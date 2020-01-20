@@ -2,10 +2,14 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, APP_INITIALIZER } from '@angular/core';
 
 import { AppComponent } from './app.component';
-import { EnvConfigService } from 'src/core/services/env-config.service';
+import { EnvConfigService } from 'src/app/core/services/env-config.service';
 import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { ErrorInterceptor } from 'src/core/intercept/error.intercepter';
-import { AppHttpInterceptor } from 'src/core/intercept/app.interceptor';
+import { ErrorInterceptor } from 'src/app/core/intercept/error.intercepter';
+import { AppHttpInterceptor } from 'src/app/core/intercept/app.interceptor';
+import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+
 
 const appEnvInitializerFn = (envConfig: EnvConfigService) => {
   return () => {
@@ -19,7 +23,10 @@ const appEnvInitializerFn = (envConfig: EnvConfigService) => {
   ],
   imports: [
     BrowserModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
+    BrowserAnimationsModule
   ],
   providers: [
     EnvConfigService,
