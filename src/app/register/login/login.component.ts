@@ -13,6 +13,8 @@ export class LoginComponent implements OnInit {
     @ViewChild('username', { static: false }) username: ElementRef;
     @ViewChild('password', { static: false }) password: ElementRef;
     loginFormGroup: FormGroup;
+    isSubmitted: boolean;
+    isPc: boolean;
 
     constructor() {
         jqKeyboard.init();
@@ -33,6 +35,24 @@ export class LoginComponent implements OnInit {
             passWord: new FormControl('', requiredInput),
             remember: new FormControl(),
         });
+    }
+
+    onSubmit() {
+        this.isSubmitted = true;
+        if (this.loginFormGroup.invalid) {
+            return;
+        }
+        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+        if (isMobile) {
+          this.isPc = false;
+        } else {
+          this.isPc = true;
+        }
+        const param = {
+            login_id: this.loginFormGroup.controls.userName.value,
+            password: this.loginFormGroup.controls.passWord.value,
+            device_type: isMobile === false ? 'Pc' : 'Mobile'
+        };
     }
 
     openKeyboard() {

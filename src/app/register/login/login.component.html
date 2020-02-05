@@ -29,7 +29,9 @@
                                 #username 
                                 class="form-control"
                                 placeholder="Email or Login ID"
-                                formControlName="userName">
+                                formControlName="userName"
+                                [ngClass]="{'invalid': isSubmitted && loginFormGroup.controls['userName'].errors}"
+                                >
                                 <button type="button" class="btn btn-none"><i class="icon ion-md-person"></i></button>
                             </div>
                         </div>
@@ -42,7 +44,9 @@
                                 #password 
                                 class="form-control" 
                                 placeholder=""
-                                formControlName="passWord">
+                                formControlName="passWord"
+                                [ngClass]="{'invalid': isSubmitted && loginFormGroup.controls['passWord'].errors}"
+                                >
                                 <button type="button" class="btn btn-none"><i class="icon ion-md-key"></i></button>
                             </div>
                         </div>
@@ -59,7 +63,7 @@
                         </div>
                         <div class="form-group">
                             <a class="btn btn-primary btn-block"
-                                href="MY003_Notification_List_MY004_Notification_Detail.html">Sign In</a>
+                                (click)="onSubmit()">Sign In</a>
                         </div>
                         <a routerLink="/forgot_password" class="forgot-link">Forgot Password?</a>
                     </div>

@@ -1,3 +1,6 @@
 .btn-toggle-vkeyboard {
     cursor: pointer;
 }
+.btn, .btn-primary, .btn-block {
+    color: white;
+}
