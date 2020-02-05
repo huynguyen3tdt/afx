@@ -34,7 +34,6 @@ const JP_REQUIRED = /[\u3000-\u303f\u3040-\u309f\u30a0-\u30ff\uff00-\uff9f\u4e00
 
 
 export function emailValidation(control: AbstractControl) {
-    console.log('123123123123123');
     if (!control.value || typeof control.value === 'string' && !control.value.trim()) {
         return DEFAULT_INVALID_REQUIRED;
     }
@@ -55,7 +54,6 @@ export function emailValidation(control: AbstractControl) {
 
 
 export function requiredInput(control: AbstractControl) {
-    console.log('----------- ', control.value);
     if (!control.value || typeof control.value === 'string' && !control.value.trim()) {
         return DEFAULT_INVALID_REQUIRED;
     }

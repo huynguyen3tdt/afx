@@ -1,0 +1,70 @@
+<div class="card card-login">
+    <div class="row align-items-end">
+        <div class="col-lg-6 d-none d-lg-block">
+            <div class="p-4">
+                <div class="row justify-content-center">
+                    <div class="col-lg-10 text-white">
+                        <h3>Welcome to Phillip MT5</h3>
+                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has
+                            been the industry's standard dummy text ever since.</p>
+                        <p class="d-none d-lg-block">&nbsp;</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <!-- BEGIN Form Login -->
+            <div class="p-4 form form-line form-login">
+                <h5 class="text-center text-lg-right"><img src="assets/images/logo.svg" class="logo"></h5>
+                <div class="row justify-content-center mt-4">
+                    <div class="col-lg-10" [formGroup]="loginFormGroup">
+                        <h3 class="mb-0 text-primary">Sign In</h3>
+                        <p class="mb-4">Don’t have an account? <a href="javascript:;">Create Now</a></p>
+                        <div class="form-group">
+                            <label class="label">Email / LoginID</label>
+                            <div class="input-wrapper">
+                                <input 
+                                type="text" 
+                                name="username" 
+                                #username 
+                                class="form-control"
+                                placeholder="Email or Login ID"
+                                formControlName="userName">
+                                <button type="button" class="btn btn-none"><i class="icon ion-md-person"></i></button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="label">Passwords</label>
+                            <div class="input-wrapper">
+                                <input 
+                                type="password" 
+                                name="passwords" 
+                                #password 
+                                class="form-control" 
+                                placeholder=""
+                                formControlName="passWord">
+                                <button type="button" class="btn btn-none"><i class="icon ion-md-key"></i></button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="container-checkbox small">Remember me
+                                <input type="checkbox" name="save_" formControlName="remember">
+                                <span class="checkmark"></span>
+                            </label>
+                            <div (click)="openKeyboard()">
+                                <a class="btn-toggle-vkeyboard small"><img src="assets/images/keyboard.svg"
+                                        alt='Visual Keyboard' class="mr-2" style="max-width: 24px;max-height: 24px">
+                                    Open Visual Keyboard</a>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <a class="btn btn-primary btn-block"
+                                href="MY003_Notification_List_MY004_Notification_Detail.html">Sign In</a>
+                        </div>
+                        <a routerLink="/forgot_password" class="forgot-link">Forgot Password?</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
