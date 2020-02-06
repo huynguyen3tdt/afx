@@ -5,7 +5,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './login/login.component';
 import { RegisterRoutes } from './register.routing';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
-
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
 
@@ -14,6 +15,7 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
         FormsModule,
         ReactiveFormsModule,
         RouterModule.forChild(RegisterRoutes),
+        BsDatepickerModule.forRoot()
     ],
 
     providers: [],

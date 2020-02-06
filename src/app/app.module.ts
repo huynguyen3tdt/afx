@@ -17,6 +17,7 @@ import { FooterComponent } from './manage/footer/footer.component';
 
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
 
 const appEnvInitializerFn = (envConfig: EnvConfigService) => {
@@ -46,7 +47,6 @@ const Routing: ModuleWithProviders = RouterModule.forRoot(AppRoutes, {
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    BrowserAnimationsModule,
     Routing,
     TranslateModule.forRoot({
       loader: {
