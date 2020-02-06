@@ -6,7 +6,6 @@ import { LoginComponent } from './login/login.component';
 import { RegisterRoutes } from './register.routing';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
 
