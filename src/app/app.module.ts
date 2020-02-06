@@ -17,6 +17,8 @@ import { FooterComponent } from './manage/footer/footer.component';
 
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { LoginGuard } from './core/guard/login.guard';
+import { AuthGuard } from './core/guard/auth.guard';
 
 
 const appEnvInitializerFn = (envConfig: EnvConfigService) => {
@@ -58,6 +60,8 @@ const Routing: ModuleWithProviders = RouterModule.forRoot(AppRoutes, {
   ],
   providers: [
     EnvConfigService,
+    AuthGuard,
+    LoginGuard,
     {
       provide: APP_INITIALIZER,
       useFactory: appEnvInitializerFn,

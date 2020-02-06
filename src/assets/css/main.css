@@ -7,7 +7,7 @@ a{
 	color: #0D688F;
 }
 a:hover{
-	color: #31B5E3;
+	color: #31B5E3 !important;
 	text-decoration: none;
 }
 /* Dropdown Menu */

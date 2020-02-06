@@ -4,3 +4,7 @@
 .btn, .btn-primary, .btn-block {
     color: white;
 }
+.forgot-link {
+    cursor: pointer;
+    color: #0D688F;
+}

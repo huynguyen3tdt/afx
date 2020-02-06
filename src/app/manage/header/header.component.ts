@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { TOKEN_AFX } from 'src/app/core/constant/authen-constant';
 
 @Component({
   selector: 'app-header',
@@ -7,9 +9,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
   }
 
+  logout() {
+    localStorage.removeItem(TOKEN_AFX);
+    this.router.navigate(['/login']);
+  }
 }

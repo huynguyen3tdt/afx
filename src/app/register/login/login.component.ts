@@ -1,10 +1,9 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { requiredInput } from 'src/app/core/helper/custom-validate.helper';
-import { USERNAME_LOGIN, PASSWORD_LOGIN, REMEMBER_LOGIN } from './../../core/constant/authen-constant';
+import { USERNAME_LOGIN, PASSWORD_LOGIN, REMEMBER_LOGIN, TOKEN_AFX } from './../../core/constant/authen-constant';
 import { Router } from '@angular/router';
 declare const $: any;
-declare const jqKeyboard: any;
 
 @Component({
     selector: 'app-login',
@@ -19,7 +18,6 @@ export class LoginComponent implements OnInit {
     isPc: boolean;
 
     constructor(private router: Router) {
-        jqKeyboard.init();
     }
 
     ngOnInit() {
@@ -40,8 +38,8 @@ export class LoginComponent implements OnInit {
         });
         if (localStorage.getItem(REMEMBER_LOGIN) === 'false') {
             this.loginFormGroup.controls.remember.setValue(false);
-            this.loginFormGroup.controls.username.setValue('');
-            this.loginFormGroup.controls.password.setValue('');
+            this.loginFormGroup.controls.userName.setValue('');
+            this.loginFormGroup.controls.passWord.setValue('');
         } else {
             this.loginFormGroup.controls.remember.setValue(true);
             if (this.checkUserNameAndPassWord(localStorage.getItem(USERNAME_LOGIN))) {
@@ -76,8 +74,14 @@ export class LoginComponent implements OnInit {
             localStorage.removeItem(PASSWORD_LOGIN);
             localStorage.setItem(REMEMBER_LOGIN, 'false');
         }
-        this.router.navigate(['/forgot_password']);
+        this.router.navigate(['/manage/notifications']);
+        localStorage.setItem(TOKEN_AFX, '111111111');
+        $('.minimize-btn').click();
+    }
 
+    changeToForgotPassWord() {
+        this.router.navigate(['forgot_password']);
+        $('.minimize-btn').click();
     }
 
     checkUserNameAndPassWord(loginParam) {

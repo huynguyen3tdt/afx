@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+declare const jqKeyboard: any;
 
 @Component({
   selector: 'app-root',
@@ -8,6 +9,7 @@ import { Component, OnInit } from '@angular/core';
 export class AppComponent implements OnInit {
   title = 'afx-front';
   constructor() {
+    jqKeyboard.init();
   }
 
   ngOnInit(): void {
