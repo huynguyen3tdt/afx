@@ -7,7 +7,6 @@ import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from '@angular/common
 import { ErrorInterceptor } from 'src/app/core/intercept/error.intercepter';
 import { AppHttpInterceptor } from 'src/app/core/intercept/app.interceptor';
 import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RegisterLayoutComponent } from './register/register-layout.component';
 import { RouterModule, PreloadAllModules } from '@angular/router';
 import { AppRoutes } from './app.routing';
@@ -17,7 +16,6 @@ import { FooterComponent } from './manage/footer/footer.component';
 
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
 
 const appEnvInitializerFn = (envConfig: EnvConfigService) => {

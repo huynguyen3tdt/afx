@@ -8,8 +8,7 @@ import { requiredInput } from 'src/app/core/helper/custom-validate.helper';
   styleUrls: ['./forgot-password.component.css']
 })
 export class ForgotPasswordComponent implements OnInit {
-  // @ViewChild('email', { static: false }) email: ElementRef;
-  // @ViewChild('dateForm', { static: false }) dateForm: ElementRef;
+
   forgotPasswordForm: FormGroup;
   isSubmitted: boolean;
 
