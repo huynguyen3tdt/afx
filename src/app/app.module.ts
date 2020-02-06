@@ -7,7 +7,6 @@ import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from '@angular/common
 import { ErrorInterceptor } from 'src/app/core/intercept/error.intercepter';
 import { AppHttpInterceptor } from 'src/app/core/intercept/app.interceptor';
 import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RegisterLayoutComponent } from './register/register-layout.component';
 import { RouterModule, PreloadAllModules } from '@angular/router';
 import { AppRoutes } from './app.routing';
@@ -46,7 +45,6 @@ const Routing: ModuleWithProviders = RouterModule.forRoot(AppRoutes, {
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    BrowserAnimationsModule,
     Routing,
     TranslateModule.forRoot({
       loader: {

@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { requiredInput } from 'src/app/core/helper/custom-validate.helper';
 
 @Component({
   selector: 'app-forgot-password',
@@ -7,9 +9,24 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ForgotPasswordComponent implements OnInit {
 
+  forgotPasswordForm: FormGroup;
+  isSubmitted: boolean;
+
   constructor() { }
 
   ngOnInit() {
+    this.initForgotPasswordForm();
   }
-
+  initForgotPasswordForm() {
+    this.forgotPasswordForm = new FormGroup({
+        email: new FormControl('', requiredInput),
+        dateInput: new FormControl('', requiredInput),
+    });
+  }
+  onSubmit() {
+    this.isSubmitted = true;
+    if (this.forgotPasswordForm.invalid) {
+        return;
+    }
+  }
 }
