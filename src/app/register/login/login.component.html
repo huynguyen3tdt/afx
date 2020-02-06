@@ -55,7 +55,7 @@
                                 <input type="checkbox" name="save_" formControlName="remember">
                                 <span class="checkmark"></span>
                             </label>
-                            <div (click)="openKeyboard()">
+                            <div *ngIf="isPc" (click)="openKeyboard()">
                                 <a class="btn-toggle-vkeyboard small"><img src="assets/images/keyboard.svg"
                                         alt='Visual Keyboard' class="mr-2" style="max-width: 24px;max-height: 24px">
                                     Open Visual Keyboard</a>
