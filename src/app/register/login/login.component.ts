@@ -1,6 +1,8 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { requiredInput } from 'src/app/core/helper/custom-validate.helper';
+import { USERNAME_LOGIN, PASSWORD_LOGIN, REMEMBER_LOGIN } from './../../core/constant/authen-constant';
+import { Router } from '@angular/router';
 declare const $: any;
 declare const jqKeyboard: any;
 
@@ -16,7 +18,7 @@ export class LoginComponent implements OnInit {
     isSubmitted: boolean;
     isPc: boolean;
 
-    constructor() {
+    constructor(private router: Router) {
         jqKeyboard.init();
     }
 
@@ -25,6 +27,7 @@ export class LoginComponent implements OnInit {
         $(window).resize(() => {
             this.login_layout();
         });
+        this.checkDevice();
         this.initKeyboard();
         this.initLoginForm();
     }
@@ -33,8 +36,25 @@ export class LoginComponent implements OnInit {
         this.loginFormGroup = new FormGroup({
             userName: new FormControl('', requiredInput),
             passWord: new FormControl('', requiredInput),
-            remember: new FormControl(),
+            remember: new FormControl(false),
         });
+        if (localStorage.getItem(REMEMBER_LOGIN) === 'false') {
+            this.loginFormGroup.controls.remember.setValue(false);
+            this.loginFormGroup.controls.username.setValue('');
+            this.loginFormGroup.controls.password.setValue('');
+        } else {
+            this.loginFormGroup.controls.remember.setValue(true);
+            if (this.checkUserNameAndPassWord(localStorage.getItem(USERNAME_LOGIN))) {
+                this.loginFormGroup.controls.userName.setValue('');
+            } else {
+                this.loginFormGroup.controls.userName.setValue(atob(localStorage.getItem(USERNAME_LOGIN)));
+            }
+            if (this.checkUserNameAndPassWord(localStorage.getItem(PASSWORD_LOGIN))) {
+                this.loginFormGroup.controls.passWord.setValue('');
+            } else {
+                this.loginFormGroup.controls.passWord.setValue(atob(localStorage.getItem(PASSWORD_LOGIN)));
+            }
+        }
     }
 
     onSubmit() {
@@ -42,17 +62,38 @@ export class LoginComponent implements OnInit {
         if (this.loginFormGroup.invalid) {
             return;
         }
-        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-        if (isMobile) {
-          this.isPc = false;
-        } else {
-          this.isPc = true;
-        }
         const param = {
             login_id: this.loginFormGroup.controls.userName.value,
             password: this.loginFormGroup.controls.passWord.value,
-            device_type: isMobile === false ? 'Pc' : 'Mobile'
+            device_type: this.isPc === false ? 'Pc' : 'Mobile'
         };
+        if (this.loginFormGroup.value.remember === true) {
+            localStorage.setItem(USERNAME_LOGIN, btoa(this.loginFormGroup.value.userName));
+            localStorage.setItem(PASSWORD_LOGIN, btoa(this.loginFormGroup.value.passWord));
+            localStorage.setItem(REMEMBER_LOGIN, 'true');
+        } else {
+            localStorage.removeItem(USERNAME_LOGIN);
+            localStorage.removeItem(PASSWORD_LOGIN);
+            localStorage.setItem(REMEMBER_LOGIN, 'false');
+        }
+        this.router.navigate(['/forgot_password']);
+
+    }
+
+    checkUserNameAndPassWord(loginParam) {
+        if (loginParam === '' || loginParam === undefined || !loginParam) {
+            return true;
+        }
+        return false;
+    }
+
+    checkDevice() {
+        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+        if (isMobile) {
+            this.isPc = false;
+        } else {
+            this.isPc = true;
+        }
     }
 
     openKeyboard() {
