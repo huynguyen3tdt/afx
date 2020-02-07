@@ -6,6 +6,9 @@ import { InnerSubscriber } from 'rxjs/internal/InnerSubscriber';
 import { EnvConfigService } from './env-config.service';
 import { map, catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { LoginResponseModel } from '../model/login-response.model';
+import { TOKEN_AFX } from '../constant/authen-constant';
+import { ResponseWihtoutDataModel } from '../model/none-data-response.model';
 
 @Injectable({
   providedIn: 'root'
@@ -17,46 +20,51 @@ export class AuthenService {
     private httpClient: HttpClient,
     private envConfigService: EnvConfigService) { }
 
-    // login(params: any): Observable<any> {
-    //   return this.httpClient
-    //     .post(`${this.envConfigService.getConfig().backEnd}/${AppSettings.API_LOGIN}/`, 
-    //     params, { observe: 'response' })
-    //     .pipe(
-    //       map((data: any)) => {
-
-    //       }
-    //     )
-    //     .pipe(
-    //       catchError((error: HttpErrorResponse) => {
-    //         return new Observable((observer: InnerSubscriber<any, any>) => {
-    //           observer.next(error);
-    //         });
-    //       })
-    //     );
-    // }
-    login(parrams): Observable<any> {
-      return this.httpClient
+  login(param): Observable<LoginResponseModel> {
+    return this.httpClient
       .post(`${this.envConfigService.getConfig().backEnd}/${AppSettings.API_LOGIN}`,
-          parrams, { observe: 'response' })
-        .pipe(
-          map((data: any) => {
-            if (data.status === 200) {
-              if (data.body.access_token) {
-                localStorage.setItem('currentUser', data.body.access_token);
-                return data;
-              }
+        param)
+      .pipe(
+        map((data: LoginResponseModel) => {
+          if (data.meta.code === 200) {
+            if (data.data.access_token) {
+              localStorage.setItem(TOKEN_AFX, data.data.access_token);
               return data;
             }
-          })
-        ).pipe(
-          catchError((error: HttpErrorResponse) => {
-              return new Observable((observer: InnerSubscriber<any, any>) => {
-                observer.next(error);
-              }); 
-            // return new Observable((observer: InnerSubscriber<any, any>) => {
-            //   observer.next(error)
-            // });
-          })
-        );
-    }
+            return data;
+          }
+          return data;
+        })
+      ).pipe(
+        catchError((error: HttpErrorResponse) => {
+          return new Observable((observer: InnerSubscriber<any, any>) => {
+            observer.next(error);
+          });
+        })
+      );
+  }
+
+  logout(): Observable<ResponseWihtoutDataModel> {
+    return this.httpClient
+      .post(`${this.envConfigService.getConfig().backEnd}/${AppSettings.API_LOGOUT}`, {})
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          return new Observable((observer: InnerSubscriber<any, any>) => {
+            observer.next(error);
+          });
+        })
+      );
+  }
+
+  forgotPassWord(param): Observable<ResponseWihtoutDataModel> {
+    return this.httpClient
+      .post(`${this.envConfigService.getConfig().backEnd}/${AppSettings.API_FORGOT_PASSWORD}`, param)
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          return new Observable((observer: InnerSubscriber<any, any>) => {
+            observer.next(error);
+          });
+        })
+      );
+  }
 }

@@ -3,6 +3,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { requiredInput } from 'src/app/core/helper/custom-validate.helper';
 import { USERNAME_LOGIN, PASSWORD_LOGIN, REMEMBER_LOGIN, TOKEN_AFX } from './../../core/constant/authen-constant';
 import { Router } from '@angular/router';
+import { AuthenService } from 'src/app/core/services/authen.service';
 declare const $: any;
 
 @Component({
@@ -17,7 +18,7 @@ export class LoginComponent implements OnInit {
     isSubmitted: boolean;
     isPc: boolean;
 
-    constructor(private router: Router) {
+    constructor(private router: Router, private authenService: AuthenService) {
     }
 
     ngOnInit() {
@@ -63,7 +64,7 @@ export class LoginComponent implements OnInit {
         const param = {
             login_id: this.loginFormGroup.controls.userName.value,
             password: this.loginFormGroup.controls.passWord.value,
-            device_type: this.isPc === false ? 'Pc' : 'Mobile'
+            device_type: this.isPc ? 'Pc' : 'Mobile'
         };
         if (this.loginFormGroup.value.remember === true) {
             localStorage.setItem(USERNAME_LOGIN, btoa(this.loginFormGroup.value.userName));
@@ -74,8 +75,11 @@ export class LoginComponent implements OnInit {
             localStorage.removeItem(PASSWORD_LOGIN);
             localStorage.setItem(REMEMBER_LOGIN, 'false');
         }
-        this.router.navigate(['/manage/notifications']);
-        localStorage.setItem(TOKEN_AFX, '111111111');
+        this.authenService.login(param).subscribe(response => {
+            if (response.meta.code === 200) {
+            this.router.navigate(['/manage/notifications']);
+            }
+        });
         $('.minimize-btn').click();
     }
 
