@@ -30,7 +30,7 @@ const FULL_SIZE_NUMBER = /([０-９])/;
 const HALF_SIZE_NUMBER = /[0-9]/;
 const FULL_WIDTH_PATTERN = /^[ア-ンｦ-ﾟＡ-ｚA-z０-９0-9ーー\-（(）)／/．\.　 ]*$/;
 const HIRAGANA_REQUIRED = /[\u3040-\u309f]/;
-const JP_REQUIRED = /[\u3000-\u303f\u3040-\u309f\u30a0-\u30ff\uff00-\uff9f\u4e00-\u9faf\u3400-\u4dbf]/
+const JP_REQUIRED = /[\u3000-\u303f\u3040-\u309f\u30a0-\u30ff\uff00-\uff9f\u4e00-\u9faf\u3400-\u4dbf]/;
 
 
 export function emailValidation(control: AbstractControl) {
