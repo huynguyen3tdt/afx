@@ -1,0 +1,25 @@
+# This folder is cached between builds
+# http://docs.gitlab.com/ce/ci/yaml/README.html#cache
+cache:
+  paths:
+  - node_modules/
+
+stages:
+  - build
+  - test
+  - deploy
+
+test:
+  stage: test
+  image: node:latest
+  before_script:
+    - npm install
+    - npm install -g @angular/cli
+    - ng --version
+  script:
+    - ng lint
+
+deploy:
+  stage: deploy
+  script:
+    - echo "DO NOTHING - NEED TO IMPLEMENT"
