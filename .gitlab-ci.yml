@@ -21,5 +21,25 @@ test:
 
 deploy:
   stage: deploy
+  image: node:latest
+  variables:
+    STAGING_SERVER_IP: "$STAGING_SERVER_IP"
+    STAGING_SERVER_PRIVATE_SSH_KEY: "$STAGING_SERVER_PRIVATE_SSH_KEY"
+  before_script:
+    - mkdir -p ~/.ssh
+    - echo "$STAGING_SERVER_PRIVATE_SSH_KEY" | tr -d '\r' > ~/.ssh/id_rsa
+    - chmod 600 ~/.ssh/id_rsa
+    - eval "$(ssh-agent -s)"
+    - ssh-add ~/.ssh/id_rsa
+    - ssh-keyscan -H $STAGING_SERVER_IP >> ~/.ssh/known_hosts
+    - npm install
+    - npm install -g @angular/cli
+    - ng --version
   script:
-    - echo "DO NOTHING - NEED TO IMPLEMENT"
+    - ng build --prod
+    - zip -r front-$(date +%Y-%m-%dT%H:%M:%S).zip dist
+    - scp *.zip root@$STAGING_SERVER_IP:/root/afx-front
+    - scp *.zip root@$STAGING_SERVER_IP:/root/afx-front/latest.zip
+    - ssh root@$STAGING_SERVER_IP "unzip /root/afx-front/latest.zip -d /var/www/afx && echo `TZ=Asia/Ho_Chi_Minh date` >> /root/afx-front/ci-staging.log"
+  only:
+    - master
