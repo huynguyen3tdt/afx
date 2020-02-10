@@ -26,6 +26,7 @@ deploy:
     STAGING_SERVER_IP: "$STAGING_SERVER_IP"
     STAGING_SERVER_PRIVATE_SSH_KEY: "$STAGING_SERVER_PRIVATE_SSH_KEY"
   before_script:
+    - apt-get update && apt-get install -y zip unzip
     - mkdir -p ~/.ssh
     - echo "$STAGING_SERVER_PRIVATE_SSH_KEY" | tr -d '\r' > ~/.ssh/id_rsa
     - chmod 600 ~/.ssh/id_rsa
@@ -38,6 +39,7 @@ deploy:
   script:
     - ng build --prod
     - zip -r front-$(date +%Y-%m-%dT%H:%M:%S).zip dist
+    - ls *.zip
     - scp *.zip root@$STAGING_SERVER_IP:/root/afx-front
     - scp *.zip root@$STAGING_SERVER_IP:/root/afx-front/latest.zip
     - ssh root@$STAGING_SERVER_IP "unzip /root/afx-front/latest.zip -d /var/www/afx && echo `TZ=Asia/Ho_Chi_Minh date` >> /root/afx-front/ci-staging.log"
