@@ -38,10 +38,10 @@ deploy:
     - ng --version
   script:
     - ng build --prod
-    - zip -r front-$(date +%Y-%m-%dT%H:%M:%S).zip dist
-    - ls *.zip
+    - zip -r front-$(date +%Y%m%d-%H%M%S).zip dist/afx-front
+    - ls -lh *.zip
     - scp *.zip root@$STAGING_SERVER_IP:/root/afx-front
     - scp *.zip root@$STAGING_SERVER_IP:/root/afx-front/latest.zip
-    - ssh root@$STAGING_SERVER_IP "unzip /root/afx-front/latest.zip -d /var/www/afx && echo `TZ=Asia/Ho_Chi_Minh date` >> /root/afx-front/ci-staging.log"
+    - ssh root@$STAGING_SERVER_IP "unzip -o /root/afx-front/latest.zip -d /var/www/ && rm -rf /var/www/afx && mv /var/www/dist/afx-front /var/www/afx && echo `TZ=Asia/Ho_Chi_Minh date` >> /root/afx-front/ci-staging.log"
   only:
     - master
