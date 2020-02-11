@@ -59,6 +59,11 @@
         <div class="container-fluid container-md">
             <!-- BEGIN HEADER BOTTOM NAV -->
             <ul class="header-bottom-nav nav">
+                <li class="nav-item nav-item-notifications">
+                  <a [routerLink]="['/manage/notifications']" class="nav-link"
+                    title="Notifications"><i class="icon ion-md-notifications d-md-none"></i> <span
+                        class="d-none d-md-inline">Notifications</span></a>
+                </li>
                 <li class="nav-item nav-item-deposit">
                     <a href="MY010_Deposit_MY011_DepositDetail.html" class="nav-link" title="Deposit"><i
                             class="icon ion-md-add d-md-none"></i> <span class="d-none d-md-inline">{{'Deposit' | translate}}</span></a>
@@ -68,24 +73,21 @@
                             class="icon ion-md-remove d-md-none"></i> <span
                             class="d-none d-md-inline">Withdraw</span></a>
                 </li>
+                <li class="nav-item nav-item-history">
+                  <a href="MY012_DW_History.html" class="nav-link" title="History"><i
+                          class="icon ion-md-time d-md-none"></i> <span class="d-none d-md-inline">History</span></a>
+                </li>
                 <li class="nav-item nav-item-report">
                     <a href="MY007_ReportList.html" class="nav-link" title="Report"><i
                             class="icon ion-md-today d-md-none"></i> <span class="d-none d-md-inline">Report</span></a>
                 </li>
-                <li class="nav-item nav-item-notifications">
-                    <a href="MY003_Notification_List_MY004_Notification_Detail.html" class="nav-link"
-                        title="Notifications"><i class="icon ion-md-notifications d-md-none"></i> <span
-                            class="d-none d-md-inline">Notifications</span></a>
-                </li>
+
                 <li class="nav-item nav-item-account">
-                    <a href="MY005_Account_Information_MY006_User_Information.html" class="nav-link"
+                    <a [routerLink]="['/manage/accountInfo']" class="nav-link"
                         title="My Account"><i class="icon ion-md-person d-md-none"></i> <span
                             class="d-none d-md-inline">My Account</span></a>
                 </li>
-                <li class="nav-item nav-item-history">
-                    <a href="MY012_DW_History.html" class="nav-link" title="History"><i
-                            class="icon ion-md-time d-md-none"></i> <span class="d-none d-md-inline">History</span></a>
-                </li>
+
             </ul><!-- END HEADER BOTTOM NAV -->
         </div>
     </div><!-- END HEADER BOTTOM -->
