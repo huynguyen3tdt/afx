@@ -18,15 +18,15 @@
                 <h5 class="text-center text-lg-right"><img src="assets/images/logo.svg" class="logo"></h5>
                 <div class="row justify-content-center mt-4">
                     <div class="col-lg-10" [formGroup]="loginFormGroup">
-                        <h3 class="mb-0 text-primary">Sign In</h3>
-                        <p class="mb-4">Don’t have an account? <a href="javascript:;">Create Now</a></p>
+                        <h3 class="mb-3 text-primary">Sign In</h3>
+
                         <div class="form-group">
                             <label class="label">Email / LoginID</label>
                             <div class="input-wrapper">
-                                <input 
-                                type="text" 
-                                name="username" 
-                                #username 
+                                <input
+                                type="text"
+                                name="username"
+                                #username
                                 class="form-control"
                                 placeholder="Email or Login ID"
                                 formControlName="userName"
@@ -38,11 +38,11 @@
                         <div class="form-group">
                             <label class="label">Passwords</label>
                             <div class="input-wrapper">
-                                <input 
-                                type="password" 
-                                name="passwords" 
-                                #password 
-                                class="form-control" 
+                                <input
+                                type="password"
+                                name="passwords"
+                                #password
+                                class="form-control"
                                 placeholder=""
                                 formControlName="passWord"
                                 [ngClass]="{'invalid': isSubmitted && loginFormGroup.controls['passWord'].errors}"
@@ -66,6 +66,7 @@
                                 (click)="onSubmit()">Sign In</a>
                         </div>
                         <a (click)="changeToForgotPassWord()" class="forgot-link">Forgot Password?</a>
+                        <p class="mb-4">Don’t have an account? <a href="javascript:;">Create Now</a></p>
                     </div>
                 </div>
             </div>

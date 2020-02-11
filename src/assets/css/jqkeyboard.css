@@ -46,7 +46,6 @@
     box-sizing: border-box;
     margin-right:5px;
     border-radius: 3px;
-    display: none !important;
 }
 
 #jqk-lang-cont button.jqk-lang-btn:hover {
@@ -55,8 +54,7 @@
 
 #jqk-lang-cont button.jqk-lang-btn.selected {
     background: #1c94c4;
-    color: #FFF;
-    display: none !important;
+    color: #FFF
 }
 /*
 #jqk-lang-cont>button.jqk-lang-btn:first-of-type {
@@ -230,3 +228,4 @@
     content: "";
     font-family: "Ionicons";
 }
+
