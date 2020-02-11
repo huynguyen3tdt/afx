@@ -23,9 +23,9 @@ export class EnvConfigService {
     return Promise.resolve(this.envConfigNull);
   }
 
-  getConfig(): EnvConfig {
+  getConfig() {
     if (this.envConfig) {
-      return this.envConfig;
+      return this.envConfig.backEnd;
     }
   }
 }
