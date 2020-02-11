@@ -1,0 +1,47 @@
+# This folder is cached between builds
+# http://docs.gitlab.com/ce/ci/yaml/README.html#cache
+cache:
+  paths:
+  - node_modules/
+
+stages:
+  - build
+  - test
+  - deploy
+
+test:
+  stage: test
+  image: node:latest
+  before_script:
+    - npm install
+    - npm install -g @angular/cli
+    - ng --version
+  script:
+    - ng lint
+
+deploy:
+  stage: deploy
+  image: node:latest
+  variables:
+    STAGING_SERVER_IP: "$STAGING_SERVER_IP"
+    STAGING_SERVER_PRIVATE_SSH_KEY: "$STAGING_SERVER_PRIVATE_SSH_KEY"
+  before_script:
+    - apt-get update && apt-get install -y zip unzip
+    - mkdir -p ~/.ssh
+    - echo "$STAGING_SERVER_PRIVATE_SSH_KEY" | tr -d '\r' > ~/.ssh/id_rsa
+    - chmod 600 ~/.ssh/id_rsa
+    - eval "$(ssh-agent -s)"
+    - ssh-add ~/.ssh/id_rsa
+    - ssh-keyscan -H $STAGING_SERVER_IP >> ~/.ssh/known_hosts
+    - npm install
+    - npm install -g @angular/cli
+    - ng --version
+  script:
+    - ng build --prod
+    - zip -r front-$(date +%Y%m%d-%H%M%S).zip dist/afx-front
+    - ls -lh *.zip
+    - scp *.zip root@$STAGING_SERVER_IP:/root/afx-front
+    - scp *.zip root@$STAGING_SERVER_IP:/root/afx-front/latest.zip
+    - ssh root@$STAGING_SERVER_IP "unzip -o /root/afx-front/latest.zip -d /var/www/ && rm -rf /var/www/afx && mv /var/www/dist/afx-front /var/www/afx && echo `TZ=Asia/Ho_Chi_Minh date` >> /root/afx-front/ci-staging.log"
+  only:
+    - master
