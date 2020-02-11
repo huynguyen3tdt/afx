@@ -37,7 +37,7 @@ export class LoginComponent implements OnInit {
             passWord: new FormControl('', requiredInput),
             remember: new FormControl(false),
         });
-        if (localStorage.getItem(REMEMBER_LOGIN) === 'false') {
+        if (localStorage.getItem(REMEMBER_LOGIN) === 'false' || localStorage.getItem(REMEMBER_LOGIN) === null) {
             this.loginFormGroup.controls.remember.setValue(false);
             this.loginFormGroup.controls.userName.setValue('');
             this.loginFormGroup.controls.passWord.setValue('');
@@ -77,10 +77,15 @@ export class LoginComponent implements OnInit {
         }
         this.authenService.login(param).subscribe(response => {
             if (response.meta.code === 200) {
+            localStorage.setItem(TOKEN_AFX, response.data.access_token);
             this.router.navigate(['/manage/notifications']);
             }
         });
         $('.minimize-btn').click();
+    }
+
+    goToManage() {
+        this.router.navigate(['/manage/notifications']);
     }
 
     changeToForgotPassWord() {

@@ -14,28 +14,15 @@ import { ResponseWihtoutDataModel } from '../model/none-data-response.model';
   providedIn: 'root'
 })
 export class AuthenService {
-
   constructor(
-    private router: Router,
     private httpClient: HttpClient,
-    private envConfigService: EnvConfigService) { }
+    private envConfigService: EnvConfigService) {}
 
   login(param): Observable<LoginResponseModel> {
     return this.httpClient
-      .post(`${this.envConfigService.getConfig().backEnd}/${AppSettings.API_LOGIN}`,
+      .post(`${this.envConfigService.getConfig()}/${AppSettings.API_LOGIN}`,
         param)
       .pipe(
-        map((data: LoginResponseModel) => {
-          if (data.meta.code === 200) {
-            if (data.data.access_token) {
-              localStorage.setItem(TOKEN_AFX, data.data.access_token);
-              return data;
-            }
-            return data;
-          }
-          return data;
-        })
-      ).pipe(
         catchError((error: HttpErrorResponse) => {
           return new Observable((observer: InnerSubscriber<any, any>) => {
             observer.next(error);
@@ -46,7 +33,7 @@ export class AuthenService {
 
   logout(): Observable<ResponseWihtoutDataModel> {
     return this.httpClient
-      .post(`${this.envConfigService.getConfig().backEnd}/${AppSettings.API_LOGOUT}`, {})
+      .post(`${this.envConfigService.getConfig()}/${AppSettings.API_LOGOUT}`, {})
       .pipe(
         catchError((error: HttpErrorResponse) => {
           return new Observable((observer: InnerSubscriber<any, any>) => {
@@ -58,7 +45,7 @@ export class AuthenService {
 
   forgotPassWord(param): Observable<ResponseWihtoutDataModel> {
     return this.httpClient
-      .post(`${this.envConfigService.getConfig().backEnd}/${AppSettings.API_FORGOT_PASSWORD}`, param)
+      .post(`${this.envConfigService.getConfig()}/${AppSettings.API_FORGOT_PASSWORD}`, param)
       .pipe(
         catchError((error: HttpErrorResponse) => {
           return new Observable((observer: InnerSubscriber<any, any>) => {

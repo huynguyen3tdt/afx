@@ -16,7 +16,7 @@ export class CommonService {
 
   getExample(): Observable<any> {
     return this.httpClient
-      .get(`${this.envConfigService.getConfig().backEnd}/${AppSettings.API_EXAMPLE}/`,
+      .get(`${this.envConfigService.getConfig()}/${AppSettings.API_EXAMPLE}/`,
         { observe: 'response' })
       .pipe(
         catchError((error: HttpErrorResponse) => {
@@ -28,7 +28,7 @@ export class CommonService {
   }
   putExample(params: any, id): Observable<any> {
     return this.httpClient
-      .put(`${this.envConfigService.getConfig().backEnd}/${AppSettings.API_EXAMPLE}${id}/`,
+      .put(`${this.envConfigService.getConfig()}/${AppSettings.API_EXAMPLE}${id}/`,
         params, { observe: 'response' })
       .pipe(
         catchError((error: HttpErrorResponse) => {
@@ -40,7 +40,7 @@ export class CommonService {
   }
   deleteExample(id: any): Observable<any> {
     return this.httpClient
-      .delete(`${this.envConfigService.getConfig().backEnd}/${AppSettings.API_EXAMPLE}${id}/`, { observe: 'response' })
+      .delete(`${this.envConfigService.getConfig()}/${AppSettings.API_EXAMPLE}${id}/`, { observe: 'response' })
       .pipe(
         catchError((error: HttpErrorResponse) => {
           return new Observable((observer: InnerSubscriber<any, any>) => {
@@ -51,7 +51,7 @@ export class CommonService {
   }
   postExample(params: any): Observable<any> {
     return this.httpClient
-      .post(`${this.envConfigService.getConfig().backEnd}/${AppSettings.API_EXAMPLE}/`, params, { observe: 'response' })
+      .post(`${this.envConfigService.getConfig()}/${AppSettings.API_EXAMPLE}/`, params, { observe: 'response' })
       .pipe(
         catchError((error: HttpErrorResponse) => {
           return new Observable((observer: InnerSubscriber<any, any>) => {
