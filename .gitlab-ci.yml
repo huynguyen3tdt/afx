@@ -9,7 +9,7 @@ stages:
   - test
   - deploy
 
-test:
+check_coding_style:
   stage: test
   image: node:latest
   before_script:
@@ -18,6 +18,15 @@ test:
     - ng --version
   script:
     - ng lint
+
+check_unit_tests:
+  stage: test
+  image: trion/ng-cli-karma
+  before_script:
+    - npm install
+    - ng --version
+  script:
+    - ng test --no-watch --no-progress --browsers=ChromeHeadlessCI
 
 deploy:
   stage: deploy
