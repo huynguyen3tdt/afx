@@ -5,6 +5,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ManageRoutes } from './manage.routing';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { AccountInformationComponent } from './account-information/account-information.component';
+import { WithdrawRequestComponent } from './withdraw-request/withdraw-request.component';
+import { WithdrawHistoryComponent } from './withdraw-history/withdraw-history.component';
 
 @NgModule({
     imports: [
@@ -14,7 +16,7 @@ import { AccountInformationComponent } from './account-information/account-infor
         RouterModule.forChild(ManageRoutes),
     ],
     providers: [],
-    declarations: [NotificationsComponent, AccountInformationComponent]
+    declarations: [NotificationsComponent, AccountInformationComponent, WithdrawRequestComponent, WithdrawHistoryComponent]
 })
 
 export class ManageModule { }
