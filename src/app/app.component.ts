@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 declare const jqKeyboard: any;
 
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',

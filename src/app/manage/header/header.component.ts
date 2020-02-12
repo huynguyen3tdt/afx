@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { TOKEN_AFX } from 'src/app/core/constant/authen-constant';
 import { AuthenService } from 'src/app/core/services/authen.service';
 declare const $: any;
+declare const TweenMax: any;
 
 @Component({
   selector: 'app-header',
@@ -31,16 +32,33 @@ export class HeaderComponent implements OnInit {
   }
 
   layout_setup() {
-    // tslint:disable-next-line:variable-name
-    const screen_height = $(window).height();
-    // tslint:disable-next-line:variable-name
-    const header_height = $('.header-wrapper').outerHeight();
-    // tslint:disable-next-line:variable-name
-    const footer_height = $('.footer-wrapper').outerHeight();
+    function offcanvas_subnav() {
+      $('.nav.offcanvas-nav > .nav-item.has-child > .nav-link > .toggle').click(() => {
+        event.preventDefault();
+        $(this).parents('.nav-item.has-child').toggleClass('opened');
+      });
+    }
+    offcanvas_subnav();
 
-    // tslint:disable-next-line:variable-name
-    const main_height = screen_height - header_height - footer_height;
+    function open_offcanvas() {
+      $('.offcanvas-overlay').addClass('show');
+    }
 
-    $('.main-wrapper').css('min-height', main_height);
+    function close_offcanvas() {
+      TweenMax.to('.offcanvas-wrapper', 0.5, { x: -360, opacity: 0 });
+      setTimeout(() => {
+        $('.offcanvas-overlay').removeClass('show');
+        TweenMax.to('.offcanvas-wrapper', 0, { x: 0, opacity: 1 });
+      }, 500);
+    }
+
+    $('.offcanvas-open').click(() => {
+      open_offcanvas();
+      TweenMax.from('.offcanvas-wrapper', 0.5, { x: -360, opacity: 0 });
+    });
+
+    $('.btn-offcanvas-close').click( () => {
+      close_offcanvas();
+    });
   }
 }
