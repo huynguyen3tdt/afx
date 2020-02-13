@@ -61,23 +61,23 @@
                                               </tr>
                                               <tr>
                                                   <td>Balance</td>
-                                                  <td class="text-right"><strong>5,000</strong></td>
+                                                  <td class="text-right"><strong>{{accountInfor?.balance | number}}</strong></td>
                                               </tr>
                                               <tr>
                                                   <td>Margin</td>
-                                                  <td class="text-right"><strong>0</strong></td>
+                                                  <td class="text-right"><strong>{{accountInfor?.margin | number}}</strong></td>
                                               </tr>
                                               <tr>
                                                   <td>Free margin</td>
-                                                  <td class="text-right"><strong>5,000</strong></td>
+                                                  <td class="text-right"><strong>{{accountInfor?.free_margin | number}}</strong></td>
                                               </tr>
                                               <tr>
                                                   <td>Equity</td>
-                                                  <td class="text-right"><strong>5,000</strong></td>
+                                                  <td class="text-right"><strong>{{accountInfor?.equity | number}}</strong></td>
                                               </tr>
                                               <tr>
                                                   <td>Margin Level</td>
-                                                  <td class="text-right"><strong>0%</strong></td>
+                                                  <td class="text-right"><strong>{{accountInfor?.margin_level | number}}%</strong></td>
                                               </tr>
                                               <tr>
                                                   <td>Required margin</td>
@@ -85,7 +85,7 @@
                                               </tr>
                                           </tbody>
                                       </table>
-                                      <p class="small text-secondary"><i class="icon ion-md-time"></i>  <em>Last updated: 2020/01/10 11:29</em><br>The system automatically updates data after 1 minute</p>
+                                      <p class="small text-secondary"><i class="icon ion-md-time"></i>  <em>Last updated: {{listMt5Infor?.lastest_time | date:'yyyy/MM/dd'}} {{listMt5Infor?.lastest_time | date:'HH:mm'}}</em><br>The system automatically updates data after 1 minute</p>
                                   </div>
                               </div>
                           </div>

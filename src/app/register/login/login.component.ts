@@ -1,7 +1,14 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { requiredInput } from 'src/app/core/helper/custom-validate.helper';
-import { USERNAME_LOGIN, PASSWORD_LOGIN, REMEMBER_LOGIN, TOKEN_AFX, FIRST_LOGIN } from './../../core/constant/authen-constant';
+import {
+  USERNAME_LOGIN,
+  PASSWORD_LOGIN,
+  REMEMBER_LOGIN,
+  TOKEN_AFX,
+  ACCOUNT_TYPE,
+  FIRST_LOGIN,
+} from './../../core/constant/authen-constant';
 import { Router } from '@angular/router';
 import { AuthenService } from 'src/app/core/services/authen.service';
 declare const $: any;
@@ -80,6 +87,7 @@ export class LoginComponent implements OnInit {
         this.authenService.login(param).subscribe(response => {
             if (response.meta.code === 200) {
             localStorage.setItem(TOKEN_AFX, response.data.access_token);
+            localStorage.setItem(ACCOUNT_TYPE, response.data.account_ids[0].account_id.toString());
             localStorage.setItem(FIRST_LOGIN, '1');
             this.router.navigate(['/manage/notifications'], {
                 queryParams: {
