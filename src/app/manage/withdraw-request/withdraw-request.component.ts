@@ -51,14 +51,14 @@ export class WithdrawRequestComponent implements OnInit {
       currency: 'JPY'
     };
     this.withdrawRequestService.postWithdraw(param).subscribe(response => {
-      if (response.status === 200) {}
+      if (response.meta.code === 200) {}
     });
   }
 
   getMt5Infor() {
     this.withdrawRequestService.getmt5Infor().subscribe(response => {
-      if (response.status === 200) {
-        this.listMt5Infor = response.body.data;
+      if (response.meta.code === 200) {
+        this.listMt5Infor = response.data;
         // this.accountType = localStorage.getItem(ACCOUNT_TYPE);
 
 
@@ -67,16 +67,16 @@ export class WithdrawRequestComponent implements OnInit {
   }
   getBankInfor() {
     this.withdrawRequestService.getBankInfor().subscribe(response => {
-      if (response.status === 200) {
-        this.listBankInfor = response.body.data;
+      if (response.meta.code === 200) {
+        this.listBankInfor = response.data;
 
       }
     });
   }
   getDwAmount() {
     this.withdrawRequestService.getDwAmount().subscribe(response => {
-      if (response.status === 200) {
-        this.listDwAmount = response.body.data;
+      if (response.meta.code === 200) {
+        this.listDwAmount = response.data;
 
         this.withdrawForm.controls.amount.setValue(this.listDwAmount.withdraw_amount.toString());
       }
@@ -84,8 +84,8 @@ export class WithdrawRequestComponent implements OnInit {
   }
   getDwHistory() {
     this.withdrawRequestService.getDwHistory().subscribe(response => {
-      if (response.status === 200) {
-        this.listDwHistory = response.body.data.results;
+      if (response.meta.code === 200) {
+        this.listDwHistory = response.data.results;
 
       }
     });

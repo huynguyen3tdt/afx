@@ -7,7 +7,7 @@ a{
 	color: #0D688F;
 }
 a:hover{
-	color: #31B5E3;
+	color: #31B5E3 !important;
 	text-decoration: none;
 }
 /* Dropdown Menu */
@@ -58,7 +58,10 @@ a:hover{
 	font-size: 24px;
 	vertical-align: middle;
 }
-
+.invalid {
+    border: 1px solid!important;
+    border-color: #dc3545!important;
+  }
 /* Nav */
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
 	background-color: #0D688F
@@ -144,7 +147,7 @@ a:hover{
 .btn-primary:hover,
 .btn-outline-primary:hover{
 	background-color: #147DAA;
-	color: #fff;
+	color: #fff !important;
 	border-color: #147DAA;
 }
 /* Main */

@@ -1,6 +1,7 @@
 import { MetaResponseModel } from './meta-response.model';
 
 export interface WithdrawRequestModel {
+  body: any;
   meta: MetaResponseModel;
   data: {
     balance: number,
@@ -17,6 +18,7 @@ export interface WithdrawRequestModel {
 }
 
 export interface WithdrawHistoryModel {
+  body: any;
   meta: MetaResponseModel;
   data: {
     id: number,
@@ -30,6 +32,7 @@ export interface WithdrawHistoryModel {
 }
 
 export interface WithdrawAmount {
+  body: any;
   meta: MetaResponseModel;
   data: {
     deposit_amount: number;
@@ -49,16 +52,32 @@ export interface WithdrawHistory {
 }
 
 export interface DrawHistoryID {
-  id:	number;
-  transaction_id:	number;
-  transaction_date:	string;
-  description:	string;
-  currency:	string;
+  data: any;
+  body: any;
+  meta: any;
+  id: number;
+  transaction_id: number;
+  transaction_date: string;
+  description: string;
+  currency: string;
   payment: string;
-  amount:	number;
+  amount: number;
   type: string;
-  status:	number;
+  status: number;
 
+}
+
+export interface DrawPost {
+  meta: any;
+  id: number;
+  transaction_id: number;
+  transaction_date: string;
+  description: string;
+  currency: string;
+  payment_method: string;
+  amount: number;
+  type: string;
+  status: number;
 }
 
 

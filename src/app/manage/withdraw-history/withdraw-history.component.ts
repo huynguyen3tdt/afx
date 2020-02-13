@@ -43,16 +43,16 @@ export class WithdrawHistoryComponent implements OnInit {
   }
   getBankInfor() {
     this.withdrawRequestService.getBankInfor().subscribe(response => {
-      if (response.status === 200) {
-        this.listBankInfor = response.body.data;
+      if (response.meta.code === 200) {
+        this.listBankInfor = response.data;
 
       }
     });
   }
   getDwHistory() {
     this.withdrawRequestService.getDwHistory().subscribe(response => {
-      if (response.status === 200) {
-        this.listDwHistory = response.body.data.results;
+      if (response.meta.code === 200) {
+        this.listDwHistory = response.data.results;
 
       }
     });

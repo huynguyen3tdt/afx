@@ -23,8 +23,8 @@ export class AccountInformationComponent implements OnInit {
 
   getMt5Infor() {
     this.withdrawRequestService.getmt5Infor().subscribe(response => {
-      if (response.status === 200) {
-        this.listAccountInfor = response.body.data;
+      if (response.meta.code === 200) {
+        this.listAccountInfor = response.data;
 
       }
     });
