@@ -5,7 +5,13 @@ import { Observable } from 'rxjs/internal/Observable';
 import { InnerSubscriber } from 'rxjs/internal/InnerSubscriber';
 import { EnvConfigService } from './env-config.service';
 import { catchError } from 'rxjs/operators';
-import { WithdrawRequestModel, WithdrawHistoryModel, WithdrawAmount, DrawHistoryID, DrawPost } from '../model/withdraw-request-response.model';
+import {
+  WithdrawRequestModel,
+  WithdrawHistoryModel,
+  WithdrawAmount,
+  TransactionResponse,
+  WithdrawHistory
+} from '../model/withdraw-request-response.model';
 
 
 @Injectable({
@@ -18,7 +24,7 @@ export class WithdrawRequestService {
 
   getmt5Infor(): Observable<WithdrawRequestModel> {
     return this.httpClient
-      .get(`${this.envConfigService.getConfig()}/${AppSettings.API_MT5_INFOR}/`)
+      .get(`${this.envConfigService.getConfig()}/${AppSettings.API_MT5_INFOR}`)
       .pipe(
         catchError((error: HttpErrorResponse) => {
           return new Observable((observer: InnerSubscriber<any, any>) => {
@@ -30,7 +36,7 @@ export class WithdrawRequestService {
 
   getBankInfor(): Observable<WithdrawHistoryModel> {
     return this.httpClient
-      .get(`${this.envConfigService.getConfig()}/${AppSettings.API_BANK_INFOR}/`)
+      .get(`${this.envConfigService.getConfig()}/${AppSettings.API_BANK_INFOR}`)
       .pipe(
         catchError((error: HttpErrorResponse) => {
           return new Observable((observer: InnerSubscriber<any, any>) => {
@@ -42,7 +48,7 @@ export class WithdrawRequestService {
 
   getDwAmount(): Observable<WithdrawAmount> {
     return this.httpClient
-      .get(`${this.envConfigService.getConfig()}/${AppSettings.API_DW_AMOUNT}/`)
+      .get(`${this.envConfigService.getConfig()}/${AppSettings.API_DW_AMOUNT}`)
       .pipe(
         catchError((error: HttpErrorResponse) => {
           return new Observable((observer: InnerSubscriber<any, any>) => {
@@ -52,9 +58,9 @@ export class WithdrawRequestService {
       );
   }
 
-  postWithdraw(params: any): Observable<DrawPost> {
+  postWithdraw(params: any): Observable<TransactionResponse> {
     return this.httpClient
-      .post(`${this.envConfigService.getConfig()}/${AppSettings.API_WITHDRAW}/`, params)
+      .post(`${this.envConfigService.getConfig()}/${AppSettings.API_WITHDRAW}`, params)
       .pipe(
         catchError((error: HttpErrorResponse) => {
           return new Observable((observer: InnerSubscriber<any, any>) => {
@@ -64,9 +70,9 @@ export class WithdrawRequestService {
       );
   }
 
-  getDwHistory(): Observable<DrawHistoryID> {
+  getDwHistory(): Observable<WithdrawHistory> {
     return this.httpClient
-      .get(`${this.envConfigService.getConfig()}/${AppSettings.API_WD_HISTORY}/`)
+      .get(`${this.envConfigService.getConfig()}/${AppSettings.API_WD_HISTORY}`)
       .pipe(
         catchError((error: HttpErrorResponse) => {
           return new Observable((observer: InnerSubscriber<any, any>) => {

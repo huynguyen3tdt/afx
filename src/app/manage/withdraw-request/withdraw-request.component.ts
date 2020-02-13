@@ -3,6 +3,7 @@ import { WithdrawRequestService } from 'src/app/core/services/withdraw-request.s
 // import { ACCOUNT_TYPE } from 'src/app/core/constant/authen-constant';
 import { FormGroup, FormControl } from '@angular/forms';
 import { requiredInput } from 'src/app/core/helper/custom-validate.helper';
+import { BankInforModel } from 'src/app/core/model/withdraw-request-response.model';
 
 @Component({
   selector: 'app-withdraw-request',
@@ -11,13 +12,13 @@ import { requiredInput } from 'src/app/core/helper/custom-validate.helper';
 })
 export class WithdrawRequestComponent implements OnInit {
 
-  public listMt5Infor;
-  public accountType;
-  public listBankInfor;
-  public listDwAmount;
-  public withdrawForm: FormGroup;
-  public isSubmitted;
-  public listDwHistory;
+  listMt5Infor;
+  accountType;
+  listBankInfor: BankInforModel;
+  listDwAmount;
+  withdrawForm: FormGroup;
+  isSubmitted;
+  listDwHistory;
 
   constructor(private withdrawRequestService: WithdrawRequestService, ) { }
 

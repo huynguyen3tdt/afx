@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { WithdrawRequestService } from 'src/app/core/services/withdraw-request.service';
 import { FormGroup, FormControl } from '@angular/forms';
 import { requiredInput } from 'src/app/core/helper/custom-validate.helper';
+import { TransactionModel, BankInforModel } from 'src/app/core/model/withdraw-request-response.model';
 
 @Component({
   selector: 'app-withdraw-history',
@@ -10,12 +11,12 @@ import { requiredInput } from 'src/app/core/helper/custom-validate.helper';
 })
 export class WithdrawHistoryComponent implements OnInit {
 
-  public listBankInfor;
-  public listDwHistory;
-  public searchForm: FormGroup;
-  public isSubmitted;
-  public fromDate: Date = new Date();
-  public toDate: Date = new Date();
+  listBankInfor: BankInforModel;
+  listDwHistory: Array<TransactionModel>;
+  searchForm: FormGroup;
+  isSubmitted;
+  fromDate: Date = new Date();
+  toDate: Date = new Date();
 
   constructor(private withdrawRequestService: WithdrawRequestService, ) { }
 
