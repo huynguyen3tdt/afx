@@ -8,5 +8,8 @@ export class AppSettings {
     public static API_BANK_INFOR                = `api/${versionAPI}/withdraws/bank_infor/`;
     public static API_DW_AMOUNT                 = `api/${versionAPI}/users/dw_amount/`;
     public static API_WITHDRAW                  = `api/${versionAPI}/withdraws/`;
-    public static API_WD_HISTORY          = `api/${versionAPI}/reports/tran_history/`;
+    public static API_WD_HISTORY                = `api/${versionAPI}/reports/tran_history/`;
+    public static API_GET_LIST_NOTIFICATIONS    = `api/${versionAPI}/news/notifications/`;
+    public static API_CHANGE_READ_STATUS        = `api/${versionAPI}/news/notification/status/`;
+    public static API_CHANGE_AGREEMENT_STATUS   = `api/${versionAPI}/news/notification/agreement/`;
 }
