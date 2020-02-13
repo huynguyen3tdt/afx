@@ -78,7 +78,7 @@ export class WithdrawRequestComponent implements OnInit {
       if (response.status === 200) {
         this.listDwAmount = response.body.data;
 
-        this.withdrawForm.controls['amount'].setValue(this.listDwAmount.withdraw_amount.toString());
+        this.withdrawForm.controls.amount.setValue(this.listDwAmount.withdraw_amount.toString());
       }
     });
   }
