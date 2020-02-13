@@ -45,7 +45,7 @@ export interface Mt5Model {
   lastest_time: string;
   unrealize_pl: number;
   currency: string;
-};
+}
 
 export interface BankInforModel {
   id: number;
@@ -55,7 +55,7 @@ export interface BankInforModel {
   swift_code: number;
   branch_number: string;
   currency: string;
-};
+}
 
 export interface TransactionModel {
     id: number;
