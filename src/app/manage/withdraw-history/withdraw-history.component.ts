@@ -9,18 +9,26 @@ import { WithdrawRequestService } from 'src/app/core/services/withdraw-request.s
 export class WithdrawHistoryComponent implements OnInit {
 
   public listBankInfor;
+  public listDwHistory;
 
   constructor(private withdrawRequestService: WithdrawRequestService, ) { }
 
   ngOnInit() {
-    this.getBankInfor()
+    this.getBankInfor();
+    this.getDwHistory();
   }
   getBankInfor() {
     this.withdrawRequestService.getBankInfor().subscribe(response => {
       if (response.status === 200) {
         this.listBankInfor = response.body.data;
-        console.log('111', this.listBankInfor );
 
+      }
+    });
+  }
+  getDwHistory() {
+    this.withdrawRequestService.getDwHistory().subscribe(response => {
+      if (response.status === 200) {
+        this.listDwHistory = response.body.data.results;
 
       }
     });

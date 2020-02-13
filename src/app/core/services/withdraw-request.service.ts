@@ -27,9 +27,48 @@ export class WithdrawRequestService {
         })
       );
   }
+
   getBankInfor(): Observable<any> {
     return this.httpClient
       .get(`${this.envConfigService.getConfig()}/${AppSettings.API_BANK_INFOR}/`,
+        { observe: 'response' })
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          return new Observable((observer: InnerSubscriber<any, any>) => {
+            observer.next(error);
+          });
+        })
+      );
+  }
+
+  getDwAmount(): Observable<any> {
+    return this.httpClient
+      .get(`${this.envConfigService.getConfig()}/${AppSettings.API_DW_AMOUNT}/`,
+        { observe: 'response' })
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          return new Observable((observer: InnerSubscriber<any, any>) => {
+            observer.next(error);
+          });
+        })
+      );
+  }
+
+  postWithdraw(params: any): Observable<any> {
+    return this.httpClient
+      .post(`${this.envConfigService.getConfig()}/${AppSettings.API_WITHDRAW}/`, params, { observe: 'response' })
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          return new Observable((observer: InnerSubscriber<any, any>) => {
+            observer.next(error);
+          });
+        })
+      );
+  }
+
+  getDwHistory(): Observable<any> {
+    return this.httpClient
+      .get(`${this.envConfigService.getConfig()}/${AppSettings.API_WD_HISTORY}/`,
         { observe: 'response' })
       .pipe(
         catchError((error: HttpErrorResponse) => {

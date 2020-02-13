@@ -43,96 +43,16 @@
                               </tr>
                           </thead>
                           <tbody>
-                              <tr>
-                                  <td><a href="javascript:;">109517140</a></td>
-                                  <td>2020/01/17  08:30</td>
-                                  <td>Deposit</td>
-                                  <td>Deposit from HSBC</td>
-                                  <td class="text-right">JPY</td>
-                                  <td class="text-right">20,000</td>
+                              <tr *ngFor="let item of listDwHistory">
+                                  <td><a href="javascript:;">{{item?.transaction_id}}</a></td>
+                                  <td>{{item?.transaction_date | date:'yyyy/MM/dd'}} {{item?.transaction_date | date:'HH:mm'}}</td>
+                                  <td>{{item?.type}}</td>
+                                  <td>{{item?.description}}</td>
+                                  <td class="text-right">{{item?.currency}}</td>
+                                  <td class="text-right">{{item?.amount}}</td>
                                   <td class="text-right"><span class="text-info"><i class="icon ion-md-hourglass"></i> Pending</span></td>
                               </tr>
-                              <tr>
-                                  <td><a href="javascript:;">109506680</a></td>
-                                  <td>2020/01/17  06:39</td>
-                                  <td>Deposit</td>
-                                  <td>Deposit from Japan Net Bank</td>
-                                  <td class="text-right">JPY</td>
-                                  <td class="text-right">100,000</td>
-                                  <td class="text-right"><span class="text-success"><i class="icon ion-md-checkmark"></i> Completed</span></td>
-                              </tr>
-                              <tr>
-                                  <td><a href="javascript:;">109425298</a></td>
-                                  <td>2020/01/17 08:30</td>
-                                  <td>Withdrawal</td>
-                                  <td>Withdraw to Japan Net Bank</td>
-                                  <td class="text-right">JPY</td>
-                                  <td class="text-right">-80,000</td>
-                                  <td class="text-right"><span class="text-info"><i class="icon ion-md-hourglass"></i> Pending</span></td>
-                              </tr>
-                              <tr>
-                                  <td><a href="javascript:;">109425119</a></td>
-                                  <td>2020/01/17  06:39</td>
-                                  <td>Withdrawal</td>
-                                  <td>Withdraw to Japan Net Bank</td>
-                                  <td class="text-right">JPY</td>
-                                  <td class="text-right">-10,000</td>
-                                  <td class="text-right"><span class="text-success"><i class="icon ion-md-checkmark"></i> Completed</span></td>
-                              </tr>
-                              <tr>
-                                  <td><a href="javascript:;">109402589</a></td>
-                                  <td>2020/01/17  06:39</td>
-                                  <td>Deposit</td>
-                                  <td>Deposit from Japan Net Bank</td>
-                                  <td class="text-right">JPY</td>
-                                  <td class="text-right">258,000</td>
-                                  <td class="text-right"><span class="text-success"><i class="icon ion-md-checkmark"></i> Completed</span></td>
-                              </tr>
-                               <tr>
-                                  <td><a href="javascript:;">109402589</a></td>
-                                  <td>2020/01/17  06:39</td>
-                                  <td>Deposit</td>
-                                  <td>Deposit from Japan Net Bank</td>
-                                  <td class="text-right">JPY</td>
-                                  <td class="text-right">258,000</td>
-                                  <td class="text-right"><span class="text-success"><i class="icon ion-md-checkmark"></i> Completed</span></td>
-                              </tr>
-                               <tr>
-                                  <td><a href="javascript:;">109402589</a></td>
-                                  <td>2020/01/17  06:39</td>
-                                  <td>Deposit</td>
-                                  <td>Deposit from Japan Net Bank</td>
-                                  <td class="text-right">JPY</td>
-                                  <td class="text-right">258,000</td>
-                                  <td class="text-right"><span class="text-success"><i class="icon ion-md-checkmark"></i> Completed</span></td>
-                              </tr>
-                               <tr>
-                                  <td><a href="javascript:;">109402589</a></td>
-                                  <td>2020/01/17  06:39</td>
-                                  <td>Deposit</td>
-                                  <td>Deposit from Japan Net Bank</td>
-                                  <td class="text-right">JPY</td>
-                                  <td class="text-right">258,000</td>
-                                  <td class="text-right"><span class="text-success"><i class="icon ion-md-checkmark"></i> Completed</span></td>
-                              </tr>
-                               <tr>
-                                  <td><a href="javascript:;">109402589</a></td>
-                                  <td>2020/01/17  06:39</td>
-                                  <td>Deposit</td>
-                                  <td>Deposit from Japan Net Bank</td>
-                                  <td class="text-right">JPY</td>
-                                  <td class="text-right">258,000</td>
-                                  <td class="text-right"><span class="text-success"><i class="icon ion-md-checkmark"></i> Completed</span></td>
-                              </tr>
-                               <tr>
-                                  <td><a href="javascript:;">109402589</a></td>
-                                  <td>2020/01/17  06:39</td>
-                                  <td>Deposit</td>
-                                  <td>Deposit from Japan Net Bank</td>
-                                  <td class="text-right">JPY</td>
-                                  <td class="text-right">258,000</td>
-                                  <td class="text-right"><span class="text-success"><i class="icon ion-md-checkmark"></i> Completed</span></td>
-                              </tr>
+
                           </tbody>
                       </table>
                   </div>
