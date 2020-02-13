@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LoginComponent } from './login.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
 import { REMEMBER_LOGIN } from 'src/app/core/constant/authen-constant';
@@ -10,6 +10,9 @@ import { NotificationsComponent } from 'src/app/manage/notifications/notificatio
 import { Router } from '@angular/router';
 import { By } from '@angular/platform-browser';
 import { EnvConfigService } from 'src/app/core/services/env-config.service';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { PaginationModule } from 'ngx-bootstrap';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -21,16 +24,19 @@ describe('LoginComponent', () => {
       declarations: [LoginComponent, NotificationsComponent],
       imports: [
         ReactiveFormsModule,
+        FormsModule,
         RouterTestingModule.withRoutes([
           {path: 'manage/notifications', component: NotificationsComponent}
         ]),
-        HttpClientModule
+        HttpClientModule,
+        PaginationModule
       ],
       providers: [
         AuthenService,
         EnvConfigService,
         { provide: Router, useValue: router}
       ],
+    schemas: [NO_ERRORS_SCHEMA],
     })
       .compileComponents();
   }));

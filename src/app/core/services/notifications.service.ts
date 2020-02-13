@@ -1,24 +1,41 @@
 import { Injectable } from '@angular/core';
-import { AppSettings } from './api.setting';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/internal/Observable';
 import { InnerSubscriber } from 'rxjs/internal/InnerSubscriber';
 import { EnvConfigService } from './env-config.service';
 import { catchError } from 'rxjs/operators';
-import { LoginResponseModel } from '../model/login-response.model';
-import { ResponseWihtoutDataModel } from '../model/none-data-response.model';
+import { PageNotificationResponse, NotificationStatusResponse, NotificationResponse } from '../model/page-noti.model';
+import { AppSettings } from './api.setting';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthenService {
+export class NotificationsService {
+
   constructor(
     private httpClient: HttpClient,
-    private envConfigService: EnvConfigService) {}
+    private envConfigService: EnvConfigService) { }
 
-  login(param): Observable<LoginResponseModel> {
+  getListNotifications(pageSize: number, pageNumber: number, type?: number): Observable<PageNotificationResponse> {
+    let URL = '';
+    if (type !== -1) {
+      URL = `?type=${type}&page_size=${pageSize}?page_numb=${pageNumber}`;
+    } else {
+      URL = `?page_size=${pageSize}?page_numb=${pageNumber}`;
+    }
+    return this.httpClient.get(`${this.envConfigService.getConfig()}/${AppSettings.API_GET_LIST_NOTIFICATIONS}` + URL)
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          return new Observable((observer: InnerSubscriber<any, any>) => {
+            observer.next(error);
+          });
+        })
+      );
+  }
+
+  changeReadStatus(param): Observable<NotificationStatusResponse> {
     return this.httpClient
-      .post(`${this.envConfigService.getConfig()}/${AppSettings.API_LOGIN}`,
+      .put(`${this.envConfigService.getConfig()}/${AppSettings.API_CHANGE_READ_STATUS}`,
         param)
       .pipe(
         catchError((error: HttpErrorResponse) => {
@@ -29,21 +46,10 @@ export class AuthenService {
       );
   }
 
-  logout(): Observable<ResponseWihtoutDataModel> {
+  changeAgreementStatus(param): Observable<NotificationResponse> {
     return this.httpClient
-      .post(`${this.envConfigService.getConfig()}/${AppSettings.API_LOGOUT}`, {})
-      .pipe(
-        catchError((error: HttpErrorResponse) => {
-          return new Observable((observer: InnerSubscriber<any, any>) => {
-            observer.next(error);
-          });
-        })
-      );
-  }
-
-  forgotPassWord(param): Observable<ResponseWihtoutDataModel> {
-    return this.httpClient
-      .post(`${this.envConfigService.getConfig()}/${AppSettings.API_FORGOT_PASSWORD}`, param)
+      .put(`${this.envConfigService.getConfig()}/${AppSettings.API_CHANGE_AGREEMENT_STATUS}`,
+        param)
       .pipe(
         catchError((error: HttpErrorResponse) => {
           return new Observable((observer: InnerSubscriber<any, any>) => {

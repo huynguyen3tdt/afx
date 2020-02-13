@@ -34,7 +34,6 @@ export class HeaderComponent implements OnInit {
   layout_setup() {
     function offcanvas_subnav() {
       $('.nav.offcanvas-nav > .nav-item.has-child > .nav-link > .toggle').click(() => {
-        event.preventDefault();
         $(this).parents('.nav-item.has-child').toggleClass('opened');
       });
     }
