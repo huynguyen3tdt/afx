@@ -10,6 +10,9 @@ import { NotificationsComponent } from 'src/app/manage/notifications/notificatio
 import { Router } from '@angular/router';
 import { By } from '@angular/platform-browser';
 import { EnvConfigService } from 'src/app/core/services/env-config.service';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { PaginationModule } from 'ngx-bootstrap';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -25,13 +28,15 @@ describe('LoginComponent', () => {
         RouterTestingModule.withRoutes([
           {path: 'manage/notifications', component: NotificationsComponent}
         ]),
-        HttpClientModule
+        HttpClientModule,
+        PaginationModule
       ],
       providers: [
         AuthenService,
         EnvConfigService,
         { provide: Router, useValue: router}
       ],
+    schemas: [NO_ERRORS_SCHEMA],
     })
       .compileComponents();
   }));

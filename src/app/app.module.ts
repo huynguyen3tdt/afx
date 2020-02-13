@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, APP_INITIALIZER, ModuleWithProviders, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NgModule, APP_INITIALIZER, ModuleWithProviders } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { EnvConfigService } from 'src/app/core/services/env-config.service';

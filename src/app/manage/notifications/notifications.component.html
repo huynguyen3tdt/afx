@@ -1,321 +1,164 @@
 <div class="container">
-  <nav aria-label="breadcrumb">
-      <ol class="breadcrumb">
-          <li class="breadcrumb-item" aria-current="page"><a href="javascript:;">Dashboard</a></li>
-          <li class="breadcrumb-item active" aria-current="page">Notifications</li>
-      </ol>
-  </nav>
-  <div class="content-wrapper">
-      <div class="content-inner">
-          <div class="row">
-              <div class="col-md-3 col-lg-2">
-                  <div class="nav flex-md-column nav-pills mb-3 filter-nav" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                      <a class="nav-link active" id="v-pills-all-tab" data-toggle="pill" href="#v-pills-all" role="tab" aria-controls="v-pills-all" aria-selected="true">All</a>
-                      <a class="nav-link" id="v-pills-important-tab" data-toggle="pill" href="#v-pills-important" role="tab" aria-controls="v-pills-important" aria-selected="false">Important</a>
-                      <a class="nav-link" id="v-pills-notifications-tab" data-toggle="pill" href="#v-pills-notifications" role="tab" aria-controls="v-pills-notifications" aria-selected="false">Notifications</a>
-                      <a class="nav-link" id="v-pills-campaign-tab" data-toggle="pill" href="#v-pills-campaign" role="tab" aria-controls="v-pills-campaign" aria-selected="false">Campaign</a>
-                  </div>
-              </div>
-              <div class="col-md-9 col-lg-10">
-                  <div class="tab-content" id="v-pills-tabContent">
-                      <div class="tab-pane fade show active" id="v-pills-all" role="tabpanel" aria-labelledby="v-pills-all-tab">
-                          <h4><strong>All</strong> Notifications</h4>
-                          <div class="list-notifications">
-                              <!-- BEGIn Item -->
-                              <div class="notification-item unread test">
-                                  <div class="badge-wrap">
-                                      <span class="badge badge-danger d-lg-block mb-lg-1">Important</span>
-                                      <span class="badge badge-warning d-lg-block mb-lg-1">System</span>
-                                  </div>
-                                  <div class="item-header" (click)="showDetail()">
-                                      <h5 class="item-title"><a href="javascript:;">The pre-contract document has been updated.</a></h5>
-                                      <div class="item-meta">2020/01/17</div>
-                                  </div>
-                                  <div class="item-content">
-                                      <p>Dear Clients,</p>
-                                      <p>On the basis of point 11.19 of the Regulations on the provision of services (Regulation), we inform you that in connection with the delisting of underlying instruments, FX International Limited withdrew from the offer following Stock CFDs: ETO.UK, CRZO.US, PCM.PL</p>
-                                      <p>FX International Limited withdrew from the offer following Stock CFDs: ETO.UK, CRZO.US, PCM.PL</p>
-                                      <p>FX</p>
-                                      <div class="mb-1"><span class="badge badge-danger small">Important</span> <span class="badge badge-warning small">system</span></div>
-                                  </div>
-                              </div><!-- END Item -->
-                              <!-- BEGIn Item -->
-                              <div class="notification-item unread">
-                                  <div class="badge-wrap">
-                                      <span class="badge badge-warning d-lg-block mb-lg-1">System</span>
-                                  </div>
-                                  <div class="item-header">
-                                      <h5 class="item-title"><a href="javascript:;">Technical maintenance</a></h5>
-                                      <div class="item-meta">2020/01/17</div>
-                                  </div>
-                                  <div class="item-content">
-                                      <p>Dear Clients,</p>
-                                      <p>Gay one the what walk then she. Demesne mention promise you justice arrived way. Or increasing to in especially inquietude companions acceptance admiration. Outweigh it families distance wandered ye an. Mr unsatiable at literature connection favourable. We neglected mr perfectly continual dependent. </p>
-                                      <p>Perpetual sincerity out suspected necessary one but provision satisfied. Respect nothing use set waiting pursuit nay you looking. If on prevailed concluded ye abilities. Address say you new but minuter greater. Do denied agreed in innate. Can and middletons thoroughly themselves him. Tolerably sportsmen belonging in september no am immediate newspaper. Theirs expect dinner it pretty indeed having no of. Principle september she conveying did eat may extensive. </p>
-                                      <p>Unpleasant astonished an diminution up partiality. Noisy an their of meant. Death means up civil do an offer wound of. Called square an in afraid direct. Resolution diminution conviction so mr at unpleasing simplicity no. No it as breakfast up conveying earnestly immediate principle. Him son disposed produced humoured overcame she bachelor improved. Studied however out wishing but inhabit fortune windows. </p>
-                                      <p>FX</p>
-                                  </div>
-                              </div><!-- END Item -->
-                              <!-- BEGIn Item -->
-                              <div class="notification-item unread">
-                                  <div class="badge-wrap">
-                                      <span class="badge badge-warning d-lg-block mb-lg-1">System</span>
-                                  </div>
-                                  <div class="item-header">
-                                      <h5 class="item-title"><a href="javascript:;">Delisting ISAT.UK, VIAB.US</a></h5>
-                                      <div class="item-meta">2020/01/17</div>
-                                  </div>
-                                  <div class="item-content">
-                                      <p>Dear Clients,</p>
-                                      <p>FX</p>
-                                      <div class="mb-1"><span class="badge badge-warning small">System</span> <span class="badge badge-success small">Campaign</span></div>
-                                  </div>
-                              </div><!-- END Item -->
-                              <!-- BEGIn Item -->
-                              <div class="notification-item">
-                                  <div class="badge-wrap">
-                                      <span class="badge badge-danger d-lg-block mb-lg-1">Important</span>
-                                  </div>
-                                  <div class="item-header">
-                                      <h5 class="item-title"><a href="javascript:;">The pre-contract document has been updated.</a></h5>
-                                      <div class="item-meta"><span class="d-block d-md-inline">08:20</span> <span class="d-block d-md-inline">2020/01/17</span></div>
-                                  </div>
-                                  <div class="item-content">
-                                      <p>Dear Clients,</p>
-                                      <p>FX</p>
-                                  </div>
-                              </div><!-- END Item -->
-                              <!-- BEGIn Item -->
-                              <div class="notification-item">
-                                  <div class="badge-wrap">
-                                      <span class="badge badge-success d-lg-block mb-lg-1">Campaign</span>
-                                  </div>
-                                  <div class="item-header">
-                                      <h5 class="item-title"><a href="javascript:;">Cashback 100%</a></h5>
-                                      <div class="item-meta">2020/01/17</div>
-                                  </div>
-                                  <div class="item-content">
-                                      <p>Dear Clients,</p>
-                                      <p>FX</p>
-                                  </div>
-                              </div><!-- END Item -->
-                              <!-- BEGIn Item -->
-                              <div class="notification-item">
-                                  <div class="badge-wrap">
-                                      <span class="badge badge-danger d-lg-block mb-lg-1">Important</span>
-                                  </div>
-                                  <div class="item-header">
-                                      <h5 class="item-title"><a href="javascript:;">The pre-contract document has been updated.</a></h5>
-                                      <div class="item-meta">2020/01/17</div>
-                                  </div>
-                                  <div class="item-content">
-                                      <p>Dear Clients,</p>
-                                      <p>On the basis of point 11.19 of the Regulations on the provision of services (Regulation), we inform you that in connection with the delisting of underlying instruments, FX International Limited withdrew from the offer following Stock CFDs: ETO.UK, CRZO.US, PCM.PL</p>
-                                      <p>FX International Limited withdrew from the offer following Stock CFDs: ETO.UK, CRZO.US, PCM.PL</p>
-                                      <p>FX</p>
-                                      <div class="mb-1"><span class="badge badge-danger small">Important</span> <span class="badge badge-warning small">system</span></div>
-                                  </div>
-                              </div><!-- END Item -->
-                              <!-- BEGIn Item -->
-                              <div class="notification-item">
-                                  <div class="badge-wrap">
-                                      <span class="badge badge-warning d-lg-block mb-lg-1">System</span>
-                                  </div>
-                                  <div class="item-header">
-                                      <h5 class="item-title"><a href="javascript:;">Technical maintenance</a></h5>
-                                      <div class="item-meta">2020/01/17</div>
-                                  </div>
-                                  <div class="item-content">
-                                      <p>Dear Clients,</p>
-                                      <p>Gay one the what walk then she. Demesne mention promise you justice arrived way. Or increasing to in especially inquietude companions acceptance admiration. Outweigh it families distance wandered ye an. Mr unsatiable at literature connection favourable. We neglected mr perfectly continual dependent. </p>
-                                      <p>Perpetual sincerity out suspected necessary one but provision satisfied. Respect nothing use set waiting pursuit nay you looking. If on prevailed concluded ye abilities. Address say you new but minuter greater. Do denied agreed in innate. Can and middletons thoroughly themselves him. Tolerably sportsmen belonging in september no am immediate newspaper. Theirs expect dinner it pretty indeed having no of. Principle september she conveying did eat may extensive. </p>
-                                      <p>Unpleasant astonished an diminution up partiality. Noisy an their of meant. Death means up civil do an offer wound of. Called square an in afraid direct. Resolution diminution conviction so mr at unpleasing simplicity no. No it as breakfast up conveying earnestly immediate principle. Him son disposed produced humoured overcame she bachelor improved. Studied however out wishing but inhabit fortune windows. </p>
-                                      <p>FX</p>
-                                  </div>
-                              </div><!-- END Item -->
-                              <!-- BEGIn Item -->
-                              <div class="notification-item">
-                                  <div class="badge-wrap">
-                                      <span class="badge badge-warning d-lg-block mb-lg-1">System</span>
-                                  </div>
-                                  <div class="item-header">
-                                      <h5 class="item-title"><a href="javascript:;">Delisting ISAT.UK, VIAB.US</a></h5>
-                                      <div class="item-meta">2020/01/17</div>
-                                  </div>
-                                  <div class="item-content">
-                                      <p>Dear Clients,</p>
-                                      <p>FX</p>
-                                      <div class="mb-1"><span class="badge badge-warning small">System</span> <span class="badge badge-success small">Campaign</span></div>
-                                  </div>
-                              </div><!-- END Item -->
-                              <!-- BEGIn Item -->
-                              <div class="notification-item">
-                                  <div class="badge-wrap">
-                                       <span class="badge badge-danger d-lg-block mb-lg-1">Important</span>
-                                  </div>
-                                  <div class="item-header">
-                                      <h5 class="item-title"><a href="javascript:;">The pre-contract document has been updated.</a></h5>
-                                      <div class="item-meta">2020/01/17</div>
-                                  </div>
-                                  <div class="item-content">
-                                      <p>Dear Clients,</p>
-                                      <p>FX</p>
-                                  </div>
-                              </div><!-- END Item -->
-                              <!-- BEGIn Item -->
-                              <div class="notification-item">
-                                  <div class="badge-wrap">
-                                       <span class="badge badge-success d-lg-block mb-lg-1">Campaign</span>
-                                  </div>
-                                  <div class="item-header">
-                                      <h5 class="item-title"><a href="javascript:;">Cashback 100%</a></h5>
-                                      <div class="item-meta">2020/01/17</div>
-                                  </div>
-                                  <div class="item-content">
-                                      <p>Dear Clients,</p>
-                                      <p>FX</p>
-                                  </div>
-                              </div><!-- END Item -->
-                          </div>
-                          <nav class="border-top pt-3">
-                              <ul class="pagination pagination-sm justify-content-end">
-                                  <li class="page-item disabled">
-                                      <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
-                                  </li>
-                                  <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                  <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                  <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                  <li class="page-item">
-                                      <a class="page-link" href="#">Next</a>
-                                  </li>
-                              </ul>
-                          </nav>
-                      </div>
-                      <div class="tab-pane fade" id="v-pills-important" role="tabpanel" aria-labelledby="v-pills-important-tab">
-                          <h4><strong>Important</strong> Notifications</h4>
-                          <div class="list-notifications">
-                              <!-- BEGIn Item -->
-                              <div class="notification-item unread test">
-                                  <div class="badge-wrap">
-                                       <span class="badge badge-danger d-lg-block mb-lg-1">Important</span>
-                                  </div>
-                                  <div class="item-header">
-                                      <h5 class="item-title"><a href="javascript:;" (click)="showimportant()">The pre-contract document has been updated.</a></h5>
-                                      <div class="item-meta">2020/01/17</div>
-                                  </div>
-                                  <div class="item-content">
-                                      <p>Dear Clients,</p>
-                                      <p>On the basis of point 11.19 of the Regulations on the provision of services (Regulation), we inform you that in connection with the delisting of underlying instruments, FX International Limited withdrew from the offer following Stock CFDs: ETO.UK, CRZO.US, PCM.PL</p>
-                                      <p>FX International Limited withdrew from the offer following Stock CFDs: ETO.UK, CRZO.US, PCM.PL</p>
-                                      <p>FX</p>
-                                      <div class="mb-1"><span class="badge badge-danger small">Important</span> <span class="badge badge-warning small">system</span></div>
-                                  </div>
-                              </div><!-- END Item -->
-                              <!-- BEGIn Item -->
-                              <div class="notification-item item-agreement unread">
-                                  <div class="badge-wrap">
-                                       <span class="badge badge-danger d-lg-block mb-lg-1">Important</span>
-                                  </div>
-                                  <div class="item-header">
-                                      <h5 class="item-title"><a href="javascript:;" data-toggle="modal" data-target="#modal-agreement">Agreement (Demo)</a></h5>
-                                      <div class="item-meta">2020/01/17</div>
-                                  </div>
-                              </div><!-- END Item -->
-                              <!-- BEGIn Item -->
-                              <div class="notification-item">
-                                  <div class="badge-wrap">
-                                       <span class="badge badge-danger d-lg-block mb-lg-1">Important</span>
-                                  </div>
-                                  <div class="item-header">
-                                      <h5 class="item-title"><a href="javascript:;">The pre-contract document has been updated.</a></h5>
-                                      <div class="item-meta">2020/01/17</div>
-                                  </div>
-                                  <div class="item-content">
-                                      <p>Dear Clients,</p>
-                                      <p>On the basis of point 11.19 of the Regulations on the provision of services (Regulation), we inform you that in connection with the delisting of underlying instruments, FX International Limited withdrew from the offer following Stock CFDs: ETO.UK, CRZO.US, PCM.PL</p>
-                                      <p>FX International Limited withdrew from the offer following Stock CFDs: ETO.UK, CRZO.US, PCM.PL</p>
-                                      <p>FX</p>
-                                      <div class="mb-1"><span class="badge badge-danger small">Important</span> <span class="badge badge-warning small">system</span></div>
-                                  </div>
-                              </div><!-- END Item -->
-                              <!-- BEGIn Item -->
-                              <div class="notification-item">
-                                  <div class="badge-wrap">
-                                       <span class="badge badge-danger d-lg-block mb-lg-1">Important</span>
-                                  </div>
-                                  <div class="item-header">
-                                      <h5 class="item-title"><a href="javascript:;">The pre-contract document has been updated.</a></h5>
-                                      <div class="item-meta">2020/01/17</div>
-                                  </div>
-                                  <div class="item-content">
-                                      <p>Dear Clients,</p>
-                                      <p>On the basis of point 11.19 of the Regulations on the provision of services (Regulation), we inform you that in connection with the delisting of underlying instruments, FX International Limited withdrew from the offer following Stock CFDs: ETO.UK, CRZO.US, PCM.PL</p>
-                                      <p>FX International Limited withdrew from the offer following Stock CFDs: ETO.UK, CRZO.US, PCM.PL</p>
-                                      <p>FX</p>
-                                      <div class="mb-1"><span class="badge badge-danger small">Important</span> <span class="badge badge-warning small">system</span></div>
-                                  </div>
-                              </div><!-- END Item -->
-                              <!-- BEGIn Item -->
-                              <div class="notification-item">
-                                  <div class="badge-wrap">
-                                       <span class="badge badge-danger d-lg-block mb-lg-1">Important</span>
-                                  </div>
-                                  <div class="item-header">
-                                      <h5 class="item-title"><a href="javascript:;">The pre-contract document has been updated.</a></h5>
-                                      <div class="item-meta">2020/01/17</div>
-                                  </div>
-                                  <div class="item-content">
-                                      <p>Dear Clients,</p>
-                                      <p>On the basis of point 11.19 of the Regulations on the provision of services (Regulation), we inform you that in connection with the delisting of underlying instruments, FX International Limited withdrew from the offer following Stock CFDs: ETO.UK, CRZO.US, PCM.PL</p>
-                                      <p>FX International Limited withdrew from the offer following Stock CFDs: ETO.UK, CRZO.US, PCM.PL</p>
-                                      <p>FX</p>
-                                      <div class="mb-1"><span class="badge badge-danger small">Important</span> <span class="badge badge-warning small">system</span></div>
-                                  </div>
-                              </div><!-- END Item -->
-                          </div>
-                      </div>
-                      <div class="tab-pane fade" id="v-pills-notifications" role="tabpanel" aria-labelledby="v-pills-notifications-tab">
-                          <h4><strong>System</strong> Notifications</h4>
-                      </div>
-                      <div class="tab-pane fade" id="v-pills-campaign" role="tabpanel" aria-labelledby="v-pills-campaign-tab">
-                          <h4><strong>Campaign</strong> Notifications</h4>
-                      </div>
-                  </div>
-              </div>
-          </div>
-      </div>
-  </div>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item" aria-current="page"><a href="javascript:;">Dashboard</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Notifications</li>
+        </ol>
+    </nav>
+    <div class="content-wrapper">
+        <div class="content-inner">
+            <div class="row">
+                <div class="col-md-3 col-lg-2">
+                    <div class="nav flex-md-column nav-pills mb-3 filter-nav" id="v-pills-tab" role="tablist"
+                        aria-orientation="vertical">
+                        <a class="nav-link active" id="v-pills-all-tab" data-toggle="pill" href="#v-pills-all"
+                            (click)="getListNotifications(pageSize,1, -1)" role="tab" aria-controls="v-pills-all"
+                            aria-selected="true">All</a>
+                        <a class="nav-link" id="v-pills-important-tab" data-toggle="pill" href="#v-pills-important" #importantTab
+                            (click)="getListNotifications(pageSize,1, 0)" role="tab" aria-controls="v-pills-important"
+                            aria-selected="false">Important</a>
+                        <a class="nav-link" id="v-pills-notifications-tab" data-toggle="pill"
+                            href="#v-pills-notifications" role="tab" aria-controls="v-pills-notifications"
+                            aria-selected="false">Notifications</a>
+                        <a class="nav-link" id="v-pills-campaign-tab" data-toggle="pill" href="#v-pills-campaign"
+                            role="tab" aria-controls="v-pills-campaign" aria-selected="false">Campaign</a>
+                    </div>
+                </div>
+                <div class="col-md-9 col-lg-10">
+                    <div class="tab-content" id="v-pills-tabContent">
+                        <div class="tab-pane fade show active" id="v-pills-all" role="tabpanel"
+                            aria-labelledby="v-pills-all-tab">
+                            <h4><strong>All</strong> Notifications</h4>
+                            <div class="list-notifications">
+                                <ng-container *ngFor="let item of listNotification; let i = index">
+                                    <div (click)="showDetail(i, item)" id="noti_{{i}}"
+                                        [ngClass]="{'unread': item.is_read == 'true'}" class="notification-item">
+                                        <div class="badge-wrap">
+                                            <span *ngIf="item?.noti_type == 0 || item?.noti_type == 3"
+                                                class="badge badge-danger d-lg-block mb-lg-1">Important</span>
+                                            <span *ngIf="item?.noti_type == 1 || item?.noti_type == 3"
+                                                class="badge badge-warning d-lg-block mb-lg-1">System</span>
+                                            <span *ngIf="item?.noti_type == 2"
+                                                class="badge badge-success d-lg-block mb-lg-1">Campaign</span>
+                                        </div>
+                                        <div class="item-header">
+                                            <h5 class="item-title"><a href="javascript:;">{{item?.title}}</a></h5>
+                                            <div class="item-meta">{{item?.date_time}}</div>
+                                        </div>
+                                        <div class="item-content" [innerHTML]="item?.content">
+                                        </div>
+                                    </div>
+                                </ng-container>
+                            </div>
+                            <nav class="border-top pt-3">
+                                <pagination [(ngModel)]="currentPage" id="pagination" appPagination
+                                    class="pagination pagination-sm justify-content-end"
+                                    (pageChanged)="pageChanged($event)" [totalItems]="totalItem / pageSize"
+                                    [maxSize]="5">
+                                </pagination>
+                            </nav>
+                        </div>
+                        <div class="tab-pane fade" id="v-pills-important" role="tabpanel"
+                            aria-labelledby="v-pills-important-tab">
+                            <h4><strong>Important</strong> Notifications</h4>
+                            <div class="list-notifications">
+                                <ng-container *ngFor="let item of listNotification; let i = index">
+                                    <div *ngIf="item.is_agreement == 'true'" (click)="showDetail(i, item)"
+                                        id="important_{{i}}" [ngClass]="{'unread': item.is_read == 'true'}"
+                                        class="notification-item">
+                                        <div class="badge-wrap">
+                                            <span class="badge badge-danger d-lg-block mb-lg-1">Important</span>
+                                        </div>
+                                        <div class="item-header">
+                                            <h5 class="item-title"><a href="javascript:;">{{item?.title}}</a></h5>
+                                            <div class="item-meta">{{item?.date_time}}</div>
+                                        </div>
+                                        <div class="item-content" [innerHTML]="item?.content">
+                                        </div>
+                                    </div>
+                                    <div *ngIf="item.is_agreement == 'false'" (click)="showDetail(i, item)"
+                                        [ngClass]="{'unread': item.is_read == 'true'}" id="important_{{i}}"
+                                        class="notification-item item-agreement">
+                                        <div class="badge-wrap">
+                                            <span class="badge badge-danger d-lg-block mb-lg-1">Important</span>
+                                        </div>
+                                        <div class="item-header">
+                                            <h5 class="item-title"><a href="javascript:;">{{item?.title}}</a></h5>
+                                            <div class="item-meta">{{item?.date_time}}</div>
+                                        </div>
+                                    </div>
+                                </ng-container>
+                            </div>
+                            <nav class="border-top pt-3">
+                                <pagination [(ngModel)]="currentPage" id="pagination" appPagination
+                                    class="pagination pagination-sm justify-content-end"
+                                    (pageChanged)="pageChanged($event)" [totalItems]="totalItem / pageSize"
+                                    [maxSize]="5">
+                                </pagination>
+                            </nav>
+                        </div>
+                        <div class="tab-pane fade" id="v-pills-notifications" role="tabpanel"
+                            aria-labelledby="v-pills-notifications-tab">
+                            <h4><strong>System</strong> Notifications</h4>
+                        </div>
+                        <div class="tab-pane fade" id="v-pills-campaign" role="tabpanel"
+                            aria-labelledby="v-pills-campaign-tab">
+                            <h4><strong>Campaign</strong> Notifications</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<div class="modal" id="modal-agreement" tabindex="-1" role="dialog" aria-labelledby="agreementTitle" aria-hidden="true" data-backdrop="static">
-  <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg" role="document">
-      <div class="modal-content">
-          <div class="modal-header pt-2 pb-2">
-              <h5 class="modal-title text-uppercase text-primary" id="agreementTitle"><i class="icon ion-md-list-box"></i> <strong>Agreement</strong></h5>
-          </div>
-          <div class="modal-body bg-light">
-              <div class="small text-secondary"><i class="icon ion-md-time"></i>  <em>Last updated: 2020/01/10 11:29</em></div>
-              <p>Effects present letters inquiry no an removed or friends. Desire behind latter me though in. Supposing shameless am he engrossed up additions. My possible peculiar together to. Desire so better am cannot he up before points. Remember mistaken opinions it pleasure of debating. Court front maids forty if aware their at. Chicken use are pressed removed. </p>
-              <p>Mind what no by kept. Celebrated no he decisively thoroughly. Our asked sex point her she seems. New plenty she horses parish design you. Stuff sight equal of my woody. Him children bringing goodness suitable she entirely put far daughter. Yourself off its pleasant ecstatic now law. Ye their mirth seems of songs. Prospect out bed contempt separate. Her inquietude our shy yet sentiments collecting. Cottage fat beloved himself arrived old. Grave widow hours among him ﻿no you led. Power had these met least nor young. Yet match drift wrong his our. </p>
-              <p>Far curiosity incommode now led smallness allowance. Favour bed assure son things yet. She consisted consulted elsewhere happiness disposing household any old the. Widow downs you new shade drift hopes small. So otherwise commanded sweetness we improving. Instantly by daughters resembled unwilling principle so middleton. Fail most room even gone her end like. Comparison dissimilar unpleasant six compliment two unpleasing any add. Ashamed my company thought wishing colonel it prevent he in. Pretended residence are something far engrossed old off. </p>
-              <p>So insisted received is occasion advanced honoured. Among ready to which up. Attacks smiling and may out assured moments man nothing outward. Thrown any behind afford either the set depend one temper. Instrument melancholy in acceptance collecting frequently be if. Zealously now pronounce existence add you instantly say offending. Merry their far had widen was. Concerns no in expenses raillery formerly. </p>
-              <p>Boy desirous families prepared gay reserved add ecstatic say. Replied joy age visitor nothing cottage. Mrs door paid led loud sure easy read. Hastily at perhaps as neither or ye fertile tedious visitor. Use fine bed none call busy dull when. Quiet ought match my right by table means. Principles up do in me favourable affronting. Twenty mother denied effect we to do on. </p>
-              <p>Manor we shall merit by chief wound no or would. Oh towards between subject passage sending mention or it. Sight happy do burst fruit to woody begin at. Assurance perpetual he in oh determine as. The year paid met him does eyes same. Own marianne improved sociable not out. Thing do sight blush mr an. Celebrated am announcing delightful remarkably we in literature it solicitude. Design use say piqued any gay supply. Front sex match vexed her those great. </p>
-              <p>Cause dried no solid no an small so still widen. Ten weather evident smiling bed against she examine its. Rendered far opinions two yet moderate sex striking. Sufficient motionless compliment by stimulated assistance at. Convinced resolving extensive agreeable in it on as remainder. Cordially say affection met who propriety him. Are man she towards private weather pleased. In more part he lose need so want rank no. At bringing or he sensible pleasure. Prevent he parlors do waiting be females an message society. </p>
-              <p>Certain but she but shyness why cottage. Gay the put instrument sir entreaties affronting. Pretended exquisite see cordially the you. Weeks quiet do vexed or whose. Motionless if no to affronting imprudence no precaution. My indulged as disposal strongly attended. Parlors men express had private village man. Discovery moonlight recommend all one not. Indulged to answered prospect it bachelor is he bringing shutters. Pronounce forfeited mr direction oh he dashwoods ye unwilling. </p>
-              <p>Not him old music think his found enjoy merry. Listening acuteness dependent at or an. Apartments thoroughly unsatiable terminated sex how themselves. She are ten hours wrong walls stand early. Domestic perceive on an ladyship extended received do. Why jennings our whatever his learning gay perceive. Is against no he without subject. Bed connection unreserved preference partiality not unaffected. Years merit trees so think in hoped we as. </p>
-              <div class="small text-secondary"><i class="icon ion-md-time"></i>  <em>Last updated: 2020/01/10 11:29</em></div>
-          </div>
-          <div class="modal-footer pt-1 pb-1 d-flex justify-content-between align-items-center">
-              <div>
-                  <label class="container-checkbox mb-0">
-                      <div class="text-primary">I agree with the above terms </div>
-                      <input type="checkbox" name="agree" value="">
-                      <span class="checkmark"></span>
-                  </label>
+<div class="modal" id="agreementmd" tabindex="-1" role="dialog" aria-labelledby="agreementTitle" aria-hidden="true"
+    data-backdrop="static">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header pt-2 pb-2">
+                <h5 class="modal-title text-uppercase text-primary" id="agreementTitle"><i
+                        class="icon ion-md-list-box"></i> <strong>Agreement</strong></h5>
+                <button (click)="hideAgreementModal()" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body bg-light">
+                <div [innerHTML]="contentAgeement">
 
-              </div>
-              <button type="button" class="btn btn-secondary btn-confirm" data-dismiss="modal">Confirm</button>
-          </div>
-      </div>
-  </div>
+                </div>
+            </div>
+            <div  [formGroup]="formAgreement" class="modal-footer pt-1 pb-1 d-flex justify-content-between align-items-center">
+                <div>
+                    <label class="container-checkbox mb-0">
+                        <div class="text-primary">I agree with the above terms </div>
+                        <input formControlName="checkAgreement" type="checkbox"
+                            name="agree">
+                        <span class="checkmark"></span>
+                    </label>
+
+                </div>
+                <div>
+                    <button (click)="confirmAgreement()" type="button" 
+                    [className]="formAgreement?.controls?.checkAgreement?.value == false ? 'btn btn-secondary btn-confirm' : 'btn btn-secondary btn-success'"
+                        >Confirm</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
 </div>
+
+<div class="modal fade" id="notice_important" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true"
+    data-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <p class="mb-0"><i class="icon ion-md-alert text-danger" style="font-size: 48px;line-height: 1"></i></p>
+                <p>You are having <strong>{{pageNotification?.data?.results?.total_noti?.important}}</strong> important notification</p>
+                <button type="button" class="btn btn-sm btn-primary pl-4 pr-4" data-dismiss="modal">Ok</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng4-loading-spinner> </ng4-loading-spinner>
