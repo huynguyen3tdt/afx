@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { WithdrawRequestService } from 'src/app/core/services/withdraw-request.service';
-import { ACCOUNT_TYPE } from 'src/app/core/constant/authen-constant';
+// import { ACCOUNT_TYPE } from 'src/app/core/constant/authen-constant';
 import { FormGroup, FormControl } from '@angular/forms';
 import { requiredInput } from 'src/app/core/helper/custom-validate.helper';
 
@@ -59,7 +59,7 @@ export class WithdrawRequestComponent implements OnInit {
     this.withdrawRequestService.getmt5Infor().subscribe(response => {
       if (response.status === 200) {
         this.listMt5Infor = response.body.data;
-        this.accountType = localStorage.getItem(ACCOUNT_TYPE);
+        // this.accountType = localStorage.getItem(ACCOUNT_TYPE);
 
 
       }
@@ -90,4 +90,7 @@ export class WithdrawRequestComponent implements OnInit {
       }
     });
   }
+  onRefesh() {
+      this.getMt5Infor();
+    }
 }

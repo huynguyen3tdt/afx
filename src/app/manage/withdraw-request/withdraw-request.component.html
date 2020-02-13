@@ -12,7 +12,10 @@
           <div class="row">
             <div class="col-md-6 col-lg-7">
               <div class="p-3 border mb-3 form form-line bg-light">
-                <h5 class="text-primary mb-3">MT5 Infomation</h5>
+                <div class="d-flex justify-content-between mb-2">
+                  <h5 class="text-primary mb-0"><strong>MT5</strong> Information</h5>
+                  <div><a href="javascript:;" class="btn-link-24" (click)="onRefesh()"><span class="ml-1">Refesh</span> <i class="icon ion-md-refresh-circle"></i></a></div>
+                </div>
                 <div class="mb-1 d-flex justify-content-between">
                   <label class="label">Type of account</label>
                   <div>
@@ -42,7 +45,6 @@
                 <div class="mb-1 d-flex justify-content-between">
                   <label class="label">Withdrawable Amount</label>
                   <div>
-                    <a href="javascript:;"><i class="icon ion-md-refresh text-success"></i></a>
                     <strong>{{listMt5Infor?.used_margin}} <span class="small text-secondary">(JPY)</span></strong>
                   </div>
                 </div>
@@ -142,7 +144,7 @@
                 </tr>
                 <tr>
                   <td colspan="7">
-                    <a routerLink="['/manage/withdrawHistory']">View entire operation history</a>
+                    <a routerLink="/manage/withdrawHistory">View entire operation history</a>
                   </td>
                 </tr>
               </tbody>
