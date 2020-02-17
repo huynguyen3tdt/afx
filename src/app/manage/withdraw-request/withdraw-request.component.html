@@ -14,26 +14,27 @@
               <div class="p-3 border mb-3 form form-line bg-light">
                 <div class="d-flex justify-content-between mb-2">
                   <h5 class="text-primary mb-0"><strong>MT5</strong> Information</h5>
-                  <div><a href="javascript:;" class="btn-link-24" (click)="onRefesh()"><span class="ml-1">Refesh</span> <i class="icon ion-md-refresh-circle"></i></a></div>
-                </div>
-                <div class="mb-1 d-flex justify-content-between">
-                  <label class="label">Type of account</label>
-                  <div>
-                    <select class="form-control form-control-sm" style="min-width: 80px;background: none;">
-                      <option>FX</option>
-                    </select>
-                  </div>
+
                 </div>
                 <div class="mb-1 d-flex justify-content-between">
                   <label class="label">Trading account</label>
                   <div>
-                    <strong>10000001</strong>
+                    <select class="form-control form-control-sm" style="min-width: 80px;background: none;">
+                      <option>FX - 10000001</option>
+                      <option>CFD - 20000001</option>
+                    </select>
                   </div>
                 </div>
                 <div class="mb-1 d-flex justify-content-between">
                   <label class="label">Balance</label>
                   <div>
-                    <strong>{{listMt5Infor?.balance | number}}<span class="small text-secondary">(JPY)</span></strong>
+                    <strong>{{listMt5Infor?.balance | number}}</strong>
+                  </div>
+                </div>
+                <div class="mb-1 d-flex justify-content-between">
+                  <label class="label">Base currency</label>
+                  <div>
+                    <strong><span class="small text-secondary">JPY</span></strong>
                   </div>
                 </div>
                 <div class="mb-1 d-flex justify-content-between">
@@ -45,17 +46,21 @@
                 <div class="mb-1 d-flex justify-content-between">
                   <label class="label">Withdrawable Amount</label>
                   <div>
-                    <strong>{{listMt5Infor?.used_margin}} <span class="small text-secondary">(JPY)</span></strong>
+                    <strong>{{listMt5Infor?.used_margin}}</strong>
                   </div>
                 </div>
-                <div class="small text-secondary"><i class="icon ion-md-time"></i> <em>Last updated:
+
+                <div class="small text-secondary">
+                  <a href="javascript:;" class="btn-link-24" (click)="onRefesh()"><span class="ml-1">Refesh</span> <i
+                      class="icon ion-md-refresh-circle"></i></a>
+                  <i class="icon ion-md-time"></i> <em>Last updated:
                     {{listMt5Infor?.lastest_time | date:'yyyy/MM/dd'}}
                     {{listMt5Infor?.lastest_time | date:'HH:mm'}}</em></div>
               </div>
 
             </div>
             <div class="col-md-6 col-lg-5" [formGroup]="withdrawForm">
-              <h4 class="text-primary border-bottom pb-1 mb-3"><i class="icon ion-md-remove"></i> Withdrawal Request
+              <h4 class="text-primary border-bottom pb-1 mb-3 title-withdrawal">Withdrawal Request
               </h4>
               <div class="form form-line">
                 <div class="mb-1 d-flex justify-content-between">
@@ -84,12 +89,6 @@
                   </div>
                 </div>
                 <div class="mb-1 d-flex justify-content-between">
-                  <label class="label">Margin Level estimate</label>
-                  <div>
-                    <strong>154.36%</strong>
-                  </div>
-                </div>
-                <div class="mb-1 d-flex justify-content-between">
                   <label class="label">Withdrawal Fee</label>
                   <div>
                     <strong>0</strong>
@@ -99,6 +98,12 @@
                   <label class="label">Total amount</label>
                   <div>
                     <strong>90,000</strong>
+                  </div>
+                </div>
+                <div class="mb-1 d-flex justify-content-between">
+                  <label class="label">Margin Level estimate</label>
+                  <div>
+                    <strong>154.36%</strong>
                   </div>
                 </div>
               </div>

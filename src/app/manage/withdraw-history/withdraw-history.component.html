@@ -15,15 +15,34 @@
                         <div class="d-flex align-items-center">
                             <div class="mb-1 mr-3">Type of account</div>
                             <select class="form-control form-control-sm" style="max-width: 140px;">
-                                <option>FX</option>
+                              <option>FX - 10000001</option>
+                              <option>CFD - 20000001</option>
                             </select>
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="text-md-right">Trading account <strong>10000001</strong></div>
+                        <div class="text-md-right">Currency: <strong>JYP</strong></div>
                     </div>
                 </div>
                 <div class="row row-filter no-gutters align-items-stretch mb-1" [formGroup]="searchForm">
+                    <div class="col-md-5">
+                      <!-- <div class="col-inner"> -->
+                        <div class="mb-1 mr-3">Type of transaction</div>
+                          <div>
+                            <label class="container-radio mb-0 mr-2 small">All
+                              <input type="radio" id="all" name="filter_type" formCotrolName="history" value="0" checked="checked">
+                              <span class="checkmark"></span>
+                            </label>
+                            <label class="container-radio mb-0 mr-2 small">Deposit
+                              <input type="radio" id="all" name="filter_type" formCotrolName="history" value="1">
+                              <span class="checkmark"></span>
+                            </label>
+                          <label class="container-radio mb-0 mr-2 small">Withdraw
+                            <input type="radio" id="all" name="filter_type" formCotrolName="history" value="2">
+                            <span class="checkmark"></span>
+                          </label>
+                        </div>
+                    </div>
                     <div class="col-md-3">
                         <div class="col-inner">
                             <label class="label text-primary">From</label>
@@ -50,25 +69,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-5">
-                        <div class="col-inner">
-                            <label class="label text-primary">Type</label>
-                            <div>
-                                <label class="container-radio mb-0 mr-2 small">All
-                                    <input type="radio" id="all" name="filter_type" formCotrolName="history" value="0" checked="checked">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="container-radio mb-0 mr-2 small">Deposit
-                                    <input type="radio" id="all" name="filter_type" formCotrolName="history" value="1">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="container-radio mb-0 mr-2 small">Withdraw
-                                    <input type="radio" id="all" name="filter_type" formCotrolName="history" value="2">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
+
                     <div class="col-md-1">
                         <button class="btn btn-success btn-search btn-block" (click)="onSearchSubmit()"><i class="icon ion-md-search"></i></button>
                     </div>
@@ -78,21 +79,21 @@
                         <div class="col-md-6">
                             <div class="d-flex justify-content-between mb-1">
                                 <div>Opening balance:</div>
-                                <div><strong>15,000.00</strong> <span class="small">(JPY)</span></div>
+                                <div><strong>15,000.00</strong></div>
                             </div>
                             <div class="d-flex justify-content-between mb-1">
                                 <div>Closing balance:</div>
-                                <div><strong>130,000.00</strong> <span class="small">(JPY)</span></div>
+                                <div><strong>130,000.00</strong></div>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="d-flex justify-content-between mb-1">
                                 <div>Total deposit amount:</div>
-                                <div><strong>323,000.00</strong> <span class="small">(JPY)</span></div>
+                                <div><strong>323,000.00</strong></div>
                             </div>
                             <div class="d-flex justify-content-between mb-1">
                                 <div>Total withdrawal amount:</div>
-                                <div><strong>208,000.00</strong> <span class="small">(JPY)</span></div>
+                                <div><strong>208,000.00</strong></div>
                             </div>
                         </div>
                     </div>
@@ -108,7 +109,7 @@
                       <table class="table table-sm table-hover" cellspacing="0" cellpadding="0">
                           <thead>
                               <tr>
-                                  <th class="border-top-0" width="120">Transaction ID</th>
+                                  <th class="border-top-0" width="43">Transaction ID</th>
                                   <th class="border-top-0">Date</th>
                                   <th class="border-top-0">Type</th>
                                   <th class="border-top-0">Description</th>
@@ -142,17 +143,11 @@
                           </div>
                           <div class="small text-secondary d-inline-block mr-2">Showing 1 to 10 of 126 entries</div>
                       </div>
-                      <ul class="pagination pagination-sm mb-0">
-                          <li class="page-item disabled">
-                              <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
-                          </li>
-                          <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                          <li class="page-item"><a class="page-link" href="#">2</a></li>
-                          <li class="page-item"><a class="page-link" href="#">3</a></li>
-                          <li class="page-item">
-                              <a class="page-link" href="#">Next</a>
-                          </li>
-                      </ul>
+                      <pagination [(ngModel)]="currentPage" id="pagination" appPagination
+                                    class="pagination pagination-sm justify-content-end"
+                                    (pageChanged)="pageChanged($event)" [totalItems]="totalItem / pageSize"
+                                    [maxSize]="5">
+                                </pagination>
                   </div>
               </div>
           </div>
