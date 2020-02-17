@@ -52,7 +52,7 @@ a:hover{
 	background: rgba(255,255,255,0.8);
 	border:1px solid rgba(0,0,20,0.1);
 	font-size: 14px;
-	
+
 }
 .btn-link-24:hover{
 	border-color: rgba(0,0,20,0.2);
@@ -140,7 +140,7 @@ a:hover{
 	box-shadow: none;
 }
 .btn-none{
-	background: none;	
+	background: none;
 }
 .btn-primary{
 	color: #fff;
@@ -260,8 +260,8 @@ body{
 		padding-left: 10px;
 		padding-right: 10px;
 	}
-	.header-top-nav.nav .nav-item.nav-item-notification.has-notification .nav-link:before {		
-		left: 10px;		
+	.header-top-nav.nav .nav-item.nav-item-notification.has-notification .nav-link:before {
+		left: 10px;
 	}
 }
 @media screen and (max-width: 540px){
@@ -284,8 +284,8 @@ body{
 		padding-left: 15px;
 		padding-right: 15px;
 	}
-	.header-top-nav.nav .nav-item.nav-item-notification.has-notification .nav-link:before {		
-		left: 5px;		
+	.header-top-nav.nav .nav-item.nav-item-notification.has-notification .nav-link:before {
+		left: 5px;
 	}
 }
 
@@ -337,7 +337,7 @@ body{
 	line-height: 20px;
 	text-align: center;
 	text-transform: uppercase;
-	font-size: 14px;	
+	font-size: 14px;
 	box-sizing: border-box;
 	border-bottom: 3px solid rgba(255,255,255,0);
 	font-weight: bold;
@@ -589,7 +589,7 @@ body{
     color: #666;
 }
 /* Sub Nav */
-.nav.offcanvas-nav .sub-nav{    
+.nav.offcanvas-nav .sub-nav{
     display: none;
 }
 .nav.offcanvas-nav .nav-item.has-child.opened .sub-nav {
@@ -640,7 +640,7 @@ body{
 	.flex-md-column.filter-nav .nav-link:hover{
 		background-color: rgba(255,255,255,0.5);
 	}
-	.flex-md-column.filter-nav .nav-link.active {		
+	.flex-md-column.filter-nav .nav-link.active {
 		border-left-color: #0D688F;
 	}
 
@@ -652,8 +652,6 @@ body{
 		right: 5px;
 		top: 0.5rem;
 	}
-	
-	
 }
 
 /* List Notifications */
@@ -716,10 +714,10 @@ body{
 	line-height: 20px;
 }
 .list-notifications .notification-item .item-content {
-	border-left: 2px solid #eee;	
+	border-left: 2px solid #eee;
 	max-height: 0;
 	overflow: hidden;
-	transition: max-height 0.15s ease-out;	
+	transition: max-height 0.15s ease-out;
 	padding-left: 15px;
 	padding-right: 15px;
 }
@@ -743,7 +741,7 @@ body{
 		padding-left: 0;
 	}
 	.list-notifications .notification-item .badge-wrap{
-		position: relative;		
+		position: relative;
 		top: auto;
 		left: auto;
 	}
@@ -1040,7 +1038,7 @@ ul.reset li {
 	max-width: 100%;
 }
 @media screen and (max-width: 768px){
-	.list-banks .bank-item {		
+	.list-banks .bank-item {
 		flex-basis: 50%;
 		width: 50%;
 	}
@@ -1050,11 +1048,11 @@ ul.reset li {
 .card-profile {
 	border-radius: 0;
 	border: 0;
-	background: none;	
+	background: none;
 }
 .card-profile .card-body{
 	padding: 0;
-	font-size: 14px;	
+	font-size: 14px;
 }
 .card-profile {
 	margin-bottom: 10px;
@@ -1089,7 +1087,7 @@ ul.reset li {
 		border-left:3px solid #eee;
 	}
 	.col-mypage-sidebar .nav-tabs .nav-link{
-		display: block;		
+		display: block;
 		border: 0;
 		border-left:3px solid #eee;
 		padding-top: 8px;
@@ -1302,7 +1300,7 @@ ul.reset li {
 	.row-filter .col-inner {
 		border:1px solid #ddd;
 		border-bottom-color: rgba(255,255,255,0);
-		
+
 	}
 	.row-filter .btn-search{
 		border-radius: 0;
@@ -1386,8 +1384,8 @@ ul.reset li {
 	line-height: 32px;
 }
 .title-withdrawal {
-	background: url(../images/icon-withdraw.svg) 0 2px no-repeat;
-	background-size: 30px 30px;
-	padding-left: 40px;
-	line-height: 32px;
+  background: url(../images/icon-withdraw.svg) 0 2px no-repeat;
+  background-size: 30px 30px;
+  padding-left: 40px;
+  line-height: 32px;
 }
