@@ -65,7 +65,7 @@
                         class="d-none d-md-inline">Notifications</span></a>
                 </li>
                 <li class="nav-item nav-item-deposit">
-                    <a href="MY010_Deposit_MY011_DepositDetail.html" class="nav-link" title="Deposit"><i
+                    <a [routerLink]="['/manage/deposit']" class="nav-link" title="Deposit"><i
                             class="icon ion-md-add d-md-none"></i> <span class="d-none d-md-inline">{{'Deposit' | translate}}</span></a>
                 </li>
                 <li class="nav-item nav-item-withdraw">
@@ -78,7 +78,7 @@
                           class="icon ion-md-time d-md-none"></i> <span class="d-none d-md-inline">History</span></a>
                 </li>
                 <li class="nav-item nav-item-report">
-                    <a href="MY007_ReportList.html" class="nav-link" title="Report"><i
+                    <a [routerLink]="['/manage/reportList']" class="nav-link" title="Report"><i
                             class="icon ion-md-today d-md-none"></i> <span class="d-none d-md-inline">Report</span></a>
                 </li>
 

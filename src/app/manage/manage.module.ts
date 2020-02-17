@@ -10,6 +10,8 @@ import { WithdrawHistoryComponent } from './withdraw-history/withdraw-history.co
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
+import { ReportListComponent } from './report-list/report-list.component';
+import { DepositComponent } from './deposit/deposit.component';
 
 @NgModule({
     imports: [
@@ -22,7 +24,13 @@ import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
         Ng4LoadingSpinnerModule.forRoot(),
     ],
     providers: [],
-    declarations: [NotificationsComponent, AccountInformationComponent, WithdrawRequestComponent, WithdrawHistoryComponent],
+    declarations: [
+      NotificationsComponent,
+      AccountInformationComponent,
+      WithdrawRequestComponent,
+      WithdrawHistoryComponent,
+      ReportListComponent,
+      DepositComponent],
     schemas: [NO_ERRORS_SCHEMA]
 })
 
