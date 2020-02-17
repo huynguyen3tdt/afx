@@ -63,7 +63,7 @@
                             <h4><strong>Important</strong> Notifications</h4>
                             <div class="list-notifications">
                                 <ng-container *ngFor="let item of listNotification; let i = index">
-                                    <div *ngIf="item.is_agreement == 'true'" (click)="showDetail(i, item)"
+                                    <div *ngIf="item.agreement == 0" (click)="showDetail(i, item)"
                                         id="important_{{i}}" [ngClass]="{'unread': item.is_read == 'true'}"
                                         class="notification-item">
                                         <div class="badge-wrap">
@@ -76,7 +76,7 @@
                                         <div class="item-content" [innerHTML]="item?.content">
                                         </div>
                                     </div>
-                                    <div *ngIf="item.is_agreement == 'false'" (click)="showDetail(i, item)"
+                                    <div *ngIf="item.agreement == 1" (click)="showDetail(i, item)"
                                         [ngClass]="{'unread': item.is_read == 'true'}" id="important_{{i}}"
                                         class="notification-item item-agreement">
                                         <div class="badge-wrap">

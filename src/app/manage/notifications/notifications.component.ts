@@ -149,7 +149,7 @@ export class NotificationsComponent implements OnInit {
         $(`#noti_${index}`).removeClass('unread');
         break;
       case 'IMPORTANT':
-        if (item.is_agreement === 'true') {
+        if (item.agreement === 0) {
           $(`#important_${index}`).toggleClass('opened');
           $(`#important_${index}`).removeClass('unread');
         } else {
