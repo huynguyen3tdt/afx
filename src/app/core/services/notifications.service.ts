@@ -16,13 +16,20 @@ export class NotificationsService {
     private httpClient: HttpClient,
     private envConfigService: EnvConfigService) { }
 
-  getListNotifications(pageSize: number, pageNumber: number, type?: number): Observable<PageNotificationResponse> {
+  getListNotifications(pageSize: number, pageNumber: number, unread: boolean, type?: number): Observable<PageNotificationResponse> {
     let URL = '';
-    if (type !== -1) {
-      URL = `?type=${type}&page_size=${pageSize}?page_numb=${pageNumber}`;
+    let checkUnread = 0;
+    if (unread === false) {
+      checkUnread = 0;
     } else {
-      URL = `?page_size=${pageSize}?page_numb=${pageNumber}`;
+      checkUnread = 1;
     }
+    if (type !== -1) {
+      URL = `?noti_type=${type}&not_read=${checkUnread}&page_size=${pageSize}?page_numb=${pageNumber}`;
+    } else {
+      URL = `?not_read=${checkUnread}&page_size=${pageSize}?page_numb=${pageNumber}`;
+    }
+    console.log('URLLL ', URL);
     return this.httpClient.get(`${this.envConfigService.getConfig()}/${AppSettings.API_GET_LIST_NOTIFICATIONS}` + URL)
       .pipe(
         catchError((error: HttpErrorResponse) => {
