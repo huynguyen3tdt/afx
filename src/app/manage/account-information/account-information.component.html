@@ -1,236 +1,311 @@
 <div class="container">
-  <nav aria-label="breadcrumb">
-      <ol class="breadcrumb">
-          <li class="breadcrumb-item" aria-current="page"><a href="javascript:;">Dashboard</a></li>
-          <li class="breadcrumb-item active" aria-current="page">My Account</li>
-      </ol>
-  </nav>
-  <div class="content-wrapper">
-      <div class="content-inner">
-          <div class="row row-mypage">
-              <div class="col-lg-3 col-mypage-sidebar">
-                  <div class="card card-profile">
-                      <!-- <div class="profile-image-wrap d-none d-lg-block">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item" aria-current="page"><a href="javascript:;">Dashboard</a></li>
+            <li class="breadcrumb-item active" aria-current="page">My Account</li>
+        </ol>
+    </nav>
+    <div class="content-wrapper">
+        <div class="content-inner">
+            <div class="row row-mypage">
+                <div class="col-lg-3 col-mypage-sidebar">
+                    <div class="card card-profile">
+                        <!-- <div class="profile-image-wrap d-none d-lg-block">
                           <img src="assets/images/profile-image.png" class="card-img-top" alt="Profile Image">
                           <button class="btn btn-none btn-upload"><i class="icon ion-md-camera"></i></button>
                       </div> -->
-                      <div class="card-body">
-                          <div class="d-flex align-items-center">
-                            <!-- <div class="mr-3 d-lg-none"><img src="assets/images/profile-image-48x48.png" alt="Avatar John Doe" class="rounded-circle"></div> -->
-                            <div>
-                              <h6 class="mb-0"><strong>Chu Thi Minh Chau</strong></h6>
-                              <p class="mb-0 text-secondary"><span class="text-primary">#123456</span> - STANDARD</p>
+                        <div class="card-body">
+                            <div class="d-flex align-items-center">
+                                <!-- <div class="mr-3 d-lg-none"><img src="assets/images/profile-image-48x48.png" alt="Avatar John Doe" class="rounded-circle"></div> -->
+                                <div>
+                                    <h6 class="mb-0"><strong>{{userInfor?.full_name}}</strong></h6>
+                                    <p class="mb-0 text-secondary"><span class="text-primary">#123456</span> - STANDARD
+                                    </p>
+                                </div>
                             </div>
-                          </div>
 
-                      </div>
-                  </div>
-                  <nav class="mb-0">
-                      <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                          <a class="nav-item nav-link active" id="nav-account-tab" data-toggle="tab" href="#nav-account" role="tab" aria-controls="nav-account" aria-selected="true"><i class="icon ion-md-person"></i> <strong class="d-none d-md-inline">Account <span class="d-none d-lg-inline">Infomation</span></strong></a>
-                          <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="true"><i class="icon ion-md-contact"></i> <strong class="d-none d-md-inline">User <span class="d-none d-lg-inline">Infomation</span></strong></a>
-                          <a class="nav-item nav-link" id="nav-bank-tab" data-toggle="tab" href="#nav-bank" role="tab" aria-controls="nav-bank" aria-selected="false"><i class="icon ion-md-card"></i> <strong class="d-none d-md-inline">Bank <span class="d-none d-lg-inline">Account</span></strong></a>
-                          <a class="nav-item nav-link" id="nav-setting-tab" data-toggle="tab" href="#nav-setting" role="tab" aria-controls="nav-setting" aria-selected="false"><i class="icon ion-md-settings"></i> <strong class="d-none d-md-inline">Setting</strong></a>
-                      </div>
-                  </nav>
-              </div>
-              <div class="col-lg-9 col-mypage-content">
-                  <div class="tab-content border" id="nav-tabContent">
-                      <!-- BEGIN ACCOUNT -->
-                      <div class="tab-pane fade show active" id="nav-account" role="tabpanel" aria-labelledby="nav-account-tab">
-                          <h4 class="border-bottom pb-1 mb-3">My Account</h4>
-                          <div class="row">
-                              <div class="col-lg-8">
-                                  <div class="d-flex align-items-center mb-2">
-                                      <label class="mr-4 mb-0">Type of Account</label>
-                                      <select class="form-control form-control-sm" style="max-width: 140px;">
-                                          <option>FX</option>
-                                      </select>
-                                  </div>
-                                  <div class="d-flex justify-content-between mb-2">
-                                      <div>Tradding accout: <strong>123456</strong></div>
-                                      <div>Currency:<strong>JPY</strong></div>
-                                  </div>
-                                  <hr>
-                                  <div class="table-responsive">
-                                      <table class="table table-borderless table-sm table-hover" cellspacing="0" cellpadding="0">
-                                          <tbody>
-                                              <tr>
-                                                  <td>Withdrawable amount</td>
-                                                  <td class="text-right"><strong>5,000</strong></td>
-                                              </tr>
-                                              <tr>
-                                                  <td>Balance</td>
-                                                  <td class="text-right"><strong>{{accountInfor?.balance | number}}</strong></td>
-                                              </tr>
-                                              <tr>
-                                                  <td>Margin</td>
-                                                  <td class="text-right"><strong>{{accountInfor?.margin | number}}</strong></td>
-                                              </tr>
-                                              <tr>
-                                                  <td>Free margin</td>
-                                                  <td class="text-right"><strong>{{accountInfor?.free_margin | number}}</strong></td>
-                                              </tr>
-                                              <tr>
-                                                  <td>Equity</td>
-                                                  <td class="text-right"><strong>{{accountInfor?.equity | number}}</strong></td>
-                                              </tr>
-                                              <tr>
-                                                  <td>Margin Level</td>
-                                                  <td class="text-right"><strong>{{accountInfor?.margin_level | number}}%</strong></td>
-                                              </tr>
-                                              <tr>
-                                                  <td>Required margin</td>
-                                                  <td class="text-right"><strong>0</strong></td>
-                                              </tr>
-                                          </tbody>
-                                      </table>
-                                      <p class="small text-secondary"><i class="icon ion-md-time"></i>  <em>Last updated: {{accountInfor?.lastest_time | date:'yyyy/MM/dd'}} {{accountInfor?.lastest_time | date:'HH:mm'}}</em><br>The system automatically updates data after 1 minute</p>
-                                  </div>
-                              </div>
-                          </div>
-                      </div><!-- END ACCOUNT -->
-                      <!-- BEGIN PROFILE -->
-                      <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-                        <h4 class="border-bottom pb-1 mb-3">My Profile</h4>
-                          <div class="row">
-                              <div class="col-lg-8">
-                                  <div class="table-responsive">
-                                      <table class="table table-sm table-borderless table-hover table-profile" cellspacing="0" cellpadding="0">
-                                          <tbody>
-                                              <tr>
-                                                  <td width="150">Full name</td>
-                                                  <td><strong>Chu Thi Minh Chau</strong></td>
-                                                  <td>&nbsp;</td>
-                                                  <td width="15">&nbsp;</td>
-                                              </tr>
-                                              <tr>
-                                                  <td>Date of birth</td>
-                                                  <td><strong>1995/03/15</strong></td>
-                                                  <td width="15">&nbsp;</td>
-                                              </tr>
-                                              <tr>
-                                                  <td>Gender</td>
-                                                  <td><strong>Female</strong></td>
-                                                  <td>&nbsp;</td>
-                                                  <td width="15">&nbsp;</td>
-                                              </tr>
-                                              <tr class="row-postcode">
-                                                  <td>Postcode</td>
-                                                  <td>
-                                                      <div class="currentvalue">
-                                                          <strong>19875</strong>
-                                                      </div>
-                                                      <div class="editable">
-                                                          <input type="text" name="postcode" class="form-control form-control-sm mb-1" value="19875" placeholder="">
-                                                          <div class="text-right">
-                                                              <button type="button" class="btn btn-sm btn-cancel btn-outline-secondary pt-0 pb-0">Cancel</button> <button type="button" class="btn btn-sm btn-save btn-success pt-0 pb-0">Save</button>
-                                                          </div>
-                                                      </div>
-                                                  </td>
-                                                  <td width="15"><span class="status invisible"><i class="icon ion-md-checkmark text-success"></i></span></td>
-                                                  <td width="15"><a href="javascript:;" class="edit-link" data-toggle="tooltip" data-placement="top" title="Edit Postcode"><i class="icon ion-md-create"></i></a></td>
-                                              </tr>
-                                              <tr class="row-address">
-                                                  <td>Address</td>
-                                                  <td>
-                                                      <div class="currentvalue">
-                                                          <div><strong>Mai Dich, Cau giay street, Ha Noi city</strong></div>
-                                                          <div><strong>Viet Nam Country</strong></div>
-                                                      </div>
-                                                      <div class="editable">
-                                                          <input type="text" name="address" class="form-control form-control-sm mb-1" value="Mai Dich, Cau giay street" placeholder="">
-                                                          <div class="row no-gutters">
-                                                              <div class="col-sm-6 pr-md-1">
-                                                                  <select class="form-control form-control-sm mb-1 select2" style="width: 100%">
-                                                                      <option>Vietnam</option>
-                                                                      <option>Japan</option>
-                                                                  </select>
-                                                              </div>
-                                                              <div class="col-sm-6 pl-md-1">
-                                                                  <select class="form-control form-control-sm mb-1 select2" style="width: 100%">
-                                                                      <option>Ha Noi</option>
-                                                                      <option>Ho Chi Minh</option>
-                                                                  </select>
-                                                              </div>
-                                                          </div>
-                                                          <div class="text-right">
-                                                              <button type="button" class="btn btn-sm btn-cancel btn-outline-secondary pt-0 pb-0">Cancel</button> <button type="button" class="btn btn-sm btn-save btn-success pt-0 pb-0">Save</button>
-                                                          </div>
-                                                      </div>
-                                                  </td>
-                                                  <td width="15"><span class="status invisible"><i class="icon ion-md-hourglass text-info"></i></span></td>
-                                                  <td width="15"><a href="javascript:;" class="edit-link" data-toggle="tooltip" data-placement="top" title="Edit Address"><i class="icon ion-md-create"></i></a></td>
-                                              </tr>
-                                              <tr class="row-email">
-                                                  <td>Email</td>
-                                                  <td>
-                                                      <div class="currentvalue">
-                                                          <strong><a href="javascript:;">chauchu@tamdongtam.vn</a></strong>
-                                                      </div>
-                                                      <div class="editable">
-                                                          <input type="text" name="email" class="form-control form-control-sm mb-1" value="chauchu@tamdongtam.vn" placeholder="">
-                                                          <div class="text-right">
-                                                              <button type="button" class="btn btn-sm btn-cancel btn-outline-secondary pt-0 pb-0">Cancel</button> <button type="button" class="btn btn-sm btn-save btn-success pt-0 pb-0">Save</button>
-                                                          </div>
-                                                      </div>
-                                                  </td>
-                                                   <td width="15"><span class="status invisible"><i class="icon ion-md-hourglass text-info"></i></span></td>
-                                                  <td width="15"><a href="javascript:;" class="edit-link" data-toggle="tooltip" data-placement="top" title="Edit Email"><i class="icon ion-md-create"></i></a></td>
-                                              </tr>
-                                              <tr class="row-phone">
-                                                  <td>Phone</td>
-                                                  <td>
-                                                      <div class="currentvalue">
-                                                          <strong><a href="javascript:;">+84389999999</a></strong>
-                                                      </div>
-                                                      <div class="editable">
-                                                          <input type="text" name="phone" class="form-control form-control-sm mb-1" value="+84389999999" placeholder="">
-                                                          <div class="text-right">
-                                                              <button type="button" class="btn btn-sm btn-cancel btn-outline-secondary pt-0 pb-0">Cancel</button> <button type="button" class="btn btn-sm btn-save btn-success pt-0 pb-0">Save</button>
-                                                          </div>
-                                                      </div>
-                                                  </td>
-                                                  <td width="15"><span class="status invisible"><i class="icon ion-md-checkmark text-success"></i></span></td>
-                                                  <td width="15"><a href="javascript:;" class="edit-link" data-toggle="tooltip" data-placement="top" title="Edit Phone"><i class="icon ion-md-create"></i></a></td>
-                                              </tr>
-                                              <tr class="row-language">
-                                                  <td>Language</td>
-                                                  <td>
-                                                      <div class="currentvalue">
-                                                          <strong>Vietnamese</strong>
-                                                      </div>
-                                                      <div class="editable">
-                                                          <select class="form-control form-control-sm mb-1 select2" style="width: 100%">
-                                                              <option>Vietnamese</option>
-                                                              <option>English</option>
-                                                          </select>
-                                                          <div class="text-right">
-                                                              <button type="button" class="btn btn-sm btn-cancel btn-outline-secondary pt-0 pb-0">Cancel</button> <button type="button" class="btn btn-sm btn-save btn-success pt-0 pb-0">Save</button>
-                                                          </div>
-                                                      </div>
-                                                  </td>
-                                                  <td width="15"><span class="status invisible"><i class="icon ion-md-checkmark text-success"></i></span></td>
-                                                  <td width="15"><a href="javascript:;" class="edit-link" data-toggle="tooltip" data-placement="top" title="Edit Language"><i class="icon ion-md-create"></i></a></td>
-                                              </tr>
-                                          </tbody>
-                                      </table>
-                                  </div>
-                              </div>
-                          </div>
-                      </div><!-- END ACCOUNT -->
-                      <!-- BEGIN BANK ACCOUNT -->
-                      <div class="tab-pane fade" id="nav-bank" role="tabpanel" aria-labelledby="nav-bank-tab">
-                          <h4 class="border-bottom pb-1 mb-3">Bank Account</h4>
-                      </div><!-- END BANK ACCOUNT -->
+                        </div>
+                    </div>
+                    <nav class="mb-0">
+                        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                            <a class="nav-item nav-link active" id="nav-account-tab" data-toggle="tab"
+                                href="#nav-account" role="tab" aria-controls="nav-account" aria-selected="true"><i
+                                    class="icon ion-md-person"></i> <strong class="d-none d-md-inline">Account <span
+                                        class="d-none d-lg-inline">Infomation</span></strong></a>
+                            <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile"
+                                role="tab" aria-controls="nav-profile" aria-selected="true"><i
+                                    class="icon ion-md-contact"></i> <strong class="d-none d-md-inline">User <span
+                                        class="d-none d-lg-inline">Infomation</span></strong></a>
+                            <a class="nav-item nav-link" id="nav-bank-tab" data-toggle="tab" href="#nav-bank" role="tab"
+                                aria-controls="nav-bank" aria-selected="false"><i class="icon ion-md-card"></i> <strong
+                                    class="d-none d-md-inline">Bank <span
+                                        class="d-none d-lg-inline">Account</span></strong></a>
+                            <a class="nav-item nav-link" id="nav-setting-tab" data-toggle="tab" href="#nav-setting"
+                                role="tab" aria-controls="nav-setting" aria-selected="false"><i
+                                    class="icon ion-md-settings"></i> <strong
+                                    class="d-none d-md-inline">Setting</strong></a>
+                        </div>
+                    </nav>
+                </div>
+                <div class="col-lg-9 col-mypage-content">
+                    <div class="tab-content border" id="nav-tabContent">
+                        <!-- BEGIN ACCOUNT -->
+                        <div class="tab-pane fade show active" id="nav-account" role="tabpanel"
+                            aria-labelledby="nav-account-tab">
+                            <h4 class="border-bottom pb-1 mb-3">Account Infomation</h4>
+                            <div class="row">
+                                <div class="col-lg-8">
+                                    <div class="d-flex align-items-center mb-2">
+                                        <label class="mr-4 mb-0">Type of Account</label>
+                                        <select class="form-control form-control-sm" style="max-width: 140px;">
+                                            <option>FX</option>
+                                        </select>
+                                    </div>
+                                    <div class="d-flex justify-content-between mb-2">
+                                        <div>Tradding accout: <strong>123456</strong></div>
+                                        <div>Currency:<strong>JPY</strong></div>
+                                    </div>
+                                    <hr>
+                                    <div class="table-responsive">
+                                        <table class="table table-borderless table-sm table-hover" cellspacing="0"
+                                            cellpadding="0">
+                                            <tbody>
+                                                <tr>
+                                                    <td>Withdrawable amount</td>
+                                                    <td class="text-right">
+                                                        <strong>{{withdrawAmount?.withdraw_amount | number}}</strong>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Withdrawal amount is pending</td>
+                                                    <td class="text-right">
+                                                        <strong>{{withdrawAmount?.withdraw_amount_pending | number}}</strong>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Balance</td>
+                                                    <td class="text-right">
+                                                        <strong>{{accountInfor?.balance | number}}</strong></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Used Margin</td>
+                                                    <td class="text-right">
+                                                        <strong>{{accountInfor?.used_margin | number}}</strong></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Free Margin</td>
+                                                    <td class="text-right">
+                                                        <strong>{{accountInfor?.free_margin | number}}</strong></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Equity</td>
+                                                    <td class="text-right">
+                                                        <strong>{{accountInfor?.equity | number}}</strong></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Margin Level</td>
+                                                    <td class="text-right">
+                                                        <strong>{{accountInfor?.margin_level | number}}%</strong></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Unrealize PL</td>
+                                                    <td class="text-right"><strong>0</strong></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <p class="small text-secondary"><i class="icon ion-md-time"></i> <em>Last
+                                                updated: {{accountInfor?.lastest_time | date:'yyyy/MM/dd'}}
+                                                {{accountInfor?.lastest_time | date:'HH:mm'}}</em><br>The system
+                                            automatically updates data after 1 minute</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!-- END ACCOUNT -->
+                        <!-- BEGIN PROFILE -->
+                        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                            <h4 class="border-bottom pb-1 mb-3">My Profile</h4>
+                            <div class="row">
+                                <div class="col-lg-8">
+                                    <div class="table-responsive">
+                                        <table class="table table-sm table-borderless table-hover table-profile"
+                                            cellspacing="0" cellpadding="0">
+                                            <tbody>
+                                                <tr>
+                                                    <td width="150">Full name</td>
+                                                    <td><strong>{{userInfor?.full_name}}</strong></td>
+                                                    <td width="15">&nbsp;</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Date of birth</td>
+                                                    <td><strong>1995/03/15</strong></td>
+                                                    <td width="15">&nbsp;</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Gender</td>
+                                                    <td><strong>{{userInfor?.gender}}</strong></td>
+                                                    <td width="15">&nbsp;</td>
+                                                </tr>
+                                                <tr class="row-postcode">
+                                                    <td>Postcode</td>
+                                                    <td>
+                                                        <div *ngIf="editAddress == false" class="currentvalue">
+                                                            <strong>{{userInfor?.postcode?.value}}</strong>
+                                                            <div class="status d-none small"><span
+                                                                    class="text-success"><i
+                                                                        class="icon ion-md-checkmark"></i>
+                                                                    Updated</span></div>
+                                                        </div>
+                                                        <div *ngIf="editAddress == true" class="editable">
+                                                            <input type="text" name="postcode"
+                                                                class="form-control form-control-sm mb-1"
+                                                                value="1987555" placeholder="">
+                                                        </div>
+                                                    </td>
+                                                    <td width="15">&nbsp;</td>
+                                                </tr>
+                                                <tr class="row-address need-verify">
+                                                    <td>Address</td>
+                                                    <td>
+                                                        <div *ngIf="editAddress == false" class="currentvalue">
+                                                            <div><strong>{{userInfor?.address?.value?.house_numb}},{{userInfor?.address?.value?.prefecture}}</strong>
+                                                            </div>
+                                                            <div><strong>{{userInfor?.address?.value?.county}}</strong></div>
+                                                            <div class="status d-none small"><span class="text-info"><i
+                                                                        class="icon ion-md-hourglass"></i> Verificaion in process</span></div>
+                                                        </div>
+                                                        <div *ngIf="editAddress == true" class="editable">
+                                                            <div class="row no-gutters">
+                                                                <div class="col-sm-6 pr-md-1">
+                                                                    <select
+                                                                        class="form-control form-control-sm mb-1 select2"
+                                                                        style="width: 100%">
+                                                                        <option>Prefecture</option>
+                                                                    </select>
+                                                                </div>
+                                                                <div class="col-sm-6 pl-md-1">
+                                                                    <select
+                                                                        class="form-control form-control-sm mb-1 select2"
+                                                                        style="width: 100%">
+                                                                        <option>County/Municipal</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <input type="text" name="address"
+                                                                class="form-control form-control-sm mb-1" value=""
+                                                                placeholder="House number/Room number">
+                                                            <div class="text-right">
+                                                                <button type="button" (click)="cancelEdit('address')"
+                                                                    class="btn btn-sm btn-cancel btn-outline-secondary pt-0 pb-0">Cancel</button>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td width="15"><a href="javascript:;" class="edit-link" *ngIf="editAddress == false"
+                                                            data-toggle="tooltip" data-placement="top" (click)="showEditField('address')"
+                                                            title="Edit Address"><i class="icon ion-md-create"></i></a>
+                                                    </td>
+                                                </tr>
+                                                <tr class="row-email need-verify">
+                                                    <td>Email</td>
+                                                    <td>
+                                                        <div *ngIf="editEmail == false" class="currentvalue">
+                                                            <strong><a
+                                                                    href="javascript:;">{{userInfor?.email?.value}}</a></strong>
+                                                            <div class="status d-none small"><span class="text-info"><i
+                                                                        class="icon ion-md-hourglass"></i> Verificaion in process</span></div>
+                                                        </div>
+                                                        <div *ngIf="editEmail == true" class="editable">
+                                                            <input type="text" name="email"
+                                                                class="form-control form-control-sm mb-1"
+                                                                value="chauchu@tamdongtam.vn" placeholder="">
+                                                            <div class="text-right">
+                                                                <button type="button" (click)="cancelEdit('email')"
+                                                                    class="btn btn-sm btn-cancel btn-outline-secondary pt-0 pb-0">Cancel</button>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td width="15"><a href="javascript:;" class="edit-link" *ngIf="editEmail == false"
+                                                            data-toggle="tooltip" data-placement="top" (click)="showEditField('email')"
+                                                            title="Edit Email"><i class="icon ion-md-create"></i></a>
+                                                    </td>
+                                                </tr>
+                                                <tr class="row-phone">
+                                                    <td>Phone</td>
+                                                    <td>
+                                                        <div *ngIf="editPhone == false" class="currentvalue">
+                                                            <strong><a href="javascript:;">{{userInfor?.phone}}</a></strong>
+                                                            <div class="status d-none small"><span
+                                                                    class="text-success"><i
+                                                                        class="icon ion-md-checkmark"></i> Updated
+                                                                </span></div>
+                                                        </div>
+                                                        <div *ngIf="editPhone == true" class="editable">
+                                                            <input type="text" name="phone"
+                                                                class="form-control form-control-sm mb-1"
+                                                                value="+84389999999" placeholder="">
+                                                            <div class="text-right">
+                                                                <button type="button" (click)="cancelEdit('phone')"
+                                                                    class="btn btn-sm btn-cancel btn-outline-secondary pt-0 pb-0">Cancel</button>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td width="15"><a href="javascript:;" class="edit-link" *ngIf="editPhone == false"
+                                                            data-toggle="tooltip" data-placement="top" (click)="showEditField('phone')"
+                                                            title="Edit Phone"><i class="icon ion-md-create"></i></a>
+                                                    </td>
+                                                </tr>
+                                                <tr class="row-language">
+                                                    <td>Language</td>
+                                                    <td>
+                                                        <div *ngIf="editLanguage == false" class="currentvalue">
+                                                            <strong>{{userInfor?.language}}</strong>
+                                                            <div class="status d-none small"><span
+                                                                    class="text-success"><i
+                                                                        class="icon ion-md-checkmark"></i>
+                                                                    Updated</span></div>
+                                                        </div>
+                                                        <div *ngIf="editLanguage == true" class="editable">
+                                                            <select class="form-control form-control-sm mb-1 select2"
+                                                                style="width: 100%">
+                                                                <option>Vietnamese</option>
+                                                                <option>English</option>
+                                                            </select>
+                                                            <div class="text-right">
+                                                                <button type="button" (click)="cancelEdit('lang')"
+                                                                    class="btn btn-sm btn-cancel btn-outline-secondary pt-0 pb-0">Cancel</button>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td width="15"><a href="javascript:;" class="edit-link" *ngIf="editLanguage == false"
+                                                            data-toggle="tooltip" data-placement="top" (click)="showEditField('lang')"
+                                                            title="Edit Language"><i class="icon ion-md-create"></i></a>
+                                                    </td>
+                                                </tr>
+                                                <tr class="row-action">
+                                                    <td>&nbsp;</td>
+                                                    <td>
+                                                        <button type="button"
+                                                            class="btn btn-save btn-success pl-3 pr-3">Save</button>
+                                                    </td>
+                                                    <td width="15">&nbsp;</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!-- END ACCOUNT -->
+                        <!-- BEGIN BANK ACCOUNT -->
+                        <div class="tab-pane fade" id="nav-bank" role="tabpanel" aria-labelledby="nav-bank-tab">
+                            <h4 class="border-bottom pb-1 mb-3">Bank Account</h4>
+                        </div><!-- END BANK ACCOUNT -->
 
-                      <!-- BEGIN SETTING -->
-                      <div class="tab-pane fade" id="nav-setting" role="tabpanel" aria-labelledby="nav-setting-tab">
-                          <h4 class="border-bottom pb-1 mb-3">Setting</h4>
-                      </div><!-- END  SETTING -->
-                  </div>
-              </div>
-          </div>
-      </div>
-  </div>
+                        <!-- BEGIN SETTING -->
+                        <div class="tab-pane fade" id="nav-setting" role="tabpanel" aria-labelledby="nav-setting-tab">
+                            <h4 class="border-bottom pb-1 mb-3">Setting</h4>
+                        </div><!-- END  SETTING -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

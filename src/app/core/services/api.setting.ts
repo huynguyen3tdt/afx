@@ -13,4 +13,5 @@ export class AppSettings {
     public static API_CHANGE_READ_STATUS        = `api/${versionAPI}/news/notification/status/`;
     public static API_CHANGE_AGREEMENT_STATUS   = `api/${versionAPI}/news/notification/agreement/`;
     public static API_REPORT                    = `api/${versionAPI}/reports/`;
+    public static API_GET_USER_INFOR            = `api/${versionAPI}/users/`;
 }
