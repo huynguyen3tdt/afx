@@ -29,7 +29,7 @@ export interface Notification {
     title: string;
     date_time: string;
     is_read: boolean;
-    is_agreement: string;
+    agreement: number;
     content: string;
 }
 

@@ -27,12 +27,25 @@ export class NotificationsComponent implements OnInit {
   agreementID: number;
   formAgreement: FormGroup;
   showNoti: boolean;
+  totalAll: number;
+  totalImportant: number;
+  totalCampagn: number;
+  totalNotification: number;
+  unreadAll: boolean;
+  unreadImportant: boolean;
+  unreadNotification: boolean;
+  unreadCampagn: boolean;
+
   constructor(
     private notificationsService: NotificationsService,
     private spinnerService: Ng4LoadingSpinnerService,
     private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
+    this.unreadAll = true;
+    this.unreadCampagn = true;
+    this.unreadImportant = true;
+    this.unreadNotification = true;
     this.currentPage = 1;
     this.pageSize = 10;
     this.checkAgreement = false;
@@ -43,7 +56,7 @@ export class NotificationsComponent implements OnInit {
         this.showNoti = false;
       }
     });
-    this.getListNotifications(this.currentPage, this.pageSize, -1);
+    this.getListNotifications(this.currentPage, this.pageSize, this.unreadAll, -1);
     this.initFormAgreement();
   }
 
@@ -53,16 +66,20 @@ export class NotificationsComponent implements OnInit {
     });
   }
 
-  getListNotifications(pageSize: number, pageNumber: number, type?: number) {
+  getListNotifications(pageSize: number, pageNumber: number, unread: boolean, type?: number) {
     this.checkTab(type);
     this.listNotification = [];
     if (type !== -1) {
       localStorage.setItem(FIRST_LOGIN, '0');
     }
     this.spinnerService.show();
-    this.notificationsService.getListNotifications(pageSize, pageNumber, type).subscribe(response => {
+    this.notificationsService.getListNotifications(pageSize, pageNumber, unread, type).subscribe(response => {
       if (response.meta.code === 200) {
         this.pageNotification = response;
+        this.totalCampagn = this.pageNotification.data.results.total_noti.campaign;
+        this.totalImportant = this.pageNotification.data.results.total_noti.important;
+        this.totalNotification = this.pageNotification.data.results.total_noti.notification;
+        this.totalAll = this.totalCampagn + this.totalImportant + this.totalNotification;
         this.listNotification = this.pageNotification.data.results.noti_list;
         this.listNotification.forEach(item => {
           item.date_time = moment(item.date_time).format('YYYY/MM/DD');
@@ -87,6 +104,23 @@ export class NotificationsComponent implements OnInit {
     });
   }
 
+  filterUnreadNoti() {
+    switch (this.tab) {
+      case 'ALL':
+        this.unreadAll = !this.unreadAll;
+        this.getListNotifications(this.currentPage, this.pageSize, this.unreadAll, -1);
+        break;
+      case 'IMPORTANT':
+        this.unreadImportant = !this.unreadImportant;
+        this.getListNotifications(this.currentPage, this.pageSize, this.unreadImportant, 0);
+        break;
+      case 'NOTIFICATIONS':
+        break;
+      case 'CAMPAIGN':
+        break;
+    }
+  }
+
   confirmAgreement() {
     if (this.formAgreement.controls.checkAgreement.value === false) {
       return;
@@ -97,7 +131,7 @@ export class NotificationsComponent implements OnInit {
     this.notificationsService.changeAgreementStatus(param).subscribe(response => {
       if (response.meta.code === 200) {
         this.checkAgreement = false;
-        this.getListNotifications(this.currentPage, this.pageSize, 0);
+        this.getListNotifications(this.currentPage, this.pageSize, this.unreadImportant, 0);
         $('#agreementmd').modal('hide');
       }
     });
@@ -110,13 +144,12 @@ export class NotificationsComponent implements OnInit {
 
   pageChanged(event) {
     this.currentPage = event.page;
-    console.log('cureentPageee ', this.currentPage);
     switch (this.tab) {
       case 'ALL':
-        this.getListNotifications(this.currentPage, this.pageSize, -1);
+        this.getListNotifications(this.currentPage, this.pageSize, this.unreadAll, -1);
         break;
       case 'IMPORTANT':
-        this.getListNotifications(this.currentPage, this.pageSize, 0);
+        this.getListNotifications(this.currentPage, this.pageSize, this.unreadImportant, 0);
         break;
       case 'NOTIFICATIONS':
         break;
@@ -149,7 +182,7 @@ export class NotificationsComponent implements OnInit {
         $(`#noti_${index}`).removeClass('unread');
         break;
       case 'IMPORTANT':
-        if (item.is_agreement === 'true') {
+        if (item.agreement === 0) {
           $(`#important_${index}`).toggleClass('opened');
           $(`#important_${index}`).removeClass('unread');
         } else {

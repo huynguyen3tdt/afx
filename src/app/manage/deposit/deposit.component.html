@@ -1,0 +1,319 @@
+<div class="container">
+  <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+          <li class="breadcrumb-item" aria-current="page"><a href="javascript:;">Dashboard</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Deposit</li>
+      </ol>
+  </nav>
+  <div class="content-wrapper">
+      <div class="content-inner">
+          <div class="card bg-white mb-3 shadow">
+              <div class="card-body">
+                  <h6>Select payment method</h6>
+                  <nav class="mb-0">
+                      <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                          <a class="nav-item nav-link" id="nav-billing-tab" data-toggle="tab" href="#nav-billing" role="tab" aria-controls="nav-billing" aria-selected="true"><strong>Billing System</strong></a>
+                          <a class="nav-item nav-link active" id="nav-bank-tab" data-toggle="tab" href="#nav-bank" role="tab" aria-controls="nav-bank" aria-selected="true"><strong>Bank Tranfers</strong></a>
+                      </div>
+                  </nav>
+                  <div class="tab-content border-0 p-0 pt-3 mb-3" id="nav-tabContent">
+                      <!-- BEGIN BBILLING SYSTEM -->
+                      <div class="tab-pane fade" id="nav-billing" role="tabpanel" aria-labelledby="nav-billing-tab">
+                          <div class="row">
+                              <div class="col-md-6 col-lg-7">
+                                  <div class="p-3 border mb-3 form form-line bg-light">
+                                      <div class="d-flex justify-content-between mb-2">
+                                          <h5 class="text-primary mb-0"><strong>MT5</strong> Information</h5>
+                                          <div><a href="javascript:;" class="btn-link-24"><span class="ml-1">Refesh</span> <i class="icon ion-md-refresh-circle"></i></a></div>
+                                      </div>
+                                      <div class="mb-1 d-flex justify-content-between">
+                                          <label class="label">Type of account</label>
+                                          <div>
+                                              <select class="form-control form-control-sm" style="min-width: 80px;background: none;">
+                                                  <option>FX</option>
+                                              </select>
+                                          </div>
+                                      </div>
+                                      <div class="mb-1 d-flex justify-content-between">
+                                          <label class="label">Trading account</label>
+                                          <div>
+                                              <strong>10000001</strong>
+                                          </div>
+                                      </div>
+                                      <div class="mb-1 d-flex justify-content-between">
+                                          <label class="label">Balance</label>
+                                          <div>
+                                              <strong>90,000.00 <span class="small text-secondary">(JPY)</span></strong>
+                                          </div>
+                                      </div>
+                                      <div class="mb-1 d-flex justify-content-between">
+                                          <label class="label">Margin Level</label>
+                                          <div>
+                                              <strong>154.36%</strong>
+                                          </div>
+                                      </div>
+                                      <div class="small text-secondary"><i class="icon ion-md-time"></i> <em>Last updated: 2020/01/10 11:29</em></div>
+                                  </div>
+                              </div>
+                              <div class="col-md-6 col-lg-5">
+                                  <h4 class="text-primary border-bottom pb-1 mb-3"><i class="icon ion-md-add"></i> Deposit Transactions</h4>
+                                  <div class="form form-line">
+                                      <div class="form form-line">
+                                          <div class="mb-2">
+                                              <label class="label">Deposit Amount</label>
+                                              <input type="text" name="amount" class="form-control form-control-lg text-right font-weight-bold text-warning" value="10,000" placeholder="">
+                                          </div>
+                                          <div class="mb-1 d-flex justify-content-between">
+                                              <label class="label">Currency</label>
+                                              <div>
+                                                  <strong>JPY</strong>
+                                              </div>
+                                          </div>
+                                          <div class="mb-1 d-flex justify-content-between align-items-center">
+                                              <label class="label">Deposit fee</label>
+                                              <div><strong>0</strong></div>
+                                          </div>
+                                          <div class="mb-1 d-flex justify-content-between align-items-center">
+                                              <label class="label">Total Amount</label>
+                                              <div><strong>10,000.00</strong></div>
+                                          </div>
+                                          <div class="mb-1 d-flex justify-content-between align-items-center">
+                                              <label class="label">Margin Level estimate</label>
+                                              <div><strong>174.28%</strong></div>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <p class="small text-secondary p-2 bg-light">Notice: Minimum single deposit amount is ......</p>
+                                  <button class="btn btn-warning btn-block text-uppercase btn-lg mb-3"><strong>Deposit</strong> <i class="icon ion-md-arrow-round-down"></i></button>
+                                  <p class="text-center" style="line-height: 1.2"><a href="javascript:;" data-toggle="modal" data-target="#modal-rule"><i class="icon ion-md-information-circle"></i> General rules for depositing and withdrawing funds</a></p>
+                              </div>
+                          </div>
+                      </div><!-- END BILLING SYSTEM -->
+                      <!-- BEGIN BANK ACCOUNT -->
+                      <div class="tab-pane fade show active" id="nav-bank" role="tabpanel" aria-labelledby="nav-bank-tab">
+                          <div class="row">
+                              <div class="col-lg-7">
+                                  <div class="list-banks-wrapper">
+                                      <ul class="idTabs list-banks">
+                                          <li class="bank-item">
+                                              <a href="#mizuho_bank">
+                                                  <div class="text-center">
+                                                      <div><img src="assets/images/bank_logo/mizuho.png" alt="Mizuho Bank" class="bank_logo"></div>
+                                                      <div class="d-none">Mizuho Bank</div>
+                                                  </div>
+                                              </a>
+                                          </li>
+                                          <li class="bank-item">
+                                              <a href="#ufj_bank">
+                                                  <div class="text-center">
+                                                      <div><img src="assets/images/bank_logo/ufj.png" alt="Mizuho Bank" class="bank_logo"></div>
+                                                      <div class="d-none">Tokyo-Mitsubishi UFJ Bank</div>
+                                                  </div>
+                                              </a>
+                                          </li>
+                                          <li class="bank-item">
+                                              <a href="#sm_bank">
+                                                  <div class="text-center">
+                                                      <div><img src="assets/images/bank_logo/smbc.png" alt="Mizuho Bank" class="bank_logo"></div>
+                                                      <div class="d-none">Sumitomo Mitsui Bank</div>
+                                                  </div>
+                                              </a>
+                                          </li>
+                                          <li class="bank-item">
+                                              <a href="#jn_bank">
+                                                  <div class="text-center">
+                                                      <div><img src="assets/images/bank_logo/jnb.png" alt="Mizuho Bank" class="bank_logo"></div>
+                                                      <div class="d-none">Japan Net Bank</div>
+                                                  </div>
+                                              </a>
+                                          </li>
+                                          <li class="bank-item">
+                                              <a href="#rakuten_bank">
+                                                  <div class="text-center">
+                                                      <div><img src="assets/images/bank_logo/rakuten.png" alt="Mizuho Bank" class="bank_logo"></div>
+                                                      <div class="d-none">Rakuten Bank</div>
+                                                  </div>
+                                              </a>
+                                          </li>
+                                          <li class="bank-item">
+                                              <a href="#jpb_bank">
+                                                  <div class="text-center">
+                                                      <div><img src="assets/images/bank_logo/jpb.png" alt="Japan Post Bank" class="bank_logo"></div>
+                                                      <div class="d-none">Japan Post Bank</div>
+                                                  </div>
+                                              </a>
+                                          </li>
+                                      </ul>
+                                  </div>
+                                  <p class="mb-1"><strong>Please find details for a wire transfer below:</strong></p>
+                                  <div id="mizuho_bank" class="mb-2">
+                                      <table class="table border table-sm" cellpadding="0" cellspacing="0">
+                                          <tbody>
+                                              <tr>
+                                                  <td width="200">Account Number</td>
+                                                  <td><strong>1073201</strong></td>
+                                              </tr>
+                                              <tr>
+                                                  <td>Account Holder's Name</td>
+                                                  <td><strong>Philip Showken</strong></td>
+                                              </tr>
+                                              <tr>
+                                                  <td>Beneficiary Bank</td>
+                                                  <td><strong>Bank of Mitsubishi UFJ</strong></td>
+                                              </tr>
+                                              <tr>
+                                                  <td>Bank Branch</td>
+                                                  <td><strong>Edogawabashi</strong></td>
+                                              </tr>
+                                              <tr>
+                                                  <td>Branch Number</td>
+                                                  <td><strong>060</strong></td>
+                                              </tr>
+                                              <tr>
+                                                  <td>currency</td>
+                                                  <td><strong>JPY</strong></td>
+                                              </tr>
+                                          </tbody>
+                                      </table>
+                                  </div>
+                                  <div id="ufj_bank" class="mb-2">
+                                      Tokyo-Mitsubishi UFJ Bank
+                                  </div>
+                                  <div id="sm_bank" class="mb-2">
+                                      Sumitomo Mitsui Bank
+                                  </div>
+                                  <div id="jn_bank" class="mb-2">
+                                      Japan Net Bank
+                                  </div>
+                                  <div id="rakuten_bank" class="mb-2">
+                                      Rakuten Bank
+                                  </div>
+                                  <div id="jpb_bank" class="mb-2">
+                                      Japan Post Bank
+                                  </div>
+                                  <div class="small font-italic text-secondary mt-2">
+                                      <p class="mb-0">※Warnings:</p>
+                                      <ul class="reset">
+                                          <li>Please try to deposit funds in the same currency as your trading account, as we do not cover exchange rate costs.</li>
+                                          <li>Any bank transfers sent to Philip Showken must be made from a bank account registered in the client's full name, otherwise your funds may be returned to the source.</li>
+                                      </ul>
+                                  </div>
+                                  <p>&nbsp;</p>
+                              </div>
+                              <div class="col-lg-5">
+                                  <div class="p-3 border mb-3 form form-line bg-light">
+                                      <div class="d-flex justify-content-between mb-2">
+                                          <h5 class="text-primary mb-0"><strong>MT5</strong> Information</h5>
+                                          <div><a href="javascript:;" class="btn-link-24"><span class="ml-1">Refesh</span> <i class="icon ion-md-refresh-circle"></i></a></div>
+                                      </div>
+                                      <div class="mb-1 d-flex justify-content-between">
+                                          <label class="label">Type of account</label>
+                                          <div>
+                                              <select class="form-control form-control-sm" style="min-width: 80px;background: none;">
+                                                  <option>FX</option>
+                                              </select>
+                                          </div>
+                                      </div>
+                                      <div class="mb-1 d-flex justify-content-between">
+                                          <label class="label">Trading account</label>
+                                          <div>
+                                              <strong>10000001</strong>
+                                          </div>
+                                      </div>
+                                      <div class="mb-1 d-flex justify-content-between">
+                                          <label class="label">Balance</label>
+                                          <div>
+                                              <strong>90,000.00 <span class="small text-secondary">(JPY)</span></strong>
+                                          </div>
+                                      </div>
+                                      <div class="mb-1 d-flex justify-content-between">
+                                          <label class="label">Margin Level</label>
+                                          <div>
+                                              <strong>154.36%</strong>
+                                          </div>
+                                      </div>
+                                      <div class="small text-secondary"><i class="icon ion-md-time"></i> <em>Last updated: 2020/01/10 11:29</em></div>
+                                  </div>
+                                  <div class="p-3 border mb-3 shadow">
+                                      <h5 class="text-primary mb-3"><i class="icon ion-md-calculator"></i> Deposit Amount Caculation</h5>
+                                      <div class="form form-line">
+                                          <div class="form form-line">
+                                              <div class="mb-2">
+                                                  <label class="label">Deposit Amount</label>
+                                                  <input type="text" name="amount" class="form-control form-control-lg text-right font-weight-bold text-warning" value="10,000" placeholder="">
+                                              </div>
+                                              <div class="mb-1 d-flex justify-content-between">
+                                                  <label class="label">Currency</label>
+                                                  <div>
+                                                      <strong>JPY</strong>
+                                                  </div>
+                                              </div>
+                                              <div class="mb-1 d-flex justify-content-between align-items-center">
+                                                  <label class="label">Margin Level estimate</label>
+                                                  <div>174.28%</div>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <p class="small text-secondary p-2 bg-light">Notice: Minimum single deposit amount is ......</p>
+                                  <p class="text-center" style="line-height: 1.2"><a href="javascript:;" data-toggle="modal" data-target="#modal-rule"><i class="icon ion-md-information-circle"></i> General rules for depositing and withdrawing funds</a></p>
+                              </div>
+                          </div>
+                      </div><!-- END BANK ACCOUNT -->
+                  </div>
+                  <div class="row">
+                      <div class="col-lg-8">
+                      </div>
+                      <div class="col-lg-4">
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="card bg-white mb-3">
+              <div class="card-body">
+                  <h6 class="mb-0 text-uppercase text-primary border-bottom mb-3 pb-2"><i class="icon ion-md-time"></i> <strong>Entire Operation History</strong></h6>
+                  <div class="table-responsive">
+                      <table class="table table-sm table-hover" cellspacing="0" cellpadding="0">
+                          <thead>
+                              <tr>
+                                  <th class="border-top-0" width="120">Transaction ID</th>
+                                  <th class="border-top-0">Date</th>
+                                  <th class="border-top-0">Type</th>
+                                  <th class="border-top-0">Description</th>
+                                  <th class="border-top-0 text-right" width="70">Currency</th>
+                                  <th class="border-top-0 text-right">Amount</th>
+                                  <th class="border-top-0 text-right" width="120">Status</th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                              <tr>
+                                  <td><a href="javascript:;" data-toggle="modal" data-target="#modal-109517140">109517140</a></td>
+                                  <td>2020/01/17 08:30</td>
+                                  <td>Deposit</td>
+                                  <td>Deposit from HSBC</td>
+                                  <td class="text-right">JPY</td>
+                                  <td class="text-right">20,000</td>
+                                  <td class="text-right"><span class="text-info"><i class="icon ion-md-hourglass"></i> Pending</span></td>
+                              </tr>
+                              <tr>
+                                  <td><a href="javascript:;" data-toggle="modal" data-target="#modal-109506680">109506680</a></td>
+                                  <td>2020/01/17 06:39</td>
+                                  <td>Deposit</td>
+                                  <td>Deposit from Japan Net Bank</td>
+                                  <td class="text-right">JPY</td>
+                                  <td class="text-right">100,000</td>
+                                  <td class="text-right"><span class="text-success"><i class="icon ion-md-checkmark"></i> Completed</span></td>
+                              </tr>
+                              <tr>
+                                  <td colspan="7">
+                                      <a href="MY012_DW_History.html">View entire operation history</a>
+                                  </td>
+                              </tr>
+                          </tbody>
+                      </table>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>

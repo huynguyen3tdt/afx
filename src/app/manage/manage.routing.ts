@@ -3,6 +3,8 @@ import { NotificationsComponent } from './notifications/notifications.component'
 import { AccountInformationComponent } from './account-information/account-information.component';
 import { WithdrawRequestComponent } from './withdraw-request/withdraw-request.component';
 import { WithdrawHistoryComponent } from './withdraw-history/withdraw-history.component';
+import { ReportListComponent } from './report-list/report-list.component';
+import { DepositComponent } from './deposit/deposit.component';
 
 export const ManageRoutes: Routes = [
   {
@@ -20,5 +22,13 @@ export const ManageRoutes: Routes = [
   {
     path: 'withdrawHistory',
     component: WithdrawHistoryComponent
+  },
+  {
+    path: 'reportList',
+    component: ReportListComponent
+  },
+  {
+    path: 'deposit',
+    component: DepositComponent
   }
 ];

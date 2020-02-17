@@ -10,13 +10,9 @@ export interface WithdrawHistoryModel {
   data: BankInforModel;
 }
 
-export interface WithdrawAmount {
+export interface WithdrawAmountResponse {
   meta: MetaResponseModel;
-  data: {
-    deposit_amount: number;
-    withdraw_amount: number;
-    withdraw_amount_pending: number
-  };
+  data: WithdrawAmountModel;
 }
 
 export interface WithdrawHistory {
@@ -67,6 +63,12 @@ export interface TransactionModel {
     amount: number;
     type: string;
     status: number;
+}
+
+export interface WithdrawAmountModel {
+  deposit_amount: number;
+  withdraw_amount: number;
+  withdraw_amount_pending: number;
 }
 
 

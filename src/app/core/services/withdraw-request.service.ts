@@ -8,9 +8,9 @@ import { catchError } from 'rxjs/operators';
 import {
   WithdrawRequestModel,
   WithdrawHistoryModel,
-  WithdrawAmount,
   TransactionResponse,
-  WithdrawHistory
+  WithdrawHistory,
+  WithdrawAmountResponse
 } from '../model/withdraw-request-response.model';
 
 
@@ -46,7 +46,7 @@ export class WithdrawRequestService {
       );
   }
 
-  getDwAmount(): Observable<WithdrawAmount> {
+  getDwAmount(): Observable<WithdrawAmountResponse> {
     return this.httpClient
       .get(`${this.envConfigService.getConfig()}/${AppSettings.API_DW_AMOUNT}`)
       .pipe(
