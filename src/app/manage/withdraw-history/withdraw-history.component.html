@@ -143,11 +143,10 @@
                           </div>
                           <div class="small text-secondary d-inline-block mr-2">Showing 1 to 10 of 126 entries</div>
                       </div>
-                      <pagination [(ngModel)]="currentPage" id="pagination" appPagination
-                                    class="pagination pagination-sm justify-content-end"
-                                    (pageChanged)="pageChanged($event)" [totalItems]="totalItem / pageSize"
-                                    [maxSize]="5">
-                                </pagination>
+                      <pagination [totalItems]="10" [boundaryLinks]="true"
+                          previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;">
+
+                      </pagination>
                   </div>
               </div>
           </div>

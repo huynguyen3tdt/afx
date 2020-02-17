@@ -4,6 +4,7 @@ import { WithdrawHistoryComponent } from './withdraw-history.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { PaginationModule } from 'ngx-bootstrap';
 
 
 describe('WithdrawHistoryComponent', () => {
@@ -17,7 +18,8 @@ describe('WithdrawHistoryComponent', () => {
         ReactiveFormsModule,
         HttpClientTestingModule,
         FormsModule,
-        BsDatepickerModule.forRoot()
+        BsDatepickerModule.forRoot(),
+        PaginationModule.forRoot(),
       ],
     })
     .compileComponents();
