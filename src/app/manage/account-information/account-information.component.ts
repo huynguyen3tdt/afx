@@ -4,6 +4,8 @@ import { WithdrawRequestService } from 'src/app/core/services/withdraw-request.s
 import { Mt5Model, WithdrawAmountModel } from 'src/app/core/model/withdraw-request-response.model';
 import { UserService } from './../../core/services/user.service';
 import { UserModel } from 'src/app/core/model/user.model';
+import { FormGroup, FormControl } from '@angular/forms';
+import { requiredInput } from 'src/app/core/helper/custom-validate.helper';
 
 @Component({
   selector: 'app-account-information',
@@ -18,6 +20,10 @@ export class AccountInformationComponent implements OnInit {
   editPhone: boolean;
   editLanguage: boolean;
   userInfor: UserModel;
+  userForm: FormGroup;
+  countries = ['Vietnamese', 'English'];
+  postcode: any;
+  isSubmitted: boolean;
 
   constructor(
     private translateee: TranslateService,
@@ -25,6 +31,7 @@ export class AccountInformationComponent implements OnInit {
     private userService: UserService) { }
 
   ngOnInit() {
+    this.initUserForm();
     this.editAddress = false;
     this.editEmail = false;
     this.editPhone = false;
@@ -32,6 +39,18 @@ export class AccountInformationComponent implements OnInit {
     this.getUserInfo();
     this.getMt5Infor();
     this.getWithDrawAmount();
+  }
+
+  initUserForm() {
+    this.userForm = new FormGroup({
+      postCode: new FormControl('', requiredInput),
+      searchPrefe: new FormControl(),
+      searchCountry: new FormControl(),
+      house_numb: new FormControl('', requiredInput),
+      email: new FormControl('', requiredInput),
+      phone: new FormControl('', requiredInput),
+      language: new FormControl(),
+    });
   }
 
   changeLang(event) {
@@ -42,7 +61,16 @@ export class AccountInformationComponent implements OnInit {
     this.userService.getUserInfor().subscribe(response => {
       if (response.meta.code === 200) {
         this.userInfor = response.data;
+        this.userForm.controls.postCode.setValue(this.userInfor.postcode.value);
+        this.userForm.controls.searchPrefe.setValue(this.userInfor.address.value.prefecture);
+        this.userForm.controls.searchCountry.setValue(this.userInfor.address.value.county);
+        this.userForm.controls.house_numb.setValue(this.userInfor.address.value.house_numb);
+        this.userForm.controls.email.setValue(this.userInfor.email.value);
+        this.userForm.controls.phone.setValue(this.userInfor.phone);
+        this.userForm.controls.language.setValue(this.userInfor.language);
+        // this.postcode = this.userInfor.postcode.value;
         console.log('userInfooo ', this.userInfor);
+
       }
     });
   }
@@ -69,6 +97,7 @@ export class AccountInformationComponent implements OnInit {
     switch (field) {
       case 'address':
         this.editAddress = true;
+        // this.userForm.controls.postCode = this.postcode;
         break;
       case 'email':
         this.editEmail = true;
@@ -97,5 +126,24 @@ export class AccountInformationComponent implements OnInit {
         this.editLanguage = false;
         break;
     }
+  }
+  onSave() {
+    this.isSubmitted = true;
+    if (this.userForm.invalid) {
+      return;
+    }
+    // const param = {
+    //   postCode: this.userForm.controls.postCode.value,
+    //   searchPrefe: this.userForm.controls.searchPrefe.value,
+    //   searchCountry: this.userForm.controls.searchCountry.value,
+    //   house_numb: this.userForm.controls.house_numb.value,
+    //   email: this.userForm.controls.email.value,
+    //   phone: this.userForm.controls.phone.value,
+    //   language: this.userForm.controls.language.value
+    // };
+    // this.userService.getUserInfor(param).subscribe(response => {
+    //   if (response.meta.code === 200) {
+    //   }
+    // });
   }
 }
