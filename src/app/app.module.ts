@@ -19,7 +19,6 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { LoginGuard } from './core/guard/login.guard';
 import { AuthGuard } from './core/guard/auth.guard';
 
-
 const appEnvInitializerFn = (envConfig: EnvConfigService) => {
   return () => {
     return envConfig.loadEnvConfig();
@@ -40,7 +39,7 @@ const Routing: ModuleWithProviders = RouterModule.forRoot(AppRoutes, {
     RegisterLayoutComponent,
     ManageLayoutComponent,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
   ],
   imports: [
     BrowserModule,
