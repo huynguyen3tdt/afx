@@ -30,10 +30,8 @@ export class ReportListComponent implements OnInit {
     this.reportservice.getReport(pageSize, pageNumber, type).subscribe(response => {
       if (response.meta.code === 200) {
         this.listReport = response.data.results;
-        console.log('111', this.listReport);
         this.listReport.forEach(item => {
           item.created_date = moment(item.created_date).format('YYYY/MM/DD');
-          console.log('222', item.created_date);
         });
       }
     });

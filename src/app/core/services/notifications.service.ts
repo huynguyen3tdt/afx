@@ -29,7 +29,6 @@ export class NotificationsService {
     } else {
       URL = `?not_read=${checkUnread}&page_size=${pageSize}?page_numb=${pageNumber}`;
     }
-    console.log('URLLL ', URL);
     return this.httpClient.get(`${this.envConfigService.getConfig()}/${AppSettings.API_GET_LIST_NOTIFICATIONS}` + URL)
       .pipe(
         catchError((error: HttpErrorResponse) => {

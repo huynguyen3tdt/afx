@@ -3,7 +3,8 @@ import { WithdrawRequestService } from 'src/app/core/services/withdraw-request.s
 // import { ACCOUNT_TYPE } from 'src/app/core/constant/authen-constant';
 import { FormGroup, FormControl } from '@angular/forms';
 import { requiredInput } from 'src/app/core/helper/custom-validate.helper';
-import { BankInforModel } from 'src/app/core/model/withdraw-request-response.model';
+import { BankInforModel, Mt5Model, TransactionModel } from 'src/app/core/model/withdraw-request-response.model';
+declare var $: any;
 
 @Component({
   selector: 'app-withdraw-request',
@@ -12,13 +13,14 @@ import { BankInforModel } from 'src/app/core/model/withdraw-request-response.mod
 })
 export class WithdrawRequestComponent implements OnInit {
 
-  listMt5Infor;
+  mt5Infor: Mt5Model;
   accountType;
-  listBankInfor: BankInforModel;
+  bankInfor: BankInforModel;
   listDwAmount;
   withdrawForm: FormGroup;
   isSubmitted;
   listDwHistory;
+  transactionDetail: TransactionModel;
 
   constructor(private withdrawRequestService: WithdrawRequestService, ) { }
 
@@ -48,25 +50,22 @@ export class WithdrawRequestComponent implements OnInit {
       currency: 'JPY'
     };
     this.withdrawRequestService.postWithdraw(param).subscribe(response => {
-      if (response.meta.code === 200) {}
+      if (response.meta.code === 200) { }
     });
   }
 
   getMt5Infor() {
     this.withdrawRequestService.getmt5Infor().subscribe(response => {
       if (response.meta.code === 200) {
-        this.listMt5Infor = response.data;
+        this.mt5Infor = response.data;
         // this.accountType = localStorage.getItem(ACCOUNT_TYPE);
-
-
       }
     });
   }
   getBankInfor() {
     this.withdrawRequestService.getBankInfor().subscribe(response => {
       if (response.meta.code === 200) {
-        this.listBankInfor = response.data;
-
+        this.bankInfor = response.data;
       }
     });
   }
@@ -88,6 +87,15 @@ export class WithdrawRequestComponent implements OnInit {
     });
   }
   onRefesh() {
-      this.getMt5Infor();
-    }
+    this.getMt5Infor();
+  }
+
+  openDetailTransaction(item) {
+    this.transactionDetail = item;
+    $('#detai_transaction').modal('show');
+  }
+
+  showConfirm() {
+    $('#withdraw_confirm').modal('show');
+  }
 }

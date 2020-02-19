@@ -12,6 +12,7 @@ import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
 import { ReportListComponent } from './report-list/report-list.component';
 import { DepositComponent } from './deposit/deposit.component';
+import { CurrencyDirective } from '../core/directive/currency.directive';
 
 @NgModule({
     imports: [
@@ -30,7 +31,9 @@ import { DepositComponent } from './deposit/deposit.component';
       WithdrawRequestComponent,
       WithdrawHistoryComponent,
       ReportListComponent,
-      DepositComponent],
+      DepositComponent,
+      CurrencyDirective
+    ],
     schemas: [NO_ERRORS_SCHEMA]
 })
 

@@ -97,13 +97,11 @@ export class AccountInformationComponent implements OnInit {
     this.withdrawRequestService.getDwAmount().subscribe(response => {
       if (response.meta.code === 200) {
         this.withdrawAmount = response.data;
-        console.log('widtDrawAmoutt ', this.withdrawAmount);
       }
     });
   }
 
   showEditField(field: string) {
-    console.log('999999 ', field);
     switch (field) {
       case 'address':
         this.editAddress = true;
