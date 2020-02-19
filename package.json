@@ -21,6 +21,7 @@
     "@angular/router": "~8.2.4",
     "@ngx-translate/core": "^11.0.1",
     "@ngx-translate/http-loader": "^4.0.0",
+    "@types/jest": "^25.1.2",
     "bootstrap": "^4.4.1",
     "jquery": "^3.4.1",
     "moment": "^2.24.0",
