@@ -60,10 +60,10 @@
                                   </thead>
                                   <tbody>
                                       <tr *ngFor="let item of listReport">
-                                          <td class="text-center align-middle"><span class="small text-secondary">PDF</span></td>
-                                          <td class="align-middle"><strong><a href="javascript:;">{{item?.report_name}}</a></strong></td>
+                                          <td class="text-center align-middle"><span class="small text-secondary">{{item?.file_type}}</span></td>
+                                          <td class="align-middle"><strong><a href="javascript:;">{{item?.report_title}}</a></strong></td>
                                           <td class="text-right align-middle"><span class="text-secondary">{{item?.created_date | date:'yyyy/MM/dd'}}</span></td>
-                                          <td class="text-right align-middle"><span class="text-danger">Not yet</span></td>
+                                          <td class="text-right align-middle"><span class="text-danger">{{item?.read_flg}}</span></td>
                                           <td class="text-right align-middle">
                                               <button class="btn btn-sm btn-outline-secondary pt-0 pb-0"><i class="icon ion-md-download"></i></button>
                                           </td>

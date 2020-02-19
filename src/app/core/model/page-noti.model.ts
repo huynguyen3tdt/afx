@@ -25,12 +25,13 @@ export interface NotificationResponse {
 
 export interface Notification {
     id: number;
-    noti_type: number;
-    title: string;
-    date_time: string;
-    is_read: boolean;
-    agreement: number;
-    content: string;
+    news_type: number;
+    news_title: string;
+    create_date: string;
+    read_flg: string;
+    agree_flg: number;
+    agreement_flg: number;
+    news_content: string;
 }
 
 export interface TotalNotification {

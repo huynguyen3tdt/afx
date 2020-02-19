@@ -120,9 +120,9 @@
                           </thead>
                           <tbody>
                               <tr *ngFor="let item of listDwHistory">
-                                  <td><a href="javascript:;">{{item?.transaction_id}}</a></td>
-                                  <td>{{item?.transaction_date | date:'yyyy/MM/dd'}} {{item?.transaction_date | date:'HH:mm'}}</td>
-                                  <td>{{item?.type}}</td>
+                                  <td><a href="javascript:;">{{item?.id}}</a></td>
+                                  <td>{{item?.create_date | date:'yyyy/MM/dd'}} {{item?.transaction_date | date:'HH:mm'}}</td>
+                                  <td>{{item?.funding_type}}</td>
                                   <td>{{item?.description}}</td>
                                   <td class="text-right">{{item?.currency}}</td>
                                   <td class="text-right">{{item?.amount}}</td>

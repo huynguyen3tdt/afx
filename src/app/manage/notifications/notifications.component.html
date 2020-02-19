@@ -30,31 +30,31 @@
                             aria-labelledby="v-pills-all-tab">
                             <h4><strong>All</strong> Notifications</h4>
                             <div class="mb-2">
-                                <label class="container-switch small">                                  
+                                <label class="container-switch small">
                                     <div class="switch">
                                       <input type="checkbox" name="unread_all" [checked]="unreadAll" (change)="filterUnreadNoti()">
                                       <span class="slider round"></span>
                                     </div>
                                     Only show unread Notification
                                 </label>
-                            </div> 
+                            </div>
                             <div class="list-notifications">
                                 <ng-container *ngFor="let item of listNotification; let i = index">
                                     <div (click)="showDetail(i, item)" id="noti_{{i}}"
-                                        [ngClass]="{'unread': item.is_read == 'true'}" class="notification-item">
+                                        [ngClass]="{'unread': item.read_flg == 'true'}" class="notification-item">
                                         <div class="badge-wrap">
-                                            <span *ngIf="item?.noti_type == 0 || item?.noti_type == 3"
+                                            <span *ngIf="item?.news_type == 0 || item?.noti_type == 3"
                                                 class="badge badge-danger d-lg-block mb-lg-1">Important</span>
-                                            <span *ngIf="item?.noti_type == 1 || item?.noti_type == 3"
+                                            <span *ngIf="item?.news_type == 1 || item?.noti_type == 3"
                                                 class="badge badge-warning d-lg-block mb-lg-1">System</span>
-                                            <span *ngIf="item?.noti_type == 2"
+                                            <span *ngIf="item?.news_type == 2"
                                                 class="badge badge-success d-lg-block mb-lg-1">Campaign</span>
                                         </div>
                                         <div class="item-header">
-                                            <h5 class="item-title"><a href="javascript:;">{{item?.title}}</a></h5>
-                                            <div class="item-meta">{{item?.date_time}}</div>
+                                            <h5 class="item-title"><a href="javascript:;">{{item?.news_title}}</a></h5>
+                                            <div class="item-meta">{{item?.create_date}}</div>
                                         </div>
-                                        <div class="item-content" [innerHTML]="item?.content">
+                                        <div class="item-content" [innerHTML]="item?.news_content">
                                         </div>
                                     </div>
                                 </ng-container>
@@ -71,38 +71,38 @@
                             aria-labelledby="v-pills-important-tab">
                             <h4><strong>Important</strong> Notifications</h4>
                             <div class="mb-2">
-                                    <label class="container-switch small">                                  
+                                    <label class="container-switch small">
                                         <div class="switch">
                                           <input type="checkbox" name="unread_all" [checked]="unreadImportant" (change)="filterUnreadNoti()">
                                           <span class="slider round"></span>
                                         </div>
                                         Only show unread Notification
                                     </label>
-                                </div> 
+                                </div>
                             <div class="list-notifications">
                                 <ng-container *ngFor="let item of listNotification; let i = index">
-                                    <div *ngIf="item.agreement == 0" (click)="showDetail(i, item)"
-                                        id="important_{{i}}" [ngClass]="{'unread': item.is_read == 'true'}"
+                                    <div *ngIf="item.agreement_flg == 0" (click)="showDetail(i, item)"
+                                        id="important_{{i}}" [ngClass]="{'unread': item.read_flg == 'true'}"
                                         class="notification-item">
                                         <div class="badge-wrap">
                                             <span class="badge badge-danger d-lg-block mb-lg-1">Important</span>
                                         </div>
                                         <div class="item-header">
-                                            <h5 class="item-title"><a href="javascript:;">{{item?.title}}</a></h5>
-                                            <div class="item-meta">{{item?.date_time}}</div>
+                                            <h5 class="item-title"><a href="javascript:;">{{item?.news_title}}</a></h5>
+                                            <div class="item-meta">{{item?.create_date}}</div>
                                         </div>
-                                        <div class="item-content" [innerHTML]="item?.content">
+                                        <div class="item-content" [innerHTML]="item?.news_content">
                                         </div>
                                     </div>
-                                    <div *ngIf="item.agreement == 1" (click)="showDetail(i, item)"
+                                    <div *ngIf="item.agreement_flg == 1" (click)="showDetail(i, item)"
                                         [ngClass]="{'unread': item.is_read == 'true'}" id="important_{{i}}"
                                         class="notification-item item-agreement">
                                         <div class="badge-wrap">
                                             <span class="badge badge-danger d-lg-block mb-lg-1">Important</span>
                                         </div>
                                         <div class="item-header">
-                                            <h5 class="item-title"><a href="javascript:;">{{item?.title}}</a></h5>
-                                            <div class="item-meta">{{item?.date_time}}</div>
+                                            <h5 class="item-title"><a href="javascript:;">{{item?.news_title}}</a></h5>
+                                            <div class="item-meta">{{item?.create_date}}</div>
                                         </div>
                                     </div>
                                 </ng-container>
@@ -156,7 +156,7 @@
 
                 </div>
                 <div>
-                    <button (click)="confirmAgreement()" type="button" 
+                    <button (click)="confirmAgreement()" type="button"
                     [className]="formAgreement?.controls?.checkAgreement?.value == false ? 'btn btn-secondary btn-confirm' : 'btn btn-secondary btn-success'"
                         >Confirm</button>
                 </div>

@@ -5,7 +5,7 @@ import { Observable } from 'rxjs/internal/Observable';
 import { InnerSubscriber } from 'rxjs/internal/InnerSubscriber';
 import { EnvConfigService } from './env-config.service';
 import { catchError } from 'rxjs/operators';
-import { UserResponse } from '../model/user.model';
+import { UserResponse, UserModel } from '../model/user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -26,5 +26,18 @@ export class UserService {
           });
         })
       );
+  }
+
+  updateUser(parram: any): Observable<UserResponse> {
+    return this.httpClient
+      .put(`${this.envConfigService.getConfig()}/${AppSettings.API_PUT_USER_INFOR}`,
+            parram)
+      .pipe(
+      catchError((error: HttpErrorResponse) => {
+        return new Observable((observer: InnerSubscriber<any, any>) => {
+          observer.next(error);
+        });
+      })
+    );
   }
 }

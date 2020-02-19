@@ -43,12 +43,8 @@ export class WithdrawRequestComponent implements OnInit {
       return;
     }
     const param = {
-      bank_account_number: 4111111111111111,
-      account_holder_name: 'TEST_HOLDER_NAME',
-      beneficiary_bank: 'TEST_BENEF_BANK',
-      bank_branch: 'TEST_BANK_BRANCH',
-      swift_code: 'ACCC',
-      withdrawal_amount: this.withdrawForm.controls.amount.value,
+      account_id: '1234',
+      amount: this.withdrawForm.controls.amount.value,
       currency: 'JPY'
     };
     this.withdrawRequestService.postWithdraw(param).subscribe(response => {

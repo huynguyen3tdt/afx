@@ -6,19 +6,19 @@ export interface UserResponse {
 }
 
 export interface UserModel {
-    full_name: string;
-    dob: string;
-    gender: string;
-    postcode: {
+    name: string;
+    fx_dob: string;
+    fx_gender: string;
+    zip: {
         status: number,
         value: string
     };
     address: {
     status: 0,
     value: {
-        prefecture: string,
-        county: string,
-        house_numb: string
+        city: string,
+        street: string,
+        street2: string
         }
     };
     email: {
@@ -26,5 +26,5 @@ export interface UserModel {
         value: string
     };
     phone: string;
-    language: string;
+    lang: string;
 }
