@@ -12,8 +12,10 @@ export const MOCK_LOGIN_RESPONSE = {
         ],
         access_token: 'qwertyuiopsdfghjklxcvbnm',
         expire_time: '2020-02-11T04:46:08.387Z',
+        is_company: 'false',
+        pwd_change_flg: 'false',
         min_amount: 10000,
         fee: 20,
-        language: 'English'
+        lang: 'English'
     }
 };

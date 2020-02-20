@@ -5,10 +5,12 @@ export interface LoginResponseModel {
     data: {
         account_ids: Array<AccountIDS>;
         access_token: string;
+        is_company: string;
+        pwd_change_flg: string;
         expire_time: string;
         min_amount: number;
         fee: number;
-        language: string;
+        lang: string;
     };
 }
 
