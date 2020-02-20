@@ -1,4 +1,3 @@
-
 /*--- Overwrite Boostrap ---*/
 a{
 	color: #0d75a2;
@@ -418,6 +417,7 @@ body{
 	line-height: 14px;
 	margin-top: 2px;
 }
+/* Form Line */
 .form-line .label{
 	font-size: 14px;
 	color: #111;
@@ -440,14 +440,14 @@ body{
 	box-shadow: none;
 	border-bottom-color: #0D688F;
 }
-.form-line .input-wrapper {
+.input-wrapper {
 	position: relative;
 }
-.form-line .input-wrapper .form-control {
+.input-wrapper .form-control {
 	padding-right: 40px;
 }
 
-.form-line .input-wrapper .btn {
+.input-wrapper .btn {
 	position: absolute;
 	right: 0;
 	top: 0;
@@ -464,6 +464,7 @@ body{
 .form-control {
 	color: #000;
 }
+
 /* ----- PAGE LOGIN --- */
 .page.login{
 	background: #0D688F url(../images/login-bg.jpg) 50% 50% no-repeat;
@@ -1526,4 +1527,20 @@ ul.reset li {
 
 .font-size-sm .list-notifications .notification-item .item-title {
 	font-size: 16px;
+}
+
+/* Form Search Box */
+.form-search-box {
+	background: #fffcf2;
+	padding: 14px 15px 0;
+	margin-left: -15px;
+	margin-right: -15px;
+}
+.form-search-box .row{
+	margin-right: -10px !important;
+	margin-left: -10px !important;
+}
+.form-search-box .row > div {
+	padding-right: 10px !important;
+	padding-left: 10px !important;
 }

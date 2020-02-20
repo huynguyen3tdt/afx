@@ -12,7 +12,7 @@ document.write( ' <div class=\"switch-style\">\n' );
 document.write( '        <div><a href=\"javascript:;\" class=\"btn btn-close\"><i class=\"icon ion-md-close\"></i></a></div>\n' );
 document.write( '        <div class=\"btn-group-vertical\">\n' );
 document.write( '            <button type=\"button\" class=\"btn btn-size-sm\" data-size=\"sm\">小</button>\n' );
-document.write( '            <button type=\"button\" class=\"btn btn-size-md active\" data-size=\"md\">中</button>\n' );
+document.write( '            <button type=\"button\" class=\"btn btn-size-md\" data-size=\"md\">中</button>\n' );
 document.write( '            <button type=\"button\" class=\"btn btn-size-lg\" data-size=\"lg\">大</button>\n' );
 document.write( '        </div>\n' );
 document.write( '    </div>' );

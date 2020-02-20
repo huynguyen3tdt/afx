@@ -77,24 +77,47 @@ jQuery(document).ready(function() {
 	    }
 	    position = scroll;
 	});
-
+	//Function Check Size
+	function check_usize(){
+		var usize = Cookies.get('usize');
+		console.log(usize);
+		
+		if(usize == 'sm'){
+			$('.switch-style .btn-group-vertical .btn').not('.btn-size-sm').removeClass('active');
+			$('.switch-style .btn-group-vertical .btn.btn-size-sm').addClass('active');
+			$('body').addClass('font-size-sm');
+		}else if(usize == 'lg'){
+			$('.switch-style .btn-group-vertical .btn').not('.btn-size-lg').removeClass('active');
+			$('.switch-style .btn-group-vertical .btn.btn-size-lg').addClass('active');
+			$('body').addClass('font-size-lg');
+		}else {
+			$('.switch-style .btn-group-vertical .btn').not('.btn-size-md').removeClass('active');
+			$('.switch-style .btn-group-vertical .btn.btn-size-md').addClass('active');
+			Cookies.set('usize','md');
+		}
+		
+	}
+	check_usize();
 	//Switch Style
 	$('.switch-style .btn-group-vertical .btn').click(function(e){
 		e.preventDefault();
 		$('.switch-style .btn-group-vertical .btn').not(this).removeClass('active');
 		var size = $(this).attr('data-size');
-		console.log(size);
+		//console.log(size);
 		switch (size) {
 	        case 'sm':
 	            $('body').addClass('font-size-sm');	
-	            $('body').removeClass('font-size-md font-size-lg');	              
+	            $('body').removeClass('font-size-md font-size-lg');	   
+	            Cookies.set('usize','sm');           
 	            break;
 	        case 'lg':
 	            $('body').addClass('font-size-lg');	
-	            $('body').removeClass('font-size-sm font-size-md');	              
+	            $('body').removeClass('font-size-sm font-size-md');
+	            Cookies.set('usize','lg');	              
 	            break;
 	        default:
-	            $('body').removeClass('font-size-sm font-size-lg');	            
+	            $('body').removeClass('font-size-sm font-size-lg');	    
+	            Cookies.set('usize','md');        
 	            break;
 	    }
 		$(this).addClass('active');
