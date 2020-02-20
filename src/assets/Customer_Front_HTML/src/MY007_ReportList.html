@@ -34,36 +34,46 @@
                                 <div class="tab-content" id="v-pills-tabContent">
                                     <div class="tab-pane fade show active" id="v-pills-all" role="tabpanel" aria-labelledby="v-pills-all-tab">
                                         <h4 class="mb-3">All Customer Statement</h4>
-                                        <div class="row mb-2 align-items-center">
-                                            <div class="col-md-5">
-                                                <label class="label mb-0">Trading account</label>
-                                                <select class="form-control form-control-sm mb-2" style="max-width: 160px;background: none;">
-                                                    <option>FX - 10000001</option>
-                                                    <option>CFD - 20000001</option>
-                                                  </select>
-                                            </div>
-                                            <div class="col-md-7">
-                                                <div class="row row-filter no-gutters align-items-stretch mb-2">
-                                                    <div class="col-md-5">
-                                                        <div class="col-inner">
-                                                            <label class="label text-primary">From</label>
-                                                            <div class="input-wrapper">
-                                                                <input type="text" name="start-date" class="form-control" placeholder="DD/MM/YYYY" value="">
-                                                                <button type="button" class="btn btn-none" disabled="disabled"><i class="icon ion-md-calendar"></i></button>
-                                                            </div>
-                                                        </div>
+                                        <div class="form mb-3 form-search-box">
+                                            <div class="row">
+                                                <div class="col-4 col-lg-3">
+                                                    <div class="form-group">
+                                                        <label class="label d-block mb-0">Trading account</label>
+                                                        <select class="form-control form-control-sm">
+                                                            <option>FX - 10000001</option>
+                                                            <option>CFD - 20000001</option>
+                                                        </select>    
                                                     </div>
-                                                    <div class="col-md-5">
-                                                        <div class="col-inner">
-                                                            <label class="label text-primary">To</label>
-                                                            <div class="input-wrapper">
-                                                                <input type="text" name="end-date" class="form-control" placeholder="DD/MM/YYYY" value="">
-                                                                <button type="button" class="btn btn-none" disabled="disabled"><i class="icon ion-md-calendar"></i></button>
+                                                </div>        
+                                                <div class="col-lg-9">
+                                                    <div class="row">
+                                                        <div class="col-md-9 col-lg-4">
+                                                            &nbsp;
+                                                        </div>
+                                                        <div class="col-md-6 col-lg-3">
+                                                            <div class="form-group">
+                                                                <label class="label d-block mb-0">From</label>
+                                                                <div class="input-wrapper">
+                                                                    <input type="text" name="start-date" class="form-control form-control-sm date" placeholder="DD/MM/YYYY" value="">
+                                                                    <button type="button" class="btn btn-none btn-sm" disabled="disabled"><i class="icon ion-md-calendar"></i></button>
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>                                                    
-                                                    <div class="col-md-2">
-                                                        <button class="btn btn-success btn-search btn-block"><i class="icon ion-md-search"></i></button>
+                                                        <div class="col-md-6 col-lg-3">
+                                                            <div class="form-group">
+                                                                <label class="label d-block mb-0">To</label>
+                                                                <div class="input-wrapper">
+                                                                    <input type="text" name="end-date" class="form-control form-control-sm date" placeholder="DD/MM/YYYY" value="">
+                                                                    <button type="button" class="btn btn-none btn-sm" disabled="disabled"><i class="icon ion-md-calendar"></i></button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-3 col-lg-2">
+                                                            <div class="form-group">
+                                                                <label class="label d-none d-lg-block mb-0">&nbsp;</label>
+                                                                <button class="btn btn-success btn-search btn-block btn-sm">View</button>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
