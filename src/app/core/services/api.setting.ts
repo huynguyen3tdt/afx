@@ -15,4 +15,5 @@ export class AppSettings {
     public static API_REPORT                    = `api/${versionAPI}/reports/`;
     public static API_GET_USER_INFOR            = `api/${versionAPI}/users/`;
     public static API_PUT_USER_INFOR            = `api/${versionAPI}/users/`;
+    public static API_CHANGE_PASSWORD           = `api/${versionAPI}/users/change_pass/`;
 }
