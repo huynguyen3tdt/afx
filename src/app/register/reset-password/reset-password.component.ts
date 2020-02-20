@@ -23,11 +23,13 @@ export class ResetPasswordComponent implements OnInit {
               private router: Router) { }
 
   ngOnInit() {
+    this.initResetPassForm();
+  }
+  initResetPassForm() {
     this.resetPassForm = new FormGroup({
       new_password: new FormControl('', requiredInput),
       confirm_password: new FormControl('', requiredInput)
     });
-
   }
   onSubmit() {
     this.isSave = true;
@@ -37,18 +39,19 @@ export class ResetPasswordComponent implements OnInit {
     }
     if (this.resetPassForm.controls.new_password.value === this.resetPassForm.controls.confirm_password.value) {
       this.isShow = true;
-      const param = {
-        password: this.resetPassForm.controls.confirm_password.value,
-      };
-      this.authenService.changePassword(param).subscribe(response => {
-        if (response.meta.code === 200) {
-          this.router.navigate(['/login']);
-        }
-      });
     } else {
       this.isShow = false;
       this.erroMessage = 'Password is not the same';
+      return;
     }
+    const param = {
+      password: this.resetPassForm.controls.confirm_password.value,
+    };
+    this.authenService.changePassword(param).subscribe(response => {
+      if (response.meta.code === 200) {
+        this.router.navigate(['/login']);
+      }
+    });
   }
   showPass() {
     if (this.showTypePass === 'password') {
@@ -71,22 +74,4 @@ export class ResetPasswordComponent implements OnInit {
       return;
     }
   }
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
