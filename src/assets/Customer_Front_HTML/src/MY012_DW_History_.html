@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script src="assets/includes/styles.js"></script>
+    <title>Phillip MT5 - History</title>
+</head>
+
+<body>
+    <div class="site-wrapper">
+        <script src="assets/includes/header.js"></script>
+        <div class="main-wrapper">
+            <div class="container">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item" aria-current="page"><a href="javascript:;">Dashboard</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">History</li>
+                    </ol>
+                </nav>
+                <div class="content-wrapper">
+                    <div class="content-inner">
+                        <div class="card bg-white mb-3">
+                            <div class="card-body">
+                                <h4 class="mb-3"><i class="icon ion-md-time text-secondary"></i> Deposit &amp; Withdrawal History</h4>
+                                <div class="d-flex align-items-center mb-3 border-bottom pb-2">
+                                    <label class="mb-1 mr-3 d-inline-block">Trading account</label>
+                                      <select class="form-control form-control-sm" style="max-width: 160px;background: none;">
+                                        <option>FX - 10000001</option>
+                                        <option>CFD - 20000001</option>
+                                      </select>
+                                    <div class="ml-auto">Currency: <strong>JPY</strong></div>
+                                </div>
+                                <div class="row mb-2 align-items-center">  
+                                        <div class="col-md-5">
+                                            <label class="label mb-0">Type of Transaction</label>
+                                            <div class="mb-2">
+                                                <label class="container-radio mb-0 mr-2 small">All
+                                                    <input type="radio" id="all" name="filter_type" value="0" checked="checked">
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                                <label class="container-radio mb-0 mr-2 small">Deposit
+                                                    <input type="radio" id="all" name="filter_type" value="1">
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                                <label class="container-radio mb-0 mr-2 small">Withdrawal
+                                                    <input type="radio" id="all" name="filter_type" value="2">
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </div>
+                                        </div>                                      
+                                        <div class="col-md-7">
+                                            <div class="row row-filter no-gutters align-items-stretch mb-2">
+                                                <div class="col-md-5">
+                                                    <div class="col-inner">
+                                                        <label class="label text-primary">From</label>
+                                                        <div class="input-wrapper">
+                                                            <input type="text" name="start-date" class="form-control" placeholder="DD/MM/YYYY" value="">
+                                                            <button type="button" class="btn btn-none" disabled="disabled"><i class="icon ion-md-calendar"></i></button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-5">
+                                                    <div class="col-inner">
+                                                        <label class="label text-primary">To</label>
+                                                        <div class="input-wrapper">
+                                                            <input type="text" name="end-date" class="form-control" placeholder="DD/MM/YYYY" value="">
+                                                            <button type="button" class="btn btn-none" disabled="disabled"><i class="icon ion-md-calendar"></i></button>
+                                                        </div>
+                                                    </div>
+                                                </div>                                                    
+                                                <div class="col-md-2">
+                                                    <button class="btn btn-success btn-search btn-block"><i class="icon ion-md-search"></i></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                <div class="border pt-2 pb-2 pl-3 pr-3 mb-3 bg-warning-light">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="row mb-1">
+                                                <div class="col-6">
+                                                    Opening balance
+                                                </div>
+                                                <div class="col-6">
+                                                    <strong>15,000</strong>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-1">
+                                                <div class="col-6">
+                                                    Closing balance
+                                                </div>
+                                                <div class="col-6">
+                                                    <strong>130,000</strong>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="row mb-1">
+                                                <div class="col-6">
+                                                    Total deposit amount
+                                                </div>
+                                                <div class="col-6">
+                                                    <strong>323,000</strong>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-1">
+                                                <div class="col-6">
+                                                    Total withdrawal amount
+                                                </div>
+                                                <div class="col-6">
+                                                    <strong>208,000</strong>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>                                    
+                                </div>
+                                <!-- END Filter Banr -->
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <div>Result of <strong>all</strong> transactions for <strong>all time</strong></div>
+                                    <div>
+                                        <button class="btn btn-outline-secondary pt-1 pb-1"><i class="icon ion-md-download"></i></button>
+                                    </div>
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="table table-sm table-hover" cellspacing="0" cellpadding="0">
+                                        <thead>
+                                            <tr>
+                                                <th class="border-top-0" width="120">Transaction ID</th>
+                                                <th class="border-top-0">Date</th>
+                                                <th class="border-top-0">Type</th>
+                                                <th class="border-top-0">Description</th>
+                                                <th class="border-top-0 text-right" width="70">Currency</th>
+                                                <th class="border-top-0 text-right">Amount</th>
+                                                <th class="border-top-0 text-right" width="120">Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td><a href="javascript:;">109517140</a></td>
+                                                <td>2020/01/17 08:30</td>
+                                                <td>Deposit</td>
+                                                <td>Deposit from HSBC</td>
+                                                <td class="text-right">JPY</td>
+                                                <td class="text-right">20,000</td>
+                                                <td class="text-right"><span class="text-info"><i class="icon ion-md-hourglass"></i> Pending</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href="javascript:;">109506680</a></td>
+                                                <td>2020/01/17 06:39</td>
+                                                <td>Deposit</td>
+                                                <td>Deposit from Japan Net Bank</td>
+                                                <td class="text-right">JPY</td>
+                                                <td class="text-right">100,000</td>
+                                                <td class="text-right"><span class="text-success"><i class="icon ion-md-checkmark"></i> Completed</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href="javascript:;">109425298</a></td>
+                                                <td>2020/01/17 08:30</td>
+                                                <td>Withdrawal</td>
+                                                <td>Withdraw to Japan Net Bank</td>
+                                                <td class="text-right">JPY</td>
+                                                <td class="text-right">-80,000</td>
+                                                <td class="text-right"><span class="text-info"><i class="icon ion-md-hourglass"></i> Pending</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href="javascript:;">109425119</a></td>
+                                                <td>2020/01/17 06:39</td>
+                                                <td>Withdrawal</td>
+                                                <td>Withdraw to Japan Net Bank</td>
+                                                <td class="text-right">JPY</td>
+                                                <td class="text-right">-10,000</td>
+                                                <td class="text-right"><span class="text-success"><i class="icon ion-md-checkmark"></i> Completed</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href="javascript:;">109402589</a></td>
+                                                <td>2020/01/17 06:39</td>
+                                                <td>Deposit</td>
+                                                <td>Deposit from Japan Net Bank</td>
+                                                <td class="text-right">JPY</td>
+                                                <td class="text-right">258,000</td>
+                                                <td class="text-right"><span class="text-success"><i class="icon ion-md-checkmark"></i> Completed</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href="javascript:;">109402589</a></td>
+                                                <td>2020/01/17 06:39</td>
+                                                <td>Deposit</td>
+                                                <td>Deposit from Japan Net Bank</td>
+                                                <td class="text-right">JPY</td>
+                                                <td class="text-right">258,000</td>
+                                                <td class="text-right"><span class="text-success"><i class="icon ion-md-checkmark"></i> Completed</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href="javascript:;">109402589</a></td>
+                                                <td>2020/01/17 06:39</td>
+                                                <td>Deposit</td>
+                                                <td>Deposit from Japan Net Bank</td>
+                                                <td class="text-right">JPY</td>
+                                                <td class="text-right">258,000</td>
+                                                <td class="text-right"><span class="text-success"><i class="icon ion-md-checkmark"></i> Completed</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href="javascript:;">109402589</a></td>
+                                                <td>2020/01/17 06:39</td>
+                                                <td>Deposit</td>
+                                                <td>Deposit from Japan Net Bank</td>
+                                                <td class="text-right">JPY</td>
+                                                <td class="text-right">258,000</td>
+                                                <td class="text-right"><span class="text-success"><i class="icon ion-md-checkmark"></i> Completed</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href="javascript:;">109402589</a></td>
+                                                <td>2020/01/17 06:39</td>
+                                                <td>Deposit</td>
+                                                <td>Deposit from Japan Net Bank</td>
+                                                <td class="text-right">JPY</td>
+                                                <td class="text-right">258,000</td>
+                                                <td class="text-right"><span class="text-success"><i class="icon ion-md-checkmark"></i> Completed</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td><a href="javascript:;">109402589</a></td>
+                                                <td>2020/01/17 06:39</td>
+                                                <td>Deposit</td>
+                                                <td>Deposit from Japan Net Bank</td>
+                                                <td class="text-right">JPY</td>
+                                                <td class="text-right">258,000</td>
+                                                <td class="text-right"><span class="text-success"><i class="icon ion-md-checkmark"></i> Completed</span></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="d-md-flex align-items-center justify-content-between mb-2">
+                                    <div class="mb-2 mb-md-0">
+                                        <div class="d-inline-block mr-2">
+                                            <select class="form-control form-control-sm">
+                                                <option>10</option>
+                                                <option>20</option>
+                                                <option>30</option>
+                                            </select>
+                                        </div>
+                                        <div class="small text-secondary d-inline-block mr-2">Showing 1 to 10 of 126 entries</div>
+                                    </div>
+                                    <ul class="pagination pagination-sm mb-0">
+                                        <li class="page-item disabled">
+                                            <a class="page-link" href="#" aria-label="Last">
+                                                <span aria-hidden="true">&laquo;</span>
+                                                <span class="sr-only">Last</span>
+                                            </a>
+                                        </li>
+                                        <li class="page-item disabled">
+                                            <a class="page-link" href="#" aria-label="Previous">
+                                                <span aria-hidden="true">&lsaquo;</span>
+                                                <span class="sr-only">Previous</span>
+                                            </a>
+                                        </li>
+                                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                        <li class="page-item">
+                                            <a class="page-link" href="#" aria-label="Next">
+                                                <span aria-hidden="true">&rsaquo;</span>
+                                                <span class="sr-only">Next</span>
+                                            </a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a class="page-link" href="#" aria-label="Latest">
+                                                <span aria-hidden="true">&raquo;</span>
+                                                <span class="sr-only">Latest</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="assets/includes/footer.js"></script>
+    </div>
+    <script src="assets/includes/offcanvas.js"></script>
+    <script src="assets/includes/plugins.js"></script>
+    <script src="assets/js/main.js"></script>
+    <!-- BEGGIN Only For this page -->
+    <script type="text/javascript">
+    jQuery(document).ready(function($) {
+        $('.header-bottom-nav .nav-item-history .nav-link').addClass('active');
+
+        $('.row-filter .input-wrapper input').focus(function() {
+            $(this).parents('.col-inner').addClass('focus');
+        });
+        $('.row-filter .input-wrapper input').focusout(function() {
+            $(this).parents('.col-inner').removeClass('focus');
+        });
+    });
+    </script>
+    <!-- END Only For this page -->
+</body>
+
+</html>
