@@ -6,6 +6,7 @@ import { LoginComponent } from './login/login.component';
 import { RegisterRoutes } from './register.routing';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 @NgModule({
 
@@ -18,7 +19,7 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
     ],
 
     providers: [],
-    declarations: [LoginComponent, ForgotPasswordComponent],
+    declarations: [LoginComponent, ForgotPasswordComponent, ResetPasswordComponent],
 })
 
 export class RegisterModule { }
