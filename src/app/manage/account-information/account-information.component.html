@@ -18,7 +18,7 @@
                             <div class="d-flex align-items-center">
                                 <!-- <div class="mr-3 d-lg-none"><img src="assets/images/profile-image-48x48.png" alt="Avatar John Doe" class="rounded-circle"></div> -->
                                 <div>
-                                    <h6 class="mb-0"><strong>{{userInfor?.full_name}}</strong></h6>
+                                    <h6 class="mb-0"><strong>{{userInfor?.name}}</strong></h6>
                                     <p class="mb-0 text-secondary"><span class="text-primary">#123456</span> - STANDARD
                                     </p>
                                 </div>
@@ -156,7 +156,7 @@
                                                                     Updated</span></div>
                                                         </div>
                                                         <div *ngIf="editAddress == true" class="editable">
-                                                            <input type="text" name="postcode" formControlName="postCode" (input)="onSearchChange($event.target.value)"
+                                                            <input type="text" name="postcode" formControlName="postCode"
                                                                 [ngClass]="{'invalid': isSubmitted && userForm.controls['postCode'].errors}"
                                                                 class="form-control form-control-sm mb-1"
                                                                 value="" placeholder="">

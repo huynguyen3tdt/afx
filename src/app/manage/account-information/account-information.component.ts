@@ -173,8 +173,5 @@ export class AccountInformationComponent implements OnInit {
     //   }
     // });
   }
-  // onSearchChange(searchValue: string): void {
-  //   console.log(searchValue);
-  // }
 
 }

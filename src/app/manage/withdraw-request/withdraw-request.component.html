@@ -64,7 +64,7 @@
                 <div class="mb-1 d-flex justify-content-between">
                   <label class="label">Bank Account Number</label>
                   <div>
-                    <strong>{{listBankInfor?.zip}}</strong>
+                    <strong>{{bankInfor?.zip}}</strong>
                   </div>
                 </div>
                 <div class="mb-1 d-flex justify-content-between">
@@ -179,7 +179,7 @@
                 </tr>
                 <tr>
                     <td width="180">Transfer date time</td>
-                    <td>{{transactionDetail?.transaction_date | date:'yyyy/MM/dd HH:mm'}}</td>
+                    <td>{{transactionDetail?.create_date | date:'yyyy/MM/dd HH:mm'}}</td>
                 </tr>
                 <tr>
                     <td width="180">Bank Account Number</td>
