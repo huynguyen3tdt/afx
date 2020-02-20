@@ -30,15 +30,15 @@
                         <div class="nav nav-tabs" id="nav-tab" role="tablist">
                             <a class="nav-item nav-link active" id="nav-account-tab" data-toggle="tab"
                                 href="#nav-account" role="tab" aria-controls="nav-account" aria-selected="true"><i
-                                    class="icon ion-md-person"></i> <strong class="d-none d-md-inline">Account <span
+                                    class="icon ion-md-person"></i> <strong class="d-none d-md-inline">Account<span
                                         class="d-none d-lg-inline">Infomation</span></strong></a>
-                            <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile"
+                            <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" (click)="getUserInfo()"
                                 role="tab" aria-controls="nav-profile" aria-selected="true"><i
-                                    class="icon ion-md-contact"></i> <strong class="d-none d-md-inline">User <span
+                                    class="icon ion-md-contact"></i> <strong class="d-none d-md-inline">User<span
                                         class="d-none d-lg-inline">Infomation</span></strong></a>
                             <a class="nav-item nav-link" id="nav-bank-tab" data-toggle="tab" href="#nav-bank" role="tab"
                                 aria-controls="nav-bank" aria-selected="false"><i class="icon ion-md-card"></i> <strong
-                                    class="d-none d-md-inline">Bank <span
+                                    class="d-none d-md-inline">Bank<span
                                         class="d-none d-lg-inline">Account</span></strong></a>
                             <a class="nav-item nav-link" id="nav-setting-tab" data-toggle="tab" href="#nav-setting"
                                 role="tab" aria-controls="nav-setting" aria-selected="false"><i
@@ -150,10 +150,10 @@
                                                     <td>
                                                         <div *ngIf="editAddress == false" class="currentvalue">
                                                             <strong>{{userInfor?.zip?.value}}</strong>
-                                                            <div class="status d-none small"><span
-                                                                    class="text-success"><i
-                                                                        class="icon ion-md-checkmark"></i>
-                                                                    Updated</span></div>
+                                                            <div *ngIf="userInfor?.zip?.status == 0" class="status small"><span
+                                                                    class="text-info"><i
+                                                                        class="icon ion-md-hourglass"></i>
+                                                                        Verificaion in process</span></div>
                                                         </div>
                                                         <div *ngIf="editAddress == true" class="editable">
                                                             <input type="text" name="postcode" formControlName="postCode"
@@ -171,7 +171,7 @@
                                                             <div><strong>{{userInfor?.address?.value?.street2}},{{userInfor?.address?.value?.city}}</strong>
                                                             </div>
                                                             <div><strong>{{userInfor?.address?.value?.street}}</strong></div>
-                                                            <div class="status d-none small"><span class="text-info"><i
+                                                            <div *ngIf="userInfor?.address?.status == 0" class="status small"><span class="text-info"><i
                                                                         class="icon ion-md-hourglass"></i> Verificaion in process</span></div>
                                                         </div>
                                                         <div *ngIf="editAddress == true" class="editable">
@@ -201,7 +201,7 @@
                                                             </div>
                                                         </div>
                                                     </td>
-                                                    <td width="15"><a href="javascript:;" class="edit-link" *ngIf="editAddress == false"
+                                                    <td width="15"><a href="javascript:;" class="edit-link" *ngIf="editAddress == false && userInfor?.address?.status != 0"
                                                             data-toggle="tooltip" data-placement="top" (click)="showEditField('address')"
                                                             title="Edit Address"><i class="icon ion-md-create"></i></a>
                                                     </td>
@@ -212,7 +212,7 @@
                                                         <div *ngIf="editEmail == false" class="currentvalue">
                                                             <strong><a
                                                                     href="javascript:;">{{userInfor?.email?.value}}</a></strong>
-                                                            <div class="status d-none small"><span class="text-info"><i
+                                                            <div *ngIf="userInfor?.email?.status == 0" class="status small"><span class="text-info"><i
                                                                         class="icon ion-md-hourglass"></i> Verificaion in process</span></div>
                                                         </div>
                                                         <div *ngIf="editEmail == true" class="editable">
@@ -226,7 +226,7 @@
                                                             </div>
                                                         </div>
                                                     </td>
-                                                    <td width="15"><a href="javascript:;" class="edit-link" *ngIf="editEmail == false"
+                                                    <td width="15"><a href="javascript:;" class="edit-link" *ngIf="editEmail == false && userInfor?.email?.status != 0"
                                                             data-toggle="tooltip" data-placement="top" (click)="showEditField('email')"
                                                             title="Edit Email"><i class="icon ion-md-create"></i></a>
                                                     </td>
@@ -321,7 +321,7 @@
           <div class="modal-body text-center">
               <p>Do you want to save information?</p>
               <div>
-                  <button type="button" class="btn btn-sm btn-success pl-3 pr-3" (click)="onClick()">Ok</button>
+                  <button type="button" class="btn btn-sm btn-success pl-3 pr-3" (click)="onSubmit()" data-dismiss="modal">Ok</button>
                   <button type="button" class="btn btn-sm btn-outline-secondary pl-3 pr-3" data-dismiss="modal">Cancel</button>
               </div>
           </div>
