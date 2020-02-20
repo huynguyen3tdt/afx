@@ -82,7 +82,7 @@ export class NotificationsComponent implements OnInit {
         this.totalAll = this.totalCampagn + this.totalImportant + this.totalNotification;
         this.listNotification = this.pageNotification.data.results.noti_list;
         this.listNotification.forEach(item => {
-          item.date_time = moment(item.date_time).format('YYYY/MM/DD');
+          item.create_date = moment(item.create_date).format('YYYY/MM/DD');
         });
         this.totalItem = this.pageNotification.data.count;
         this.spinnerService.hide();
@@ -182,12 +182,12 @@ export class NotificationsComponent implements OnInit {
         $(`#noti_${index}`).removeClass('unread');
         break;
       case 'IMPORTANT':
-        if (item.agreement === 0) {
+        if (item.agreement_flg === 0) {
           $(`#important_${index}`).toggleClass('opened');
           $(`#important_${index}`).removeClass('unread');
         } else {
           $(`#important_${index}`).removeClass('unread');
-          this.contentAgeement = item.content;
+          this.contentAgeement = item.news_content;
           this.agreementID = item.id;
           $('#agreementmd').modal('show');
         }

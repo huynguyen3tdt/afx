@@ -13,10 +13,10 @@ export interface ReportResponseModel {
 
 export interface ReportIDS {
   id: number;
-  report_name: string;
-  report_url: string;
+  report_title: string;
+  read_flg: string;
   created_date: string;
-  is_read: string;
+  file_type: string;
 }
 
 

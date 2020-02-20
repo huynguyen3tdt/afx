@@ -45,23 +45,24 @@ export interface Mt5Model {
 
 export interface BankInforModel {
   id: number;
-  holder_name: string;
-  beneficiary_bank: string;
+  acc_number: number;
+  acc_holder_name: string;
+  name: string;
   bank_branch: string;
-  swift_code: number;
-  branch_number: string;
+  zip: number;
+  branch_code: string;
   currency: string;
 }
 
 export interface TransactionModel {
     id: number;
-    transaction_id: number;
-    transaction_date: string;
+    trading_account_id: number;
+    create_date: string;
     description: string;
     currency: string;
-    payment_method: string;
+    method: string;
     amount: number;
-    type: string;
+    funding_type: string;
     status: number;
 }
 

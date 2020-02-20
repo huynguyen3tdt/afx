@@ -53,7 +53,7 @@
                 <div class="d-flex align-items-center">
                   <div class="mr-2" (click)="onRefesh()"><a href="javascript:;" class="btn-link-24"><i class="icon ion-md-refresh-circle pr-1"></i> <span class="mr-1">Refesh</span></a></div>
                   <div class="small text-secondary"><i class="icon ion-md-time"></i>  <em>Last updated: 2020/01/10 11:29</em></div>
-                </div>  
+                </div>
               </div>
 
             </div>
@@ -64,7 +64,7 @@
                 <div class="mb-1 d-flex justify-content-between">
                   <label class="label">Bank Account Number</label>
                   <div>
-                    <strong>002100xxxxxx</strong>
+                    <strong>{{listBankInfor?.zip}}</strong>
                   </div>
                 </div>
                 <div class="mb-1 d-flex justify-content-between">
@@ -134,9 +134,10 @@
               </thead>
               <tbody>
                 <tr *ngFor="let item of listDwHistory">
-                  <td><a href="javascript:;" (click)="openDetailTransaction(item)">{{item?.transaction_id}}</a></td>
-                  <td>{{item?.transaction_date | date:'yyyy/MM/dd HH:mm'}}</td>
-                  <td>{{item?.type}}</td>
+                  <td><a href="javascript:;" data-toggle="modal"
+                      data-target="#modal-109517140">{{item?.id}}</a></td>
+                  <td>{{item?.create_date | date:'yyyy/MM/dd'}} {{item?.create_date | date:'HH:mm'}}</td>
+                  <td>{{item?.funding_type}}</td>
                   <td>{{item?.description}}</td>
                   <td class="text-right">{{item?.currency}}</td>
                   <td class="text-right">{{item?.amount}}</td>
@@ -238,7 +239,7 @@
                 <tr>
                     <td width="180">Account Holder's Name</td>
                     <td><strong>xxxxxx</strong></td>
-                </tr>                    
+                </tr>
                 <tr>
                     <td width="180">Beneficiary Bank</td>
                     <td>Japan Net Bank</td>
