@@ -102,44 +102,37 @@ export class AccountInformationComponent implements OnInit {
   }
 
   showEditField(field: string) {
+    this.showSave = true;
     switch (field) {
       case 'address':
         this.editAddress = true;
-        this.showSave = true;
-        // this.userForm.controls.postCode = this.postcode;
         break;
       case 'email':
         this.editEmail = true;
-        this.showSave = true;
         break;
       case 'phone':
         this.editPhone = true;
-        this.showSave = true;
         break;
       case 'lang':
         this.editLanguage = true;
-        this.showSave = true;
         break;
     }
   }
 
   cancelEdit(field: string) {
+    this.showSave = false;
     switch (field) {
       case 'address':
         this.editAddress = false;
-        this.showSave = false;
         break;
       case 'email':
         this.editEmail = false;
-        this.showSave = false;
         break;
       case 'phone':
         this.editPhone = false;
-        this.showSave = false;
         break;
       case 'lang':
         this.editLanguage = false;
-        this.showSave = false;
         break;
 
     }
