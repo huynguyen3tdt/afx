@@ -52,4 +52,16 @@ export class AuthenService {
         })
       );
   }
+
+  changePassword(param): Observable<ResponseWihtoutDataModel> {
+    return this.httpClient
+      .put(`${this.envConfigService.getConfig()}/${AppSettings.API_CHANGE_PASSWORD}`, param)
+      .pipe(
+      catchError((error: HttpErrorResponse) => {
+        return new Observable((observer: InnerSubscriber<any, any>) => {
+          observer.next(error);
+        });
+      })
+    );
+  }
 }
