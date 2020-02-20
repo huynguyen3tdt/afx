@@ -44,7 +44,6 @@ export class AccountInformationComponent implements OnInit {
     this.editEmail = false;
     this.editPhone = false;
     this.editLanguage = false;
-    this.getUserInfo();
     this.getMt5Infor();
     this.getWithDrawAmount();
   }
@@ -79,7 +78,7 @@ export class AccountInformationComponent implements OnInit {
         this.userForm.controls.phone.setValue(this.userInfor.phone);
         this.userForm.controls.language.setValue(this.userInfor.lang);
         // this.postcode = this.userInfor.postcode.value;
-        console.log('userInfooo ', this.county);
+        console.log('userInfooo ', this.userInfor);
 
       }
     });
@@ -99,6 +98,45 @@ export class AccountInformationComponent implements OnInit {
         this.withdrawAmount = response.data;
       }
     });
+  }
+
+  onSubmit() {
+    this.isSubmitted = true;
+    if (this.userForm.invalid) {
+      return;
+    }
+    this.editAddress = false;
+    this.editEmail = false;
+    this.editPhone = false;
+    this.editLanguage = false;
+
+    const param = {
+      post_code: this.userForm.controls.postCode.value,
+      prefecture: this.userForm.controls.searchPrefe.value,
+      address: {
+        county: this.userForm.controls.searchCountry.value,
+        house_numb: this.userForm.controls.house_numb.value,
+        email: this.userForm.controls.email.value,
+      },
+      phone: this.userForm.controls.phone.value,
+      lang: this.userForm.controls.language.value
+    };
+    this.userService.updateUser(param).subscribe(response => {
+      console.log('responseee ', response);
+      if (response.meta.code === 200) {
+
+        this.showSave = false;
+        this.editAddress = false;
+        this.editEmail = false;
+        this.editPhone = false;
+        this.editLanguage = false;
+        this.test = response.data.zip.status;
+      }
+    });
+    // this.userService.getUserInfor(param).subscribe(response => {
+    //   if (response.meta.code === 200) {
+    //   }
+    // });
   }
 
   showEditField(field: string) {
@@ -137,41 +175,6 @@ export class AccountInformationComponent implements OnInit {
 
     }
 
-  }
-
-  onClick() {
-    $('#modal-confirm').modal('hide');
-    this.isSubmitted = true;
-    if (this.userForm.invalid) {
-      return;
-    }
-    const param = {
-      post_code: this.userForm.controls.postCode.value,
-
-      prefecture: this.userForm.controls.searchPrefe.value,
-      address: {
-        county: this.userForm.controls.searchCountry.value,
-        house_numb: this.userForm.controls.house_numb.value,
-        email: this.userForm.controls.email.value,
-      },
-      phone: this.userForm.controls.phone.value,
-      lang: this.userForm.controls.language.value
-    };
-    this.userService.updateUser(param).subscribe(response => {
-      if (response.meta.code === 200) {
-
-        this.showSave = false;
-        this.editAddress = false;
-        this.editEmail = false;
-        this.editPhone = false;
-        this.editLanguage = false;
-        this.test = response.data.zip.status;
-      }
-    });
-    // this.userService.getUserInfor(param).subscribe(response => {
-    //   if (response.meta.code === 200) {
-    //   }
-    // });
   }
 
 }
