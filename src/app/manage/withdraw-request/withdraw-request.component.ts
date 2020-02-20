@@ -18,7 +18,7 @@ export class WithdrawRequestComponent implements OnInit {
   bankInfor: BankInforModel;
   listDwAmount;
   withdrawForm: FormGroup;
-  isSubmitted;
+  isSubmitted: boolean;
   listDwHistory;
   transactionDetail: TransactionModel;
 
