@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
 import { TOKEN_AFX } from 'src/app/core/constant/authen-constant';
 import { AuthenService } from 'src/app/core/services/authen.service';
 declare const $: any;
@@ -11,11 +11,26 @@ declare const TweenMax: any;
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-
-  constructor(private router: Router, private authenService: AuthenService) { }
+  constructor(private router: Router, private authenService: AuthenService) {
+    this.router.events.subscribe((e: any) => {
+      this.activeRouter(this.router.url);
+    });
+  }
 
   ngOnInit() {
     this.layout_setup();
+  }
+
+  activeRouter(url) {
+    url = url.split('/')[2];
+    const listRouter = ['notifications', 'deposit', 'withdrawRequest', 'withdrawHistory', 'reportList', 'accountInfo'];
+    listRouter.forEach(element => {
+      if (url === element) {
+        $(`#${element}`).addClass('active');
+      } else {
+        $(`#${element}`).removeClass('active');
+      }
+    });
   }
 
   logout() {
@@ -56,7 +71,7 @@ export class HeaderComponent implements OnInit {
       TweenMax.from('.offcanvas-wrapper', 0.5, { x: -360, opacity: 0 });
     });
 
-    $('.btn-offcanvas-close').click( () => {
+    $('.btn-offcanvas-close').click(() => {
       close_offcanvas();
     });
   }

@@ -42,10 +42,10 @@ export class NotificationsComponent implements OnInit {
     private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
-    this.unreadAll = true;
-    this.unreadCampagn = true;
-    this.unreadImportant = true;
-    this.unreadNotification = true;
+    this.unreadAll = false;
+    this.unreadCampagn = false;
+    this.unreadImportant = false;
+    this.unreadNotification = false;
     this.currentPage = 1;
     this.pageSize = 10;
     this.checkAgreement = false;
