@@ -24,7 +24,7 @@
                     <div class="content-inner">
                         <div class="row row-mypage">
                             <div class="col-lg-3 col-mypage-sidebar">
-                                <div class="card card-profile">
+                                <div class="card card-profile border-top">
                                     <div class="card-body">
                                         <h6 class="mb-0"><strong>Chu Thi Minh Chau</strong></h6>
                                     </div>
@@ -453,45 +453,62 @@
                                     <!-- BEGIN SETTING -->
                                     <div class="tab-pane fade" id="nav-setting" role="tabpanel" aria-labelledby="nav-setting-tab">
                                         <h3 class="border-bottom pb-1 mb-3">Setting</h3>
+                                        <h5 class="label mb-0"><strong>Change Passwords</strong></h5>
+                                        <p class="small text-secondary">It's a good idea to use a strong password that you're not using elsewhere</p>
+                                        <div class="row mb-2">
+                                            <div class="col-md-4 col-lg-3">
+                                                <label class="label mt-1">Current password</label>
+                                            </div> 
+                                            <div class="col-md-8 col-lg-9">
+                                               <input type="password" name="current_password" class="form-control form-control-sm" value="" placeholder="" style="max-width: 240px">
+                                            </div>  
+                                        </div>
+                                        <div class="row mb-2">
+                                            <div class="col-md-4 col-lg-3">
+                                                <label class="label mt-1">New password</label>
+                                            </div> 
+                                            <div class="col-md-8 col-lg-9">
+                                               <input type="password" name="new-password" class="form-control form-control-sm" value="" placeholder="" style="max-width: 240px">
+                                            </div>  
+                                        </div>
+                                        <div class="row mb-2">
+                                            <div class="col-md-4 col-lg-3">
+                                                <label class="label mt-1">Confirm password</label>
+                                            </div> 
+                                            <div class="col-md-8 col-lg-9">
+                                               <input type="password" name="confirm-password" class="form-control form-control-sm" value="" placeholder="" style="max-width: 240px">
+                                            </div>  
+                                        </div>
+                                        <hr>
+                                        <div class="row mb-2">
+                                            <div class="col-md-4 col-lg-3">
+                                                <label class="label mt-1">Font Size</label>
+                                            </div> 
+                                            <div class="col-md-8 col-lg-9">
+                                                <div class="btn-group">                                                                        
+                                                    <button type="button" class="btn btn-outline-secondary btn-sm btn-size-sm" data-size="sm">小</button>
+                                                    <button type="button" class="btn btn-outline-secondary btn-sm btn-size-md active" data-size="md">中</button>
+                                                    <button type="button" class="btn btn-outline-secondary btn-sm btn-size-lg" data-size="lg">大</button>
+                                                </div>
+                                            </div>  
+                                        </div>
+                                        <div class="row mb-2">
+                                            <div class="col-md-4 col-lg-3">
+                                                <label class="label mt-1">Language</label>
+                                            </div> 
+                                            <div class="col-md-8 col-lg-9">
+                                                <select class="form-control form-control-sm select2" style="max-width: 240px;">
+                                                    <option>English</option>
+                                                </select>
+                                            </div>  
+                                        </div>
                                         <div class="row">
-                                            <div class="col-lg-8">
-                                                <div class="form-group">
-                                                    <div class="row">
-                                                        <div class="col-md-4 col-lg-3">
-                                                            <label class="label">Change Passwords</label>
-                                                        </div> 
-                                                        <div class="col-md-8 col-lg-9">
-                                                            ---
-                                                        </div>  
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <div class="row">
-                                                        <div class="col-md-4 col-lg-3">
-                                                            <label class="label">Font Size</label>
-                                                        </div> 
-                                                        <div class="col-md-8 col-lg-9">
-                                                            <div class="btn-group">                                                                        
-                                                                <button type="button" class="btn btn-size-sm" data-size="sm">小</button>
-                                                                <button type="button" class="btn btn-size-md active" data-size="md">中</button>
-                                                                <button type="button" class="btn btn-size-lg" data-size="lg">大</button>
-                                                            </div>
-                                                        </div>  
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <div class="row">
-                                                        <div class="col-md-4 col-lg-3">
-                                                            <label class="label">Language</label>
-                                                        </div> 
-                                                        <div class="col-md-8 col-lg-9">
-                                                            <select class="form-control form-control-sm select2">
-                                                                <option>English</option>
-                                                            </select>
-                                                        </div>  
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            <div class="col-md-4 col-lg-3">
+                                                &nbsp;
+                                            </div> 
+                                            <div class="col-md-8 col-lg-9">
+                                                <button type="button" class="btn btn-save btn-success pl-3 pr-3">Save</button>
+                                            </div>  
                                         </div>
                                     </div><!-- END SETTING -->
                                 </div>
