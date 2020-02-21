@@ -712,7 +712,7 @@ body{
 }
 .list-notifications .notification-item .item-title{
 	margin: 0 0 5px;
-	font-size: 18px;
+	font-size: 17px;
 	line-height: 20px;
 	font-weight: normal;
 }
@@ -1498,8 +1498,61 @@ ul.reset li {
 		min-width: 24px;
 	}
 } 
+/* FONT SIZE MD */ 
+body{
+	font-size: 15px;
+	line-height: 1.4;
+}
+.small {
+	font-size: 14px;
+}
+h6{
+	font-size: 15px;
+}
+h5 {
+	font-size: 17px;
+}
+h4 {
+	font-size: 20px;
+}
+h3 {
+	font-size: 24px;
+}
+h2{
+	font-size: 29px;
+}
+h1{
+	font-size: 35px;
+}
 
 /* FONT SIZE LG */
+.font-size-lg body{
+	font-size: 17px;
+	line-height: 1.4;
+}
+.font-size-lg .small {
+	font-size: 15px;
+}
+.font-size-lg h6{
+	font-size: 17px;
+}
+.font-size-lg h5,
+.font-size-lg .list-notifications .notification-item .item-title {
+	font-size: 19px;
+}
+.font-size-lg h4 {
+	font-size: 23px;
+}
+.font-size-lg h3 {
+	font-size: 30px;
+}
+.font-size-lg h2{
+	font-size: 38px;
+}
+.font-size-lg h1{
+	font-size: 48px;
+}
+
 .font-size-lg .main-wrapper,
 .font-size-lg .main-wrapper .table-sm{
 	font-size: 17px;
@@ -1510,24 +1563,39 @@ ul.reset li {
 .font-size-lg .table-sm thead th {
 	font-size: 14px;
 }
-.font-size-lg .list-notifications .notification-item .item-title {
-	font-size: 20px;
-}
-/* FONT SIZE SM*/
-.font-size-sm .main-wrapper,
-.font-size-sm .main-wrapper .table-sm{
-	font-size: 13px;
-}
 
-.font-size-sm .main-wrapper .small,
-.font-size-sm .list-notifications .notification-item .item-meta,
-.font-size-sm  .table-sm thead th {
+
+/* FONT SIZE SM*/
+.font-size-sm  body,
+.font-size-sm .table-sm{
+	font-size: 14px;
+	line-height: 1.4;
+}
+.font-size-sm  .small,
+.font-size-sm .table-sm thead th {
 	font-size: 12px;
 }
-
+.font-size-sm h6{
+	font-size: 14px;
+}
+.font-size-sm h5,
 .font-size-sm .list-notifications .notification-item .item-title {
 	font-size: 16px;
 }
+.font-size-sm h4 {
+	font-size: 18px;
+}
+.font-size-sm h3 {
+	font-size: 20px;
+}
+.font-size-sm h2{
+	font-size: 24px;
+}
+.font-size-sm h1{
+	font-size: 32px;
+}
+
+
 
 /* Form Search Box */
 .form-search-box {
@@ -1576,3 +1644,4 @@ ul.reset li {
 .table-profile tbody tr th {
 	background-color: #f5f5f5;
 }
+
