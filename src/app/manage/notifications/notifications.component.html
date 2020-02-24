@@ -60,9 +60,10 @@
                                 </ng-container>
                             </div>
                             <nav class="border-top pt-3">
-                                <pagination [(ngModel)]="currentPage" id="pagination" appPagination
+                                <pagination [(ngModel)]="currentPage" id="pagination"  [boundaryLinks]="true"
                                     class="pagination pagination-sm justify-content-end"
                                     (pageChanged)="pageChanged($event)" [totalItems]="totalItem / pageSize"
+                                    previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;"
                                     [maxSize]="5">
                                 </pagination>
                             </nav>
@@ -108,9 +109,10 @@
                                 </ng-container>
                             </div>
                             <nav class="border-top pt-3">
-                                <pagination [(ngModel)]="currentPage" id="pagination" appPagination
+                                <pagination [(ngModel)]="currentPage" id="pagination" [boundaryLinks]="true"
                                     class="pagination pagination-sm justify-content-end"
                                     (pageChanged)="pageChanged($event)" [totalItems]="totalItem / pageSize"
+                                    previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;"
                                     [maxSize]="5">
                                 </pagination>
                             </nav>
