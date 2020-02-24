@@ -11,41 +11,58 @@
               <div class="col-md-3 col-lg-2">
                   <div class="nav flex-md-column nav-pills mb-3 filter-nav" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                       <a class="nav-link active" id="v-pills-all-tab" data-toggle="pill" href="#v-pills-all" role="tab" aria-controls="v-pills-all" aria-selected="true">All</a>
-                      <a class="nav-link" id="v-pills-transaction-tab" data-toggle="pill" href="#v-pills-transaction" role="tab" aria-controls="v-pills-transaction" aria-selected="false">Transaction Reports</a>
-                      <a class="nav-link" id="v-pills-annual-tab" data-toggle="pill" href="#v-pills-annual" role="tab" aria-controls="v-pills-annual" aria-selected="false">Annual Reports</a>
+                      <a class="nav-link" id="v-pills-transaction-tab" data-toggle="pill" href="#v-pills-transaction" role="tab" aria-controls="v-pills-transaction" aria-selected="false">Daily Customer Statement</a>
+                      <a class="nav-link" id="v-pills-annual-tab" data-toggle="pill" href="#v-pills-annual" role="tab" aria-controls="v-pills-annual" aria-selected="false">Yearly Customer Statement</a>
                   </div>
               </div>
               <div class="col-md-9 col-lg-10">
                   <div class="tab-content" id="v-pills-tabContent">
                       <div class="tab-pane fade show active" id="v-pills-all" role="tabpanel" aria-labelledby="v-pills-all-tab">
-                          <h4 class="mb-3"><strong>All</strong> Reports</h4>
-                          <div class="form">
-                              <div class="row align-items-end">
-                                  <div class="col-md-3">
-                                      <div class="form-group">
-                                          <label class="label  mb-1">Type of account</label>
-                                          <select class="form-control form-control-sm">
-                                              <option>FX</option>
-                                              <option>CFD</option>
-                                          </select>
-                                      </div>
+                        <h3 class="mb-3">All Customer Statement</h3>
+                        <div class="form mb-3 form-search-box">
+                          <div class="row">
+                              <div class="col-4 col-lg-3">
+                                  <div class="form-group">
+                                      <label class="label d-block mb-0">Trading account</label>
+                                      <select class="form-control form-control-sm">
+                                          <option>FX - 10000001</option>
+                                          <option>CFD - 20000001</option>
+                                      </select>
                                   </div>
-                                  <div class="col-md-3">
-                                      <div class="form-group">
-                                          <label class="label mb-1">Type of report</label>
-                                          <select class="form-control form-control-sm">
-                                              <option>FX</option>
-                                              <option>CFD</option>
-                                          </select>
+                              </div>
+                              <div class="col-lg-9">
+                                  <div class="row">
+                                      <div class="col-md-9 col-lg-4">
+                                          &nbsp;
                                       </div>
-                                  </div>
-                                  <div class="col-md-1 ml-auto">
-                                       <div class="form-group">
-                                          <button class="btn btn-success btn-block btn-sm"><i class="icon ion-md-search"></i></button>
+                                      <div class="col-md-6 col-lg-3">
+                                          <div class="form-group">
+                                              <label class="label d-block mb-0">From</label>
+                                              <div class="input-wrapper">
+                                                  <input type="text" name="start-date" class="form-control form-control-sm date" placeholder="DD/MM/YYYY" value="">
+                                                  <button type="button" class="btn btn-none btn-sm" disabled="disabled"><i class="icon ion-md-calendar"></i></button>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div class="col-md-6 col-lg-3">
+                                          <div class="form-group">
+                                              <label class="label d-block mb-0">To</label>
+                                              <div class="input-wrapper">
+                                                  <input type="text" name="end-date" class="form-control form-control-sm date" placeholder="DD/MM/YYYY" value="">
+                                                  <button type="button" class="btn btn-none btn-sm" disabled="disabled"><i class="icon ion-md-calendar"></i></button>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div class="col-md-3 col-lg-2">
+                                          <div class="form-group">
+                                              <label class="label d-none d-lg-block mb-0">&nbsp;</label>
+                                              <button class="btn btn-success btn-search btn-block btn-sm">View</button>
+                                          </div>
                                       </div>
                                   </div>
                               </div>
                           </div>
+                      </div>
 
                           <div class="table-responsive">
                               <table class="table table-sm table-hover" cellspacing="0" cellpadding="0">
@@ -60,7 +77,8 @@
                                   </thead>
                                   <tbody>
                                       <tr *ngFor="let item of listReport">
-                                          <td class="text-center align-middle"><span class="small text-secondary">{{item?.file_type}}</span></td>
+                                          <td class="text-center align-middle"><img src="assets/images/icons/pdf.svg" width="20" height="20"></td>
+                                          <!-- <td class="text-center align-middle"><span class="small text-secondary">{{item?.file_type}}</span></td> -->
                                           <td class="align-middle"><strong><a href="javascript:;">{{item?.report_title}}</a></strong></td>
                                           <td class="text-right align-middle"><span class="text-secondary">{{item?.created_date | date:'yyyy/MM/dd'}}</span></td>
                                           <td class="text-right align-middle"><span class="text-danger">{{item?.read_flg}}</span></td>

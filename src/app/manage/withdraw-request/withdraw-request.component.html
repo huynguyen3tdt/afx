@@ -117,8 +117,10 @@
       </div>
       <div class="card bg-white mb-3">
         <div class="card-body">
-          <h6 class="mb-0 text-uppercase text-primary border-bottom mb-3 pb-2"><i class="icon ion-md-time pr-1"></i>
-            <strong>Entire Operation History</strong></h6>
+          <div class="d-flex justify-content-between align-items-center border-bottom mb-3 pb-2">
+            <h6 class="mb-0 text-uppercase text-primary"><i class="icon ion-md-time"></i> <strong>Entire Operation History</strong></h6>
+            <div class="text-right small text-secondary">Currency: <strong>JPY</strong></div>
+        </div>
           <div class="table-responsive">
             <table class="table table-sm table-hover" cellspacing="0" cellpadding="0">
               <thead>
@@ -126,8 +128,8 @@
                   <th class="border-top-0" width="120">Transaction ID</th>
                   <th class="border-top-0">Date</th>
                   <th class="border-top-0">Type</th>
-                  <th class="border-top-0">Description</th>
-                  <th class="border-top-0 text-right" width="70">Currency</th>
+                  <th class="border-top-0">Payment Method</th>
+                  <!-- <th class="border-top-0 text-right" width="70">Currency</th> -->
                   <th class="border-top-0 text-right">Amount</th>
                   <th class="border-top-0 text-right" width="120">Status</th>
                 </tr>
@@ -139,7 +141,7 @@
                   <td>{{item?.create_date | date:'yyyy/MM/dd'}} {{item?.create_date | date:'HH:mm'}}</td>
                   <td>{{item?.funding_type}}</td>
                   <td>{{item?.description}}</td>
-                  <td class="text-right">{{item?.currency}}</td>
+                  <!-- <td class="text-right">{{item?.currency}}</td> -->
                   <td class="text-right">{{item?.amount}}</td>
                   <td class="text-right"><span class="text-info"><i class="icon ion-md-hourglass"></i> Pending</span>
                   </td>
