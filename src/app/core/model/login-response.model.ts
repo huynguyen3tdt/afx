@@ -10,7 +10,6 @@ export interface LoginResponseModel {
         expire_time: string;
         module_funding_min_deposit: number;
         module_funding_min_withdraw: number;
-        // fee: number;
         lang: string;
     };
 }
