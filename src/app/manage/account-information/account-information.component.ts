@@ -77,8 +77,6 @@ export class AccountInformationComponent implements OnInit {
         this.userForm.controls.email.setValue(this.userInfor.email.value);
         this.userForm.controls.phone.setValue(this.userInfor.phone);
         this.userForm.controls.language.setValue(this.userInfor.lang);
-        // this.postcode = this.userInfor.postcode.value;
-        console.log('userInfooo ', this.userInfor);
 
       }
     });
@@ -122,7 +120,6 @@ export class AccountInformationComponent implements OnInit {
       lang: this.userForm.controls.language.value
     };
     this.userService.updateUser(param).subscribe(response => {
-      console.log('responseee ', response);
       if (response.meta.code === 200) {
 
         this.showSave = false;

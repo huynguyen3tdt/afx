@@ -14,6 +14,7 @@ export class ForgotPasswordComponent implements OnInit {
 
   forgotPasswordForm: FormGroup;
   isSubmitted: boolean;
+  errorMess = '';
 
   constructor(private authenService: AuthenService, private router: Router) { }
 
@@ -39,6 +40,8 @@ export class ForgotPasswordComponent implements OnInit {
     this.authenService.forgotPassWord(param).subscribe(response => {
       if (response.meta.code === 200) {
         this.router.navigate(['login']);
+      } else if (response.meta.code === 102) {
+        this.errorMess = response.meta.message;
       }
     });
   }
