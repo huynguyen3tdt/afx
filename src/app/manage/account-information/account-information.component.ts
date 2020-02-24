@@ -26,7 +26,7 @@ export class AccountInformationComponent implements OnInit {
   editAddress: boolean;
   editEmail: boolean;
   editPhone: boolean;
-  editLanguage: boolean;
+  // editLanguage: boolean;
   userInfor: UserModel;
   userForm: FormGroup;
   countries = ['Vietnamese', 'English'];
@@ -43,7 +43,7 @@ export class AccountInformationComponent implements OnInit {
     this.editAddress = false;
     this.editEmail = false;
     this.editPhone = false;
-    this.editLanguage = false;
+    // this.editLanguage = false;
     this.getMt5Infor();
     this.getWithDrawAmount();
   }
@@ -56,7 +56,7 @@ export class AccountInformationComponent implements OnInit {
       house_numb: new FormControl('', requiredInput),
       email: new FormControl('', requiredInput),
       phone: new FormControl('', requiredInput),
-      language: new FormControl(),
+      // language: new FormControl(),
     });
   }
 
@@ -76,7 +76,7 @@ export class AccountInformationComponent implements OnInit {
         this.userForm.controls.house_numb.setValue(this.userInfor.address.value.street2);
         this.userForm.controls.email.setValue(this.userInfor.email.value);
         this.userForm.controls.phone.setValue(this.userInfor.phone);
-        this.userForm.controls.language.setValue(this.userInfor.lang);
+        // this.userForm.controls.language.setValue(this.userInfor.lang);
         // this.postcode = this.userInfor.postcode.value;
         console.log('userInfooo ', this.userInfor);
 
@@ -108,7 +108,7 @@ export class AccountInformationComponent implements OnInit {
     this.editAddress = false;
     this.editEmail = false;
     this.editPhone = false;
-    this.editLanguage = false;
+    // this.editLanguage = false;
 
     const param = {
       post_code: this.userForm.controls.postCode.value,
@@ -119,17 +119,16 @@ export class AccountInformationComponent implements OnInit {
         email: this.userForm.controls.email.value,
       },
       phone: this.userForm.controls.phone.value,
-      lang: this.userForm.controls.language.value
+      // lang: this.userForm.controls.language.value
     };
     this.userService.updateUser(param).subscribe(response => {
-      console.log('responseee ', response);
       if (response.meta.code === 200) {
 
         this.showSave = false;
         this.editAddress = false;
         this.editEmail = false;
         this.editPhone = false;
-        this.editLanguage = false;
+        // this.editLanguage = false;
         this.test = response.data.zip.status;
       }
     });
@@ -151,9 +150,9 @@ export class AccountInformationComponent implements OnInit {
       case 'phone':
         this.editPhone = true;
         break;
-      case 'lang':
-        this.editLanguage = true;
-        break;
+      // case 'lang':
+      //   this.editLanguage = true;
+      //   break;
     }
   }
 
@@ -169,9 +168,9 @@ export class AccountInformationComponent implements OnInit {
       case 'phone':
         this.editPhone = false;
         break;
-      case 'lang':
-        this.editLanguage = false;
-        break;
+      // case 'lang':
+      //   this.editLanguage = false;
+      //   break;
 
     }
 
