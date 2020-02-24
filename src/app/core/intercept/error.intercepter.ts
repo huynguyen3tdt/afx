@@ -9,7 +9,7 @@ export class ErrorInterceptor implements HttpInterceptor {
     constructor() {}
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         return next.handle(request).pipe(catchError(err => {
-            return throwError(err);
+          return throwError(err.error);
         }));
     }
 }

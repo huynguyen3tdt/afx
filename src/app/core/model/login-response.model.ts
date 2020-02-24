@@ -5,10 +5,11 @@ export interface LoginResponseModel {
     data: {
         account_ids: Array<AccountIDS>;
         access_token: string;
-        is_company: string;
-        pwd_change_flg: string;
+        is_company: boolean;
+        pwd_change_flg: boolean;
         expire_time: string;
-        min_amount: number;
+        module_funding_min_deposit: number;
+        module_funding_min_withdraw: number;
         fee: number;
         lang: string;
     };

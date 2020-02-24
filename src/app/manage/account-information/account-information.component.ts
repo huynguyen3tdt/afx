@@ -122,7 +122,6 @@ export class AccountInformationComponent implements OnInit {
       // lang: this.userForm.controls.language.value
     };
     this.userService.updateUser(param).subscribe(response => {
-      console.log('responseee ', response);
       if (response.meta.code === 200) {
 
         this.showSave = false;

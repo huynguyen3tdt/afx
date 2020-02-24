@@ -22,7 +22,6 @@ export const RegisterRoutes: Routes = [
     },
     {
       path: 'reset_password',
-      canActivate: [LoginGuard],
       component: ResetPasswordComponent
     },
 ];

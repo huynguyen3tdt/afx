@@ -27,11 +27,14 @@ export interface Notification {
     id: number;
     news_type: number;
     news_title: string;
+    write_date: string;
     create_date: string;
     read_flg: string;
     agree_flg: number;
     agreement_flg: number;
     news_content: string;
+    create_uid: number;
+    write_uid: number;
 }
 
 export interface TotalNotification {

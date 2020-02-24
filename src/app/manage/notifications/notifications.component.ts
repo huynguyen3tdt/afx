@@ -35,6 +35,8 @@ export class NotificationsComponent implements OnInit {
   unreadImportant: boolean;
   unreadNotification: boolean;
   unreadCampagn: boolean;
+  checkType: any;
+
 
   constructor(
     private notificationsService: NotificationsService,
@@ -65,7 +67,6 @@ export class NotificationsComponent implements OnInit {
       checkAgreement: new FormControl(false, requiredInput)
     });
   }
-
   getListNotifications(pageSize: number, pageNumber: number, unread: boolean, type?: number) {
     this.checkTab(type);
     this.listNotification = [];
