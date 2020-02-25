@@ -69,7 +69,7 @@ export class NotificationsComponent implements OnInit {
         this.showNoti = false;
       }
     });
-    this.getListNotifications(this.currentPage, this.pageSize, this.unreadAll, -1);
+    this.getListNotifications(this.pageSize, this.currentPage, this.unreadAll, this.CHECKTAB.ALL);
     this.initFormAgreement();
   }
 
@@ -120,11 +120,11 @@ export class NotificationsComponent implements OnInit {
     switch (this.tab) {
       case this.TABS.ALL:
         this.unreadAll = !this.unreadAll;
-        this.getListNotifications(this.currentPage, this.pageSize, this.unreadAll, -1);
+        this.getListNotifications(this.pageSize, this.currentPage, this.unreadAll, this.CHECKTAB.ALL);
         break;
       case this.TABS.IMPORTANT:
         this.unreadImportant = !this.unreadImportant;
-        this.getListNotifications(this.currentPage, this.pageSize, this.unreadImportant, 0);
+        this.getListNotifications(this.pageSize, this.currentPage, this.unreadImportant, this.CHECKTAB.IMPORTANT);
         break;
       case this.TABS.NOTIFICATIONS:
         break;
@@ -143,7 +143,7 @@ export class NotificationsComponent implements OnInit {
     this.notificationsService.changeAgreementStatus(param).subscribe(response => {
       if (response.meta.code === 200) {
         this.checkAgreement = false;
-        this.getListNotifications(this.currentPage, this.pageSize, this.unreadImportant, 0);
+        this.getListNotifications(this.pageSize, this.currentPage, this.unreadImportant, this.CHECKTAB.IMPORTANT);
         $('#agreementmd').modal('hide');
       }
     });
@@ -158,10 +158,10 @@ export class NotificationsComponent implements OnInit {
     this.currentPage = event.page;
     switch (this.tab) {
       case this.TABS.ALL:
-        this.getListNotifications(this.currentPage, this.pageSize, this.unreadAll, -1);
+        this.getListNotifications(this.pageSize, this.currentPage, this.unreadAll, this.CHECKTAB.ALL);
         break;
       case this.TABS.IMPORTANT:
-        this.getListNotifications(this.currentPage, this.pageSize, this.unreadImportant, 0);
+        this.getListNotifications(this.pageSize, this.currentPage, this.unreadImportant, this.CHECKTAB.IMPORTANT);
         break;
       case this.TABS.NOTIFICATIONS:
         break;
