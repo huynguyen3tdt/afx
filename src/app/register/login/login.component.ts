@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { requiredInput } from 'src/app/core/helper/custom-validate.helper';
 import {
@@ -18,7 +18,7 @@ declare const $: any;
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, AfterViewInit {
   @ViewChild('username', { static: false }) username: ElementRef;
   @ViewChild('password', { static: false }) password: ElementRef;
   loginFormGroup: FormGroup;
@@ -41,6 +41,10 @@ export class LoginComponent implements OnInit {
     this.checkDevice();
     this.initKeyboard();
     this.initLoginForm();
+  }
+
+  ngAfterViewInit() {
+    this.username.nativeElement.focus();
   }
 
   initLoginForm() {
@@ -83,17 +87,17 @@ export class LoginComponent implements OnInit {
       password: this.loginFormGroup.controls.passWord.value,
       device_type: this.isPc ? 'Pc' : 'Mobile'
     };
-    if (this.loginFormGroup.value.remember === true) {
-      localStorage.setItem(USERNAME_LOGIN, btoa(this.loginFormGroup.value.userName));
-      localStorage.setItem(PASSWORD_LOGIN, btoa(this.loginFormGroup.value.passWord));
-      localStorage.setItem(REMEMBER_LOGIN, 'true');
-    } else {
-      localStorage.removeItem(USERNAME_LOGIN);
-      localStorage.removeItem(PASSWORD_LOGIN);
-      localStorage.setItem(REMEMBER_LOGIN, 'false');
-    }
     this.authenService.login(param).subscribe(response => {
       if (response.meta.code === 200) {
+        if (this.loginFormGroup.value.remember === true) {
+          localStorage.setItem(USERNAME_LOGIN, btoa(this.loginFormGroup.value.userName));
+          localStorage.setItem(PASSWORD_LOGIN, btoa(this.loginFormGroup.value.passWord));
+          localStorage.setItem(REMEMBER_LOGIN, 'true');
+        } else {
+          localStorage.removeItem(USERNAME_LOGIN);
+          localStorage.removeItem(PASSWORD_LOGIN);
+          localStorage.setItem(REMEMBER_LOGIN, 'false');
+        }
         localStorage.setItem(TOKEN_AFX, response.data.access_token);
         localStorage.setItem(ACCOUNT_TYPE, response.data.account_ids[0].account_id.toString());
         localStorage.setItem(FIRST_LOGIN, '1');
