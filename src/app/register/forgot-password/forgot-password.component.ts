@@ -48,7 +48,6 @@ export class ForgotPasswordComponent implements OnInit {
     };
 
     this.authenService.forgotPassWord(param).subscribe(response => {
-      console.log('tesst', response)
       if (response.meta.code === 200) {
         this.errSubmit = true;
         this.successMess = '仮パスワードを登録メールアドレスにメール致しますので、ご確認ください。';
