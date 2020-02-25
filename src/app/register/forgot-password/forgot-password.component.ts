@@ -15,6 +15,8 @@ export class ForgotPasswordComponent implements OnInit {
   forgotPasswordForm: FormGroup;
   isSubmitted: boolean;
   errorMess = '';
+  successMess = '';
+  errSubmit: boolean;
 
   constructor(private authenService: AuthenService, private router: Router) { }
 
@@ -39,9 +41,14 @@ export class ForgotPasswordComponent implements OnInit {
 
     this.authenService.forgotPassWord(param).subscribe(response => {
       if (response.meta.code === 200) {
-        this.router.navigate(['login']);
-      } else if (response.meta.code === 102) {
-        this.errorMess = response.meta.message;
+        this.errSubmit = true;
+        this.successMess = '仮パスワードを登録メールアドレスにメール致しますので、ご確認ください。';
+        setTimeout(() => {
+          this.router.navigate(['login']);
+        }, 2000);
+      } else {
+        this.errSubmit = false;
+        this.errorMess = 'Login ID and DOB is not matching';
       }
     });
   }
