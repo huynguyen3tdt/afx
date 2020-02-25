@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { requiredInput } from 'src/app/core/helper/custom-validate.helper';
 import * as moment from 'moment';
@@ -11,7 +11,7 @@ import { element } from 'protractor';
   templateUrl: './forgot-password.component.html',
   styleUrls: ['./forgot-password.component.css']
 })
-export class ForgotPasswordComponent implements OnInit {
+export class ForgotPasswordComponent implements OnInit, AfterViewInit {
   @ViewChild('username', { static: false }) username: ElementRef;
   @ViewChild('dob', { static: false }) password: ElementRef;
   forgotPasswordForm: FormGroup;
