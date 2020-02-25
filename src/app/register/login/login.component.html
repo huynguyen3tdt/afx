@@ -17,56 +17,57 @@
             <div class="p-4 form form-line form-login">
                 <h5 class="text-center text-lg-right"><img src="assets/images/logo.svg" class="logo"></h5>
                 <div class="row justify-content-center mt-4">
-                    <div class="col-lg-10" [formGroup]="loginFormGroup">
-                        <h3 class="mb-3 text-primary">Sign In</h3>
 
-                        <div class="form-group">
-                            <label class="label">Email / LoginID</label>
-                            <div class="input-wrapper">
-                                <input
-                                type="text"
-                                name="username"
-                                #username
-                                class="form-control"
-                                placeholder="Email or Login ID"
-                                formControlName="userName"
-                                [ngClass]="{'invalid': isSubmitted && loginFormGroup.controls['userName'].errors}"
-                                >
-                                <button type="button" class="btn btn-none"><i class="icon ion-md-person"></i></button>
+                    <div class="col-lg-10">
+                        <form [formGroup]="loginFormGroup" (ngSubmit)="onSubmit()">
+                            <h3 class="mb-3 text-primary">Sign In</h3>
+
+                            <div class="form-group">
+                                <label class="label">Email / LoginID</label>
+                                <div class="input-wrapper">
+                                    <input tabindex="1" type="text" #username class="form-control"
+                                        placeholder="Email or Login ID" formControlName="userName"
+                                        [ngClass]="{'invalid': isSubmitted && loginFormGroup.controls['userName'].errors}">
+                                    <button type="button" class="btn btn-none"><i
+                                            class="icon ion-md-person"></i></button>
+                                </div>
+                                <div *ngIf="isSubmitted && loginFormGroup?.controls['userName']?.errors?.Required" class="invalid-mess">
+                                    <div>This field is required</div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="label">Passwords</label>
-                            <div class="input-wrapper">
-                                <input
-                                type="password"
-                                name="passwords"
-                                #password
-                                class="form-control"
-                                placeholder=""
-                                formControlName="passWord"
-                                [ngClass]="{'invalid': isSubmitted && loginFormGroup.controls['passWord'].errors}"
-                                >
-                                <button type="button" class="btn btn-none"><i class="icon ion-md-key"></i></button>
+                            <div class="form-group">
+                                <label class="label">Passwords</label>
+                                <div class="input-wrapper">
+                                    <input tabindex="2" type="password" #password class="form-control"
+                                        placeholder="" formControlName="passWord"
+                                        [ngClass]="{'invalid': isSubmitted && loginFormGroup.controls['passWord'].errors}">
+                                    <button type="button" class="btn btn-none"><i class="icon ion-md-key"></i></button>
+                                </div>
+                                <div *ngIf="isSubmitted && loginFormGroup?.controls['passWord']?.errors?.Required" class="invalid-mess">
+                                        <div>This field is required</div>
+                                    </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="container-checkbox small">Remember me
-                                <input type="checkbox" name="save_" formControlName="remember">
-                                <span class="checkmark"></span>
-                            </label>
-                            <div *ngIf="isPc" (click)="openKeyboard()">
-                                <a class="btn-toggle-vkeyboard small"><img src="assets/images/keyboard.svg"
-                                        alt='Visual Keyboard' class="mr-2" style="max-width: 24px;max-height: 24px">
-                                    Open Visual Keyboard</a>
+                            <div *ngIf="invalidAccount == true" class="invalid-mess mb-2">
+                                    <div>Invalid email or password</div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <a class="btn btn-primary btn-block" id="btnlogin"
-                                (click)="onSubmit()">Sign In</a>
-                        </div>
-                        <a (click)="changeToForgotPassWord()" class="forgot-link">Forgot Password?</a>
-                        <p class="mb-4">Don’t have an account? <a href="javascript:;">Create Now</a></p>
+                            <div class="form-group">
+                                <label class="container-checkbox small">Remember me
+                                    <input type="checkbox" name="save_" formControlName="remember">
+                                    <span class="checkmark"></span>
+                                </label>
+                                <div *ngIf="isPc" (click)="openKeyboard()">
+                                    <a class="btn-toggle-vkeyboard small"><img src="assets/images/keyboard.svg"
+                                            alt='Visual Keyboard' class="mr-2" style="max-width: 24px;max-height: 24px">
+                                        Open Visual Keyboard</a>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <button class="btn btn-primary btn-block" id="btnlogin" type="submit">Sign In</button>
+                            </div>
+                            <a (click)="changeToForgotPassWord()" class="forgot-link">Forgot Password?</a>
+                            <p class="mb-4">Don’t have an account? <a href="javascript:;">Create Now</a></p>
+                        </form>
+
                     </div>
                 </div>
             </div>

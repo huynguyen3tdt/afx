@@ -3,7 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { requiredInput } from 'src/app/core/helper/custom-validate.helper';
 import * as moment from 'moment';
 import { AuthenService } from 'src/app/core/services/authen.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-forgot-password',
@@ -16,10 +16,18 @@ export class ForgotPasswordComponent implements OnInit {
   isSubmitted: boolean;
   errorMess = '';
 
-  constructor(private authenService: AuthenService, private router: Router) { }
+  constructor(
+    private authenService: AuthenService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
     this.initForgotPasswordForm();
+    this.activatedRoute.queryParams.subscribe(param => {
+      if (param.loginId) {
+        this.forgotPasswordForm.controls.email.setValue(param.loginId);
+      }
+    });
   }
   initForgotPasswordForm() {
     this.forgotPasswordForm = new FormGroup({
@@ -34,12 +42,16 @@ export class ForgotPasswordComponent implements OnInit {
     }
     const param = {
       login_id: this.forgotPasswordForm.controls.email.value,
-      dob : moment(this.forgotPasswordForm.controls.dateInput.value).format('YYYY-MM-DD')
+      dob: moment(this.forgotPasswordForm.controls.dateInput.value).format('YYYY-MM-DD')
     };
 
     this.authenService.forgotPassWord(param).subscribe(response => {
       if (response.meta.code === 200) {
-        this.router.navigate(['login']);
+        this.router.navigate(['login'], {
+          queryParams: {
+            loginId: this.forgotPasswordForm.value.email,
+          }
+        });
       } else if (response.meta.code === 102) {
         this.errorMess = response.meta.message;
       }

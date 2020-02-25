@@ -3,3 +3,11 @@
     border: 1px solid!important;
     border-color: #dc3545!important;
 }
+.invalid-mess {
+	display: block !important;
+    width: 100%;
+    margin-top: .25rem;
+    font-size: 80%;
+    color: #dc3545;
+}
+
