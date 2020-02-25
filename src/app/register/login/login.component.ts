@@ -9,7 +9,7 @@ import {
   ACCOUNT_TYPE,
   FIRST_LOGIN,
 } from './../../core/constant/authen-constant';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { AuthenService } from 'src/app/core/services/authen.service';
 declare const $: any;
 
@@ -24,10 +24,12 @@ export class LoginComponent implements OnInit {
   loginFormGroup: FormGroup;
   isSubmitted: boolean;
   isPc: boolean;
+  invalidAccount: boolean;
 
   constructor(
     private router: Router,
-    private authenService: AuthenService) {
+    private authenService: AuthenService,
+    private activatedRoute: ActivatedRoute) {
   }
 
   ngOnInit() {
@@ -35,6 +37,7 @@ export class LoginComponent implements OnInit {
     $(window).resize(() => {
       this.login_layout();
     });
+    this.invalidAccount = false;
     this.checkDevice();
     this.initKeyboard();
     this.initLoginForm();
@@ -50,6 +53,11 @@ export class LoginComponent implements OnInit {
       this.loginFormGroup.controls.remember.setValue(false);
       this.loginFormGroup.controls.userName.setValue('');
       this.loginFormGroup.controls.passWord.setValue('');
+      this.activatedRoute.queryParams.subscribe(param => {
+        if (param.loginId) {
+          this.loginFormGroup.controls.userName.setValue(param.loginId);
+        }
+      });
     } else {
       this.loginFormGroup.controls.remember.setValue(true);
       if (this.checkUserNameAndPassWord(localStorage.getItem(USERNAME_LOGIN))) {
@@ -99,6 +107,8 @@ export class LoginComponent implements OnInit {
           this.router.navigate(['/reset_password'], {
           });
         }
+      } else if (response.meta.code === 102) {
+        this.invalidAccount = true;
       }
 
     });
@@ -110,7 +120,11 @@ export class LoginComponent implements OnInit {
   }
 
   changeToForgotPassWord() {
-    this.router.navigate(['forgot_password']);
+    this.router.navigate(['forgot_password'], {
+      queryParams: {
+        loginId: this.loginFormGroup.value.userName,
+      }
+    });
     $('.minimize-btn').click();
   }
 

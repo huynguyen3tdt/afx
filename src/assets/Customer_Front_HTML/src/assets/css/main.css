@@ -1,3 +1,6 @@
+/* Import Font */
+@import url('https://fonts.googleapis.com/css?family=M+PLUS+1p:400,700&display=swap&subset=japanese,latin-ext');
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans+JP:400,700&display=swap&subset=japanese');
 /*--- Overwrite Boostrap ---*/
 a{
 	color: #0d75a2;
@@ -181,9 +184,7 @@ a:hover{
 }
 /* Main */
 body{
-	/*font-family: 'ヒラギノ角ゴ Pro W3','Hiragino Kaku Gothic Pro',arial,'メイリオ',Meiryo,'ＭＳ Ｐゴシック',sans-serif;*/
-	font-family: 'meiryo',sans-serif;
-	/*font-family: 'Montserrat', 'Mplus 1p', 'Hiragino Sans', 'Hiragino Kaku Gothic Pro', '游ゴシック' , '游ゴシック体' , YuGothic , 'Yu Gothic', 'ＭＳ ゴシック' , 'MS Gothic', sans-serif;*/
+	font-family: "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", Osaka, メイリオ, Meiryo, "ＭＳ Ｐゴシック", "MS PGothic", "ＭＳ ゴシック" , "MS Gothic", "Noto Sans CJK JP", TakaoPGothic, sans-serif;
 	background-color: #EFF3F8;
 	font-size: 15px;
 	color: #000;
@@ -1629,12 +1630,12 @@ h1{
 	padding-right: 10px !important;
 	padding-left: 10px !important;
 }
-.form-search-box .btn-group .btn.btn-outline-secondary{
+.btn-group .btn.btn-outline-secondary{
 	border-color: #ccc;
 	background: #fff;
 }
-.form-search-box .btn-group .btn.btn-outline-secondary:hover,
-.form-search-box .btn-group .btn.btn-outline-secondary.active{
+.btn-group .btn.btn-outline-secondary:hover,
+.btn-group .btn.btn-outline-secondary.active{
 	color: #fff;
 	background-color: #0D688F;
 	border-color: #0D688F;
