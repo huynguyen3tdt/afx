@@ -12,8 +12,8 @@ import { element } from 'protractor';
   styleUrls: ['./forgot-password.component.css']
 })
 export class ForgotPasswordComponent implements OnInit, AfterViewInit {
-  @ViewChild('username', { static: false }) username: ElementRef;
-  @ViewChild('dob', { static: false }) password: ElementRef;
+  @ViewChild('loginid', { static: false }) loginid: ElementRef;
+
   forgotPasswordForm: FormGroup;
   isSubmitted: boolean;
   errorMess = '';
@@ -34,7 +34,7 @@ export class ForgotPasswordComponent implements OnInit, AfterViewInit {
     });
   }
   ngAfterViewInit() {
-    this.username.nativeElement.focus();
+    this.loginid.nativeElement.focus();
   }
 
   initForgotPasswordForm() {
