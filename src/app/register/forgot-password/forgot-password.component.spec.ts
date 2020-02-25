@@ -5,6 +5,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { Router } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('ForgotPasswordComponent', () => {
   let component: ForgotPasswordComponent;
@@ -16,9 +17,10 @@ describe('ForgotPasswordComponent', () => {
       imports: [
         ReactiveFormsModule,
         HttpClientModule,
-        BsDatepickerModule.forRoot()
+        BsDatepickerModule.forRoot(),
+        RouterTestingModule
       ],
-      providers: [{ provide: Router, useClass: class { navigate = jasmine.createSpy('navigate'); }}]
+      providers: []
     })
     .compileComponents();
   }));
