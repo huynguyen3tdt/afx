@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import {FormControl, FormGroup, AbstractControl} from '@angular/forms';
 import {requiredInput} from '../../core/helper/custom-validate.helper';
 import {Validators} from '@angular/forms';
@@ -16,6 +16,7 @@ const INVALID_PASSWORD = {
   styleUrls: ['./reset-password.component.css']
 })
 export class ResetPasswordComponent implements OnInit {
+
   resetPassForm: FormGroup;
   isSave = false;
   isShow = false;

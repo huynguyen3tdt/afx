@@ -4,6 +4,7 @@ import { requiredInput } from 'src/app/core/helper/custom-validate.helper';
 import * as moment from 'moment';
 import { AuthenService } from 'src/app/core/services/authen.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { element } from 'protractor';
 
 @Component({
   selector: 'app-forgot-password',
@@ -11,7 +12,8 @@ import { Router, ActivatedRoute } from '@angular/router';
   styleUrls: ['./forgot-password.component.css']
 })
 export class ForgotPasswordComponent implements OnInit {
-
+  @ViewChild('username', { static: false }) username: ElementRef;
+  @ViewChild('dob', { static: false }) password: ElementRef;
   forgotPasswordForm: FormGroup;
   isSubmitted: boolean;
   errorMess = '';
@@ -31,6 +33,10 @@ export class ForgotPasswordComponent implements OnInit {
       }
     });
   }
+  ngAfterViewInit() {
+    this.username.nativeElement.focus();
+  }
+
   initForgotPasswordForm() {
     this.forgotPasswordForm = new FormGroup({
       email: new FormControl('', requiredInput),
@@ -49,7 +55,7 @@ export class ForgotPasswordComponent implements OnInit {
 
     this.authenService.forgotPassWord(param).subscribe(response => {
       if (response.meta.code === 200) {
-        this.errSubmit = true;
+        this.errSubmit = false;
         this.successMess = '仮パスワードを登録メールアドレスにメール致しますので、ご確認ください。';
         setTimeout(() => {
           this.router.navigate(['login'], {
@@ -58,8 +64,8 @@ export class ForgotPasswordComponent implements OnInit {
             }
           });
         }, 2000);
-      } else {
-        this.errSubmit = false;
+      } else if (response.meta.code === 102) {
+        this.errSubmit = true;
         this.errorMess = 'Login ID and DOB is not matching';
       }
     });
