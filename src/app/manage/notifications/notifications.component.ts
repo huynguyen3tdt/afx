@@ -36,7 +36,18 @@ export class NotificationsComponent implements OnInit {
   unreadNotification: boolean;
   unreadCampagn: boolean;
   checkType: any;
-
+  TABS = {
+    ALL: 'ALL',
+    IMPORTANT: 'IMPORTANT',
+    NOTIFICATIONS: 'NOTIFICATIONS',
+    CAMPAIGN: 'CAMPAIGN'
+  };
+  CHECKTAB = {
+    ALL: -1,
+    IMPORTANT: 0,
+    NOTIFICATIONS: 1,
+    CAMPAIGN: 2
+  };
 
   constructor(
     private notificationsService: NotificationsService,
@@ -83,7 +94,7 @@ export class NotificationsComponent implements OnInit {
         this.totalAll = this.totalCampagn + this.totalImportant + this.totalNotification;
         this.listNotification = this.pageNotification.data.results.noti_list;
         this.listNotification.forEach(item => {
-          item.create_date = moment(item.create_date).format('YYYY/MM/DD');
+          item.create_date = moment(item.create_date).format('YYYY/MM/DD HH:MM');
         });
         this.totalItem = this.pageNotification.data.count;
         this.spinnerService.hide();
@@ -107,17 +118,17 @@ export class NotificationsComponent implements OnInit {
 
   filterUnreadNoti() {
     switch (this.tab) {
-      case 'ALL':
+      case this.TABS.ALL:
         this.unreadAll = !this.unreadAll;
         this.getListNotifications(this.currentPage, this.pageSize, this.unreadAll, -1);
         break;
-      case 'IMPORTANT':
+      case this.TABS.IMPORTANT:
         this.unreadImportant = !this.unreadImportant;
         this.getListNotifications(this.currentPage, this.pageSize, this.unreadImportant, 0);
         break;
-      case 'NOTIFICATIONS':
+      case this.TABS.NOTIFICATIONS:
         break;
-      case 'CAMPAIGN':
+      case this.TABS.CAMPAIGN:
         break;
     }
   }
@@ -146,32 +157,32 @@ export class NotificationsComponent implements OnInit {
   pageChanged(event) {
     this.currentPage = event.page;
     switch (this.tab) {
-      case 'ALL':
+      case this.TABS.ALL:
         this.getListNotifications(this.currentPage, this.pageSize, this.unreadAll, -1);
         break;
-      case 'IMPORTANT':
+      case this.TABS.IMPORTANT:
         this.getListNotifications(this.currentPage, this.pageSize, this.unreadImportant, 0);
         break;
-      case 'NOTIFICATIONS':
+      case this.TABS.NOTIFICATIONS:
         break;
-      case 'CAMPAIGN':
+      case this.TABS.CAMPAIGN:
         break;
     }
   }
 
   checkTab(type: number) {
     switch (type) {
-      case -1:
-        this.tab = 'ALL';
+      case this.CHECKTAB.ALL:
+        this.tab = this.TABS.ALL;
         break;
-      case 0:
-        this.tab = 'IMPORTANT';
+      case this.CHECKTAB.IMPORTANT:
+        this.tab = this.TABS.IMPORTANT;
         break;
-      case 1:
-        this.tab = 'NOTIFICATIONS';
+      case this.CHECKTAB.NOTIFICATIONS:
+        this.tab = this.TABS.NOTIFICATIONS;
         break;
-      case 2:
-        this.tab = 'CAMPAIGN';
+      case this.CHECKTAB.CAMPAIGN:
+        this.tab = this.TABS.CAMPAIGN;
         break;
     }
   }
