@@ -25,9 +25,9 @@ export class NotificationsService {
       checkUnread = 1;
     }
     if (type !== -1) {
-      URL = `?noti_type=${type}&not_read=${checkUnread}&page_size=${pageSize}?page_numb=${pageNumber}`;
+      URL = `?noti_type=${type}&not_read=${checkUnread}&page_size=${pageSize}&page_numb=${pageNumber}`;
     } else {
-      URL = `?not_read=${checkUnread}&page_size=${pageSize}?page_numb=${pageNumber}`;
+      URL = `?not_read=${checkUnread}&page_size=${pageSize}&page_numb=${pageNumber}`;
     }
     return this.httpClient.get(`${this.envConfigService.getConfig()}/${AppSettings.API_GET_LIST_NOTIFICATIONS}` + URL)
       .pipe(
