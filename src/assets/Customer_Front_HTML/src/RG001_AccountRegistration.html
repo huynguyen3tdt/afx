@@ -415,7 +415,7 @@
                                                 <h5 class="c-title text-primary"><strong>現住所（ご登録住所）</strong></h5>
                                                 <p class="c-note small text-secondary">本人確認書類に記載された住所をご記入ください。</p>
                                                 <div class="form-group">
-                                                    <label class="form-label mb-1"><strong>郵便番号</strong> <span class="small badge badge-danger">必須</span></label>
+                                                    <label class="form-label mb-1"><strong>郵便番号</strong></label>
                                                     <div class="row">
                                                         <div class="col-md-6 col-lg-4">
                                                             <input type="text" name="" class="form-control" value="" placeholder="例）1036026">
@@ -481,18 +481,18 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label class="form-label mb-1"><strong>市区郡・町村</strong> <span class="small badge badge-danger">必須</span></label>
+                                                    <label class="form-label mb-1"><strong>市区郡・町村</strong></label>
                                                     <div class="row">
                                                         <div class="col-md-6 col-lg-4">
-                                                            <input type="text" name="" class="form-control" value="" placeholder="例）中央区日本橋">
+                                                            <input type="text" name="" class="form-control" value="" placeholder="例）中央区日本橋兜町">
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label class="form-label mb-1"><strong>番地等</strong><span class="small badge badge-danger">必須</span></label>
+                                                    <label class="form-label mb-1"><strong>番地等</strong></label>
                                                     <div class="row">
                                                         <div class="col-md-6 col-lg-4">
-                                                            <input type="text" name="" class="form-control" value="" placeholder="例）２－７－１">
+                                                            <input type="text" name="" class="form-control" value="" placeholder="例）４－３">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -500,7 +500,7 @@
                                                     <label class="form-label mb-1"><strong>マンション名・部屋番号</strong></label>
                                                     <div class="row">
                                                         <div class="col-md-6 col-lg-4">
-                                                            <input type="text" name="" class="form-control" value="" placeholder="例）東京日本橋タワー２６階">
+                                                            <input type="text" name="" class="form-control" value="" placeholder="例）兜町ビル３階">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -509,12 +509,74 @@
                                         <!-- 18/02/2020 -->
                                         <div class="card mb-3">
                                             <div class="card-body">
-                                                <h5 class="c-title text-primary"><strong>振込先金融機関口座情報</strong></h5>
+                                                <h5 class="c-title text-primary"><strong>振込先金融機関口座情報</strong></h5>                                                
+                                                <!-- 26/02/2020 -->
+                                                <div class="form-group">
+                                                    <label class="form-label mb-1"><strong>銀行名</strong> <span class="small badge badge-danger">必須</span></label>
+                                                    <div class="row container-radios-wrapper">
+                                                        <div class="col-lg-4">
+                                                            <label class="container-radio small mb-3 box-item-radio">
+                                                                <div class="text-center"><strong>三菱ＵＦＪ銀行</strong></div>
+                                                                <input type="radio" name="bank" value="0">
+                                                                <span class="checkmark"></span>
+                                                            </label>
+                                                        </div>
+                                                        <div class="col-lg-4">
+                                                            <label class="container-radio small mb-3 box-item-radio">
+                                                                <div class="text-center"><strong>三井住友銀行</strong></div>
+                                                                <input type="radio" name="bank" value="1">
+                                                                <span class="checkmark"></span>
+                                                            </label>
+                                                        </div>
+                                                        <div class="col-lg-4">
+                                                            <label class="container-radio small mb-3 box-item-radio">
+                                                                <div class="text-center"><strong>みずほ銀行</strong></div>
+                                                                <input type="radio" name="bank" value="1">
+                                                                <span class="checkmark"></span>
+                                                            </label>
+                                                        </div>
+                                                        <div class="col-lg-4">
+                                                            <label class="container-radio small mb-3 box-item-radio">
+                                                                <div class="text-center"><strong>楽天銀行</strong></div>
+                                                                <input type="radio" name="bank" value="0">
+                                                                <span class="checkmark"></span>
+                                                            </label>
+                                                        </div>
+                                                        <div class="col-lg-4">
+                                                            <label class="container-radio small mb-3 box-item-radio">
+                                                                <div class="text-center"><strong>ジャパンネット銀行</strong></div>
+                                                                <input type="radio" name="bank" value="1">
+                                                                <span class="checkmark"></span>
+                                                            </label>
+                                                        </div>
+                                                        <div class="col-lg-4">
+                                                            <label class="container-radio small mb-3 box-item-radio">
+                                                                <div class="text-center"><strong>住信ＳＢＩネット銀行</strong></div>
+                                                                <input type="radio" name="bank" value="1">
+                                                                <span class="checkmark"></span>
+                                                            </label>
+                                                        </div>
+                                                        <div class="col-lg-4">
+                                                            <label class="container-radio small mb-3 box-item-radio">
+                                                                <div class="text-center"><strong>ゆうちょ銀行</strong></div>
+                                                                <input type="radio" name="bank" value="1">
+                                                                <span class="checkmark"></span>
+                                                            </label>
+                                                        </div>
+                                                        <div class="col-lg-4">
+                                                            <label class="container-radio small mb-3 box-item-radio">
+                                                                <div class="text-center"><strong>その他の金融機関</strong></div>
+                                                                <input type="radio" name="bank" value="1">
+                                                                <span class="checkmark"></span>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div><!-- 26/02/2020 -->
                                                 <div class="form-group">
                                                     <label class="form-label mb-1"><strong>銀行名</strong> <span class="small badge badge-danger">必須</span></label>
                                                     <div class="row">
                                                         <div class="col-md-6 col-lg-4">
-                                                            <input type="text" name="" class="form-control" value="" placeholder="例）楽天銀行">
+                                                            <input type="text" name="" class="form-control" value="" placeholder="例）楽天銀行" disabled="disabled">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -522,7 +584,7 @@
                                                     <label class="form-label mb-1"><strong>支店名</strong> <span class="small badge badge-danger">必須</span></label>
                                                     <div class="row">
                                                         <div class="col-md-6 col-lg-4">
-                                                            <input type="text" name="" class="form-control" value="" placeholder="例）ジャズ支店">
+                                                            <input type="text" name="" class="form-control" value="" placeholder="例）ジャズ支店" disabled="disabled">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -553,6 +615,15 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <!-- 26/02/2020 -->
+                                                <div class="form-group">
+                                                    <label class="form-label mb-1"><strong>口座名義人</strong></label>
+                                                    <div class="row">
+                                                        <div class="col-md-6 col-lg-4">
+                                                            <input type="text" name="" class="form-control" value="" placeholder="例）カワセタロウ" disabled="disabled">
+                                                        </div>
+                                                    </div>
+                                                </div><!-- 26/02/2020 -->
                                             </div>
                                         </div>
                                         <!-- END 18/02/2020 -->
@@ -823,6 +894,17 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <!-- 26/02/2020 -->
+                                                <div class="form-group">
+                                                    <label class="form-label mb-1"><strong>その他をご選択の場合</strong> <span class="badge small badge-danger">必須</span></label>
+                                                    <div class="row">
+                                                        <div class="col-md-6 col-lg-4">
+                                                            <input type="text" name="" class="form-control" value="" placeholder="">
+                                                        </div>
+                                                    </div>
+                                                    
+                                                </div>
+                                                <!-- 26/02/2020 -->
                                                 <div class="form-group">
                                                     <label class="form-label mb-1"><strong>申込の経緯（取引の動機）</strong> <span class="badge small badge-danger">必須</span></label>
                                                     <div class="row">
@@ -843,6 +925,17 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <!-- 26/02/2020 -->
+                                                <div class="form-group">
+                                                    <label class="form-label mb-1"><strong>具体名をご記入ください</strong> <span class="badge small badge-danger">必須</span></label>
+                                                    <div class="row">
+                                                        <div class="col-md-6 col-lg-4">
+                                                            <input type="text" name="" class="form-control" value="" placeholder="">
+                                                        </div>
+                                                    </div>
+                                                    
+                                                </div>
+                                                <!-- 26/02/2020 -->
                                                 <div class="form-group">
                                                     <label class="form-label mb-1"><strong>投資経験：FX取引</strong> <span class="badge small badge-danger">必須</span></label>
                                                     <div class="row">
@@ -1036,7 +1129,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label class="form-label mb-1"><strong>郵便番号</strong> <span class="badge small badge-danger">必須</span></label>
+                                                    <label class="form-label mb-1"><strong>郵便番号</strong></label>
                                                     <div class="row">
                                                         <div class="col-md-6 col-lg-4">
                                                             <input type="text" name="" value="" placeholder="例）1036026" class="form-control">
@@ -1102,7 +1195,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label class="form-label mb-1"><strong>市区郡・町村</strong> <span class="badge small badge-danger">必須</span></label>
+                                                    <label class="form-label mb-1"><strong>市区郡・町村</strong></label>
                                                     <div class="row">
                                                         <div class="col-md-6 col-lg-4">
                                                             <input type="text" name="" value="" placeholder="例）中央区日本橋" class="form-control">
@@ -1110,7 +1203,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label class="form-label mb-1"><strong>ビル名</strong> <span class="badge small badge-danger">必須</span></label>
+                                                    <label class="form-label mb-1"><strong>ビル名</strong></label>
                                                     <div class="row">
                                                         <div class="col-md-6 col-lg-4">
                                                             <input type="text" name="" value="" placeholder="例）２－７－１" class="form-control">
@@ -1118,7 +1211,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label class="form-label mb-1"><strong>電話番号</strong> <span class="small badge badge-danger">必須</span></label>
+                                                    <label class="form-label mb-1"><strong>電話番号</strong></label>
                                                     <div class="row">
                                                         <div class="col-md-6 col-lg-4">
                                                             <input type="text" name="" class="form-control" value="" placeholder="例）090XXXXXXXX">
@@ -1181,6 +1274,68 @@
                                         <div class="card mb-3">
                                             <div class="card-body">
                                                 <h5 class="c-title text-primary"><strong>振込先金融機関口座情報</strong></h5>
+                                                <!-- 26/02/2020 -->
+                                                <div class="form-group">
+                                                    <label class="form-label mb-1"><strong>銀行名</strong> <span class="small badge badge-danger">必須</span></label>
+                                                    <div class="row container-radios-wrapper">
+                                                        <div class="col-lg-4">
+                                                            <label class="container-radio small mb-3 box-item-radio">
+                                                                <div class="text-center"><strong>三菱ＵＦＪ銀行</strong></div>
+                                                                <input type="radio" name="bank" value="0">
+                                                                <span class="checkmark"></span>
+                                                            </label>
+                                                        </div>
+                                                        <div class="col-lg-4">
+                                                            <label class="container-radio small mb-3 box-item-radio">
+                                                                <div class="text-center"><strong>三井住友銀行</strong></div>
+                                                                <input type="radio" name="bank" value="1">
+                                                                <span class="checkmark"></span>
+                                                            </label>
+                                                        </div>
+                                                        <div class="col-lg-4">
+                                                            <label class="container-radio small mb-3 box-item-radio">
+                                                                <div class="text-center"><strong>みずほ銀行</strong></div>
+                                                                <input type="radio" name="bank" value="1">
+                                                                <span class="checkmark"></span>
+                                                            </label>
+                                                        </div>
+                                                        <div class="col-lg-4">
+                                                            <label class="container-radio small mb-3 box-item-radio">
+                                                                <div class="text-center"><strong>楽天銀行</strong></div>
+                                                                <input type="radio" name="bank" value="0">
+                                                                <span class="checkmark"></span>
+                                                            </label>
+                                                        </div>
+                                                        <div class="col-lg-4">
+                                                            <label class="container-radio small mb-3 box-item-radio">
+                                                                <div class="text-center"><strong>ジャパンネット銀行</strong></div>
+                                                                <input type="radio" name="bank" value="1">
+                                                                <span class="checkmark"></span>
+                                                            </label>
+                                                        </div>
+                                                        <div class="col-lg-4">
+                                                            <label class="container-radio small mb-3 box-item-radio">
+                                                                <div class="text-center"><strong>住信ＳＢＩネット銀行</strong></div>
+                                                                <input type="radio" name="bank" value="1">
+                                                                <span class="checkmark"></span>
+                                                            </label>
+                                                        </div>
+                                                        <div class="col-lg-4">
+                                                            <label class="container-radio small mb-3 box-item-radio">
+                                                                <div class="text-center"><strong>ゆうちょ銀行</strong></div>
+                                                                <input type="radio" name="bank" value="1">
+                                                                <span class="checkmark"></span>
+                                                            </label>
+                                                        </div>
+                                                        <div class="col-lg-4">
+                                                            <label class="container-radio small mb-3 box-item-radio">
+                                                                <div class="text-center"><strong>その他の金融機関</strong></div>
+                                                                <input type="radio" name="bank" value="1">
+                                                                <span class="checkmark"></span>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div><!-- 26/02/2020 -->
                                                 <div class="form-group">
                                                     <label class="form-label mb-1"><strong>銀行名</strong> <span class="small badge badge-danger">必須</span></label>
                                                     <div class="row">
@@ -1224,6 +1379,15 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <!-- 26/02/2020 -->
+                                                <div class="form-group">
+                                                    <label class="form-label mb-1"><strong>口座名義人</strong></label>
+                                                    <div class="row">
+                                                        <div class="col-md-6 col-lg-4">
+                                                            <input type="text" name="" class="form-control" value="" placeholder="例）カワセタロウ" disabled="disabled">
+                                                        </div>
+                                                    </div>
+                                                </div><!-- 26/02/2020 -->
                                             </div>
                                         </div><!-- END 18/02/2020 -->
                                         <div class="card mb-3">
@@ -1535,178 +1699,6 @@
                                                     <div class="row">
                                                         <div class="col-md-6 col-lg-4">
                                                             <input type="text" name="" value="" placeholder="例）中央区日本橋" class="form-control">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="card mb-3">
-                                            <div class="card-body">
-                                                <h5 class="c-title text-primary"><strong>法人投資経験</strong></h5>
-                                                <div class="form-group">
-                                                    <label class="form-label mb-1"><strong>法人投資経験：FX取引</strong> <span class="badge small badge-danger">必須</span></label>
-                                                    <div class="row">
-                                                        <div class="col-md-6 col-lg-4">
-                                                            <select class="form-control">
-                                                                <option value="">選択してください</option>
-                                                                <option value="0">未経験</option>
-                                                                <option value="12">半年未満</option>
-                                                                <option value="1">１年未満</option>
-                                                                <option value="2">２年未満</option>
-                                                                <option value="3">３年未満</option>
-                                                                <option value="4">４年未満</option>
-                                                                <option value="5">５年未満</option>
-                                                                <option value="6">６年未満</option>
-                                                                <option value="7">７年未満</option>
-                                                                <option value="8">８年未満</option>
-                                                                <option value="9">９年未満</option>
-                                                                <option value="10">１０年未満</option>
-                                                                <option value="11">１０年以上</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="form-label mb-1"><strong>法人投資経験：CFD取引</strong> <span class="badge small badge-danger">必須</span></label>
-                                                    <div class="row">
-                                                        <div class="col-md-6 col-lg-4">
-                                                            <select class="form-control">
-                                                                <option value="">選択してください</option>
-                                                                <option value="0">未経験</option>
-                                                                <option value="12">半年未満</option>
-                                                                <option value="1">１年未満</option>
-                                                                <option value="2">２年未満</option>
-                                                                <option value="3">３年未満</option>
-                                                                <option value="4">４年未満</option>
-                                                                <option value="5">５年未満</option>
-                                                                <option value="6">６年未満</option>
-                                                                <option value="7">７年未満</option>
-                                                                <option value="8">８年未満</option>
-                                                                <option value="9">９年未満</option>
-                                                                <option value="10">１０年未満</option>
-                                                                <option value="11">１０年以上</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="form-label mb-1"><strong>法人投資経験：株式取引</strong> <span class="badge small badge-danger">必須</span></label>
-                                                    <div class="row">
-                                                        <div class="col-md-6 col-lg-4">
-                                                            <select class="form-control">
-                                                                <option value="">選択してください</option>
-                                                                <option value="0">未経験</option>
-                                                                <option value="12">半年未満</option>
-                                                                <option value="1">１年未満</option>
-                                                                <option value="2">２年未満</option>
-                                                                <option value="3">３年未満</option>
-                                                                <option value="4">４年未満</option>
-                                                                <option value="5">５年未満</option>
-                                                                <option value="6">６年未満</option>
-                                                                <option value="7">７年未満</option>
-                                                                <option value="8">８年未満</option>
-                                                                <option value="9">９年未満</option>
-                                                                <option value="10">１０年未満</option>
-                                                                <option value="11">１０年以上</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="form-label mb-1"><strong>法人投資経験：信用取引</strong> <span class="badge small badge-danger">必須</span></label>
-                                                    <div class="row">
-                                                        <div class="col-md-6 col-lg-4">
-                                                            <select class="form-control">
-                                                                <option value="">選択してください</option>
-                                                                <option value="0">未経験</option>
-                                                                <option value="12">半年未満</option>
-                                                                <option value="1">１年未満</option>
-                                                                <option value="2">２年未満</option>
-                                                                <option value="3">３年未満</option>
-                                                                <option value="4">４年未満</option>
-                                                                <option value="5">５年未満</option>
-                                                                <option value="6">６年未満</option>
-                                                                <option value="7">７年未満</option>
-                                                                <option value="8">８年未満</option>
-                                                                <option value="9">９年未満</option>
-                                                                <option value="10">１０年未満</option>
-                                                                <option value="11">１０年以上</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="form-label mb-1"><strong>法人投資経験：商品先物</strong> <span class="badge small badge-danger">必須</span></label>
-                                                    <div class="row">
-                                                        <div class="col-md-6 col-lg-4">
-                                                            <select class="form-control">
-                                                                <option value="">選択してください</option>
-                                                                <option value="0">未経験</option>
-                                                                <option value="12">半年未満</option>
-                                                                <option value="1">１年未満</option>
-                                                                <option value="2">２年未満</option>
-                                                                <option value="3">３年未満</option>
-                                                                <option value="4">４年未満</option>
-                                                                <option value="5">５年未満</option>
-                                                                <option value="6">６年未満</option>
-                                                                <option value="7">７年未満</option>
-                                                                <option value="8">８年未満</option>
-                                                                <option value="9">９年未満</option>
-                                                                <option value="10">１０年未満</option>
-                                                                <option value="11">１０年以上</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="form-label mb-1"><strong>法人投資経験：その他</strong> <span class="badge small badge-danger">必須</span></label>
-                                                    <div class="row justify-content-center container-radios-wrapper">
-                                                        <div class="col-lg-3">
-                                                            <label class="container-radio small box-item-radio mb-2 mb-lg-0 active">
-                                                                <div class="text-center"><strong>特になし</strong></div>
-                                                                <input type="radio" name="other_invest_ex" value="0" checked>
-                                                                <span class="checkmark"></span>
-                                                            </label>
-                                                        </div>
-                                                        <div class="col-lg-3">
-                                                            <label class="container-radio small  box-item-radio mb-2 mb-lg-0">
-                                                                <div class="text-center"><strong>上記以外の投資経験がある</strong></div>
-                                                                <input type="radio" name="other_invest_ex" value="1">
-                                                                <span class="checkmark"></span>
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="border p-3" id="other_invest_ex_content" style="display: none;">
-                                                    <div class="form-group">
-                                                        <label class="form-label mb-1"><strong>投資経験がある金融商品名</strong> <span class="badge small badge-danger">必須</span></label>
-                                                        <div class="row">
-                                                            <div class="col-md-6 col-lg-4">
-                                                                <input type="text" name="" value="" placeholder="例)先物・オプション・仮想通貨" class="form-control">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label class="form-label mb-1"><strong>取引経験</strong> <span class="badge small badge-danger">必須</span></label>
-                                                        <div class="row">
-                                                            <div class="col-md-6 col-lg-4">
-                                                                <select class="form-control">
-                                                                    <option value="">選択してください</option>
-                                                                    <option value="0">未経験</option>
-                                                                    <option value="12">半年未満</option>
-                                                                    <option value="1">１年未満</option>
-                                                                    <option value="2">２年未満</option>
-                                                                    <option value="3">３年未満</option>
-                                                                    <option value="4">４年未満</option>
-                                                                    <option value="5">５年未満</option>
-                                                                    <option value="6">６年未満</option>
-                                                                    <option value="7">７年未満</option>
-                                                                    <option value="8">８年未満</option>
-                                                                    <option value="9">９年未満</option>
-                                                                    <option value="10">１０年未満</option>
-                                                                    <option value="11">１０年以上</option>
-                                                                </select>
-                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -2442,7 +2434,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label class="form-label mb-1"><strong>郵便番号</strong> <span class="badge small badge-danger">必須</span></label>
+                                                    <label class="form-label mb-1"><strong>郵便番号</strong></label>
                                                     <div class="row">
                                                         <div class="col-md-6 col-lg-4">
                                                             <input type="text" name="" value="" placeholder="例）1036026" class="form-control">
@@ -2508,26 +2500,26 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label class="form-label mb-1"><strong>市区郡・町村</strong> <span class="badge small badge-danger">必須</span></label>
+                                                    <label class="form-label mb-1"><strong>市区郡・町村</strong></label>
                                                     <div class="row">
                                                         <div class="col-md-6 col-lg-4">
-                                                            <input type="text" name="" value="" placeholder="例）中央区日本橋" class="form-control">
+                                                            <input type="text" name="" value="" placeholder="例）中央区日本橋兜町" class="form-control">
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label class="form-label mb-1"><strong>番地等</strong> <span class="badge small badge-danger">必須</span></label>
+                                                    <label class="form-label mb-1"><strong>番地等</strong></label>
                                                     <div class="row">
                                                         <div class="col-md-6 col-lg-4">
-                                                            <input type="text" name="" value="" placeholder="例）２－７－１" class="form-control">
+                                                            <input type="text" name="" value="" placeholder="例）４－３" class="form-control">
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label class="form-label mb-1"><strong>マンション名・部屋番号</strong> <span class="badge small badge-danger">必須</span></label>
+                                                    <label class="form-label mb-1"><strong>マンション名・部屋番号</strong></label>
                                                     <div class="row">
                                                         <div class="col-md-6 col-lg-4">
-                                                            <input type="text" name="" value="" placeholder="例）東京日本橋タワー２６階" class="form-control">
+                                                            <input type="text" name="" value="" placeholder="兜町ビル３階" class="form-control">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -2684,6 +2676,16 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <!-- 26/02/2020 -->
+                                                <div class="form-group">
+                                                    <label class="form-label mb-1"><strong>その他をご選択の場合</strong> <span class="badge small badge-danger">必須</span></label>
+                                                    <div class="row">
+                                                        <div class="col-md-6 col-lg-4">
+                                                            <input type="text" name="" class="form-control" value="" placeholder="">
+                                                        </div>
+                                                    </div>                                                    
+                                                </div>
+                                                <!-- 26/02/2020 -->
                                                 <div class="form-group">
                                                     <label class="form-label mb-1"><strong>申込の経緯（取引の動機）</strong> <span class="badge small badge-danger">必須</span></label>
                                                     <div class="row">
@@ -2704,6 +2706,17 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <!-- 26/02/2020 -->
+                                                <div class="form-group">
+                                                    <label class="form-label mb-1"><strong>具体名をご記入ください</strong> <span class="badge small badge-danger">必須</span></label>
+                                                    <div class="row">
+                                                        <div class="col-md-6 col-lg-4">
+                                                            <input type="text" name="" class="form-control" value="" placeholder="">
+                                                        </div>
+                                                    </div>
+                                                    
+                                                </div>
+                                                <!-- 26/02/2020 -->
                                             </div>
                                         </div>
                                     </div>

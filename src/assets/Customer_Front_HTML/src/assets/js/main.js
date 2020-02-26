@@ -83,25 +83,25 @@ jQuery(document).ready(function() {
 		console.log(usize);
 		
 		if(usize == 'sm'){
-			$('.switch-style .btn-group-vertical .btn').not('.btn-size-sm').removeClass('active');
-			$('.switch-style .btn-group-vertical .btn.btn-size-sm').addClass('active');
+			$('.switch-style .btn-group .btn').not('.btn-size-sm').removeClass('active');
+			$('.switch-style .btn-group .btn.btn-size-sm').addClass('active');
 			$('body').addClass('font-size-sm');
 		}else if(usize == 'lg'){
-			$('.switch-style .btn-group-vertical .btn').not('.btn-size-lg').removeClass('active');
-			$('.switch-style .btn-group-vertical .btn.btn-size-lg').addClass('active');
+			$('.switch-style .btn-group .btn').not('.btn-size-lg').removeClass('active');
+			$('.switch-style .btn-group .btn.btn-size-lg').addClass('active');
 			$('body').addClass('font-size-lg');
 		}else {
-			$('.switch-style .btn-group-vertical .btn').not('.btn-size-md').removeClass('active');
-			$('.switch-style .btn-group-vertical .btn.btn-size-md').addClass('active');
+			$('.switch-style .btn-group .btn').not('.btn-size-md').removeClass('active');
+			$('.switch-style .btn-group .btn.btn-size-md').addClass('active');
 			Cookies.set('usize','md');
 		}
 		
 	}
 	check_usize();
 	//Switch Style
-	$('.switch-style .btn-group-vertical .btn').click(function(e){
+	$('.switch-style .btn-group .btn').click(function(e){
 		e.preventDefault();
-		$('.switch-style .btn-group-vertical .btn').not(this).removeClass('active');
+		$('.switch-style .btn-group .btn').not(this).removeClass('active');
 		var size = $(this).attr('data-size');
 		//console.log(size);
 		switch (size) {
