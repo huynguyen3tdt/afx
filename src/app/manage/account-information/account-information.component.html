@@ -36,7 +36,7 @@
                                 role="tab" aria-controls="nav-profile" aria-selected="true"><i
                                     class="icon ion-md-contact"></i> <strong class="d-none d-md-inline">User<span
                                         class="d-none d-lg-inline">Infomation</span></strong></a>
-                            <a class="nav-item nav-link" id="nav-bank-tab" data-toggle="tab" href="#nav-corporate" role="tab"
+                            <a class="nav-item nav-link" id="nav-bank-tab" data-toggle="tab" href="#nav-corporate" role="tab" (click)="getCorporateInfor()"
                             aria-controls="nav-corporate" aria-selected="false"><i class="icon ion-md-briefcase"></i> <strong
                                     class="d-none d-md-inline">Corporate<span
                                         class="d-none d-lg-inline">Infomation</span></strong></a>
@@ -164,7 +164,6 @@
                                                         </div>
                                                         <div *ngIf="editAddress == true" class="editable">
                                                             <input type="text" name="postcode" formControlName="postCode"
-                                                                [ngClass]="{'invalid': isSubmitted && userForm.controls['postCode'].errors}"
                                                                 class="form-control form-control-sm mb-1"
                                                                 value="" placeholder="">
                                                         </div>
@@ -184,14 +183,14 @@
                                                         <div *ngIf="editAddress == true" class="editable">
                                                             <div class="row no-gutters">
                                                                 <div class="col-sm-6 pr-md-1">
-                                                                    <select formControlName="searchPrefe" [ngClass]="{'invalid': isSubmitted && userForm.controls['searchPrefe'].errors}"
+                                                                    <select formControlName="searchPrefe"
                                                                         class="form-control form-control-sm mb-1 select2"
                                                                         style="width: 100%">
                                                                         <option [value]="prefecture">{{prefecture}}</option>
                                                                     </select>
                                                                 </div>
                                                                 <div class="col-sm-6 pl-md-1">
-                                                                    <select formControlName="searchCountry" [ngClass]="{'invalid': isSubmitted && userForm.controls['searchCountry'].errors}"
+                                                                    <select formControlName="searchCountry"
                                                                         class="form-control form-control-sm mb-1 select2"
                                                                         style="width: 100%">
                                                                         <option [value]="county">{{county}}</option>
@@ -199,7 +198,6 @@
                                                                 </div>
                                                             </div>
                                                             <input type="text" name="address" formControlName="house_numb"
-                                                              [ngClass]="{'invalid': isSubmitted && userForm.controls['house_numb'].errors}"
                                                                 class="form-control form-control-sm mb-1" value=""
                                                                 placeholder="House number/Room number" >
                                                             <div class="text-right">
@@ -224,7 +222,6 @@
                                                         </div>
                                                         <div *ngIf="editEmail == true" class="editable">
                                                             <input type="text" name="email" formControlName="email"
-                                                              [ngClass]="{'invalid': isSubmitted && userForm.controls['email'].errors}"
                                                                 class="form-control form-control-sm mb-1"
                                                                 value="" placeholder="">
                                                             <div class="text-right">
@@ -250,7 +247,6 @@
                                                         </div>
                                                         <div *ngIf="editPhone == true" class="editable">
                                                             <input type="text" name="phone" formControlName="phone"
-                                                            [ngClass]="{'invalid': isSubmitted && userForm.controls['phone'].errors}"
                                                                 class="form-control form-control-sm mb-1"
                                                                 value="+" placeholder="">
                                                             <div class="text-right">
@@ -307,30 +303,32 @@
                         <!-- BEGIN Corporate -->
                         <div class="tab-pane fade" id="nav-corporate" role="tabpanel" aria-labelledby="nav-corporate-tab">
                           <h3 class="border-bottom pb-1 mb-3">Corporate Infomation</h3>
-                          <div class="row">
+                          <div class="row" [formGroup]="corporateForm">
                               <div class="col-lg-8">
                                   <div class="table-responsive">
                                       <table class="table table-sm table-borderless table-hover table-profile" cellspacing="0" cellpadding="0">
                                           <tbody>
                                               <tr>
                                                   <td width="150">Corporate name</td>
-                                                  <td><strong>Tam Dong Tam Innovative Solutions SJC</strong></td>
+                                                  <td><strong>{{corporateInfor?.corporation?.name}}</strong></td>
                                                   <td width="15">&nbsp;</td>
                                               </tr>
                                               <tr>
                                                   <td>Corporate name (Furigana)</td>
-                                                  <td><strong>タムドンタムイノベーティブソリューションズ</strong></td>
+                                                  <td><strong>{{corporateInfor?.corporation?.fx_name1}}</strong></td>
                                                   <td width="15">&nbsp;</td>
                                               </tr>
                                               <tr class="row-postcode">
                                                   <td>Postcode</td>
                                                   <td>
-                                                      <div class="currentvalue">
-                                                          <strong>000-1234</strong>
-                                                          <div class="status d-none small"><span class="text-success"><i class="icon ion-md-checkmark"></i> Updated</span></div>
+                                                      <div class="currentvalue" *ngIf="editCorAddress == false">
+                                                          <strong>{{corporateInfor?.zip?.value}}</strong>
+                                                          <div class="status d-none small" *ngIf="corporateInfor?.zip?.status == 0">
+                                                            <span class="text-success"><i class="icon ion-md-checkmark">
+                                                            </i> Updated</span></div>
                                                       </div>
-                                                      <div class="editable">
-                                                          <input type="text" name="postcode" class="form-control form-control-sm mb-1" value="0001234" placeholder="">
+                                                      <div class="editable" *ngIf="editCorAddress == true">
+                                                          <input type="text" name="postcode" fromControlName="cor_postcode" class="form-control form-control-sm mb-1" value="0001234" placeholder="">
                                                       </div>
                                                   </td>
                                                   <td width="15">&nbsp;</td>
@@ -338,70 +336,75 @@
                                               <tr class="row-address need-verify">
                                                   <td>Address</td>
                                                   <td>
-                                                      <div class="currentvalue">
-                                                          <div><strong>Ha Noi city, Cau Giay street, Mai Dich</strong></div>
-                                                          <div><strong>12 - 59 Doan Ke Thien</strong></div>
-                                                          <div class="status d-none small"><span class="text-info"><i class="icon ion-md-hourglass"></i> Verificaion in process</span></div>
+                                                      <div class="currentvalue" *ngIf="editCorAddress == false">
+                                                          <div><strong>{{corporateInfor?.corporation?.address?.value?.city}} , {{corporateInfor?.corporation?.address?.value?.street}}</strong></div>
+                                                          <div><strong>{{corporateInfor?.corporation?.address?.value?.street2}} - {{corporateInfor?.corporation?.address?.value?.fx_street3}}</strong></div>
+                                                          <div class="status d-none small"><span class="text-info">
+                                                            <i class="icon ion-md-hourglass" *ngIf="corporateInfor?.address?.status == 0">
+                                                            </i> Verificaion in process</span></div>
                                                       </div>
-                                                      <div class="editable">
+                                                      <div class="editable" *ngIf="editCorAddress == true">
                                                           <div class="row no-gutters">
                                                               <div class="col-sm-6 pr-md-1">
-                                                                  <select class="form-control form-control-sm mb-1 select2" style="width: 100%">
-                                                                      <option>Prefecture</option>
+                                                                  <select class="form-control form-control-sm mb-1 select2" style="width: 100%" formControlName="cor_prefec">
+                                                                      <option [value]="corPrefecture">{{corPrefecture}}</option>
                                                                   </select>
                                                               </div>
                                                               <div class="col-sm-6 pl-md-1">
-                                                                  <select class="form-control form-control-sm mb-1 select2" style="width: 100%">
-                                                                      <option>District</option>
+                                                                  <select class="form-control form-control-sm mb-1 select2" style="width: 100%" formControlName="cor_district">
+                                                                      <option [value]="corDistrict">{{corDistrict}}</option>
                                                                   </select>
                                                               </div>
                                                           </div>
                                                           <div class="row no-gutters">
                                                               <div class="col-sm-6 pr-md-1">
-                                                                  <input type="text" name="address" class="form-control form-control-sm mb-1" value="" placeholder="House Number">
+                                                                  <input type="text" name="cor-address" class="form-control form-control-sm mb-1" formControlName="cor_house" value="" placeholder="House Number">
                                                               </div>
                                                               <div class="col-sm-6 pl-md-1">
-                                                                  <input type="text" name="address" class="form-control form-control-sm mb-1" value="" placeholder="Building Name">
+                                                                  <input type="text" name="cor-address" class="form-control form-control-sm mb-1" formControlName="cor_build" value="" placeholder="Building Name">
                                                               </div>
                                                           </div>
                                                           <div class="text-right">
-                                                              <button type="button" class="btn btn-sm btn-cancel btn-outline-secondary pt-0 pb-0">Cancel</button>
+                                                              <button type="button" class="btn btn-sm btn-cancel btn-outline-secondary pt-0 pb-0" (click)="cancelEditCor('cor-address')">Cancel</button>
                                                           </div>
                                                       </div>
                                                   </td>
-                                                  <td width="15"><a href="javascript:;" class="edit-link" data-toggle="tooltip" data-placement="top" title="Edit Address"><i class="icon ion-md-create"></i></a></td>
+                                                  <td width="15"><a href="javascript:;" class="edit-link" data-toggle="tooltip" data-placement="top" *ngIf="editCorAddress == false && corporateInfor?.address?.status != 0"
+                                                    title="Edit Address" (click)="showEditFieldCor('cor-address')"><i class="icon ion-md-create"></i></a></td>
                                               </tr>
                                               <tr class="row-phone">
                                                   <td>Phone</td>
                                                   <td>
-                                                      <div class="currentvalue">
-                                                          <strong><a href="javascript:;">+84389999999</a></strong>
+                                                      <div class="currentvalue" *ngIf="editCorPhone == false">
+                                                          <strong><a href="javascript:;">+{{corporateInfor?.moblie}}</a></strong>
                                                           <div class="status d-none small"><span class="text-success"><i class="icon ion-md-checkmark"></i> Updated </span></div>
                                                       </div>
-                                                      <div class="editable">
-                                                          <input type="text" name="phone" class="form-control form-control-sm mb-1" value="+84389999999" placeholder="">
+                                                      <div class="editable" *ngIf="editCorPhone == true">
+                                                          <input type="text" name="cor-phone" class="form-control form-control-sm mb-1" value="+84389999999" placeholder="" formControlName="cor_phone">
                                                           <div class="text-right">
-                                                              <button type="button" class="btn btn-sm btn-cancel btn-outline-secondary pt-0 pb-0">Cancel</button>
+                                                              <button type="button" class="btn btn-sm btn-cancel btn-outline-secondary pt-0 pb-0" (click)="cancelEditCor('cor-phone')">Cancel</button>
                                                           </div>
                                                       </div>
                                                   </td>
-                                                  <td width="15"><a href="javascript:;" class="edit-link" data-toggle="tooltip" data-placement="top" title="Edit Phone"><i class="icon ion-md-create"></i></a></td>
+                                                  <td width="15"><a href="javascript:;" class="edit-link" data-toggle="tooltip" data-placement="top" title="Edit Phone"
+                                                    (click)="showEditFieldCor('cor-phone')"><i class="icon ion-md-create"></i></a></td>
                                               </tr>
                                               <tr class="row-fax">
                                                   <td>Fax</td>
                                                   <td>
-                                                      <div class="currentvalue">
-                                                          <strong><a href="javascript:;">+84389999999</a></strong>
+                                                      <div class="currentvalue" *ngIf="editCorFax == false">
+                                                          <strong><a href="javascript:;">+{{corporateInfor?.fx_fax?.value}}</a></strong>
                                                           <div class="status d-none small"><span class="text-success"><i class="icon ion-md-checkmark"></i> Updated </span></div>
                                                       </div>
-                                                      <div class="editable">
-                                                          <input type="text" name="fax" class="form-control form-control-sm mb-1" value="+84389999999" placeholder="">
+                                                      <div class="editable" *ngIf="editCorFax == true">
+                                                          <input type="text" name="cor-fax" class="form-control form-control-sm mb-1" value="+84389999999" placeholder="" formControlName="cor_fax">
                                                           <div class="text-right">
-                                                              <button type="button" class="btn btn-sm btn-cancel btn-outline-secondary pt-0 pb-0">Cancel</button>
+                                                              <button type="button" class="btn btn-sm btn-cancel btn-outline-secondary pt-0 pb-0" (click)="cancelEditCor('cor-fax')">Cancel</button>
                                                           </div>
                                                       </div>
                                                   </td>
-                                                  <td width="15"><a href="javascript:;" class="edit-link" data-toggle="tooltip" data-placement="top" title="Edit Fax"><i class="icon ion-md-create"></i></a></td>
+                                                  <td width="15"><a href="javascript:;" class="edit-link" data-toggle="tooltip" data-placement="top" title="Edit Fax"
+                                                    (click)="showEditFieldCor('cor-fax')" ><i class="icon ion-md-create"></i></a></td>
                                               </tr>
                                               <tr>
                                                   <td colspan="3">&nbsp;</td>
@@ -412,44 +415,46 @@
                                               <tr class="row-department">
                                                   <td width="150">Department</td>
                                                   <td>
-                                                      <div class="currentvalue">
-                                                          <strong>BOD</strong>
+                                                      <div class="currentvalue" *ngIf="editPersonBod == false">
+                                                          <strong>{{corporateInfor?.pic?.fx_dept}}</strong>
                                                           <div class="status d-none small"><span class="text-success"><i class="icon ion-md-checkmark"></i> Updated </span></div>
                                                       </div>
-                                                      <div class="editable">
-                                                          <input type="text" name="department" class="form-control form-control-sm mb-1" value="BOD" placeholder="">
+                                                      <div class="editable" *ngIf="editPersonBod == true">
+                                                          <input type="text" name="department" class="form-control form-control-sm mb-1" value="BOD" placeholder="" formControlName="person_bod">
                                                           <div class="text-right">
-                                                              <button type="button" class="btn btn-sm btn-cancel btn-outline-secondary pt-0 pb-0">Cancel</button>
+                                                              <button type="button" class="btn btn-sm btn-cancel btn-outline-secondary pt-0 pb-0" (click)="cancelEditCor('department')">Cancel</button>
                                                           </div>
                                                       </div>
                                                   </td>
-                                                  <td width="15"><a href="javascript:;" class="edit-link" data-toggle="tooltip" data-placement="top" title="Edit Department"><i class="icon ion-md-create"></i></a></td>
+                                                  <td width="15"><a href="javascript:;" class="edit-link" data-toggle="tooltip" data-placement="top" title="Edit Department"
+                                                    (click)="showEditFieldCor('department')"><i class="icon ion-md-create"></i></a></td>
                                               </tr>
                                               <tr class="row-pic-position">
                                                   <td width="150">PIC Position</td>
                                                   <td>
-                                                      <div class="currentvalue">
-                                                          <strong>CEO</strong>
+                                                      <div class="currentvalue" *ngIf="editPersonPic == false">
+                                                          <strong>{{corporateInfor?.pic?.function}}</strong>
                                                           <div class="status d-none small"><span class="text-success"><i class="icon ion-md-checkmark"></i> Updated </span></div>
                                                       </div>
-                                                      <div class="editable">
-                                                          <input type="text" name="pic-position" class="form-control form-control-sm mb-1" value="CEO" placeholder="PIC Position">
+                                                      <div class="editable" *ngIf="editPersonPic == true">
+                                                          <input type="text" name="pic-position" class="form-control form-control-sm mb-1" value="CEO" placeholder="PIC Position" formControlName="person_pic">
                                                           <div class="text-right">
-                                                              <button type="button" class="btn btn-sm btn-cancel btn-outline-secondary pt-0 pb-0">Cancel</button>
+                                                              <button type="button" class="btn btn-sm btn-cancel btn-outline-secondary pt-0 pb-0" (click)="cancelEditCor('pic-position')">Cancel</button>
                                                           </div>
                                                       </div>
                                                   </td>
-                                                  <td width="15"><a href="javascript:;" class="edit-link" data-toggle="tooltip" data-placement="top" title="Edit PIC Position"><i class="icon ion-md-create"></i></a></td>
+                                                  <td width="15"><a href="javascript:;" class="edit-link" data-toggle="tooltip" data-placement="top" title="Edit PIC Position"
+                                                    (click)="showEditFieldCor('pic-position')"><i class="icon ion-md-create"></i></a></td>
                                               </tr>
                                               <tr class="row-pic-name">
                                                   <td width="150">PIC Name</td>
                                                   <td>
-                                                      <div class="currentvalue">
-                                                          <strong>Nguyễn Tuấn Anh</strong>
+                                                      <div class="currentvalue" *ngIf="editPersonPicname == false">
+                                                          <strong>{{corporateInfor?.pic?.name}}</strong>
                                                           <div class="status d-none small"><span class="text-success"><i class="icon ion-md-checkmark"></i> Updated </span></div>
                                                       </div>
-                                                      <div class="editable">
-                                                          <input type="text" name="pic-name" class="form-control form-control-sm mb-1" value="Nguyễn Tuấn Anh" placeholder="PIC name">
+                                                      <div class="editable" *ngIf="editPersonPicname == true">
+                                                          <input type="text" name="pic-name" class="form-control form-control-sm mb-1" value="Nguyễn Tuấn Anh" placeholder="PIC name" formControlName="per_picname">
                                                       </div>
                                                   </td>
                                                   <td width="15">&nbsp;</td>
@@ -457,71 +462,75 @@
                                               <tr class="row-pic-name-furi">
                                                   <td width="150">PIC name (furigana)</td>
                                                   <td>
-                                                      <div class="currentvalue">
-                                                          <strong>グエン・トゥアン・アン</strong>
+                                                      <div class="currentvalue" *ngIf="editPersonPicname == false">
+                                                          <strong>{{corporateInfor?.pic?.fx_name1}}</strong>
                                                           <div class="status d-none small"><span class="text-success"><i class="icon ion-md-checkmark"></i> Updated </span></div>
                                                       </div>
-                                                      <div class="editable">
-                                                          <input type="text" name="pic-name" class="form-control form-control-sm mb-1" value="グエン・トゥアン・アン" placeholder="PIC name">
+                                                      <div class="editable" *ngIf="editPersonPicname == true">
+                                                          <input type="text" name="pic-name" class="form-control form-control-sm mb-1" value="グエン・トゥアン・アン" placeholder="PIC name" formControlName="person_picname2">
                                                           <div class="text-right">
-                                                              <button type="button" class="btn btn-sm btn-cancel btn-outline-secondary pt-0 pb-0">Cancel</button>
+                                                              <button type="button" class="btn btn-sm btn-cancel btn-outline-secondary pt-0 pb-0" (click)="cancelEditCor('pic-name')">Cancel</button>
                                                           </div>
                                                       </div>
                                                   </td>
-                                                  <td width="15"><a href="javascript:;" class="edit-link" data-toggle="tooltip" data-placement="top" title="Edit PIC Name"><i class="icon ion-md-create"></i></a></td>
+                                                  <td width="15"><a href="javascript:;" class="edit-link" data-toggle="tooltip" data-placement="top" title="Edit PIC Name"
+                                                    (click)="showEditFieldCor('pic-name')"><i class="icon ion-md-create"></i></a></td>
                                               </tr>
                                               <tr class="row-pic-gender">
                                                   <td width="150">PIC Gender</td>
                                                   <td>
                                                       <div class="currentvalue">
-                                                          <strong>Male</strong>
+                                                          <strong>{{corporateInfor?.pic?.fx_gender?.value}}</strong>
                                                           <div class="status d-none small"><span class="text-success"><i class="icon ion-md-checkmark"></i> Updated </span></div>
                                                       </div>
-                                                      <div class="editable">
-                                                          <select class="form-control form-control-sm mb-1 select2" style="width: 100%">
+                                                      <!-- <div class="editable">
+                                                          <select class="form-control form-control-sm mb-1 select2" style="width: 100%" formControlName="person_gender">
                                                               <option>Male</option>
                                                               <option>Female</option>
                                                           </select>
-                                                      </div>
+                                                      </div> -->
                                                   </td>
                                                   <td width="15">&nbsp;</td>
                                               </tr>
                                               <tr class="row-phone">
                                                   <td>Phone</td>
                                                   <td>
-                                                      <div class="currentvalue">
-                                                          <strong><a href="javascript:;">+84123456789</a></strong>
+                                                      <div class="currentvalue" *ngIf="editPersonPhone == false">
+                                                          <strong><a href="javascript:;">+{{corporateInfor?.pic?.mobile}}</a></strong>
                                                           <div class="status d-none small"><span class="text-success"><i class="icon ion-md-checkmark"></i> Updated </span></div>
                                                       </div>
-                                                      <div class="editable">
-                                                          <input type="text" name="phone" class="form-control form-control-sm mb-1" value="+84123456789" placeholder="">
+                                                      <div class="editable" *ngIf="editPersonPhone == true">
+                                                          <input type="text" name="p-phone" class="form-control form-control-sm mb-1" value="+84123456789" placeholder="" formControlName="person_phone">
                                                           <div class="text-right">
-                                                              <button type="button" class="btn btn-sm btn-cancel btn-outline-secondary pt-0 pb-0">Cancel</button>
+                                                              <button type="button" class="btn btn-sm btn-cancel btn-outline-secondary pt-0 pb-0" (click)="cancelEditCor('p-phone')">Cancel</button>
                                                           </div>
                                                       </div>
                                                   </td>
-                                                  <td width="15"><a href="javascript:;" class="edit-link" data-toggle="tooltip" data-placement="top" title="Edit Phone"><i class="icon ion-md-create"></i></a></td>
+                                                  <td width="15"><a href="javascript:;" class="edit-link" data-toggle="tooltip" data-placement="top" title="Edit Phone"
+                                                    (click)="showEditFieldCor('p-phone')"><i class="icon ion-md-create"></i></a></td>
                                               </tr>
                                               <tr class="row-email need-verify">
                                                   <td>Email</td>
                                                   <td>
-                                                      <div class="currentvalue">
-                                                          <strong><a href="javascript:;">anhnt@tamdongtam.vn</a></strong>
-                                                          <div class="status d-none small"><span class="text-info"><i class="icon ion-md-hourglass"></i> Verificaion in process</span></div>
+                                                      <div class="currentvalue" *ngIf="editPersonEmail == false">
+                                                          <strong><a href="javascript:;">{{corporateInfor?.pic?.email?.value}}</a></strong>
+                                                          <div class="status d-none small" *ngIf="corporateInfor?.pic?.email?.status == 0"><span class="text-info">
+                                                            <i class="icon ion-md-hourglass"></i> Verificaion in process</span></div>
                                                       </div>
-                                                      <div class="editable">
-                                                          <input type="text" name="email" class="form-control form-control-sm mb-1" value="chauchu@tamdongtam.vn" placeholder="">
+                                                      <div class="editable" *ngIf="editPersonEmail == true">
+                                                          <input type="text" name="p-email" class="form-control form-control-sm mb-1" value="chauchu@tamdongtam.vn" placeholder="" formControlName="person_email">
                                                           <div class="text-right">
-                                                              <button type="button" class="btn btn-sm btn-cancel btn-outline-secondary pt-0 pb-0">Cancel</button>
+                                                              <button type="button" class="btn btn-sm btn-cancel btn-outline-secondary pt-0 pb-0" (click)="cancelEditCor('p-email')">Cancel</button>
                                                           </div>
                                                       </div>
                                                   </td>
-                                                  <td width="15"><a href="javascript:;" class="edit-link" data-toggle="tooltip" data-placement="top" title="Edit Email"><i class="icon ion-md-create"></i></a></td>
+                                                  <td width="15"><a href="javascript:;" class="edit-link" data-toggle="tooltip" data-placement="top" title="Edit Email"
+                                                    (click)="showEditFieldCor('p-email')" *ngIf="editPersonEmail == false && corporateInfor?.pic?.email?.status != 0"><i class="icon ion-md-create"></i></a></td>
                                               </tr>
                                               <tr class="row-action">
                                                   <td>&nbsp;</td>
                                                   <td>
-                                                      <button type="button" class="btn btn-save btn-success pl-3 pr-3">Save</button>
+                                                      <button type="button" class="btn btn-save btn-success pl-3 pr-3" *ngIf="showSaveCor == true">Save</button>
                                                   </td>
                                                   <td width="15">&nbsp;</td>
                                               </tr>
@@ -537,48 +546,66 @@
                         </div><!-- END BANK ACCOUNT -->
 
                         <!-- BEGIN SETTING -->
-                        <div class="tab-pane fade" id="nav-setting" role="tabpanel" aria-labelledby="nav-setting-tab">
+                        <div class="tab-pane fade" id="nav-setting" role="tabpanel" aria-labelledby="nav-setting-tab" [formGroup]="changePassForm">
                           <h3 class="border-bottom pb-1 mb-3">Setting</h3>
+                          <h5 class="label mb-0"><strong>Change Passwords</strong></h5>
+                          <p class="small text-secondary">It's a good idea to use a strong password that you're not using elsewhere</p>
+                          <div class="row mb-2">
+                              <div class="col-md-4 col-lg-3">
+                                  <label class="label mt-1">Current password</label>
+                              </div>
+                              <div class="col-md-8 col-lg-9">
+                                 <input type="password" name="current_password" class="form-control form-control-sm" value="" formControlName="current_password" placeholder="" style="max-width: 240px">
+                              </div>
+                          </div>
+                          <div class="row mb-2">
+                              <div class="col-md-4 col-lg-3">
+                                  <label class="label mt-1">New password</label>
+                              </div>
+                              <div class="col-md-8 col-lg-9">
+                                 <input type="password" name="new-password" class="form-control form-control-sm" value="" formControlName="new_password" placeholder="" style="max-width: 240px">
+                              </div>
+                          </div>
+                          <div class="row mb-2">
+                              <div class="col-md-4 col-lg-3">
+                                  <label class="label mt-1">Confirm password</label>
+                              </div>
+                              <div class="col-md-8 col-lg-9">
+                                 <input type="password" name="confirm-password" class="form-control form-control-sm" value="" formControlName="confirm_password" placeholder="" style="max-width: 240px">
+                              </div>
+                          </div>
                           <div class="row">
-                              <div class="col-lg-8">
-                                  <div class="form-group">
-                                      <div class="row">
-                                          <div class="col-md-4 col-lg-3">
-                                              <label class="label">Change Passwords</label>
-                                          </div>
-                                          <div class="col-md-8 col-lg-9">
-                                              ---
-                                          </div>
-                                      </div>
-                                  </div>
-                                  <div class="form-group">
-                                      <div class="row">
-                                          <div class="col-md-4 col-lg-3">
-                                              <label class="label">Font Size</label>
-                                          </div>
-                                          <div class="col-md-8 col-lg-9">
-                                              <div class="btn-group">
-                                                  <button type="button" class="btn btn-size-sm" data-size="sm">小</button>
-                                                  <button type="button" class="btn btn-size-md active" data-size="md">中</button>
-                                                  <button type="button" class="btn btn-size-lg" data-size="lg">大</button>
-                                              </div>
-                                          </div>
-                                      </div>
-                                  </div>
-                                  <div class="form-group">
-                                      <div class="row">
-                                          <div class="col-md-4 col-lg-3">
-                                              <label class="label">Language</label>
-                                          </div>
-                                          <div class="col-md-8 col-lg-9">
-                                              <select class="form-control form-control-sm select2">
-                                                  <option>English</option>
-                                              </select>
-                                          </div>
-                                      </div>
+                            <div class="col-md-4 col-lg-3">
+                                &nbsp;
+                            </div>
+                            <div class="col-md-8 col-lg-9">
+                                <button type="button" class="btn btn-save btn-success pl-3 pr-3" (click)="settingSave()">Save</button>
+                            </div>
+                          </div>
+                          <hr>
+                          <div class="row mb-2">
+                              <div class="col-md-4 col-lg-3">
+                                  <label class="label mt-1">Font Size</label>
+                              </div>
+                              <div class="col-md-8 col-lg-9">
+                                  <div class="btn-group">
+                                      <button type="button" class="btn btn-outline-secondary btn-sm btn-size-sm" data-size="sm">小</button>
+                                      <button type="button" class="btn btn-outline-secondary btn-sm btn-size-md active" data-size="md">中</button>
+                                      <button type="button" class="btn btn-outline-secondary btn-sm btn-size-lg" data-size="lg">大</button>
                                   </div>
                               </div>
                           </div>
+                          <div class="row mb-2">
+                              <div class="col-md-4 col-lg-3">
+                                  <label class="label mt-1">Language</label>
+                              </div>
+                              <div class="col-md-8 col-lg-9">
+                                  <select class="form-control form-control-sm select2" style="max-width: 240px;">
+                                      <option>English</option>
+                                  </select>
+                              </div>
+                          </div>
+
                       </div><!-- END SETTING -->
                     </div>
                 </div>

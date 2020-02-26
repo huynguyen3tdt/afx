@@ -13,7 +13,8 @@ export class AppSettings {
     public static API_CHANGE_READ_STATUS        = `api/${versionAPI}/news/notification/status/`;
     public static API_CHANGE_AGREEMENT_STATUS   = `api/${versionAPI}/news/notification/agreement/`;
     public static API_REPORT                    = `api/${versionAPI}/reports/`;
-    public static API_GET_USER_INFOR            = `api/${versionAPI}/users/`;
-    public static API_PUT_USER_INFOR            = `api/${versionAPI}/users/`;
     public static API_CHANGE_PASSWORD           = `api/${versionAPI}/users/change_pass/`;
+    public static API_GET_INDIVIDUAL            = `api/${versionAPI}/users/individual/`;
+    public static API_PUT_INDIVIDUAL            = `api/${versionAPI}/users/individual/`;
+    public static API_GET_CORPORATION           = `api/${versionAPI}/users/corporation/`;
 }

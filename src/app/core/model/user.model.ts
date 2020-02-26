@@ -1,8 +1,14 @@
 import { MetaResponseModel } from './meta-response.model';
+import { TransitiveCompileNgModuleMetadata } from '@angular/compiler';
 
 export interface UserResponse {
     meta: MetaResponseModel;
     data: UserModel;
+}
+
+export interface CorporateResponse {
+  meta: MetaResponseModel;
+  data: CorporateModel;
 }
 
 export interface UserModel {
@@ -18,14 +24,55 @@ export interface UserModel {
     value: {
         city: string,
         street: string,
-        street2: string
+        street2: string,
+        fx_street3: string,
         }
     };
     email: {
         status: number,
         value: string
     };
-    phone: string;
+    mobile: number;
     lang: string;
 }
 
+export interface CorporateModel {
+  corporation: {
+    name: string,
+    fx_name1: string,
+    zip: {
+      status: number,
+      value: number,
+    }
+    address: {
+      status: number,
+      value: {
+        city: string,
+        street: string,
+        street2: string,
+        fx_street3: string,
+      }
+    },
+    fx_fax: {
+      status: number,
+      value: string,
+    },
+    mobile: number,
+    lang: string,
+  };
+  pic: {
+    name: string,
+    fx_name1: string,
+    fx_gendr: {
+      status: number,
+      value: string,
+    },
+    email: {
+      status: number,
+      value: string,
+    },
+    mobile: number,
+    function: string,
+    fx_dept: string,
+  };
+}
