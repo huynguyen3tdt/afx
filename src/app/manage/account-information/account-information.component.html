@@ -546,7 +546,7 @@
                         </div><!-- END BANK ACCOUNT -->
 
                         <!-- BEGIN SETTING -->
-                        <div class="tab-pane fade" id="nav-setting" role="tabpanel" aria-labelledby="nav-setting-tab">
+                        <div class="tab-pane fade" id="nav-setting" role="tabpanel" aria-labelledby="nav-setting-tab" [formGroup]="changePassForm">
                           <h3 class="border-bottom pb-1 mb-3">Setting</h3>
                           <h5 class="label mb-0"><strong>Change Passwords</strong></h5>
                           <p class="small text-secondary">It's a good idea to use a strong password that you're not using elsewhere</p>
@@ -555,7 +555,7 @@
                                   <label class="label mt-1">Current password</label>
                               </div>
                               <div class="col-md-8 col-lg-9">
-                                 <input type="password" name="current_password" class="form-control form-control-sm" value="" placeholder="" style="max-width: 240px">
+                                 <input type="password" name="current_password" class="form-control form-control-sm" value="" formControlName="current_password" placeholder="" style="max-width: 240px">
                               </div>
                           </div>
                           <div class="row mb-2">
@@ -563,7 +563,7 @@
                                   <label class="label mt-1">New password</label>
                               </div>
                               <div class="col-md-8 col-lg-9">
-                                 <input type="password" name="new-password" class="form-control form-control-sm" value="" placeholder="" style="max-width: 240px">
+                                 <input type="password" name="new-password" class="form-control form-control-sm" value="" formControlName="new_password" placeholder="" style="max-width: 240px">
                               </div>
                           </div>
                           <div class="row mb-2">
@@ -571,8 +571,16 @@
                                   <label class="label mt-1">Confirm password</label>
                               </div>
                               <div class="col-md-8 col-lg-9">
-                                 <input type="password" name="confirm-password" class="form-control form-control-sm" value="" placeholder="" style="max-width: 240px">
+                                 <input type="password" name="confirm-password" class="form-control form-control-sm" value="" formControlName="confirm_password" placeholder="" style="max-width: 240px">
                               </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-md-4 col-lg-3">
+                                &nbsp;
+                            </div>
+                            <div class="col-md-8 col-lg-9">
+                                <button type="button" class="btn btn-save btn-success pl-3 pr-3" (click)="settingSave()">Save</button>
+                            </div>
                           </div>
                           <hr>
                           <div class="row mb-2">
@@ -597,14 +605,7 @@
                                   </select>
                               </div>
                           </div>
-                          <div class="row">
-                              <div class="col-md-4 col-lg-3">
-                                  &nbsp;
-                              </div>
-                              <div class="col-md-8 col-lg-9">
-                                  <button type="button" class="btn btn-save btn-success pl-3 pr-3">Save</button>
-                              </div>
-                          </div>
+
                       </div><!-- END SETTING -->
                     </div>
                 </div>

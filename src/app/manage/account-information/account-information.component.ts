@@ -39,6 +39,7 @@ export class AccountInformationComponent implements OnInit {
   corporateInfor: CorporateModel;
   userForm: FormGroup;
   corporateForm: FormGroup;
+  changePassForm: FormGroup;
   countries = ['Vietnamese', 'English'];
   postcode: any;
   isSubmitted: boolean;
@@ -55,6 +56,7 @@ export class AccountInformationComponent implements OnInit {
   ngOnInit() {
     this.initUserForm();
     this.initCorporateForm();
+    this.initSettingForm();
     this.editAddress = false;
     this.editEmail = false;
     this.editPhone = false;
@@ -99,6 +101,13 @@ export class AccountInformationComponent implements OnInit {
       // person_gender: new FormControl(),
       person_phone: new FormControl(),
       person_email: new FormControl(),
+    });
+  }
+  initSettingForm() {
+    this.changePassForm = new FormGroup({
+      current_password: new FormControl(),
+      new_password: new FormControl(),
+      confirm_password: new FormControl(),
     });
   }
   changeLang(event) {
@@ -289,5 +298,8 @@ export class AccountInformationComponent implements OnInit {
         this.editPersonEmail = false;
         break;
     }
+  }
+  settingSave() {
+
   }
 }
