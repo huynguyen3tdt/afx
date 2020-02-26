@@ -16,15 +16,22 @@ export class ReportService {
   constructor(private httpClient: HttpClient,
               private envConfigService: EnvConfigService) { }
 
-  getReport(pageSize: number, pageNumber: number, type?: number): Observable<ReportResponseModel> {
+  getReport(accountNumber: number, pageSize: number, pageNumber: number,
+            type?: number , dateFrom?: string, dateTo?: string): Observable<ReportResponseModel> {
     let URL = '';
     if (type !== -1) {
-      URL = `?type=${type}&page_size=${pageSize}?page_numb=${pageNumber}`;
+      URL = `?account_numb=${accountNumber}&type=${type}&page_size=${pageSize}&page=${pageNumber}`;
     } else {
-      URL = `?page_size=${pageSize}?page_numb=${pageNumber}`;
+      URL = `?account_numb=${accountNumber}&page_size=${pageSize}&page=${pageNumber}`;
+    }
+    if (dateFrom && dateFrom !== 'Invalid date') {
+      URL += `&date_from=${dateFrom}`;
+    }
+    if (dateTo && dateTo !== 'Invalid date') {
+      URL += `&date_to=${dateTo}`;
     }
     return this.httpClient
-      .get(`${this.envConfigService.getConfig()}/${AppSettings.API_REPORT}`)
+      .get(`${this.envConfigService.getConfig()}/${AppSettings.API_REPORT}` + URL)
       .pipe(
         catchError((error: HttpErrorResponse) => {
           return new Observable((observer: InnerSubscriber<any, any>) => {

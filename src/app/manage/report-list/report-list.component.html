@@ -25,14 +25,13 @@
                         <div class="tab-pane fade show active" id="v-pills-all" role="tabpanel"
                             aria-labelledby="v-pills-all-tab">
                             <h3 class="mb-3">All Customer Statement</h3>
-                            <div class="form mb-3 form-search-box">
+                            <div [formGroup]="searchForm" class="form mb-3 form-search-box">
                                 <div class="row">
                                     <div class="col-4 col-lg-3">
                                         <div class="form-group">
                                             <label class="label d-block mb-0">Trading account</label>
-                                            <select class="form-control form-control-sm">
-                                                <option>FX - 10000001</option>
-                                                <option>CFD - 20000001</option>
+                                            <select formControlName="tradingAccount" class="form-control form-control-sm">
+                                                <option *ngFor="let item of listTradingAccount" value="{{item}}">{{item}}</option>
                                             </select>
                                         </div>
                                     </div>
@@ -42,11 +41,11 @@
                                                 <div class="form-group">
                                                     <label class="label d-none d-lg-block mb-0">&nbsp;</label>
                                                     <div class="btn-group d-flex">
-                                                        <button type="button"
+                                                        <button type="button" (click)="setDate(DURATION.DAY)"
                                                             class="btn btn-sm btn-outline-secondary">Day</button>
-                                                        <button type="button"
+                                                        <button type="button" (click)="setDate(DURATION.MONTH)"
                                                             class="btn btn-sm btn-outline-secondary">Month</button>
-                                                        <button type="button"
+                                                        <button type="button" (click)="setDate(DURATION.YEAR)"
                                                             class="btn btn-sm btn-outline-secondary">Year</button>
                                                     </div>
                                                 </div>
@@ -57,9 +56,13 @@
                                                     <div class="input-wrapper">
                                                         <input type="text" name="start-date"
                                                             class="form-control form-control-sm date"
-                                                            placeholder="DD/MM/YYYY" value="">
-                                                        <button type="button" class="btn btn-none btn-sm"
-                                                            disabled="disabled"><i
+                                                            placeholder="DD/MM/YYYY"
+                                                            #dp="bsDatepicker" bsDatepicker
+                                                            formControlName="fromDate"
+                                                            [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-blue' }"
+                                                            >
+                                                        <button type="button" class="btn btn-none btn-sm" (click)="dp.toggle()" [attr.aria-expanded]="dp.isOpen"
+                                                            ><i
                                                                 class="icon ion-md-calendar"></i></button>
                                                     </div>
                                                 </div>
@@ -70,9 +73,13 @@
                                                     <div class="input-wrapper">
                                                         <input type="text" name="end-date"
                                                             class="form-control form-control-sm date"
-                                                            placeholder="DD/MM/YYYY" value="">
-                                                        <button type="button" class="btn btn-none btn-sm"
-                                                            disabled="disabled"><i
+                                                            placeholder="DD/MM/YYYY"
+                                                            #dp2="bsDatepicker" bsDatepicker
+                                                            formControlName="toDate"
+                                                            [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-blue' }"
+                                                            >
+                                                        <button type="button" class="btn btn-none btn-sm" (click)="dp2.toggle()" [attr.aria-expanded]="dp2.isOpen"
+                                                            ><i
                                                                 class="icon ion-md-calendar"></i></button>
                                                     </div>
                                                 </div>
@@ -80,8 +87,8 @@
                                             <div class="col-md-3 col-lg-2">
                                                 <div class="form-group">
                                                     <label class="label d-none d-lg-block mb-0">&nbsp;</label>
-                                                    <button
-                                                        class="btn btn-success btn-search btn-block btn-sm">View</button>
+                                                    <button (click)="searchReport()"
+                                                        class="btn btn-success btn-search btn-block btn-sm">Apply</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -123,19 +130,18 @@
                             <div class="d-flex align-items-center justify-content-between mb-2">
                                 <div>
                                     <div class="d-inline-block mr-2">
-                                        <select class="form-control form-control-sm">
-                                            <option>10</option>
-                                            <option>20</option>
-                                            <option>30</option>
+                                        <select (change)="changeTotalItem($event)" class="form-control form-control-sm">
+                                            <option *ngFor="let item of listTotalItem" value="{{item}}">{{item}}</option>
                                         </select>
                                     </div>
-                                    <div class="small text-secondary d-inline-block mr-2">Showing 1 to 10 of 126 entries
+                                    <div class="small text-secondary d-inline-block mr-2">Showing {{recordFrom}} to {{recordTo}} of {{totalItem}} entries
                                     </div>
                                 </div>
                                 <ul class="pagination pagination-sm mb-0">
-                                    <pagination [(ngModel)]="currentPage" id="pagination" appPagination
+                                    <pagination [(ngModel)]="currentPage" id="pagination" appPagination [boundaryLinks]="true"
                                         class="pagination pagination-sm justify-content-end"
                                         (pageChanged)="pageChanged($event)" [totalItems]="totalItem / pageSize"
+                                        previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;"
                                         [maxSize]="5">
                                     </pagination>
                                 </ul>
