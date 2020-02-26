@@ -28,7 +28,7 @@ export class AppHttpInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(
       timeout(TIMEOUT),
       catchError(e => {
-      console.log('err in interceptor', e);
+      // console.log('err in interceptor', e);
       return throwError(e);
     }));
   }
