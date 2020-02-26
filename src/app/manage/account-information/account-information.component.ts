@@ -68,7 +68,6 @@ export class AccountInformationComponent implements OnInit {
     this.editPersonPicname = false;
     this.editPersonPhone = false;
     this.editPersonEmail = false;
-    // this.editLanguage = false;
     this.getMt5Infor();
     this.getWithDrawAmount();
     this.getCorporateInfor();
@@ -98,7 +97,6 @@ export class AccountInformationComponent implements OnInit {
       person_pic: new FormControl(),
       per_picname: new FormControl(),
       person_picname2: new FormControl(),
-      // person_gender: new FormControl(),
       person_phone: new FormControl(),
       person_email: new FormControl(),
     });
@@ -126,10 +124,6 @@ export class AccountInformationComponent implements OnInit {
         this.userForm.controls.house_numb.setValue(this.userInfor.address.value.street2);
         this.userForm.controls.email.setValue(this.userInfor.email.value);
         this.userForm.controls.phone.setValue(this.userInfor.mobile);
-        // this.userForm.controls.language.setValue(this.userInfor.lang);
-        // this.postcode = this.userInfor.postcode.value;
-        console.log('userInfooo ', this.userInfor);
-
       }
     });
   }
@@ -140,10 +134,7 @@ export class AccountInformationComponent implements OnInit {
         this.corporateInfor = response.data;
         this.corPrefecture = this.corporateInfor.corporation.address.value.city;
         this.corDistrict = this.corporateInfor.corporation.address.value.street;
-        console.log('corInfooo ', this.corporateInfor);
         this.corporateForm.controls.cor_postcode.setValue(this.corporateInfor.corporation.zip.value);
-        // this.corporateForm.controls.cor_prefec.setValue(this.corporateInfor.corporation.address.value.city);
-        // this.corporateForm.controls.cor_district.setValue(this.corporateInfor.corporation.address.value.street);
         this.corporateForm.controls.cor_house.setValue(this.corporateInfor.corporation.address.value.street2);
         this.corporateForm.controls.cor_build.setValue(this.corporateInfor.corporation.address.value.fx_street3);
         this.corporateForm.controls.cor_phone.setValue(this.corporateInfor.corporation.mobile);
