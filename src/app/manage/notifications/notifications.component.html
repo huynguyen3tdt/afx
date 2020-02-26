@@ -18,9 +18,11 @@
                             (click)="getListNotifications(pageSize, 1, unreadImportant, 0)" role="tab" aria-controls="v-pills-important"
                             aria-selected="false">Important<span class="badge">{{totalImportant}}</span></a>
                         <a class="nav-link" id="v-pills-notifications-tab" data-toggle="pill"
+                            (click)="getListNotifications(pageSize, 1, unreadImportant, 1)"
                             href="#v-pills-notifications" role="tab" aria-controls="v-pills-notifications"
                             aria-selected="false">Notifications<span class="badge">{{totalNotification}}</span></a>
                         <a class="nav-link" id="v-pills-campaign-tab" data-toggle="pill" href="#v-pills-campaign"
+                            (click)="getListNotifications(pageSize, 1, unreadImportant, 2)"
                             role="tab" aria-controls="v-pills-campaign" aria-selected="false">Campaign<span class="badge">{{totalCampagn}}</span></a>
                     </div>
                 </div>
@@ -120,10 +122,80 @@
                         <div class="tab-pane fade" id="v-pills-notifications" role="tabpanel"
                             aria-labelledby="v-pills-notifications-tab">
                             <h4><strong>System</strong> Notifications</h4>
+                            <div class="mb-2">
+                                <label class="container-switch small">
+                                    <div class="switch">
+                                      <input type="checkbox" name="unread_all" [checked]="unreadAll" (change)="filterUnreadNoti()">
+                                      <span class="slider round"></span>
+                                    </div>
+                                    Only show unread Notification
+                                </label>
+                            </div>
+                            <div class="list-notifications">
+                                <ng-container *ngFor="let item of listNotification; let i = index">
+                                    <div (click)="showDetail(i, item)" 
+                                        id="system_{{i}}" [ngClass]="{'unread': item.read_flg == 'true'}" 
+                                        class="notification-item">
+                                        <div class="badge-wrap">
+                                            <span *ngIf="item?.news_type == 1 || item?.noti_type == 3"
+                                                class="badge badge-warning d-lg-block mb-lg-1">System</span>
+                                        </div>
+                                        <div class="item-header">
+                                            <h5 class="item-title"><a href="javascript:;">{{item?.news_title}}</a></h5>
+                                            <div class="item-meta">{{item?.create_date}}</div>
+                                        </div>
+                                        <div class="item-content" [innerHTML]="item?.news_content">
+                                        </div>
+                                    </div>
+                                </ng-container>
+                            </div>
+                            <nav class="border-top pt-3">
+                                <pagination [(ngModel)]="currentPage" id="pagination"  [boundaryLinks]="true"
+                                    class="pagination pagination-sm justify-content-end"
+                                    (pageChanged)="pageChanged($event)" [totalItems]="totalItem / pageSize"
+                                    previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;"
+                                    [maxSize]="5">
+                                </pagination>
+                            </nav>
                         </div>
                         <div class="tab-pane fade" id="v-pills-campaign" role="tabpanel"
                             aria-labelledby="v-pills-campaign-tab">
                             <h4><strong>Campaign</strong> Notifications</h4>
+                            <div class="mb-2">
+                                <label class="container-switch small">
+                                    <div class="switch">
+                                      <input type="checkbox" name="unread_all" [checked]="unreadCampagn" (change)="filterUnreadNoti()">
+                                      <span class="slider round"></span>
+                                    </div>
+                                    Only show unread Notification
+                                </label>
+                            </div>
+                            <div class="list-notifications">
+                                <ng-container *ngFor="let item of listNotification; let i = index">
+                                    <div (click)="showDetail(i, item)" 
+                                        id="campain_{{i}}" [ngClass]="{'unread': item.read_flg == 'true'}" 
+                                        class="notification-item">
+                                        <div class="badge-wrap">
+                                            <span *ngIf="item?.news_type == 2"
+                                                class="badge badge-success d-lg-block mb-lg-1">Campaign</span>
+                                        </div>
+                                        <div class="item-header">
+                                            <h5 class="item-title"><a href="javascript:;">{{item?.news_title}}</a></h5>
+                                            <div class="item-meta">{{item?.create_date}}</div>
+                                        </div>
+                                        <div class="item-content" [innerHTML]="item?.news_content">
+                                        </div>
+                                    </div>
+                                </ng-container>
+                            </div>
+                            <nav class="border-top pt-3">
+                                <pagination [(ngModel)]="currentPage" id="pagination"  [boundaryLinks]="true"
+                                    class="pagination pagination-sm justify-content-end"
+                                    (pageChanged)="pageChanged($event)" [totalItems]="totalItem / pageSize"
+                                    previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;"
+                                    [maxSize]="5">
+                                </pagination>
+                            </nav>
                         </div>
                     </div>
                 </div>
