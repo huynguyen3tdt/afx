@@ -47,7 +47,7 @@
                                     <div class="tab-pane fade show active" id="nav-account" role="tabpanel" aria-labelledby="nav-account-tab">
                                         <h3 class="border-bottom pb-1 mb-3">Account Infomation</h3>
                                         <div class="row">
-                                            <div class="col-lg-8">
+                                            <div class="col-lg-9">
                                                 <div class="d-flex justify-content-between align-items-center mb-2">
                                                     <div class="d-flex align-items-center">
                                                         <div class="mr-2">
@@ -108,7 +108,7 @@
                                     <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
                                         <h3 class="border-bottom pb-1 mb-3">User Infomation</h3>
                                         <div class="row">
-                                            <div class="col-lg-8">
+                                            <div class="col-lg-9">
                                                 <div class="table-responsive">
                                                     <table class="table table-sm table-borderless table-hover table-profile" cellspacing="0" cellpadding="0">
                                                         <tbody>
@@ -225,7 +225,7 @@
                                     <div class="tab-pane fade" id="nav-corporate" role="tabpanel" aria-labelledby="nav-corporate-tab">
                                         <h3 class="border-bottom pb-1 mb-3">Corporate Infomation</h3>
                                         <div class="row">
-                                            <div class="col-lg-8">
+                                            <div class="col-lg-9">
                                                 <div class="table-responsive">
                                                     <table class="table table-sm table-borderless table-hover table-profile" cellspacing="0" cellpadding="0">
                                                         <tbody>
@@ -451,6 +451,189 @@
                                     <!-- BEGIN BANK ACCOUNT -->
                                     <div class="tab-pane fade" id="nav-bank" role="tabpanel" aria-labelledby="nav-bank-tab">
                                         <h3 class="border-bottom pb-1 mb-3">Bank Account</h3>
+                                        <div class="bank_info">                                            
+                                            <div class="row mb-1">
+                                                <div class="col-md-4 col-lg-3">
+                                                    <label class="label">Beneficiary Bank</label>
+                                                </div> 
+                                                <div class="col-md-8 col-lg-6">
+                                                   <strong>Bank of Mitsubishi UFJ</strong>
+                                                </div>  
+                                            </div>
+                                            <div class="row mb-1">
+                                                <div class="col-md-4 col-lg-3">
+                                                    <label class="label">Bank code</label>
+                                                </div> 
+                                                <div class="col-md-8 col-lg-6">
+                                                   <strong>0005</strong>
+                                                </div>  
+                                            </div> 
+                                            <div class="row mb-1">
+                                                <div class="col-md-4 col-lg-3">
+                                                    <label class="label">Bank branch</label>
+                                                </div> 
+                                                <div class="col-md-8 col-lg-6">
+                                                   <strong>Edogawabashi</strong>
+                                                </div>  
+                                            </div> 
+                                            <div class="row mb-1">
+                                                <div class="col-md-4 col-lg-3">
+                                                    <label class="label">Branch code</label>
+                                                </div> 
+                                                <div class="col-md-8 col-lg-6">
+                                                   <strong>006</strong>
+                                                </div>  
+                                            </div> 
+                                            <div class="row mb-1">
+                                                <div class="col-md-4 col-lg-3">
+                                                    <label class="label">Account type</label>
+                                                </div> 
+                                                <div class="col-md-8 col-lg-6">
+                                                   <strong>Saving</strong>
+                                                </div>  
+                                            </div> 
+                                            <div class="row mb-1">
+                                                <div class="col-md-4 col-lg-3">
+                                                    <label class="label">Bank Account Number</label>
+                                                </div> 
+                                                <div class="col-md-8 col-lg-6">
+                                                   <strong>8847583745</strong>
+                                                </div>  
+                                            </div> 
+                                            <div class="row mb-1">
+                                                <div class="col-md-4 col-lg-3">
+                                                    <label class="label">Account holder name</label>
+                                                </div> 
+                                                <div class="col-md-8 col-lg-6">
+                                                   <strong>カワセタロウ</strong>
+                                                </div>  
+                                            </div> 
+                                            <div class="row mb-1">
+                                                <div class="col-md-4 col-lg-3">
+                                                    &nbsp;
+                                                </div> 
+                                                <div class="col-md-8 col-lg-6">
+                                                   <button type="button" class="btn btn-edit btn-success btn-sm pl-3 pr-3">Edit</button>
+                                                </div>  
+                                            </div> 
+                                        </div>
+                                        <div class="bank_form d-none">
+                                            <div class="row row-small-gutters container-radios-wrapper mb-3">
+                                                <div class="col-md-6 col-lg-4">
+                                                    <label class="container-radio small mb-1 box-item-radio active">
+                                                        <div class="ml-4 pl-2"><strong>Mitsubishi UFJ Bank</strong></div>
+                                                        <input type="radio" name="bank" value="0" checked="checked">
+                                                        <span class="checkmark"></span>
+                                                    </label>
+                                                </div>
+                                                <div class="col-md-6 col-lg-4">
+                                                    <label class="container-radio small mb-2 box-item-radio">
+                                                        <div class="ml-4 pl-2"><strong>Sumitomo Mitsui Bank</strong></div>
+                                                        <input type="radio" name="bank" value="1">
+                                                        <span class="checkmark"></span>
+                                                    </label>
+                                                </div>
+                                                <div class="col-md-6 col-lg-4">
+                                                    <label class="container-radio small mb-2 box-item-radio">
+                                                        <div class="ml-4 pl-2"><strong>Mizuho Bank</strong></div>
+                                                        <input type="radio" name="bank" value="2">
+                                                        <span class="checkmark"></span>
+                                                    </label>
+                                                </div>
+                                                <div class="col-md-6 col-lg-4">
+                                                    <label class="container-radio small mb-1 box-item-radio">
+                                                        <div class="ml-4 pl-2"><strong>Rakuten Bank</strong></div>
+                                                        <input type="radio" name="bank" value="3">
+                                                        <span class="checkmark"></span>
+                                                    </label>
+                                                </div>
+                                                <div class="col-md-6 col-lg-4">
+                                                    <label class="container-radio small mb-2 box-item-radio">
+                                                        <div class="ml-4 pl-2"><strong>Japan Net Bank</strong></div>
+                                                        <input type="radio" name="bank" value="4">
+                                                        <span class="checkmark"></span>
+                                                    </label>
+                                                </div>
+                                                <div class="col-md-6 col-lg-4">
+                                                    <label class="container-radio small mb-2 box-item-radio">
+                                                        <div class="ml-4 pl-2"><strong>Sumishin SBI Net Bank</strong></div>
+                                                        <input type="radio" name="bank" value="5">
+                                                        <span class="checkmark"></span>
+                                                    </label>
+                                                </div>
+                                                <div class="col-md-6 col-lg-4">
+                                                    <label class="container-radio small mb-2 box-item-radio">
+                                                        <div class="ml-4 pl-2"><strong>Japan Post Bank</strong></div>
+                                                        <input type="radio" name="bank" value="6">
+                                                        <span class="checkmark"></span>
+                                                    </label>
+                                                </div>
+                                                <div class="col-md-6 col-lg-4">
+                                                    <label class="container-radio small mb-2 box-item-radio">
+                                                        <div class="ml-4 pl-2"><strong>Other banking facilities</strong></div>
+                                                        <input type="radio" name="bank" value="other">
+                                                        <span class="checkmark"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-2">
+                                                <div class="col-md-4 col-lg-3">
+                                                    <label class="label mt-1">Beneficiary Bank</label>
+                                                </div> 
+                                                <div class="col-md-8 col-lg-6">
+                                                   <input type="password" name="current_password" class="form-control form-control-sm" value="" placeholder="" disabled="disabled">
+                                                </div>  
+                                            </div>
+                                            <div class="row mb-2">
+                                                <div class="col-md-4 col-lg-3">
+                                                    <label class="label mt-1">Bank branch</label>
+                                                </div> 
+                                                <div class="col-md-8 col-lg-6">
+                                                   <input type="password" name="current_password" class="form-control form-control-sm" value="" placeholder="" disabled="disabled">
+                                                </div>  
+                                            </div> 
+                                            <div class="row mb-2 pt-1">
+                                                <div class="col-md-4 col-lg-3">
+                                                    <label class="label">Account Type</label>
+                                                </div> 
+                                                <div class="col-md-8 col-lg-6">
+                                                   <label class="container-radio small mb-1 mr-2">
+                                                        <div><strong>Savings</strong></div>
+                                                        <input type="radio" name="bank_account_type" value="0" checked="checked">
+                                                        <span class="checkmark"></span>
+                                                    </label>
+                                                    <label class="container-radio small mb-1">
+                                                        <div><strong>Checkings</strong></div>
+                                                        <input type="radio" name="bank_account_type" value="1">
+                                                        <span class="checkmark"></span>
+                                                    </label>
+                                                </div>  
+                                            </div>  
+                                            <div class="row mb-2">
+                                                <div class="col-md-4 col-lg-3">
+                                                    <label class="label mt-1">Bank Account Number</label>
+                                                </div> 
+                                                <div class="col-md-8 col-lg-6">
+                                                   <input type="text" name="bank_account_number" class="form-control form-control-sm" value="8847583745" placeholder="">
+                                                </div>  
+                                            </div>
+                                            <div class="row mb-2">
+                                                <div class="col-md-4 col-lg-3">
+                                                    <label class="label">Account holder name</label>
+                                                </div> 
+                                                <div class="col-md-8 col-lg-6">
+                                                   カワセタロウ
+                                                </div>  
+                                            </div> 
+                                            <div class="row mb-2">
+                                                <div class="col-md-4 col-lg-3">
+                                                    &nbsp;
+                                                </div> 
+                                                <div class="col-md-8 col-lg-6">
+                                                   <button type="button" class="btn btn-save btn-success pl-3 pr-3 btn-sm">Save</button> <button type="button" class="btn btn-cancel btn-secondary pl-3 pr-3 btn-sm">Cancel</button>
+                                                </div>  
+                                            </div> 
+                                        </div>
                                     </div><!-- END BANK ACCOUNT -->
                                     <!-- BEGIN SETTING -->
                                     <div class="tab-pane fade" id="nav-setting" role="tabpanel" aria-labelledby="nav-setting-tab">
@@ -481,16 +664,26 @@
                                                <input type="password" name="confirm-password" class="form-control form-control-sm" value="" placeholder="" style="max-width: 240px">
                                             </div>  
                                         </div>
+                                        <div class="row">
+                                            <div class="col-md-4 col-lg-3">
+                                                &nbsp;
+                                            </div> 
+                                            <div class="col-md-8 col-lg-9">
+                                                <button type="button" class="btn btn-save btn-success pl-3 pr-3 btn-sm">Save</button>
+                                            </div>  
+                                        </div>
                                         <hr>
                                         <div class="row mb-2">
                                             <div class="col-md-4 col-lg-3">
                                                 <label class="label mt-1">Font Size</label>
                                             </div> 
                                             <div class="col-md-8 col-lg-9">
-                                                <div class="btn-group">                                                                        
-                                                    <button type="button" class="btn btn-outline-secondary btn-sm btn-size-sm" data-size="sm">小</button>
-                                                    <button type="button" class="btn btn-outline-secondary btn-sm btn-size-md active" data-size="md">中</button>
-                                                    <button type="button" class="btn btn-outline-secondary btn-sm btn-size-lg" data-size="lg">大</button>
+                                                <div class="switch-style">
+                                                    <div class="btn-group">                                                                        
+                                                        <button type="button" class="btn btn-outline-secondary btn-sm btn-size-sm" data-size="sm">小</button>
+                                                        <button type="button" class="btn btn-outline-secondary btn-sm btn-size-md" data-size="md">中</button>
+                                                        <button type="button" class="btn btn-outline-secondary btn-sm btn-size-lg" data-size="lg">大</button>
+                                                    </div>
                                                 </div>
                                             </div>  
                                         </div>
@@ -502,14 +695,6 @@
                                                 <select class="form-control form-control-sm select2" style="max-width: 240px;">
                                                     <option>English</option>
                                                 </select>
-                                            </div>  
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-4 col-lg-3">
-                                                &nbsp;
-                                            </div> 
-                                            <div class="col-md-8 col-lg-9">
-                                                <button type="button" class="btn btn-save btn-success pl-3 pr-3">Save</button>
                                             </div>  
                                         </div>
                                     </div><!-- END SETTING -->
@@ -525,6 +710,20 @@
     <script src="assets/includes/offcanvas.js"></script>
     <!-- Modal Configm -->
     <div class="modal fade" id="modal-confirm" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-body text-center">
+                    <p>Do you want to save information?</p>
+                    <div>
+                        <button type="button" class="btn btn-sm btn-success pl-3 pr-3">Ok</button>
+                        <button type="button" class="btn btn-sm btn-outline-secondary pl-3 pr-3" data-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Configm Bank -->
+    <div class="modal fade" id="modal-confirm-bank" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" data-backdrop="static">
         <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
             <div class="modal-content">
                 <div class="modal-body text-center">
@@ -664,7 +863,46 @@
 
                 $('.table-profile tr.row-action').hide();
             }, 100);
-        })
+        });
+
+        $('.container-radios-wrapper .box-item-radio input[type=radio]').change(function() {
+            $(this).parents('.container-radios-wrapper').find('.box-item-radio').not($(this).parent()).removeClass('active');
+            $(this).parent().addClass('active');
+        });
+
+
+
+        //Banks Setting 
+        function edit_bank(){
+            $('.bank_form').removeClass('d-none');
+            $('.bank_info').addClass('d-none');
+        }
+        function save_bank(){
+            $('.bank_form').addClass('d-none');
+            $('.bank_info').removeClass('d-none');
+        }
+        $('.bank_info .btn-edit').click(function(e) {
+            e.preventDefault();
+            console.log('Edit');
+            edit_bank();
+        });
+        $('.bank_form .btn-cancel').click(function(e) {
+            e.preventDefault();
+            console.log('cancel');
+            $('#modal-confirm-bank').modal('hide');
+            save_bank();
+        });
+        $('.bank_form .btn-save').click(function(e) {
+            e.preventDefault();
+            console.log('save');            
+            $('#modal-confirm-bank').modal('show');
+        });
+
+        $('#modal-confirm-bank .btn-success').click(function(e) {
+            e.preventDefault();
+            $('#modal-confirm-bank').modal('hide');
+            save_bank();
+        });
 
     });
     </script>

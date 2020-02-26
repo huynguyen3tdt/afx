@@ -1462,29 +1462,29 @@ ul.reset li {
 }
 
 /* Deno */
-.switch-style{
+.switch-style.float{
 	position: fixed;
 	right: 20px;
 	bottom:70px;
 }
-.switch-style .btn{
+.switch-style.float .btn{
 	font-size: 14px;
 	background: #ddd;
 	min-width: 36px;
 	padding-left: 0;
 	padding-right: 0;
 }
-.switch-style .btn.btn-close,
-.switch-style .btn.btn-close:hover{
+.switch-style.float .btn.btn-close,
+.switch-style.float .btn.btn-close:hover{
 	background: none;
 	padding-top: 0;
 	padding-bottom: 0;
 	color: #666;
 }
-.switch-style .btn:hover{
+.switch-style.float .btn:hover{
 	background: #eee;
 }
-.switch-style .btn.active {
+.switch-style.float .btn.active {
 	background: #0D688F;
 	color: #fff;
 }
@@ -1646,3 +1646,22 @@ h1{
 	background-color: #f5f5f5;
 }
 
+/* Row Small Gutters*/
+.row-small-gutters {
+	margin-left: -0.3rem;
+	margin-right: -0.3rem;
+}
+.row-small-gutters .col-lg-4 {
+	padding-left: 0.3rem;
+	padding-right: 0.3rem;
+}
+
+.row-small-gutters .box-item-checkbox,
+.row-small-gutters .box-item-radio {
+	padding: 0.6rem;
+}
+.row-small-gutters .box-item-checkbox .checkmark, 
+.row-small-gutters .box-item-radio .checkmark {
+	left: 0.6rem;
+	top: 0.6rem;
+}
