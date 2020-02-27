@@ -6,6 +6,7 @@ import { UserService } from './../../core/services/user.service';
 import { UserModel, CorporateResponse, CorporateModel } from 'src/app/core/model/user.model';
 import { FormGroup, FormControl } from '@angular/forms';
 import { requiredInput } from 'src/app/core/helper/custom-validate.helper';
+import { IS_COMPANY } from 'src/app/core/constant/authen-constant';
 
 declare var $: any;
 
@@ -51,6 +52,10 @@ export class AccountInformationComponent implements OnInit {
   corPrefecture: any;
   corDistrict: any;
   test: any;
+  isCompany: string;
+
+
+
 
 
   ngOnInit() {
@@ -132,6 +137,7 @@ export class AccountInformationComponent implements OnInit {
     this.userService.getCorporateInfor().subscribe(response => {
       if (response.meta.code === 200) {
         this.corporateInfor = response.data;
+        this.isCompany = localStorage.getItem('isCompanyAFX');
         this.corPrefecture = this.corporateInfor.corporation.address.value.city;
         this.corDistrict = this.corporateInfor.corporation.address.value.street;
         this.corporateForm.controls.cor_postcode.setValue(this.corporateInfor.corporation.zip.value);
