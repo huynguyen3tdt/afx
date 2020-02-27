@@ -20,7 +20,7 @@ import {
 export class WithdrawRequestService {
 
   constructor(private httpClient: HttpClient,
-    private envConfigService: EnvConfigService) { }
+              private envConfigService: EnvConfigService) { }
 
   getmt5Infor(): Observable<WithdrawRequestModel> {
     return this.httpClient
