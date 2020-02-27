@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { NotificationsService } from 'src/app/core/services/notifications.service';
-import { PageNotificationResponse, Notification } from 'src/app/core/model/page-noti.model';
+import { PageNotificationResponse, Notification, TotalNotification } from 'src/app/core/model/page-noti.model';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import * as moment from 'moment';
 import { FormGroup, FormControl } from '@angular/forms';
@@ -31,6 +31,7 @@ export class NotificationsComponent implements OnInit {
   totalImportant: number;
   totalCampagn: number;
   totalNotification: number;
+  totalNoti: TotalNotification;
   unreadAll: boolean;
   unreadImportant: boolean;
   unreadNotification: boolean;
@@ -65,6 +66,7 @@ export class NotificationsComponent implements OnInit {
     });
     this.getListNotifications(this.pageSize, this.currentPage, this.unreadAll, this.TABS.ALL.value);
     this.initFormAgreement();
+    this.getTotalNotification();
   }
 
   initFormAgreement() {
@@ -82,32 +84,39 @@ export class NotificationsComponent implements OnInit {
     this.notificationsService.getListNotifications(pageSize, pageNumber, unread, type).subscribe(response => {
       if (response.meta.code === 200) {
         this.pageNotification = response;
-        this.totalCampagn = this.pageNotification.data.results.total_noti.campaign;
-        this.totalImportant = this.pageNotification.data.results.total_noti.important;
-        this.totalNotification = this.pageNotification.data.results.total_noti.notification;
-        this.totalAll = this.totalCampagn + this.totalImportant + this.totalNotification;
-        this.listNotification = this.pageNotification.data.results.noti_list;
+        this.listNotification = this.pageNotification.data.results;
         this.listNotification.forEach(item => {
-          item.create_date = moment(item.create_date).format('YYYY/MM/DD HH:MM');
+          item.publish_date = moment(item.publish_date).format('YYYY/MM/DD HH:MM');
         });
         this.totalItem = this.pageNotification.data.count;
         this.spinnerService.hide();
         if (this.showNoti === true && this.tab === 'ALL'
-          && (this.pageNotification.data.results.total_noti.important > 0)
           && (localStorage.getItem(FIRST_LOGIN) === '1')) {
           $('#notice_important').modal('show');
           this.importantTab.nativeElement.click();
         }
       }
     });
+    this.getTotalNotification();
   }
-
+  getTotalNotification() {
+    this.notificationsService.getTotalNotification().subscribe(response => {
+      if (response.meta.code === 200) {
+        this.totalNoti = response.data;
+        this.totalCampagn = this.totalNoti.campaign;
+        this.totalImportant = this.totalNoti.important;
+        this.totalNotification = this.totalNoti.notification;
+        this.totalAll = this.totalCampagn + this.totalImportant + this.totalNotification;
+      }
+    });
+  }
   changeReadStatus(id: number) {
     const param = {
       noti_id: id
     };
     this.notificationsService.changeReadStatus(param).subscribe(response => {
     });
+    this.getTotalNotification();
   }
 
   filterUnreadNoti() {
@@ -146,6 +155,7 @@ export class NotificationsComponent implements OnInit {
       }
     });
     this.checkAgreement = false;
+    this.getTotalNotification();
   }
 
   hideAgreementModal() {
@@ -214,6 +224,7 @@ export class NotificationsComponent implements OnInit {
         break;
     }
     this.changeReadStatus(item.id);
+    this.getTotalNotification();
   }
 
   showimportant() {

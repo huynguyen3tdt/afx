@@ -4,7 +4,10 @@ import { Observable } from 'rxjs/internal/Observable';
 import { InnerSubscriber } from 'rxjs/internal/InnerSubscriber';
 import { EnvConfigService } from './env-config.service';
 import { catchError } from 'rxjs/operators';
-import { PageNotificationResponse, NotificationStatusResponse, NotificationResponse } from '../model/page-noti.model';
+import { PageNotificationResponse,
+        NotificationStatusResponse,
+        NotificationResponse,
+        TotalNotificationResponse} from '../model/page-noti.model';
 import { AppSettings } from './api.setting';
 
 @Injectable({
@@ -30,6 +33,17 @@ export class NotificationsService {
       URL = `?not_read=${checkUnread}&page_size=${pageSize}&page=${pageNumber}`;
     }
     return this.httpClient.get(`${this.envConfigService.getConfig()}/${AppSettings.API_GET_LIST_NOTIFICATIONS}` + URL)
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          return new Observable((observer: InnerSubscriber<any, any>) => {
+            observer.next(error);
+          });
+        })
+      );
+  }
+
+  getTotalNotification(): Observable<TotalNotificationResponse> {
+    return this.httpClient.get(`${this.envConfigService.getConfig()}/${AppSettings.API_TOTAL_NOTI}`)
       .pipe(
         catchError((error: HttpErrorResponse) => {
           return new Observable((observer: InnerSubscriber<any, any>) => {

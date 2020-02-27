@@ -17,4 +17,5 @@ export class AppSettings {
     public static API_GET_INDIVIDUAL            = `api/${versionAPI}/users/individual/`;
     public static API_PUT_INDIVIDUAL            = `api/${versionAPI}/users/individual/`;
     public static API_GET_CORPORATION           = `api/${versionAPI}/users/corporation/`;
+    public static API_TOTAL_NOTI                = `api/${versionAPI}/news/total_noti/`;
 }

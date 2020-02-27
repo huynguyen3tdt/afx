@@ -54,7 +54,7 @@
                                         </div>
                                         <div class="item-header">
                                             <h5 class="item-title"><a href="javascript:;">{{item?.news_title}}</a></h5>
-                                            <div class="item-meta">{{item?.create_date}}</div>
+                                            <div class="item-meta">{{item?.publish_date}}</div>
                                         </div>
                                         <div class="item-content" [innerHTML]="item?.news_content">
                                         </div>
@@ -92,7 +92,7 @@
                                         </div>
                                         <div class="item-header">
                                             <h5 class="item-title"><a href="javascript:;">{{item?.news_title}}</a></h5>
-                                            <div class="item-meta">{{item?.create_date}}</div>
+                                            <div class="item-meta">{{item?.publish_date}}</div>
                                         </div>
                                         <div class="item-content" [innerHTML]="item?.news_content">
                                         </div>
@@ -105,7 +105,7 @@
                                         </div>
                                         <div class="item-header">
                                             <h5 class="item-title"><a href="javascript:;">{{item?.news_title}}</a></h5>
-                                            <div class="item-meta">{{item?.create_date}}</div>
+                                            <div class="item-meta">{{item?.publish_date}}</div>
                                         </div>
                                     </div>
                                 </ng-container>
@@ -133,8 +133,8 @@
                             </div>
                             <div class="list-notifications">
                                 <ng-container *ngFor="let item of listNotification; let i = index">
-                                    <div (click)="showDetail(i, item)" 
-                                        id="system_{{i}}" [ngClass]="{'unread': item.read_flg == 'true'}" 
+                                    <div (click)="showDetail(i, item)"
+                                        id="system_{{i}}" [ngClass]="{'unread': item.read_flg == 'true'}"
                                         class="notification-item">
                                         <div class="badge-wrap">
                                             <span *ngIf="item?.news_type == 1 || item?.noti_type == 3"
@@ -142,7 +142,7 @@
                                         </div>
                                         <div class="item-header">
                                             <h5 class="item-title"><a href="javascript:;">{{item?.news_title}}</a></h5>
-                                            <div class="item-meta">{{item?.create_date}}</div>
+                                            <div class="item-meta">{{item?.publish_date}}</div>
                                         </div>
                                         <div class="item-content" [innerHTML]="item?.news_content">
                                         </div>
@@ -172,8 +172,8 @@
                             </div>
                             <div class="list-notifications">
                                 <ng-container *ngFor="let item of listNotification; let i = index">
-                                    <div (click)="showDetail(i, item)" 
-                                        id="campain_{{i}}" [ngClass]="{'unread': item.read_flg == 'true'}" 
+                                    <div (click)="showDetail(i, item)"
+                                        id="campain_{{i}}" [ngClass]="{'unread': item.read_flg == 'true'}"
                                         class="notification-item">
                                         <div class="badge-wrap">
                                             <span *ngIf="item?.news_type == 2"
@@ -181,7 +181,7 @@
                                         </div>
                                         <div class="item-header">
                                             <h5 class="item-title"><a href="javascript:;">{{item?.news_title}}</a></h5>
-                                            <div class="item-meta">{{item?.create_date}}</div>
+                                            <div class="item-meta">{{item?.publish_date}}</div>
                                         </div>
                                         <div class="item-content" [innerHTML]="item?.news_content">
                                         </div>
@@ -246,7 +246,7 @@
         <div class="modal-content">
             <div class="modal-body text-center">
                 <p class="mb-0"><i class="icon ion-md-alert text-danger" style="font-size: 48px;line-height: 1"></i></p>
-                <p>You are having <strong>{{pageNotification?.data?.results?.total_noti?.important}}</strong> important notification</p>
+                <p>You are having <strong>{{totalNoti?.important}}</strong> important notification</p>
                 <button type="button" class="btn btn-sm btn-primary pl-4 pr-4" data-dismiss="modal">Ok</button>
             </div>
         </div>
