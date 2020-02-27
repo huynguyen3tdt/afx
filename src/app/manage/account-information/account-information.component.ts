@@ -137,7 +137,7 @@ export class AccountInformationComponent implements OnInit {
     this.userService.getCorporateInfor().subscribe(response => {
       if (response.meta.code === 200) {
         this.corporateInfor = response.data;
-        this.isCompany = localStorage.getItem('isCompanyAFX');
+        this.isCompany = localStorage.getItem(IS_COMPANY);
         this.corPrefecture = this.corporateInfor.corporation.address.value.city;
         this.corDistrict = this.corporateInfor.corporation.address.value.street;
         this.corporateForm.controls.cor_postcode.setValue(this.corporateInfor.corporation.zip.value);
