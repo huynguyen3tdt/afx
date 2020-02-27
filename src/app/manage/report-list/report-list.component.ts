@@ -4,6 +4,7 @@ import { ReportIDS } from 'src/app/core/model/report-response.model';
 import { FormGroup, FormControl } from '@angular/forms';
 import { ACCOUNT_TYPE } from 'src/app/core/constant/authen-constant';
 import * as moment from 'moment';
+import { JAPAN_FORMATDATE } from 'src/app/core/constant/format-date-constant';
 
 @Component({
   selector: 'app-report-list',
@@ -22,6 +23,7 @@ export class ReportListComponent implements OnInit {
   listTotalItem: Array<number> = [10, 20, 30];
   recordFrom: number;
   recordTo: number;
+  showErrorDate: boolean;
 
   TABS = {
     ALL: { name: 'ALL', value: 0 },
@@ -40,7 +42,6 @@ export class ReportListComponent implements OnInit {
   ngOnInit() {
     this.currentPage = 1;
     this.pageSize = 10;
-    this.tradingAccount = Number(localStorage.getItem(ACCOUNT_TYPE));
     this.listTradingAccount.push(Number(localStorage.getItem(ACCOUNT_TYPE)));
     this.initSearchForm();
     this.getReport(this.searchForm.controls.tradingAccount.value, this.currentPage, this.pageSize, this.TABS.ALL.value,
@@ -53,6 +54,7 @@ export class ReportListComponent implements OnInit {
       fromDate: new FormControl(null),
       toDate: new FormControl(null)
     });
+    this.setDate(this.DURATION.YEAR);
   }
 
   getReport(accountNumber: number, pageSize: number, pageNumber: number, type?: number, dateFrom?: string, dateTo?: string) {
@@ -62,7 +64,7 @@ export class ReportListComponent implements OnInit {
         this.listReport = response.data.results;
         this.totalItem = response.data.count;
         this.listReport.forEach(item => {
-          item.created_date = moment(item.created_date).format('YYYY/MM/DD');
+          item.create_date = moment(item.create_date).format(JAPAN_FORMATDATE);
         });
         this.recordFrom = this.pageSize * (this.currentPage - 1) + 1;
         this.recordTo = this.recordFrom + (this.listReport.length - 1);
@@ -71,11 +73,16 @@ export class ReportListComponent implements OnInit {
   }
 
   searchReport() {
+    this.showErrorDate = false;
     if (this.searchForm.controls.fromDate.value !== null && this.searchForm.controls.fromDate.value.toString().indexOf('/') === -1) {
-      this.searchForm.controls.fromDate.setValue(moment(new Date(this.searchForm.controls.fromDate.value)).format('DD/MM/YYYY'));
+      this.searchForm.controls.fromDate.setValue(moment(new Date(this.searchForm.controls.fromDate.value)).format(JAPAN_FORMATDATE));
     }
     if (this.searchForm.controls.toDate.value !== null && this.searchForm.controls.toDate.value.toString().indexOf('/') === -1) {
-      this.searchForm.controls.toDate.setValue(moment(new Date(this.searchForm.controls.toDate.value)).format('DD/MM/YYYY'));
+      this.searchForm.controls.toDate.setValue(moment(new Date(this.searchForm.controls.toDate.value)).format(JAPAN_FORMATDATE));
+    }
+    if (moment(this.searchForm.controls.fromDate.value) > moment(this.searchForm.controls.toDate.value)) {
+      this.showErrorDate = true;
+      return;
     }
     switch (this.tab) {
       case this.TABS.ALL.name:
@@ -119,23 +126,40 @@ export class ReportListComponent implements OnInit {
   }
 
   setDate(duration: string) {
-    this.searchForm.controls.toDate.setValue(moment((new Date()).toDateString()).format('DD/MM/YYYY'));
+    this.searchForm.controls.toDate.setValue(moment((new Date()).toDateString()).format(JAPAN_FORMATDATE));
     switch (duration) {
       case this.DURATION.DAY:
-        this.searchForm.controls.fromDate.setValue(moment(new Date()).add(-7, 'days').format('DD/MM/YYYY'));
+        this.searchForm.controls.fromDate.setValue(moment((new Date()).toDateString()).format(JAPAN_FORMATDATE));
         break;
       case this.DURATION.MONTH:
-        this.searchForm.controls.fromDate.setValue(moment(new Date()).add(-30, 'days').format('DD/MM/YYYY'));
+        this.searchForm.controls.fromDate.setValue(moment(new Date()).add(-((new Date()).getDate() - 1), 'days').format(JAPAN_FORMATDATE));
         break;
       case this.DURATION.YEAR:
-        this.searchForm.controls.fromDate.setValue(moment(new Date()).add(-1, 'years').format('DD/MM/YYYY'));
+        this.searchForm.controls.fromDate.setValue(moment(new Date(new Date().getFullYear(), 0, 1)).format(JAPAN_FORMATDATE));
         break;
+    }
+    this.searchReport();
+  }
+
+  onValueChangeFrom(event) {
+    this.showErrorDate = false;
+    if ((new Date(event).getTime()) >
+    new Date(this.searchForm.controls.toDate.value).getTime()) {
+      this.showErrorDate = true;
+    }
+  }
+
+  onValueChangeTo(event) {
+    this.showErrorDate = false;
+    if ((new Date(this.searchForm.controls.fromDate.value).getTime()) >
+    new Date(event).getTime()) {
+      this.showErrorDate = true;
     }
   }
 
   formatDate(date: string) {
     if (date) {
-      return date.split('/')[0] + '-' + date.split('/')[1] + '-' + date.split('/')[2];
+      return date.split('/')[2] + '-' + date.split('/')[1] + '-' + date.split('/')[0];
     }
     return null;
   }

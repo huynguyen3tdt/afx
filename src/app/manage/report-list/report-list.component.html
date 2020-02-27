@@ -30,7 +30,7 @@
                                     <div class="col-4 col-lg-3">
                                         <div class="form-group">
                                             <label class="label d-block mb-0">Trading account</label>
-                                            <select formControlName="tradingAccount" class="form-control form-control-sm">
+                                            <select disabled formControlName="tradingAccount" class="form-control form-control-sm">
                                                 <option *ngFor="let item of listTradingAccount" value="{{item}}">{{item}}</option>
                                             </select>
                                         </div>
@@ -56,14 +56,19 @@
                                                     <div class="input-wrapper">
                                                         <input type="text" name="start-date"
                                                             class="form-control form-control-sm date"
-                                                            placeholder="DD/MM/YYYY"
+                                                            placeholder="YYYY/MM/DD"
                                                             #dp="bsDatepicker" bsDatepicker
                                                             formControlName="fromDate"
-                                                            [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-blue' }"
+                                                            (bsValueChange)="onValueChangeFrom($event)"
+                                                            autocomplete="off"
+                                                            [bsConfig]="{ dateInputFormat: 'YYYY/MM/DD', containerClass: 'theme-blue' }"
                                                             >
                                                         <button type="button" class="btn btn-none btn-sm" (click)="dp.toggle()" [attr.aria-expanded]="dp.isOpen"
                                                             ><i
                                                                 class="icon ion-md-calendar"></i></button>
+                                                    </div>
+                                                    <div *ngIf="showErrorDate == true" class="invalid-mess">
+                                                        Period is incorrect, the to date must be greater than the from date
                                                     </div>
                                                 </div>
                                             </div>
@@ -73,10 +78,12 @@
                                                     <div class="input-wrapper">
                                                         <input type="text" name="end-date"
                                                             class="form-control form-control-sm date"
-                                                            placeholder="DD/MM/YYYY"
+                                                            placeholder="YYYY/MM/DD"
                                                             #dp2="bsDatepicker" bsDatepicker
                                                             formControlName="toDate"
-                                                            [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-blue' }"
+                                                            autocomplete="off"
+                                                            (bsValueChange)="onValueChangeTo($event)"
+                                                            [bsConfig]="{ dateInputFormat: 'YYYY/MM/DD', containerClass: 'theme-blue' }"
                                                             >
                                                         <button type="button" class="btn btn-none btn-sm" (click)="dp2.toggle()" [attr.aria-expanded]="dp2.isOpen"
                                                             ><i
@@ -109,13 +116,15 @@
                                     </thead>
                                     <tbody>
                                         <tr *ngFor="let item of listReport">
-                                            <td class="text-center align-middle"><img src="assets/images/icons/pdf.svg"
+                                            <td *ngIf="item.file_type == 'pdf'" class="text-center align-middle"><img src="assets/images/icons/pdf.svg"
+                                                    width="20" height="20"></td>
+                                            <td *ngIf="item.file_type == 'csv'" class="text-center align-middle"><img src="assets/images/icons/csv.svg"
                                                     width="20" height="20"></td>
                                             <!-- <td class="text-center align-middle"><span class="small text-secondary">{{item?.file_type}}</span></td> -->
                                             <td class="align-middle"><strong><a
                                                         href="javascript:;">{{item?.report_title}}</a></strong></td>
                                             <td class="text-right align-middle"><span
-                                                    class="text-secondary">{{item?.created_date | date:'yyyy/MM/dd'}}</span>
+                                                    class="text-secondary">{{item?.create_date}}</span>
                                             </td>
                                             <td class="text-right align-middle"><span
                                                     class="text-danger">{{item?.read_flg}}</span></td>
