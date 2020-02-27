@@ -239,7 +239,7 @@
                                                     <td>Phone</td>
                                                     <td>
                                                         <div *ngIf="editPhone == false" class="currentvalue">
-                                                            <strong><a href="javascript:;">{{userInfor?.phone}}</a></strong>
+                                                            <strong><a href="javascript:;">{{userInfor?.mobile}}</a></strong>
                                                             <div class="status d-none small" ><span
                                                                     class="text-success"><i
                                                                         class="icon ion-md-checkmark"></i> Updated
@@ -322,8 +322,8 @@
                                                   <td>Postcode</td>
                                                   <td>
                                                       <div class="currentvalue" *ngIf="editCorAddress == false">
-                                                          <strong>{{corporateInfor?.zip?.value}}</strong>
-                                                          <div class="status d-none small" *ngIf="corporateInfor?.zip?.status == 0">
+                                                          <strong>{{corporateInfor?.corporation?.zip?.value}}</strong>
+                                                          <div class="status d-none small" *ngIf="corporateInfor?.corporation?.zip?.status == 0">
                                                             <span class="text-success"><i class="icon ion-md-checkmark">
                                                             </i> Updated</span></div>
                                                       </div>
@@ -340,7 +340,7 @@
                                                           <div><strong>{{corporateInfor?.corporation?.address?.value?.city}} , {{corporateInfor?.corporation?.address?.value?.street}}</strong></div>
                                                           <div><strong>{{corporateInfor?.corporation?.address?.value?.street2}} - {{corporateInfor?.corporation?.address?.value?.fx_street3}}</strong></div>
                                                           <div class="status d-none small"><span class="text-info">
-                                                            <i class="icon ion-md-hourglass" *ngIf="corporateInfor?.address?.status == 0">
+                                                            <i class="icon ion-md-hourglass" *ngIf="corporateInfor?.corporation?.address?.status == 0">
                                                             </i> Verificaion in process</span></div>
                                                       </div>
                                                       <div class="editable" *ngIf="editCorAddress == true">
@@ -369,14 +369,14 @@
                                                           </div>
                                                       </div>
                                                   </td>
-                                                  <td width="15"><a href="javascript:;" class="edit-link" data-toggle="tooltip" data-placement="top" *ngIf="editCorAddress == false && corporateInfor?.address?.status != 0"
+                                                  <td width="15"><a href="javascript:;" class="edit-link" data-toggle="tooltip" data-placement="top" *ngIf="editCorAddress == false && corporateInfor?.corporation?.address?.status != 0"
                                                     title="Edit Address" (click)="showEditFieldCor('cor-address')"><i class="icon ion-md-create"></i></a></td>
                                               </tr>
                                               <tr class="row-phone">
                                                   <td>Phone</td>
                                                   <td>
                                                       <div class="currentvalue" *ngIf="editCorPhone == false">
-                                                          <strong><a href="javascript:;">+{{corporateInfor?.moblie}}</a></strong>
+                                                          <strong><a href="javascript:;">+{{corporateInfor?.corporation?.mobile}}</a></strong>
                                                           <div class="status d-none small"><span class="text-success"><i class="icon ion-md-checkmark"></i> Updated </span></div>
                                                       </div>
                                                       <div class="editable" *ngIf="editCorPhone == true">
@@ -393,7 +393,7 @@
                                                   <td>Fax</td>
                                                   <td>
                                                       <div class="currentvalue" *ngIf="editCorFax == false">
-                                                          <strong><a href="javascript:;">+{{corporateInfor?.fx_fax?.value}}</a></strong>
+                                                          <strong><a href="javascript:;">+{{corporateInfor?.corporation?.fx_fax?.value}}</a></strong>
                                                           <div class="status d-none small"><span class="text-success"><i class="icon ion-md-checkmark"></i> Updated </span></div>
                                                       </div>
                                                       <div class="editable" *ngIf="editCorFax == true">
