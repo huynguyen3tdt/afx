@@ -86,7 +86,7 @@ export class NotificationsComponent implements OnInit {
         this.pageNotification = response;
         this.listNotification = this.pageNotification.data.results;
         this.listNotification.forEach(item => {
-          item.create_date = moment(item.create_date).format('YYYY/MM/DD HH:MM');
+          item.publish_date = moment(item.publish_date).format('YYYY/MM/DD HH:MM');
         });
         this.totalItem = this.pageNotification.data.count;
         this.spinnerService.hide();

@@ -4,7 +4,10 @@ import { Observable } from 'rxjs/internal/Observable';
 import { InnerSubscriber } from 'rxjs/internal/InnerSubscriber';
 import { EnvConfigService } from './env-config.service';
 import { catchError } from 'rxjs/operators';
-import { PageNotificationResponse, NotificationStatusResponse, NotificationResponse, TotalNotoficationResponse } from '../model/page-noti.model';
+import { PageNotificationResponse,
+        NotificationStatusResponse,
+        NotificationResponse,
+        TotalNotoficationResponse } from '../model/page-noti.model';
 import { AppSettings } from './api.setting';
 
 @Injectable({
