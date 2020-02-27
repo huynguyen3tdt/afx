@@ -20,7 +20,7 @@ import {
 export class WithdrawRequestService {
 
   constructor(private httpClient: HttpClient,
-              private envConfigService: EnvConfigService) { }
+    private envConfigService: EnvConfigService) { }
 
   getmt5Infor(): Observable<WithdrawRequestModel> {
     return this.httpClient
@@ -70,9 +70,22 @@ export class WithdrawRequestService {
       );
   }
 
-  getDwHistory(): Observable<WithdrawHistory> {
+  getDwHistory(accountNumber: number, pageSize: number, pageNumber: number,
+               type?: number, dateFrom?: string, dateTo?: string): Observable<WithdrawHistory> {
+    let URL = '';
+    if (type !== -1) {
+      URL = `?account_id=${accountNumber}&type=${type}&page_size=${pageSize}&page=${pageNumber}`;
+    } else {
+      URL = `?account_id=${accountNumber}&page_size=${pageSize}&page=${pageNumber}`;
+    }
+    if (dateFrom && dateFrom !== 'Invalid date') {
+      URL += `&date_from=${dateFrom}`;
+    }
+    if (dateTo && dateTo !== 'Invalid date') {
+      URL += `&date_to=${dateTo}`;
+    }
     return this.httpClient
-      .get(`${this.envConfigService.getConfig()}/${AppSettings.API_WD_HISTORY}`)
+      .get(`${this.envConfigService.getConfig()}/${AppSettings.API_WD_HISTORY}` + URL)
       .pipe(
         catchError((error: HttpErrorResponse) => {
           return new Observable((observer: InnerSubscriber<any, any>) => {

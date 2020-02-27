@@ -79,12 +79,12 @@ export class WithdrawRequestComponent implements OnInit {
     });
   }
   getDwHistory() {
-    this.withdrawRequestService.getDwHistory().subscribe(response => {
-      if (response.meta.code === 200) {
-        this.listDwHistory = response.data.results;
+    // this.withdrawRequestService.getDwHistory().subscribe(response => {
+    //   if (response.meta.code === 200) {
+    //     this.listDwHistory = response.data.results;
 
-      }
-    });
+    //   }
+    // });
   }
   onRefesh() {
     this.getMt5Infor();
