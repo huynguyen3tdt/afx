@@ -7,7 +7,7 @@ import { catchError } from 'rxjs/operators';
 import { PageNotificationResponse,
         NotificationStatusResponse,
         NotificationResponse,
-        TotalNotoficationResponse } from '../model/page-noti.model';
+        TotalNotificationResponse} from '../model/page-noti.model';
 import { AppSettings } from './api.setting';
 
 @Injectable({
@@ -42,7 +42,7 @@ export class NotificationsService {
       );
   }
 
-  getTotalNotification(): Observable<TotalNotoficationResponse> {
+  getTotalNotification(): Observable<TotalNotificationResponse> {
     return this.httpClient.get(`${this.envConfigService.getConfig()}/${AppSettings.API_TOTAL_NOTI}`)
       .pipe(
         catchError((error: HttpErrorResponse) => {

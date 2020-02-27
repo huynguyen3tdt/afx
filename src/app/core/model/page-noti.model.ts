@@ -9,7 +9,7 @@ export interface PageNotificationResponse {
         results: Array<Notification>;
     };
 }
-export interface TotalNotoficationResponse {
+export interface TotalNotificationResponse {
   meta: MetaResponseModel;
   data: TotalNotification;
 }

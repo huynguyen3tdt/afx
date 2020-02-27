@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { NotificationsService } from 'src/app/core/services/notifications.service';
-import { PageNotificationResponse, Notification } from 'src/app/core/model/page-noti.model';
+import { PageNotificationResponse, Notification, TotalNotification } from 'src/app/core/model/page-noti.model';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import * as moment from 'moment';
 import { FormGroup, FormControl } from '@angular/forms';
@@ -31,7 +31,7 @@ export class NotificationsComponent implements OnInit {
   totalImportant: number;
   totalCampagn: number;
   totalNotification: number;
-  listTotalNoti: any;
+  totalNoti: TotalNotification;
   unreadAll: boolean;
   unreadImportant: boolean;
   unreadNotification: boolean;
@@ -102,10 +102,10 @@ export class NotificationsComponent implements OnInit {
   getTotalNotification() {
     this.notificationsService.getTotalNotification().subscribe(response => {
       if (response.meta.code === 200) {
-        this.listTotalNoti = response;
-        this.totalCampagn = this.listTotalNoti.data.campaign;
-        this.totalImportant = this.listTotalNoti.data.important;
-        this.totalNotification = this.listTotalNoti.data.notification;
+        this.totalNoti = response.data;
+        this.totalCampagn = this.totalNoti.campaign;
+        this.totalImportant = this.totalNoti.important;
+        this.totalNotification = this.totalNoti.notification;
         this.totalAll = this.totalCampagn + this.totalImportant + this.totalNotification;
       }
     });
@@ -116,6 +116,7 @@ export class NotificationsComponent implements OnInit {
     };
     this.notificationsService.changeReadStatus(param).subscribe(response => {
     });
+    this.getTotalNotification();
   }
 
   filterUnreadNoti() {
@@ -154,6 +155,7 @@ export class NotificationsComponent implements OnInit {
       }
     });
     this.checkAgreement = false;
+    this.getTotalNotification();
   }
 
   hideAgreementModal() {
@@ -222,6 +224,7 @@ export class NotificationsComponent implements OnInit {
         break;
     }
     this.changeReadStatus(item.id);
+    this.getTotalNotification();
   }
 
   showimportant() {
