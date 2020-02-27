@@ -20,7 +20,7 @@ export class ReportService {
             type?: number , dateFrom?: string, dateTo?: string): Observable<ReportResponseModel> {
     let URL = '';
     if (type !== -1) {
-      URL = `?account_numb=${accountNumber}&type=${type}&page_size=${pageSize}&page=${pageNumber}`;
+      URL = `?account_numb=${accountNumber}&type_report=${type}&page_size=${pageSize}&page=${pageNumber}`;
     } else {
       URL = `?account_numb=${accountNumber}&page_size=${pageSize}&page=${pageNumber}`;
     }

@@ -24,8 +24,8 @@ export class ReportListComponent implements OnInit {
   recordTo: number;
 
   TABS = {
-    ALL: { name: 'ALL', value: -1 },
-    DAILY: { name: 'DAILY', value: 0 },
+    ALL: { name: 'ALL', value: 0 },
+    DAILY: { name: 'DAILY', value: 1 },
     YEARLY: { name: 'YEARLY', value: 1 },
   };
 
