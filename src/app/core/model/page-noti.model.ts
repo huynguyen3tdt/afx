@@ -6,10 +6,13 @@ export interface PageNotificationResponse {
         next: string,
         previous: string,
         count: number,
-        results: ResultPageNotification;
+        results: Array<Notification>;
     };
 }
-
+export interface TotalNotoficationResponse {
+  meta: MetaResponseModel;
+  data: TotalNotification;
+}
 export interface NotificationStatusResponse {
     meta: MetaResponseModel;
     data: {
@@ -27,14 +30,13 @@ export interface Notification {
     id: number;
     news_type: number;
     news_title: string;
-    write_date: string;
     create_date: string;
     read_flg: string;
     agree_flg: number;
     agreement_flg: number;
-    news_content: string;
-    create_uid: number;
-    write_uid: number;
+    publish_date: string;
+    news_content: number;
+    active: number;
 }
 
 export interface TotalNotification {
@@ -43,7 +45,5 @@ export interface TotalNotification {
     campaign: number;
 }
 
-export interface ResultPageNotification {
-    total_noti: TotalNotification;
-    noti_list: Notification[];
-}
+
+

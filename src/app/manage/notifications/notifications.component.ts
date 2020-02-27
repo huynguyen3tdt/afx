@@ -31,6 +31,7 @@ export class NotificationsComponent implements OnInit {
   totalImportant: number;
   totalCampagn: number;
   totalNotification: number;
+  listTotalNoti: any;
   unreadAll: boolean;
   unreadImportant: boolean;
   unreadNotification: boolean;
@@ -65,6 +66,7 @@ export class NotificationsComponent implements OnInit {
     });
     this.getListNotifications(this.pageSize, this.currentPage, this.unreadAll, this.TABS.ALL.value);
     this.initFormAgreement();
+    this.getTotalNotification();
   }
 
   initFormAgreement() {
@@ -82,26 +84,32 @@ export class NotificationsComponent implements OnInit {
     this.notificationsService.getListNotifications(pageSize, pageNumber, unread, type).subscribe(response => {
       if (response.meta.code === 200) {
         this.pageNotification = response;
-        this.totalCampagn = this.pageNotification.data.results.total_noti.campaign;
-        this.totalImportant = this.pageNotification.data.results.total_noti.important;
-        this.totalNotification = this.pageNotification.data.results.total_noti.notification;
-        this.totalAll = this.totalCampagn + this.totalImportant + this.totalNotification;
-        this.listNotification = this.pageNotification.data.results.noti_list;
+        this.listNotification = this.pageNotification.data.results;
         this.listNotification.forEach(item => {
           item.create_date = moment(item.create_date).format('YYYY/MM/DD HH:MM');
         });
         this.totalItem = this.pageNotification.data.count;
         this.spinnerService.hide();
         if (this.showNoti === true && this.tab === 'ALL'
-          && (this.pageNotification.data.results.total_noti.important > 0)
           && (localStorage.getItem(FIRST_LOGIN) === '1')) {
           $('#notice_important').modal('show');
           this.importantTab.nativeElement.click();
         }
       }
     });
+    this.getTotalNotification();
   }
-
+  getTotalNotification() {
+    this.notificationsService.getTotalNotification().subscribe(response => {
+      if (response.meta.code === 200) {
+        this.listTotalNoti = response;
+        this.totalCampagn = this.listTotalNoti.data.campaign;
+        this.totalImportant = this.listTotalNoti.data.important;
+        this.totalNotification = this.listTotalNoti.data.notification;
+        this.totalAll = this.totalCampagn + this.totalImportant + this.totalNotification;
+      }
+    });
+  }
   changeReadStatus(id: number) {
     const param = {
       noti_id: id
