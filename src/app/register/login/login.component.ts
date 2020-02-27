@@ -8,6 +8,7 @@ import {
   TOKEN_AFX,
   ACCOUNT_TYPE,
   FIRST_LOGIN,
+  IS_COMPANY,
 } from './../../core/constant/authen-constant';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthenService } from 'src/app/core/services/authen.service';
@@ -100,6 +101,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
         }
         localStorage.setItem(TOKEN_AFX, response.data.access_token);
         localStorage.setItem(ACCOUNT_TYPE, response.data.account_ids[0].account_id.toString());
+        localStorage.setItem(IS_COMPANY, response.data.is_company.toString());
         localStorage.setItem(FIRST_LOGIN, '1');
         if (response.data.pwd_change_flg === false) {
           this.router.navigate(['/manage/notifications'], {

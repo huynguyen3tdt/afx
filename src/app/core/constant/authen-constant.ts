@@ -5,3 +5,4 @@ export const USERNAME_LOGIN = 'useNameLoginAFX';
 export const PASSWORD_LOGIN = 'passWordLoginAFX';
 export const ACCOUNT_TYPE = 'accountTypeAFX';
 export const FIRST_LOGIN    = 'firstLoginAFX';
+export const IS_COMPANY    = 'isCompanyAFX';
