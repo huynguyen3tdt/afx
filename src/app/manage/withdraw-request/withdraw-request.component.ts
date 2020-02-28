@@ -27,6 +27,7 @@ export class WithdrawRequestComponent implements OnInit {
   constructor(private withdrawRequestService: WithdrawRequestService, ) { }
 
   ngOnInit() {
+    this.minWithdraw = localStorage.getItem(MIN_WITHDRAW);
     this.initWithdrawForm();
     this.getMt5Infor();
     this.getBankInfor();
@@ -68,7 +69,7 @@ export class WithdrawRequestComponent implements OnInit {
     this.withdrawRequestService.getBankInfor().subscribe(response => {
       if (response.meta.code === 200) {
         this.bankInfor = response.data;
-        this.minWithdraw = localStorage.getItem(MIN_WITHDRAW);
+
       }
     });
   }

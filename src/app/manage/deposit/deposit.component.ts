@@ -20,7 +20,7 @@ export class DepositComponent implements OnInit {
   constructor(private depositService: DepositService) { }
 
   ngOnInit() {
-    // this.showInforBank('ufj_bank');
+    this.minDeposit = localStorage.getItem(MIN_DEPOST);
     this.initDepositAmountForm();
     this.initDepositTransactionForm();
     this.getDepositBank();
@@ -42,7 +42,6 @@ export class DepositComponent implements OnInit {
     this.depositService.getDepositBank().subscribe(response => {
       if (response.meta.code === 200) {
         this.listBankTranfer = response.data;
-        this.minDeposit = localStorage.getItem(MIN_DEPOST);
         this.listBankTranfer.forEach(item => {
           item.id = item.id;
           item.name = item.name;
