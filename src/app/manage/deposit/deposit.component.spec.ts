@@ -1,22 +1,23 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { DepositComponent } from './deposit.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('DepositComponent', () => {
   let component: DepositComponent;
   let fixture: ComponentFixture<DepositComponent>;
+
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
         ReactiveFormsModule,
         FormsModule,
+        HttpClientTestingModule,
       ],
       declarations: [DepositComponent]
     })
-      .compileComponents();
-  }));
+    fixture.detectChanges();
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(DepositComponent);
@@ -27,4 +28,3 @@ describe('DepositComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-});
