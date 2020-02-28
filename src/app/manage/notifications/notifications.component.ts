@@ -90,11 +90,6 @@ export class NotificationsComponent implements OnInit {
         });
         this.totalItem = this.pageNotification.data.count;
         this.spinnerService.hide();
-        if (this.showNoti === true && this.tab === 'ALL'
-          && (localStorage.getItem(FIRST_LOGIN) === '1')) {
-          $('#notice_important').modal('show');
-          this.importantTab.nativeElement.click();
-        }
       }
     });
     this.getTotalNotification();
@@ -107,6 +102,12 @@ export class NotificationsComponent implements OnInit {
         this.totalImportant = this.totalNoti.important;
         this.totalNotification = this.totalNoti.notification;
         this.totalAll = this.totalCampagn + this.totalImportant + this.totalNotification;
+        if (this.showNoti === true && this.tab === 'ALL'
+        && (localStorage.getItem(FIRST_LOGIN) === '1')
+        && this.totalImportant > 0) {
+        $('#notice_important').modal('show');
+        this.importantTab.nativeElement.click();
+      }
       }
     });
   }
