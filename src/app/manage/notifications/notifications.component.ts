@@ -202,7 +202,6 @@ export class NotificationsComponent implements OnInit {
   }
 
   showDetail(index: number, item: Notification) {
-    console.log('itemmm ', item);
     if (item.agreement_flg === 1) {
       this.contentAgeement = item.news_content;
       this.agreementID = item.id;

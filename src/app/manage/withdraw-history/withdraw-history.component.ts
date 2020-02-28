@@ -153,6 +153,7 @@ export class WithdrawHistoryComponent implements OnInit {
         break;
     }
     if (callSearh) {
+      this.currentPage = 1;
       this.searchTranHistory();
     }
   }
