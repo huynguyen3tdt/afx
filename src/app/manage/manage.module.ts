@@ -13,6 +13,7 @@ import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
 import { ReportListComponent } from './report-list/report-list.component';
 import { DepositComponent } from './deposit/deposit.component';
 import { CurrencyDirective } from '../core/directive/currency.directive';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
     imports: [
@@ -23,6 +24,7 @@ import { CurrencyDirective } from '../core/directive/currency.directive';
         BsDatepickerModule.forRoot(),
         PaginationModule.forRoot(),
         Ng4LoadingSpinnerModule.forRoot(),
+        TranslateModule 
     ],
     providers: [],
     declarations: [

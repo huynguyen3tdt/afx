@@ -7,18 +7,17 @@
                 <!-- BEGIN SITE BRAND -->
                 <div class="site-brand">
                     <h1 class="site-title">
-                        <a href="javascript:;" class="site-link"><img src="assets/images/logo.svg" alt=""
-                                class="logo"></a>
+                        <a href="javascript:;" class="site-link"><img src="assets/images/logo.svg" alt="" class="logo"></a>
                     </h1>
-                </div> <!-- END SITE BRAND -->
+                </div>
+                <!-- END SITE BRAND -->
                 <!-- BEGIN HEADER TOP NAV -->
                 <ul class="header-top-nav nav">
                     <li class="nav-item nav-item-dmt5">
                         <a href="javascript:;" class="nav-link">MT5</a>
                     </li>
                     <li class="nav-item nav-item-notification dropdown has-notification">
-                        <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false"><i class="icon ion-md-notifications"></i></a>
+                        <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icon ion-md-notifications"></i></a>
                         <div class="dropdown-menu dropdown-menu-notification dropdown-menu-right">
                             <h6 class="mb-1 text-primary text-uppercase title"><strong>Unread Notifications</strong>
                             </h6>
@@ -34,9 +33,7 @@
                                 <div><strong>Cashback 100%</strong></div>
                                 <div class="small text-secondary">2020/01/17</div>
                             </a>
-                            <div class="text-center small"><a
-                                    href="MY003_Notification_List_MY004_Notification_Detail.html"
-                                    class="text-secondary">View more</a></div>
+                            <div class="text-center small"><a href="MY003_Notification_List_MY004_Notification_Detail.html" class="text-secondary">View more</a></div>
                         </div>
                     </li>
                     <!-- <li class="nav-item nav-item-user-panel">
@@ -50,19 +47,20 @@
                     <li class="nav-item nav-item-menu d-sm-none" (click)="openSubNav()">
                         <a href="javascript:;" class="nav-link offcanvas-open"><i class="icon ion-md-menu"></i></a>
                     </li>
-                </ul><!-- END HEADER TOP NAV -->
+                </ul>
+                <!-- END HEADER TOP NAV -->
             </div>
         </div>
-    </div><!-- END HEADER TOP -->
+    </div>
+    <!-- END HEADER TOP -->
     <!-- BEGIN HEADER BOTTOM -->
     <div class="header-bottom-nav-wrapper">
         <div class="container-fluid container-md">
             <!-- BEGIN HEADER BOTTOM NAV -->
             <ul class="header-bottom-nav nav">
                 <li class="nav-item nav-item-notifications">
-                  <a [routerLink]="['/manage/notifications']" id="notifications" class="nav-link"
-                    title="Notifications"><i class="icon ion-md-notifications d-md-none"></i> <span
-                        class="d-none d-md-inline">Notifications</span></a>
+                    <a [routerLink]="['/manage/notifications']" id="notifications" class="nav-link" title="Notifications"><i class="icon ion-md-notifications d-md-none"></i> <span
+                        class="d-none d-md-inline">{{'Notifications' | translate}}</span></a>
                 </li>
                 <li class="nav-item nav-item-deposit">
                     <a [routerLink]="['/manage/deposit']" id="deposit" class="nav-link" title="Deposit"><i
@@ -71,27 +69,29 @@
                 <li class="nav-item nav-item-withdraw">
                     <a [routerLink]="['/manage/withdrawRequest']" id="withdrawRequest" class="nav-link" title="Withdraw"><i
                             class="icon ion-md-remove d-md-none"></i> <span
-                            class="d-none d-md-inline">Withdraw</span></a>
+                            class="d-none d-md-inline">{{'Withdraw' | translate}}</span></a>
                 </li>
                 <li class="nav-item nav-item-history">
-                  <a [routerLink]="['/manage/withdrawHistory']" id="withdrawHistory" class="nav-link" title="History"><i
-                          class="icon ion-md-time d-md-none"></i> <span class="d-none d-md-inline">History</span></a>
+                    <a [routerLink]="['/manage/withdrawHistory']" id="withdrawHistory" class="nav-link" title="History"><i
+                          class="icon ion-md-time d-md-none"></i> <span class="d-none d-md-inline">{{'History' | translate}}</span></a>
                 </li>
                 <li class="nav-item nav-item-report">
                     <a [routerLink]="['/manage/reportList']" id="reportList" class="nav-link" title="Report"><i
-                            class="icon ion-md-today d-md-none"></i> <span class="d-none d-md-inline">Report</span></a>
+                            class="icon ion-md-today d-md-none"></i> <span class="d-none d-md-inline">{{'Report' | translate}}</span></a>
                 </li>
 
                 <li class="nav-item nav-item-account">
-                    <a [routerLink]="['/manage/accountInfo']" id="accountInfo" class="nav-link"
-                        title="My Account"><i class="icon ion-md-person d-md-none"></i> <span
-                            class="d-none d-md-inline">My Account</span></a>
+                    <a [routerLink]="['/manage/accountInfo']" id="accountInfo" class="nav-link" title="My Account"><i class="icon ion-md-person d-md-none"></i> <span
+                            class="d-none d-md-inline">{{'My Account' | translate}}</span></a>
                 </li>
 
-            </ul><!-- END HEADER BOTTOM NAV -->
+            </ul>
+            <!-- END HEADER BOTTOM NAV -->
         </div>
-    </div><!-- END HEADER BOTTOM -->
-</div><!-- END HEADER -->
+    </div>
+    <!-- END HEADER BOTTOM -->
+</div>
+<!-- END HEADER -->
 
 <div class="offcanvas-overlay">
     <div class="offcanvas-wrapper">
@@ -103,26 +103,26 @@
                 </div>
             </div>
             <ul class="offcanvas-nav nav">
-              <li class="nav-item nav-item-notifications">
-                  <a href="MY003_Notification_List_MY004_Notification_Detail.html" class="nav-link has-icon"><i class="icon ion-md-notifications"></i> Notifications</a>
+                <li class="nav-item nav-item-notifications">
+                    <a href="MY003_Notification_List_MY004_Notification_Detail.html" class="nav-link has-icon"><i class="icon ion-md-notifications"></i> Notifications</a>
                 </li>
                 <li class="nav-item nav-item-deposit">
-                  <a href="MY010_Deposit_MY011_DepositDetail.html" class="nav-link active has-icon"><i class="icon ion-md-add"></i> Deposit</a>
+                    <a href="MY010_Deposit_MY011_DepositDetail.html" class="nav-link active has-icon"><i class="icon ion-md-add"></i> Deposit</a>
                 </li>
                 <li class="nav-item nav-item-withdraw">
-                  <a href="MY014_WithdrawRequest.html" class="nav-link has-icon"><i class="icon ion-md-remove"></i> Withdrawal</a>
+                    <a href="MY014_WithdrawRequest.html" class="nav-link has-icon"><i class="icon ion-md-remove"></i> Withdrawal</a>
                 </li>
                 <li class="nav-item nav-item-history">
-                  <a href="MY012_DW_History.html" class="nav-link has-icon"><i class="icon ion-md-time"></i> History</a>
+                    <a href="MY012_DW_History.html" class="nav-link has-icon"><i class="icon ion-md-time"></i> History</a>
                 </li>
                 <li class="nav-item nav-item-report">
-                  <a href="MY007_ReportList.html" class="nav-link has-icon"><i class="icon ion-md-today"></i> Report</a>
+                    <a href="MY007_ReportList.html" class="nav-link has-icon"><i class="icon ion-md-today"></i> Report</a>
                 </li>
                 <li class="nav-item nav-item-account">
-                  <a href="MY005_Account_Information_MY006_User_Information.html" class="nav-link has-icon"><i class="icon ion-md-person"></i> My Account</a>
+                    <a href="MY005_Account_Information_MY006_User_Information.html" class="nav-link has-icon"><i class="icon ion-md-person"></i> My Account</a>
                 </li>
 
-              </ul>
+            </ul>
         </div>
     </div>
 </div>

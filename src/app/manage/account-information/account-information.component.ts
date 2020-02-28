@@ -5,9 +5,7 @@ import { Mt5Model, WithdrawAmountModel } from 'src/app/core/model/withdraw-reque
 import { UserService } from './../../core/services/user.service';
 import { UserModel, CorporateResponse, CorporateModel } from 'src/app/core/model/user.model';
 import { FormGroup, FormControl } from '@angular/forms';
-import { requiredInput } from 'src/app/core/helper/custom-validate.helper';
 import { IS_COMPANY } from 'src/app/core/constant/authen-constant';
-
 declare var $: any;
 
 @Component({
@@ -21,7 +19,15 @@ export class AccountInformationComponent implements OnInit {
   constructor(
     private translateee: TranslateService,
     private withdrawRequestService: WithdrawRequestService,
-    private userService: UserService) { }
+    private userService: UserService) {
+      if (localStorage.getItem('locale')) {
+        const browserLang = localStorage.getItem('locale');
+        translateee.use(browserLang.match(/en|fr/) ? browserLang : 'en');
+      } else {
+        localStorage.setItem('locale', 'en');
+        translateee.setDefaultLang('en');
+      }
+     }
   accountInfor: Mt5Model;
   withdrawAmount: WithdrawAmountModel;
   editAddress: boolean;
@@ -299,4 +305,5 @@ export class AccountInformationComponent implements OnInit {
   settingSave() {
 
   }
+
 }

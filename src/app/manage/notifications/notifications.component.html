@@ -9,48 +9,33 @@
         <div class="content-inner">
             <div class="row">
                 <div class="col-md-3 col-lg-2">
-                    <div class="nav flex-md-column nav-pills mb-3 filter-nav" id="v-pills-tab" role="tablist"
-                        aria-orientation="vertical">
-                        <a class="nav-link active" id="v-pills-all-tab" data-toggle="pill" href="#v-pills-all"
-                            (click)="getListNotifications(pageSize, 1, unreadAll, -1)" role="tab" aria-controls="v-pills-all"
-                            aria-selected="true">All<span class="badge">{{totalAll}}</span></a>
-                        <a class="nav-link" id="v-pills-important-tab" data-toggle="pill" href="#v-pills-important" #importantTab
-                            (click)="getListNotifications(pageSize, 1, unreadImportant, 0)" role="tab" aria-controls="v-pills-important"
-                            aria-selected="false">Important<span class="badge">{{totalImportant}}</span></a>
-                        <a class="nav-link" id="v-pills-notifications-tab" data-toggle="pill"
-                            (click)="getListNotifications(pageSize, 1, unreadImportant, 1)"
-                            href="#v-pills-notifications" role="tab" aria-controls="v-pills-notifications"
-                            aria-selected="false">Notifications<span class="badge">{{totalNotification}}</span></a>
-                        <a class="nav-link" id="v-pills-campaign-tab" data-toggle="pill" href="#v-pills-campaign"
-                            (click)="getListNotifications(pageSize, 1, unreadImportant, 2)"
-                            role="tab" aria-controls="v-pills-campaign" aria-selected="false">Campaign<span class="badge">{{totalCampagn}}</span></a>
+                    <div class="nav flex-md-column nav-pills mb-3 filter-nav" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                        <a class="nav-link active" id="v-pills-all-tab" data-toggle="pill" href="#v-pills-all" (click)="getListNotifications(pageSize, 1, unreadAll, -1)" role="tab" aria-controls="v-pills-all" aria-selected="true">{{'All' | translate}}<span class="badge">{{totalAll}}</span></a>
+                        <a class="nav-link" id="v-pills-important-tab" data-toggle="pill" href="#v-pills-important" #importantTab (click)="getListNotifications(pageSize, 1, unreadImportant, 0)" role="tab" aria-controls="v-pills-important" aria-selected="false">{{'Important' | translate}}<span class="badge">{{totalImportant}}</span></a>
+                        <a class="nav-link" id="v-pills-notifications-tab" data-toggle="pill" (click)="getListNotifications(pageSize, 1, unreadImportant, 1)" href="#v-pills-notifications" role="tab" aria-controls="v-pills-notifications" aria-selected="false">{{'Notifications' | translate}}<span class="badge">{{totalNotification}}</span></a>
+                        <a class="nav-link" id="v-pills-campaign-tab" data-toggle="pill" href="#v-pills-campaign" (click)="getListNotifications(pageSize, 1, unreadImportant, 2)" role="tab" aria-controls="v-pills-campaign" aria-selected="false">{{'Campaign' | translate}}<span class="badge">{{totalCampagn}}</span></a>
                     </div>
                 </div>
                 <div class="col-md-9 col-lg-10">
                     <div class="tab-content" id="v-pills-tabContent">
-                        <div class="tab-pane fade show active" id="v-pills-all" role="tabpanel"
-                            aria-labelledby="v-pills-all-tab">
-                            <h4><strong>All</strong> Notifications</h4>
+                        <div class="tab-pane fade show active" id="v-pills-all" role="tabpanel" aria-labelledby="v-pills-all-tab">
+                            <h4><strong>{{'All' | translate}}</strong> {{'Notifications' | translate}}</h4>
                             <div class="mb-2">
                                 <label class="container-switch small">
                                     <div class="switch">
                                       <input type="checkbox" name="unread_all" [checked]="unreadAll" (change)="filterUnreadNoti()">
                                       <span class="slider round"></span>
                                     </div>
-                                    Only show unread Notification
+                                    {{'Only show unread Notification' | translate}}
                                 </label>
                             </div>
                             <div class="list-notifications">
                                 <ng-container *ngFor="let item of listNotification; let i = index">
-                                    <div (click)="showDetail(i, item)" id="noti_{{i}}"
-                                        [ngClass]="{'unread': item.read_flg == 'true'}" class="notification-item">
+                                    <div (click)="showDetail(i, item)" id="noti_{{i}}" [ngClass]="{'unread': item.read_flg == 'true'}" class="notification-item">
                                         <div class="badge-wrap">
-                                            <span *ngIf="item?.news_type == 0 || item?.noti_type == 3"
-                                                class="badge badge-danger d-lg-block mb-lg-1">Important</span>
-                                            <span *ngIf="item?.news_type == 1 || item?.noti_type == 3"
-                                                class="badge badge-warning d-lg-block mb-lg-1">System</span>
-                                            <span *ngIf="item?.news_type == 2"
-                                                class="badge badge-success d-lg-block mb-lg-1">Campaign</span>
+                                            <span *ngIf="item?.news_type == 0 || item?.noti_type == 3" class="badge badge-danger d-lg-block mb-lg-1">  {{'Important' | translate}}</span>
+                                            <span *ngIf="item?.news_type == 1 || item?.noti_type == 3" class="badge badge-danger d-lg-block mb-lg-1"> {{'System' | translate}}</span>
+                                            <span *ngIf="item?.news_type == 2" class="badge badge-success d-lg-block mb-lg-1"> {{'Campaign' | translate}}</span>
                                         </div>
                                         <div class="item-header">
                                             <h5 class="item-title"><a href="javascript:;">{{item?.news_title}}</a></h5>
@@ -62,33 +47,27 @@
                                 </ng-container>
                             </div>
                             <nav class="border-top pt-3">
-                                <pagination [(ngModel)]="currentPage" id="pagination"  [boundaryLinks]="true"
-                                    class="pagination pagination-sm justify-content-end"
-                                    (pageChanged)="pageChanged($event)" [totalItems]="totalItem / pageSize"
-                                    previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;"
-                                    [maxSize]="5">
+                                <pagination [(ngModel)]="currentPage" id="pagination" [boundaryLinks]="true" class="pagination pagination-sm justify-content-end" (pageChanged)="pageChanged($event)" [totalItems]="totalItem / pageSize" previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;"
+                                    lastText="&raquo;" [maxSize]="5">
                                 </pagination>
                             </nav>
                         </div>
-                        <div class="tab-pane fade" id="v-pills-important" role="tabpanel"
-                            aria-labelledby="v-pills-important-tab">
-                            <h4><strong>Important</strong> Notifications</h4>
+                        <div class="tab-pane fade" id="v-pills-important" role="tabpanel" aria-labelledby="v-pills-important-tab">
+                            <h4><strong>{{'Important' | translate}}</strong> {{'Notifications' | translate}}</h4>
                             <div class="mb-2">
-                                    <label class="container-switch small">
+                                <label class="container-switch small">
                                         <div class="switch">
                                           <input type="checkbox" name="unread_all" [checked]="unreadImportant" (change)="filterUnreadNoti()">
                                           <span class="slider round"></span>
                                         </div>
-                                        Only show unread Notification
+                                        {{'Only show unread Notification' | translate}}
                                     </label>
-                                </div>
+                            </div>
                             <div class="list-notifications">
                                 <ng-container *ngFor="let item of listNotification; let i = index">
-                                    <div *ngIf="item.agreement_flg == 0" (click)="showDetail(i, item)"
-                                        id="important_{{i}}" [ngClass]="{'unread': item.read_flg == 'true'}"
-                                        class="notification-item">
+                                    <div *ngIf="item.agreement_flg == 0" (click)="showDetail(i, item)" id="important_{{i}}" [ngClass]="{'unread': item.read_flg == 'true'}" class="notification-item">
                                         <div class="badge-wrap">
-                                            <span class="badge badge-danger d-lg-block mb-lg-1">Important</span>
+                                            <span class="badge badge-danger d-lg-block mb-lg-1">{{'Important' | translate}}</span>
                                         </div>
                                         <div class="item-header">
                                             <h5 class="item-title"><a href="javascript:;">{{item?.news_title}}</a></h5>
@@ -97,9 +76,7 @@
                                         <div class="item-content" [innerHTML]="item?.news_content">
                                         </div>
                                     </div>
-                                    <div *ngIf="item.agreement_flg == 1" (click)="showDetail(i, item)"
-                                        [ngClass]="{'unread': item.is_read == 'true'}" id="important_{{i}}"
-                                        class="notification-item item-agreement">
+                                    <div *ngIf="item.agreement_flg == 1" (click)="showDetail(i, item)" [ngClass]="{'unread': item.is_read == 'true'}" id="important_{{i}}" class="notification-item item-agreement">
                                         <div class="badge-wrap">
                                             <span class="badge badge-danger d-lg-block mb-lg-1">Important</span>
                                         </div>
@@ -111,34 +88,27 @@
                                 </ng-container>
                             </div>
                             <nav class="border-top pt-3">
-                                <pagination [(ngModel)]="currentPage" id="pagination" [boundaryLinks]="true"
-                                    class="pagination pagination-sm justify-content-end"
-                                    (pageChanged)="pageChanged($event)" [totalItems]="totalItem / pageSize"
-                                    previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;"
-                                    [maxSize]="5">
+                                <pagination [(ngModel)]="currentPage" id="pagination" [boundaryLinks]="true" class="pagination pagination-sm justify-content-end" (pageChanged)="pageChanged($event)" [totalItems]="totalItem / pageSize" previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;"
+                                    lastText="&raquo;" [maxSize]="5">
                                 </pagination>
                             </nav>
                         </div>
-                        <div class="tab-pane fade" id="v-pills-notifications" role="tabpanel"
-                            aria-labelledby="v-pills-notifications-tab">
-                            <h4><strong>System</strong> Notifications</h4>
+                        <div class="tab-pane fade" id="v-pills-notifications" role="tabpanel" aria-labelledby="v-pills-notifications-tab">
+                            <h4><strong>{{'System' | translate}}</strong>{{'Notifications' | translate}}</h4>
                             <div class="mb-2">
                                 <label class="container-switch small">
                                     <div class="switch">
                                       <input type="checkbox" name="unread_all" [checked]="unreadAll" (change)="filterUnreadNoti()">
                                       <span class="slider round"></span>
                                     </div>
-                                    Only show unread Notification
+                                    {{'Only show unread Notification' | translate}}
                                 </label>
                             </div>
                             <div class="list-notifications">
                                 <ng-container *ngFor="let item of listNotification; let i = index">
-                                    <div (click)="showDetail(i, item)"
-                                        id="system_{{i}}" [ngClass]="{'unread': item.read_flg == 'true'}"
-                                        class="notification-item">
+                                    <div (click)="showDetail(i, item)" id="system_{{i}}" [ngClass]="{'unread': item.read_flg == 'true'}" class="notification-item">
                                         <div class="badge-wrap">
-                                            <span *ngIf="item?.news_type == 1 || item?.noti_type == 3"
-                                                class="badge badge-warning d-lg-block mb-lg-1">System</span>
+                                            <span *ngIf="item?.news_type == 1 || item?.noti_type == 3" class="badge badge-warning d-lg-block mb-lg-1">{{'System' | translate}}</span>
                                         </div>
                                         <div class="item-header">
                                             <h5 class="item-title"><a href="javascript:;">{{item?.news_title}}</a></h5>
@@ -150,34 +120,27 @@
                                 </ng-container>
                             </div>
                             <nav class="border-top pt-3">
-                                <pagination [(ngModel)]="currentPage" id="pagination"  [boundaryLinks]="true"
-                                    class="pagination pagination-sm justify-content-end"
-                                    (pageChanged)="pageChanged($event)" [totalItems]="totalItem / pageSize"
-                                    previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;"
-                                    [maxSize]="5">
+                                <pagination [(ngModel)]="currentPage" id="pagination" [boundaryLinks]="true" class="pagination pagination-sm justify-content-end" (pageChanged)="pageChanged($event)" [totalItems]="totalItem / pageSize" previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;"
+                                    lastText="&raquo;" [maxSize]="5">
                                 </pagination>
                             </nav>
                         </div>
-                        <div class="tab-pane fade" id="v-pills-campaign" role="tabpanel"
-                            aria-labelledby="v-pills-campaign-tab">
-                            <h4><strong>Campaign</strong> Notifications</h4>
+                        <div class="tab-pane fade" id="v-pills-campaign" role="tabpanel" aria-labelledby="v-pills-campaign-tab">
+                            <h4><strong> {{'Campaign' | translate}}</strong> {{'Notifications' | translate}} </h4>
                             <div class="mb-2">
                                 <label class="container-switch small">
                                     <div class="switch">
                                       <input type="checkbox" name="unread_all" [checked]="unreadCampagn" (change)="filterUnreadNoti()">
                                       <span class="slider round"></span>
                                     </div>
-                                    Only show unread Notification
+                                    {{'Only show unread Notification' | translate}}
                                 </label>
                             </div>
                             <div class="list-notifications">
                                 <ng-container *ngFor="let item of listNotification; let i = index">
-                                    <div (click)="showDetail(i, item)"
-                                        id="campain_{{i}}" [ngClass]="{'unread': item.read_flg == 'true'}"
-                                        class="notification-item">
+                                    <div (click)="showDetail(i, item)" id="campain_{{i}}" [ngClass]="{'unread': item.read_flg == 'true'}" class="notification-item">
                                         <div class="badge-wrap">
-                                            <span *ngIf="item?.news_type == 2"
-                                                class="badge badge-success d-lg-block mb-lg-1">Campaign</span>
+                                            <span *ngIf="item?.news_type == 2" class="badge badge-success d-lg-block mb-lg-1">{{'Campaign' | translate}}</span>
                                         </div>
                                         <div class="item-header">
                                             <h5 class="item-title"><a href="javascript:;">{{item?.news_title}}</a></h5>
@@ -189,11 +152,8 @@
                                 </ng-container>
                             </div>
                             <nav class="border-top pt-3">
-                                <pagination [(ngModel)]="currentPage" id="pagination"  [boundaryLinks]="true"
-                                    class="pagination pagination-sm justify-content-end"
-                                    (pageChanged)="pageChanged($event)" [totalItems]="totalItem / pageSize"
-                                    previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;"
-                                    [maxSize]="5">
+                                <pagination [(ngModel)]="currentPage" id="pagination" [boundaryLinks]="true" class="pagination pagination-sm justify-content-end" (pageChanged)="pageChanged($event)" [totalItems]="totalItem / pageSize" previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;"
+                                    lastText="&raquo;" [maxSize]="5">
                                 </pagination>
                             </nav>
                         </div>
@@ -203,13 +163,11 @@
         </div>
     </div>
 </div>
-<div class="modal" id="agreementmd" tabindex="-1" role="dialog" aria-labelledby="agreementTitle" aria-hidden="true"
-    data-backdrop="static">
+<div class="modal" id="agreementmd" tabindex="-1" role="dialog" aria-labelledby="agreementTitle" aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header pt-2 pb-2">
-                <h5 class="modal-title text-uppercase text-primary" id="agreementTitle"><i
-                        class="icon ion-md-list-box"></i> <strong>Agreement</strong></h5>
+                <h5 class="modal-title text-uppercase text-primary" id="agreementTitle"><i class="icon ion-md-list-box"></i> <strong>Agreement</strong></h5>
                 <button (click)="hideAgreementModal()" type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -219,7 +177,7 @@
 
                 </div>
             </div>
-            <div  [formGroup]="formAgreement" class="modal-footer pt-1 pb-1 d-flex justify-content-between align-items-center">
+            <div [formGroup]="formAgreement" class="modal-footer pt-1 pb-1 d-flex justify-content-between align-items-center">
                 <div>
                     <label class="container-checkbox mb-0">
                         <div class="text-primary">I agree with the above terms </div>
@@ -230,9 +188,7 @@
 
                 </div>
                 <div>
-                    <button (click)="confirmAgreement()" type="button"
-                    [className]="formAgreement?.controls?.checkAgreement?.value == false ? 'btn btn-secondary btn-confirm' : 'btn btn-secondary btn-success'"
-                        >Confirm</button>
+                    <button (click)="confirmAgreement()" type="button" [className]="formAgreement?.controls?.checkAgreement?.value == false ? 'btn btn-secondary btn-confirm' : 'btn btn-secondary btn-success'">Confirm</button>
                 </div>
 
             </div>
@@ -240,8 +196,7 @@
     </div>
 </div>
 
-<div class="modal fade" id="notice_important" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true"
-    data-backdrop="static">
+<div class="modal fade" id="notice_important" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
         <div class="modal-content">
             <div class="modal-body text-center">
