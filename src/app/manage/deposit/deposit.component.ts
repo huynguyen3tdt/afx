@@ -63,9 +63,11 @@ export class DepositComponent implements OnInit {
   showInforBank(index) {
     setTimeout(() => {
       const listTab = [];
+      // tslint:disable-next-line: no-shadowed-variable
       this.listBankTranfer.forEach(element => {
-        listTab.push(`bank_${element.id}`)
+        listTab.push(`bank_${element.id}`);
       });
+      // tslint:disable-next-line: no-shadowed-variable
       listTab.forEach(element => {
         if (index === element) {
           $(`a#${element}`).addClass('selected');
