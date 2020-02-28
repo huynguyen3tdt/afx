@@ -113,7 +113,7 @@
                                 <div class="col-lg-7">
                                     <div class="list-banks-wrapper">
                                         <ul class="idTabs list-banks">
-                                            <li (click)="showInforBank('ufj_bank')" class="bank-item">
+                                            <li (click)="showInforBank('ufj_bank')" *ngIf="listBankTranfer[0]" class="bank-item">
                                                 <a id="ufj_bank">
                                                     <div class="text-center">
                                                         <div><img src="assets/images/bank_logo/ufj.png"
@@ -122,7 +122,7 @@
                                                     </div>
                                                 </a>
                                             </li>
-                                            <li (click)="showInforBank('mizuho_bank')" class="bank-item">
+                                            <li (click)="showInforBank('mizuho_bank')" *ngIf="listBankTranfer[1]" class="bank-item">
                                                 <a id="mizuho_bank">
                                                     <div class="text-center">
                                                         <div><img src="assets/images/bank_logo/mizuho.png"
@@ -131,7 +131,7 @@
                                                     </div>
                                                 </a>
                                             </li>
-                                            <li (click)="showInforBank('sm_bank')" class="bank-item">
+                                            <li (click)="showInforBank('sm_bank')" *ngIf="listBankTranfer[2]" class="bank-item">
                                                 <a id="sm_bank">
                                                     <div class="text-center">
                                                         <div><img src="assets/images/bank_logo/smbc.png"
@@ -140,7 +140,7 @@
                                                     </div>
                                                 </a>
                                             </li>
-                                            <li (click)="showInforBank('jpb_bank')" class="bank-item">
+                                            <li (click)="showInforBank('jpb_bank')" *ngIf="listBankTranfer[3]" class="bank-item">
                                                 <a id="jpb_bank">
                                                     <div class="text-center">
                                                         <div><img src="assets/images/bank_logo/jpb.png"
@@ -149,7 +149,7 @@
                                                     </div>
                                                 </a>
                                             </li>
-                                            <li (click)="showInforBank('jn_bank')" class="bank-item">
+                                            <li (click)="showInforBank('jn_bank')" *ngIf="listBankTranfer[4]" class="bank-item">
                                                 <a id="jn_bank">
                                                     <div class="text-center">
                                                         <div><img src="assets/images/bank_logo/jnb.png"
@@ -158,7 +158,7 @@
                                                     </div>
                                                 </a>
                                             </li>
-                                            <li (click)="showInforBank('rakuten_bank')" class="bank-item">
+                                            <li (click)="showInforBank('rakuten_bank')" *ngIf="listBankTranfer[5]" class="bank-item">
                                                 <a id="rakuten_bank">
                                                     <div class="text-center">
                                                         <div><img src="assets/images/bank_logo/rakuten.png"
@@ -172,34 +172,34 @@
                                     <p class="mb-1"><strong>Please find details for a wire transfer below:</strong></p>
                                     <div id="ufj_bank" class="mb-2">
                                         <table class="table border table-sm" cellpadding="0" cellspacing="0">
-                                            <tbody>
+                                            <tbody *ngFor="let item of listBankTranfer">
                                                 <tr>
                                                     <td width="120">銀行名</td>
-                                                    <td><strong>三菱ＵＦＪ銀行</strong></td>
+                                                    <td><strong>{{item?.name}}</strong></td>
                                                 </tr>
                                                 <tr>
                                                     <td>支店名</td>
-                                                    <td><strong>赤坂支店</strong></td>
+                                                    <td><strong>{{item?.branch_name}}</strong></td>
                                                 </tr>
                                                 <tr>
                                                     <td>支店番号</td>
-                                                    <td><strong>609</strong></td>
+                                                    <td><strong>{{item?.branch_code}}</strong></td>
                                                 </tr>
                                                 <tr>
                                                     <td>口座種類</td>
-                                                    <td><strong>普通口座</strong></td>
+                                                    <td><strong>{{item?.fx_acc_type}}</strong></td>
                                                 </tr>
                                                 <tr>
                                                     <td>口座番号</td>
-                                                    <td><strong>4861600</strong></td>
+                                                    <td><strong>{{item?.acc_number}}</strong></td>
                                                 </tr>
                                                 <tr>
                                                     <td>口座名義</td>
-                                                    <td><strong>フィリップショウケン （カ</strong></td>
+                                                    <td><strong>{{item?.acc_holder_name}}</strong></td>
                                                 </tr>
                                                 <tr>
                                                     <td>通貨</td>
-                                                    <td><strong>円</strong></td>
+                                                    <td><strong>{{item?.currency}}</strong></td>
                                                 </tr>
                                             </tbody>
                                         </table>
