@@ -6,6 +6,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
+import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
 
 describe('ForgotPasswordComponent', () => {
   let component: ForgotPasswordComponent;
@@ -18,7 +19,8 @@ describe('ForgotPasswordComponent', () => {
         ReactiveFormsModule,
         HttpClientModule,
         BsDatepickerModule.forRoot(),
-        RouterTestingModule
+        RouterTestingModule,
+        Ng4LoadingSpinnerModule
       ],
       providers: []
     })
