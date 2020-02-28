@@ -3,7 +3,7 @@ import { WithdrawRequestService } from 'src/app/core/services/withdraw-request.s
 import { FormGroup, FormControl } from '@angular/forms';
 import { TransactionModel, BankInforModel } from 'src/app/core/model/withdraw-request-response.model';
 import * as moment from 'moment';
-import { ACCOUNT_TYPE } from 'src/app/core/constant/authen-constant';
+import { ACCOUNT_ID } from 'src/app/core/constant/authen-constant';
 import { JAPAN_FORMATDATE, JAPAN_FORMATDATE_HH_MM } from 'src/app/core/constant/format-date-constant';
 import {
   PaymentMethod,
@@ -53,7 +53,7 @@ export class WithdrawHistoryComponent implements OnInit {
   ngOnInit() {
     this.currentPage = 1;
     this.pageSize = 10;
-    this.listTradingAccount.push(Number(localStorage.getItem(ACCOUNT_TYPE)));
+    this.listTradingAccount.push(Number(localStorage.getItem(ACCOUNT_ID)));
     this.initSearchForm();
     this.getTranHistory(this.searchForm.controls.tradingAccount.value, this.currentPage, this.pageSize, this.TABS.ALL.value,
       this.formatDate(this.searchForm.controls.fromDate.value), this.formatDate(this.searchForm.controls.toDate.value));
