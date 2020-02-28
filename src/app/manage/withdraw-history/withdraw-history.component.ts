@@ -5,6 +5,14 @@ import { TransactionModel, BankInforModel } from 'src/app/core/model/withdraw-re
 import * as moment from 'moment';
 import { ACCOUNT_TYPE } from 'src/app/core/constant/authen-constant';
 import { JAPAN_FORMATDATE, JAPAN_FORMATDATE_HH_MM } from 'src/app/core/constant/format-date-constant';
+import {
+  PaymentMethod,
+  PaymentMethodValue,
+  TYPEOFTRANHISTORY,
+  TYPEOFTRANHISTORYVALUE,
+  STATUSTRANHISTORY,
+  STATUSTRANHISTORYVALUE } from 'src/app/core/constant/method-enum';
+declare var $: any;
 
 @Component({
   selector: 'app-withdraw-history',
@@ -27,11 +35,12 @@ export class WithdrawHistoryComponent implements OnInit {
   pageSize: number;
   totalItem: number;
   tab: string;
+  tranHistoryDetail: TransactionModel;
   listTotalItem: Array<number> = [10, 20, 30];
   TABS = {
     ALL: { name: 'ALL', value: 0 },
     DEPOSIT: { name: 'DEPOSIT', value: 1 },
-    WITHDRAWAL: { name: 'WITHDRAWAL', value: 1 },
+    WITHDRAWAL: { name: 'WITHDRAWAL', value: 2 },
   };
   DURATION = {
     DAY: 'day',
@@ -48,7 +57,6 @@ export class WithdrawHistoryComponent implements OnInit {
     this.initSearchForm();
     this.getTranHistory(this.searchForm.controls.tradingAccount.value, this.currentPage, this.pageSize, this.TABS.ALL.value,
       this.formatDate(this.searchForm.controls.fromDate.value), this.formatDate(this.searchForm.controls.toDate.value));
-    this.getDepositAndWitdraw();
   }
 
   initSearchForm() {
@@ -60,12 +68,6 @@ export class WithdrawHistoryComponent implements OnInit {
     this.setDate(this.DURATION.YEAR);
   }
 
-  getDepositAndWitdraw() {
-    this.withdrawRequestService.getDwAmount().subscribe(response => {
-      console.log('responseee ', response);
-    });
-  }
-
   getTranHistory(accountNumber: number, pageSize: number, pageNumber: number, type?: number, dateFrom?: string, dateTo?: string) {
     this.checkTab(type);
     this.withdrawRequestService.getDwHistory(accountNumber, pageNumber, pageSize, type, dateFrom, dateTo).subscribe(response => {
@@ -74,6 +76,8 @@ export class WithdrawHistoryComponent implements OnInit {
         this.totalItem = response.data.count;
         this.listReport.forEach(item => {
           item.create_date = moment(item.create_date).format(JAPAN_FORMATDATE_HH_MM);
+          item.funding_type = this.checkType(item.funding_type);
+          item.method = this.checkPaymentMedthod(item.method);
         });
         this.recordFrom = this.pageSize * (this.currentPage - 1) + 1;
         this.recordTo = this.recordFrom + (this.listReport.length - 1);
@@ -136,7 +140,7 @@ export class WithdrawHistoryComponent implements OnInit {
     this.searchTranHistory();
   }
 
-  checkTab(type: number) {
+  checkTab(type: number, callSearh?: string) {
     switch (type) {
       case this.TABS.ALL.value:
         this.tab = this.TABS.ALL.name;
@@ -147,6 +151,9 @@ export class WithdrawHistoryComponent implements OnInit {
       case this.TABS.WITHDRAWAL.value:
         this.tab = this.TABS.WITHDRAWAL.name;
         break;
+    }
+    if (callSearh) {
+      this.searchTranHistory();
     }
   }
 
@@ -166,9 +173,55 @@ export class WithdrawHistoryComponent implements OnInit {
     }
   }
 
+  openDetail(tranId: number) {
+    console.log('11111 ', tranId);
+    this.withdrawRequestService.getDetailTranHistory(tranId).subscribe(response => {
+      console.log('responseee ', response);
+      if (response.meta.code === 200) {
+        this.tranHistoryDetail = response.data;
+        this.tranHistoryDetail.create_date = moment(this.tranHistoryDetail.create_date).format(JAPAN_FORMATDATE_HH_MM);
+        this.tranHistoryDetail.method = this.checkPaymentMedthod(this.tranHistoryDetail.method);
+        this.tranHistoryDetail.funding_type = this.checkType(this.tranHistoryDetail.funding_type);
+        $('#tran_detail').modal('show');
+      }
+    });
+  }
+
   formatDate(date: string) {
     if (date) {
       return date.split('/')[2] + '-' + date.split('/')[1] + '-' + date.split('/')[0];
+    }
+    return null;
+  }
+
+  checkPaymentMedthod(type: string) {
+    if (type === PaymentMethod.QUICKDEPOSIT) {
+      return PaymentMethodValue.QUICKDEPOSIT;
+    }
+    if (type === PaymentMethod.BANKTRANSFER) {
+      return PaymentMethodValue.BANKTRANSFER;
+    }
+    return '';
+  }
+  checkType(type: string) {
+    if (type === TYPEOFTRANHISTORY.DEPOSIT) {
+      return TYPEOFTRANHISTORYVALUE.DEPOSIT;
+    }
+    if (type === TYPEOFTRANHISTORY.WITHDRAWAL) {
+      return TYPEOFTRANHISTORYVALUE.WITHDRAWAL;
+    }
+    return '';
+  }
+
+  checkStatus(status: number) {
+    if (status === STATUSTRANHISTORY.COMPLETE) {
+      return STATUSTRANHISTORYVALUE.COMPLETE;
+    }
+    if (status === STATUSTRANHISTORY.CANCEL) {
+      return STATUSTRANHISTORYVALUE.CANCEL;
+    }
+    if (status === STATUSTRANHISTORY.PENDING) {
+      return STATUSTRANHISTORYVALUE.PENDING;
     }
     return null;
   }

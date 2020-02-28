@@ -10,7 +10,8 @@ import {
   WithdrawHistoryModel,
   TransactionResponse,
   WithdrawHistory,
-  WithdrawAmountResponse
+  WithdrawAmountResponse,
+  TransactionModel
 } from '../model/withdraw-request-response.model';
 
 
@@ -86,6 +87,18 @@ export class WithdrawRequestService {
     }
     return this.httpClient
       .get(`${this.envConfigService.getConfig()}/${AppSettings.API_WD_HISTORY}` + URL)
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          return new Observable((observer: InnerSubscriber<any, any>) => {
+            observer.next(error);
+          });
+        })
+      );
+  }
+
+  getDetailTranHistory(tranId: number): Observable<TransactionResponse> {
+    return this.httpClient
+      .get(`${this.envConfigService.getConfig()}/${AppSettings.API_WD_HISTORY}${tranId}/`)
       .pipe(
         catchError((error: HttpErrorResponse) => {
           return new Observable((observer: InnerSubscriber<any, any>) => {

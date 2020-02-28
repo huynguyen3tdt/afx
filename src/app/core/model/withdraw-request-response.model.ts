@@ -64,6 +64,7 @@ export interface TransactionModel {
     amount: number;
     funding_type: string;
     status: number;
+    name: string;
 }
 
 export interface WithdrawAmountModel {

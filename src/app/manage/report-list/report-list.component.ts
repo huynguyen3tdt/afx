@@ -28,7 +28,7 @@ export class ReportListComponent implements OnInit {
   TABS = {
     ALL: { name: 'ALL', value: 0 },
     DAILY: { name: 'DAILY', value: 1 },
-    YEARLY: { name: 'YEARLY', value: 1 },
+    YEARLY: { name: 'YEARLY', value: 2 },
   };
 
   DURATION = {
@@ -111,7 +111,7 @@ export class ReportListComponent implements OnInit {
     this.searchReport();
   }
 
-  checkTab(type: number) {
+  checkTab(type: number, callSearh?: string) {
     switch (type) {
       case this.TABS.ALL.value:
         this.tab = this.TABS.ALL.name;
@@ -122,6 +122,9 @@ export class ReportListComponent implements OnInit {
       case this.TABS.YEARLY.value:
         this.tab = this.TABS.YEARLY.name;
         break;
+    }
+    if (callSearh) {
+      this.searchReport();
     }
   }
 
