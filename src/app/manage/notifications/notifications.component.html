@@ -13,17 +13,17 @@
                         aria-orientation="vertical">
                         <a class="nav-link active" id="v-pills-all-tab" data-toggle="pill" href="#v-pills-all"
                             (click)="getListNotifications(pageSize, 1, unreadAll, -1)" role="tab" aria-controls="v-pills-all"
-                            aria-selected="true">All<span class="badge">{{totalAll}}</span></a>
+                            aria-selected="true">All<span *ngIf="totalAll > 0" class="badge">{{totalAll}}</span></a>
                         <a class="nav-link" id="v-pills-important-tab" data-toggle="pill" href="#v-pills-important" #importantTab
                             (click)="getListNotifications(pageSize, 1, unreadImportant, 0)" role="tab" aria-controls="v-pills-important"
-                            aria-selected="false">Important<span class="badge">{{totalImportant}}</span></a>
+                            aria-selected="false">Important<span *ngIf="totalImportant > 0" class="badge">{{totalImportant}}</span></a>
                         <a class="nav-link" id="v-pills-notifications-tab" data-toggle="pill"
                             (click)="getListNotifications(pageSize, 1, unreadImportant, 1)"
                             href="#v-pills-notifications" role="tab" aria-controls="v-pills-notifications"
-                            aria-selected="false">Notifications<span class="badge">{{totalNotification}}</span></a>
+                            aria-selected="false">Notifications<span *ngIf="totalNotification > 0" class="badge">{{totalNotification}}</span></a>
                         <a class="nav-link" id="v-pills-campaign-tab" data-toggle="pill" href="#v-pills-campaign"
                             (click)="getListNotifications(pageSize, 1, unreadImportant, 2)"
-                            role="tab" aria-controls="v-pills-campaign" aria-selected="false">Campaign<span class="badge">{{totalCampagn}}</span></a>
+                            role="tab" aria-controls="v-pills-campaign" aria-selected="false">Campaign<span *ngIf="totalCampagn > 0" class="badge">{{totalCampagn}}</span></a>
                     </div>
                 </div>
                 <div class="col-md-9 col-lg-10">
