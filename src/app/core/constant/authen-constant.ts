@@ -6,3 +6,5 @@ export const PASSWORD_LOGIN = 'passWordLoginAFX';
 export const ACCOUNT_TYPE = 'accountTypeAFX';
 export const FIRST_LOGIN    = 'firstLoginAFX';
 export const IS_COMPANY    = 'isCompanyAFX';
+export const MIN_DEPOST    = 'minDepositAFX';
+export const MIN_WITHDRAW    = 'minWithdrawAFX';

@@ -4,6 +4,7 @@ import { requiredInput } from 'src/app/core/helper/custom-validate.helper';
 import { DepositModel } from 'src/app/core/model/deposit-response.model';
 import { DepositService } from 'src/app/core/services/deposit.service';
 import { element } from 'protractor';
+import { MIN_DEPOST } from 'src/app/core/constant/authen-constant';
 declare var $: any;
 
 @Component({
@@ -15,6 +16,7 @@ export class DepositComponent implements OnInit {
   depositAmountForm: FormGroup;
   depositTransactionForm: FormGroup;
   listBankTranfer: Array<DepositModel>;
+  minDeposit: string;
   constructor(private depositService: DepositService) { }
 
   ngOnInit() {
@@ -40,6 +42,7 @@ export class DepositComponent implements OnInit {
     this.depositService.getDepositBank().subscribe(response => {
       if (response.meta.code === 200) {
         this.listBankTranfer = response.data;
+        this.minDeposit = localStorage.getItem(MIN_DEPOST);
         this.listBankTranfer.forEach(item => {
           item.id = item.id;
           item.name = item.name;
