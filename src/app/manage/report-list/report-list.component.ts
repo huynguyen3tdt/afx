@@ -124,6 +124,7 @@ export class ReportListComponent implements OnInit {
         break;
     }
     if (callSearh) {
+      this.currentPage = 1;
       this.searchReport();
     }
   }

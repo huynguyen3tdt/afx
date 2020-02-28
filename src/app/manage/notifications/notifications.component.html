@@ -43,7 +43,7 @@
                             <div class="list-notifications">
                                 <ng-container *ngFor="let item of listNotification; let i = index">
                                     <div (click)="showDetail(i, item)" id="noti_{{i}}"
-                                        [ngClass]="{'unread': item.read_flg == 'true'}" class="notification-item">
+                                        [ngClass]="{'unread': item.read_flg == false}" class="notification-item">
                                         <div class="badge-wrap">
                                             <span *ngIf="item?.news_type == 0 || item?.noti_type == 3"
                                                 class="badge badge-danger d-lg-block mb-lg-1">Important</span>
@@ -56,7 +56,12 @@
                                             <h5 class="item-title"><a href="javascript:;">{{item?.news_title}}</a></h5>
                                             <div class="item-meta">{{item?.publish_date}}</div>
                                         </div>
-                                        <div class="item-content" [innerHTML]="item?.news_content">
+                                        <div *ngIf="item?.agreement_flg != 1" class="item-content" [innerHTML]="item?.news_content">
+                                        </div>
+                                        <div *ngIf="item?.agreement_flg == 1" class="item-content">
+                                            <div [innerHTML]="item?.news_content"></div>
+                                            <button (click)="confirmAgreement()"
+                                            [disabled]="item.agree_flg == true ? true : false" type="button" class="btn btn-primary f-right">Confirm</button>
                                         </div>
                                     </div>
                                 </ng-container>
@@ -84,7 +89,7 @@
                                 </div>
                             <div class="list-notifications">
                                 <ng-container *ngFor="let item of listNotification; let i = index">
-                                    <div *ngIf="item.agreement_flg == 0" (click)="showDetail(i, item)"
+                                    <!-- <div *ngIf="item.agreement_flg == 0" (click)="showDetail(i, item)"
                                         id="important_{{i}}" [ngClass]="{'unread': item.read_flg == 'true'}"
                                         class="notification-item">
                                         <div class="badge-wrap">
@@ -96,9 +101,10 @@
                                         </div>
                                         <div class="item-content" [innerHTML]="item?.news_content">
                                         </div>
-                                    </div>
-                                    <div *ngIf="item.agreement_flg == 1" (click)="showDetail(i, item)"
-                                        [ngClass]="{'unread': item.is_read == 'true'}" id="important_{{i}}"
+                                    </div> -->
+                                    <div (click)="showDetail(i, item)"
+                                        id="important_{{i}}" 
+                                        [ngClass]="{'unread': item.read_flg == false}"
                                         class="notification-item item-agreement">
                                         <div class="badge-wrap">
                                             <span class="badge badge-danger d-lg-block mb-lg-1">Important</span>
@@ -107,6 +113,12 @@
                                             <h5 class="item-title"><a href="javascript:;">{{item?.news_title}}</a></h5>
                                             <div class="item-meta">{{item?.publish_date}}</div>
                                         </div>
+                                        <div class="item-content">
+                                            <div [innerHTML]="item?.news_content"></div>
+                                            <button (click)="confirmAgreement()"
+                                            [disabled]="item.agree_flg == true ? true : false" type="button" class="btn btn-primary f-right">Confirm</button>
+                                        </div>
+                                        
                                     </div>
                                 </ng-container>
                             </div>
@@ -134,7 +146,7 @@
                             <div class="list-notifications">
                                 <ng-container *ngFor="let item of listNotification; let i = index">
                                     <div (click)="showDetail(i, item)"
-                                        id="system_{{i}}" [ngClass]="{'unread': item.read_flg == 'true'}"
+                                        id="system_{{i}}" [ngClass]="{'unread': item.read_flg == false}"
                                         class="notification-item">
                                         <div class="badge-wrap">
                                             <span *ngIf="item?.news_type == 1 || item?.noti_type == 3"
@@ -173,7 +185,7 @@
                             <div class="list-notifications">
                                 <ng-container *ngFor="let item of listNotification; let i = index">
                                     <div (click)="showDetail(i, item)"
-                                        id="campain_{{i}}" [ngClass]="{'unread': item.read_flg == 'true'}"
+                                        id="campain_{{i}}" [ngClass]="{'unread': item.read_flg == false}"
                                         class="notification-item">
                                         <div class="badge-wrap">
                                             <span *ngIf="item?.news_type == 2"
@@ -203,7 +215,7 @@
         </div>
     </div>
 </div>
-<div class="modal" id="agreementmd" tabindex="-1" role="dialog" aria-labelledby="agreementTitle" aria-hidden="true"
+<!-- <div class="modal" id="agreementmd" tabindex="-1" role="dialog" aria-labelledby="agreementTitle" aria-hidden="true"
     data-backdrop="static">
     <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
@@ -216,7 +228,6 @@
             </div>
             <div class="modal-body bg-light">
                 <div [innerHTML]="contentAgeement">
-
                 </div>
             </div>
             <div  [formGroup]="formAgreement" class="modal-footer pt-1 pb-1 d-flex justify-content-between align-items-center">
@@ -238,7 +249,7 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->
 
 <div class="modal fade" id="notice_important" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true"
     data-backdrop="static">

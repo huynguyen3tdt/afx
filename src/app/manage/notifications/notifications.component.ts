@@ -103,11 +103,11 @@ export class NotificationsComponent implements OnInit {
         this.totalNotification = this.totalNoti.notification;
         this.totalAll = this.totalCampagn + this.totalImportant + this.totalNotification;
         if (this.showNoti === true && this.tab === 'ALL'
-        && (localStorage.getItem(FIRST_LOGIN) === '1')
-        && this.totalImportant > 0) {
-        $('#notice_important').modal('show');
-        this.importantTab.nativeElement.click();
-      }
+          && (localStorage.getItem(FIRST_LOGIN) === '1')
+          && this.totalImportant > 0) {
+          $('#notice_important').modal('show');
+          this.importantTab.nativeElement.click();
+        }
       }
     });
   }
@@ -142,17 +142,20 @@ export class NotificationsComponent implements OnInit {
   }
 
   confirmAgreement() {
-    if (this.formAgreement.controls.checkAgreement.value === false) {
-      return;
-    }
+    // if (this.formAgreement.controls.checkAgreement.value === false) {
+    //   return;
+    // }
     const param = {
       noti_id: this.agreementID
     };
     this.notificationsService.changeAgreementStatus(param).subscribe(response => {
       if (response.meta.code === 200) {
         this.checkAgreement = false;
-        this.getListNotifications(this.pageSize, this.currentPage, this.unreadImportant, this.TABS.IMPORTANT.value);
-        $('#agreementmd').modal('hide');
+        if (this.tab === this.TABS.ALL.name) {
+          this.getListNotifications(this.pageSize, this.currentPage, this.unreadAll, this.TABS.ALL.value);
+        } else {
+          this.getListNotifications(this.pageSize, this.currentPage, this.unreadImportant, this.TABS.IMPORTANT.value);
+        }
       }
     });
     this.checkAgreement = false;
@@ -199,6 +202,11 @@ export class NotificationsComponent implements OnInit {
   }
 
   showDetail(index: number, item: Notification) {
+    console.log('itemmm ', item);
+    if (item.agreement_flg === 1) {
+      this.contentAgeement = item.news_content;
+      this.agreementID = item.id;
+    }
     switch (this.tab) {
       case this.TABS.ALL.name:
         $(`#noti_${index}`).toggleClass('opened');
@@ -209,10 +217,8 @@ export class NotificationsComponent implements OnInit {
           $(`#important_${index}`).toggleClass('opened');
           $(`#important_${index}`).removeClass('unread');
         } else {
+          $(`#important_${index}`).toggleClass('opened');
           $(`#important_${index}`).removeClass('unread');
-          this.contentAgeement = item.news_content;
-          this.agreementID = item.id;
-          $('#agreementmd').modal('show');
         }
         break;
       case this.TABS.NOTIFICATIONS.name:
