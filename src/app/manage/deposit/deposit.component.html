@@ -12,17 +12,17 @@
                     <h6>Select payment method</h6>
                     <nav class="mb-0">
                         <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                            <a class="nav-item nav-link" id="nav-billing-tab" data-toggle="tab" href="#nav-billing"
+                            <a class="nav-item nav-link active" id="nav-billing-tab" data-toggle="tab" href="#nav-billing"
                                 role="tab" aria-controls="nav-billing" aria-selected="true"><strong>Billing
                                     System</strong></a>
-                            <a class="nav-item nav-link active" id="nav-bank-tab" data-toggle="tab" href="#nav-bank"
+                            <a class="nav-item nav-link" id="nav-bank-tab" data-toggle="tab" href="#nav-bank"
                                 role="tab" aria-controls="nav-bank" aria-selected="true"><strong>Bank
                                     Tranfer</strong></a>
                         </div>
                     </nav>
                     <div class="tab-content border-0 p-0 pt-3 mb-3" id="nav-tabContent">
                         <!-- BEGIN BBILLING SYSTEM -->
-                        <div class="tab-pane fade" id="nav-billing" role="tabpanel" aria-labelledby="nav-billing-tab">
+                        <div class="tab-pane show active" id="nav-billing" role="tabpanel" aria-labelledby="nav-billing-tab">
                             <div class="row">
                                 <div class="col-md-6 col-lg-7">
                                     <div class="p-3 border mb-3 form form-line bg-light">
@@ -96,7 +96,7 @@
                                         </div>
                                     </div>
                                     <p class="small text-secondary p-2 bg-light">Notice: Minimum single deposit amount
-                                        is ......</p>
+                                        is {{minDeposit}}</p>
                                     <button
                                         class="btn btn-warning btn-block text-uppercase btn-lg mb-3"><strong>Deposit</strong></button>
                                     <p class="text-center" style="line-height: 1.2"><a href="javascript:;"
@@ -107,14 +107,15 @@
                             </div>
                         </div><!-- END BILLING SYSTEM -->
                         <!-- BEGIN BANK ACCOUNT -->
-                        <div class="tab-pane fade show active" id="nav-bank" role="tabpanel"
+                        <div class="tab-pane fade show" id="nav-bank" role="tabpanel"
                             aria-labelledby="nav-bank-tab">
                             <div class="row">
                                 <div class="col-lg-7">
                                     <div class="list-banks-wrapper">
                                         <ul class="idTabs list-banks">
-                                            <li (click)="showInforBank('ufj_bank')" class="bank-item">
-                                                <a id="ufj_bank">
+                                          <ng-container *ngFor="let bank of listBankTranfer;let i = index">
+                                            <li (click)="showInforBank('bank_' + bank?.id)" class="bank-item">
+                                                <a id="bank_{{bank?.id}}">
                                                     <div class="text-center">
                                                         <div><img src="assets/images/bank_logo/ufj.png"
                                                                 alt="Mizuho Bank" class="bank_logo"></div>
@@ -122,259 +123,47 @@
                                                     </div>
                                                 </a>
                                             </li>
-                                            <li (click)="showInforBank('mizuho_bank')" class="bank-item">
-                                                <a id="mizuho_bank">
-                                                    <div class="text-center">
-                                                        <div><img src="assets/images/bank_logo/mizuho.png"
-                                                                alt="Mizuho Bank" class="bank_logo"></div>
-                                                        <div class="d-none">Mizuho Bank</div>
-                                                    </div>
-                                                </a>
-                                            </li>
-                                            <li (click)="showInforBank('sm_bank')" class="bank-item">
-                                                <a id="sm_bank">
-                                                    <div class="text-center">
-                                                        <div><img src="assets/images/bank_logo/smbc.png"
-                                                                alt="Mizuho Bank" class="bank_logo"></div>
-                                                        <div class="d-none">Sumitomo Mitsui Bank</div>
-                                                    </div>
-                                                </a>
-                                            </li>
-                                            <li (click)="showInforBank('jpb_bank')" class="bank-item">
-                                                <a id="jpb_bank">
-                                                    <div class="text-center">
-                                                        <div><img src="assets/images/bank_logo/jpb.png"
-                                                                alt="Japan Post Bank" class="bank_logo"></div>
-                                                        <div class="d-none">Japan Post Bank</div>
-                                                    </div>
-                                                </a>
-                                            </li>
-                                            <li (click)="showInforBank('jn_bank')" class="bank-item">
-                                                <a id="jn_bank">
-                                                    <div class="text-center">
-                                                        <div><img src="assets/images/bank_logo/jnb.png"
-                                                                alt="Mizuho Bank" class="bank_logo"></div>
-                                                        <div class="d-none">Japan Net Bank</div>
-                                                    </div>
-                                                </a>
-                                            </li>
-                                            <li (click)="showInforBank('rakuten_bank')" class="bank-item">
-                                                <a id="rakuten_bank">
-                                                    <div class="text-center">
-                                                        <div><img src="assets/images/bank_logo/rakuten.png"
-                                                                alt="Mizuho Bank" class="bank_logo"></div>
-                                                        <div class="d-none">Rakuten Bank</div>
-                                                    </div>
-                                                </a>
-                                            </li>
+                                          </ng-container>
+
                                         </ul>
                                     </div>
                                     <p class="mb-1"><strong>Please find details for a wire transfer below:</strong></p>
-                                    <div id="ufj_bank" class="mb-2">
+                                    <ng-container *ngFor="let item of listBankTranfer;let i = index">
+                                      <div id="bank_{{item?.id}}" class="mb-2">
                                         <table class="table border table-sm" cellpadding="0" cellspacing="0">
                                             <tbody>
                                                 <tr>
                                                     <td width="120">銀行名</td>
-                                                    <td><strong>三菱ＵＦＪ銀行</strong></td>
+                                                    <td><strong>{{item?.name}}</strong></td>
                                                 </tr>
                                                 <tr>
                                                     <td>支店名</td>
-                                                    <td><strong>赤坂支店</strong></td>
+                                                    <td><strong>{{item?.branch_name}}</strong></td>
                                                 </tr>
                                                 <tr>
                                                     <td>支店番号</td>
-                                                    <td><strong>609</strong></td>
+                                                    <td><strong>{{item?.branch_code}}</strong></td>
                                                 </tr>
                                                 <tr>
                                                     <td>口座種類</td>
-                                                    <td><strong>普通口座</strong></td>
+                                                    <td><strong>{{item?.fx_acc_type}}</strong></td>
                                                 </tr>
                                                 <tr>
                                                     <td>口座番号</td>
-                                                    <td><strong>4861600</strong></td>
+                                                    <td><strong>{{item?.acc_number}}</strong></td>
                                                 </tr>
                                                 <tr>
                                                     <td>口座名義</td>
-                                                    <td><strong>フィリップショウケン （カ</strong></td>
+                                                    <td><strong>{{item?.acc_holder_name}}</strong></td>
                                                 </tr>
                                                 <tr>
                                                     <td>通貨</td>
-                                                    <td><strong>円</strong></td>
+                                                    <td><strong>{{item?.currency}}</strong></td>
                                                 </tr>
                                             </tbody>
                                         </table>
                                     </div>
-                                    <div id="mizuho_bank" class="mb-2">
-                                        <table class="table border table-sm" cellpadding="0" cellspacing="0">
-                                            <tbody>
-                                                <tr>
-                                                    <td width="120">銀行名</td>
-                                                    <td><strong>みずほ銀行</strong></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>支店名</td>
-                                                    <td><strong>赤坂支店</strong></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>支店番号</td>
-                                                    <td><strong>539</strong></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>口座種類</td>
-                                                    <td><strong>普通口座</strong></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>口座番号</td>
-                                                    <td><strong>2015479</strong></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>口座名義</td>
-                                                    <td><strong>フィリップショウケン （カ</strong></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>通貨</td>
-                                                    <td><strong>円</strong></td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <div id="sm_bank" class="mb-2">
-                                        <table class="table border table-sm" cellpadding="0" cellspacing="0">
-                                            <tbody>
-                                                <tr>
-                                                    <td width="120">銀行名</td>
-                                                    <td><strong>三井住友銀行</strong></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>支店名</td>
-                                                    <td><strong>赤坂支店</strong></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>支店番号</td>
-                                                    <td><strong>825</strong></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>口座種類</td>
-                                                    <td><strong>普通口座</strong></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>口座番号</td>
-                                                    <td><strong>8735179</strong></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>口座名義</td>
-                                                    <td><strong>フィリップショウケン （カ</strong></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>通貨</td>
-                                                    <td><strong>円</strong></td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <div id="jpb_bank" class="mb-2">
-                                        <table class="table border table-sm" cellpadding="0" cellspacing="0">
-                                            <tbody>
-                                                <tr>
-                                                    <td width="120">銀行名</td>
-                                                    <td><strong>ゆうちょ銀行</strong></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>支店名</td>
-                                                    <td><strong>&nbsp;</strong></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>支店番号</td>
-                                                    <td><strong>10090</strong></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>口座種類</td>
-                                                    <td><strong>&nbsp;</strong></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>口座番号</td>
-                                                    <td><strong>9548081</strong></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>口座名義</td>
-                                                    <td><strong>フィリップショウケン （カ</strong></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>通貨</td>
-                                                    <td><strong>円</strong></td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <div id="jn_bank" class="mb-2">
-                                        <table class="table border table-sm" cellpadding="0" cellspacing="0">
-                                            <tbody>
-                                                <tr>
-                                                    <td width="120">銀行名</td>
-                                                    <td><strong>ジャパンネット銀行</strong></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>支店名</td>
-                                                    <td><strong>本店営業部</strong></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>支店番号</td>
-                                                    <td><strong>001</strong></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>口座種類</td>
-                                                    <td><strong>普通口座</strong></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>口座番号</td>
-                                                    <td><strong>6572885</strong></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>口座名義</td>
-                                                    <td><strong>フィリップショウケン （カ</strong></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>通貨</td>
-                                                    <td><strong>円</strong></td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <div id="rakuten_bank" class="mb-2">
-                                        <table class="table border table-sm" cellpadding="0" cellspacing="0">
-                                            <tbody>
-                                                <tr>
-                                                    <td width="120">銀行名</td>
-                                                    <td><strong>楽天銀行（旧イーバンク銀行）</strong></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>支店名</td>
-                                                    <td><strong>サンバ支店</strong></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>支店番号</td>
-                                                    <td><strong>203</strong></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>口座種類</td>
-                                                    <td>普通口座</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>口座番号</td>
-                                                    <td>7024468</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>口座名義</td>
-                                                    <td><strong>フィリップショウケン （カ</strong></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>通貨</td>
-                                                    <td><strong>円</strong></td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-
+                                    </ng-container>
                                     <div class="small font-italic text-secondary mt-2">
                                         <p class="mb-0">※Warnings:</p>
                                         <ul class="reset">
