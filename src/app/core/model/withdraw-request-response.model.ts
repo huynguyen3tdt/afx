@@ -32,7 +32,6 @@ export interface TransactionResponse {
 
 export interface Mt5Model {
   balance: number;
-  margin: number;
   free_margin: number;
   equity: number;
   margin_level: number;

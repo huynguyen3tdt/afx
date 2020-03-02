@@ -23,6 +23,12 @@ export class WithdrawRequestComponent implements OnInit {
   listDwHistory;
   transactionDetail: TransactionModel;
   minWithdraw: string;
+  depositValue: number;
+  withdrawError: boolean;
+  equityEstimate: number;
+  marginLevelEstimate: number;
+  errMessage: boolean;
+
 
   constructor(private withdrawRequestService: WithdrawRequestService, ) { }
 
@@ -33,6 +39,7 @@ export class WithdrawRequestComponent implements OnInit {
     this.getBankInfor();
     this.getDwAmount();
     this.getDwHistory();
+    this.countWithdraw();
   }
 
   initWithdrawForm() {
@@ -89,6 +96,25 @@ export class WithdrawRequestComponent implements OnInit {
 
     //   }
     // });
+  }
+
+  changeWithdtaw(event: any) {
+    const numeral = require('numeral');
+    this.depositValue = numeral(this.withdrawForm.controls.amount.value).value();
+    if (this.depositValue < 10000) {
+      this.withdrawError = false;
+      return;
+    }
+    this.withdrawError = true;
+    this.countWithdraw();
+  }
+  countWithdraw() {
+    this.errMessage = true;
+    this.equityEstimate = Math.floor(10 + this.depositValue);
+    this.marginLevelEstimate = Math.floor(((10 + this.equityEstimate) / 2000) * 100);
+    if (this.marginLevelEstimate <= 100) {
+      this.errMessage = false;
+    }
   }
   onRefesh() {
     this.getMt5Infor();

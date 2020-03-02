@@ -77,8 +77,11 @@
                   <label class="label"><strong>Withdrawal Amount</strong></label>
                   <input type="text" name="amount"
                     class="form-control form-control-lg text-right font-weight-bold text-success" placeholder=""
-                    formControlName="amount" currency
+                    formControlName="amount" currency (change)="changeWithdtaw($event.target.value)" autocomplete="off"
                     [ngClass]="{'invalid': isSubmitted && withdrawForm.controls['amount'].errors}">
+                  <div *ngIf="withdrawError == false" class="invalid-mess">
+                    <div>Minimum amount is not below {{minWithdraw}}</div>
+                  </div>
                   <div class="mt-2">
                     <label class="container-checkbox small">Whole of money
                       <input type="checkbox" name="Junior" formControlName="wholeMoney">
@@ -101,11 +104,14 @@
                 <div class="mb-1 d-flex justify-content-between">
                   <label class="label">Margin Level estimate</label>
                   <div>
-                    <strong>154.36%</strong>
+                    <strong>{{marginLevelEstimate}}%</strong>
                   </div>
                 </div>
               </div>
               <p class="small text-secondary p-2 bg-light">Notice: Minimum single withdrawal amount is {{minWithdraw}}</p>
+              <div *ngIf="errMessage == false" class="invalid-mess">
+                <div>Your Margin Level is nearly the Margin Call Level</div>
+              </div>
               <button class="btn btn-success btn-block text-uppercase btn-lg mb-3"
                 (click)="showConfirm()"><strong>Withdraw</strong></button>
               <p class="text-center" style="line-height: 1.2"><a href="javascript:;" data-toggle="modal"

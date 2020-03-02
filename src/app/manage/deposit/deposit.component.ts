@@ -5,6 +5,8 @@ import { DepositModel } from 'src/app/core/model/deposit-response.model';
 import { DepositService } from 'src/app/core/services/deposit.service';
 import { element } from 'protractor';
 import { MIN_DEPOST } from 'src/app/core/constant/authen-constant';
+import { WithdrawRequestService } from './../../core/services/withdraw-request.service';
+import { Mt5Model } from 'src/app/core/model/withdraw-request-response.model';
 declare var $: any;
 
 @Component({
@@ -13,17 +15,37 @@ declare var $: any;
   styleUrls: ['./deposit.component.css']
 })
 export class DepositComponent implements OnInit {
+  constructor(private depositService: DepositService,
+              private withdrawRequestService: WithdrawRequestService) { }
   depositAmountForm: FormGroup;
   depositTransactionForm: FormGroup;
   listBankTranfer: Array<DepositModel>;
   minDeposit: string;
-  constructor(private depositService: DepositService) { }
+  mt5Infor: Mt5Model;
+  equity: number;
+  usedMargin: number;
+  isSubmitted: boolean;
+  equityEstimate: number;
+  equityDeposit: number;
+  marginLevelEstimate: number;
+  marginLevelEstimate2: number;
+  errMessage = '';
+  depositError: boolean;
+  errMessage2 = '';
+  depositError2: boolean;
+  depositValue: number;
+  depositAmount: number;
+
+
 
   ngOnInit() {
     this.minDeposit = localStorage.getItem(MIN_DEPOST);
     this.initDepositAmountForm();
     this.initDepositTransactionForm();
     this.getDepositBank();
+    this.getMt5Infor();
+    this.countDeposit();
+    this.countDepositAmount();
   }
 
   initDepositAmountForm() {
@@ -61,6 +83,15 @@ export class DepositComponent implements OnInit {
     });
   }
 
+  getMt5Infor() {
+    this.withdrawRequestService.getmt5Infor().subscribe(response => {
+      if (response.meta.code === 200) {
+        this.mt5Infor = response.data;
+        this.equity = this.mt5Infor.equity;
+        this.usedMargin = this.mt5Infor.used_margin;
+      }
+    });
+  }
 
   showInforBank(index) {
     setTimeout(() => {
@@ -82,5 +113,44 @@ export class DepositComponent implements OnInit {
     }, 50);
 
   }
-
+  onSubmit() {
+    this.isSubmitted = true;
+    if (this.depositTransactionForm.invalid) {
+      return;
+    }
+  }
+  changeDeposit(event: any) {
+    const numeral = require('numeral');
+    this.depositValue = numeral(this.depositTransactionForm.controls.deposit.value).value();
+    if (this.depositValue < 10000) {
+      this.depositError = false;
+      return;
+    }
+    this.depositError = true;
+    this.countDeposit();
+  }
+  changeDepositCal(event: any) {
+    const numeral = require('numeral');
+    this.depositAmount = numeral(this.depositAmountForm.controls.deposit.value).value();
+    if (this.depositAmount < 10000) {
+      this.depositError2 = false;
+      return;
+    }
+    this.depositError2 = true;
+    this.countDepositAmount();
+  }
+  countDeposit() {
+    this.equityEstimate = Math.floor(10 + this.depositValue);
+    this.marginLevelEstimate = Math.floor(((10 + this.equityEstimate) / 2000) * 100);
+    if (this.marginLevelEstimate <= 100) {
+      this.errMessage = 'Your Margin Level is nearly the Margin Call Level';
+    }
+  }
+  countDepositAmount() {
+    this.equityDeposit = Math.floor(10 + this.depositAmount);
+    this.marginLevelEstimate2 = Math.floor(((10 + this.equityDeposit) / 2000) * 100);
+    if (this.marginLevelEstimate2 <= 100) {
+      this.errMessage2 = 'Your Margin Level is nearly the Margin Call Level';
+    }
+  }
 }
