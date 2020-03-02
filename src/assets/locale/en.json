@@ -77,5 +77,74 @@
     "User": "User",
     "Account Infomation": "Account Infomation",
     "Tradding Accounts": "Tradding Account",
-    "Withdrawable amount": "Withdrawable amount"
+    "Withdrawable amount": "Withdrawable amount",
+    "Withdrawal amount is pending": "Withdrawal amount is pending",
+    "Unrealize PL": "Unrealize PL",
+    "Equity": "Equity",
+    "Infomation": "Infomation",
+    "Free Margin": "Free Margin",
+    "Used Margin": "Used Margin",
+    "My Profile": "My Profile",
+    "Phone": "Phone",
+    "Email": "Email",
+    "Address": "Address",
+    "Postcode": "Postcode",
+    "Gender": "Gender",
+    "Date of birth": "Date of birth",
+    "Full name": "Full name",
+    "The system automatically updates data after 1 minute": "The system automatically updates data after 1 minute",
+    "Last updated:": "Last updated:",
+    "PIC Gender": "PIC Gender",
+    "PIC name (furigana)": "PIC name (furigana)",
+    "PIC Name": "PIC Name",
+    "PIC Position": "PIC Position",
+    "Department": "Department",
+    "Person in charge (PIC) information": "Person in charge (PIC) information",
+    "Fax": "Fax",
+    "Verificaion in process": "Verificaion in process",
+    "Updated": "Updated",
+    "Corporate name (Furigana)": "Corporate name (Furigana)",
+    "Corporate name": "Corporate name",
+    "Corporate Infomation": "Corporate Infomation",
+    "English": "English",
+    "Language": "Language",
+    "Font Size": "Font Size",
+    "Save": "Save",
+    "Confirm password": "Confirm password",
+    "New password": "New password",
+    "Current password": "Current password",
+    "It is a good idea to use a strong password that you are not using elsewhere": "It is a good idea to use a strong password that you are not using elsewhere",
+    "Change Passwords": "Change Passwords",
+    "Bank Account": "Bank Account",
+    "Cancel": "Cancel",
+    "User Infomation": "User Infomation",
+    "important notification": "important notification",
+    "All Notifications": "All Notifications",
+    "Important Notifications": "Important Notifications",
+    "System Notifications": "System Notifications",
+    "Campaign Notifications": "Campaign Notifications",
+    "I agree with the above terms": "I agree with the above terms",
+    "You are having ": "You are having ",
+    "Ok": "Ok",
+    "MT5 Information": "MT5 Information",
+    "Transaction Report": "Transaction Report",
+    "Pending": "Pending",
+    "Deposit amount": "Deposit amount",
+    "Description": "Description",
+    "Beneficiary Bank": "Beneficiary Bank",
+    "Remitter bank": "Remitter bank",
+    "Transfer date time": "Transfer date time"
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

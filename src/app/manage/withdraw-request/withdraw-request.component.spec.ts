@@ -7,6 +7,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { WithdrawRequestService } from 'src/app/core/services/withdraw-request.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { Router } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('WithdrawRequestComponent', () => {
   let component: WithdrawRequestComponent;
@@ -19,7 +20,8 @@ describe('WithdrawRequestComponent', () => {
       imports: [
         ReactiveFormsModule,
         HttpClientTestingModule,
-        FormsModule
+        FormsModule,
+        TranslateModule.forRoot()
       ],
       providers: [
         WithdrawRequestService,

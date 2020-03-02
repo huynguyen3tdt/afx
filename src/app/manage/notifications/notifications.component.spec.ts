@@ -11,6 +11,7 @@ import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { EnvConfigService } from 'src/app/core/services/env-config.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('NotificationsComponent', () => {
   let component: NotificationsComponent;
@@ -25,7 +26,8 @@ describe('NotificationsComponent', () => {
         HttpClientTestingModule,
         PaginationModule.forRoot(),
         Ng4LoadingSpinnerModule,
-        RouterTestingModule
+        RouterTestingModule,
+        TranslateModule.forRoot()
       ],
       providers: [NotificationsService, EnvConfigService]
     })

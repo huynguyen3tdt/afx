@@ -4,6 +4,7 @@ import { DepositComponent } from './deposit.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import {ReportListComponent} from '../report-list/report-list.component';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('DepositComponent', () => {
   let component: DepositComponent;
@@ -16,6 +17,7 @@ describe('DepositComponent', () => {
         ReactiveFormsModule,
         FormsModule,
         HttpClientTestingModule,
+        TranslateModule.forRoot()
       ],
       declarations: [DepositComponent]
     })

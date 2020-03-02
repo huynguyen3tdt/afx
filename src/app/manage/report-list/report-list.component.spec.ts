@@ -7,6 +7,7 @@ import { PaginationModule, BsDatepickerModule } from 'ngx-bootstrap';
 import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
 import { RouterTestingModule } from '@angular/router/testing';
 import { EnvConfigService } from 'src/app/core/services/env-config.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('ReportListComponent', () => {
   let component: ReportListComponent;
@@ -22,7 +23,8 @@ describe('ReportListComponent', () => {
         PaginationModule.forRoot(),
         Ng4LoadingSpinnerModule,
         RouterTestingModule,
-        BsDatepickerModule.forRoot()
+        BsDatepickerModule.forRoot(),
+        TranslateModule.forRoot()
       ],
       providers: [ReportListComponent, EnvConfigService]
     })

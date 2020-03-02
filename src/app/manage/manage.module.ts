@@ -24,7 +24,7 @@ import { TranslateModule } from '@ngx-translate/core';
         BsDatepickerModule.forRoot(),
         PaginationModule.forRoot(),
         Ng4LoadingSpinnerModule.forRoot(),
-        TranslateModule 
+        TranslateModule
     ],
     providers: [],
     declarations: [
