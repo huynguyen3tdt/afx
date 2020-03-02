@@ -9,34 +9,24 @@
         <div class="content-inner">
             <div class="row">
                 <div class="col-md-3 col-lg-2">
-                    <div class="nav flex-md-column nav-pills mb-3 filter-nav" id="v-pills-tab" role="tablist"
-                        aria-orientation="vertical">
-                        <a class="nav-link active" id="v-pills-all-tab" data-toggle="pill" href="#v-pills-all"
-                            (click)="checkTab(TABS.ALL.value, 'call')"
-                            role="tab" aria-controls="v-pills-all" aria-selected="true">All</a>
-                        <a class="nav-link" id="v-pills-deposit-tab" data-toggle="pill" href="#v-pills-all"
-                            (click)="checkTab(TABS.DEPOSIT.value, 'call')"
-                            role="tab" aria-controls="v-pills-deposit" aria-selected="false">Deposit</a>
-                        <a class="nav-link" id="v-pills-withdrawal-tab" data-toggle="pill" href="#v-pills-all"
-                            (click)="checkTab(TABS.WITHDRAWAL.value, 'call')"
-                            role="tab" aria-controls="v-pills-withdrawal" aria-selected="false">Withdrawal</a>
+                    <div class="nav flex-md-column nav-pills mb-3 filter-nav" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                        <a class="nav-link active" id="v-pills-all-tab" data-toggle="pill" href="#v-pills-all" (click)="checkTab(TABS.ALL.value, 'call')" role="tab" aria-controls="v-pills-all" aria-selected="true">{{'All' | translate}}</a>
+                        <a class="nav-link" id="v-pills-deposit-tab" data-toggle="pill" href="#v-pills-all" (click)="checkTab(TABS.DEPOSIT.value, 'call')" role="tab" aria-controls="v-pills-deposit" aria-selected="false">{{'Deposit' | translate}}</a>
+                        <a class="nav-link" id="v-pills-withdrawal-tab" data-toggle="pill" href="#v-pills-all" (click)="checkTab(TABS.WITHDRAWAL.value, 'call')" role="tab" aria-controls="v-pills-withdrawal" aria-selected="false">{{'Withdraw' | translate}}</a>
                     </div>
                 </div>
                 <div class="col-md-9 col-lg-10">
                     <div class="tab-content" id="v-pills-tabContent">
-                        <div class="tab-pane fade show active" id="v-pills-all" role="tabpanel"
-                            aria-labelledby="v-pills-all-tab">
-                            <h3 class="mb-3" *ngIf="tab == 'ALL'"><i class="icon ion-md-time text-secondary"></i> Deposit &amp; Withdrawal
-                                History</h3>
+                        <div class="tab-pane fade show active" id="v-pills-all" role="tabpanel" aria-labelledby="v-pills-all-tab">
+                            <h3 class="mb-3" *ngIf="tab == 'ALL'"><i class="icon ion-md-time text-secondary"></i>{{'Deposit' | translate}} &amp; {{'Withdrawal History' | translate}}</h3>
                             <h3 class="mb-3" *ngIf="tab == 'DEPOSIT'"><i class="icon ion-md-time text-secondary"></i> Deposit History</h3>
                             <h3 class="mb-3" *ngIf="tab == 'WITHDRAWAL'"><i class="icon ion-md-time text-secondary"></i> Withdrawal History</h3>
                             <div [formGroup]="searchForm" class="form mb-3 form-search-box">
                                 <div class="row">
                                     <div class="col-4 col-lg-3">
                                         <div class="form-group">
-                                            <label class="label d-block mb-0">Trading account</label>
-                                            <select disabled formControlName="tradingAccount"
-                                                class="form-control form-control-sm">
+                                            <label class="label d-block mb-0">{{'Trading account' | translate}}</label>
+                                            <select disabled formControlName="tradingAccount" class="form-control form-control-sm">
                                                 <option *ngFor="let item of listTradingAccount" value="{{item}}">
                                                     {{item}}</option>
                                             </select>
@@ -48,48 +38,31 @@
                                                 <div class="form-group">
                                                     <label class="label d-none d-lg-block mb-0">&nbsp;</label>
                                                     <div class="btn-group d-flex">
-                                                        <button type="button" (click)="setDate(DURATION.DAY)"
-                                                            class="btn btn-sm btn-outline-secondary">Day</button>
-                                                        <button type="button" (click)="setDate(DURATION.MONTH)"
-                                                            class="btn btn-sm btn-outline-secondary">Month</button>
-                                                        <button type="button" (click)="setDate(DURATION.YEAR)"
-                                                            class="btn btn-sm btn-outline-secondary">Year</button>
+                                                        <button type="button" (click)="setDate(DURATION.DAY)" class="btn btn-sm btn-outline-secondary">{{'Day' | translate}}</button>
+                                                        <button type="button" (click)="setDate(DURATION.MONTH)" class="btn btn-sm btn-outline-secondary">{{'Month' | translate}}</button>
+                                                        <button type="button" (click)="setDate(DURATION.YEAR)" class="btn btn-sm btn-outline-secondary">{{'Year' | translate}}</button>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-lg-3">
                                                 <div class="form-group">
-                                                    <label class="label d-block mb-0">From</label>
+                                                    <label class="label d-block mb-0">{{'From' | translate}}</label>
                                                     <div class="input-wrapper">
-                                                        <input type="text" name="start-date"
-                                                            class="form-control form-control-sm date"
-                                                            placeholder="YYYY/MM/DD" #dp="bsDatepicker" bsDatepicker
-                                                            formControlName="fromDate"
-                                                            (bsValueChange)="onValueChangeFrom($event)"
-                                                            autocomplete="off"
-                                                            [bsConfig]="{ dateInputFormat: 'YYYY/MM/DD', containerClass: 'theme-blue' }">
-                                                        <button type="button" class="btn btn-none btn-sm"
-                                                            (click)="dp.toggle()" [attr.aria-expanded]="dp.isOpen"><i
+                                                        <input type="text" name="start-date" class="form-control form-control-sm date" placeholder="YYYY/MM/DD" #dp="bsDatepicker" bsDatepicker formControlName="fromDate" (bsValueChange)="onValueChangeFrom($event)" autocomplete="off" [bsConfig]="{ dateInputFormat: 'YYYY/MM/DD', containerClass: 'theme-blue' }">
+                                                        <button type="button" class="btn btn-none btn-sm" (click)="dp.toggle()" [attr.aria-expanded]="dp.isOpen"><i
                                                                 class="icon ion-md-calendar"></i></button>
                                                     </div>
                                                     <div *ngIf="showErrorDate == true" class="invalid-mess">
-                                                        Period is incorrect, the to date must be greater than the from
-                                                        date
+                                                        Period is incorrect, the to date must be greater than the from date
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-lg-3">
                                                 <div class="form-group">
-                                                    <label class="label d-block mb-0">To</label>
+                                                    <label class="label d-block mb-0">{{'To' | translate}}</label>
                                                     <div class="input-wrapper">
-                                                        <input type="text" name="end-date"
-                                                            class="form-control form-control-sm date"
-                                                            placeholder="YYYY/MM/DD" #dp2="bsDatepicker" bsDatepicker
-                                                            formControlName="toDate" autocomplete="off"
-                                                            (bsValueChange)="onValueChangeTo($event)"
-                                                            [bsConfig]="{ dateInputFormat: 'YYYY/MM/DD', containerClass: 'theme-blue' }">
-                                                        <button type="button" class="btn btn-none btn-sm"
-                                                            (click)="dp2.toggle()" [attr.aria-expanded]="dp2.isOpen"><i
+                                                        <input type="text" name="end-date" class="form-control form-control-sm date" placeholder="YYYY/MM/DD" #dp2="bsDatepicker" bsDatepicker formControlName="toDate" autocomplete="off" (bsValueChange)="onValueChangeTo($event)" [bsConfig]="{ dateInputFormat: 'YYYY/MM/DD', containerClass: 'theme-blue' }">
+                                                        <button type="button" class="btn btn-none btn-sm" (click)="dp2.toggle()" [attr.aria-expanded]="dp2.isOpen"><i
                                                                 class="icon ion-md-calendar"></i></button>
                                                     </div>
                                                 </div>
@@ -97,8 +70,7 @@
                                             <div class="col-md-3 col-lg-2">
                                                 <div class="form-group">
                                                     <label class="label d-none d-lg-block mb-0">&nbsp;</label>
-                                                    <button (click)="searchTranHistory()"
-                                                        class="btn btn-success btn-search btn-block btn-sm">Apply</button>
+                                                    <button (click)="searchTranHistory()" class="btn btn-success btn-search btn-block btn-sm">{{'Apply' | translate}}</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -106,34 +78,31 @@
                                 </div>
                             </div>
                             <!-- END Filter Banr -->
-                            <div class="text-right small text-secondary">Currency: <strong>JPY</strong></div>
+                            <div class="text-right small text-secondary">{{'Currency:' | translate}} <strong>JPY</strong></div>
                             <div class="table-responsive">
                                 <table class="table table-sm table-hover mb-3" cellspacing="0" cellpadding="0">
                                     <thead>
                                         <tr>
-                                            <th class="border-top-0" width="120">Transaction ID</th>
-                                            <th class="border-top-0">Date</th>
-                                            <th class="border-top-0">Type</th>
-                                            <th class="border-top-0">Payment method</th>
-                                            <th class="border-top-0 text-right">Amount</th>
-                                            <th class="border-top-0 text-right" width="120">Status</th>
+                                            <th class="border-top-0" width="120">{{'Transaction ID' | translate}}</th>
+                                            <th class="border-top-0">{{'Date' | translate}}</th>
+                                            <th class="border-top-0">{{'Type' | translate}}</th>
+                                            <th class="border-top-0">{{'Payment method' | translate}}</th>
+                                            <th class="border-top-0 text-right">{{'Amount' | translate}}</th>
+                                            <th class="border-top-0 text-right" width="120">{{'Status' | translate}}</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <ng-container>
                                             <tr *ngFor="let item of listReport">
-                                                <td><a href="javascript:;"
-                                                        (click)="openDetail(item?.id)">{{item?.id}}</a></td>
+                                                <td><a href="javascript:;" (click)="openDetail(item?.id)">{{item?.id}}</a></td>
                                                 <td>{{item?.create_date}}</td>
                                                 <td>{{item?.funding_type}}</td>
                                                 <td>{{item?.method}}</td>
                                                 <td class="text-right">{{item?.amount}}</td>
-                                                <td *ngIf="item?.status == 3" class="text-right"><span
-                                                        class="text-info"><i class="icon ion-md-hourglass"></i>
+                                                <td *ngIf="item?.status == 3" class="text-right"><span class="text-info"><i class="icon ion-md-hourglass"></i>
                                                         Pending</span></td>
                                                 <td *ngIf="item?.status == 2" class="text-right"><span> Cancel</span></td>
-                                                <td *ngIf="item?.status == 1" class="text-right"><span
-                                                        class="text-success"><i class="icon ion-md-checkmark"></i>
+                                                <td *ngIf="item?.status == 1" class="text-right"><span class="text-success"><i class="icon ion-md-checkmark"></i>
                                                         Completed</span></td>
                                             </tr>
                                         </ng-container>
@@ -162,27 +131,21 @@
                                             </option>
                                         </select>
                                     </div>
-                                    <div class="small text-secondary d-inline-block mr-2">Showing {{recordFrom}} to
-                                        {{recordTo}} of {{totalItem}} entries
+                                    <div class="small text-secondary d-inline-block mr-2">{{'Showing' | translate}} {{recordFrom}} {{'To' | translate}} {{recordTo}} {{'of' | translate}} {{totalItem}} {{'entries' | translate}}
                                     </div>
                                 </div>
                                 <ul class="pagination pagination-sm mb-0">
-                                    <pagination [(ngModel)]="currentPage" id="pagination" appPagination
-                                        [boundaryLinks]="true" class="pagination pagination-sm justify-content-end"
-                                        (pageChanged)="pageChanged($event)" [totalItems]="totalItem / pageSize"
-                                        previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;"
-                                        lastText="&raquo;" [maxSize]="5">
+                                    <pagination [(ngModel)]="currentPage" id="pagination" appPagination [boundaryLinks]="true" class="pagination pagination-sm justify-content-end" (pageChanged)="pageChanged($event)" [totalItems]="totalItem / pageSize" previousText="&lsaquo;" nextText="&rsaquo;"
+                                        firstText="&laquo;" lastText="&raquo;" [maxSize]="5">
                                     </pagination>
                                 </ul>
                             </div>
                         </div>
-                        <div class="tab-pane fade" id="v-pills-deposit" role="tabpanel"
-                            aria-labelledby="v-pills-deposit-tab">
-                            <h3 class="mb-3"><i class="icon ion-md-time text-secondary"></i> Deposit History</h3>
+                        <div class="tab-pane fade" id="v-pills-deposit" role="tabpanel" aria-labelledby="v-pills-deposit-tab">
+                            <h3 class="mb-3"><i class="icon ion-md-time text-secondary"></i> {{'Deposit History' | translate}}</h3>
                         </div>
-                        <div class="tab-pane fade" id="v-pills-withdrawal" role="tabpanel"
-                            aria-labelledby="v-pills-withdrawal-tab">
-                            <h3 class="mb-3"><i class="icon ion-md-time text-secondary"></i> Withdrawal History</h3>
+                        <div class="tab-pane fade" id="v-pills-withdrawal" role="tabpanel" aria-labelledby="v-pills-withdrawal-tab">
+                            <h3 class="mb-3"><i class="icon ion-md-time text-secondary"></i> {{'Withdrawal History' | translate}}</h3>
                         </div>
                     </div>
                 </div>
