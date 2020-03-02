@@ -133,18 +133,32 @@
     "Description": "Description",
     "Beneficiary Bank": "Beneficiary Bank",
     "Remitter bank": "Remitter bank",
-    "Transfer date time": "Transfer date time"
-
-
-
-
-
-
-
-
-
-
-
+    "Transfer date time": "Transfer date time",
+    "Welcome to Phillip MT5": "Welcome to Phillip MT5",
+    "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since." : "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since.",
+    "Sign In" : "Sign In",
+    "Email / LoginID": "Email / LoginID",
+    "Passwords": "Passwords",
+    "This field is required" : "This field is required",
+    "Invalid email or password": "Invalid email or password",
+    "Remember me": "Remember me",
+    "Open Visual Keyboard": "Open Visual Keyboard",
+    "Forgot Password?": "Forgot Password?",
+    "Create Now": "Create Now",
+    "Don’t have an account?": "Don’t have an account?",
+    "Password recovery": "Password recovery",
+    "To reset the password please enter your email or MT5 ID": "To reset the password please enter your email or MT5 ID",
+    "Login ID": "Login ID",
+    "DOB": "DOB",
+    "Click here if you forgot your Login ID": "Click here if you forgot your Login ID",
+    "Submit": "Submit",
+    "Back to Login": "Back to Login",
+    "Please waiting": "Please waiting",
+    "seconds to back to login page.": "seconds to back to login page.",
+    "Change Password": "Change Password",
+    "New Password": "New Password",
+    "Confirm Password": "Confirm Password",
+    "New password needs to be 8 characters or more and has at least 1 alphabet letter": "New password needs to be 8 characters or more and has at least 1 alphabet letter"
 
 
 }
