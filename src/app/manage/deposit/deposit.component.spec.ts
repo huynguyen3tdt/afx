@@ -1,9 +1,9 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { DepositComponent } from './deposit.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import {ReportListComponent} from '../report-list/report-list.component';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { EnvConfigService } from 'src/app/core/services/env-config.service';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { TranslateModule } from '@ngx-translate/core';
 
 describe('DepositComponent', () => {
@@ -13,15 +13,17 @@ describe('DepositComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      declarations: [ DepositComponent ],
       imports: [
         ReactiveFormsModule,
         FormsModule,
         HttpClientTestingModule,
-        TranslateModule.forRoot()
+        TranslateModule.forRoot(),
+        RouterTestingModule,
       ],
-      declarations: [DepositComponent]
+      providers: [DepositComponent, EnvConfigService]
     })
-      .compileComponents();
+    .compileComponents();
   }));
 
   beforeEach(() => {

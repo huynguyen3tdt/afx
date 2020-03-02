@@ -6,9 +6,11 @@ import {
   PASSWORD_LOGIN,
   REMEMBER_LOGIN,
   TOKEN_AFX,
-  ACCOUNT_TYPE,
+  ACCOUNT_ID,
   FIRST_LOGIN,
   IS_COMPANY,
+  MIN_DEPOST,
+  MIN_WITHDRAW,
 } from './../../core/constant/authen-constant';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthenService } from 'src/app/core/services/authen.service';
@@ -100,8 +102,10 @@ export class LoginComponent implements OnInit, AfterViewInit {
           localStorage.setItem(REMEMBER_LOGIN, 'false');
         }
         localStorage.setItem(TOKEN_AFX, response.data.access_token);
-        localStorage.setItem(ACCOUNT_TYPE, response.data.account_ids[0].account_id.toString());
+        localStorage.setItem(ACCOUNT_ID, response.data.account_ids[0].account_id.toString());
         localStorage.setItem(IS_COMPANY, response.data.is_company.toString());
+        localStorage.setItem(MIN_DEPOST, response.data.module_funding_min_deposit.toString());
+        localStorage.setItem(MIN_WITHDRAW, response.data.module_funding_min_withdraw.toString());
         localStorage.setItem(FIRST_LOGIN, '1');
         if (response.data.pwd_change_flg === false) {
           this.router.navigate(['/manage/notifications'], {

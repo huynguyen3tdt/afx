@@ -30,9 +30,9 @@
                         <div class="nav nav-tabs" id="nav-tab" role="tablist">
                             <a class="nav-item nav-link active" id="nav-account-tab" data-toggle="tab" href="#nav-account" role="tab" aria-controls="nav-account" aria-selected="true"><i
                                     class="icon ion-md-person"></i> <strong class="d-none d-md-inline">{{'Account Infomation' | translate}}</strong></a>
-                            <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" (click)="getUserInfo()" role="tab" aria-controls="nav-profile" aria-selected="true"><i
+                            <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" (click)="getUserInfo()" *ngIf="isUser == 'false'" role="tab" aria-controls="nav-profile" aria-selected="true"><i
                                     class="icon ion-md-contact"></i> <strong class="d-none d-md-inline">{{'User Infomation' | translate}}</strong></a>
-                            <a class="nav-item nav-link" id="nav-bank-tab" data-toggle="tab" href="#nav-corporate" role="tab" (click)="getCorporateInfor()" aria-controls="nav-corporate" aria-selected="false"><i class="icon ion-md-briefcase"></i> <strong
+                            <a class="nav-item nav-link" id="nav-bank-tab" data-toggle="tab" href="#nav-corporate" role="tab" (click)="getCorporateInfor()" *ngIf="isCompany == 'true'" aria-controls="nav-corporate" aria-selected="false"><i class="icon ion-md-briefcase"></i> <strong
                                     class="d-none d-md-inline">{{'Corporate Infomation' | translate}}</strong></a>
                             <a class="nav-item nav-link" id="nav-bank-tab" data-toggle="tab" href="#nav-bank" role="tab" aria-controls="nav-bank" aria-selected="false"><i class="icon ion-md-card"></i> <strong
                                     class="d-none d-md-inline">{{'Bank Account' | translate}}</strong></a>

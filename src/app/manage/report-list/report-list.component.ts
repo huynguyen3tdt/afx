@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ReportService } from 'src/app/core/services/report.service';
 import { ReportIDS } from 'src/app/core/model/report-response.model';
 import { FormGroup, FormControl } from '@angular/forms';
-import { ACCOUNT_TYPE } from 'src/app/core/constant/authen-constant';
+import { ACCOUNT_ID } from 'src/app/core/constant/authen-constant';
 import * as moment from 'moment';
 import { JAPAN_FORMATDATE } from 'src/app/core/constant/format-date-constant';
 
@@ -28,7 +28,7 @@ export class ReportListComponent implements OnInit {
   TABS = {
     ALL: { name: 'ALL', value: 0 },
     DAILY: { name: 'DAILY', value: 1 },
-    YEARLY: { name: 'YEARLY', value: 1 },
+    YEARLY: { name: 'YEARLY', value: 2 },
   };
 
   DURATION = {
@@ -42,7 +42,7 @@ export class ReportListComponent implements OnInit {
   ngOnInit() {
     this.currentPage = 1;
     this.pageSize = 10;
-    this.listTradingAccount.push(Number(localStorage.getItem(ACCOUNT_TYPE)));
+    this.listTradingAccount.push(Number(localStorage.getItem(ACCOUNT_ID)));
     this.initSearchForm();
     this.getReport(this.searchForm.controls.tradingAccount.value, this.currentPage, this.pageSize, this.TABS.ALL.value,
       this.formatDate(this.searchForm.controls.fromDate.value), this.formatDate(this.searchForm.controls.toDate.value));
@@ -111,7 +111,7 @@ export class ReportListComponent implements OnInit {
     this.searchReport();
   }
 
-  checkTab(type: number) {
+  checkTab(type: number, callSearh?: string) {
     switch (type) {
       case this.TABS.ALL.value:
         this.tab = this.TABS.ALL.name;
@@ -122,6 +122,10 @@ export class ReportListComponent implements OnInit {
       case this.TABS.YEARLY.value:
         this.tab = this.TABS.YEARLY.name;
         break;
+    }
+    if (callSearh) {
+      this.currentPage = 1;
+      this.searchReport();
     }
   }
 

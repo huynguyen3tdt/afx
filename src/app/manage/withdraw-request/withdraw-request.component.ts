@@ -4,6 +4,7 @@ import { WithdrawRequestService } from 'src/app/core/services/withdraw-request.s
 import { FormGroup, FormControl } from '@angular/forms';
 import { requiredInput } from 'src/app/core/helper/custom-validate.helper';
 import { BankInforModel, Mt5Model, TransactionModel } from 'src/app/core/model/withdraw-request-response.model';
+import { MIN_WITHDRAW } from './../../core/constant/authen-constant';
 declare var $: any;
 
 @Component({
@@ -21,10 +22,12 @@ export class WithdrawRequestComponent implements OnInit {
   isSubmitted: boolean;
   listDwHistory;
   transactionDetail: TransactionModel;
+  minWithdraw: string;
 
   constructor(private withdrawRequestService: WithdrawRequestService, ) { }
 
   ngOnInit() {
+    this.minWithdraw = localStorage.getItem(MIN_WITHDRAW);
     this.initWithdrawForm();
     this.getMt5Infor();
     this.getBankInfor();
@@ -66,6 +69,7 @@ export class WithdrawRequestComponent implements OnInit {
     this.withdrawRequestService.getBankInfor().subscribe(response => {
       if (response.meta.code === 200) {
         this.bankInfor = response.data;
+
       }
     });
   }

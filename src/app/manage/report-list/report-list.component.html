@@ -10,15 +10,17 @@
             <div class="row">
                 <div class="col-md-3 col-lg-2">
                     <div class="nav flex-md-column nav-pills mb-3 filter-nav" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                        <a class="nav-link active" id="v-pills-all-tab" data-toggle="pill" href="#v-pills-all" role="tab" aria-controls="v-pills-all" aria-selected="true">{{'All' | translate}}</a>
-                        <a class="nav-link" id="v-pills-transaction-tab" data-toggle="pill" href="#v-pills-transaction" role="tab" aria-controls="v-pills-transaction" aria-selected="false">{{'Daily Customer Statement' | translate}}</a>
-                        <a class="nav-link" id="v-pills-annual-tab" data-toggle="pill" href="#v-pills-annual" role="tab" aria-controls="v-pills-annual" aria-selected="false">{{'Yearly Customer Statement' | translate}}</a>
+                        <a class="nav-link active" id="v-pills-all-tab" data-toggle="pill" href="#v-pills-all" (click)="checkTab(TABS.ALL.value, 'call')" role="tab" aria-controls="v-pills-all" aria-selected="true">{{'All' | translate}}</a>
+                        <a class="nav-link" id="v-pills-transaction-tab" data-toggle="pill" href="#v-pills-all" (click)="checkTab(TABS.DAILY.value, 'call')" role="tab" aria-controls="v-pills-transaction" aria-selected="false">{{'Daily Customer Statement' | translate}}</a>
+                        <a class="nav-link" id="v-pills-annual-tab" data-toggle="pill" href="#v-pills-all" role="tab" (click)="checkTab(TABS.YEARLY.value, 'call')" aria-controls="v-pills-annual" aria-selected="false">{{'Yearly Customer Statement' | translate}}</a>
                     </div>
                 </div>
                 <div class="col-md-9 col-lg-10">
                     <div class="tab-content" id="v-pills-tabContent">
                         <div class="tab-pane fade show active" id="v-pills-all" role="tabpanel" aria-labelledby="v-pills-all-tab">
-                            <h3 class="mb-3">{{'All Customer Statement' | translate}}</h3>
+                            <h3 *ngIf="tab == 'ALL'" class="mb-3">{{'All Customer Statement' | translate}}</h3>
+                            <h3 *ngIf="tab == 'DAILY'" class="mb-3">Transaction Report</h3>
+                            <h3 *ngIf="tab == 'YEARLY'" class="mb-3">System Notifications</h3>
                             <div [formGroup]="searchForm" class="form mb-3 form-search-box">
                                 <div class="row">
                                     <div class="col-4 col-lg-3">

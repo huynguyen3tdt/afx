@@ -59,7 +59,7 @@ export class AccountInformationComponent implements OnInit {
   corDistrict: any;
   test: any;
   isCompany: string;
-
+  isUser: string;
 
 
 
@@ -82,6 +82,7 @@ export class AccountInformationComponent implements OnInit {
     this.getMt5Infor();
     this.getWithDrawAmount();
     this.getCorporateInfor();
+    this.getUserInfo();
   }
 
   initUserForm() {
@@ -126,6 +127,7 @@ export class AccountInformationComponent implements OnInit {
   getUserInfo() {
     this.userService.getUserInfor().subscribe(response => {
       if (response.meta.code === 200) {
+        this.isUser = localStorage.getItem(IS_COMPANY);
         this.userInfor = response.data;
         this.prefecture = response.data.address.value.city;
         this.county = response.data.address.value.street;

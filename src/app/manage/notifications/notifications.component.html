@@ -10,10 +10,10 @@
             <div class="row">
                 <div class="col-md-3 col-lg-2">
                     <div class="nav flex-md-column nav-pills mb-3 filter-nav" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                        <a class="nav-link active" id="v-pills-all-tab" data-toggle="pill" href="#v-pills-all" (click)="getListNotifications(pageSize, 1, unreadAll, -1)" role="tab" aria-controls="v-pills-all" aria-selected="true">{{'All' | translate}}<span class="badge">{{totalAll}}</span></a>
-                        <a class="nav-link" id="v-pills-important-tab" data-toggle="pill" href="#v-pills-important" #importantTab (click)="getListNotifications(pageSize, 1, unreadImportant, 0)" role="tab" aria-controls="v-pills-important" aria-selected="false">{{'Important' | translate}}<span class="badge">{{totalImportant}}</span></a>
-                        <a class="nav-link" id="v-pills-notifications-tab" data-toggle="pill" (click)="getListNotifications(pageSize, 1, unreadImportant, 1)" href="#v-pills-notifications" role="tab" aria-controls="v-pills-notifications" aria-selected="false">{{'Notifications' | translate}}<span class="badge">{{totalNotification}}</span></a>
-                        <a class="nav-link" id="v-pills-campaign-tab" data-toggle="pill" href="#v-pills-campaign" (click)="getListNotifications(pageSize, 1, unreadImportant, 2)" role="tab" aria-controls="v-pills-campaign" aria-selected="false">{{'Campaign' | translate}}<span class="badge">{{totalCampagn}}</span></a>
+                        <a class="nav-link active" id="v-pills-all-tab" data-toggle="pill" href="#v-pills-all" (click)="getListNotifications(pageSize, 1, unreadAll, -1)" role="tab" aria-controls="v-pills-all" aria-selected="true">{{'All' | translate}}<span *ngIf="totalAll > 0" class="badge">{{totalAll}}</span></a>
+                        <a class="nav-link" id="v-pills-important-tab" data-toggle="pill" href="#v-pills-important" #importantTab (click)="getListNotifications(pageSize, 1, unreadImportant, 0)" role="tab" aria-controls="v-pills-important" aria-selected="false">{{'Important' | translate}}<span *ngIf="totalImportant > 0" class="badge">{{totalImportant}}</span></a>
+                        <a class="nav-link" id="v-pills-notifications-tab" data-toggle="pill" (click)="getListNotifications(pageSize, 1, unreadImportant, 1)" href="#v-pills-notifications" role="tab" aria-controls="v-pills-notifications" aria-selected="false">{{'Notifications' | translate}}<span *ngIf="totalNotification > 0" class="badge">{{totalNotification}}</span></a>
+                        <a class="nav-link" id="v-pills-campaign-tab" data-toggle="pill" href="#v-pills-campaign" (click)="getListNotifications(pageSize, 1, unreadImportant, 2)" role="tab" aria-controls="v-pills-campaign" aria-selected="false">{{'Campaign' | translate}}<span *ngIf="totalCampagn > 0" class="badge">{{totalCampagn}}</span></a>
                     </div>
                 </div>
                 <div class="col-md-9 col-lg-10">
@@ -31,7 +31,7 @@
                             </div>
                             <div class="list-notifications">
                                 <ng-container *ngFor="let item of listNotification; let i = index">
-                                    <div (click)="showDetail(i, item)" id="noti_{{i}}" [ngClass]="{'unread': item.read_flg == 'true'}" class="notification-item">
+                                    <div (click)="showDetail(i, item)" id="noti_{{i}}" [ngClass]="{'unread': item.read_flg == false}" class="notification-item">
                                         <div class="badge-wrap">
                                             <span *ngIf="item?.news_type == 0 || item?.noti_type == 3" class="badge badge-danger d-lg-block mb-lg-1">  {{'Important' | translate}}</span>
                                             <span *ngIf="item?.news_type == 1 || item?.noti_type == 3" class="badge badge-danger d-lg-block mb-lg-1"> {{'System' | translate}}</span>
@@ -41,7 +41,11 @@
                                             <h5 class="item-title"><a href="javascript:;">{{item?.news_title}}</a></h5>
                                             <div class="item-meta">{{item?.publish_date}}</div>
                                         </div>
-                                        <div class="item-content" [innerHTML]="item?.news_content">
+                                        <div *ngIf="item?.agreement_flg != 1" class="item-content" [innerHTML]="item?.news_content">
+                                        </div>
+                                        <div *ngIf="item?.agreement_flg == 1" class="item-content">
+                                            <div [innerHTML]="item?.news_content"></div>
+                                            <button (click)="confirmAgreement()" [disabled]="item.agree_flg == true ? true : false" type="button" class="btn btn-primary f-right">Confirm</button>
                                         </div>
                                     </div>
                                 </ng-container>
@@ -65,7 +69,9 @@
                             </div>
                             <div class="list-notifications">
                                 <ng-container *ngFor="let item of listNotification; let i = index">
-                                    <div *ngIf="item.agreement_flg == 0" (click)="showDetail(i, item)" id="important_{{i}}" [ngClass]="{'unread': item.read_flg == 'true'}" class="notification-item">
+                                    <!-- <div *ngIf="item.agreement_flg == 0" (click)="showDetail(i, item)"
+                                        id="important_{{i}}" [ngClass]="{'unread': item.read_flg == 'true'}"
+                                        class="notification-item">
                                         <div class="badge-wrap">
                                             <span class="badge badge-danger d-lg-block mb-lg-1">{{'Important' | translate}}</span>
                                         </div>
@@ -75,8 +81,8 @@
                                         </div>
                                         <div class="item-content" [innerHTML]="item?.news_content">
                                         </div>
-                                    </div>
-                                    <div *ngIf="item.agreement_flg == 1" (click)="showDetail(i, item)" [ngClass]="{'unread': item.is_read == 'true'}" id="important_{{i}}" class="notification-item item-agreement">
+                                    </div> -->
+                                    <div (click)="showDetail(i, item)" id="important_{{i}}" [ngClass]="{'unread': item.read_flg == false}" class="notification-item item-agreement">
                                         <div class="badge-wrap">
                                             <span class="badge badge-danger d-lg-block mb-lg-1">Important</span>
                                         </div>
@@ -84,6 +90,11 @@
                                             <h5 class="item-title"><a href="javascript:;">{{item?.news_title}}</a></h5>
                                             <div class="item-meta">{{item?.publish_date}}</div>
                                         </div>
+                                        <div class="item-content">
+                                            <div [innerHTML]="item?.news_content"></div>
+                                            <button (click)="confirmAgreement()" [disabled]="item.agree_flg == true ? true : false" type="button" class="btn btn-primary f-right">Confirm</button>
+                                        </div>
+
                                     </div>
                                 </ng-container>
                             </div>
@@ -106,7 +117,7 @@
                             </div>
                             <div class="list-notifications">
                                 <ng-container *ngFor="let item of listNotification; let i = index">
-                                    <div (click)="showDetail(i, item)" id="system_{{i}}" [ngClass]="{'unread': item.read_flg == 'true'}" class="notification-item">
+                                    <div (click)="showDetail(i, item)" id="system_{{i}}" [ngClass]="{'unread': item.read_flg == false}" class="notification-item">
                                         <div class="badge-wrap">
                                             <span *ngIf="item?.news_type == 1 || item?.noti_type == 3" class="badge badge-warning d-lg-block mb-lg-1">{{'System' | translate}}</span>
                                         </div>
@@ -138,7 +149,7 @@
                             </div>
                             <div class="list-notifications">
                                 <ng-container *ngFor="let item of listNotification; let i = index">
-                                    <div (click)="showDetail(i, item)" id="campain_{{i}}" [ngClass]="{'unread': item.read_flg == 'true'}" class="notification-item">
+                                    <div (click)="showDetail(i, item)" id="campain_{{i}}" [ngClass]="{'unread': item.read_flg == false}" class="notification-item">
                                         <div class="badge-wrap">
                                             <span *ngIf="item?.news_type == 2" class="badge badge-success d-lg-block mb-lg-1">{{'Campaign' | translate}}</span>
                                         </div>
@@ -163,7 +174,8 @@
         </div>
     </div>
 </div>
-<div class="modal" id="agreementmd" tabindex="-1" role="dialog" aria-labelledby="agreementTitle" aria-hidden="true" data-backdrop="static">
+<!-- <div class="modal" id="agreementmd" tabindex="-1" role="dialog" aria-labelledby="agreementTitle" aria-hidden="true"
+    data-backdrop="static">
     <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header pt-2 pb-2">
@@ -174,7 +186,6 @@
             </div>
             <div class="modal-body bg-light">
                 <div [innerHTML]="contentAgeement">
-
                 </div>
             </div>
             <div [formGroup]="formAgreement" class="modal-footer pt-1 pb-1 d-flex justify-content-between align-items-center">
@@ -194,7 +205,7 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->
 
 <div class="modal fade" id="notice_important" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
