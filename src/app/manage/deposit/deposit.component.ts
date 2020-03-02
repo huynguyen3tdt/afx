@@ -28,11 +28,11 @@ export class DepositComponent implements OnInit {
   equityEstimate: number;
   equityDeposit: number;
   marginLevelEstimate: number;
-  marginLevelEstimate2: number;
-  errMessage = '';
+  marginLevelEstimateBank: number;
+  errMessageQuickDeposit: boolean;
+  errMessageBankTran: boolean;
   depositError: boolean;
-  errMessage2 = '';
-  depositError2: boolean;
+  bankError: boolean;
   depositValue: number;
   depositAmount: number;
 
@@ -133,24 +133,26 @@ export class DepositComponent implements OnInit {
     const numeral = require('numeral');
     this.depositAmount = numeral(this.depositAmountForm.controls.deposit.value).value();
     if (this.depositAmount < 10000) {
-      this.depositError2 = false;
+      this.bankError = false;
       return;
     }
-    this.depositError2 = true;
+    this.bankError = true;
     this.countDepositAmount();
   }
   countDeposit() {
+    this.errMessageQuickDeposit = true;
     this.equityEstimate = Math.floor(10 + this.depositValue);
     this.marginLevelEstimate = Math.floor(((10 + this.equityEstimate) / 2000) * 100);
     if (this.marginLevelEstimate <= 100) {
-      this.errMessage = 'Your Margin Level is nearly the Margin Call Level';
+      this.errMessageQuickDeposit = false;
     }
   }
   countDepositAmount() {
+    this.errMessageBankTran = true;
     this.equityDeposit = Math.floor(10 + this.depositAmount);
-    this.marginLevelEstimate2 = Math.floor(((10 + this.equityDeposit) / 2000) * 100);
-    if (this.marginLevelEstimate2 <= 100) {
-      this.errMessage2 = 'Your Margin Level is nearly the Margin Call Level';
+    this.marginLevelEstimateBank = Math.floor(((10 + this.equityDeposit) / 2000) * 100);
+    if (this.marginLevelEstimateBank <= 100) {
+      this.errMessageBankTran = false;
     }
   }
 }

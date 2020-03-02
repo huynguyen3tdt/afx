@@ -100,8 +100,8 @@
                                     </div>
                                     <p class="small text-secondary p-2 bg-light">Notice: Minimum single deposit amount
                                         is {{minDeposit}}</p>
-                                    <div *ngIf="errMessage" class="invalid-mess">
-                                      <div>{{errMessage}}</div>
+                                    <div *ngIf="errMessageQuickDeposit == false" class="invalid-mess">
+                                      <div>Your Margin Level is nearly the Margin Call Level</div>
                                     </div>
                                     <button
                                         class="btn btn-warning btn-block text-uppercase btn-lg mb-3" (click)="onSubmit()"><strong>Deposit</strong></button>
@@ -232,7 +232,7 @@
                                                         class="form-control form-control-lg text-right font-weight-bold text-warning" (change)="changeDepositCal($event.target.value)"
                                                         value="10,000" placeholder="">
                                                 </div>
-                                                <div *ngIf="depositError2 == false" class="invalid-mess">
+                                                <div *ngIf="bankError == false" class="invalid-mess">
                                                   <div>Minimum amount is not below {{minDeposit}}</div>
                                                 </div>
                                                 <div class="mb-1 d-flex justify-content-between">
@@ -243,15 +243,15 @@
                                                 </div>
                                                 <div class="mb-1 d-flex justify-content-between align-items-center">
                                                     <label class="label">Margin Level estimate</label>
-                                                    <div>{{marginLevelEstimate2}}%</div>
+                                                    <div>{{marginLevelEstimateBank}}%</div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <p class="small text-secondary p-2 bg-light">Notice: Minimum single deposit amount
                                         is {{minDeposit}}</p>
-                                    <div *ngIf="errMessage" class="invalid-mess">
-                                      <div>{{errMessage2}}</div>
+                                    <div *ngIf="errMessageBankTran == false" class="invalid-mess">
+                                      <div>Your Margin Level is nearly the Margin Call Level</div>
                                     </div>
                                     <p class="text-center" style="line-height: 1.2"><a href="javascript:;"
                                             data-toggle="modal" data-target="#modal-rule"><i
