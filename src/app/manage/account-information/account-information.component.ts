@@ -17,16 +17,9 @@ export class AccountInformationComponent implements OnInit {
 
 
   constructor(
-    private translateee: TranslateService,
+    private translate: TranslateService,
     private withdrawRequestService: WithdrawRequestService,
     private userService: UserService) {
-      if (localStorage.getItem('locale')) {
-        const browserLang = localStorage.getItem('locale');
-        translateee.use(browserLang.match(/en|fr/) ? browserLang : 'en');
-      } else {
-        localStorage.setItem('locale', 'en');
-        translateee.setDefaultLang('en');
-      }
      }
   accountInfor: Mt5Model;
   withdrawAmount: WithdrawAmountModel;
@@ -60,9 +53,7 @@ export class AccountInformationComponent implements OnInit {
   test: any;
   isCompany: string;
   isUser: string;
-
-
-
+  language: string;
 
   ngOnInit() {
     this.initUserForm();
@@ -93,7 +84,6 @@ export class AccountInformationComponent implements OnInit {
       house_numb: new FormControl(),
       email: new FormControl(),
       phone: new FormControl(),
-      // language: new FormControl(),
     });
   }
   initCorporateForm() {
@@ -118,10 +108,13 @@ export class AccountInformationComponent implements OnInit {
       current_password: new FormControl(),
       new_password: new FormControl(),
       confirm_password: new FormControl(),
+      language: new FormControl(),
     });
+    this.changePassForm.controls.language.setValue(localStorage.getItem('locale'));
   }
   changeLang(event) {
-    this.translateee.use(event);
+    this.translate.use(event);
+    localStorage.setItem('locale', event);
   }
 
   getUserInfo() {

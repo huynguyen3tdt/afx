@@ -8,6 +8,7 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
 
@@ -17,7 +18,8 @@ import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
         ReactiveFormsModule,
         RouterModule.forChild(RegisterRoutes),
         BsDatepickerModule.forRoot(),
-        Ng4LoadingSpinnerModule.forRoot()
+        Ng4LoadingSpinnerModule.forRoot(),
+        TranslateModule
     ],
 
     providers: [],

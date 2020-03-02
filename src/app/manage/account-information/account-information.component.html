@@ -565,13 +565,12 @@
                                     <label class="label mt-1">{{'Language' | translate}}</label>
                                 </div>
                                 <div class="col-md-8 col-lg-9">
-                                    <select (change)="changeLang($event.target.value)" class="form-control form-control-sm select2" style="max-width: 240px;">
-                                      <option value="en">{{'English' | translate}}</option>
-                                      <option value="fr">{{'English' | translate}}</option>
+                                    <select formControlName="language" (change)="changeLang($event.target.value)" class="form-control form-control-sm select2" style="max-width: 240px;">
+                                      <option value="en">English</option>
+                                      <option value="jp">Japanese</option>
                                   </select>
                                 </div>
                             </div>
-
                         </div>
                         <!-- END SETTING -->
                     </div>

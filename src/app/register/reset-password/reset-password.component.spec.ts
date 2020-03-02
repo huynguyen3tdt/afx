@@ -9,6 +9,7 @@ import {PaginationModule} from 'ngx-bootstrap';
 import {AuthenService} from '../../core/services/authen.service';
 import {EnvConfigService} from '../../core/services/env-config.service';
 import {Router} from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('ResetPasswordComponent', () => {
   let component: ResetPasswordComponent;
@@ -22,6 +23,7 @@ describe('ResetPasswordComponent', () => {
         ReactiveFormsModule,
         FormsModule,
         HttpClientModule,
+        TranslateModule.forRoot()
       ],
       providers: [
         AuthenService,
