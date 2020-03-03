@@ -4,7 +4,9 @@ import { WithdrawRequestService } from 'src/app/core/services/withdraw-request.s
 import { FormGroup, FormControl } from '@angular/forms';
 import { requiredInput } from 'src/app/core/helper/custom-validate.helper';
 import { BankInforModel, Mt5Model, TransactionModel } from 'src/app/core/model/withdraw-request-response.model';
-import { MIN_WITHDRAW, ACCOUNT_ID } from './../../core/constant/authen-constant';
+import { MIN_WITHDRAW, ACCOUNT_IDS } from './../../core/constant/authen-constant';
+import { GlobalService } from 'src/app/core/services/global.service';
+import { AccountType } from 'src/app/core/model/report-response.model';
 declare var $: any;
 
 @Component({
@@ -28,18 +30,24 @@ export class WithdrawRequestComponent implements OnInit {
   equityEstimate: number;
   marginLevelEstimate: number;
   errMessage: boolean;
-  accountId: string;
+  accountID: number;
   equity: number;
   usedMargin: number;
+  listTradingAccount: Array<AccountType>;
 
 
-  constructor(private withdrawRequestService: WithdrawRequestService, ) { }
+  constructor(private withdrawRequestService: WithdrawRequestService
+              ) { }
 
   ngOnInit() {
-    this.accountId = localStorage.getItem(ACCOUNT_ID);
+    this.listTradingAccount = JSON.parse(localStorage.getItem(ACCOUNT_IDS));
+    if (this.listTradingAccount) {
+      this.accountID = Number(this.listTradingAccount[0].account_id);
+    }
+
     this.minWithdraw = localStorage.getItem(MIN_WITHDRAW);
     this.initWithdrawForm();
-    this.getMt5Infor(this.accountId);
+    this.getMt5Infor(this.accountID);
     this.getBankInfor();
     this.getDwAmount();
     this.getDwHistory();
@@ -59,7 +67,7 @@ export class WithdrawRequestComponent implements OnInit {
       return;
     }
     const param = {
-      account_id: '1234',
+      ACCOUNT_IDS: '1234',
       amount: this.withdrawForm.controls.amount.value,
       currency: 'JPY'
     };
@@ -122,7 +130,7 @@ export class WithdrawRequestComponent implements OnInit {
     }
   }
   onRefesh() {
-    this.getMt5Infor(this.accountId);
+    this.getMt5Infor(this.accountID);
   }
 
   openDetailTransaction(item) {

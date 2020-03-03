@@ -3,15 +3,14 @@ import { WithdrawRequestService } from 'src/app/core/services/withdraw-request.s
 import { FormGroup, FormControl } from '@angular/forms';
 import { TransactionModel, BankInforModel } from 'src/app/core/model/withdraw-request-response.model';
 import * as moment from 'moment';
-import { ACCOUNT_ID } from 'src/app/core/constant/authen-constant';
+import { ACCOUNT_IDS } from 'src/app/core/constant/authen-constant';
 import { JAPAN_FORMATDATE, JAPAN_FORMATDATE_HH_MM } from 'src/app/core/constant/format-date-constant';
 import {
   PaymentMethod,
-  PaymentMethodValue,
   TYPEOFTRANHISTORY,
-  TYPEOFTRANHISTORYVALUE,
-  STATUSTRANHISTORY,
-  STATUSTRANHISTORYVALUE } from 'src/app/core/constant/method-enum';
+  STATUSTRANHISTORY } from 'src/app/core/constant/payment-method-constant';
+import { GlobalService } from 'src/app/core/services/global.service';
+import { AccountType } from 'src/app/core/model/report-response.model';
 declare var $: any;
 
 @Component({
@@ -27,7 +26,7 @@ export class WithdrawHistoryComponent implements OnInit {
   isSubmitted;
   fromDate: Date = new Date();
   toDate: Date = new Date();
-  listTradingAccount: Array<number> = [];
+  listTradingAccount: Array<AccountType>;
   showErrorDate: boolean;
   recordFrom: number;
   recordTo: number;
@@ -48,12 +47,12 @@ export class WithdrawHistoryComponent implements OnInit {
     YEAR: 'year'
   };
 
-  constructor(private withdrawRequestService: WithdrawRequestService, ) { }
+  constructor(private withdrawRequestService: WithdrawRequestService) { }
 
   ngOnInit() {
     this.currentPage = 1;
     this.pageSize = 10;
-    this.listTradingAccount.push(Number(localStorage.getItem(ACCOUNT_ID)));
+    this.listTradingAccount = JSON.parse(localStorage.getItem(ACCOUNT_IDS));
     this.initSearchForm();
     this.getTranHistory(this.searchForm.controls.tradingAccount.value, this.currentPage, this.pageSize, this.TABS.ALL.value,
       this.formatDate(this.searchForm.controls.fromDate.value), this.formatDate(this.searchForm.controls.toDate.value));
@@ -61,7 +60,7 @@ export class WithdrawHistoryComponent implements OnInit {
 
   initSearchForm() {
     this.searchForm = new FormGroup({
-      tradingAccount: new FormControl(this.listTradingAccount[0]),
+      tradingAccount: new FormControl(this.listTradingAccount ? this.listTradingAccount[0].account_id : null),
       fromDate: new FormControl(null),
       toDate: new FormControl(null)
     });
@@ -154,6 +153,7 @@ export class WithdrawHistoryComponent implements OnInit {
     }
     if (callSearh) {
       this.currentPage = 1;
+      this.pageSize = 10;
       this.searchTranHistory();
     }
   }
@@ -196,33 +196,33 @@ export class WithdrawHistoryComponent implements OnInit {
   }
 
   checkPaymentMedthod(type: string) {
-    if (type === PaymentMethod.QUICKDEPOSIT) {
-      return PaymentMethodValue.QUICKDEPOSIT;
+    if (type === PaymentMethod.QUICKDEPOSIT.key) {
+      return PaymentMethod.QUICKDEPOSIT.name;
     }
-    if (type === PaymentMethod.BANKTRANSFER) {
-      return PaymentMethodValue.BANKTRANSFER;
+    if (type === PaymentMethod.BANKTRANSFER.key) {
+      return PaymentMethod.BANKTRANSFER.name;
     }
     return '';
   }
   checkType(type: string) {
-    if (type === TYPEOFTRANHISTORY.DEPOSIT) {
-      return TYPEOFTRANHISTORYVALUE.DEPOSIT;
+    if (type === TYPEOFTRANHISTORY.DEPOSIT.key) {
+      return TYPEOFTRANHISTORY.DEPOSIT.name;
     }
-    if (type === TYPEOFTRANHISTORY.WITHDRAWAL) {
-      return TYPEOFTRANHISTORYVALUE.WITHDRAWAL;
+    if (type === TYPEOFTRANHISTORY.WITHDRAWAL.key) {
+      return TYPEOFTRANHISTORY.WITHDRAWAL.name;
     }
     return '';
   }
 
   checkStatus(status: number) {
-    if (status === STATUSTRANHISTORY.COMPLETE) {
-      return STATUSTRANHISTORYVALUE.COMPLETE;
+    if (status === STATUSTRANHISTORY.COMPLETE.key) {
+      return STATUSTRANHISTORY.COMPLETE.name;
     }
-    if (status === STATUSTRANHISTORY.CANCEL) {
-      return STATUSTRANHISTORYVALUE.CANCEL;
+    if (status === STATUSTRANHISTORY.CANCEL.key) {
+      return STATUSTRANHISTORY.CANCEL.name;
     }
-    if (status === STATUSTRANHISTORY.PENDING) {
-      return STATUSTRANHISTORYVALUE.PENDING;
+    if (status === STATUSTRANHISTORY.PENDING.key) {
+      return STATUSTRANHISTORY.PENDING.name;
     }
     return null;
   }

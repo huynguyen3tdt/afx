@@ -6,14 +6,16 @@ import {
   PASSWORD_LOGIN,
   REMEMBER_LOGIN,
   TOKEN_AFX,
-  ACCOUNT_ID,
   FIRST_LOGIN,
   IS_COMPANY,
   MIN_DEPOST,
   MIN_WITHDRAW,
+  ACCOUNT_IDS,
+  ACCOUNT_TYPE,
 } from './../../core/constant/authen-constant';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthenService } from 'src/app/core/services/authen.service';
+import { AccountType } from 'src/app/core/model/report-response.model';
 declare const $: any;
 
 @Component({
@@ -101,8 +103,9 @@ export class LoginComponent implements OnInit, AfterViewInit {
           localStorage.removeItem(PASSWORD_LOGIN);
           localStorage.setItem(REMEMBER_LOGIN, 'false');
         }
+        response.data.account_ids = this.getListAccountIds(response.data.account_ids);
         localStorage.setItem(TOKEN_AFX, response.data.access_token);
-        localStorage.setItem(ACCOUNT_ID, response.data.account_ids[0].account_id.toString());
+        localStorage.setItem(ACCOUNT_IDS, JSON.stringify(response.data.account_ids));
         localStorage.setItem(IS_COMPANY, response.data.is_company.toString());
         localStorage.setItem(MIN_DEPOST, response.data.module_funding_min_deposit.toString());
         localStorage.setItem(MIN_WITHDRAW, response.data.module_funding_min_withdraw.toString());
@@ -143,6 +146,31 @@ export class LoginComponent implements OnInit, AfterViewInit {
       return true;
     }
     return false;
+  }
+
+  getListAccountIds(data) {
+    const listData = [];
+    if (data) {
+      // tslint:disable-next-line:no-shadowed-variable
+      data.map((element: any) => {
+        if (element.account_type === ACCOUNT_TYPE.ACCOUNT_FX.account_type) {
+          element.value = ACCOUNT_TYPE.ACCOUNT_FX.name + '-' + element.account_id;
+        }
+        if (element.account_type === ACCOUNT_TYPE.ACCOUNT_CFDIndex.account_type) {
+          element.value = ACCOUNT_TYPE.ACCOUNT_CFDIndex.name + '-' + element.account_id;
+        }
+        if (element.account_type === ACCOUNT_TYPE.ACCOUNT_CFDCom.account_type) {
+          element.value = ACCOUNT_TYPE.ACCOUNT_CFDCom.name + '-' + element.account_id;
+        }
+        const dataObj: AccountType = {
+          account_type: element.account_type,
+          account_id: element.account_id,
+          value : element.value
+        };
+        listData.push(dataObj);
+      });
+    }
+    return listData;
   }
 
   checkDevice() {
