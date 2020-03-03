@@ -4,7 +4,9 @@ import { requiredInput } from 'src/app/core/helper/custom-validate.helper';
 import { DepositModel } from 'src/app/core/model/deposit-response.model';
 import { DepositService } from 'src/app/core/services/deposit.service';
 import { element } from 'protractor';
-import { MIN_DEPOST } from 'src/app/core/constant/authen-constant';
+import { MIN_DEPOST, ACCOUNT_ID } from 'src/app/core/constant/authen-constant';
+import { WithdrawRequestService } from './../../core/services/withdraw-request.service';
+import { Mt5Model } from 'src/app/core/model/withdraw-request-response.model';
 declare var $: any;
 
 @Component({
@@ -13,17 +15,39 @@ declare var $: any;
   styleUrls: ['./deposit.component.css']
 })
 export class DepositComponent implements OnInit {
+  constructor(private depositService: DepositService,
+              private withdrawRequestService: WithdrawRequestService) { }
   depositAmountForm: FormGroup;
   depositTransactionForm: FormGroup;
   listBankTranfer: Array<DepositModel>;
   minDeposit: string;
-  constructor(private depositService: DepositService) { }
+  mt5Infor: Mt5Model;
+  equity: number;
+  usedMargin: number;
+  isSubmitted: boolean;
+  equityEstimate: number;
+  equityDeposit: number;
+  marginLevelEstimate: number;
+  marginLevelEstimateBank: number;
+  errMessageQuickDeposit: boolean;
+  errMessageBankTran: boolean;
+  depositError: boolean;
+  bankError: boolean;
+  depositValue: number;
+  depositAmount: number;
+  accountId: string;
+
+
 
   ngOnInit() {
+    this.accountId = localStorage.getItem(ACCOUNT_ID);
     this.minDeposit = localStorage.getItem(MIN_DEPOST);
     this.initDepositAmountForm();
     this.initDepositTransactionForm();
     this.getDepositBank();
+    this.getMt5Infor(this.accountId);
+    this.countDeposit();
+    this.countDepositAmount();
   }
 
   initDepositAmountForm() {
@@ -61,6 +85,15 @@ export class DepositComponent implements OnInit {
     });
   }
 
+  getMt5Infor(accountId) {
+    this.withdrawRequestService.getmt5Infor(accountId).subscribe(response => {
+      if (response.meta.code === 200) {
+        this.mt5Infor = response.data;
+        this.equity = this.mt5Infor.equity;
+        this.usedMargin = this.mt5Infor.used_margin;
+      }
+    });
+  }
 
   showInforBank(index) {
     setTimeout(() => {
@@ -82,5 +115,46 @@ export class DepositComponent implements OnInit {
     }, 50);
 
   }
-
+  onSubmit() {
+    this.isSubmitted = true;
+    if (this.depositTransactionForm.invalid) {
+      return;
+    }
+  }
+  changeDeposit(event: any) {
+    const numeral = require('numeral');
+    this.depositValue = numeral(this.depositTransactionForm.controls.deposit.value).value();
+    if (this.depositValue < 10000) {
+      this.depositError = true;
+      return;
+    }
+    this.depositError = false;
+    this.countDeposit();
+  }
+  changeDepositCal(event: any) {
+    const numeral = require('numeral');
+    this.depositAmount = numeral(this.depositAmountForm.controls.deposit.value).value();
+    if (this.depositAmount < 10000) {
+      this.bankError = true;
+      return;
+    }
+    this.bankError = false;
+    this.countDepositAmount();
+  }
+  countDeposit() {
+    this.errMessageQuickDeposit = false;
+    this.equityEstimate = Math.floor(this.equity + this.depositValue);
+    this.marginLevelEstimate = Math.floor(((this.usedMargin + this.equityEstimate) / 2000) * 100);
+    if (this.marginLevelEstimate <= 100) {
+      this.errMessageQuickDeposit = true;
+    }
+  }
+  countDepositAmount() {
+    this.errMessageBankTran = false;
+    this.equityDeposit = Math.floor(this.equity + this.depositAmount);
+    this.marginLevelEstimateBank = Math.floor(((this.usedMargin + this.equityDeposit) / 2000) * 100);
+    if (this.marginLevelEstimateBank <= 100) {
+      this.errMessageBankTran = true;
+    }
+  }
 }

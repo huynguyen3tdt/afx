@@ -6,7 +6,7 @@ import { InnerSubscriber } from 'rxjs/internal/InnerSubscriber';
 import { EnvConfigService } from './env-config.service';
 import { catchError } from 'rxjs/operators';
 import {TotalNotificationResponse} from '../model/page-noti.model';
-import {DepositResponse} from '../model/deposit-response.model';
+import {DepositResponse, BillingSystemModel} from '../model/deposit-response.model';
 
 
 
@@ -27,5 +27,17 @@ export class DepositService {
             });
           })
         );
+  }
+  billingSystem(param): Observable<BillingSystemModel> {
+    return this.httpClient
+      .post(`${this.envConfigService.getConfig()}/${AppSettings.API_DEPOSIT_BIILING}`,
+        param)
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          return new Observable((observer: InnerSubscriber<any, any>) => {
+            observer.next(error);
+          });
+        })
+      );
   }
 }

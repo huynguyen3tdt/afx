@@ -15,4 +15,19 @@ export interface DepositModel {
   fx_acc_type: string;
   bic: string;
   currency: string;
- }
+}
+
+export interface BillingSystemResponse {
+  meta: MetaResponseModel;
+  data: BillingSystemModel;
+}
+
+export interface BillingSystemModel {
+  id: number;
+  create_date: string;
+  currency: string;
+  method: string;
+  amount: number;
+  funding_type: string;
+  status: number;
+}

@@ -26,10 +26,9 @@
                                         <div class="mb-1 d-flex justify-content-between">
                                             <label class="label">{{'Trading account' | translate}}</label>
                                             <div>
-                                                <select class="form-control form-control-sm" style="min-width: 80px;background: none;">
-                                                    <option>FX - 10000001</option>
-                                                    <option>CFD - 20000001</option>
-                                                </select>
+                                              <select disabled class="form-control form-control-sm" style="min-width: 80px;background: none;">
+                                                <option value="{{accountId}}">{{accountId}}</option>
+                                              </select>
                                             </div>
                                         </div>
                                         <div class="mb-1 d-flex justify-content-between">
@@ -41,13 +40,13 @@
                                         <div class="mb-1 d-flex justify-content-between">
                                             <label class="label">{{'Balance' | translate}}</label>
                                             <div>
-                                                <strong>90,000</strong>
+                                                <strong>{{mt5Infor?.balance | number}}</strong>
                                             </div>
                                         </div>
                                         <div class="mb-1 d-flex justify-content-between">
                                             <label class="label">{{'Margin Level' | translate}}</label>
                                             <div>
-                                                <strong>154.36%</strong>
+                                                <strong>{{mt5Infor?.margin_level | number}}%</strong>
                                             </div>
                                         </div>
                                         <div class="d-flex align-items-center">
@@ -66,7 +65,12 @@
                                         <div class="form form-line">
                                             <div class="mb-3">
                                                 <label class="label">{{'Deposit Amount' | translate}}</label>
-                                                <input type="text" name="amount" formControlName="deposit" currency class="form-control form-control-lg text-right font-weight-bold text-warning" value="10,000" placeholder="">
+                                                <input type="text" name="amount" formControlName="deposit" (change)="changeDeposit($event.target.value)" currency [ngClass]="{'invalid': isSubmitted && depositTransactionForm.controls['deposit'].errors}"
+                                                    class="form-control form-control-lg text-right font-weight-bold text-warning deposit" autocomplete="off"
+                                                    value="10,000" placeholder="">
+                                            </div>
+                                            <div *ngIf="depositError == true" class="invalid-mess">
+                                              <div>Minimum amount is not below {{minDeposit}}</div>
                                             </div>
                                             <div class="mb-1 d-flex justify-content-between">
                                                 <label class="label">{{'Currency' | translate}}</label>
@@ -84,14 +88,19 @@
                                             </div>
                                             <div class="mb-1 d-flex justify-content-between align-items-center">
                                                 <label class="label">{{'Margin Level estimate' | translate}}</label>
-                                                <div><strong>174.28%</strong></div>
+                                                <div><strong>{{marginLevelEstimate}}%</strong></div>
                                             </div>
                                         </div>
                                     </div>
-                                    <p class="small text-secondary p-2 bg-light">{{'Notice: Minimum single deposit amount is ......' | translate}} {{minDeposit}}</p>
-                                    <button class="btn btn-warning btn-block text-uppercase btn-lg mb-3"><strong>Deposit</strong></button>
-                                    <p class="text-center" style="line-height: 1.2"><a href="javascript:;" data-toggle="modal" data-target="#modal-rule"><i
-                                                class="icon ion-md-information-circle"></i>{{'General rules for depositing and withdrawing funds' | translate}}</a></p>
+                                    <p class="small text-secondary p-2 bg-light">{{'Notice: Minimum single deposit amount is' | translate}} {{minDeposit}}</p>
+                                    <div *ngIf="errMessageQuickDeposit == true" class="invalid-mess">
+                                      <div>Your Margin Level is nearly the Margin Call Level</div>
+                                    </div>
+                                    <button
+                                        class="btn btn-warning btn-block text-uppercase btn-lg mb-3" (click)="onSubmit()"><strong>Deposit</strong></button>
+                                    <p class="text-center" style="line-height: 1.2"><a href="javascript:;"
+                                            data-toggle="modal" data-target="#modal-rule"><i
+                                                class="icon ion-md-information-circle"></i> {{'General rules for depositing and withdrawing funds' | translate}}</a></p>
                                 </div>
                             </div>
                         </div>
@@ -167,10 +176,9 @@
                                         <div class="mb-1 d-flex justify-content-between">
                                             <label class="label">{{'Trading account' | translate}}</label>
                                             <div>
-                                                <select class="form-control form-control-sm" style="min-width: 80px;background: none;">
-                                                    <option>FX - 10000001</option>
-                                                    <option>CFD - 20000001</option>
-                                                </select>
+                                              <select disabled class="form-control form-control-sm" style="min-width: 80px;background: none;">
+                                                <option value="{{accountId}}">{{accountId}}</option>
+                                              </select>
                                             </div>
                                         </div>
                                         <div class="mb-1 d-flex justify-content-between">
@@ -182,13 +190,13 @@
                                         <div class="mb-1 d-flex justify-content-between">
                                             <label class="label">{{'Balance' | translate}}</label>
                                             <div>
-                                                <strong>90,000</strong>
+                                                <strong>{{mt5Infor?.balance | number}}</strong>
                                             </div>
                                         </div>
                                         <div class="mb-1 d-flex justify-content-between">
                                             <label class="label">{{'Margin Level' | translate}}</label>
                                             <div>
-                                                <strong>154.36%</strong>
+                                                <strong>{{mt5Infor?.margin_level | number}}%</strong>
                                             </div>
                                         </div>
                                         <div class="d-flex align-items-center">
@@ -205,7 +213,12 @@
                                             <div class="form form-line">
                                                 <div class="mb-3">
                                                     <label class="label">{{'Deposit Amount' | translate}}</label>
-                                                    <input type="text" name="amount" formControlName="deposit" currency class="form-control form-control-lg text-right font-weight-bold text-warning" value="10,000" placeholder="">
+                                                    <input type="text" name="amount" formControlName="deposit" currency autocomplete="off"
+                                                        class="form-control form-control-lg text-right font-weight-bold text-warning" (change)="changeDepositCal($event.target.value)"
+                                                        value="10,000" placeholder="">
+                                                </div>
+                                                <div *ngIf="bankError == true" class="invalid-mess">
+                                                  <div>Minimum amount is not below {{minDeposit}}</div>
                                                 </div>
                                                 <div class="mb-1 d-flex justify-content-between">
                                                     <label class="label">{{'Currency' | translate}}</label>
@@ -215,13 +228,17 @@
                                                 </div>
                                                 <div class="mb-1 d-flex justify-content-between align-items-center">
                                                     <label class="label">{{'Margin Level estimate' | translate}}</label>
-                                                    <div>174.28%</div>
+                                                    <div>{{marginLevelEstimateBank}}%</div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <p class="small text-secondary p-2 bg-light">{{'Notice: Minimum single deposit amount is' | translate}} {{minDeposit}}</p>
-                                    <p class="text-center" style="line-height: 1.2"><a href="javascript:;" data-toggle="modal" data-target="#modal-rule"><i
+                                    <div *ngIf="errMessageBankTran == true" class="invalid-mess">
+                                      <div>Your Margin Level is nearly the Margin Call Level</div>
+                                    </div>
+                                    <p class="text-center" style="line-height: 1.2"><a href="javascript:;"
+                                            data-toggle="modal" data-target="#modal-rule"><i
                                                 class="icon ion-md-information-circle"></i> {{'General rules for depositing and withdrawing funds' | translate}}</a></p>
                                 </div>
                             </div>

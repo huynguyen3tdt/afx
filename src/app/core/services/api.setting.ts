@@ -19,4 +19,5 @@ export class AppSettings {
     public static API_GET_CORPORATION           = `api/${versionAPI}/users/corporation/`;
     public static API_TOTAL_NOTI                = `api/${versionAPI}/news/total_noti/`;
     public static API_DEPOSIT_BANK_TRANFER      = `api/${versionAPI}/deposits/bank_transfer/`;
+    public static API_DEPOSIT_BIILING           = `api/${versionAPI}/deposits/billing_system/`;
 }

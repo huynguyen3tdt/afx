@@ -4,7 +4,7 @@ import { WithdrawRequestService } from 'src/app/core/services/withdraw-request.s
 import { FormGroup, FormControl } from '@angular/forms';
 import { requiredInput } from 'src/app/core/helper/custom-validate.helper';
 import { BankInforModel, Mt5Model, TransactionModel } from 'src/app/core/model/withdraw-request-response.model';
-import { MIN_WITHDRAW } from './../../core/constant/authen-constant';
+import { MIN_WITHDRAW, ACCOUNT_ID } from './../../core/constant/authen-constant';
 declare var $: any;
 
 @Component({
@@ -23,16 +23,27 @@ export class WithdrawRequestComponent implements OnInit {
   listDwHistory;
   transactionDetail: TransactionModel;
   minWithdraw: string;
+  depositValue: number;
+  withdrawError: boolean;
+  equityEstimate: number;
+  marginLevelEstimate: number;
+  errMessage: boolean;
+  accountId: string;
+  equity: number;
+  usedMargin: number;
+
 
   constructor(private withdrawRequestService: WithdrawRequestService, ) { }
 
   ngOnInit() {
+    this.accountId = localStorage.getItem(ACCOUNT_ID);
     this.minWithdraw = localStorage.getItem(MIN_WITHDRAW);
     this.initWithdrawForm();
-    this.getMt5Infor();
+    this.getMt5Infor(this.accountId);
     this.getBankInfor();
     this.getDwAmount();
     this.getDwHistory();
+    this.countWithdraw();
   }
 
   initWithdrawForm() {
@@ -57,11 +68,12 @@ export class WithdrawRequestComponent implements OnInit {
     });
   }
 
-  getMt5Infor() {
-    this.withdrawRequestService.getmt5Infor().subscribe(response => {
+  getMt5Infor(accountId) {
+    this.withdrawRequestService.getmt5Infor(accountId).subscribe(response => {
       if (response.meta.code === 200) {
         this.mt5Infor = response.data;
-        // this.accountType = localStorage.getItem(ACCOUNT_TYPE);
+        this.equity = this.mt5Infor.equity;
+        this.usedMargin = this.mt5Infor.used_margin;
       }
     });
   }
@@ -90,8 +102,27 @@ export class WithdrawRequestComponent implements OnInit {
     //   }
     // });
   }
+
+  changeWithdtaw(event: any) {
+    const numeral = require('numeral');
+    this.depositValue = numeral(this.withdrawForm.controls.amount.value).value();
+    if (this.depositValue < 10000) {
+      this.withdrawError = true;
+      return;
+    }
+    this.withdrawError = false;
+    this.countWithdraw();
+  }
+  countWithdraw() {
+    this.errMessage = false;
+    this.equityEstimate = Math.floor(this.equity - this.depositValue);
+    this.marginLevelEstimate = Math.floor(((this.usedMargin + this.equityEstimate) / 2000) * 100);
+    if (this.marginLevelEstimate <= 100) {
+      this.errMessage = true;
+    }
+  }
   onRefesh() {
-    this.getMt5Infor();
+    this.getMt5Infor(this.accountId);
   }
 
   openDetailTransaction(item) {
