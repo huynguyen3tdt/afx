@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ReportService } from 'src/app/core/services/report.service';
 import { ReportIDS } from 'src/app/core/model/report-response.model';
 import { FormGroup, FormControl } from '@angular/forms';
 import { ACCOUNT_ID } from 'src/app/core/constant/authen-constant';
-import * as moment from 'moment';
 import { JAPAN_FORMATDATE } from 'src/app/core/constant/format-date-constant';
+import * as moment from 'moment';
+declare var $: any;
 
 @Component({
   selector: 'app-report-list',
@@ -12,6 +13,7 @@ import { JAPAN_FORMATDATE } from 'src/app/core/constant/format-date-constant';
   styleUrls: ['./report-list.component.css']
 })
 export class ReportListComponent implements OnInit {
+  @ViewChild('pdfViewer', { static: false }) public pdfViewer;
   currentPage: number;
   pageSize: number;
   totalItem: number;
@@ -166,5 +168,13 @@ export class ReportListComponent implements OnInit {
       return date.split('/')[2] + '-' + date.split('/')[1] + '-' + date.split('/')[0];
     }
     return null;
+  }
+
+  openPDF(item: ReportIDS) {
+    if (item.file_type === 'pdf') {
+      this.pdfViewer.pdfSrc = item.file_path;
+      this.pdfViewer.refresh();
+      $('#modal-2').modal('show');
+    }
   }
 }

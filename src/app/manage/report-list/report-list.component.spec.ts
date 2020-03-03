@@ -8,6 +8,7 @@ import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
 import { RouterTestingModule } from '@angular/router/testing';
 import { EnvConfigService } from 'src/app/core/services/env-config.service';
 import { TranslateModule } from '@ngx-translate/core';
+import { PdfJsViewerModule } from 'ng2-pdfjs-viewer';
 
 describe('ReportListComponent', () => {
   let component: ReportListComponent;
@@ -24,7 +25,8 @@ describe('ReportListComponent', () => {
         Ng4LoadingSpinnerModule,
         RouterTestingModule,
         BsDatepickerModule.forRoot(),
-        TranslateModule.forRoot()
+        TranslateModule.forRoot(),
+        PdfJsViewerModule
       ],
       providers: [ReportListComponent, EnvConfigService]
     })
