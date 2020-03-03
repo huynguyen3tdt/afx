@@ -5,7 +5,9 @@ import { Mt5Model, WithdrawAmountModel } from 'src/app/core/model/withdraw-reque
 import { UserService } from './../../core/services/user.service';
 import { UserModel, CorporateResponse, CorporateModel } from 'src/app/core/model/user.model';
 import { FormGroup, FormControl } from '@angular/forms';
-import { IS_COMPANY, ACCOUNT_ID } from 'src/app/core/constant/authen-constant';
+import { IS_COMPANY, ACCOUNT_IDS } from 'src/app/core/constant/authen-constant';
+import { GlobalService } from 'src/app/core/services/global.service';
+import { AccountType } from 'src/app/core/model/report-response.model';
 declare var $: any;
 
 @Component({
@@ -19,7 +21,8 @@ export class AccountInformationComponent implements OnInit {
   constructor(
     private translate: TranslateService,
     private withdrawRequestService: WithdrawRequestService,
-    private userService: UserService) {
+    private userService: UserService
+    ) {
      }
   accountInfor: Mt5Model;
   withdrawAmount: WithdrawAmountModel;
@@ -54,10 +57,14 @@ export class AccountInformationComponent implements OnInit {
   isCompany: string;
   isUser: string;
   language: string;
-  accountId: string;
+  listTradingAccount: Array<AccountType>;
+  accountID: number;
 
   ngOnInit() {
-    this.accountId = localStorage.getItem(ACCOUNT_ID);
+    this.listTradingAccount = JSON.parse(localStorage.getItem(ACCOUNT_IDS));
+    if (this.listTradingAccount) {
+      this.accountID = Number(this.listTradingAccount[0].account_id);
+    }
     this.initUserForm();
     this.initCorporateForm();
     this.initSettingForm();
@@ -72,7 +79,7 @@ export class AccountInformationComponent implements OnInit {
     this.editPersonPicname = false;
     this.editPersonPhone = false;
     this.editPersonEmail = false;
-    this.getMt5Infor(this.accountId);
+    this.getMt5Infor(this.accountID);
     this.getWithDrawAmount();
     this.getCorporateInfor();
     this.getUserInfo();

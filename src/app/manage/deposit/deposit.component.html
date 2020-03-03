@@ -26,9 +26,9 @@
                                         <div class="mb-1 d-flex justify-content-between">
                                             <label class="label">{{'Trading account' | translate}}</label>
                                             <div>
-                                              <select disabled class="form-control form-control-sm" style="min-width: 80px;background: none;">
-                                                <option value="{{accountId}}">{{accountId}}</option>
-                                              </select>
+                                            <select [(ngModel)]="accountID" disabled class="form-control form-control-sm" style="min-width: 80px;background: none;">
+                                                <option *ngFor="let item of listTradingAccount" value="{{item?.account_id}}">{{item?.value}}</option>
+                                             </select>
                                             </div>
                                         </div>
                                         <div class="mb-1 d-flex justify-content-between">
@@ -176,8 +176,8 @@
                                         <div class="mb-1 d-flex justify-content-between">
                                             <label class="label">{{'Trading account' | translate}}</label>
                                             <div>
-                                              <select disabled class="form-control form-control-sm" style="min-width: 80px;background: none;">
-                                                <option value="{{accountId}}">{{accountId}}</option>
+                                              <select [(ngModel)]="accountID" disabled class="form-control form-control-sm" style="min-width: 80px;background: none;">
+                                                <option *ngFor="let item of listTradingAccount" value="{{item?.account_id}}">{{item?.value}}</option>
                                               </select>
                                             </div>
                                         </div>

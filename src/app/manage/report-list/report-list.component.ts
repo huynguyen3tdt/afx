@@ -1,10 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ReportService } from 'src/app/core/services/report.service';
-import { ReportIDS } from 'src/app/core/model/report-response.model';
+import { ReportIDS, AccountType } from 'src/app/core/model/report-response.model';
 import { FormGroup, FormControl } from '@angular/forms';
-import { ACCOUNT_ID } from 'src/app/core/constant/authen-constant';
+import { ACCOUNT_IDS } from 'src/app/core/constant/authen-constant';
 import { JAPAN_FORMATDATE } from 'src/app/core/constant/format-date-constant';
 import * as moment from 'moment';
+import { GlobalService } from 'src/app/core/services/global.service';
 declare var $: any;
 
 @Component({
@@ -21,7 +22,7 @@ export class ReportListComponent implements OnInit {
   listReport: Array<ReportIDS>;
   searchForm: FormGroup;
   tradingAccount: number;
-  listTradingAccount: Array<number> = [];
+  listTradingAccount: Array<AccountType>;
   listTotalItem: Array<number> = [10, 20, 30];
   recordFrom: number;
   recordTo: number;
@@ -39,12 +40,12 @@ export class ReportListComponent implements OnInit {
     YEAR: 'year'
   };
 
-  constructor(private reportservice: ReportService, ) { }
+  constructor(private reportservice: ReportService) { }
 
   ngOnInit() {
     this.currentPage = 1;
     this.pageSize = 10;
-    this.listTradingAccount.push(Number(localStorage.getItem(ACCOUNT_ID)));
+    this.listTradingAccount = JSON.parse(localStorage.getItem(ACCOUNT_IDS));
     this.initSearchForm();
     this.getReport(this.searchForm.controls.tradingAccount.value, this.currentPage, this.pageSize, this.TABS.ALL.value,
       this.formatDate(this.searchForm.controls.fromDate.value), this.formatDate(this.searchForm.controls.toDate.value));
@@ -52,7 +53,7 @@ export class ReportListComponent implements OnInit {
 
   initSearchForm() {
     this.searchForm = new FormGroup({
-      tradingAccount: new FormControl(this.listTradingAccount[0]),
+      tradingAccount: new FormControl(this.listTradingAccount ? this.listTradingAccount[0].account_id : null),
       fromDate: new FormControl(null),
       toDate: new FormControl(null)
     });
@@ -127,6 +128,7 @@ export class ReportListComponent implements OnInit {
     }
     if (callSearh) {
       this.currentPage = 1;
+      this.pageSize = 10;
       this.searchReport();
     }
   }

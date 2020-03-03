@@ -84,7 +84,7 @@
                                     </div> -->
                                     <div (click)="showDetail(i, item)" id="important_{{i}}" [ngClass]="{'unread': item.read_flg == false}" class="notification-item item-agreement">
                                         <div class="badge-wrap">
-                                            <span class="badge badge-danger d-lg-block mb-lg-1">Important</span>
+                                            <span class="badge badge-danger d-lg-block mb-lg-1">{{'Important' | translate}}</span>
                                         </div>
                                         <div class="item-header">
                                             <h5 class="item-title"><a href="javascript:;">{{item?.news_title}}</a></h5>

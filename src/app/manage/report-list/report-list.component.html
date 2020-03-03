@@ -27,7 +27,7 @@
                                         <div class="form-group">
                                             <label class="label d-block mb-0">{{'Trading account' | translate}}</label>
                                             <select disabled formControlName="tradingAccount" class="form-control form-control-sm">
-                                                <option *ngFor="let item of listTradingAccount" value="{{item}}">{{item}}</option>
+                                                <option *ngFor="let item of listTradingAccount" value="{{item?.account_id}}">{{item?.value}}</option>
                                             </select>
                                         </div>
                                     </div>
@@ -84,6 +84,7 @@
                                             <th class="border-top-0" width="20">&nbsp;</th>
                                             <th class="border-top-0">{{'Name' | translate}}</th>
                                             <th width="120" class="border-top-0 text-right">{{'Created date' | translate}}</th>
+                                            <th width="120" class="border-top-0 text-right">{{'File type' | translate}}</th>
                                             <th width="120" class="border-top-0 text-right">{{'Status' | translate}}</th>
                                             <th class="border-top-0 text-right">&nbsp;</th>
                                         </tr>
@@ -97,7 +98,10 @@
                                                         href="javascript:;">{{item?.report_title}}</a></strong></td>
                                             <td class="text-right align-middle"><span class="text-secondary">{{item?.create_date}}</span>
                                             </td>
-                                            <td class="text-right align-middle"><span class="text-danger">{{item?.read_flg}}</span></td>
+                                            <td class="text-right align-middle"><span class="text-secondary">{{item?.file_type | uppercase}}</span>
+                                            </td>
+                                            <td *ngIf="item?.read_flg == true" class="text-right align-middle"><span class="text-danger">Done</span></td>
+                                            <td *ngIf="item?.read_flg == false" class="text-right align-middle"><span class="text-danger">Not yet</span></td>
                                             <td class="text-right align-middle">
                                                 <button class="btn btn-sm btn-outline-secondary pt-0 pb-0"><i
                                                         class="icon ion-md-download"></i></button>
@@ -109,7 +113,7 @@
                             <div class="d-flex align-items-center justify-content-between mb-2">
                                 <div>
                                     <div class="d-inline-block mr-2">
-                                        <select (change)="changeTotalItem($event)" class="form-control form-control-sm">
+                                        <select (change)="changeTotalItem($event)" [(ngModel)]="pageSize" class="form-control form-control-sm">
                                             <option *ngFor="let item of listTotalItem" value="{{item}}">{{item}}</option>
                                         </select>
                                     </div>

@@ -19,8 +19,8 @@
                 <div class="mb-1 d-flex justify-content-between">
                   <label class="label">{{'Trading account' | translate}}</label>
                   <div>
-                    <select disabled class="form-control form-control-sm" style="min-width: 80px;background: none;">
-                      <option value="{{accountId}}">{{accountId}}</option>
+                    <select disabled [(ngModel)]="accountID" class="form-control form-control-sm" style="min-width: 80px;background: none;">
+                      <option *ngFor="let item of listTradingAccount" value="{{item?.account_id}}">{{item?.value}}</option>
                     </select>
                   </div>
                 </div>
@@ -111,7 +111,7 @@
                   </div>
                 </div>
               </div>
-              <p class="small text-secondary p-2 bg-light">Notice: Minimum single withdrawal amount is {{minWithdraw}}
+              <p class="small text-secondary p-2 bg-light">{{'Notice: Minimum single withdrawal amount is' | translate}} {{minWithdraw}}
               </p>
               <div *ngIf="errMessage == true" class="invalid-mess">
                 <div>Your Margin Level is nearly the Margin Call Level</div>

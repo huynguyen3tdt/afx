@@ -4,9 +4,11 @@ import { requiredInput } from 'src/app/core/helper/custom-validate.helper';
 import { DepositModel } from 'src/app/core/model/deposit-response.model';
 import { DepositService } from 'src/app/core/services/deposit.service';
 import { element } from 'protractor';
-import { MIN_DEPOST, ACCOUNT_ID } from 'src/app/core/constant/authen-constant';
+import { MIN_DEPOST, ACCOUNT_IDS } from 'src/app/core/constant/authen-constant';
 import { WithdrawRequestService } from './../../core/services/withdraw-request.service';
 import { Mt5Model } from 'src/app/core/model/withdraw-request-response.model';
+import { AccountType } from 'src/app/core/model/report-response.model';
+import { GlobalService } from 'src/app/core/services/global.service';
 declare var $: any;
 
 @Component({
@@ -35,17 +37,19 @@ export class DepositComponent implements OnInit {
   bankError: boolean;
   depositValue: number;
   depositAmount: number;
-  accountId: string;
-
-
+  listTradingAccount: Array<AccountType>;
+  accountID: number;
 
   ngOnInit() {
-    this.accountId = localStorage.getItem(ACCOUNT_ID);
+    this.listTradingAccount = JSON.parse(localStorage.getItem(ACCOUNT_IDS));
+    if (this.listTradingAccount) {
+      this.accountID = Number(this.listTradingAccount[0].account_id);
+    }
     this.minDeposit = localStorage.getItem(MIN_DEPOST);
     this.initDepositAmountForm();
     this.initDepositTransactionForm();
     this.getDepositBank();
-    this.getMt5Infor(this.accountId);
+    this.getMt5Infor(this.accountID);
 
   }
 
@@ -163,6 +167,6 @@ export class DepositComponent implements OnInit {
     }
   }
   onRefesh() {
-    this.getMt5Infor(this.accountId);
+    this.getMt5Infor(this.accountID);
   }
 }
