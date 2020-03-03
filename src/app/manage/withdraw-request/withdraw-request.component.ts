@@ -51,12 +51,13 @@ export class WithdrawRequestComponent implements OnInit {
     this.getBankInfor();
     this.getDwAmount();
     this.getDwHistory();
-    this.countWithdraw();
+
   }
 
   initWithdrawForm() {
+    const numeral = require('numeral');
     this.withdrawForm = new FormGroup({
-      amount: new FormControl('', requiredInput),
+      amount: new FormControl(numeral(10000).format('0,0'), requiredInput),
       wholeMoney: new FormControl(false),
     });
   }
@@ -83,6 +84,7 @@ export class WithdrawRequestComponent implements OnInit {
         this.equity = this.mt5Infor.equity;
         this.usedMargin = this.mt5Infor.used_margin;
       }
+      this.countWithdraw();
     });
   }
   getBankInfor() {
@@ -122,9 +124,10 @@ export class WithdrawRequestComponent implements OnInit {
     this.countWithdraw();
   }
   countWithdraw() {
+    const numeral = require('numeral');
     this.errMessage = false;
-    this.equityEstimate = Math.floor(this.equity - this.depositValue);
-    this.marginLevelEstimate = Math.floor(((this.usedMargin + this.equityEstimate) / 2000) * 100);
+    this.equityEstimate = Math.floor(this.equity - numeral(this.withdrawForm.controls.amount.value).value());
+    this.marginLevelEstimate = Math.floor((this.equityEstimate / this.usedMargin) * 100);
     if (this.marginLevelEstimate <= 100) {
       this.errMessage = true;
     }

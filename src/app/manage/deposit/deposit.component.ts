@@ -50,19 +50,20 @@ export class DepositComponent implements OnInit {
     this.initDepositTransactionForm();
     this.getDepositBank();
     this.getMt5Infor(this.accountID);
-    this.countDeposit();
-    this.countDepositAmount();
+
   }
 
   initDepositAmountForm() {
+    const numeral = require('numeral');
     this.depositAmountForm = new FormGroup({
-      deposit: new FormControl('', requiredInput)
+      deposit: new FormControl(numeral(10000).format('0,0'), requiredInput)
     });
   }
 
   initDepositTransactionForm() {
+    const numeral = require('numeral');
     this.depositTransactionForm = new FormGroup({
-      deposit: new FormControl('', requiredInput)
+      deposit: new FormControl(numeral(10000).format('0,0'), requiredInput)
     });
   }
 
@@ -96,6 +97,8 @@ export class DepositComponent implements OnInit {
         this.equity = this.mt5Infor.equity;
         this.usedMargin = this.mt5Infor.used_margin;
       }
+      this.countDeposit();
+      this.countDepositAmount();
     });
   }
 
@@ -146,19 +149,24 @@ export class DepositComponent implements OnInit {
     this.countDepositAmount();
   }
   countDeposit() {
+    const numeral = require('numeral');
     this.errMessageQuickDeposit = false;
-    this.equityEstimate = Math.floor(this.equity + this.depositValue);
-    this.marginLevelEstimate = Math.floor(((this.usedMargin + this.equityEstimate) / 2000) * 100);
+    this.equityEstimate = Math.floor(this.equity + numeral(this.depositTransactionForm.controls.deposit.value).value());
+    this.marginLevelEstimate = Math.floor((this.equityEstimate / this.usedMargin) * 100);
     if (this.marginLevelEstimate <= 100) {
       this.errMessageQuickDeposit = true;
     }
   }
   countDepositAmount() {
+    const numeral = require('numeral');
     this.errMessageBankTran = false;
-    this.equityDeposit = Math.floor(this.equity + this.depositAmount);
-    this.marginLevelEstimateBank = Math.floor(((this.usedMargin + this.equityDeposit) / 2000) * 100);
+    this.equityDeposit = Math.floor(this.equity + numeral(this.depositAmountForm.controls.deposit.value).value());
+    this.marginLevelEstimateBank = Math.floor((this.equityDeposit / this.usedMargin) * 100);
     if (this.marginLevelEstimateBank <= 100) {
       this.errMessageBankTran = true;
     }
+  }
+  onRefesh() {
+    this.getMt5Infor(this.accountID);
   }
 }
