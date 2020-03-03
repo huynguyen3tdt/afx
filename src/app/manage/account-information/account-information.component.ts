@@ -5,9 +5,7 @@ import { Mt5Model, WithdrawAmountModel } from 'src/app/core/model/withdraw-reque
 import { UserService } from './../../core/services/user.service';
 import { UserModel, CorporateResponse, CorporateModel } from 'src/app/core/model/user.model';
 import { FormGroup, FormControl } from '@angular/forms';
-import { requiredInput } from 'src/app/core/helper/custom-validate.helper';
 import { IS_COMPANY } from 'src/app/core/constant/authen-constant';
-
 declare var $: any;
 
 @Component({
@@ -19,9 +17,10 @@ export class AccountInformationComponent implements OnInit {
 
 
   constructor(
-    private translateee: TranslateService,
+    private translate: TranslateService,
     private withdrawRequestService: WithdrawRequestService,
-    private userService: UserService) { }
+    private userService: UserService) {
+     }
   accountInfor: Mt5Model;
   withdrawAmount: WithdrawAmountModel;
   editAddress: boolean;
@@ -54,9 +53,7 @@ export class AccountInformationComponent implements OnInit {
   test: any;
   isCompany: string;
   isUser: string;
-
-
-
+  language: string;
 
   ngOnInit() {
     this.initUserForm();
@@ -87,7 +84,6 @@ export class AccountInformationComponent implements OnInit {
       house_numb: new FormControl(),
       email: new FormControl(),
       phone: new FormControl(),
-      // language: new FormControl(),
     });
   }
   initCorporateForm() {
@@ -112,10 +108,13 @@ export class AccountInformationComponent implements OnInit {
       current_password: new FormControl(),
       new_password: new FormControl(),
       confirm_password: new FormControl(),
+      language: new FormControl(),
     });
+    this.changePassForm.controls.language.setValue(localStorage.getItem('locale'));
   }
   changeLang(event) {
-    this.translateee.use(event);
+    this.translate.use(event);
+    localStorage.setItem('locale', event);
   }
 
   getUserInfo() {
@@ -301,4 +300,5 @@ export class AccountInformationComponent implements OnInit {
   settingSave() {
 
   }
+
 }

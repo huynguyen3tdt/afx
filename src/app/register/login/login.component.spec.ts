@@ -13,6 +13,7 @@ import { EnvConfigService } from 'src/app/core/services/env-config.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { PaginationModule } from 'ngx-bootstrap';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -26,7 +27,8 @@ describe('LoginComponent', () => {
         FormsModule,
         RouterTestingModule,
         HttpClientModule,
-        PaginationModule
+        PaginationModule,
+        TranslateModule.forRoot()
       ],
       providers: [
         AuthenService,

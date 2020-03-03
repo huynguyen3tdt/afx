@@ -102,18 +102,18 @@ export class WithdrawRequestComponent implements OnInit {
     const numeral = require('numeral');
     this.depositValue = numeral(this.withdrawForm.controls.amount.value).value();
     if (this.depositValue < 10000) {
-      this.withdrawError = false;
+      this.withdrawError = true;
       return;
     }
-    this.withdrawError = true;
+    this.withdrawError = false;
     this.countWithdraw();
   }
   countWithdraw() {
-    this.errMessage = true;
+    this.errMessage = false;
     this.equityEstimate = Math.floor(10 + this.depositValue);
     this.marginLevelEstimate = Math.floor(((10 + this.equityEstimate) / 2000) * 100);
     if (this.marginLevelEstimate <= 100) {
-      this.errMessage = false;
+      this.errMessage = true;
     }
   }
   onRefesh() {

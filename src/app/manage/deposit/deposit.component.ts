@@ -123,36 +123,36 @@ export class DepositComponent implements OnInit {
     const numeral = require('numeral');
     this.depositValue = numeral(this.depositTransactionForm.controls.deposit.value).value();
     if (this.depositValue < 10000) {
-      this.depositError = false;
+      this.depositError = true;
       return;
     }
-    this.depositError = true;
+    this.depositError = false;
     this.countDeposit();
   }
   changeDepositCal(event: any) {
     const numeral = require('numeral');
     this.depositAmount = numeral(this.depositAmountForm.controls.deposit.value).value();
     if (this.depositAmount < 10000) {
-      this.bankError = false;
+      this.bankError = true;
       return;
     }
-    this.bankError = true;
+    this.bankError = false;
     this.countDepositAmount();
   }
   countDeposit() {
-    this.errMessageQuickDeposit = true;
+    this.errMessageQuickDeposit = false;
     this.equityEstimate = Math.floor(10 + this.depositValue);
     this.marginLevelEstimate = Math.floor(((10 + this.equityEstimate) / 2000) * 100);
     if (this.marginLevelEstimate <= 100) {
-      this.errMessageQuickDeposit = false;
+      this.errMessageQuickDeposit = true;
     }
   }
   countDepositAmount() {
-    this.errMessageBankTran = true;
+    this.errMessageBankTran = false;
     this.equityDeposit = Math.floor(10 + this.depositAmount);
     this.marginLevelEstimateBank = Math.floor(((10 + this.equityDeposit) / 2000) * 100);
     if (this.marginLevelEstimateBank <= 100) {
-      this.errMessageBankTran = false;
+      this.errMessageBankTran = true;
     }
   }
 }
