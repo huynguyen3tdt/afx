@@ -8,7 +8,7 @@ document.write( '        </div>' );
 document.write( '<div class=\"scroll-top\">\n' );
 document.write( '        <a href=\"#\" class=\"scroll-top-link\"><i class=\"icon ion-md-arrow-up\"></i></a>\n' );
 document.write( '    </div>' );
-document.write( ' <div class=\"switch-style float\">\n' );
+document.write( ' <div class=\"switch-style float d-none\">\n' );
 document.write( '        <div><a href=\"javascript:;\" class=\"btn btn-close\"><i class=\"icon ion-md-close\"></i></a></div>\n' );
 document.write( '        <div class=\"btn-group btn-group-vertical\">\n' );
 document.write( '            <button type=\"button\" class=\"btn btn-size-sm\" data-size=\"sm\">小</button>\n' );
