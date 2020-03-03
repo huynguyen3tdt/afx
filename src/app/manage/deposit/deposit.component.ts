@@ -89,7 +89,6 @@ export class DepositComponent implements OnInit {
   getMt5Infor(accountId) {
     this.withdrawRequestService.getmt5Infor(accountId).subscribe(response => {
       if (response.meta.code === 200) {
-        console.log('22222 ', response.data);
         this.mt5Infor = response.data;
         this.equity = this.mt5Infor.equity;
         this.usedMargin = this.mt5Infor.used_margin;
@@ -162,5 +161,8 @@ export class DepositComponent implements OnInit {
     if (this.marginLevelEstimateBank <= 100) {
       this.errMessageBankTran = true;
     }
+  }
+  onRefesh() {
+    this.getMt5Infor(this.accountId);
   }
 }
