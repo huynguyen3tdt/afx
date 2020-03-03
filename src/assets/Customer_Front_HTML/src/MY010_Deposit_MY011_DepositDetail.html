@@ -28,7 +28,7 @@
                                 <h6>Select payment method</h6>
                                 <nav class="mb-0">
                                     <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                                        <a class="nav-item nav-link" id="nav-billing-tab" data-toggle="tab" href="#nav-billing" role="tab" aria-controls="nav-billing" aria-selected="true"><strong>Billing System</strong></a>
+                                        <a class="nav-item nav-link" id="nav-billing-tab" data-toggle="tab" href="#nav-billing" role="tab" aria-controls="nav-billing" aria-selected="true"><strong>Quick Deposit</strong></a>
                                         <a class="nav-item nav-link active" id="nav-bank-tab" data-toggle="tab" href="#nav-bank" role="tab" aria-controls="nav-bank" aria-selected="true"><strong>Bank Tranfer</strong></a>
                                     </div>
                                 </nav>
@@ -101,7 +101,7 @@
                                                     </div>
                                                 </div>
                                                 <p class="small text-secondary p-2 bg-light">Notice: Minimum single deposit amount is ......</p>
-                                                <button class="btn btn-warning btn-block text-uppercase btn-lg mb-3"><strong>Deposit</strong></button>
+                                                <button class="btn btn-warning btn-block text-uppercase btn-lg mb-3" data-toggle="modal" data-target="#modal-deposit-confirm"><strong>Deposit</strong></button>
                                                 <p class="text-center" style="line-height: 1.2"><a href="javascript:;" data-toggle="modal" data-target="#modal-rule"><i class="icon ion-md-information-circle"></i> General rules for depositing and withdrawing funds</a></p>
                                             </div>
                                         </div>
@@ -499,6 +499,51 @@
         <script src="assets/includes/footer.js"></script>
     </div>
     <!-- Modal Transaction -->
+    <div class="modal fade" id="modal-deposit-confirm" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header pt-2 pb-2">
+                    <div>
+                        <h5 class="modal-title text-primary"><strong>Deposit infomation</strong></h5>
+                    </div>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-hover table-sm" cellspacing="0" cellpadding="0">
+                        <tbody>
+                            <tr>
+                                <td width="180" class="border-top-0">Trading account</td>
+                                <td class="border-top-0"><strong>FX - 10000001</strong></td>
+                            </tr>
+                            <tr>
+                                <td width="180">Type</td>
+                                <td><strong>Deposit</strong></td>
+                            </tr>
+                            <tr>
+                                <td width="180">Payment method</td>
+                                <td><strong>Quick deposit</strong></td>
+                            </tr>
+                            <tr>
+                                <td width="180">Remitter bank</td>
+                                <td><strong>Mizuho Bank</strong></td>
+                            </tr>
+                            <tr>
+                                <td width="180">Deposit amount</td>
+                                <td><strong>20000</strong> <span class="small text-secondary">JPY</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="mt-1 text-right">
+                        <button type="button" class="btn btn-primary pl-4 pr-4 btn-confirm" data-dismiss="modal">Confirm</button>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <!-- Modal Transaction -->
     <div class="modal fade" id="modal-109517140" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -647,7 +692,7 @@
                 </div>
             </div>
         </div>
-    </div>c
+    </div>
     <script src="assets/includes/plugins.js"></script>
     <script src="assets/js/main.js"></script>
     <!-- BEGGIN Only For this page -->
