@@ -23,9 +23,11 @@ export class WithdrawRequestService {
   constructor(private httpClient: HttpClient,
               private envConfigService: EnvConfigService) { }
 
-  getmt5Infor(): Observable<WithdrawRequestModel> {
+  getmt5Infor(accountId: number): Observable<WithdrawRequestModel> {
+    let URL = '';
+    URL = `?account_id=${accountId}`;
     return this.httpClient
-      .get(`${this.envConfigService.getConfig()}/${AppSettings.API_MT5_INFOR}`)
+      .get(`${this.envConfigService.getConfig()}/${AppSettings.API_MT5_INFOR}` + URL)
       .pipe(
         catchError((error: HttpErrorResponse) => {
           return new Observable((observer: InnerSubscriber<any, any>) => {

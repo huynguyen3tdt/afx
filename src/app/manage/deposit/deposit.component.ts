@@ -4,7 +4,7 @@ import { requiredInput } from 'src/app/core/helper/custom-validate.helper';
 import { DepositModel } from 'src/app/core/model/deposit-response.model';
 import { DepositService } from 'src/app/core/services/deposit.service';
 import { element } from 'protractor';
-import { MIN_DEPOST } from 'src/app/core/constant/authen-constant';
+import { MIN_DEPOST, ACCOUNT_ID } from 'src/app/core/constant/authen-constant';
 import { WithdrawRequestService } from './../../core/services/withdraw-request.service';
 import { Mt5Model } from 'src/app/core/model/withdraw-request-response.model';
 declare var $: any;
@@ -35,15 +35,17 @@ export class DepositComponent implements OnInit {
   bankError: boolean;
   depositValue: number;
   depositAmount: number;
+  accountId: string;
 
 
 
   ngOnInit() {
+    this.accountId = localStorage.getItem(ACCOUNT_ID);
     this.minDeposit = localStorage.getItem(MIN_DEPOST);
     this.initDepositAmountForm();
     this.initDepositTransactionForm();
     this.getDepositBank();
-    this.getMt5Infor();
+    this.getMt5Infor(this.accountId);
     this.countDeposit();
     this.countDepositAmount();
   }
@@ -83,8 +85,8 @@ export class DepositComponent implements OnInit {
     });
   }
 
-  getMt5Infor() {
-    this.withdrawRequestService.getmt5Infor().subscribe(response => {
+  getMt5Infor(accountId) {
+    this.withdrawRequestService.getmt5Infor(accountId).subscribe(response => {
       if (response.meta.code === 200) {
         this.mt5Infor = response.data;
         this.equity = this.mt5Infor.equity;
@@ -141,16 +143,16 @@ export class DepositComponent implements OnInit {
   }
   countDeposit() {
     this.errMessageQuickDeposit = false;
-    this.equityEstimate = Math.floor(10 + this.depositValue);
-    this.marginLevelEstimate = Math.floor(((10 + this.equityEstimate) / 2000) * 100);
+    this.equityEstimate = Math.floor(this.equity + this.depositValue);
+    this.marginLevelEstimate = Math.floor(((this.usedMargin + this.equityEstimate) / 2000) * 100);
     if (this.marginLevelEstimate <= 100) {
       this.errMessageQuickDeposit = true;
     }
   }
   countDepositAmount() {
     this.errMessageBankTran = false;
-    this.equityDeposit = Math.floor(10 + this.depositAmount);
-    this.marginLevelEstimateBank = Math.floor(((10 + this.equityDeposit) / 2000) * 100);
+    this.equityDeposit = Math.floor(this.equity + this.depositAmount);
+    this.marginLevelEstimateBank = Math.floor(((this.usedMargin + this.equityDeposit) / 2000) * 100);
     if (this.marginLevelEstimateBank <= 100) {
       this.errMessageBankTran = true;
     }

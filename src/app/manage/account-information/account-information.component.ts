@@ -5,7 +5,7 @@ import { Mt5Model, WithdrawAmountModel } from 'src/app/core/model/withdraw-reque
 import { UserService } from './../../core/services/user.service';
 import { UserModel, CorporateResponse, CorporateModel } from 'src/app/core/model/user.model';
 import { FormGroup, FormControl } from '@angular/forms';
-import { IS_COMPANY } from 'src/app/core/constant/authen-constant';
+import { IS_COMPANY, ACCOUNT_ID } from 'src/app/core/constant/authen-constant';
 declare var $: any;
 
 @Component({
@@ -54,8 +54,10 @@ export class AccountInformationComponent implements OnInit {
   isCompany: string;
   isUser: string;
   language: string;
+  accountId: string;
 
   ngOnInit() {
+    this.accountId = localStorage.getItem(ACCOUNT_ID);
     this.initUserForm();
     this.initCorporateForm();
     this.initSettingForm();
@@ -70,7 +72,7 @@ export class AccountInformationComponent implements OnInit {
     this.editPersonPicname = false;
     this.editPersonPhone = false;
     this.editPersonEmail = false;
-    this.getMt5Infor();
+    this.getMt5Infor(this.accountId);
     this.getWithDrawAmount();
     this.getCorporateInfor();
     this.getUserInfo();
@@ -155,8 +157,8 @@ export class AccountInformationComponent implements OnInit {
       }
     });
   }
-  getMt5Infor() {
-    this.withdrawRequestService.getmt5Infor().subscribe(response => {
+  getMt5Infor(accountId) {
+    this.withdrawRequestService.getmt5Infor(accountId).subscribe(response => {
       if (response.meta.code === 200) {
         this.accountInfor = response.data;
       }
