@@ -30,4 +30,10 @@ export interface ReportIDS {
   write_uid: number;
 }
 
+export interface AccountType {
+  account_type: number;
+  account_id: string;
+  value: string;
+}
+
 

@@ -27,8 +27,8 @@
                                         <div class="form-group">
                                             <label class="label d-block mb-0">{{'Trading account' | translate}}</label>
                                             <select disabled formControlName="tradingAccount" class="form-control form-control-sm">
-                                                <option *ngFor="let item of listTradingAccount" value="{{item}}">
-                                                    {{item}}</option>
+                                                <option *ngFor="let item of listTradingAccount" value="{{item?.account_id}}">
+                                                    {{item.value}}</option>
                                             </select>
                                         </div>
                                     </div>
@@ -126,7 +126,7 @@
                             <div class="d-md-flex align-items-center justify-content-between mb-2 border-top pt-2">
                                 <div class="mb-2 mb-md-0">
                                     <div class="d-inline-block mr-2">
-                                        <select (change)="changeTotalItem($event)" class="form-control form-control-sm">
+                                        <select (change)="changeTotalItem($event)" [(ngModel)]="pageSize" class="form-control form-control-sm">
                                             <option *ngFor="let item of listTotalItem" value="{{item}}">{{item}}
                                             </option>
                                         </select>
