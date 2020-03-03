@@ -93,7 +93,7 @@
                                             <td *ngIf="item.file_type == 'pdf'" class="text-center align-middle"><img src="assets/images/icons/pdf.svg" width="20" height="20"></td>
                                             <td *ngIf="item.file_type == 'csv'" class="text-center align-middle"><img src="assets/images/icons/csv.svg" width="20" height="20"></td>
                                             <!-- <td class="text-center align-middle"><span class="small text-secondary">{{item?.file_type}}</span></td> -->
-                                            <td class="align-middle"><strong><a
+                                            <td class="align-middle"><strong><a (click)="openPDF(item)"
                                                         href="javascript:;">{{item?.report_title}}</a></strong></td>
                                             <td class="text-right align-middle"><span class="text-secondary">{{item?.create_date}}</span>
                                             </td>
@@ -134,4 +134,14 @@
             </div>
         </div>
     </div>
+</div>
+
+
+<div id="modal-2" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+        <ng2-pdfjs-viewer style="height: 900px" #pdfViewer></ng2-pdfjs-viewer>
+    </div>
+  </div>
 </div>

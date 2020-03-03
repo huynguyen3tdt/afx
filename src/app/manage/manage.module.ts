@@ -14,6 +14,7 @@ import { ReportListComponent } from './report-list/report-list.component';
 import { DepositComponent } from './deposit/deposit.component';
 import { CurrencyDirective } from '../core/directive/currency.directive';
 import { TranslateModule } from '@ngx-translate/core';
+import { PdfJsViewerModule } from 'ng2-pdfjs-viewer';
 
 @NgModule({
     imports: [
@@ -24,7 +25,8 @@ import { TranslateModule } from '@ngx-translate/core';
         BsDatepickerModule.forRoot(),
         PaginationModule.forRoot(),
         Ng4LoadingSpinnerModule.forRoot(),
-        TranslateModule
+        TranslateModule,
+        PdfJsViewerModule
     ],
     providers: [],
     declarations: [
