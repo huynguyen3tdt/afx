@@ -4,8 +4,8 @@ import { WithdrawRequestService } from 'src/app/core/services/withdraw-request.s
 import { Mt5Model, WithdrawAmountModel } from 'src/app/core/model/withdraw-request-response.model';
 import { UserService } from './../../core/services/user.service';
 import { UserModel, CorporateResponse, CorporateModel } from 'src/app/core/model/user.model';
-import { FormGroup, FormControl, AbstractControl } from '@angular/forms';
-import { IS_COMPANY, ACCOUNT_IDS, PASSWORD_LOGIN } from 'src/app/core/constant/authen-constant';
+import { FormGroup, FormControl } from '@angular/forms';
+import { IS_COMPANY, ACCOUNT_IDS} from 'src/app/core/constant/authen-constant';
 import { GlobalService } from 'src/app/core/services/global.service';
 import { AccountType } from 'src/app/core/model/report-response.model';
 import { passwordValidation } from 'src/app/core/helper/custom-validate.helper';
@@ -71,7 +71,6 @@ export class AccountInformationComponent implements OnInit {
 
 
   ngOnInit() {
-    this.oldPassword = atob(localStorage.getItem(PASSWORD_LOGIN));
     this.listTradingAccount = JSON.parse(localStorage.getItem(ACCOUNT_IDS));
     if (this.listTradingAccount) {
       this.accountID = Number(this.listTradingAccount[0].account_id);
@@ -125,7 +124,7 @@ export class AccountInformationComponent implements OnInit {
   }
   initSettingForm() {
     this.changePassForm = new FormGroup({
-      current_password: new FormControl(this.oldPassword, [passwordValidation]),
+      current_password: new FormControl('', [passwordValidation]),
       new_password: new FormControl('', [passwordValidation]),
       confirm_password: new FormControl('', [passwordValidation]),
       language: new FormControl(),
@@ -331,7 +330,7 @@ export class AccountInformationComponent implements OnInit {
     }
     const param = {
       new_password: this.changePassForm.controls.confirm_password.value,
-      old_password: this.oldPassword,
+      old_password: this.changePassForm.controls.current_password.value,
     };
     this.authenService.changePassword(param).subscribe( response => {
       if (response.meta.code === 200) {
