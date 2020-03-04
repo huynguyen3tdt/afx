@@ -103,7 +103,7 @@
                                             <td *ngIf="item?.read_flg == true" class="text-right align-middle"><span class="text-danger">Done</span></td>
                                             <td *ngIf="item?.read_flg == false" class="text-right align-middle"><span class="text-danger">Not yet</span></td>
                                             <td class="text-right align-middle">
-                                                <button class="btn btn-sm btn-outline-secondary pt-0 pb-0"><i
+                                                <button (click)="downLoadFile(item)" class="btn btn-sm btn-outline-secondary pt-0 pb-0"><i
                                                         class="icon ion-md-download"></i></button>
                                             </td>
                                         </tr>

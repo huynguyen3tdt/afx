@@ -174,9 +174,40 @@ export class ReportListComponent implements OnInit {
 
   openPDF(item: ReportIDS) {
     if (item.file_type === 'pdf') {
-      this.pdfViewer.pdfSrc = item.file_path;
-      this.pdfViewer.refresh();
-      $('#modal-2').modal('show');
+      this.reportservice.downLoadReportFile(item.id).subscribe(response => {
+        const file = new Blob([response], {
+          type: 'application/pdf',
+        });
+        this.pdfViewer.pdfSrc = file; // pdfSrc can be Blob or Uint8Array
+        this.pdfViewer.refresh();
+        $('#modal-2').modal('show');
+      });
     }
+  }
+  downLoadFile(item: ReportIDS) {
+    this.reportservice.downLoadReportFile(item.id).subscribe(response => {
+      let file;
+      if (item.file_type === 'pdf') {
+        file = new Blob([response], {
+          type: 'application/pdf',
+        });
+      } else {
+        file = new Blob([response], {
+          type: 'text/csv',
+        });
+      }
+      const fileURL = URL.createObjectURL(file);
+      const a = document.createElement('a');
+      let fileName;
+      if (item.file_type === 'pdf') {
+        fileName = item.file_name;
+      } else {
+        fileName = `${item.file_name}.csv`;
+      }
+      a.href = fileURL;
+      a.download = fileName;
+      document.body.appendChild(a);
+      a.click();
+    });
   }
 }
