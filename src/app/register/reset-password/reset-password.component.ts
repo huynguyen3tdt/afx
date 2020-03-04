@@ -29,7 +29,7 @@ export class ResetPasswordComponent implements OnInit {
   }
   initResetPassForm() {
     this.resetPassForm = new FormGroup({
-      new_password: new FormControl('', [passwordValidation, requiredInput]),
+      new_password: new FormControl('', [passwordValidation]),
       confirm_password: new FormControl('', [passwordValidation])
     });
   }
