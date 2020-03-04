@@ -138,12 +138,7 @@ export class DepositComponent implements OnInit {
   }
 
   goToHistory() {
-    this.router.navigate(['/manage/withdrawHistory'],
-      {
-        queryParams: {
-          deposit: true,
-        }
-      });
+    this.router.navigate(['/manage/withdrawHistory']);
   }
 
   checkPaymentMedthod(type: string) {
