@@ -104,8 +104,6 @@ export class WithdrawRequestComponent implements OnInit {
     this.withdrawRequestService.getDwAmount(accountId).subscribe(response => {
       if (response.meta.code === 200) {
         this.listDwAmount = response.data;
-
-        this.withdrawForm.controls.amount.setValue(this.listDwAmount.withdraw_amount.toString());
       }
     });
   }
