@@ -49,7 +49,7 @@ export class WithdrawRequestComponent implements OnInit {
     this.initWithdrawForm();
     this.getMt5Infor(this.accountID);
     this.getBankInfor();
-    this.getDwAmount();
+    this.getDwAmount(this.accountID);
     this.getDwHistory();
 
   }
@@ -95,8 +95,8 @@ export class WithdrawRequestComponent implements OnInit {
       }
     });
   }
-  getDwAmount() {
-    this.withdrawRequestService.getDwAmount().subscribe(response => {
+  getDwAmount(accountId) {
+    this.withdrawRequestService.getDwAmount(accountId).subscribe(response => {
       if (response.meta.code === 200) {
         this.listDwAmount = response.data;
 

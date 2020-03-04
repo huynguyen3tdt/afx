@@ -4,6 +4,7 @@ import {requiredInput} from '../../core/helper/custom-validate.helper';
 import {Validators} from '@angular/forms';
 import {AuthenService} from '../../core/services/authen.service';
 import {Router} from '@angular/router';
+import { PASSWORD_LOGIN } from 'src/app/core/constant/authen-constant';
 
 const INVALID_PASSWORD = {
   Required: true,
@@ -18,18 +19,20 @@ const INVALID_PASSWORD = {
 export class ResetPasswordComponent implements OnInit {
 
   resetPassForm: FormGroup;
-  isSave = false;
-  isShow = false;
-  erroMessage = '';
-  showPassword = false;
+  isSubmitted: boolean;
+  // isShow = false;
+  erroMessage: boolean;
+  showPassword: boolean;
   showTypePass = 'password';
   showTypeConfirmPass = 'password';
   errorMess = '';
-
+  oldPassword: string;
   constructor(private authenService: AuthenService,
               private router: Router) { }
 
   ngOnInit() {
+    this.oldPassword = atob(localStorage.getItem(PASSWORD_LOGIN));
+    console.log('111', this.oldPassword)
     this.initResetPassForm();
   }
   initResetPassForm() {
@@ -39,20 +42,20 @@ export class ResetPasswordComponent implements OnInit {
     });
   }
   onSubmit() {
-    this.isSave = true;
+    this.isSubmitted = true;
     if (this.resetPassForm.invalid) {
-      this.isShow = false;
+      this.erroMessage = false;
       return;
     }
     if (this.resetPassForm.controls.new_password.value === this.resetPassForm.controls.confirm_password.value) {
-      this.isShow = true;
+      this.erroMessage = false;
     } else {
-      this.isShow = false;
-      this.erroMessage = 'Password is not the same';
+      this.erroMessage = true;
       return;
     }
     const param = {
-      password: this.resetPassForm.controls.confirm_password.value,
+      new_password: this.resetPassForm.controls.confirm_password.value,
+      old_password: this.oldPassword
     };
     this.authenService.changePassword(param).subscribe(response => {
       if (response.meta.code === 200) {
