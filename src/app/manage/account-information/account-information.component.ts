@@ -8,13 +8,10 @@ import { FormGroup, FormControl, AbstractControl } from '@angular/forms';
 import { IS_COMPANY, ACCOUNT_IDS, PASSWORD_LOGIN } from 'src/app/core/constant/authen-constant';
 import { GlobalService } from 'src/app/core/services/global.service';
 import { AccountType } from 'src/app/core/model/report-response.model';
-import { requiredInput } from 'src/app/core/helper/custom-validate.helper';
+import { passwordValidation } from 'src/app/core/helper/custom-validate.helper';
 import { AuthenService } from 'src/app/core/services/authen.service';
 declare var $: any;
-const INVALID_PASSWORD = {
-  Required: true,
-  message: 'New password needs to be 8 characters or more and has at least 1 alphabet letter'
-};
+
 
 @Component({
   selector: 'app-account-information',
@@ -128,9 +125,9 @@ export class AccountInformationComponent implements OnInit {
   }
   initSettingForm() {
     this.changePassForm = new FormGroup({
-      current_password: new FormControl(this.oldPassword, [requiredInput, this.passwordValidation]),
-      new_password: new FormControl('', [requiredInput, this.passwordValidation]),
-      confirm_password: new FormControl('', [requiredInput, this.passwordValidation]),
+      current_password: new FormControl(this.oldPassword, [passwordValidation]),
+      new_password: new FormControl('', [passwordValidation]),
+      confirm_password: new FormControl('', [passwordValidation]),
       language: new FormControl(),
     });
     this.changePassForm.controls.language.setValue(localStorage.getItem('locale'));
@@ -343,19 +340,6 @@ export class AccountInformationComponent implements OnInit {
         this.errorPassword = true;
       }
     });
-  }
-  passwordValidation(control: AbstractControl) {
-    if (!control.value || typeof control.value === 'string' && !control.value.trim()) {
-      return INVALID_PASSWORD;
-    }
-    if (control.value.search(/[a-zA-Z]/) < 0) {
-      return INVALID_PASSWORD;
-    } else if (control.value.search(/[0-9]/) < 0) {
-      return INVALID_PASSWORD;
-    } else if (control.value.length < 8) {
-      return INVALID_PASSWORD;
-    }
-    return null;
   }
 
 }

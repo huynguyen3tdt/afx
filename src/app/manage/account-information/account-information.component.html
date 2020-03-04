@@ -522,13 +522,19 @@
                                 <div class="col-md-8 col-lg-9">
                                     <input type="password" name="current_password" class="form-control form-control-sm" value="" formControlName="current_password" placeholder="" style="max-width: 240px" [ngClass]="{'invalid': isSubmittedSetting && changePassForm.controls['current_password'].errors}">
                                 </div>
+                                <div *ngIf="isSubmittedSetting && changePassForm?.controls['current_password']?.errors?.Required" class="text-danger text-center pb-2">
+                                    <div>{{'This field is required' | translate}}</div>
+                                </div>
                             </div>
                             <div class="row mb-2">
                                 <div class="col-md-4 col-lg-3">
                                     <label class="label mt-1">{{'New password' | translate}}</label>
                                 </div>
                                 <div class="col-md-8 col-lg-9">
-                                    <input type="password" name="new-password" class="form-control form-control-sm" value="" formControlName="new_password" placeholder="" style="max-width: 240px" [ngClass]="{'invalid': isSubmittedSetting && changePassForm.controls['new_password'].errors}">
+                                    <input type="password" name="new-password" class="form-control form-control-sm" value="" formControlName="new_password" placeholder="" style="max-width: 240px" [ngClass]="{'invalid': isSubmittedSetting && (changePassForm.controls['new_password'].errors || changePassForm?.controls['new_password']?.errors?.RequiredPass)}">
+                                </div>
+                                <div *ngIf="isSubmittedSetting && changePassForm?.controls['new_password']?.errors?.RequiredPass" class="text-danger text-center pb-2">
+                                    <div>{{'This field is required' | translate}}</div>
                                 </div>
                             </div>
                             <div class="row mb-2">
@@ -536,20 +542,25 @@
                                     <label class="label mt-1">{{'Confirm password' | translate}}</label>
                                 </div>
                                 <div class="col-md-8 col-lg-9">
-                                    <input type="password" name="confirm-password" class="form-control form-control-sm" value="" formControlName="confirm_password" placeholder="" style="max-width: 240px" [ngClass]="{'invalid': isSubmittedSetting && changePassForm.controls['confirm_password'].errors}">
+                                    <input type="password" name="confirm-password" class="form-control form-control-sm" value="" formControlName="confirm_password" placeholder="" style="max-width: 240px" [ngClass]="{'invalid': isSubmittedSetting && (changePassForm.controls['confirm_password'].errors || changePassForm?.controls['confirm_password']?.errors?.RequiredPass)}">
                                 </div>
-                                <p class="text-danger" style="max-width: 23rem;text-align: center;" *ngIf="isSubmittedSetting == true && errorMessage == true">
-                                    {{'Password is not the same' | translate}}
-                                </p>
-                                <p class="text-danger" style="max-width: 23rem;text-align: center;" *ngIf="isSubmittedSetting && changePassForm.controls['confirm_password'].errors">
-                                    {{'New password needs to be 8 characters or more and has at least 1 alphabet letter' | translate}}
-                                </p>
-                                <p class="text-danger" style="max-width: 23rem;text-align: center;" *ngIf="errorPassword == true">
-                                    {{'Password incorrect' | translate}}
-                                </p>
-                                <p class="text-success" style="max-width: 23rem;text-align: center;" *ngIf="successPassword == true">
-                                    {{'Change password success' | translate}}
-                                </p>
+                                <div *ngIf="isSubmittedSetting && changePassForm?.controls['confirm_password']?.errors?.RequiredPass" class="text-danger text-center pb-2">
+                                    <div>{{'This field is required' | translate}}</div>
+                                </div>
+                            </div>
+                            <div class="text-danger text-center pb-2" style="max-width: 23rem;text-align: center;" *ngIf="isSubmittedSetting == true && errorMessage == true">
+                                <div>{{'Current password and new passwords cannot be the same' | translate}}</div>
+                            </div>
+
+                            <div class="text-danger" style="max-width: 23rem;text-align: center;" *ngIf="errorPassword == true">
+                                <div>{{'Password incorrect' | translate}}</div>
+                            </div>
+                            <div class="text-danger text-center pb-2" *ngIf="isSubmittedSetting && changePassForm?.controls['confirm_password']?.errors?.RequiredPassLength" class="invalid-feedback">
+                                <div>
+                                    {{'New password needs to be 8 characters or more and has at least 1 alphabet letter' | translate}}</div>
+                            </div>
+                            <div class="text-success text-center pb-2" style="max-width: 23rem;text-align: center;" *ngIf="successPassword == true">
+                                <div>{{'You have successfully changed the password' | translate}}</div>
                             </div>
                             <div class="row">
                                 <div class="col-md-4 col-lg-3">
