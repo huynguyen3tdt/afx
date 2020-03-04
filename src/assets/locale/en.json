@@ -135,11 +135,11 @@
     "Remitter bank": "Remitter bank",
     "Transfer date time": "Transfer date time",
     "Welcome to Phillip MT5": "Welcome to Phillip MT5",
-    "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since." : "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since.",
-    "Sign In" : "Sign In",
+    "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since.": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since.",
+    "Sign In": "Sign In",
     "Email / LoginID": "Email / LoginID",
     "Passwords": "Passwords",
-    "This field is required" : "This field is required",
+    "This field is required": "This field is required",
     "Invalid email or password": "Invalid email or password",
     "Remember me": "Remember me",
     "Open Visual Keyboard": "Open Visual Keyboard",
@@ -158,7 +158,9 @@
     "Change Password": "Change Password",
     "New Password": "New Password",
     "Confirm Password": "Confirm Password",
-    "New password needs to be 8 characters or more and has at least 1 alphabet letter": "New password needs to be 8 characters or more and has at least 1 alphabet letter"
-
+    "New password needs to be 8 characters or more and has at least 1 alphabet letter": "New password needs to be 8 characters or more and has at least 1 alphabet letter",
+    "Current password and new passwords cannot be the same": "Current password and new passwords cannot be the same",
+    "Password incorrect": "Password incorrect",
+    "You have successfully changed the password": "You have successfully changed the password"
 
 }

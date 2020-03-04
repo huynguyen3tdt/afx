@@ -18,6 +18,15 @@ const DEFAULT_INVALID_REQUIRED = {
     message: 'This field is required'
 };
 
+const INVALID_PASSWORD = {
+    RequiredPass: true,
+    message: 'New password needs to be 8 characters or more and has at least 1 alphabet letter'
+  };
+const INVALID_PASSWORD_LENGTH = {
+    RequiredPassLength: true,
+    message: 'New password needs to be 8 characters or more and has at least 1 alphabet letter'
+  };
+
 const DIGITS_PATTERN = '^\\d+$';
 const SALARY_PATTEN = '^[0-9, ]*$';
 const NOT_SPECIAL_CHARACTERS_FOR_EMAIL = '^[a-zA-Z0-9-._ ]*$';
@@ -59,4 +68,18 @@ export function requiredInput(control: AbstractControl) {
     }
     return null;
 }
+
+export function passwordValidation(control: AbstractControl) {
+    if (!control.value || typeof control.value === 'string' && !control.value.trim()) {
+      return INVALID_PASSWORD;
+    }
+    if (control.value.search(/[a-zA-Z]/) < 0) {
+      return INVALID_PASSWORD_LENGTH;
+    } else if (control.value.search(/[0-9]/) < 0) {
+      return INVALID_PASSWORD_LENGTH;
+    } else if (control.value.length < 8) {
+      return INVALID_PASSWORD_LENGTH;
+    }
+    return null;
+  }
 
