@@ -5,10 +5,13 @@ import { Mt5Model, WithdrawAmountModel } from 'src/app/core/model/withdraw-reque
 import { UserService } from './../../core/services/user.service';
 import { UserModel, CorporateResponse, CorporateModel } from 'src/app/core/model/user.model';
 import { FormGroup, FormControl } from '@angular/forms';
-import { IS_COMPANY, ACCOUNT_IDS } from 'src/app/core/constant/authen-constant';
+import { IS_COMPANY, ACCOUNT_IDS} from 'src/app/core/constant/authen-constant';
 import { GlobalService } from 'src/app/core/services/global.service';
 import { AccountType } from 'src/app/core/model/report-response.model';
+import { passwordValidation } from 'src/app/core/helper/custom-validate.helper';
+import { AuthenService } from 'src/app/core/services/authen.service';
 declare var $: any;
+
 
 @Component({
   selector: 'app-account-information',
@@ -21,7 +24,8 @@ export class AccountInformationComponent implements OnInit {
   constructor(
     private translate: TranslateService,
     private withdrawRequestService: WithdrawRequestService,
-    private userService: UserService
+    private userService: UserService,
+    private authenService: AuthenService,
     ) {
      }
   accountInfor: Mt5Model;
@@ -59,6 +63,12 @@ export class AccountInformationComponent implements OnInit {
   language: string;
   listTradingAccount: Array<AccountType>;
   accountID: number;
+  isSubmittedSetting: boolean;
+  errorMessage: boolean;
+  oldPassword: string;
+  errorPassword: boolean;
+  successPassword: boolean;
+
 
   ngOnInit() {
     this.listTradingAccount = JSON.parse(localStorage.getItem(ACCOUNT_IDS));
@@ -114,9 +124,9 @@ export class AccountInformationComponent implements OnInit {
   }
   initSettingForm() {
     this.changePassForm = new FormGroup({
-      current_password: new FormControl(),
-      new_password: new FormControl(),
-      confirm_password: new FormControl(),
+      current_password: new FormControl('', [passwordValidation]),
+      new_password: new FormControl('', [passwordValidation]),
+      confirm_password: new FormControl('', [passwordValidation]),
       language: new FormControl(),
     });
     this.changePassForm.controls.language.setValue(localStorage.getItem('locale'));
@@ -307,7 +317,28 @@ export class AccountInformationComponent implements OnInit {
     }
   }
   settingSave() {
-
+    this.isSubmittedSetting = true;
+    if (this.changePassForm.invalid) {
+      this.errorMessage = false;
+      return;
+    }
+    if (this.changePassForm.controls.new_password.value === this.changePassForm.controls.confirm_password.value) {
+      this.errorMessage = false;
+    } else {
+      this.errorMessage = true;
+      return;
+    }
+    const param = {
+      new_password: this.changePassForm.controls.confirm_password.value,
+      old_password: this.changePassForm.controls.current_password.value,
+    };
+    this.authenService.changePassword(param).subscribe( response => {
+      if (response.meta.code === 200) {
+        this.successPassword = true;
+      } else {
+        this.errorPassword = true;
+      }
+    });
   }
 
 }

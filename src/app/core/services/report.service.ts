@@ -40,5 +40,19 @@ export class ReportService {
         })
       );
   }
+  downLoadReportFile(reportId: number): Observable<any> {
+    return this.httpClient
+      .get(
+        `${this.envConfigService.getConfig()}/${AppSettings.API_DOWNLOAD_REPORT_FILE}?report_id=${reportId}`,
+        { responseType: 'arraybuffer' }
+      )
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          return new Observable((observer: InnerSubscriber<any, any>) => {
+            observer.next(error);
+          });
+        })
+      );
+  }
 }
 

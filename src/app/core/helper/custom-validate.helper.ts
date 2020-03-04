@@ -19,13 +19,13 @@ const DEFAULT_INVALID_REQUIRED = {
 };
 
 const INVALID_PASSWORD = {
-  RequiredPass: true,
-  message: 'New password needs to be 8 characters or more and has at least 1 alphabet letter'
-};
+    RequiredPass: true,
+    message: 'New password needs to be 8 characters or more and has at least 1 alphabet letter'
+  };
 const INVALID_PASSWORD_LENGTH = {
-  RequiredPassLength: true,
-  message: 'New password needs to be 8 characters or more and has at least 1 alphabet letter'
-};
+    RequiredPassLength: true,
+    message: 'New password needs to be 8 characters or more and has at least 1 alphabet letter'
+  };
 
 const DIGITS_PATTERN = '^\\d+$';
 const SALARY_PATTEN = '^[0-9, ]*$';
