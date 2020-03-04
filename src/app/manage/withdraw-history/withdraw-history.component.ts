@@ -175,9 +175,7 @@ export class WithdrawHistoryComponent implements OnInit {
   }
 
   openDetail(tranId: number) {
-    console.log('11111 ', tranId);
     this.withdrawRequestService.getDetailTranHistory(tranId).subscribe(response => {
-      console.log('responseee ', response);
       if (response.meta.code === 200) {
         this.tranHistoryDetail = response.data;
         this.tranHistoryDetail.create_date = moment(this.tranHistoryDetail.create_date).format(JAPAN_FORMATDATE_HH_MM);

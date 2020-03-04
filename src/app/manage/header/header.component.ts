@@ -23,6 +23,9 @@ export class HeaderComponent implements OnInit {
 
   activeRouter(url) {
     url = url.split('/')[2];
+    if (url.indexOf('?') > -1 ) {
+      url = url.substring(0, url.indexOf('?'));
+    }
     const listRouter = ['notifications', 'deposit', 'withdrawRequest', 'withdrawHistory', 'reportList', 'accountInfo'];
     listRouter.forEach(element => {
       if (url === element) {
