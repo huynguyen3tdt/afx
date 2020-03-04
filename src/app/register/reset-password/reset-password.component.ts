@@ -1,15 +1,9 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import {FormControl, FormGroup, AbstractControl} from '@angular/forms';
-import {requiredInput} from '../../core/helper/custom-validate.helper';
-import {Validators} from '@angular/forms';
 import {AuthenService} from '../../core/services/authen.service';
 import {Router} from '@angular/router';
 import { PASSWORD_LOGIN } from 'src/app/core/constant/authen-constant';
-
-const INVALID_PASSWORD = {
-  Required: true,
-  message: 'New password needs to be 8 characters or more and has at least 1 alphabet letter'
-};
+import { passwordValidation, requiredInput } from 'src/app/core/helper/custom-validate.helper';
 
 @Component({
   selector: 'app-reset-password',
@@ -35,12 +29,13 @@ export class ResetPasswordComponent implements OnInit {
   }
   initResetPassForm() {
     this.resetPassForm = new FormGroup({
-      new_password: new FormControl('', [requiredInput, this.passwordValidation]),
-      confirm_password: new FormControl('', [requiredInput, this.passwordValidation])
+      new_password: new FormControl('', [passwordValidation, requiredInput]),
+      confirm_password: new FormControl('', [passwordValidation])
     });
   }
   onSubmit() {
     this.isSubmitted = true;
+    this.erroMessage = false;
     if (this.resetPassForm.invalid) {
       this.erroMessage = false;
       return;
@@ -83,18 +78,5 @@ export class ResetPasswordComponent implements OnInit {
       this.showTypeConfirmPass = 'password';
       return;
     }
-  }
-  passwordValidation(control: AbstractControl) {
-    if (!control.value || typeof control.value === 'string' && !control.value.trim()) {
-      return INVALID_PASSWORD;
-    }
-    if (control.value.search(/[a-zA-Z]/) < 0) {
-      return INVALID_PASSWORD;
-    } else if (control.value.search(/[0-9]/) < 0) {
-      return INVALID_PASSWORD;
-    } else if (control.value.length < 8) {
-      return INVALID_PASSWORD;
-    }
-    return null;
   }
 }
