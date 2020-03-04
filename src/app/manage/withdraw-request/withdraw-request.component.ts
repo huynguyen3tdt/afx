@@ -56,7 +56,7 @@ export class WithdrawRequestComponent implements OnInit {
       this.getTranHistory(Number(this.accountID.split('-')[1]), 1, 2, 2);
     }
     this.getBankInfor();
-    this.getDwAmount(this.accountID);
+    this.getDwAmount(Number(this.accountID.split('-')[1]));
 
 
   }
