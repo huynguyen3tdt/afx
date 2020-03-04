@@ -20,7 +20,6 @@ export class ResetPasswordComponent implements OnInit {
 
   resetPassForm: FormGroup;
   isSubmitted: boolean;
-  // isShow = false;
   erroMessage: boolean;
   showPassword: boolean;
   showTypePass = 'password';
@@ -32,7 +31,6 @@ export class ResetPasswordComponent implements OnInit {
 
   ngOnInit() {
     this.oldPassword = atob(localStorage.getItem(PASSWORD_LOGIN));
-    console.log('111', this.oldPassword)
     this.initResetPassForm();
   }
   initResetPassForm() {
