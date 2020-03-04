@@ -59,7 +59,6 @@ export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    console.log('in in in');
   }
 
   initSearchForm() {

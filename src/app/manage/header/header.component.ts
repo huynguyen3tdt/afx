@@ -30,7 +30,6 @@ export class HeaderComponent implements OnInit {
     listRouter.forEach(element => {
       if (url === element) {
         $(`#${element}`).addClass('active');
-        console.log('------------ ', $(`#${element}`));
       } else {
         $(`#${element}`).removeClass('active');
       }
