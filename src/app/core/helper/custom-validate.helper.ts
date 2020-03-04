@@ -1,21 +1,21 @@
 import { AbstractControl } from '@angular/forms';
 
 const DEFAULT_INVALID_LENGTH_TEXT = {
-    Lengthh: true,
-    message: 'Max length is 50 and min length is 10'
+  Lengthh: true,
+  message: 'Max length is 50 and min length is 10'
 };
 const DEFAULT_INVALID_LENGTH_KTP_NPWP = {
-    Lengthh: true,
-    message: 'Max length is 17 and min length is 12'
+  Lengthh: true,
+  message: 'Max length is 17 and min length is 12'
 };
 const DEFAULT_INVALID_EMAIL = {
-    Email: true,
-    message: 'Please enter follow by format email'
+  Email: true,
+  message: 'Please enter follow by format email'
 };
 
 const DEFAULT_INVALID_REQUIRED = {
-    Required: true,
-    message: 'This field is required'
+  Required: true,
+  message: 'This field is required'
 };
 
 const INVALID_PASSWORD = {
@@ -43,43 +43,42 @@ const JP_REQUIRED = /[\u3000-\u303f\u3040-\u309f\u30a0-\u30ff\uff00-\uff9f\u4e00
 
 
 export function emailValidation(control: AbstractControl) {
-    if (!control.value || typeof control.value === 'string' && !control.value.trim()) {
-        return DEFAULT_INVALID_REQUIRED;
-    }
-    const str1 = control.value.split('@')[0];
-    const pattern = new RegExp(EMAIL_PATTERN);
-    const pattern2 = new RegExp(NOT_SPECIAL_CHARACTERS_FOR_EMAIL);
-    if (!control.value || typeof control.value === 'string' && !control.value.trim()) {
-        return DEFAULT_INVALID_REQUIRED;
-    }
-    if (pattern2.test(str1) === false) {
-        return DEFAULT_INVALID_EMAIL;
-    }
-    if (pattern.test(control.value.trim()) === false) {
-        return DEFAULT_INVALID_EMAIL;
-    }
-    return;
+  if (!control.value || typeof control.value === 'string' && !control.value.trim()) {
+    return DEFAULT_INVALID_REQUIRED;
+  }
+  const str1 = control.value.split('@')[0];
+  const pattern = new RegExp(EMAIL_PATTERN);
+  const pattern2 = new RegExp(NOT_SPECIAL_CHARACTERS_FOR_EMAIL);
+  if (!control.value || typeof control.value === 'string' && !control.value.trim()) {
+    return DEFAULT_INVALID_REQUIRED;
+  }
+  if (pattern2.test(str1) === false) {
+    return DEFAULT_INVALID_EMAIL;
+  }
+  if (pattern.test(control.value.trim()) === false) {
+    return DEFAULT_INVALID_EMAIL;
+  }
+  return;
 }
 
 
 export function requiredInput(control: AbstractControl) {
-    if (!control.value || typeof control.value === 'string' && !control.value.trim()) {
-        return DEFAULT_INVALID_REQUIRED;
-    }
-    return null;
+  if (!control.value || typeof control.value === 'string' && !control.value.trim()) {
+    return DEFAULT_INVALID_REQUIRED;
+  }
+  return null;
 }
 
 export function passwordValidation(control: AbstractControl) {
-    if (!control.value || typeof control.value === 'string' && !control.value.trim()) {
-      return INVALID_PASSWORD;
-    }
-    if (control.value.search(/[a-zA-Z]/) < 0) {
-      return INVALID_PASSWORD_LENGTH;
-    } else if (control.value.search(/[0-9]/) < 0) {
-      return INVALID_PASSWORD_LENGTH;
-    } else if (control.value.length < 8) {
-      return INVALID_PASSWORD_LENGTH;
-    }
-    return null;
+  if (!control.value || typeof control.value === 'string' && !control.value.trim()) {
+    return INVALID_PASSWORD;
   }
-
+  if (control.value.search(/[a-zA-Z]/) < 0) {
+    return INVALID_PASSWORD_LENGTH;
+  } else if (control.value.search(/[0-9]/) < 0) {
+    return INVALID_PASSWORD_LENGTH;
+  } else if (control.value.length < 8) {
+    return INVALID_PASSWORD_LENGTH;
+  }
+  return null;
+}

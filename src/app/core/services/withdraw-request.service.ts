@@ -49,9 +49,9 @@ export class WithdrawRequestService {
       );
   }
 
-  getDwAmount(): Observable<WithdrawAmountResponse> {
+  getDwAmount(accountId: number): Observable<WithdrawAmountResponse> {
     return this.httpClient
-      .get(`${this.envConfigService.getConfig()}/${AppSettings.API_DW_AMOUNT}`)
+      .get(`${this.envConfigService.getConfig()}/${AppSettings.API_DW_AMOUNT}` + `?account_id=${accountId}`)
       .pipe(
         catchError((error: HttpErrorResponse) => {
           return new Observable((observer: InnerSubscriber<any, any>) => {

@@ -54,9 +54,9 @@ export class WithdrawRequestComponent implements OnInit {
     if (this.accountID) {
       this.getMt5Infor(Number(this.accountID.split('-')[1]));
       this.getTranHistory(Number(this.accountID.split('-')[1]), 1, 2, 2);
+      this.getDwAmount(Number(this.accountID.split('-')[1]));
     }
     this.getBankInfor();
-    this.getDwAmount();
   }
 
   initWithdrawForm() {
@@ -100,8 +100,8 @@ export class WithdrawRequestComponent implements OnInit {
       }
     });
   }
-  getDwAmount() {
-    this.withdrawRequestService.getDwAmount().subscribe(response => {
+  getDwAmount(accountId) {
+    this.withdrawRequestService.getDwAmount(accountId).subscribe(response => {
       if (response.meta.code === 200) {
         this.listDwAmount = response.data;
 

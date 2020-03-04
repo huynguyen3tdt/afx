@@ -90,7 +90,7 @@ export class AccountInformationComponent implements OnInit {
     this.editPersonPhone = false;
     this.editPersonEmail = false;
     this.getMt5Infor(this.accountID);
-    this.getWithDrawAmount();
+    this.getWithDrawAmount(this.accountID);
     this.getCorporateInfor();
     this.getUserInfo();
   }
@@ -182,8 +182,8 @@ export class AccountInformationComponent implements OnInit {
     });
   }
 
-  getWithDrawAmount() {
-    this.withdrawRequestService.getDwAmount().subscribe(response => {
+  getWithDrawAmount(accountId) {
+    this.withdrawRequestService.getDwAmount(accountId).subscribe(response => {
       if (response.meta.code === 200) {
         this.withdrawAmount = response.data;
       }

@@ -1,14 +1,9 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import {FormControl, FormGroup, AbstractControl} from '@angular/forms';
-import {requiredInput} from '../../core/helper/custom-validate.helper';
-import {Validators} from '@angular/forms';
 import {AuthenService} from '../../core/services/authen.service';
 import {Router} from '@angular/router';
-
-const INVALID_PASSWORD = {
-  Required: true,
-  message: 'New password needs to be 8 characters or more and has at least 1 alphabet letter'
-};
+import { PASSWORD_LOGIN } from 'src/app/core/constant/authen-constant';
+import { passwordValidation, requiredInput } from 'src/app/core/helper/custom-validate.helper';
 
 @Component({
   selector: 'app-reset-password',
@@ -18,41 +13,42 @@ const INVALID_PASSWORD = {
 export class ResetPasswordComponent implements OnInit {
 
   resetPassForm: FormGroup;
-  isSave = false;
-  isShow = false;
-  erroMessage = '';
-  showPassword = false;
+  isSubmitted: boolean;
+  erroMessage: boolean;
+  showPassword: boolean;
   showTypePass = 'password';
   showTypeConfirmPass = 'password';
   errorMess = '';
-
+  oldPassword: string;
   constructor(private authenService: AuthenService,
               private router: Router) { }
 
   ngOnInit() {
+    this.oldPassword = atob(localStorage.getItem(PASSWORD_LOGIN));
     this.initResetPassForm();
   }
   initResetPassForm() {
     this.resetPassForm = new FormGroup({
-      new_password: new FormControl('', [requiredInput, this.passwordValidation]),
-      confirm_password: new FormControl('', [requiredInput, this.passwordValidation])
+      new_password: new FormControl('', [passwordValidation, requiredInput]),
+      confirm_password: new FormControl('', [passwordValidation])
     });
   }
   onSubmit() {
-    this.isSave = true;
+    this.isSubmitted = true;
+    this.erroMessage = false;
     if (this.resetPassForm.invalid) {
-      this.isShow = false;
+      this.erroMessage = false;
       return;
     }
     if (this.resetPassForm.controls.new_password.value === this.resetPassForm.controls.confirm_password.value) {
-      this.isShow = true;
+      this.erroMessage = false;
     } else {
-      this.isShow = false;
-      this.erroMessage = 'Password is not the same';
+      this.erroMessage = true;
       return;
     }
     const param = {
-      password: this.resetPassForm.controls.confirm_password.value,
+      new_password: this.resetPassForm.controls.confirm_password.value,
+      old_password: this.oldPassword
     };
     this.authenService.changePassword(param).subscribe(response => {
       if (response.meta.code === 200) {
@@ -82,18 +78,5 @@ export class ResetPasswordComponent implements OnInit {
       this.showTypeConfirmPass = 'password';
       return;
     }
-  }
-  passwordValidation(control: AbstractControl) {
-    if (!control.value || typeof control.value === 'string' && !control.value.trim()) {
-      return INVALID_PASSWORD;
-    }
-    if (control.value.search(/[a-zA-Z]/) < 0) {
-      return INVALID_PASSWORD;
-    } else if (control.value.search(/[0-9]/) < 0) {
-      return INVALID_PASSWORD;
-    } else if (control.value.length < 8) {
-      return INVALID_PASSWORD;
-    }
-    return null;
   }
 }
