@@ -7,7 +7,11 @@ import { BankInforModel, Mt5Model, TransactionModel } from 'src/app/core/model/w
 import { MIN_WITHDRAW, ACCOUNT_IDS } from './../../core/constant/authen-constant';
 import { GlobalService } from 'src/app/core/services/global.service';
 import { AccountType } from 'src/app/core/model/report-response.model';
+import { JAPAN_FORMATDATE_HH_MM } from 'src/app/core/constant/format-date-constant';
+import { PaymentMethod, TYPEOFTRANHISTORY } from 'src/app/core/constant/payment-method-constant';
 declare var $: any;
+import * as moment from 'moment';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-withdraw-request',
@@ -30,27 +34,30 @@ export class WithdrawRequestComponent implements OnInit {
   equityEstimate: number;
   marginLevelEstimate: number;
   errMessage: boolean;
-  accountID: number;
+  accountID: string;
   equity: number;
   usedMargin: number;
   listTradingAccount: Array<AccountType>;
+  listWithdraw: Array<TransactionModel>;
+  withdrawTranDetail: TransactionModel;
 
-
-  constructor(private withdrawRequestService: WithdrawRequestService
-              ) { }
+  constructor(private withdrawRequestService: WithdrawRequestService,
+              private router: Router) { }
 
   ngOnInit() {
     this.listTradingAccount = JSON.parse(localStorage.getItem(ACCOUNT_IDS));
     if (this.listTradingAccount) {
-      this.accountID = Number(this.listTradingAccount[0].account_id);
+      this.accountID = this.listTradingAccount[0].value;
     }
-
     this.minWithdraw = localStorage.getItem(MIN_WITHDRAW);
     this.initWithdrawForm();
-    this.getMt5Infor(this.accountID);
+    if (this.accountID) {
+      this.getMt5Infor(Number(this.accountID.split('-')[1]));
+      this.getTranHistory(Number(this.accountID.split('-')[1]), 1, 2, 2);
+    }
     this.getBankInfor();
     this.getDwAmount(this.accountID);
-    this.getDwHistory();
+
 
   }
 
@@ -104,13 +111,53 @@ export class WithdrawRequestComponent implements OnInit {
       }
     });
   }
-  getDwHistory() {
-    // this.withdrawRequestService.getDwHistory().subscribe(response => {
-    //   if (response.meta.code === 200) {
-    //     this.listDwHistory = response.data.results;
 
-    //   }
-    // });
+  getTranHistory(accountNumber: number, pageSize: number, pageNumber: number, type?: number, dateFrom?: string, dateTo?: string) {
+    this.withdrawRequestService.getDwHistory(accountNumber, pageNumber, pageSize, type, dateFrom, dateTo).subscribe(response => {
+      if (response.meta.code === 200) {
+        this.listWithdraw = response.data.results;
+        this.listWithdraw.forEach(item => {
+          item.create_date = moment(item.create_date).format(JAPAN_FORMATDATE_HH_MM);
+          item.funding_type = this.checkType(item.funding_type);
+          item.method = this.checkPaymentMedthod(item.method);
+        });
+      }
+    });
+  }
+
+  openDetail(tranId: number) {
+    this.withdrawRequestService.getDetailTranHistory(tranId).subscribe(response => {
+      if (response.meta.code === 200) {
+        this.withdrawTranDetail = response.data;
+        this.withdrawTranDetail.create_date = moment(this.withdrawTranDetail.create_date).format(JAPAN_FORMATDATE_HH_MM);
+        this.withdrawTranDetail.method = this.checkPaymentMedthod(this.withdrawTranDetail.method);
+        this.withdrawTranDetail.funding_type = this.checkType(this.withdrawTranDetail.funding_type);
+        $('#tran_detail').modal('show');
+      }
+    });
+  }
+
+  goToHistory() {
+    this.router.navigate(['/manage/withdrawHistory']);
+  }
+
+  checkPaymentMedthod(type: string) {
+    if (type === PaymentMethod.QUICKDEPOSIT.key) {
+      return PaymentMethod.QUICKDEPOSIT.name;
+    }
+    if (type === PaymentMethod.BANKTRANSFER.key) {
+      return PaymentMethod.BANKTRANSFER.name;
+    }
+    return '';
+  }
+  checkType(type: string) {
+    if (type === TYPEOFTRANHISTORY.DEPOSIT.key) {
+      return TYPEOFTRANHISTORY.DEPOSIT.name;
+    }
+    if (type === TYPEOFTRANHISTORY.WITHDRAWAL.key) {
+      return TYPEOFTRANHISTORY.WITHDRAWAL.name;
+    }
+    return '';
   }
 
   changeWithdtaw(event: any) {
@@ -133,7 +180,7 @@ export class WithdrawRequestComponent implements OnInit {
     }
   }
   onRefesh() {
-    this.getMt5Infor(this.accountID);
+    this.getMt5Infor(Number(this.accountID.split('-')[1]));
   }
 
   openDetailTransaction(item) {

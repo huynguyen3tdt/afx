@@ -10,9 +10,12 @@
             <div class="row">
                 <div class="col-md-3 col-lg-2">
                     <div class="nav flex-md-column nav-pills mb-3 filter-nav" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                        <a class="nav-link active" id="v-pills-all-tab" data-toggle="pill" href="#v-pills-all" (click)="checkTab(TABS.ALL.value, 'call')" role="tab" aria-controls="v-pills-all" aria-selected="true">{{'All' | translate}}</a>
-                        <a class="nav-link" id="v-pills-deposit-tab" data-toggle="pill" href="#v-pills-all" (click)="checkTab(TABS.DEPOSIT.value, 'call')" role="tab" aria-controls="v-pills-deposit" aria-selected="false">{{'Deposit' | translate}}</a>
-                        <a class="nav-link" id="v-pills-withdrawal-tab" data-toggle="pill" href="#v-pills-all" (click)="checkTab(TABS.WITHDRAWAL.value, 'call')" role="tab" aria-controls="v-pills-withdrawal" aria-selected="false">{{'Withdraw' | translate}}</a>
+                        <a class="nav-link active" #allTab id="v-pills-all-tab" data-toggle="pill" href="#v-pills-all" 
+                        (click)="checkTab(TABS.ALL.value, 'call')" role="tab" aria-controls="v-pills-all" aria-selected="true">{{'All' | translate}}</a>
+                        <a class="nav-link" #depositTab id="v-pills-deposit-tab" data-toggle="pill" href="#v-pills-all" 
+                        (click)="checkTab(TABS.DEPOSIT.value, 'call')" role="tab" aria-controls="v-pills-deposit" aria-selected="false">{{'Deposit' | translate}}</a>
+                        <a class="nav-link" #withdrawTab id="v-pills-withdrawal-tab" data-toggle="pill" href="#v-pills-all" 
+                        (click)="checkTab(TABS.WITHDRAWAL.value, 'call')" role="tab" aria-controls="v-pills-withdrawal" aria-selected="false">{{'Withdraw' | translate}}</a>
                     </div>
                 </div>
                 <div class="col-md-9 col-lg-10">
