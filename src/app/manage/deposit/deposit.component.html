@@ -23,25 +23,40 @@
                                 <div class="col-md-6 col-lg-7">
                                     <div class="p-3 border mb-3 form form-line bg-light">
                                         <h5 class="text-primary mb-2"><strong>MT5</strong> {{'Information' | translate}}</h5>
-                                        <div class="mb-1 d-flex justify-content-between">
-                                            <label class="label">{{'Trading account' | translate}}</label>
-                                            <div>
-                                                <select [(ngModel)]="accountID" disabled class="form-control form-control-sm" style="min-width: 80px;background: none;">
-                                                <option *ngFor="let item of listTradingAccount" value="{{item?.value}}">{{item?.value}}</option>
-                                             </select>
-                                            </div>
-                                        </div>
-                                        <div class="mb-1 d-flex justify-content-between">
-                                            <label class="label">{{'Base currency' | translate}}</label>
-                                            <div>
-                                                <strong>JPY</strong>
-                                            </div>
+                                        <div class="d-flex justify-content-between align-items-center mb-2">
+                                          <div class="d-flex align-items-center">
+                                              <label class="label mb-0 mr-2 pt-1">{{'Trading account' | translate}}</label>
+                                              <div class="d-inline-block">
+                                                  <select class="form-control form-control-sm mb-0 bg-none" [(ngModel)]="accountID" disabled style="min-width: 160px;">
+                                                    <option *ngFor="let item of listTradingAccount" value="{{item?.value}}">{{item?.value}}</option>
+                                                  </select>
+                                              </div>
+                                          </div>
+                                          <div class="pt-1"><label class="label mb-0 mr-2 d-inline">{{'Currency' | translate}}</label>: <strong>JPY</strong></div>
                                         </div>
                                         <div class="mb-1 d-flex justify-content-between">
                                             <label class="label">{{'Balance' | translate}}</label>
                                             <div>
                                                 <strong>{{mt5Infor?.balance | number}}</strong>
                                             </div>
+                                        </div>
+                                        <div class="mb-1 d-flex justify-content-between">
+                                          <label class="label">{{'Used Margin' | translate}}</label>
+                                          <div>
+                                              <strong>{{mt5Infor?.used_margin | number}}</strong>
+                                          </div>
+                                        </div>
+                                        <div class="mb-1 d-flex justify-content-between">
+                                          <label class="label">{{'Equity' | translate}}</label>
+                                          <div>
+                                              <strong>{{mt5Infor?.equity | number}}</strong>
+                                          </div>
+                                        </div>
+                                        <div class="mb-1 d-flex justify-content-between">
+                                          <label class="label">{{'Withdrawable amount' | translate}}</label>
+                                          <div>
+                                              <strong>{{mt5Infor?.free_margin | number}}</strong>
+                                          </div>
                                         </div>
                                         <div class="mb-1 d-flex justify-content-between">
                                             <label class="label">{{'Margin Level' | translate}}</label>
@@ -51,10 +66,8 @@
                                         </div>
                                         <div class="d-flex align-items-center">
                                             <div class="mr-2" (click)="onRefesh()"><a href="javascript:;" class="btn-link-24"><i
-                                                        class="icon ion-md-refresh-circle mr-1"></i> <span
-                                                        class="mr-1">{{'Refesh' | translate}}</span></a></div>
-                                            <div class="small text-secondary"><i class="icon ion-md-time"></i> <em>Last
-                                                    updated: 2020/01/10 11:29</em></div>
+                                                        class="icon ion-md-refresh-circle mr-1"></i></a></div>
+                                            <div class="small text-secondary"><i class="icon ion-md-time"></i> <em> {{mt5Infor?.lastest_time | date:'yyyy/MM/dd'}} {{mt5Infor?.lastest_time | date:'HH:mm'}}</em></div>
                                         </div>
                                     </div>
                                 </div>
@@ -174,16 +187,11 @@
                                             <label class="label">{{'Trading account' | translate}}</label>
                                             <div>
                                                 <select [(ngModel)]="accountID" disabled class="form-control form-control-sm" style="min-width: 80px;background: none;">
-                                                <option *ngFor="let item of listTradingAccount" value="{{item?.account_id}}">{{item?.value}}</option>
+                                                <option *ngFor="let item of listTradingAccount" value="{{item?.value}}">{{item?.value}}</option>
                                               </select>
                                             </div>
                                         </div>
-                                        <div class="mb-1 d-flex justify-content-between">
-                                            <label class="label">{{'Base currency' | translate}}</label>
-                                            <div>
-                                                <strong>JPY</strong>
-                                            </div>
-                                        </div>
+
                                         <div class="mb-1 d-flex justify-content-between">
                                             <label class="label">{{'Balance' | translate}}</label>
                                             <div>
@@ -198,10 +206,8 @@
                                         </div>
                                         <div class="d-flex align-items-center">
                                             <div class="mr-2" (click)="onRefesh()"><a href="javascript:;" class="btn-link-24"><i
-                                                        class="icon ion-md-refresh-circle mr-1"></i> <span
-                                                        class="mr-1">{{'Refesh' | translate}}</span></a></div>
-                                            <div class="small text-secondary"><i class="icon ion-md-time"></i> <em>Last
-                                                    updated: 2020/01/10 11:29</em></div>
+                                                        class="icon ion-md-refresh-circle mr-1"></i> </a></div>
+                                            <div class="small text-secondary"><i class="icon ion-md-time"></i> <em>{{mt5Infor?.lastest_time | date:'yyyy/MM/dd'}} {{mt5Infor?.lastest_time | date:'HH:mm'}}</em></div>
                                         </div>
                                     </div>
                                     <div class="p-3 border mb-3 shadow">
@@ -278,12 +284,12 @@
                                             Pending</span></td> -->
 
                                     <td *ngIf="item?.status == 4" class="text-right"><span class="text-info"><i class="icon ion-md-hourglass"></i>
-                                                In progress</span></td>
+                                              {{'In progress' | translate}}</span></td>
                                     <td *ngIf="item?.status == 3" class="text-right"><span class="text-info"><i class="icon ion-md-hourglass"></i>
-                                                    Pending</span></td>
-                                    <td *ngIf="item?.status == 2" class="text-right"><span> Cancel</span></td>
+                                      {{'Pending' | translate}}</span></td>
+                                    <td *ngIf="item?.status == 2" class="text-right"><span> {{'Cancel' | translate}}</span></td>
                                     <td *ngIf="item?.status == 1" class="text-right"><span class="text-success"><i class="icon ion-md-checkmark"></i>
-                                                    Completed</span></td>
+                                      {{'Completed' | translate}}</span></td>
 
                                 </tr>
                                 <tr>

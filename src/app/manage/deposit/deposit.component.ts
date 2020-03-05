@@ -6,7 +6,7 @@ import { DepositService } from 'src/app/core/services/deposit.service';
 import { element } from 'protractor';
 import { MIN_DEPOST, ACCOUNT_IDS } from 'src/app/core/constant/authen-constant';
 import { WithdrawRequestService } from './../../core/services/withdraw-request.service';
-import { Mt5Model, TransactionModel } from 'src/app/core/model/withdraw-request-response.model';
+import { Mt5Model, TransactionModel, WithdrawAmountModel } from 'src/app/core/model/withdraw-request-response.model';
 import { AccountType } from 'src/app/core/model/report-response.model';
 import { GlobalService } from 'src/app/core/services/global.service';
 import { JAPAN_FORMATDATE_HH_MM } from 'src/app/core/constant/format-date-constant';
@@ -49,6 +49,7 @@ export class DepositComponent implements OnInit {
   accountID: string;
   listDeposit: Array<TransactionModel>;
   depositTranDetail: TransactionModel;
+  listDwAmount: WithdrawAmountModel;
 
   ngOnInit() {
     this.listTradingAccount = JSON.parse(localStorage.getItem(ACCOUNT_IDS));
@@ -59,6 +60,7 @@ export class DepositComponent implements OnInit {
     if (this.accountID) {
       this.getTranHistory(Number(this.accountID.split('-')[1]), 1, 2, 1);
       this.getMt5Infor(Number(this.accountID.split('-')[1]));
+      this.getDwAmount(Number(this.accountID.split('-')[1]));
     }
     this.initDepositAmountForm();
     this.initDepositTransactionForm();
@@ -129,6 +131,16 @@ export class DepositComponent implements OnInit {
           item.funding_type = this.checkType(item.funding_type);
           item.method = this.checkPaymentMedthod(item.method);
         });
+      }
+    });
+  }
+
+  getDwAmount(accountId) {
+    this.spinnerService.show();
+    this.withdrawRequestService.getDwAmount(accountId).subscribe(response => {
+      if (response.meta.code === 200) {
+        this.spinnerService.hide();
+        this.listDwAmount = response.data;
       }
     });
   }
