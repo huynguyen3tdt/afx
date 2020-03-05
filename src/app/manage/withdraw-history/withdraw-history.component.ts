@@ -3,6 +3,7 @@ import { WithdrawRequestService } from 'src/app/core/services/withdraw-request.s
 import { FormGroup, FormControl } from '@angular/forms';
 import { TransactionModel, BankInforModel } from 'src/app/core/model/withdraw-request-response.model';
 import * as moment from 'moment';
+import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { ACCOUNT_IDS } from 'src/app/core/constant/authen-constant';
 import { JAPAN_FORMATDATE, JAPAN_FORMATDATE_HH_MM } from 'src/app/core/constant/format-date-constant';
 import {
@@ -47,7 +48,8 @@ export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
     YEAR: 'year'
   };
 
-  constructor(private withdrawRequestService: WithdrawRequestService) { }
+  constructor(private withdrawRequestService: WithdrawRequestService,
+              private spinnerService: Ng4LoadingSpinnerService) { }
 
   ngOnInit() {
     this.currentPage = 1;
@@ -71,9 +73,11 @@ export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
   }
 
   getTranHistory(accountNumber: number, pageSize: number, pageNumber: number, type?: number, dateFrom?: string, dateTo?: string) {
+    this.spinnerService.show();
     this.checkTab(type);
     this.withdrawRequestService.getDwHistory(accountNumber, pageNumber, pageSize, type, dateFrom, dateTo).subscribe(response => {
       if (response.meta.code === 200) {
+        this.spinnerService.hide();
         this.listReport = response.data.results;
         this.totalItem = response.data.count;
         this.listReport.forEach(item => {

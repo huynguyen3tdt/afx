@@ -8,6 +8,7 @@ import { WithdrawRequestService } from 'src/app/core/services/withdraw-request.s
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { Router, RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
+import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
 
 describe('WithdrawRequestComponent', () => {
   let component: WithdrawRequestComponent;
@@ -21,7 +22,8 @@ describe('WithdrawRequestComponent', () => {
         ReactiveFormsModule,
         HttpClientTestingModule,
         FormsModule,
-        TranslateModule.forRoot()
+        TranslateModule.forRoot(),
+        Ng4LoadingSpinnerModule,
       ],
       providers: [
         WithdrawRequestService,

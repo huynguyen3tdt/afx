@@ -10,6 +10,7 @@ import { GlobalService } from 'src/app/core/services/global.service';
 import { AccountType } from 'src/app/core/model/report-response.model';
 import { passwordValidation } from 'src/app/core/helper/custom-validate.helper';
 import { AuthenService } from 'src/app/core/services/authen.service';
+import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { BankInforModel } from './../../core/model/withdraw-request-response.model';
 declare var $: any;
 
@@ -23,6 +24,7 @@ export class AccountInformationComponent implements OnInit {
 
 
   constructor(
+    private spinnerService: Ng4LoadingSpinnerService,
     private translate: TranslateService,
     private withdrawRequestService: WithdrawRequestService,
     private userService: UserService,
@@ -183,8 +185,10 @@ export class AccountInformationComponent implements OnInit {
   }
 
   getCorporateInfor() {
+    this.spinnerService.show();
     this.userService.getCorporateInfor().subscribe(response => {
       if (response.meta.code === 200) {
+        this.spinnerService.hide();
         this.corporateInfor = response.data;
         this.corPrefecture = this.corporateInfor.corporation.address.value.city;
         this.corDistrict = this.corporateInfor.corporation.address.value.street;
@@ -203,7 +207,9 @@ export class AccountInformationComponent implements OnInit {
     });
   }
   getMt5Infor(accountId) {
+    this.spinnerService.show();
     this.withdrawRequestService.getmt5Infor(accountId).subscribe(response => {
+      this.spinnerService.hide();
       if (response.meta.code === 200) {
         this.accountInfor = response.data;
       }
@@ -211,8 +217,10 @@ export class AccountInformationComponent implements OnInit {
   }
 
   getWithDrawAmount(accountId) {
+    this.spinnerService.show();
     this.withdrawRequestService.getDwAmount(accountId).subscribe(response => {
       if (response.meta.code === 200) {
+        this.spinnerService.hide();
         this.withdrawAmount = response.data;
       }
     });
