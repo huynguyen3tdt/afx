@@ -6,6 +6,7 @@ import { ACCOUNT_IDS } from 'src/app/core/constant/authen-constant';
 import { JAPAN_FORMATDATE } from 'src/app/core/constant/format-date-constant';
 import * as moment from 'moment';
 import { GlobalService } from 'src/app/core/services/global.service';
+import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 declare var $: any;
 
 @Component({
@@ -40,7 +41,8 @@ export class ReportListComponent implements OnInit {
     YEAR: 'year'
   };
 
-  constructor(private reportservice: ReportService) { }
+  constructor(private reportservice: ReportService,
+              private spinnerService: Ng4LoadingSpinnerService, ) { }
 
   ngOnInit() {
     this.currentPage = 1;
@@ -61,9 +63,11 @@ export class ReportListComponent implements OnInit {
   }
 
   getReport(accountNumber: number, pageSize: number, pageNumber: number, type?: number, dateFrom?: string, dateTo?: string) {
+    this.spinnerService.show();
     this.checkTab(type);
     this.reportservice.getReport(accountNumber, pageNumber, pageSize, type, dateFrom, dateTo).subscribe(response => {
       if (response.meta.code === 200) {
+        this.spinnerService.hide();
         this.listReport = response.data.results;
         this.totalItem = response.data.count;
         this.listReport.forEach(item => {

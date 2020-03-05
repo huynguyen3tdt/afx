@@ -14,6 +14,7 @@ declare var $: any;
 import * as moment from 'moment';
 import { PaymentMethod, TYPEOFTRANHISTORY } from 'src/app/core/constant/payment-method-constant';
 import { Router } from '@angular/router';
+import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 
 @Component({
   selector: 'app-deposit',
@@ -23,6 +24,7 @@ import { Router } from '@angular/router';
 export class DepositComponent implements OnInit {
   constructor(private depositService: DepositService,
               private withdrawRequestService: WithdrawRequestService,
+              private spinnerService: Ng4LoadingSpinnerService,
               private router: Router) { }
 
   depositAmountForm: FormGroup;
@@ -78,8 +80,10 @@ export class DepositComponent implements OnInit {
   }
 
   getDepositBank() {
+    this.spinnerService.show();
     this.depositService.getDepositBank().subscribe(response => {
       if (response.meta.code === 200) {
+        this.spinnerService.hide();
         this.listBankTranfer = response.data;
         this.listBankTranfer.forEach(item => {
           item.id = item.id;
@@ -101,11 +105,13 @@ export class DepositComponent implements OnInit {
   }
 
   getMt5Infor(accountId) {
+    this.spinnerService.show();
     this.withdrawRequestService.getmt5Infor(accountId).subscribe(response => {
       if (response.meta.code === 200) {
         this.mt5Infor = response.data;
         this.equity = this.mt5Infor.equity;
         this.usedMargin = this.mt5Infor.used_margin;
+        this.spinnerService.hide();
       }
       this.countDeposit();
       this.countDepositAmount();
@@ -113,8 +119,10 @@ export class DepositComponent implements OnInit {
   }
 
   getTranHistory(accountNumber: number, pageSize: number, pageNumber: number, type?: number, dateFrom?: string, dateTo?: string) {
+    this.spinnerService.show();
     this.withdrawRequestService.getDwHistory(accountNumber, pageNumber, pageSize, type, dateFrom, dateTo).subscribe(response => {
       if (response.meta.code === 200) {
+        this.spinnerService.hide();
         this.listDeposit = response.data.results;
         this.listDeposit.forEach(item => {
           item.create_date = moment(item.create_date).format(JAPAN_FORMATDATE_HH_MM);

@@ -8,6 +8,7 @@ import { PaginationModule } from 'ngx-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { RouterModule, Routes, provideRoutes } from '@angular/router';
+import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
 
 const config: Routes = [
   {
@@ -28,7 +29,8 @@ describe('WithdrawHistoryComponent', () => {
         BsDatepickerModule.forRoot(),
         PaginationModule.forRoot(),
         TranslateModule.forRoot(),
-        RouterTestingModule
+        RouterTestingModule,
+        Ng4LoadingSpinnerModule,
       ],
       providers: [ provideRoutes(config) ]
     })
