@@ -5,11 +5,12 @@ import { Mt5Model, WithdrawAmountModel } from 'src/app/core/model/withdraw-reque
 import { UserService } from './../../core/services/user.service';
 import { UserModel, CorporateResponse, CorporateModel } from 'src/app/core/model/user.model';
 import { FormGroup, FormControl } from '@angular/forms';
-import { IS_COMPANY, ACCOUNT_IDS} from 'src/app/core/constant/authen-constant';
+import { IS_COMPANY, ACCOUNT_IDS } from 'src/app/core/constant/authen-constant';
 import { GlobalService } from 'src/app/core/services/global.service';
 import { AccountType } from 'src/app/core/model/report-response.model';
 import { passwordValidation } from 'src/app/core/helper/custom-validate.helper';
 import { AuthenService } from 'src/app/core/services/authen.service';
+import { BankInforModel } from './../../core/model/withdraw-request-response.model';
 declare var $: any;
 
 
@@ -26,8 +27,8 @@ export class AccountInformationComponent implements OnInit {
     private withdrawRequestService: WithdrawRequestService,
     private userService: UserService,
     private authenService: AuthenService,
-    ) {
-     }
+  ) {
+  }
   accountInfor: Mt5Model;
   withdrawAmount: WithdrawAmountModel;
   editAddress: boolean;
@@ -47,6 +48,9 @@ export class AccountInformationComponent implements OnInit {
   userForm: FormGroup;
   corporateForm: FormGroup;
   changePassForm: FormGroup;
+  branchNameForm: FormGroup;
+  branchCodeForm: FormGroup;
+  bankAccountForm: FormGroup;
   countries = ['Vietnamese', 'English'];
   postcode: any;
   isSubmitted: boolean;
@@ -68,9 +72,12 @@ export class AccountInformationComponent implements OnInit {
   oldPassword: string;
   errorPassword: boolean;
   successPassword: boolean;
+  bankAccount: boolean;
+  editBank: boolean;
 
 
   ngOnInit() {
+    this.isCompany = localStorage.getItem(IS_COMPANY);
     this.listTradingAccount = JSON.parse(localStorage.getItem(ACCOUNT_IDS));
     if (this.listTradingAccount) {
       this.accountID = Number(this.listTradingAccount[0].account_id);
@@ -78,6 +85,11 @@ export class AccountInformationComponent implements OnInit {
     this.initUserForm();
     this.initCorporateForm();
     this.initSettingForm();
+    this.initBranchNameForm();
+    this.initBranchCodeForm();
+    this.initBankAccountForm();
+    this.bankAccount = true;
+    this.editBank = false;
     this.editAddress = false;
     this.editEmail = false;
     this.editPhone = false;
@@ -91,8 +103,7 @@ export class AccountInformationComponent implements OnInit {
     this.editPersonEmail = false;
     this.getMt5Infor(this.accountID);
     this.getWithDrawAmount(this.accountID);
-    this.getCorporateInfor();
-    this.getUserInfo();
+
   }
 
   initUserForm() {
@@ -136,10 +147,28 @@ export class AccountInformationComponent implements OnInit {
     localStorage.setItem('locale', event);
   }
 
+  initBranchNameForm() {
+    this.branchNameForm = new FormGroup({
+      branch_name: new FormControl('')
+    });
+  }
+  initBranchCodeForm() {
+    this.branchCodeForm = new FormGroup({
+      branch_code: new FormControl('')
+    });
+  }
+  initBankAccountForm() {
+    this.bankAccountForm = new FormGroup({
+      beneficiary_bank: new FormControl(''),
+      bank_branch: new FormControl(''),
+      bank_account_type: new FormControl(),
+      bank_account_number: new FormControl(''),
+    });
+  }
+
   getUserInfo() {
     this.userService.getUserInfor().subscribe(response => {
       if (response.meta.code === 200) {
-        this.isUser = localStorage.getItem(IS_COMPANY);
         this.userInfor = response.data;
         this.prefecture = response.data.address.value.city;
         this.county = response.data.address.value.street;
@@ -157,7 +186,6 @@ export class AccountInformationComponent implements OnInit {
     this.userService.getCorporateInfor().subscribe(response => {
       if (response.meta.code === 200) {
         this.corporateInfor = response.data;
-        this.isCompany = localStorage.getItem(IS_COMPANY);
         this.corPrefecture = this.corporateInfor.corporation.address.value.city;
         this.corDistrict = this.corporateInfor.corporation.address.value.street;
         this.corporateForm.controls.cor_postcode.setValue(this.corporateInfor.corporation.zip.value);
@@ -332,7 +360,7 @@ export class AccountInformationComponent implements OnInit {
       new_password: this.changePassForm.controls.confirm_password.value,
       old_password: this.changePassForm.controls.current_password.value,
     };
-    this.authenService.changePassword(param).subscribe( response => {
+    this.authenService.changePassword(param).subscribe(response => {
       if (response.meta.code === 200) {
         this.successPassword = true;
       } else {
@@ -340,5 +368,19 @@ export class AccountInformationComponent implements OnInit {
       }
     });
   }
+  editBankAccount() {
+    this.editBank = true;
+    this.bankAccount = false;
 
+  }
+  showBankInfor() {
+    $('#modal-select-bank').modal('show');
+  }
+  saveBankAccount() {
+
+  }
+  cancelBankAccount() {
+    this.editBank = false;
+    this.bankAccount = true;
+  }
 }
