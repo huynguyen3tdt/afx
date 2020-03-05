@@ -5,7 +5,7 @@ import { Observable } from 'rxjs/internal/Observable';
 import { InnerSubscriber } from 'rxjs/internal/InnerSubscriber';
 import { EnvConfigService } from './env-config.service';
 import { catchError } from 'rxjs/operators';
-import { ReportResponseModel } from '../model/report-response.model';
+import { ReportResponseModel, ReportChangeResponseModel } from '../model/report-response.model';
 
 
 @Injectable({
@@ -46,6 +46,19 @@ export class ReportService {
         `${this.envConfigService.getConfig()}/${AppSettings.API_DOWNLOAD_REPORT_FILE}?report_id=${reportId}`,
         { responseType: 'arraybuffer' }
       )
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          return new Observable((observer: InnerSubscriber<any, any>) => {
+            observer.next(error);
+          });
+        })
+      );
+  }
+
+  changeReadStatus(param): Observable<ReportChangeResponseModel> {
+    return this.httpClient
+      .put(`${this.envConfigService.getConfig()}/${AppSettings.API_REPORT_STATUS}`,
+        param)
       .pipe(
         catchError((error: HttpErrorResponse) => {
           return new Observable((observer: InnerSubscriber<any, any>) => {
