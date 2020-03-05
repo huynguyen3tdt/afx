@@ -11,6 +11,11 @@ export interface ReportResponseModel {
   };
 }
 
+export interface ReportChangeResponseModel {
+  meta: MetaResponseModel;
+  data: ReportIDS;
+}
+
 export interface ReportIDS {
   id: number;
   partner_id: number;
@@ -36,4 +41,11 @@ export interface AccountType {
   value: string;
 }
 
+export interface Report {
+  id: number;
+  report_title: string;
+  created_date: string;
+  read_flg: boolean;
+  file_type: string;
+}
 

@@ -62,7 +62,7 @@ export class DepositComponent implements OnInit {
     }
     this.initDepositAmountForm();
     this.initDepositTransactionForm();
-    this.getDepositBank();
+    // this.getDepositBank();
   }
 
   initDepositAmountForm() {

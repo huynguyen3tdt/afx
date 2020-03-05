@@ -176,6 +176,17 @@ export class ReportListComponent implements OnInit {
     return null;
   }
 
+  changeReadStatus(id: number) {
+    const param = {
+      report_id : id
+    };
+    this.reportservice.changeReadStatus(param).subscribe(response => {
+      if (response.meta.code === 200) {
+        this.searchReport();
+      }
+    });
+  }
+
   openPDF(item: ReportIDS) {
     if (item.file_type === 'pdf') {
       this.reportservice.downLoadReportFile(item.id).subscribe(response => {
@@ -186,6 +197,7 @@ export class ReportListComponent implements OnInit {
         this.pdfViewer.refresh();
         $('#modal-2').modal('show');
       });
+      this.changeReadStatus(item.id);
     }
   }
   downLoadFile(item: ReportIDS) {
@@ -212,6 +224,7 @@ export class ReportListComponent implements OnInit {
       a.download = fileName;
       document.body.appendChild(a);
       a.click();
+      this.changeReadStatus(item.id);
     });
   }
 }
