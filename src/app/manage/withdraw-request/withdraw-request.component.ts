@@ -12,7 +12,7 @@ import { PaymentMethod, TYPEOFTRANHISTORY } from 'src/app/core/constant/payment-
 declare var $: any;
 import * as moment from 'moment';
 import { Router } from '@angular/router';
-
+import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 @Component({
   selector: 'app-withdraw-request',
   templateUrl: './withdraw-request.component.html',
@@ -42,6 +42,7 @@ export class WithdrawRequestComponent implements OnInit {
   withdrawTranDetail: TransactionModel;
 
   constructor(private withdrawRequestService: WithdrawRequestService,
+              private spinnerService: Ng4LoadingSpinnerService,
               private router: Router) { }
 
   ngOnInit() {
@@ -83,8 +84,10 @@ export class WithdrawRequestComponent implements OnInit {
   }
 
   getMt5Infor(accountId) {
+    this.spinnerService.show();
     this.withdrawRequestService.getmt5Infor(accountId).subscribe(response => {
       if (response.meta.code === 200) {
+        this.spinnerService.hide();
         this.mt5Infor = response.data;
         this.equity = this.mt5Infor.equity;
         this.usedMargin = this.mt5Infor.used_margin;
@@ -93,24 +96,30 @@ export class WithdrawRequestComponent implements OnInit {
     });
   }
   getBankInfor() {
+    this.spinnerService.show();
     this.withdrawRequestService.getBankInfor().subscribe(response => {
       if (response.meta.code === 200) {
+        this.spinnerService.hide();
         this.bankInfor = response.data;
 
       }
     });
   }
   getDwAmount(accountId) {
+    this.spinnerService.show();
     this.withdrawRequestService.getDwAmount(accountId).subscribe(response => {
       if (response.meta.code === 200) {
+        this.spinnerService.hide();
         this.listDwAmount = response.data;
       }
     });
   }
 
   getTranHistory(accountNumber: number, pageSize: number, pageNumber: number, type?: number, dateFrom?: string, dateTo?: string) {
+    this.spinnerService.show();
     this.withdrawRequestService.getDwHistory(accountNumber, pageNumber, pageSize, type, dateFrom, dateTo).subscribe(response => {
       if (response.meta.code === 200) {
+        this.spinnerService.hide();
         this.listWithdraw = response.data.results;
         this.listWithdraw.forEach(item => {
           item.create_date = moment(item.create_date).format(JAPAN_FORMATDATE_HH_MM);
