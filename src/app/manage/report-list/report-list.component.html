@@ -91,17 +91,16 @@
                                     </thead>
                                     <tbody>
                                         <tr *ngFor="let item of listReport">
-                                            <td *ngIf="item.file_type == 'pdf'" class="text-center align-middle"><img src="assets/images/icons/pdf.svg" width="20" height="20"></td>
-                                            <td *ngIf="item.file_type == 'csv'" class="text-center align-middle"><img src="assets/images/icons/csv.svg" width="20" height="20"></td>
+
                                             <!-- <td class="text-center align-middle"><span class="small text-secondary">{{item?.file_type}}</span></td> -->
                                             <td class="align-middle"><strong><a (click)="openPDF(item)"
                                                         href="javascript:;">{{item?.report_title}}</a></strong></td>
                                             <td class="text-right align-middle"><span class="text-secondary">{{item?.create_date}}</span>
                                             </td>
-                                            <td class="text-right align-middle"><span class="text-secondary">{{item?.file_type | uppercase}}</span>
-                                            </td>
-                                            <td *ngIf="item?.read_flg == true" class="text-right align-middle"><span class="text-danger">Done</span></td>
-                                            <td *ngIf="item?.read_flg == false" class="text-right align-middle"><span class="text-danger">Not yet</span></td>
+                                            <td *ngIf="item.file_type == 'pdf'" class="text-center align-middle"><img src="assets/images/icons/pdf.svg" width="20" height="20"></td>
+                                            <td *ngIf="item.file_type == 'csv'" class="text-center align-middle"><img src="assets/images/icons/csv.svg" width="20" height="20"></td>
+                                            <td *ngIf="item?.read_flg == true" class="text-right align-middle"><span class="text-success">{{'Done' | translate}}</span></td>
+                                            <td *ngIf="item?.read_flg == false" class="text-right align-middle"><span class="text-danger">{{'Not yet' | translate}}</span></td>
                                             <td class="text-right align-middle">
                                                 <button (click)="downLoadFile(item)" class="btn btn-sm btn-outline-secondary pt-0 pb-0"><i
                                                         class="icon ion-md-download"></i></button>

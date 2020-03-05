@@ -161,5 +161,9 @@
     "New password needs to be 8 characters or more and has at least 1 alphabet letter": "新しいパスワードは8文字以上で、少なくとも1文字のアルファベットが必要です。",
     "Current password and new passwords cannot be the same": "現在のパスワードと新しいパスワードを同じにすることはできません。",
     "Password incorrect": "正しくないパスワード。",
-    "You have successfully changed the password": "パスワードを正常に変更しました。"
+    "You have successfully changed the password": "パスワードを正常に変更しました。",
+    "In progress": "進行中",
+    "Completed": "完了しました",
+    "Done": "完了",
+    "Not yet": "未だに"
 }
