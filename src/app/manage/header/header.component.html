@@ -56,7 +56,6 @@
     <!-- BEGIN HEADER BOTTOM -->
     <div class="header-bottom-nav-wrapper">
         <div class="container-fluid container-md">
-            <!-- BEGIN HEADER BOTTOM NAV -->
             <ul class="header-bottom-nav nav">
                 <li class="nav-item nav-item-notifications">
                     <a [routerLink]="['/manage/notifications']" id="notifications" class="nav-link" title="Notifications"><i class="icon ion-md-notifications d-md-none"></i> <span
@@ -86,10 +85,8 @@
                 </li>
 
             </ul>
-            <!-- END HEADER BOTTOM NAV -->
         </div>
     </div>
-    <!-- END HEADER BOTTOM -->
 </div>
 <!-- END HEADER -->
 
@@ -104,22 +101,22 @@
             </div>
             <ul class="offcanvas-nav nav">
                 <li class="nav-item nav-item-notifications">
-                    <a href="MY003_Notification_List_MY004_Notification_Detail.html" class="nav-link has-icon"><i class="icon ion-md-notifications"></i> Notifications</a>
+                    <a [routerLink]="['/manage/notifications']" id="notifications" class="nav-link has-icon btn-offcanvas-close"><i class="icon ion-md-notifications"></i> {{'Notifications' | translate}}</a>
                 </li>
                 <li class="nav-item nav-item-deposit">
-                    <a href="MY010_Deposit_MY011_DepositDetail.html" class="nav-link active has-icon"><i class="icon ion-md-add"></i> Deposit</a>
+                    <a [routerLink]="['/manage/deposit']" id="deposit" class="nav-link has-icon btn-offcanvas-close"><i class="icon ion-md-add"></i> {{'Deposit' | translate}}</a>
                 </li>
                 <li class="nav-item nav-item-withdraw">
-                    <a href="MY014_WithdrawRequest.html" class="nav-link has-icon"><i class="icon ion-md-remove"></i> Withdrawal</a>
+                    <a [routerLink]="['/manage/withdrawRequest']" id="withdrawRequest" class="nav-link has-icon btn-offcanvas-close"><i class="icon ion-md-remove"></i> {{'Withdraw' | translate}}</a>
                 </li>
                 <li class="nav-item nav-item-history">
-                    <a href="MY012_DW_History.html" class="nav-link has-icon"><i class="icon ion-md-time"></i> History</a>
+                    <a [routerLink]="['/manage/withdrawHistory']" id="withdrawHistory" class="nav-link has-icon btn-offcanvas-close"><i class="icon ion-md-time"></i> {{'History' | translate}}</a>
                 </li>
                 <li class="nav-item nav-item-report">
-                    <a href="MY007_ReportList.html" class="nav-link has-icon"><i class="icon ion-md-today"></i> Report</a>
+                    <a [routerLink]="['/manage/reportList']" id="reportList" class="nav-link has-icon btn-offcanvas-close"><i class="icon ion-md-today"></i> {{'Report' | translate}}</a>
                 </li>
                 <li class="nav-item nav-item-account">
-                    <a href="MY005_Account_Information_MY006_User_Information.html" class="nav-link has-icon"><i class="icon ion-md-person"></i> My Account</a>
+                    <a [routerLink]="['/manage/accountInfo']" id="accountInfo" class="nav-link has-icon btn-offcanvas-close"><i class="icon ion-md-person"></i> {{'My Account' | translate}}</a>
                 </li>
 
             </ul>

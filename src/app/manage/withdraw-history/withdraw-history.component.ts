@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { WithdrawRequestService } from 'src/app/core/services/withdraw-request.service';
 import { FormGroup, FormControl } from '@angular/forms';
 import { TransactionModel, BankInforModel } from 'src/app/core/model/withdraw-request-response.model';
@@ -18,7 +18,7 @@ declare var $: any;
   templateUrl: './withdraw-history.component.html',
   styleUrls: ['./withdraw-history.component.css']
 })
-export class WithdrawHistoryComponent implements OnInit {
+export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
   listBankInfor: BankInforModel;
   listDwHistory: Array<TransactionModel>;
   listReport: Array<TransactionModel>;
@@ -56,6 +56,9 @@ export class WithdrawHistoryComponent implements OnInit {
     this.initSearchForm();
     this.getTranHistory(this.searchForm.controls.tradingAccount.value, this.currentPage, this.pageSize, this.TABS.ALL.value,
       this.formatDate(this.searchForm.controls.fromDate.value), this.formatDate(this.searchForm.controls.toDate.value));
+  }
+
+  ngAfterViewInit(): void {
   }
 
   initSearchForm() {
