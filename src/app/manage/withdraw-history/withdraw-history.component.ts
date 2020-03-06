@@ -47,6 +47,7 @@ export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
     MONTH: 'month',
     YEAR: 'year'
   };
+  STATUS = ['Complete', 'Pending', 'In process', 'Cancel'];
 
   constructor(private withdrawRequestService: WithdrawRequestService,
               private spinnerService: Ng4LoadingSpinnerService) { }
