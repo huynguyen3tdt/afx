@@ -43,7 +43,8 @@ export class WithdrawRequestComponent implements OnInit {
 
   constructor(private withdrawRequestService: WithdrawRequestService,
               private spinnerService: Ng4LoadingSpinnerService,
-              private router: Router) { }
+              private router: Router,
+              private globalService: GlobalService) { }
 
   ngOnInit() {
     this.listTradingAccount = JSON.parse(localStorage.getItem(ACCOUNT_IDS));
@@ -179,7 +180,7 @@ export class WithdrawRequestComponent implements OnInit {
     const numeral = require('numeral');
     this.errMessage = false;
     this.equityEstimate = Math.floor(this.equity - numeral(this.withdrawForm.controls.amount.value).value());
-    this.marginLevelEstimate = Math.floor((this.equityEstimate / this.usedMargin) * 100);
+    this.marginLevelEstimate = this.globalService.calculateMarginLevel(this.equityEstimate, this.usedMargin);
     if (this.marginLevelEstimate <= 100) {
       this.errMessage = true;
     }

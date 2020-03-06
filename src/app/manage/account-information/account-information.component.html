@@ -36,7 +36,7 @@
                                     class="d-none d-md-inline">{{'Corporate Infomation' | translate}}</strong></a>
                             <a class="nav-item nav-link" id="nav-bank-tab" data-toggle="tab" href="#nav-bank" role="tab" aria-controls="nav-bank" aria-selected="false"><i class="icon ion-md-card"></i> <strong
                                     class="d-none d-md-inline">{{'Bank Account' | translate}}</strong></a>
-                            <a class="nav-item nav-link" id="nav-setting-tab" data-toggle="tab" href="#nav-setting" role="tab" aria-controls="nav-setting" aria-selected="false"><i
+                            <a class="nav-item nav-link" id="nav-setting-tab" data-toggle="tab" href="#nav-setting" role="tab" (click)="openSetting()" aria-controls="nav-setting" aria-selected="false"><i
                                     class="icon ion-md-settings"></i> <strong
                                     class="d-none d-md-inline">{{'Setting' | translate}}</strong></a>
                         </div>
@@ -789,9 +789,9 @@
                                 </div>
                                 <div class="col-md-8 col-lg-9">
                                     <div class="btn-group">
-                                        <button type="button" class="btn btn-outline-secondary btn-sm btn-size-sm" data-size="sm">小</button>
-                                        <button type="button" class="btn btn-outline-secondary btn-sm btn-size-md active" data-size="md">中</button>
-                                        <button type="button" class="btn btn-outline-secondary btn-sm btn-size-lg" data-size="lg">大</button>
+                                        <button type="button" class="btn btn-outline-secondary btn-sm btn-size-sm" data-size="sm" id="font-size-sm" (click)="changeFontSize('font-size-sm')">小</button>
+                                        <button type="button" class="btn btn-outline-secondary btn-sm btn-size-md" id="font-size-md" data-size="md" (click)="changeFontSize('font-size-md')">中</button>
+                                        <button type="button" class="btn btn-outline-secondary btn-sm btn-size-lg" id="font-size-lg" data-size="lg" (click)="changeFontSize('font-size-lg')">大</button>
                                     </div>
                                 </div>
                             </div>

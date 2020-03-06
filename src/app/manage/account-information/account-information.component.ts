@@ -5,7 +5,7 @@ import { Mt5Model, WithdrawAmountModel } from 'src/app/core/model/withdraw-reque
 import { UserService } from './../../core/services/user.service';
 import { UserModel, CorporateResponse, CorporateModel } from 'src/app/core/model/user.model';
 import { FormGroup, FormControl } from '@angular/forms';
-import { IS_COMPANY, ACCOUNT_IDS } from 'src/app/core/constant/authen-constant';
+import { IS_COMPANY, ACCOUNT_IDS, FONTSIZE_AFX } from 'src/app/core/constant/authen-constant';
 import { GlobalService } from 'src/app/core/services/global.service';
 import { AccountType } from 'src/app/core/model/report-response.model';
 import { passwordValidation } from 'src/app/core/helper/custom-validate.helper';
@@ -200,7 +200,7 @@ export class AccountInformationComponent implements OnInit {
         this.corporateForm.controls.person_bod.setValue(this.corporateInfor.pic.fx_dept);
         this.corporateForm.controls.person_pic.setValue(this.corporateInfor.pic.function);
         this.corporateForm.controls.per_picname.setValue(this.corporateInfor.pic.name);
-        this.corporateForm.controls.per_picname2.setValue(this.corporateInfor.pic.fx_name1);
+        this.corporateForm.controls.person_picname2.setValue(this.corporateInfor.pic.fx_name1);
         this.corporateForm.controls.person_phone.setValue(this.corporateInfor.pic.mobile);
         this.corporateForm.controls.person_email.setValue(this.corporateInfor.pic.email.value);
       }
@@ -390,5 +390,25 @@ export class AccountInformationComponent implements OnInit {
   cancelBankAccount() {
     this.editBank = false;
     this.bankAccount = true;
+  }
+
+  openSetting() {
+   const fontSizeCurrent = localStorage.getItem(FONTSIZE_AFX);
+   $(`#${fontSizeCurrent}`).addClass('active');
+  }
+
+  changeFontSize(fontsize: string) {
+    const listFontSize = ['font-size-sm', 'font-size-md', 'font-size-lg'];
+    console.log('fonrtSizeee ', fontsize);
+    listFontSize.forEach(element => {
+      if (fontsize === element) {
+        $(`#${element}`).addClass('active');
+        $('body').addClass(element);
+        localStorage.setItem(FONTSIZE_AFX, element);
+      } else {
+        $(`#${element}`).removeClass('active');
+        $('body').removeClass(element);
+      }
+    });
   }
 }
