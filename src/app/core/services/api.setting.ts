@@ -22,4 +22,5 @@ export class AppSettings {
     public static API_DEPOSIT_BIILING           = `api/${versionAPI}/deposits/billing_system/`;
     public static API_DOWNLOAD_REPORT_FILE      = `api/${versionAPI}/reports/file/`;
     public static API_REPORT_STATUS             = `api/${versionAPI}/reports/status/`;
+    public static API_POST_WITHDRAW             = `api/${versionAPI}/withdraws/`;
 }

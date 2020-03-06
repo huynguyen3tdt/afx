@@ -13,6 +13,7 @@ import {
   WithdrawAmountResponse,
   TransactionModel
 } from '../model/withdraw-request-response.model';
+import { ResponseWihtoutDataModel } from '../model/none-data-response.model';
 
 
 @Injectable({
@@ -61,9 +62,9 @@ export class WithdrawRequestService {
       );
   }
 
-  postWithdraw(params: any): Observable<TransactionResponse> {
+  postWithdraw(param): Observable<ResponseWihtoutDataModel> {
     return this.httpClient
-      .post(`${this.envConfigService.getConfig()}/${AppSettings.API_WITHDRAW}`, params)
+      .post(`${this.envConfigService.getConfig()}/${AppSettings.API_POST_WITHDRAW }`, param)
       .pipe(
         catchError((error: HttpErrorResponse) => {
           return new Observable((observer: InnerSubscriber<any, any>) => {

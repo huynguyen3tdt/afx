@@ -166,5 +166,11 @@
   "Completed": "Completed",
   "Done": "Done",
   "Not yet": "Not yet",
-  "Quick deposit": "Quick deposit"
+  "Quick deposit": "Quick deposit",
+  "Are you sure you want to make the withdrawal request": "Are you sure you want to make the withdrawal request",
+  "Account Holders Name": "Account Holders Name",
+  "Bank Branch": "Bank Branch",
+  "Branch Number": "Branch Number",
+  "Confirm": "confirm"
+
 }
