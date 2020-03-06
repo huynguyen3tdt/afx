@@ -15,6 +15,12 @@ export interface WithdrawAmountResponse {
   data: WithdrawAmountModel;
 }
 
+// tslint:disable-next-line: class-name
+export interface postWithdrawResponse {
+  meta: MetaResponseModel;
+  data: postWithdrawModel;
+}
+
 export interface WithdrawHistory {
   meta: MetaResponseModel;
   data: {
@@ -47,29 +53,41 @@ export interface BankInforModel {
   acc_number: number;
   acc_holder_name: string;
   name: string;
-  bank_branch: string;
+  branch_name: string;
   zip: number;
   branch_code: string;
+  fx_acc_type: number;
+  bic: string;
   currency: string;
 }
 
 export interface TransactionModel {
-    id: number;
-    trading_account_id: number;
-    create_date: string;
-    description: string;
-    currency: string;
-    method: string;
-    amount: number;
-    funding_type: string;
-    status: number;
-    name: string;
+  id: number;
+  trading_account_id: number;
+  create_date: string;
+  description: string;
+  currency: string;
+  method: string;
+  amount: number;
+  funding_type: string;
+  status: number;
+  name: string;
 }
 
 export interface WithdrawAmountModel {
   deposit_amount: number;
   withdraw_amount: number;
   withdraw_amount_pending: number;
+}
+
+// tslint:disable-next-line: class-name
+export interface postWithdrawModel {
+  id: number;
+  create_date: string;
+  method: string;
+  amount: number;
+  funding_type: string;
+  status: number;
 }
 
 
