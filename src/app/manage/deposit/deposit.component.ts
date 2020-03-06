@@ -15,6 +15,7 @@ import * as moment from 'moment';
 import { PaymentMethod, TYPEOFTRANHISTORY } from 'src/app/core/constant/payment-method-constant';
 import { Router } from '@angular/router';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
+const numeral = require('numeral');
 
 @Component({
   selector: 'app-deposit',
@@ -25,7 +26,8 @@ export class DepositComponent implements OnInit {
   constructor(private depositService: DepositService,
               private withdrawRequestService: WithdrawRequestService,
               private spinnerService: Ng4LoadingSpinnerService,
-              private router: Router) { }
+              private router: Router,
+              private globalService: GlobalService) { }
 
   depositAmountForm: FormGroup;
   depositTransactionForm: FormGroup;
@@ -68,14 +70,12 @@ export class DepositComponent implements OnInit {
   }
 
   initDepositAmountForm() {
-    const numeral = require('numeral');
     this.depositAmountForm = new FormGroup({
       deposit: new FormControl(numeral(10000).format('0,0'), requiredInput)
     });
   }
 
   initDepositTransactionForm() {
-    const numeral = require('numeral');
     this.depositTransactionForm = new FormGroup({
       deposit: new FormControl(numeral(10000).format('0,0'), requiredInput)
     });
@@ -205,9 +205,20 @@ export class DepositComponent implements OnInit {
     if (this.depositTransactionForm.invalid) {
       return;
     }
+    const param = {
+      currency: 'JPY',
+      amount: numeral(this.depositTransactionForm.controls.deposit.value).value(),
+      account_id: Number(this.accountID.split('-')[1])
+    };
+    this.spinnerService.show();
+    this.depositService.billingSystem(param).subscribe(response => {
+      this.spinnerService.hide();
+      if (response.meta.code === 200) {
+        console.log('in in in');
+      }
+    });
   }
   changeDeposit(event: any) {
-    const numeral = require('numeral');
     this.depositValue = numeral(this.depositTransactionForm.controls.deposit.value).value();
     if (this.depositValue < 10000) {
       this.depositError = true;
@@ -217,7 +228,6 @@ export class DepositComponent implements OnInit {
     this.countDeposit();
   }
   changeDepositCal(event: any) {
-    const numeral = require('numeral');
     this.depositAmount = numeral(this.depositAmountForm.controls.deposit.value).value();
     if (this.depositAmount < 10000) {
       this.bankError = true;
@@ -227,19 +237,17 @@ export class DepositComponent implements OnInit {
     this.countDepositAmount();
   }
   countDeposit() {
-    const numeral = require('numeral');
     this.errMessageQuickDeposit = false;
     this.equityEstimate = Math.floor(this.equity + numeral(this.depositTransactionForm.controls.deposit.value).value());
-    this.marginLevelEstimate = Math.floor((this.equityEstimate / this.usedMargin) * 100);
+    this.marginLevelEstimate = this.globalService.calculateMarginLevel(this.equityEstimate, this.usedMargin);
     if (this.marginLevelEstimate <= 100) {
       this.errMessageQuickDeposit = true;
     }
   }
   countDepositAmount() {
-    const numeral = require('numeral');
     this.errMessageBankTran = false;
     this.equityDeposit = Math.floor(this.equity + numeral(this.depositAmountForm.controls.deposit.value).value());
-    this.marginLevelEstimateBank = Math.floor((this.equityDeposit / this.usedMargin) * 100);
+    this.marginLevelEstimate = this.globalService.calculateMarginLevel(this.equityDeposit, this.usedMargin);
     if (this.marginLevelEstimateBank <= 100) {
       this.errMessageBankTran = true;
     }
