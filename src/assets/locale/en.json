@@ -167,10 +167,23 @@
   "Done": "Done",
   "Not yet": "Not yet",
   "Quick deposit": "Quick deposit",
-  "Are you sure you want to make the withdrawal request": "Are you sure you want to make the withdrawal request",
+  "Are you sure you want to make the withdrawal request?": "Are you sure you want to make the withdrawal request?",
   "Account Holders Name": "Account Holders Name",
   "Bank Branch": "Bank Branch",
   "Branch Number": "Branch Number",
-  "Confirm": "confirm"
+  "Confirm": "confirm",
+  "Early Withdrawal": "Early Withdrawal",
+  "Withdrawal amount": "Withdrawal amount",
+  "Createdate time": "Createdate time",
+  "Your withdrawal request has been received and is being processed within 3-4 business days": "Your withdrawal request has been received and is being processed within 3-4 business days",
+  "Got it!": "Got it!",
+  "Your Margin Level is nearly the Margin Call Level": "Your Margin Level is nearly the Margin Call Level",
+  "Bank code": "Bank code",
+  "Bank branch": "Bank branch",
+  "Branch code": "Branch code",
+  "Account type": "Account type",
+  "Account holder name": "Account holder name",
+  "Savings": "Savings",
+  "Checkings": "Checkings"
 
 }
