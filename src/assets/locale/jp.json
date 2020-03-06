@@ -13,7 +13,7 @@
   "Select payment method": "入金方法選択",
   "Billing System": "ビリングシステム",
   "Bank Tranfer": "銀行振替",
-  "Please find details for a wire transfer below:": "振替の詳細が下記通りです。",
+  "Please find details for a wire transfer below:": "振替の詳細が下記通りです:",
   "Information": "情報",
   "Trading account": "取引口座",
   "Base currency": "基本通貨",
@@ -184,5 +184,9 @@
   "Account type": "口座の種類",
   "Account holder name": "口座名義",
   "Savings": "貯蓄",
-  "Checkings": "確認"
+  "Checkings": "確認",
+  "Margin level estimate": "マージンレベルの見積もり",
+  "Account Type": "口座の種類",
+  "Payment service": "決済サービス"
+
 }

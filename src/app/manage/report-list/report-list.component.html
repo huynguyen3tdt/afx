@@ -19,8 +19,8 @@
                     <div class="tab-content" id="v-pills-tabContent">
                         <div class="tab-pane fade show active" id="v-pills-all" role="tabpanel" aria-labelledby="v-pills-all-tab">
                             <h3 *ngIf="tab == 'ALL'" class="mb-3">{{'All Customer Statement' | translate}}</h3>
-                            <h3 *ngIf="tab == 'DAILY'" class="mb-3">Transaction Report</h3>
-                            <h3 *ngIf="tab == 'YEARLY'" class="mb-3">System Notifications</h3>
+                            <h3 *ngIf="tab == 'DAILY'" class="mb-3">{{'Transaction Report' | translate}}</h3>
+                            <h3 *ngIf="tab == 'YEARLY'" class="mb-3">{{'System Notifications' | translate}}</h3>
                             <div [formGroup]="searchForm" class="form mb-3 form-search-box">
                                 <div class="row">
                                     <div class="col-4 col-lg-3">

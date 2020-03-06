@@ -134,7 +134,7 @@
 
                                         </ul>
                                     </div>
-                                    <p class="mb-1"><strong>Please find details for a wire transfer below:</strong></p>
+                                    <p class="mb-1"><strong>{{'Please find details for a wire transfer below:' | translate}}</strong></p>
                                     <ng-container *ngFor="let item of listBankTranfer;let i = index">
                                         <div id="bank_{{item?.id}}" class="mb-2">
                                             <table class="table border table-sm" cellpadding="0" cellspacing="0">
@@ -321,39 +321,39 @@
                 <table class="table table-hover table-sm" cellspacing="0" cellpadding="0">
                     <tbody>
                         <tr>
-                            <td width="180" class="border-top-0">Trading account</td>
+                            <td width="180" class="border-top-0">{{'Trading account' | translate}}</td>
                             <td class="border-top-0">{{accountID}}</td>
                         </tr>
                         <tr>
-                            <td width="180">Date time</td>
+                            <td width="180">{{'Date time' | translate}}</td>
                             <td>{{depositTranDetail?.create_date}}</td>
                         </tr>
                         <tr>
-                            <td width="180">Type</td>
+                            <td width="180">{{'Type' | translate}}</td>
                             <td>{{depositTranDetail?.funding_type}}</td>
                         </tr>
                         <tr>
-                            <td width="180">Payment method</td>
+                            <td width="180">{{'Payment method' | translate}}</td>
                             <td>{{depositTranDetail?.method}}</td>
                         </tr>
                         <tr *ngIf="depositTranDetail?.method == 'Quick deposit'">
-                            <td width="180">Payment service</td>
+                            <td width="180">{{'Payment service' | translate}}</td>
                             <td>{{depositTranDetail?.name}}</td>
                         </tr>
                         <tr *ngIf="depositTranDetail?.method == 'Bank transfer'">
-                            <td width="180">Payment service</td>
+                            <td width="180">{{'Payment service' | translate}}</td>
                             <td>{{depositTranDetail?.name}}</td>
                         </tr>
                         <tr>
-                            <td width="180">Amount</td>
+                            <td width="180">{{'Amount' | translate}}</td>
                             <td><strong>{{depositTranDetail?.amount | number}}</strong> <span class="small text-secondary"></span>{{depositTranDetail?.currency}}</td>
                         </tr>
                         <tr>
-                            <td width="180">Status</td>
-                            <td *ngIf="depositTranDetail?.status == 1"><span class="text-success"><i class="icon ion-md-checkmark"></i> Completed</span></td>
-                            <td *ngIf="depositTranDetail?.status == 2"><span> Cancel</span></td>
-                            <td *ngIf="depositTranDetail?.status == 3"><span class="text-info"><i class="icon ion-md-hourglass"></i> Pending</span></td>
-                            <td *ngIf="depositTranDetail?.status == 4"><span class="text-info"><i class="icon ion-md-hourglass"></i> In progress</span></td>
+                            <td width="180">{{'Status' | translate}}</td>
+                            <td *ngIf="depositTranDetail?.status == 1"><span class="text-success"><i class="icon ion-md-checkmark"></i>{{'Completed' | translate}} </span></td>
+                            <td *ngIf="depositTranDetail?.status == 2"><span>{{'Amount' | translate}} Cancel</span></td>
+                            <td *ngIf="depositTranDetail?.status == 3"><span class="text-info"><i class="icon ion-md-hourglass"></i>{{'Pending' | translate}} </span></td>
+                            <td *ngIf="depositTranDetail?.status == 4"><span class="text-info"><i class="icon ion-md-hourglass"></i> {{'In progress' | translate}}</span></td>
                         </tr>
                     </tbody>
                 </table>
