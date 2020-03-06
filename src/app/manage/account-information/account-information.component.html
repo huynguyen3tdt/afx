@@ -510,7 +510,7 @@
                             <div class="bank_info" *ngIf="bankAccount">
                                 <div class="row mb-1">
                                     <div class="col-md-4 col-lg-3">
-                                        <label class="label">Beneficiary Bank</label>
+                                        <label class="label">{{'Beneficiary Bank' | translate}}</label>
                                     </div>
                                     <div class="col-md-8 col-lg-6">
                                         <strong>Bank of Mitsubishi UFJ</strong>
@@ -518,7 +518,7 @@
                                 </div>
                                 <div class="row mb-1">
                                     <div class="col-md-4 col-lg-3">
-                                        <label class="label">Bank code</label>
+                                        <label class="label">{{'Bank code' | translate}}</label>
                                     </div>
                                     <div class="col-md-8 col-lg-6">
                                         <strong>0005</strong>
@@ -526,7 +526,7 @@
                                 </div>
                                 <div class="row mb-1">
                                     <div class="col-md-4 col-lg-3">
-                                        <label class="label">Bank branch</label>
+                                        <label class="label">{{'Bank branch' | translate}}</label>
                                     </div>
                                     <div class="col-md-8 col-lg-6">
                                         <strong>Edogawabashi</strong>
@@ -534,7 +534,7 @@
                                 </div>
                                 <div class="row mb-1">
                                     <div class="col-md-4 col-lg-3">
-                                        <label class="label">Branch code</label>
+                                        <label class="label">{{'Branch code' | translate}}</label>
                                     </div>
                                     <div class="col-md-8 col-lg-6">
                                         <strong>006</strong>
@@ -542,7 +542,7 @@
                                 </div>
                                 <div class="row mb-1">
                                     <div class="col-md-4 col-lg-3">
-                                        <label class="label">Account type</label>
+                                        <label class="label">{{'Account type' | translate}}</label>
                                     </div>
                                     <div class="col-md-8 col-lg-6">
                                         <strong>Saving</strong>
@@ -550,7 +550,7 @@
                                 </div>
                                 <div class="row mb-1">
                                     <div class="col-md-4 col-lg-3">
-                                        <label class="label">Bank Account Number</label>
+                                        <label class="label">{{'Bank Account Number' | translate}}</label>
                                     </div>
                                     <div class="col-md-8 col-lg-6">
                                         <strong>8847583745</strong>
@@ -558,7 +558,7 @@
                                 </div>
                                 <div class="row mb-1">
                                     <div class="col-md-4 col-lg-3">
-                                        <label class="label">Account holder name</label>
+                                        <label class="label">{{'Account holder name' | translate}}</label>
                                     </div>
                                     <div class="col-md-8 col-lg-6">
                                         <strong>カワセタロウ</strong>
@@ -569,7 +569,7 @@
                                         &nbsp;
                                     </div>
                                     <div class="col-md-8 col-lg-6">
-                                        <button type="button" class="btn btn-edit btn-success btn-sm pl-3 pr-3" (click)="editBankAccount()">Edit</button>
+                                        <button type="button" class="btn btn-edit btn-success btn-sm pl-3 pr-3" (click)="editBankAccount()">{{'Edit' | translate}}</button>
                                     </div>
                                 </div>
                             </div>
@@ -642,7 +642,7 @@
                                 <form [formGroup]="bankAccountForm">
                                     <div class="row mb-2">
                                         <div class="col-md-4 col-lg-3">
-                                            <label class="label mt-1">Beneficiary Bank</label>
+                                            <label class="label mt-1">{{'Beneficiary Bank' | translate}}</label>
                                         </div>
                                         <div class="col-md-8 col-lg-6">
                                             <input type="text" name="beneficiary_bank" formControlName="beneficiary_bank" class="form-control form-control-sm" value="" placeholder="" disabled="disabled">
@@ -650,7 +650,7 @@
                                     </div>
                                     <div class="row mb-2">
                                         <div class="col-md-4 col-lg-3">
-                                            <label class="label mt-1">Bank branch</label>
+                                            <label class="label mt-1">{{'Bank branch' | translate}}</label>
                                         </div>
                                         <div class="col-md-8 col-lg-6">
                                             <input type="text" name="bank_branch" formControlName="bank_branch" class="form-control form-control-sm" value="" placeholder="" disabled="disabled">
@@ -658,16 +658,16 @@
                                     </div>
                                     <div class="row mb-2 pt-1">
                                         <div class="col-md-4 col-lg-3">
-                                            <label class="label">Account Type</label>
+                                            <label class="label">{{'Account Type' | translate}}</label>
                                         </div>
                                         <div class="col-md-8 col-lg-6">
                                             <label class="container-radio small mb-1 mr-2">
-                                          <div><strong>Savings</strong></div>
+                                          <div><strong>{{'Savings' | translate}}</strong></div>
                                           <input type="radio" name="bank_account_type" formControlName="bank_account_type" value="0" checked="checked">
                                           <span class="checkmark"></span>
                                       </label>
                                             <label class="container-radio small mb-1">
-                                          <div><strong>Checkings</strong></div>
+                                          <div><strong>{{'Checkings' | translate}}</strong></div>
                                           <input type="radio" name="bank_account_type" formControlName="bank_account_type" value="1">
                                           <span class="checkmark"></span>
                                       </label>
@@ -675,7 +675,7 @@
                                     </div>
                                     <div class="row mb-2">
                                         <div class="col-md-4 col-lg-3">
-                                            <label class="label mt-1">Bank Account Number</label>
+                                            <label class="label mt-1">{{'Bank Account Number' | translate}}</label>
                                         </div>
                                         <div class="col-md-8 col-lg-6">
                                             <input type="text" name="bank_account_number" formControlName="bank_account_number" class="form-control form-control-sm" value="8847583745" placeholder="">
@@ -683,7 +683,7 @@
                                     </div>
                                     <div class="row mb-2">
                                         <div class="col-md-4 col-lg-3">
-                                            <label class="label">Account holder name</label>
+                                            <label class="label">{{'Account holder name' | translate}}</label>
                                         </div>
                                         <div class="col-md-8 col-lg-6">
                                             カワセタロウ
@@ -694,8 +694,8 @@
                                             &nbsp;
                                         </div>
                                         <div class="col-md-8 col-lg-6">
-                                            <button type="button" class="btn btn-save btn-success pl-3 pr-3 btn-sm" (click)="saveBankAccount()">Save</button>
-                                            <button type="button" class="btn btn-cancel btn-secondary pl-3 pr-3 btn-sm" (click)="cancelBankAccount()">Cancel</button>
+                                            <button type="button" class="btn btn-save btn-success pl-3 pr-3 btn-sm" (click)="saveBankAccount()">{{'Save' | translate}}</button>
+                                            <button type="button" class="btn btn-cancel btn-secondary pl-3 pr-3 btn-sm" (click)="cancelBankAccount()">{{'Cancel' | translate}}</button>
                                         </div>
                                     </div>
                                 </form>
