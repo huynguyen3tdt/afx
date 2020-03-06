@@ -161,14 +161,14 @@
                                     <td class="text-right">{{item?.amount | number}}</td>
                                     <td *ngIf="item?.status == 4" class="text-right"><span class="text-info"><i
                                         class="icon ion-md-hourglass"></i>
-                                      In progress</span></td>
+                                      {{'In progress' | translate}}</span></td>
                                     <td *ngIf="item?.status == 3" class="text-right"><span class="text-info"><i
                                         class="icon ion-md-hourglass"></i>
-                                      Pending</span></td>
-                                    <td *ngIf="item?.status == 2" class="text-right"><span> Cancel</span></td>
+                                        {{'Pending' | translate}}</span></td>
+                                    <td *ngIf="item?.status == 2" class="text-right"><span> {{'Cancel' | translate}}</span></td>
                                     <td *ngIf="item?.status == 1" class="text-right"><span class="text-success"><i
                                         class="icon ion-md-checkmark"></i>
-                                      Completed</span></td>
+                                        {{'Completed' | translate}}</span></td>
                                     <!-- <td class="text-right"><span class="text-info"><i class="icon ion-md-hourglass"></i> {{item?.currency}}</span></td> -->
                                 </tr>
                                 <tr>
