@@ -6,6 +6,7 @@ export const ACCOUNT_TYPE = {
   ACCOUNT_CFDIndex: {account_type: 2, name: 'CFD Index'},
   ACCOUNT_CFDCom: {account_type: 3, name: 'CFD Index'},
 };
+const numeral = require('numeral');
 
 @Injectable({
   providedIn: 'root'
@@ -36,5 +37,11 @@ export class GlobalService {
       });
     }
     return listData;
+  }
+
+  calculateMarginLevel(equityDeposit: number, usedMargin: number) {
+    let marginLevel: number;
+    marginLevel = Math.floor((equityDeposit / usedMargin) * 100);
+    return marginLevel;
   }
 }
