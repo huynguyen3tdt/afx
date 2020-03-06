@@ -182,7 +182,10 @@ a:hover{
 	color: #fff;
 	border-color: #147DAA;
 }
-
+.bg-none,
+.bg-none:hover {
+	background: none;
+}
 /* Main */
 body{
 	font-family: "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", Osaka, メイリオ, Meiryo, "ＭＳ Ｐゴシック", "MS PGothic", "ＭＳ ゴシック" , "MS Gothic", "Noto Sans CJK JP", TakaoPGothic, sans-serif;
