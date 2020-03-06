@@ -119,7 +119,7 @@
                                 <ng-container *ngFor="let item of listNotification; let i = index">
                                     <div (click)="showDetail(i, item)" id="system_{{i}}" [ngClass]="{'unread': item.read_flg == false}" class="notification-item">
                                         <div class="badge-wrap">
-                                            <span *ngIf="item?.news_type == 1 || item?.noti_type == 3" class="badge badge-warning d-lg-block mb-lg-1">{{'System' | translate}}</span>
+                                            <span *ngIf="item?.news_type == 1" class="badge badge-warning d-lg-block mb-lg-1">{{'System' | translate}}</span>
                                         </div>
                                         <div class="item-header">
                                             <h5 class="item-title"><a href="javascript:;">{{item?.news_title}}</a></h5>
