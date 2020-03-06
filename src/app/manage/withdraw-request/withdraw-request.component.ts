@@ -3,7 +3,7 @@ import { WithdrawRequestService } from 'src/app/core/services/withdraw-request.s
 // import { ACCOUNT_TYPE } from 'src/app/core/constant/authen-constant';
 import { FormGroup, FormControl } from '@angular/forms';
 import { requiredInput } from 'src/app/core/helper/custom-validate.helper';
-import { BankInforModel, Mt5Model, TransactionModel } from 'src/app/core/model/withdraw-request-response.model';
+import { BankInforModel, Mt5Model, TransactionModel, WithdrawAmountModel } from 'src/app/core/model/withdraw-request-response.model';
 import { MIN_WITHDRAW, ACCOUNT_IDS } from './../../core/constant/authen-constant';
 import { GlobalService } from 'src/app/core/services/global.service';
 import { AccountType } from 'src/app/core/model/report-response.model';
@@ -23,7 +23,7 @@ export class WithdrawRequestComponent implements OnInit {
   mt5Infor: Mt5Model;
   accountType;
   bankInfor: BankInforModel;
-  listDwAmount;
+  listDwAmount: WithdrawAmountModel;
   withdrawForm: FormGroup;
   isSubmitted: boolean;
   listDwHistory;

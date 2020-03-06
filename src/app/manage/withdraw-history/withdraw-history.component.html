@@ -18,14 +18,14 @@
                 <div class="col-md-9 col-lg-10">
                     <div class="tab-content" id="v-pills-tabContent">
                         <div class="tab-pane fade show active" id="v-pills-all" role="tabpanel" aria-labelledby="v-pills-all-tab">
-                            <h3 class="mb-3" *ngIf="tab == 'ALL'"><i class="icon ion-md-time text-secondary"></i>{{'Deposit' | translate}} &amp; {{'Withdrawal History' | translate}}</h3>
+                            <h3 class="mb-3" *ngIf="tab == 'ALL'"><i class="icon ion-md-time text-secondary"></i>{{'Withdrawal History' | translate}}</h3>
                             <h3 class="mb-3" *ngIf="tab == 'DEPOSIT'"><i class="icon ion-md-time text-secondary"></i> Deposit History</h3>
                             <h3 class="mb-3" *ngIf="tab == 'WITHDRAWAL'"><i class="icon ion-md-time text-secondary"></i> Withdrawal History</h3>
                             <div [formGroup]="searchForm" class="form mb-3 form-search-box">
                                 <div class="row">
                                     <div class="col-4 col-lg-3">
-                                        <div class="form-group">
-                                            <label class="label d-block mb-0">{{'Trading account' | translate}}</label>
+                                        <div class="form-group d-flex align-items-center mt-3">
+                                            <label class="label d-block mb-0 mr-2">{{'Trading account' | translate}}</label>
                                             <select disabled formControlName="tradingAccount" class="form-control form-control-sm">
                                                 <option *ngFor="let item of listTradingAccount" value="{{item?.account_id}}">
                                                     {{item.value}}</option>
@@ -38,7 +38,7 @@
                                                 <div class="form-group">
                                                     <label class="label d-none d-lg-block mb-0">&nbsp;</label>
                                                     <div class="btn-group d-flex">
-                                                        <button type="button" (click)="setDate(DURATION.DAY)" class="btn btn-sm btn-outline-secondary">{{'Day' | translate}}</button>
+                                                        <button type="button" (click)="setDate(DURATION.DAY)" class="btn btn-sm btn-outline-secondary" style="width: 30px">{{'Day' | translate}}</button>
                                                         <button type="button" (click)="setDate(DURATION.MONTH)" class="btn btn-sm btn-outline-secondary">{{'Month' | translate}}</button>
                                                         <button type="button" (click)="setDate(DURATION.YEAR)" class="btn btn-sm btn-outline-secondary">{{'Year' | translate}}</button>
                                                     </div>
@@ -100,12 +100,12 @@
                                                 <td>{{item?.method}}</td>
                                                 <td class="text-right">{{item?.amount}}</td>
                                                 <td *ngIf="item?.status == 4" class="text-right"><span class="text-info"><i class="icon ion-md-hourglass"></i>
-                                                    In progress</span></td>
+                                                    {{'In progress' | translate}}</span></td>
                                                 <td *ngIf="item?.status == 3" class="text-right"><span class="text-info"><i class="icon ion-md-hourglass"></i>
-                                                        Pending</span></td>
-                                                <td *ngIf="item?.status == 2" class="text-right"><span> Cancel</span></td>
+                                                  {{'Pending' | translate}}</span></td>
+                                                <td *ngIf="item?.status == 2" class="text-right"><span>{{'Cancel' | translate}} </span></td>
                                                 <td *ngIf="item?.status == 1" class="text-right"><span class="text-success"><i class="icon ion-md-checkmark"></i>
-                                                        Completed</span></td>
+                                                  {{'Completed' | translate}} </span></td>
                                             </tr>
                                         </ng-container>
                                     </tbody>
