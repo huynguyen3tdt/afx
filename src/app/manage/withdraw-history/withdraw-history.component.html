@@ -193,7 +193,7 @@
                                     </div>
                                 </div>
                                 <ul class="pagination pagination-sm mb-0">
-                                    <pagination id="pagination" [totalItems]="totalItem"
+                                    <pagination [(ngModel)]="currentPage" id="pagination" [totalItems]="totalPage"
                                         [boundaryLinks]="true" class="pagination pagination-sm justify-content-end"
                                         (pageChanged)="pageChanged($event)"
                                         previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;"
