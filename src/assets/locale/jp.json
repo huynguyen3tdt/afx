@@ -184,5 +184,7 @@
   "Account type": "口座の種類",
   "Account holder name": "口座名義",
   "Savings": "貯蓄",
-  "Checkings": "確認"
+  "Checkings": "確認",
+  "Transaction": "Transaction",
+  "Payment service": "Payment service"
 }

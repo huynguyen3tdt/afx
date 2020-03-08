@@ -184,6 +184,7 @@
   "Account type": "Account type",
   "Account holder name": "Account holder name",
   "Savings": "Savings",
-  "Checkings": "Checkings"
-
+  "Checkings": "Checkings",
+  "Transaction": "Transaction",
+  "Payment service": "Payment service"
 }
