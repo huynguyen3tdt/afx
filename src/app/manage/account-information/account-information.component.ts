@@ -103,7 +103,7 @@ export class AccountInformationComponent implements OnInit {
     this.editPersonPicname = false;
     this.editPersonPhone = false;
     this.editPersonEmail = false;
-    // this.getMt5Infor(this.accountID);
+    this.getMt5Infor(this.accountID);
     this.getWithDrawAmount(this.accountID);
 
   }
