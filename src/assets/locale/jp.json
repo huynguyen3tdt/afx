@@ -185,8 +185,8 @@
   "Account holder name": "口座名義",
   "Savings": "貯蓄",
   "Checkings": "確認",
+  "Transaction": "Transaction",
+  "Payment service": "Payment service",
   "Margin level estimate": "マージンレベルの見積もり",
-  "Account Type": "口座の種類",
-  "Payment service": "決済サービス"
-
+  "Account Type": "口座の種類"
 }

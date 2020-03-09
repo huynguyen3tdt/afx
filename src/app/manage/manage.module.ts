@@ -15,6 +15,7 @@ import { DepositComponent } from './deposit/deposit.component';
 import { CurrencyDirective } from '../core/directive/currency.directive';
 import { TranslateModule } from '@ngx-translate/core';
 import { PdfJsViewerModule } from 'ng2-pdfjs-viewer';
+import { ListTransactionComponent } from './list-transaction/list-transaction.component';
 
 @NgModule({
     imports: [
@@ -36,7 +37,8 @@ import { PdfJsViewerModule } from 'ng2-pdfjs-viewer';
       WithdrawHistoryComponent,
       ReportListComponent,
       DepositComponent,
-      CurrencyDirective
+      CurrencyDirective,
+      ListTransactionComponent
     ],
     schemas: [NO_ERRORS_SCHEMA]
 })

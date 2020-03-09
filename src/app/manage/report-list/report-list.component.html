@@ -120,7 +120,7 @@
                                     </div>
                                 </div>
                                 <ul class="pagination pagination-sm mb-0">
-                                    <pagination [(ngModel)]="currentPage" id="pagination" appPagination [boundaryLinks]="true" class="pagination pagination-sm justify-content-end" (pageChanged)="pageChanged($event)" [totalItems]="totalItem / pageSize" previousText="&lsaquo;" nextText="&rsaquo;"
+                                    <pagination [(ngModel)]="currentPage" id="pagination" appPagination [boundaryLinks]="true" class="pagination pagination-sm justify-content-end" (pageChanged)="pageChanged($event)" [totalItems]="totalPage" previousText="&lsaquo;" nextText="&rsaquo;"
                                         firstText="&laquo;" lastText="&raquo;" [maxSize]="5">
                                     </pagination>
                                 </ul>
