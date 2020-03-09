@@ -76,3 +76,4 @@ export interface CorporateModel {
     fx_dept: string,
   };
 }
+
