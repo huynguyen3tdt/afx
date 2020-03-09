@@ -28,7 +28,7 @@ export class ReportListComponent implements OnInit {
   recordFrom: number;
   recordTo: number;
   showErrorDate: boolean;
-
+  totalPage: number;
   TABS = {
     ALL: { name: 'ALL', value: 0 },
     DAILY: { name: 'DAILY', value: 1 },
@@ -62,14 +62,15 @@ export class ReportListComponent implements OnInit {
     this.setDate(this.DURATION.YEAR);
   }
 
-  getReport(accountNumber: number, pageSize: number, pageNumber: number, type?: number, dateFrom?: string, dateTo?: string) {
+  getReport(accountNumber: number, pageNumber: number, pageSize: number, type?: number, dateFrom?: string, dateTo?: string) {
     this.spinnerService.show();
     this.checkTab(type);
-    this.reportservice.getReport(accountNumber, pageNumber, pageSize, type, dateFrom, dateTo).subscribe(response => {
+    this.reportservice.getReport(accountNumber, pageSize, pageNumber, type, dateFrom, dateTo).subscribe(response => {
       if (response.meta.code === 200) {
         this.spinnerService.hide();
         this.listReport = response.data.results;
         this.totalItem = response.data.count;
+        this.totalPage = (this.totalItem / pageSize) * 10;
         this.listReport.forEach(item => {
           item.create_date = moment(item.create_date).format(JAPAN_FORMATDATE);
         });

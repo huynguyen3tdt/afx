@@ -37,6 +37,7 @@ export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
   tab: string;
   tranHistoryDetail: TransactionModel;
   listTotalItem: Array<number> = [10, 20, 30];
+  totalPage: number;
   TABS = {
     ALL: { name: 'ALL', value: 0 },
     DEPOSIT: { name: 'DEPOSIT', value: 1 },
@@ -47,6 +48,7 @@ export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
     MONTH: 'month',
     YEAR: 'year'
   };
+  STATUS = ['Complete', 'Pending', 'In process', 'Cancel'];
 
   constructor(private withdrawRequestService: WithdrawRequestService,
               private spinnerService: Ng4LoadingSpinnerService) { }
@@ -72,14 +74,15 @@ export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
     this.setDate(this.DURATION.YEAR);
   }
 
-  getTranHistory(accountNumber: number, pageSize: number, pageNumber: number, type?: number, dateFrom?: string, dateTo?: string) {
+  getTranHistory(accountNumber: number, pageNumber: number, pageSize: number, type?: number, dateFrom?: string, dateTo?: string) {
     this.spinnerService.show();
     this.checkTab(type);
-    this.withdrawRequestService.getDwHistory(accountNumber, pageNumber, pageSize, type, dateFrom, dateTo).subscribe(response => {
+    this.withdrawRequestService.getDwHistory(accountNumber, pageSize, pageNumber, type, dateFrom, dateTo).subscribe(response => {
       if (response.meta.code === 200) {
         this.spinnerService.hide();
         this.listReport = response.data.results;
         this.totalItem = response.data.count;
+        this.totalPage = (response.data.count / pageSize) * 10;
         this.listReport.forEach(item => {
           item.create_date = moment(item.create_date).format(JAPAN_FORMATDATE_HH_MM);
           item.funding_type = this.checkType(item.funding_type);
@@ -136,8 +139,8 @@ export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
   }
 
   pageChanged(event) {
-    this.currentPage = event.page;
-    this.searchTranHistory();
+      this.currentPage = event.page;
+      this.searchTranHistory();
   }
 
   changeTotalItem(event) {

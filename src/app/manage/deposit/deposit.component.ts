@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { requiredInput } from 'src/app/core/helper/custom-validate.helper';
 import { DepositModel } from 'src/app/core/model/deposit-response.model';
@@ -15,6 +15,7 @@ import * as moment from 'moment';
 import { PaymentMethod, TYPEOFTRANHISTORY } from 'src/app/core/constant/payment-method-constant';
 import { Router } from '@angular/router';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
+import { ListTransactionComponent } from '../list-transaction/list-transaction.component';
 const numeral = require('numeral');
 
 @Component({
@@ -23,6 +24,7 @@ const numeral = require('numeral');
   styleUrls: ['./deposit.component.css']
 })
 export class DepositComponent implements OnInit {
+  @ViewChild('listTran', { static: false }) listTran: ListTransactionComponent;
   constructor(private depositService: DepositService,
               private withdrawRequestService: WithdrawRequestService,
               private spinnerService: Ng4LoadingSpinnerService,
@@ -52,15 +54,16 @@ export class DepositComponent implements OnInit {
   listDeposit: Array<TransactionModel>;
   depositTranDetail: TransactionModel;
   listDwAmount: WithdrawAmountModel;
+  transactionType: number;
 
   ngOnInit() {
+    this.transactionType = Number(TYPEOFTRANHISTORY.DEPOSIT.key);
     this.listTradingAccount = JSON.parse(localStorage.getItem(ACCOUNT_IDS));
     if (this.listTradingAccount) {
       this.accountID = this.listTradingAccount[0].value;
     }
     this.minDeposit = localStorage.getItem(MIN_DEPOST);
     if (this.accountID) {
-      this.getTranHistory(Number(this.accountID.split('-')[1]), 1, 2, 1);
       this.getMt5Infor(Number(this.accountID.split('-')[1]));
       this.getDwAmount(Number(this.accountID.split('-')[1]));
     }
@@ -120,21 +123,6 @@ export class DepositComponent implements OnInit {
     });
   }
 
-  getTranHistory(accountNumber: number, pageSize: number, pageNumber: number, type?: number, dateFrom?: string, dateTo?: string) {
-    this.spinnerService.show();
-    this.withdrawRequestService.getDwHistory(accountNumber, pageNumber, pageSize, type, dateFrom, dateTo).subscribe(response => {
-      if (response.meta.code === 200) {
-        this.spinnerService.hide();
-        this.listDeposit = response.data.results;
-        this.listDeposit.forEach(item => {
-          item.create_date = moment(item.create_date).format(JAPAN_FORMATDATE_HH_MM);
-          item.funding_type = this.checkType(item.funding_type);
-          item.method = this.checkPaymentMedthod(item.method);
-        });
-      }
-    });
-  }
-
   getDwAmount(accountId) {
     this.spinnerService.show();
     this.withdrawRequestService.getDwAmount(accountId).subscribe(response => {
@@ -143,41 +131,6 @@ export class DepositComponent implements OnInit {
         this.listDwAmount = response.data;
       }
     });
-  }
-
-  openDetail(tranId: number) {
-    this.withdrawRequestService.getDetailTranHistory(tranId).subscribe(response => {
-      if (response.meta.code === 200) {
-        this.depositTranDetail = response.data;
-        this.depositTranDetail.create_date = moment(this.depositTranDetail.create_date).format(JAPAN_FORMATDATE_HH_MM);
-        this.depositTranDetail.method = this.checkPaymentMedthod(this.depositTranDetail.method);
-        this.depositTranDetail.funding_type = this.checkType(this.depositTranDetail.funding_type);
-        $('#tran_detail').modal('show');
-      }
-    });
-  }
-
-  goToHistory() {
-    this.router.navigate(['/manage/withdrawHistory']);
-  }
-
-  checkPaymentMedthod(type: string) {
-    if (type === PaymentMethod.QUICKDEPOSIT.key) {
-      return PaymentMethod.QUICKDEPOSIT.name;
-    }
-    if (type === PaymentMethod.BANKTRANSFER.key) {
-      return PaymentMethod.BANKTRANSFER.name;
-    }
-    return '';
-  }
-  checkType(type: string) {
-    if (type === TYPEOFTRANHISTORY.DEPOSIT.key) {
-      return TYPEOFTRANHISTORY.DEPOSIT.name;
-    }
-    if (type === TYPEOFTRANHISTORY.WITHDRAWAL.key) {
-      return TYPEOFTRANHISTORY.WITHDRAWAL.name;
-    }
-    return '';
   }
 
   showInforBank(index) {
@@ -215,6 +168,7 @@ export class DepositComponent implements OnInit {
       this.spinnerService.hide();
       if (response.meta.code === 200) {
         console.log('in in in');
+        this.listTran.ngOnChanges();
       }
     });
   }
