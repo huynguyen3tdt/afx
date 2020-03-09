@@ -5,8 +5,7 @@ import { Observable } from 'rxjs/internal/Observable';
 import { InnerSubscriber } from 'rxjs/internal/InnerSubscriber';
 import { EnvConfigService } from './env-config.service';
 import { catchError } from 'rxjs/operators';
-import {TotalNotificationResponse} from '../model/page-noti.model';
-import {DepositResponse, BillingSystemModel} from '../model/deposit-response.model';
+import {DepositResponse, BillingSystemResponse} from '../model/deposit-response.model';
 
 
 
@@ -18,8 +17,8 @@ export class DepositService {
   constructor(private httpClient: HttpClient,
               private envConfigService: EnvConfigService) {}
 
-    getDepositBank(): Observable<DepositResponse> {
-      return this.httpClient.get(`${this.envConfigService.getConfig()}/${AppSettings.API_DEPOSIT_BANK_TRANFER}`)
+  getDepositBank(): Observable<DepositResponse> {
+    return this.httpClient.get(`${this.envConfigService.getConfig()}/${AppSettings.API_DEPOSIT_BANK_TRANFER}`)
         .pipe(
           catchError((error: HttpErrorResponse) => {
             return new Observable((observer: InnerSubscriber<any, any>) => {
@@ -28,7 +27,7 @@ export class DepositService {
           })
         );
   }
-  billingSystem(param): Observable<BillingSystemModel> {
+  billingSystem(param): Observable<BillingSystemResponse> {
     return this.httpClient
       .post(`${this.envConfigService.getConfig()}/${AppSettings.API_DEPOSIT_BIILING}`,
         param)

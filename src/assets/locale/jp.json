@@ -13,7 +13,7 @@
   "Select payment method": "入金方法選択",
   "Billing System": "ビリングシステム",
   "Bank Tranfer": "銀行振替",
-  "Please find details for a wire transfer below:": "振替の詳細が下記通りです。",
+  "Please find details for a wire transfer below:": "振替の詳細が下記通りです:",
   "Information": "情報",
   "Trading account": "取引口座",
   "Base currency": "基本通貨",
@@ -56,9 +56,9 @@
   "Date": "日付",
   "Withdrawal History": "入出金履歴",
   "To": "日付まで",
-  "Year": "年",
-  "Month": "月",
-  "Day": "日",
+  "Y": "年",
+  "M": "月",
+  "D": "日",
   "From": "日付から",
   "Deposit History": "入金履歴",
   "Payment method": "支払方法",
@@ -184,5 +184,9 @@
   "Account type": "口座の種類",
   "Account holder name": "口座名義",
   "Savings": "貯蓄",
-  "Checkings": "確認"
+  "Checkings": "確認",
+  "Transaction": "Transaction",
+  "Payment service": "Payment service",
+  "Margin level estimate": "マージンレベルの見積もり",
+  "Account Type": "口座の種類"
 }

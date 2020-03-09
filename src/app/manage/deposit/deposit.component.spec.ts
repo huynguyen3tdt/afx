@@ -6,6 +6,7 @@ import { EnvConfigService } from 'src/app/core/services/env-config.service';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('DepositComponent', () => {
   let component: DepositComponent;
@@ -23,7 +24,8 @@ describe('DepositComponent', () => {
         RouterTestingModule,
         Ng4LoadingSpinnerModule,
       ],
-      providers: [DepositComponent, EnvConfigService]
+      providers: [DepositComponent, EnvConfigService],
+      schemas: [NO_ERRORS_SCHEMA]
     })
     .compileComponents();
   }));

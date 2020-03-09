@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { requiredInput } from 'src/app/core/helper/custom-validate.helper';
 import { DepositModel } from 'src/app/core/model/deposit-response.model';
@@ -15,6 +15,8 @@ import * as moment from 'moment';
 import { PaymentMethod, TYPEOFTRANHISTORY } from 'src/app/core/constant/payment-method-constant';
 import { Router } from '@angular/router';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
+import { ListTransactionComponent } from '../list-transaction/list-transaction.component';
+const numeral = require('numeral');
 
 @Component({
   selector: 'app-deposit',
@@ -22,10 +24,12 @@ import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
   styleUrls: ['./deposit.component.css']
 })
 export class DepositComponent implements OnInit {
+  @ViewChild('listTran', { static: false }) listTran: ListTransactionComponent;
   constructor(private depositService: DepositService,
               private withdrawRequestService: WithdrawRequestService,
               private spinnerService: Ng4LoadingSpinnerService,
-              private router: Router) { }
+              private router: Router,
+              private globalService: GlobalService) { }
 
   depositAmountForm: FormGroup;
   depositTransactionForm: FormGroup;
@@ -50,15 +54,16 @@ export class DepositComponent implements OnInit {
   listDeposit: Array<TransactionModel>;
   depositTranDetail: TransactionModel;
   listDwAmount: WithdrawAmountModel;
+  transactionType: number;
 
   ngOnInit() {
+    this.transactionType = Number(TYPEOFTRANHISTORY.DEPOSIT.key);
     this.listTradingAccount = JSON.parse(localStorage.getItem(ACCOUNT_IDS));
     if (this.listTradingAccount) {
       this.accountID = this.listTradingAccount[0].value;
     }
     this.minDeposit = localStorage.getItem(MIN_DEPOST);
     if (this.accountID) {
-      this.getTranHistory(Number(this.accountID.split('-')[1]), 1, 2, 1);
       this.getMt5Infor(Number(this.accountID.split('-')[1]));
       this.getDwAmount(Number(this.accountID.split('-')[1]));
     }
@@ -68,14 +73,12 @@ export class DepositComponent implements OnInit {
   }
 
   initDepositAmountForm() {
-    const numeral = require('numeral');
     this.depositAmountForm = new FormGroup({
       deposit: new FormControl(numeral(10000).format('0,0'), requiredInput)
     });
   }
 
   initDepositTransactionForm() {
-    const numeral = require('numeral');
     this.depositTransactionForm = new FormGroup({
       deposit: new FormControl(numeral(10000).format('0,0'), requiredInput)
     });
@@ -120,21 +123,6 @@ export class DepositComponent implements OnInit {
     });
   }
 
-  getTranHistory(accountNumber: number, pageSize: number, pageNumber: number, type?: number, dateFrom?: string, dateTo?: string) {
-    this.spinnerService.show();
-    this.withdrawRequestService.getDwHistory(accountNumber, pageNumber, pageSize, type, dateFrom, dateTo).subscribe(response => {
-      if (response.meta.code === 200) {
-        this.spinnerService.hide();
-        this.listDeposit = response.data.results;
-        this.listDeposit.forEach(item => {
-          item.create_date = moment(item.create_date).format(JAPAN_FORMATDATE_HH_MM);
-          item.funding_type = this.checkType(item.funding_type);
-          item.method = this.checkPaymentMedthod(item.method);
-        });
-      }
-    });
-  }
-
   getDwAmount(accountId) {
     this.spinnerService.show();
     this.withdrawRequestService.getDwAmount(accountId).subscribe(response => {
@@ -143,41 +131,6 @@ export class DepositComponent implements OnInit {
         this.listDwAmount = response.data;
       }
     });
-  }
-
-  openDetail(tranId: number) {
-    this.withdrawRequestService.getDetailTranHistory(tranId).subscribe(response => {
-      if (response.meta.code === 200) {
-        this.depositTranDetail = response.data;
-        this.depositTranDetail.create_date = moment(this.depositTranDetail.create_date).format(JAPAN_FORMATDATE_HH_MM);
-        this.depositTranDetail.method = this.checkPaymentMedthod(this.depositTranDetail.method);
-        this.depositTranDetail.funding_type = this.checkType(this.depositTranDetail.funding_type);
-        $('#tran_detail').modal('show');
-      }
-    });
-  }
-
-  goToHistory() {
-    this.router.navigate(['/manage/withdrawHistory']);
-  }
-
-  checkPaymentMedthod(type: string) {
-    if (type === PaymentMethod.QUICKDEPOSIT.key) {
-      return PaymentMethod.QUICKDEPOSIT.name;
-    }
-    if (type === PaymentMethod.BANKTRANSFER.key) {
-      return PaymentMethod.BANKTRANSFER.name;
-    }
-    return '';
-  }
-  checkType(type: string) {
-    if (type === TYPEOFTRANHISTORY.DEPOSIT.key) {
-      return TYPEOFTRANHISTORY.DEPOSIT.name;
-    }
-    if (type === TYPEOFTRANHISTORY.WITHDRAWAL.key) {
-      return TYPEOFTRANHISTORY.WITHDRAWAL.name;
-    }
-    return '';
   }
 
   showInforBank(index) {
@@ -205,9 +158,21 @@ export class DepositComponent implements OnInit {
     if (this.depositTransactionForm.invalid) {
       return;
     }
+    const param = {
+      currency: 'JPY',
+      amount: numeral(this.depositTransactionForm.controls.deposit.value).value(),
+      account_id: Number(this.accountID.split('-')[1])
+    };
+    this.spinnerService.show();
+    this.depositService.billingSystem(param).subscribe(response => {
+      this.spinnerService.hide();
+      if (response.meta.code === 200) {
+        console.log('in in in');
+        this.listTran.ngOnChanges();
+      }
+    });
   }
   changeDeposit(event: any) {
-    const numeral = require('numeral');
     this.depositValue = numeral(this.depositTransactionForm.controls.deposit.value).value();
     if (this.depositValue < 10000) {
       this.depositError = true;
@@ -217,7 +182,6 @@ export class DepositComponent implements OnInit {
     this.countDeposit();
   }
   changeDepositCal(event: any) {
-    const numeral = require('numeral');
     this.depositAmount = numeral(this.depositAmountForm.controls.deposit.value).value();
     if (this.depositAmount < 10000) {
       this.bankError = true;
@@ -227,19 +191,17 @@ export class DepositComponent implements OnInit {
     this.countDepositAmount();
   }
   countDeposit() {
-    const numeral = require('numeral');
     this.errMessageQuickDeposit = false;
     this.equityEstimate = Math.floor(this.equity + numeral(this.depositTransactionForm.controls.deposit.value).value());
-    this.marginLevelEstimate = Math.floor((this.equityEstimate / this.usedMargin) * 100);
+    this.marginLevelEstimate = this.globalService.calculateMarginLevel(this.equityEstimate, this.usedMargin);
     if (this.marginLevelEstimate <= 100) {
       this.errMessageQuickDeposit = true;
     }
   }
   countDepositAmount() {
-    const numeral = require('numeral');
     this.errMessageBankTran = false;
     this.equityDeposit = Math.floor(this.equity + numeral(this.depositAmountForm.controls.deposit.value).value());
-    this.marginLevelEstimateBank = Math.floor((this.equityDeposit / this.usedMargin) * 100);
+    this.marginLevelEstimate = this.globalService.calculateMarginLevel(this.equityDeposit, this.usedMargin);
     if (this.marginLevelEstimateBank <= 100) {
       this.errMessageBankTran = true;
     }
