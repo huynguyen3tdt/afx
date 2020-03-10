@@ -40,6 +40,7 @@ export class NotificationsComponent implements OnInit {
   recordFrom: number;
   recordTo: number;
   listTotalItem: Array<number> = [10, 20, 30];
+  totalPage: number;
   TABS = {
     ALL: { name: 'ALL', value: -1 },
     IMPORTANT: { name: 'IMPORTANT', value: 0 },
@@ -89,6 +90,7 @@ export class NotificationsComponent implements OnInit {
           item.publish_date = moment(item.publish_date).format('YYYY/MM/DD HH:MM');
         });
         this.totalItem = this.pageNotification.data.count;
+        this.totalPage = (this.totalItem / this.pageSize) * 10;
         this.spinnerService.hide();
         this.recordFrom = this.pageSize * (this.currentPage - 1) + 1;
         this.recordTo = this.recordFrom + (this.listNotification.length - 1);
