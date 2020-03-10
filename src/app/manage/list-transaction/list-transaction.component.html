@@ -20,9 +20,9 @@
                 <tbody>
                     <tr *ngFor="let item of listTransaction">
                         <td><a href="javascript:;" (click)="openDetail(item?.id)">{{item?.id}}</a></td>
-                        <td>{{item?.create_date}}</td>
-                        <td>{{item?.funding_type}}</td>
-                        <td>{{item?.method}}</td>
+                        <td><a style="cursor: pointer;" (click)="openDetail(item?.id)">{{item?.create_date}}</a></td>
+                        <td><a style="cursor: pointer;" (click)="openDetail(item?.id)">{{item?.funding_type}}</a></td>
+                        <td><a style="cursor: pointer;" (click)="openDetail(item?.id)">{{item?.method}}</a></td>
                         <!-- <td class="text-right">JPY</td> -->
                         <td class="text-right">{{item?.amount | number}}</td>
                         <!-- <td class="text-right"><span class="text-info"><i class="icon ion-md-hourglass"></i>
