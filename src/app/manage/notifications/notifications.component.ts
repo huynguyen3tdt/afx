@@ -37,6 +37,9 @@ export class NotificationsComponent implements OnInit {
   unreadNotification: boolean;
   unreadCampagn: boolean;
   checkType: any;
+  recordFrom: number;
+  recordTo: number;
+  listTotalItem: Array<number> = [10, 20, 30];
   TABS = {
     ALL: { name: 'ALL', value: -1 },
     IMPORTANT: { name: 'IMPORTANT', value: 0 },
@@ -90,6 +93,8 @@ export class NotificationsComponent implements OnInit {
         });
         this.totalItem = this.pageNotification.data.count;
         this.spinnerService.hide();
+        this.recordFrom = this.pageSize * (this.currentPage - 1) + 1;
+        this.recordTo = this.recordFrom + (this.listNotification.length - 1);
       }
     });
     this.getTotalNotification();
