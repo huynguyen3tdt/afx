@@ -17,50 +17,50 @@
 
                                 </div>
                                 <div class="d-flex justify-content-between align-items-center mb-2">
-                                  <div class="d-flex align-items-center">
-                                      <label class="label mb-0 mr-2 pt-1">{{'Trading account' | translate}}</label>
-                                      <div class="d-inline-block">
-                                          <select class="form-control form-control-sm mb-0 bg-none" [(ngModel)]="accountID" disabled style="min-width: 160px;">
+                                    <div class="d-flex align-items-center">
+                                        <label class="label mb-0 mr-2 pt-1">{{'Trading account' | translate}}</label>
+                                        <div class="d-inline-block">
+                                            <select class="form-control form-control-sm mb-0 bg-none" [(ngModel)]="accountID" disabled style="min-width: 160px;">
                                             <option *ngFor="let item of listTradingAccount" value="{{item?.value}}">{{item?.value}}</option>
                                           </select>
-                                      </div>
-                                  </div>
-                                  <div class="pt-1"><label class="label mb-0 mr-2 d-inline">{{'Currency' | translate}}</label>: <strong>JPY</strong></div>
+                                        </div>
+                                    </div>
+                                    <div class="pt-1"><label class="label mb-0 mr-2 d-inline">{{'Currency' | translate}}</label>: <strong>JPY</strong></div>
                                 </div>
 
                                 <div class="mb-1 d-flex justify-content-between">
-                                  <label class="label">{{'Balance' | translate}}</label>
-                                  <div>
-                                      <strong>{{mt5Infor?.balance | number}}</strong>
-                                  </div>
-                              </div>
-                              <div class="mb-1 d-flex justify-content-between">
-                                <label class="label">{{'Used Margin' | translate}}</label>
-                                <div>
-                                    <strong>{{mt5Infor?.used_margin | number}}</strong>
+                                    <label class="label">{{'Balance' | translate}}</label>
+                                    <div>
+                                        <strong>{{mt5Infor?.balance | number}}</strong>
+                                    </div>
                                 </div>
-                              </div>
-                              <div class="mb-1 d-flex justify-content-between">
-                                <label class="label">{{'Equity' | translate}}</label>
-                                <div>
-                                    <strong>{{mt5Infor?.equity | number}}</strong>
+                                <div class="mb-1 d-flex justify-content-between">
+                                    <label class="label">{{'Used Margin' | translate}}</label>
+                                    <div>
+                                        <strong>{{mt5Infor?.used_margin | number}}</strong>
+                                    </div>
                                 </div>
-                              </div>
-                              <div class="mb-1 d-flex justify-content-between">
-                                <label class="label">{{'Withdrawable amount' | translate}}</label>
-                                <div>
-                                    <strong>{{mt5Infor?.free_margin | number}}</strong>
+                                <div class="mb-1 d-flex justify-content-between">
+                                    <label class="label">{{'Equity' | translate}}</label>
+                                    <div>
+                                        <strong>{{mt5Infor?.equity | number}}</strong>
+                                    </div>
                                 </div>
-                              </div>
-                              <div class="mb-1 d-flex justify-content-between">
-                                  <label class="label">{{'Margin Level' | translate}}</label>
-                                  <div>
-                                      <strong>{{mt5Infor?.margin_level | number}}%</strong>
-                                  </div>
-                              </div>
+                                <div class="mb-1 d-flex justify-content-between">
+                                    <label class="label">{{'Withdrawable amount' | translate}}</label>
+                                    <div>
+                                        <strong>{{mt5Infor?.free_margin | number}}</strong>
+                                    </div>
+                                </div>
+                                <div class="mb-1 d-flex justify-content-between">
+                                    <label class="label">{{'Margin Level' | translate}}</label>
+                                    <div>
+                                        <strong>{{mt5Infor?.margin_level | number}}%</strong>
+                                    </div>
+                                </div>
 
 
-                              <div class="d-flex align-items-center">
+                                <div class="d-flex align-items-center">
                                     <div class="mr-2" (click)="onRefesh()"><a href="javascript:;" class="btn-link-24"><i
                         class="icon ion-md-refresh-circle pr-1"></i></a></div>
                                     <div class="small text-secondary"><i class="icon ion-md-time"></i> <em>{{mt5Infor?.lastest_time | date:'yyyy/MM/dd'}} {{mt5Infor?.lastest_time | date:'HH:mm'}}</em></div>
@@ -122,7 +122,7 @@
                             <div *ngIf="errMessage == true" class="invalid-mess">
                                 <div>{{'Your Margin Level is nearly the Margin Call Level' | translate}}</div>
                             </div>
-                            <button class="btn btn-success btn-block text-uppercase btn-lg mb-3" (click)="showConfirm()"><strong>Withdraw</strong></button>
+                            <button class="btn btn-success btn-block text-uppercase btn-lg mb-3" (click)="showConfirm()"><strong>{{'Withdrawal'| translate}}</strong></button>
                             <p class="text-center" style="line-height: 1.2"><a href="javascript:;" data-toggle="modal" data-target="#modal-rule"><i class="icon ion-md-information-circle"></i>
                             {{'General rules for depositing and withdrawing funds' | translate}}</a></p>
                         </div>
@@ -138,102 +138,102 @@
 </div>
 
 
-<div class="modal fade" id="modal-withdraw-confirm" tabindex="-1" role="dialog"  aria-hidden="true" data-backdrop="static">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header bg-light pt-2 pb-2">
-        <div>
-          <h5 class="modal-title text-primary"><strong>{{'Withdrawal Request' | translate}}</strong></h5>
+<div class="modal fade" id="modal-withdraw-confirm" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-light pt-2 pb-2">
+                <div>
+                    <h5 class="modal-title text-primary"><strong>{{'Withdrawal Request' | translate}}</strong></h5>
+                </div>
+            </div>
+            <div class="modal-body">
+                <table class="table table-hover table-sm small" cellspacing="0" cellpadding="0">
+                    <tbody>
+                        <tr>
+                            <td width="180" class="border-top-0">{{'Trading account' | translate}}</td>
+                            <td class="border-top-0" *ngFor="let item of listTradingAccount">{{item?.value}}</td>
+                        </tr>
+                        <tr>
+                            <td width="180">{{'Transfer date time' | translate}}</td>
+                            <td>{{newDate | date: 'yyyy/MM/dd H:mm'}}</td>
+                        </tr>
+                        <tr>
+                            <td width="180">{{'Bank Account Number' | translate}}</td>
+                            <td><strong>{{bankInfor?.acc_number}}</strong></td>
+                        </tr>
+                        <tr>
+                            <td width="180">{{'Account Holders Name' | translate}}</td>
+                            <td><strong>{{bankInfor?.acc_holder_name}}</strong></td>
+                        </tr>
+                        <tr>
+                            <td width="180">{{'Beneficiary Bank' | translate}}</td>
+                            <td>{{bankInfor?.name}}</td>
+                        </tr>
+                        <tr>
+                            <td width="180">{{'Bank Branch' | translate}}</td>
+                            <td>{{bankInfor?.branch_name}}</td>
+                        </tr>
+                        <tr *ngFor="let item of listBankTranfer">
+                            <td width="180">{{'Branch Number' | translate}}</td>
+                            <td>{{item?.branch_code}}</td>
+                        </tr>
+                        <tr>
+                            <td width="180">{{'Withdrawal amount' | translate}}</td>
+                            <td><strong>10,000</strong></td>
+                        </tr>
+                        <tr>
+                            <td width="180">{{'Currency' | translate}}</td>
+                            <td>JPY</td>
+                        </tr>
+                        <tr>
+                            <td width="180">{{'Margin level estimate' | translate}}</td>
+                            <td>{{marginLevelEstimate}}%</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p>{{'Are you sure you want to make the withdrawal request?' | translate}}</p>
+                <hr>
+                <div class="text-right">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{'Cancel' | translate}}</button>
+                    <button type="button" class="btn btn-primary" (click)="sendConfirm()">{{'Confirm' | translate}}</button>
+                </div>
+            </div>
         </div>
-      </div>
-      <div class="modal-body">
-        <table class="table table-hover table-sm small" cellspacing="0" cellpadding="0">
-            <tbody>
-                <tr>
-                    <td width="180" class="border-top-0">{{'Trading account' | translate}}</td>
-                    <td class="border-top-0" *ngFor="let item of listTradingAccount">{{item?.value}}</td>
-                </tr>
-                <tr>
-                    <td width="180">{{'Transfer date time' | translate}}</td>
-                    <td>{{newDate | date: 'yyyy/MM/dd H:mm'}}</td>
-                </tr>
-                <tr>
-                    <td width="180">{{'Bank Account Number' | translate}}</td>
-                    <td><strong>{{bankInfor?.acc_number}}</strong></td>
-                </tr>
-                <tr>
-                    <td width="180">{{'Account Holders Name' | translate}}</td>
-                    <td><strong>{{bankInfor?.acc_holder_name}}</strong></td>
-                </tr>
-                <tr>
-                    <td width="180">{{'Beneficiary Bank' | translate}}</td>
-                    <td>{{bankInfor?.name}}</td>
-                </tr>
-                <tr>
-                    <td width="180">{{'Bank Branch' | translate}}</td>
-                    <td>{{bankInfor?.branch_name}}</td>
-                </tr>
-                <tr *ngFor="let item of listBankTranfer">
-                    <td width="180">{{'Branch Number' | translate}}</td>
-                    <td>{{item?.branch_code}}</td>
-                </tr>
-                <tr>
-                    <td width="180">{{'Withdrawal amount' | translate}}</td>
-                    <td><strong>10,000</strong></td>
-                </tr>
-                <tr>
-                    <td width="180">{{'Currency' | translate}}</td>
-                    <td>JPY</td>
-                </tr>
-                <tr>
-                    <td width="180">{{'Margin level estimate' | translate}}</td>
-                    <td>{{marginLevelEstimate}}%</td>
-                </tr>
-            </tbody>
-        </table>
-        <p>{{'Are you sure you want to make the withdrawal request?' | translate}}</p>
-        <hr>
-        <div class="text-right">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">{{'Cancel' | translate}}</button>
-          <button type="button" class="btn btn-primary" (click)="sendConfirm()">{{'Confirm' | translate}}</button>
-        </div>
-      </div>
     </div>
-  </div>
 </div>
 
-<div class="modal fade" id="modal_withdraw" tabindex="-1" role="dialog"  aria-hidden="true" data-backdrop="static">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header bg-light pt-2 pb-2">
-        <div>
-          <h5 class="modal-title text-primary"><strong>{{'Early Withdrawal' | translate}}</strong></h5>
+<div class="modal fade" id="modal_withdraw" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-light pt-2 pb-2">
+                <div>
+                    <h5 class="modal-title text-primary"><strong>{{'Early Withdrawal' | translate}}</strong></h5>
+                </div>
+            </div>
+            <div class="modal-body">
+                <table class="table table-hover table-sm small" cellspacing="0" cellpadding="0">
+                    <tbody>
+                        <tr>
+                            <td width="180" class="border-top-0">{{'Withdrawal amount' | translate}}</td>
+                            <td class="border-top-0">{{listWithdrawRequest?.amount}} JPY</td>
+                        </tr>
+                        <tr>
+                            <td width="180">{{'Transaction ID' | translate}}</td>
+                            <td>{{listWithdrawRequest?.id}}</td>
+                        </tr>
+                        <tr>
+                            <td width="180">{{'Createdate time' | translate}}</td>
+                            <td>{{listWithdrawRequest?.create_date | date: 'yyyy/MM/dd H:mm'}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p>{{'Your withdrawal request has been received and is being processed within 3-4 business days' | translate}}?</p>
+                <hr>
+                <div class="text-center">
+                    <button type="button" class="btn btn-success" id="got_it" data-dismiss="modal">{{'Got it!' | translate}}</button>
+                </div>
+            </div>
         </div>
-      </div>
-      <div class="modal-body">
-        <table class="table table-hover table-sm small" cellspacing="0" cellpadding="0">
-            <tbody>
-                <tr>
-                    <td width="180" class="border-top-0">{{'Withdrawal amount' | translate}}</td>
-                    <td class="border-top-0">{{listWithdrawRequest?.amount}} JPY</td>
-                </tr>
-                <tr>
-                    <td width="180">{{'Transaction ID' | translate}}</td>
-                    <td>{{listWithdrawRequest?.id}}</td>
-                </tr>
-                <tr>
-                    <td width="180">{{'Createdate time' | translate}}</td>
-                    <td>{{listWithdrawRequest?.create_date | date: 'yyyy/MM/dd H:mm'}}</td>
-                </tr>
-            </tbody>
-        </table>
-        <p>{{'Your withdrawal request has been received and is being processed within 3-4 business days' | translate}}?</p>
-        <hr>
-        <div class="text-center">
-          <button type="button" class="btn btn-success" id="got_it" data-dismiss="modal">{{'Got it!' | translate}}</button>
-        </div>
-      </div>
     </div>
-  </div>
 </div>
 <ng4-loading-spinner> </ng4-loading-spinner>
