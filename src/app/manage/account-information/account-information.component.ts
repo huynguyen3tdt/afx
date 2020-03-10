@@ -114,6 +114,7 @@ export class AccountInformationComponent implements OnInit {
       searchPrefe: new FormControl(),
       searchCountry: new FormControl(),
       house_numb: new FormControl(),
+      name_build: new FormControl(),
       email: new FormControl(),
       phone: new FormControl(),
     });
@@ -130,7 +131,7 @@ export class AccountInformationComponent implements OnInit {
       person_bod: new FormControl(),
       person_pic: new FormControl(),
       per_picname: new FormControl(),
-      person_picname2: new FormControl(),
+      person_picname: new FormControl(),
       person_phone: new FormControl(),
       person_email: new FormControl(),
     });
@@ -200,7 +201,7 @@ export class AccountInformationComponent implements OnInit {
         this.corporateForm.controls.person_bod.setValue(this.corporateInfor.pic.fx_dept);
         this.corporateForm.controls.person_pic.setValue(this.corporateInfor.pic.function);
         this.corporateForm.controls.per_picname.setValue(this.corporateInfor.pic.name);
-        this.corporateForm.controls.person_picname2.setValue(this.corporateInfor.pic.fx_name1);
+        this.corporateForm.controls.person_picname.setValue(this.corporateInfor.pic.fx_name1);
         this.corporateForm.controls.person_phone.setValue(this.corporateInfor.pic.mobile);
         this.corporateForm.controls.person_email.setValue(this.corporateInfor.pic.email.value);
       }
@@ -226,42 +227,34 @@ export class AccountInformationComponent implements OnInit {
     });
   }
 
-  onSubmit() {
+  changeUser() {
     this.isSubmitted = true;
     if (this.userForm.invalid) {
       return;
     }
-    this.editAddress = false;
-    this.editEmail = false;
-    this.editPhone = false;
-    // this.editLanguage = false;
-
     const param = {
-      post_code: this.userForm.controls.postCode.value,
-      prefecture: this.userForm.controls.searchPrefe.value,
+      zip: this.userForm.controls.postCode.value,
       address: {
-        county: this.userForm.controls.searchCountry.value,
-        house_numb: this.userForm.controls.house_numb.value,
-        email: this.userForm.controls.email.value,
+        city: this.userForm.controls.searchPrefe.value,
+        street: this.userForm.controls.searchCountry.value,
+        street2: this.userForm.controls.house_numb.value,
+        fx_street3: this.userForm.controls.name_build.value,
       },
-      phone: this.userForm.controls.phone.value,
-      // lang: this.userForm.controls.language.value
+      email: this.userForm.controls.email.value,
+      mobile: this.userForm.controls.phone.value,
+      lang: ''
     };
     this.userService.updateUser(param).subscribe(response => {
       if (response.meta.code === 200) {
-
         this.showSave = false;
         this.editAddress = false;
         this.editEmail = false;
         this.editPhone = false;
-        // this.editLanguage = false;
-        this.test = response.data.zip.status;
+        this.getUserInfo();
+
       }
     });
-    // this.userService.getUserInfor(param).subscribe(response => {
-    //   if (response.meta.code === 200) {
-    //   }
-    // });
+
   }
 
   showEditField(field: string) {
@@ -376,6 +369,47 @@ export class AccountInformationComponent implements OnInit {
       }
     });
   }
+  SaveCor() {
+    $('#modal-corporation').modal('show');
+  }
+  updateCorporate() {
+    const param = {
+      corporation: {
+        zip: this.corporateForm.controls.cor_postcode.value,
+        address: {
+          city: this.corporateForm.controls.cor_prefec.value,
+          street: this.corporateForm.controls.cor_district.value,
+          street2: this.corporateForm.controls.cor_house.value,
+          fx_street3: this.corporateForm.controls.cor_build.value,
+        },
+        mobile: this.corporateForm.controls.cor_phone.value,
+        fx_fax: this.corporateForm.controls.cor_fax.value,
+        lang: '',
+      },
+      pic: {
+        name: this.corporateForm.controls.per_picname.value,
+        fx_name1: this.corporateForm.controls.person_picname.value,
+        fx_gender: this.corporateInfor.pic.fx_gender.value,
+        email: this.corporateForm.controls.person_email.value,
+        mobile: this.corporateForm.controls.person_phone.value,
+        function: this.corporateForm.controls.person_pic.value,
+        fx_dept: this.corporateForm.controls.person_bod.value
+      }
+    };
+    this.userService.changeCorporation(param).subscribe( response => {
+      if (response.meta.code === 200) {
+        this.editCorAddress = false;
+        this.editCorPhone = false;
+        this.editCorFax = false;
+        this.editPersonBod = false;
+        this.editPersonPic = false;
+        this.editPersonPicname = false;
+        this.editPersonPhone = false;
+        this.editPersonEmail = false;
+        this.getCorporateInfor();
+      }
+    });
+  }
   editBankAccount() {
     this.editBank = true;
     this.bankAccount = false;
@@ -411,4 +445,5 @@ export class AccountInformationComponent implements OnInit {
       }
     });
   }
+
 }

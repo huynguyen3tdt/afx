@@ -28,7 +28,7 @@
                     </div>
                     <nav class="mb-0">
                         <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                            <a class="nav-item nav-link active" id="nav-account-tab" data-toggle="tab" href="#nav-account" role="tab" aria-controls="nav-account" aria-selected="true"><i
+                            <a class="nav-item nav-link active" id="nav-account-tab" data-toggle="tab" href="#nav-account" role="tab" (click)="getMt5Infor(this.accountID)" aria-controls="nav-account" aria-selected="true"><i
                                     class="icon ion-md-person"></i> <strong class="d-none d-md-inline">{{'Account Infomation' | translate}}</strong></a>
                             <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" (click)="getUserInfo()" *ngIf="isCompany == 'false'" role="tab" aria-controls="nav-profile" aria-selected="true"><i
                                     class="icon ion-md-contact"></i> <strong class="d-none d-md-inline">{{'User Infomation' | translate}}</strong></a>
@@ -69,7 +69,7 @@
                                                 <tr>
                                                     <td>{{'Withdrawable amount' | translate}}</td>
                                                     <td class="text-right">
-                                                        <strong>{{withdrawAmount?.withdraw_amount | number}}</strong>
+                                                        <strong>{{accountInfor?.free_margin  | number}}</strong>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -177,7 +177,15 @@
                                                                     </select>
                                                                 </div>
                                                             </div>
-                                                            <input type="text" name="address" formControlName="house_numb" class="form-control form-control-sm mb-1" value="" placeholder="House number/Room number">
+
+                                                            <div class="row no-gutters">
+                                                              <div class="col-sm-6 pr-md-1">
+                                                                  <input type="text" name="cor-address" class="form-control form-control-sm mb-1" formControlName="house_numb" value="" placeholder="House Number">
+                                                              </div>
+                                                              <div class="col-sm-6 pl-md-1">
+                                                                  <input type="text" name="cor-address" class="form-control form-control-sm mb-1" formControlName="name_build" value="" placeholder="Building Name">
+                                                              </div>
+                                                          </div>
                                                             <div class="text-right">
                                                                 <button type="button" (click)="cancelEdit('address')" class="btn btn-sm btn-cancel btn-outline-secondary pt-0 pb-0">{{'Cancel' | translate}}</button>
                                                             </div>
@@ -344,7 +352,7 @@
                                                     <td>{{'Phone' | translate}}</td>
                                                     <td>
                                                         <div class="currentvalue" *ngIf="editCorPhone == false">
-                                                            <strong><a href="javascript:;">+{{corporateInfor?.corporation?.mobile}}</a></strong>
+                                                            <strong><a href="javascript:;">{{corporateInfor?.corporation?.mobile}}</a></strong>
                                                             <div class="status d-none small"><span class="text-success"><i class="icon ion-md-checkmark"></i>  {{'Updated' | translate}}</span></div>
                                                         </div>
                                                         <div class="editable" *ngIf="editCorPhone == true">
@@ -360,7 +368,7 @@
                                                     <td>{{'Fax' | translate}}</td>
                                                     <td>
                                                         <div class="currentvalue" *ngIf="editCorFax == false">
-                                                            <strong><a href="javascript:;">+{{corporateInfor?.corporation?.fx_fax?.value}}</a></strong>
+                                                            <strong><a href="javascript:;">{{corporateInfor?.corporation?.fx_fax?.value}}</a></strong>
                                                             <div class="status d-none small"><span class="text-success"><i class="icon ion-md-checkmark"></i>  {{'Updated' | translate}} </span></div>
                                                         </div>
                                                         <div class="editable" *ngIf="editCorFax == true">
@@ -431,7 +439,7 @@
                                                             <div class="status d-none small"><span class="text-success"><i class="icon ion-md-checkmark"></i> {{'Updated' | translate}} </span></div>
                                                         </div>
                                                         <div class="editable" *ngIf="editPersonPicname == true">
-                                                            <input type="text" name="pic-name" class="form-control form-control-sm mb-1" value="グエン・トゥアン・アン" placeholder="PIC name" formControlName="person_picname2">
+                                                            <input type="text" name="pic-name" class="form-control form-control-sm mb-1" value="グエン・トゥアン・アン" placeholder="PIC name" formControlName="person_picname">
                                                             <div class="text-right">
                                                                 <button type="button" class="btn btn-sm btn-cancel btn-outline-secondary pt-0 pb-0" (click)="cancelEditCor('pic-name')">{{'Cancel' | translate}}</button>
                                                             </div>
@@ -459,7 +467,7 @@
                                                     <td>{{'Phone' | translate}}</td>
                                                     <td>
                                                         <div class="currentvalue" *ngIf="editPersonPhone == false">
-                                                            <strong><a href="javascript:;">+{{corporateInfor?.pic?.mobile}}</a></strong>
+                                                            <strong><a href="javascript:;">{{corporateInfor?.pic?.mobile}}</a></strong>
                                                             <div class="status d-none small"><span class="text-success"><i class="icon ion-md-checkmark"></i> {{'Updated' | translate}} </span></div>
                                                         </div>
                                                         <div class="editable" *ngIf="editPersonPhone == true">
@@ -493,7 +501,7 @@
                                                 <tr class="row-action">
                                                     <td>&nbsp;</td>
                                                     <td>
-                                                        <button type="button" class="btn btn-save btn-success pl-3 pr-3" *ngIf="showSaveCor == true">{{'Save' | translate}}</button>
+                                                        <button type="button" class="btn btn-save btn-success pl-3 pr-3" *ngIf="showSaveCor == true" (click)="SaveCor()">{{'Save' | translate}}</button>
                                                     </td>
                                                     <td width="15">&nbsp;</td>
                                                 </tr>
@@ -821,12 +829,26 @@
             <div class="modal-body text-center">
                 <p>Do you want to save information?</p>
                 <div>
-                    <button type="button" class="btn btn-sm btn-success pl-3 pr-3" (click)="onSubmit()" data-dismiss="modal">Ok</button>
+                    <button type="button" class="btn btn-sm btn-success pl-3 pr-3" (click)="changeUser()" data-dismiss="modal">Ok</button>
                     <button type="button" class="btn btn-sm btn-outline-secondary pl-3 pr-3" data-dismiss="modal">Cancel</button>
                 </div>
             </div>
         </div>
     </div>
+</div>
+
+<div class="modal fade" id="modal-corporation" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" data-backdrop="static">
+  <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+      <div class="modal-content">
+          <div class="modal-body text-center">
+              <p>Do you want to save information?</p>
+              <div>
+                  <button type="button" class="btn btn-sm btn-success pl-3 pr-3" (click)="updateCorporate()" data-dismiss="modal">Ok</button>
+                  <button type="button" class="btn btn-sm btn-outline-secondary pl-3 pr-3" data-dismiss="modal">Cancel</button>
+              </div>
+          </div>
+      </div>
+  </div>
 </div>
 
 <!-- Modal Configm Bank -->
