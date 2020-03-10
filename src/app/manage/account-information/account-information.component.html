@@ -144,9 +144,9 @@
                                                     <td>
                                                         <div *ngIf="editAddress == false" class="currentvalue">
                                                             <strong>{{userInfor?.zip?.value}}</strong>
-                                                            <div *ngIf="userInfor?.zip?.status == 0" class="status small"><span class="text-info"><i
+                                                            <!-- <div *ngIf="userInfor?.zip?.status == 1" class="status small"><span class="text-info"><i
                                                                         class="icon ion-md-hourglass"></i>
-                                                                        {{'Verificaion in process' | translate}}</span></div>
+                                                                        {{'Verificaion in process' | translate}}</span></div> -->
                                                         </div>
                                                         <div *ngIf="editAddress == true" class="editable">
                                                             <input type="text" name="postcode" formControlName="postCode" class="form-control form-control-sm mb-1" value="" placeholder="">
@@ -161,19 +161,19 @@
                                                             <div><strong>{{userInfor?.address?.value?.street2}},{{userInfor?.address?.value?.city}}</strong>
                                                             </div>
                                                             <div><strong>{{userInfor?.address?.value?.street}}</strong></div>
-                                                            <div *ngIf="userInfor?.address?.status == 0" class="status small"><span class="text-info"><i
+                                                            <div *ngIf="userInfor?.address?.status == 1" class="status small"><span class="text-info"><i
                                                                         class="icon ion-md-hourglass"></i> {{'Verificaion in process' | translate}}</span></div>
                                                         </div>
                                                         <div *ngIf="editAddress == true" class="editable">
                                                             <div class="row no-gutters">
                                                                 <div class="col-sm-6 pr-md-1">
                                                                     <select formControlName="searchPrefe" class="form-control form-control-sm mb-1 select2" style="width: 100%">
-                                                                        <option [value]="prefecture">{{prefecture}}</option>
+                                                                        <option value="{{prefecture}}">{{prefecture}}</option>
                                                                     </select>
                                                                 </div>
                                                                 <div class="col-sm-6 pl-md-1">
                                                                     <select formControlName="searchCountry" class="form-control form-control-sm mb-1 select2" style="width: 100%">
-                                                                        <option [value]="county">{{county}}</option>
+                                                                        <option value="{{county}}">{{county}}</option>
                                                                     </select>
                                                                 </div>
                                                             </div>
@@ -192,7 +192,7 @@
                                                         </div>
                                                     </td>
                                                     <td width="15">
-                                                        <a href="javascript:;" class="edit-link" *ngIf="editAddress == false && userInfor?.address?.status != 0" data-toggle="tooltip" data-placement="top" (click)="showEditField('address')" title="Edit Address"><i class="icon ion-md-create"></i></a>
+                                                        <a href="javascript:;" class="edit-link" *ngIf="editAddress == false && userInfor?.address?.status == 0" data-toggle="tooltip" data-placement="top" (click)="showEditField('address')" title="Edit Address"><i class="icon ion-md-create"></i></a>
                                                     </td>
                                                 </tr>
                                                 <tr class="row-email need-verify">
@@ -201,7 +201,7 @@
                                                         <div *ngIf="editEmail == false" class="currentvalue">
                                                             <strong><a
                                                                     href="javascript:;">{{userInfor?.email?.value}}</a></strong>
-                                                            <div *ngIf="userInfor?.email?.status == 0" class="status small"><span class="text-info"><i
+                                                            <div *ngIf="userInfor?.email?.status == 1" class="status small"><span class="text-info"><i
                                                                         class="icon ion-md-hourglass"></i> Verificaion in process</span></div>
                                                         </div>
                                                         <div *ngIf="editEmail == true" class="editable">
@@ -212,7 +212,7 @@
                                                         </div>
                                                     </td>
                                                     <td width="15">
-                                                        <a href="javascript:;" class="edit-link" *ngIf="editEmail == false && userInfor?.email?.status != 0" data-toggle="tooltip" data-placement="top" (click)="showEditField('email')" title="Edit Email"><i class="icon ion-md-create"></i></a>
+                                                        <a href="javascript:;" class="edit-link" *ngIf="editEmail == false && userInfor?.email?.status == 0" data-toggle="tooltip" data-placement="top" (click)="showEditField('email')" title="Edit Email"><i class="icon ion-md-create"></i></a>
                                                     </td>
                                                 </tr>
                                                 <tr class="row-phone">
@@ -220,9 +220,9 @@
                                                     <td>
                                                         <div *ngIf="editPhone == false" class="currentvalue">
                                                             <strong><a href="javascript:;">{{userInfor?.mobile}}</a></strong>
-                                                            <div class="status d-none small"><span class="text-success"><i
+                                                            <!-- <div class="status d-none small"><span class="text-success"><i
                                                                         class="icon ion-md-checkmark"></i> Updated
-                                                                </span></div>
+                                                                </span></div> -->
                                                         </div>
                                                         <div *ngIf="editPhone == true" class="editable">
                                                             <input type="text" name="phone" formControlName="phone" class="form-control form-control-sm mb-1" value="+" placeholder="">
@@ -234,33 +234,7 @@
                                                     <td width="15"><a href="javascript:;" class="edit-link" *ngIf="editPhone == false" data-toggle="tooltip" data-placement="top" (click)="showEditField('phone')" title="Edit Phone"><i class="icon ion-md-create"></i></a>
                                                     </td>
                                                 </tr>
-                                                <!-- <tr class="row-language">
-                                                    <td>Language</td>
-                                                    <td>
-                                                        <div *ngIf="editLanguage == false" class="currentvalue">
-                                                            <strong>{{userInfor?.lang}}</strong>
-                                                            <div class="status d-none small"><span
-                                                                    class="text-success"><i
-                                                                        class="icon ion-md-checkmark"></i>
-                                                                    Updated</span></div>
-                                                        </div>
-                                                        <div *ngIf="editLanguage == true" class="editable">
-                                                            <select class="form-control form-control-sm mb-1 select2" formControlName="language"
 
-                                                                style="width: 100%">
-                                                                <option [value]="country" *ngFor="let country of countries">{{country}}
-                                                            </select>
-                                                            <div class="text-right">
-                                                                <button type="button" (click)="cancelEdit('lang')"
-                                                                    class="btn btn-sm btn-cancel btn-outline-secondary pt-0 pb-0">Cancel</button>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td width="15"><a href="javascript:;" class="edit-link" *ngIf="editLanguage == false"
-                                                            data-toggle="tooltip" data-placement="top" (click)="showEditField('lang')"
-                                                            title="Edit Language"><i class="icon ion-md-create"></i></a>
-                                                    </td>
-                                                </tr> -->
                                                 <tr class="row-action" *ngIf="showSave == true">
                                                     <td>&nbsp;</td>
                                                     <td>
@@ -298,9 +272,9 @@
                                                     <td>
                                                         <div class="currentvalue" *ngIf="editCorAddress == false">
                                                             <strong>{{corporateInfor?.corporation?.zip?.value}}</strong>
-                                                            <div class="status d-none small" *ngIf="corporateInfor?.corporation?.zip?.status == 0">
+                                                            <!-- <div class="status small" *ngIf="corporateInfor?.corporation?.zip?.status == 1">
                                                                 <span class="text-success"><i class="icon ion-md-checkmark">
-                                                            </i> {{'Updated' | translate}}</span></div>
+                                                            </i> {{'Updated' | translate}}</span></div> -->
                                                         </div>
                                                         <div class="editable" *ngIf="editCorAddress == true">
                                                             <input type="text" name="postcode" fromControlName="cor_postcode" class="form-control form-control-sm mb-1" value="0001234" placeholder="">
@@ -314,8 +288,8 @@
                                                         <div class="currentvalue" *ngIf="editCorAddress == false">
                                                             <div><strong>{{corporateInfor?.corporation?.address?.value?.city}} , {{corporateInfor?.corporation?.address?.value?.street}}</strong></div>
                                                             <div><strong>{{corporateInfor?.corporation?.address?.value?.street2}} - {{corporateInfor?.corporation?.address?.value?.fx_street3}}</strong></div>
-                                                            <div class="status d-none small"><span class="text-info">
-                                                            <i class="icon ion-md-hourglass" *ngIf="corporateInfor?.corporation?.address?.status == 0">
+                                                            <div class="status small" *ngIf="corporateInfor?.corporation?.address?.status == 1"><span class="text-info">
+                                                            <i class="icon ion-md-hourglass">
                                                             </i> {{'Verificaion in process' | translate}}</span></div>
                                                         </div>
                                                         <div class="editable" *ngIf="editCorAddress == true">
@@ -345,7 +319,7 @@
                                                         </div>
                                                     </td>
                                                     <td width="15">
-                                                        <a href="javascript:;" class="edit-link" data-toggle="tooltip" data-placement="top" *ngIf="editCorAddress == false && corporateInfor?.corporation?.address?.status != 0" title="Edit Address" (click)="showEditFieldCor('cor-address')"><i class="icon ion-md-create"></i></a>
+                                                        <a href="javascript:;" class="edit-link" data-toggle="tooltip" data-placement="top" *ngIf="editCorAddress == false && corporateInfor?.corporation?.address?.status == 0" title="Edit Address" (click)="showEditFieldCor('cor-address')"><i class="icon ion-md-create"></i></a>
                                                     </td>
                                                 </tr>
                                                 <tr class="row-phone">
@@ -353,7 +327,7 @@
                                                     <td>
                                                         <div class="currentvalue" *ngIf="editCorPhone == false">
                                                             <strong><a href="javascript:;">{{corporateInfor?.corporation?.mobile}}</a></strong>
-                                                            <div class="status d-none small"><span class="text-success"><i class="icon ion-md-checkmark"></i>  {{'Updated' | translate}}</span></div>
+                                                            <!-- <div class="status d-none small"><span class="text-success"><i class="icon ion-md-checkmark"></i>  {{'Updated' | translate}}</span></div> -->
                                                         </div>
                                                         <div class="editable" *ngIf="editCorPhone == true">
                                                             <input type="text" name="cor-phone" class="form-control form-control-sm mb-1" value="+84389999999" placeholder="" formControlName="cor_phone">
@@ -369,7 +343,7 @@
                                                     <td>
                                                         <div class="currentvalue" *ngIf="editCorFax == false">
                                                             <strong><a href="javascript:;">{{corporateInfor?.corporation?.fx_fax?.value}}</a></strong>
-                                                            <div class="status d-none small"><span class="text-success"><i class="icon ion-md-checkmark"></i>  {{'Updated' | translate}} </span></div>
+                                                            <!-- <div class="status d-none small"><span class="text-success"><i class="icon ion-md-checkmark"></i>  {{'Updated' | translate}} </span></div> -->
                                                         </div>
                                                         <div class="editable" *ngIf="editCorFax == true">
                                                             <input type="text" name="cor-fax" class="form-control form-control-sm mb-1" value="+84389999999" placeholder="" formControlName="cor_fax">
@@ -391,7 +365,7 @@
                                                     <td>
                                                         <div class="currentvalue" *ngIf="editPersonBod == false">
                                                             <strong>{{corporateInfor?.pic?.fx_dept}}</strong>
-                                                            <div class="status d-none small"><span class="text-success"><i class="icon ion-md-checkmark"></i>  {{'Updated' | translate}} </span></div>
+                                                            <!-- <div class="status d-none small"><span class="text-success"><i class="icon ion-md-checkmark"></i>  {{'Updated' | translate}} </span></div> -->
                                                         </div>
                                                         <div class="editable" *ngIf="editPersonBod == true">
                                                             <input type="text" name="department" class="form-control form-control-sm mb-1" value="BOD" placeholder="" formControlName="person_bod">
@@ -407,7 +381,7 @@
                                                     <td>
                                                         <div class="currentvalue" *ngIf="editPersonPic == false">
                                                             <strong>{{corporateInfor?.pic?.function}}</strong>
-                                                            <div class="status d-none small"><span class="text-success"><i class="icon ion-md-checkmark"></i> {{'Updated' | translate}} </span></div>
+                                                            <!-- <div class="status d-none small"><span class="text-success"><i class="icon ion-md-checkmark"></i> {{'Updated' | translate}} </span></div> -->
                                                         </div>
                                                         <div class="editable" *ngIf="editPersonPic == true">
                                                             <input type="text" name="pic-position" class="form-control form-control-sm mb-1" value="CEO" placeholder="PIC Position" formControlName="person_pic">
@@ -423,7 +397,7 @@
                                                     <td>
                                                         <div class="currentvalue" *ngIf="editPersonPicname == false">
                                                             <strong>{{corporateInfor?.pic?.name}}</strong>
-                                                            <div class="status d-none small"><span class="text-success"><i class="icon ion-md-checkmark"></i> {{'Updated' | translate}} </span></div>
+                                                            <!-- <div class="status d-none small"><span class="text-success"><i class="icon ion-md-checkmark"></i> {{'Updated' | translate}} </span></div> -->
                                                         </div>
                                                         <div class="editable" *ngIf="editPersonPicname == true">
                                                             <input type="text" name="pic-name" class="form-control form-control-sm mb-1" value="Nguyễn Tuấn Anh" placeholder="PIC name" formControlName="per_picname">
@@ -436,7 +410,7 @@
                                                     <td>
                                                         <div class="currentvalue" *ngIf="editPersonPicname == false">
                                                             <strong>{{corporateInfor?.pic?.fx_name1}}</strong>
-                                                            <div class="status d-none small"><span class="text-success"><i class="icon ion-md-checkmark"></i> {{'Updated' | translate}} </span></div>
+                                                            <!-- <div class="status d-none small"><span class="text-success"><i class="icon ion-md-checkmark"></i> {{'Updated' | translate}} </span></div> -->
                                                         </div>
                                                         <div class="editable" *ngIf="editPersonPicname == true">
                                                             <input type="text" name="pic-name" class="form-control form-control-sm mb-1" value="グエン・トゥアン・アン" placeholder="PIC name" formControlName="person_picname">
@@ -452,7 +426,7 @@
                                                     <td>
                                                         <div class="currentvalue">
                                                             <strong>{{corporateInfor?.pic?.fx_gender?.value}}</strong>
-                                                            <div class="status d-none small"><span class="text-success"><i class="icon ion-md-checkmark"></i> {{'Updated' | translate}} </span></div>
+                                                            <!-- <div class="status d-none small"><span class="text-success"><i class="icon ion-md-checkmark"></i> {{'Updated' | translate}} </span></div> -->
                                                         </div>
                                                         <!-- <div class="editable">
                                                           <select class="form-control form-control-sm mb-1 select2" style="width: 100%" formControlName="person_gender">
@@ -468,7 +442,7 @@
                                                     <td>
                                                         <div class="currentvalue" *ngIf="editPersonPhone == false">
                                                             <strong><a href="javascript:;">{{corporateInfor?.pic?.mobile}}</a></strong>
-                                                            <div class="status d-none small"><span class="text-success"><i class="icon ion-md-checkmark"></i> {{'Updated' | translate}} </span></div>
+                                                            <!-- <div class="status d-none small"><span class="text-success"><i class="icon ion-md-checkmark"></i> {{'Updated' | translate}} </span></div> -->
                                                         </div>
                                                         <div class="editable" *ngIf="editPersonPhone == true">
                                                             <input type="text" name="p-phone" class="form-control form-control-sm mb-1" value="+84123456789" placeholder="" formControlName="person_phone">
@@ -484,7 +458,7 @@
                                                     <td>
                                                         <div class="currentvalue" *ngIf="editPersonEmail == false">
                                                             <strong><a href="javascript:;">{{corporateInfor?.pic?.email?.value}}</a></strong>
-                                                            <div class="status d-none small" *ngIf="corporateInfor?.pic?.email?.status == 0"><span class="text-info">
+                                                            <div class="status small" *ngIf="corporateInfor?.pic?.email?.status == 1"><span class="text-info">
                                                             <i class="icon ion-md-hourglass"></i> {{'Verificaion in process' | translate}}</span></div>
                                                         </div>
                                                         <div class="editable" *ngIf="editPersonEmail == true">
@@ -495,7 +469,7 @@
                                                         </div>
                                                     </td>
                                                     <td width="15">
-                                                        <a href="javascript:;" class="edit-link" data-toggle="tooltip" data-placement="top" title="Edit Email" (click)="showEditFieldCor('p-email')" *ngIf="editPersonEmail == false && corporateInfor?.pic?.email?.status != 0"><i class="icon ion-md-create"></i></a>
+                                                        <a href="javascript:;" class="edit-link" data-toggle="tooltip" data-placement="top" title="Edit Email" (click)="showEditFieldCor('p-email')" *ngIf="editPersonEmail == false && corporateInfor?.pic?.email?.status == 0"><i class="icon ion-md-create"></i></a>
                                                     </td>
                                                 </tr>
                                                 <tr class="row-action">
