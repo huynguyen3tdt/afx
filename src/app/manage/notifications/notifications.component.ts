@@ -86,7 +86,6 @@ export class NotificationsComponent implements OnInit {
       if (response.meta.code === 200) {
         this.pageNotification = response;
         this.listNotification = this.pageNotification.data.results;
-        console.log('pageNotification', this.listNotification);
         this.listNotification.forEach(item => {
           item.publish_date = moment(item.publish_date).format('YYYY/MM/DD HH:MM');
         });
