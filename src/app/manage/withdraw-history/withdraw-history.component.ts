@@ -61,16 +61,17 @@ export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
               private spinnerService: Ng4LoadingSpinnerService,
               private activatedRoute: ActivatedRoute) {
                 this.STATUS = [
-                  {label: 'Complete', value: {id: 1, name: 'Complete'}},
-                  {label: 'Cancel', value: {id: 2, name: 'Pending'}},
-                  {label: 'In process', value: {id: 3, name: 'In process'}},
-                  {label: 'New', value: {id: 4, name: 'Cancel'}},
+                  {label: 'New', value: {id: 1, name: 'New'}},
+                  {label: 'In process', value: {id: 2, name: 'In process'}},
+                  {label: 'Complete', value: {id: 3, name: 'Complete'}},
+                  {label: 'Cancel', value: {id: 4, name: 'Cancel'}},
               ];
                }
 
   ngOnInit() {
     this.activatedRoute.queryParams.subscribe(res => {
       this.querytab = res.tab;
+
     });
     this.currentPage = 1;
     this.pageSize = 10;
@@ -90,6 +91,9 @@ export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
       if (this.querytab === this.TABS.WITHDRAWAL.name) {
         this.withdrawTab.nativeElement.click();
       }
+      if (this.querytab === this.TABS.WITHDRAWAL.name) {
+        this.withdrawTab.nativeElement.click();
+      }
     }, 100);
   }
 
@@ -98,7 +102,7 @@ export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
       tradingAccount: new FormControl(this.listTradingAccount ? this.listTradingAccount[0].account_id : null),
       fromDate: new FormControl(null),
       toDate: new FormControl(null),
-      status: new FormControl([{id: 1, name: 'Complete'}])
+      status: new FormControl([{id: 1, name: 'New'}])
     });
     this.setDate(this.DURATION.YEAR);
   }
