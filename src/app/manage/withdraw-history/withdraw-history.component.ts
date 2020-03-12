@@ -62,9 +62,9 @@ export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
               private activatedRoute: ActivatedRoute) {
                 this.STATUS = [
                   {label: 'Complete', value: {id: 1, name: 'Complete'}},
-                  {label: 'Pending', value: {id: 2, name: 'Pending'}},
+                  {label: 'Cancel', value: {id: 2, name: 'Pending'}},
                   {label: 'In process', value: {id: 3, name: 'In process'}},
-                  {label: 'Cancel', value: {id: 4, name: 'Cancel'}},
+                  {label: 'New', value: {id: 4, name: 'Cancel'}},
               ];
                }
 
