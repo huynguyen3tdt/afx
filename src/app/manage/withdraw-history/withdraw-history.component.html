@@ -46,7 +46,7 @@
                                                 <div class="form-group">
                                                     <label
                                                         class="label d-block mb-0 mr-2">{{'Status' | translate}}</label>
-                                                        <p-multiSelect [options]="STATUS"  [panelStyle]="{minWidth:'20em'}" formControlName="status"></p-multiSelect>
+                                                        <p-multiSelect [options]="STATUS"  [panelStyle]="{minWidth:'20em'}" formControlName="status" (onChange)="changeStatus()"></p-multiSelect>
                                                     <!-- <select  formControlName="tradingAccount"
                                                         class="form-control form-control-sm" multiple>
                                                         <option *ngFor="let item of STATUS"

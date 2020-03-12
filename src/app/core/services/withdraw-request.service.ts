@@ -75,7 +75,7 @@ export class WithdrawRequestService {
   }
 
   getDwHistory(accountNumber: number, pageSize: number, pageNumber: number,
-               type?: number, dateFrom?: string, dateTo?: string): Observable<WithdrawHistory> {
+               type?: number, dateFrom?: string, dateTo?: string, statusSearch?: string): Observable<WithdrawHistory> {
     let URL = '';
     if (type !== -1) {
       URL = `?account_id=${accountNumber}&type=${type}&page_size=${pageSize}&page=${pageNumber}`;
@@ -87,6 +87,9 @@ export class WithdrawRequestService {
     }
     if (dateTo && dateTo !== 'Invalid date') {
       URL += `&date_to=${dateTo}`;
+    }
+    if (statusSearch) {
+      URL += `&status=${statusSearch}`;
     }
     return this.httpClient
       .get(`${this.envConfigService.getConfig()}/${AppSettings.API_WD_HISTORY}` + URL)

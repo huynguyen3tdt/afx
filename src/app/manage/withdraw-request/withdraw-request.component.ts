@@ -175,7 +175,9 @@ export class WithdrawRequestComponent implements OnInit {
     this.withdrawRequestService.postWithdraw(param).subscribe( response => {
       if (response.meta.code === 200) {
         this.listWithdrawRequest = response.data;
+
         this.listTran.ngOnChanges();
+
       }
     });
   }
