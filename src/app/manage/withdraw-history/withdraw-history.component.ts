@@ -39,6 +39,7 @@ export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
   pageSize: number;
   totalItem: number;
   tab: string;
+  statusWithdrawal: string;
   tranHistoryDetail: TransactionModel;
   listTotalItem: Array<number> = [10, 20, 30];
   totalPage: number;
@@ -46,6 +47,8 @@ export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
   withdrawId: string;
   depositId: string;
   querytab: string;
+  queryStatus: string;
+  statusSearch: string;
   TABS = {
     ALL: { name: 'ALL', value: 0 },
     DEPOSIT: { name: 'DEPOSIT', value: 1 },
@@ -61,17 +64,16 @@ export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
               private spinnerService: Ng4LoadingSpinnerService,
               private activatedRoute: ActivatedRoute) {
                 this.STATUS = [
-                  {label: 'New', value: {id: 1, name: 'New'}},
-                  {label: 'In process', value: {id: 2, name: 'In process'}},
-                  {label: 'Complete', value: {id: 3, name: 'Complete'}},
-                  {label: 'Cancel', value: {id: 4, name: 'Cancel'}},
+                  {label: 'New', value: {id: 4, name: 'New'}},
+                  {label: 'In process', value: {id: 3, name: 'In process'}},
+                  {label: 'Complete', value: {id: 1, name: 'Complete'}},
+                  {label: 'Cancel', value: {id: 2, name: 'Cancel'}},
               ];
                }
 
   ngOnInit() {
     this.activatedRoute.queryParams.subscribe(res => {
       this.querytab = res.tab;
-
     });
     this.currentPage = 1;
     this.pageSize = 10;
@@ -91,7 +93,9 @@ export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
       if (this.querytab === this.TABS.WITHDRAWAL.name) {
         this.withdrawTab.nativeElement.click();
       }
-      if (this.querytab === this.TABS.WITHDRAWAL.name) {
+      if (this.querytab === 'detailwithdrawal') {
+        this.searchForm.controls.status.setValue([{id: 4, name: 'New'}, {id: 3, name: 'In process'}]);
+        this.changeStatus();
         this.withdrawTab.nativeElement.click();
       }
     }, 100);
@@ -102,15 +106,17 @@ export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
       tradingAccount: new FormControl(this.listTradingAccount ? this.listTradingAccount[0].account_id : null),
       fromDate: new FormControl(null),
       toDate: new FormControl(null),
-      status: new FormControl([{id: 1, name: 'New'}])
+      status: new FormControl([])
     });
     this.setDate(this.DURATION.YEAR);
   }
 
-  getTranHistory(accountNumber: number, pageNumber: number, pageSize: number, type?: number, dateFrom?: string, dateTo?: string) {
+  getTranHistory(accountNumber: number,
+                 pageNumber: number, pageSize: number, type?: number, dateFrom?: string, dateTo?: string, statusSearch?: string) {
     this.spinnerService.show();
     this.checkTab(type);
-    this.withdrawRequestService.getDwHistory(accountNumber, pageSize, pageNumber, type, dateFrom, dateTo).subscribe(response => {
+    this.withdrawRequestService.getDwHistory(accountNumber, pageSize, pageNumber, type, dateFrom,
+      dateTo, statusSearch).subscribe(response => {
       if (response.meta.code === 200) {
         this.spinnerService.hide();
         this.listReport = response.data.results;
@@ -142,15 +148,18 @@ export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
     switch (this.tab) {
       case this.TABS.ALL.name:
         this.getTranHistory(this.searchForm.controls.tradingAccount.value, this.currentPage, this.pageSize, this.TABS.ALL.value,
-          this.formatDate(this.searchForm.controls.fromDate.value), this.formatDate(this.searchForm.controls.toDate.value));
+          this.formatDate(this.searchForm.controls.fromDate.value), this.formatDate(this.searchForm.controls.toDate.value),
+          this.statusSearch);
         break;
       case this.TABS.DEPOSIT.name:
         this.getTranHistory(this.searchForm.controls.tradingAccount.value, this.currentPage, this.pageSize, this.TABS.DEPOSIT.value,
-          this.formatDate(this.searchForm.controls.fromDate.value), this.formatDate(this.searchForm.controls.toDate.value));
+          this.formatDate(this.searchForm.controls.fromDate.value), this.formatDate(this.searchForm.controls.toDate.value),
+          this.statusSearch);
         break;
       case this.TABS.WITHDRAWAL.name:
         this.getTranHistory(this.searchForm.controls.tradingAccount.value, this.currentPage, this.pageSize, this.TABS.WITHDRAWAL.value,
-          this.formatDate(this.searchForm.controls.fromDate.value), this.formatDate(this.searchForm.controls.toDate.value));
+          this.formatDate(this.searchForm.controls.fromDate.value), this.formatDate(this.searchForm.controls.toDate.value),
+          this.statusSearch);
         break;
     }
   }
@@ -195,9 +204,16 @@ export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
         break;
     }
     if (callSearh) {
-      this.currentPage = 1;
-      this.pageSize = 10;
-      this.searchTranHistory();
+      if (this.querytab === 'detailwithdrawal') {
+        this.searchTranHistory();
+        this.querytab = '';
+      } else {
+        this.currentPage = 1;
+        this.pageSize = 10;
+        this.searchForm.controls.status.setValue([]);
+        this.statusSearch = '';
+        this.searchTranHistory();
+      }
     }
   }
 
@@ -267,5 +283,12 @@ export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
     }
     return null;
   }
-
+  changeStatus() {
+    this.statusSearch = '';
+    this.currentPage = 1;
+    this.searchForm.controls.status.value.forEach(item => {
+      this.statusSearch += item.id + '+';
+    });
+    this.searchTranHistory();
+  }
 }
