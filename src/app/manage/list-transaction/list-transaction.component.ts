@@ -1,7 +1,7 @@
 import { Component, OnInit, OnChanges, Input } from '@angular/core';
 import { WithdrawRequestService } from 'src/app/core/services/withdraw-request.service';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { TransactionModel } from 'src/app/core/model/withdraw-request-response.model';
 import { JAPAN_FORMATDATE_HH_MM } from 'src/app/core/constant/format-date-constant';
 import { PaymentMethod, TYPEOFTRANHISTORY } from 'src/app/core/constant/payment-method-constant';
@@ -16,9 +16,11 @@ import * as moment from 'moment';
 export class ListTransactionComponent implements OnInit, OnChanges {
   @Input() accountID: string;
   @Input() tranType: number;
+
   titleTransaction: string;
   listTransaction: Array<TransactionModel>;
   transactionDetail: TransactionModel;
+
   constructor(private withdrawRequestService: WithdrawRequestService,
               private spinnerService: Ng4LoadingSpinnerService,
               private router: Router) { }
@@ -78,7 +80,8 @@ export class ListTransactionComponent implements OnInit, OnChanges {
     return '';
   }
 
-  goToHistory() {
-    this.router.navigate(['/manage/withdrawHistory']);
-  }
+  // goToHistory() {
+  //   this.router.navigate(['/manage/withdrawHistory']);
+  // }
+
 }

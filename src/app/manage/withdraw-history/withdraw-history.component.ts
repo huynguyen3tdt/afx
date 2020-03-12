@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { WithdrawRequestService } from 'src/app/core/services/withdraw-request.service';
 import { FormGroup, FormControl } from '@angular/forms';
 import { TransactionModel, BankInforModel } from 'src/app/core/model/withdraw-request-response.model';
@@ -12,6 +12,8 @@ import {
   STATUSTRANHISTORY } from 'src/app/core/constant/payment-method-constant';
 import { GlobalService } from 'src/app/core/services/global.service';
 import { AccountType } from 'src/app/core/model/report-response.model';
+import {SelectItem} from 'primeng/api';
+import { ActivatedRoute } from '@angular/router';
 declare var $: any;
 
 @Component({
@@ -20,6 +22,8 @@ declare var $: any;
   styleUrls: ['./withdraw-history.component.css']
 })
 export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
+  @ViewChild('depositTab', { static: false }) depositTab: ElementRef;
+  @ViewChild('withdrawTab', { static: false }) withdrawTab: ElementRef;
   listBankInfor: BankInforModel;
   listDwHistory: Array<TransactionModel>;
   listReport: Array<TransactionModel>;
@@ -38,6 +42,10 @@ export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
   tranHistoryDetail: TransactionModel;
   listTotalItem: Array<number> = [10, 20, 30];
   totalPage: number;
+  STATUS: SelectItem[];
+  withdrawId: string;
+  depositId: string;
+  querytab: string;
   TABS = {
     ALL: { name: 'ALL', value: 0 },
     DEPOSIT: { name: 'DEPOSIT', value: 1 },
@@ -48,28 +56,49 @@ export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
     MONTH: 'month',
     YEAR: 'year'
   };
-  STATUS = ['Complete', 'Pending', 'In process', 'Cancel'];
-
+  // STATUS = ['Complete', 'Pending', 'In process', 'Cancel'];
   constructor(private withdrawRequestService: WithdrawRequestService,
-              private spinnerService: Ng4LoadingSpinnerService) { }
+              private spinnerService: Ng4LoadingSpinnerService,
+              private activatedRoute: ActivatedRoute) {
+                this.STATUS = [
+                  {label: 'Complete', value: {id: 1, name: 'Complete'}},
+                  {label: 'Pending', value: {id: 2, name: 'Pending'}},
+                  {label: 'In process', value: {id: 3, name: 'In process'}},
+                  {label: 'Cancel', value: {id: 4, name: 'Cancel'}},
+              ];
+               }
 
   ngOnInit() {
+    this.activatedRoute.queryParams.subscribe(res => {
+      this.querytab = res.tab;
+    });
     this.currentPage = 1;
     this.pageSize = 10;
     this.listTradingAccount = JSON.parse(localStorage.getItem(ACCOUNT_IDS));
     this.initSearchForm();
-    this.getTranHistory(this.searchForm.controls.tradingAccount.value, this.currentPage, this.pageSize, this.TABS.ALL.value,
-      this.formatDate(this.searchForm.controls.fromDate.value), this.formatDate(this.searchForm.controls.toDate.value));
+    if (!this.querytab) {
+      this.getTranHistory(this.searchForm.controls.tradingAccount.value, this.currentPage, this.pageSize, this.TABS.ALL.value,
+        this.formatDate(this.searchForm.controls.fromDate.value), this.formatDate(this.searchForm.controls.toDate.value));
+    }
   }
 
   ngAfterViewInit(): void {
+    setTimeout(() => {
+      if (this.querytab === this.TABS.DEPOSIT.name) {
+        this.depositTab.nativeElement.click();
+      }
+      if (this.querytab === this.TABS.WITHDRAWAL.name) {
+        this.withdrawTab.nativeElement.click();
+      }
+    }, 100);
   }
 
   initSearchForm() {
     this.searchForm = new FormGroup({
       tradingAccount: new FormControl(this.listTradingAccount ? this.listTradingAccount[0].account_id : null),
       fromDate: new FormControl(null),
-      toDate: new FormControl(null)
+      toDate: new FormControl(null),
+      status: new FormControl([{id: 1, name: 'Complete'}])
     });
     this.setDate(this.DURATION.YEAR);
   }
@@ -234,4 +263,5 @@ export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
     }
     return null;
   }
+
 }

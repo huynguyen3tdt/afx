@@ -29,11 +29,14 @@
               "./node_modules/ngx-bootstrap/datepicker/bs-datepicker.css",
               "src/styles.css",
               "src/assets/css/main.css",
-              "src/assets/css/jqkeyboard.css"
+              "src/assets/css/jqkeyboard.css",
+              "node_modules/primeng/resources/themes/nova-light/theme.css",
+              "node_modules/primeng/resources/primeng.min.css",
+              "node_modules/primeicons/primeicons.css"
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
-              "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",   
+              "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
               "src/assets/js/TweenMax.min.js"
             ]
           },
