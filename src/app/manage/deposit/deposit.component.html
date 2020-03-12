@@ -24,15 +24,15 @@
                                     <div class="p-3 border mb-3 form form-line bg-light">
                                         <h5 class="text-primary mb-2"><strong>MT5</strong> {{'Information' | translate}}</h5>
                                         <div class="d-flex justify-content-between align-items-center mb-2">
-                                          <div class="d-flex align-items-center">
-                                              <label class="label mb-0 mr-2 pt-1">{{'Trading account' | translate}}</label>
-                                              <div class="d-inline-block">
-                                                  <select class="form-control form-control-sm mb-0 bg-none" [(ngModel)]="accountID" disabled style="min-width: 160px;">
+                                            <div class="d-flex align-items-center">
+                                                <label class="label mb-0 mr-2 pt-1">{{'Trading account' | translate}}</label>
+                                                <div class="d-inline-block">
+                                                    <select class="form-control form-control-sm mb-0 bg-none" [(ngModel)]="accountID" disabled style="min-width: 160px;">
                                                     <option *ngFor="let item of listTradingAccount" value="{{item?.value}}">{{item?.value}}</option>
                                                   </select>
-                                              </div>
-                                          </div>
-                                          <div class="pt-1"><label class="label mb-0 mr-2 d-inline">{{'Currency' | translate}}</label>: <strong>JPY</strong></div>
+                                                </div>
+                                            </div>
+                                            <div class="pt-1"><label class="label mb-0 mr-2 d-inline">{{'Currency' | translate}}</label>: <strong>JPY</strong></div>
                                         </div>
                                         <div class="mb-1 d-flex justify-content-between">
                                             <label class="label">{{'Balance' | translate}}</label>
@@ -41,22 +41,22 @@
                                             </div>
                                         </div>
                                         <div class="mb-1 d-flex justify-content-between">
-                                          <label class="label">{{'Used Margin' | translate}}</label>
-                                          <div>
-                                              <strong>{{mt5Infor?.used_margin | number}}</strong>
-                                          </div>
+                                            <label class="label">{{'Used Margin' | translate}}</label>
+                                            <div>
+                                                <strong>{{mt5Infor?.used_margin | number}}</strong>
+                                            </div>
                                         </div>
                                         <div class="mb-1 d-flex justify-content-between">
-                                          <label class="label">{{'Equity' | translate}}</label>
-                                          <div>
-                                              <strong>{{mt5Infor?.equity | number}}</strong>
-                                          </div>
+                                            <label class="label">{{'Equity' | translate}}</label>
+                                            <div>
+                                                <strong>{{mt5Infor?.equity | number}}</strong>
+                                            </div>
                                         </div>
                                         <div class="mb-1 d-flex justify-content-between">
-                                          <label class="label">{{'Withdrawable amount' | translate}}</label>
-                                          <div>
-                                              <strong>{{mt5Infor?.free_margin | number}}</strong>
-                                          </div>
+                                            <label class="label">{{'Withdrawable amount' | translate}}</label>
+                                            <div>
+                                                <strong>{{mt5Infor?.free_margin | number}}</strong>
+                                            </div>
                                         </div>
                                         <div class="mb-1 d-flex justify-content-between">
                                             <label class="label">{{'Margin Level' | translate}}</label>
@@ -82,7 +82,7 @@
                                                     autocomplete="off" value="10,000" placeholder="">
                                             </div>
                                             <div *ngIf="depositError == true" class="invalid-mess">
-                                                <div>Minimum amount is not below {{minDeposit}}</div>
+                                                <div>{{'Minimum amount is not below' | translate}} {{minDeposit}}</div>
                                             </div>
                                             <div class="mb-1 d-flex justify-content-between">
                                                 <label class="label">{{'Currency' | translate}}</label>
@@ -106,9 +106,9 @@
                                     </div>
                                     <p class="small text-secondary p-2 bg-light">{{'Notice: Minimum single deposit amount is' | translate}} {{minDeposit}}</p>
                                     <div *ngIf="errMessageQuickDeposit == true" class="invalid-mess">
-                                        <div>Your Margin Level is nearly the Margin Call Level</div>
+                                        <div>{{'Your Margin Level is nearly the Margin Call Levels' | translate}}</div>
                                     </div>
-                                    <button class="btn btn-warning btn-block text-uppercase btn-lg mb-3" (click)="onSubmit()"><strong>Deposit</strong></button>
+                                    <button class="btn btn-warning btn-block text-uppercase btn-lg mb-3" (click)="onSubmit()"><strong>{{'Deposit' | translate}}</strong></button>
                                     <p class="text-center" style="line-height: 1.2"><a href="javascript:;" data-toggle="modal" data-target="#modal-rule"><i
                                                 class="icon ion-md-information-circle"></i> {{'General rules for depositing and withdrawing funds' | translate}}</a></p>
                                 </div>
@@ -256,7 +256,7 @@
             <ng-container *ngIf="accountID">
                 <app-list-transaction *ngIf="accountID" #listTran [accountID]="accountID" [tranType]="transactionType"></app-list-transaction>
             </ng-container>
-            
+
         </div>
     </div>
 </div>
@@ -344,7 +344,7 @@
                     <button type="button" class="btn btn-primary pl-4 pr-4 btn-confirm" data-dismiss="modal">Confirm</button>
                 </div>
             </div>
-            
+
         </div>
     </div>
 </div>

@@ -32,10 +32,8 @@
                                 <div class="row">
                                     <div class="col-4 col-lg-2">
                                         <div class="form-group">
-                                            <label
-                                                class="label d-block mb-0 mr-2">{{'Trading account' | translate}}</label>
-                                            <select disabled formControlName="tradingAccount"
-                                                class="form-control form-control-sm">
+                                            <label class="label d-block mb-0 mr-2">{{'Trading account' | translate}}</label>
+                                            <select disabled formControlName="tradingAccount" class="form-control form-control-sm">
                                                 <option *ngFor="let item of listTradingAccount"
                                                     value="{{item?.account_id}}">
                                                     {{item.value}}</option>
@@ -61,13 +59,9 @@
                                                 <div class="form-group form-group">
                                                     <label class="label d-none d-lg-block mb-0">&nbsp;</label>
                                                     <div class="btn-group d-flex">
-                                                        <button type="button" (click)="setDate(DURATION.DAY)"
-                                                            class="btn btn-sm btn-outline-secondary"
-                                                            style="width: 30px">{{'D' | translate}}</button>
-                                                        <button type="button" (click)="setDate(DURATION.MONTH)"
-                                                            class="btn btn-sm btn-outline-secondary">{{'M' | translate}}</button>
-                                                        <button type="button" (click)="setDate(DURATION.YEAR)"
-                                                            class="btn btn-sm btn-outline-secondary">{{'Y' | translate}}</button>
+                                                        <button type="button" (click)="setDate(DURATION.DAY)" class="btn btn-sm btn-outline-secondary" style="width: 30px">{{'D' | translate}}</button>
+                                                        <button type="button" (click)="setDate(DURATION.MONTH)" class="btn btn-sm btn-outline-secondary">{{'M' | translate}}</button>
+                                                        <button type="button" (click)="setDate(DURATION.YEAR)" class="btn btn-sm btn-outline-secondary">{{'Y' | translate}}</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -75,20 +69,12 @@
                                                 <div class="form-group form-group">
                                                     <label class="label d-block mb-0">{{'From' | translate}} </label>
                                                     <div class="input-wrapper">
-                                                        <input type="text" name="start-date"
-                                                            class="form-control form-control-sm date"
-                                                            placeholder="YYYY/MM/DD" #dp="bsDatepicker" bsDatepicker
-                                                            formControlName="fromDate"
-                                                            (bsValueChange)="onValueChangeFrom($event)"
-                                                            autocomplete="off"
-                                                            [bsConfig]="{ dateInputFormat: 'YYYY/MM/DD', containerClass: 'theme-blue' }">
-                                                        <button type="button" class="btn btn-none btn-sm"
-                                                            (click)="dp.toggle()" [attr.aria-expanded]="dp.isOpen"><i
+                                                        <input type="text" name="start-date" class="form-control form-control-sm date" placeholder="YYYY/MM/DD" #dp="bsDatepicker" bsDatepicker formControlName="fromDate" (bsValueChange)="onValueChangeFrom($event)" autocomplete="off" [bsConfig]="{ dateInputFormat: 'YYYY/MM/DD', containerClass: 'theme-blue' }">
+                                                        <button type="button" class="btn btn-none btn-sm" (click)="dp.toggle()" [attr.aria-expanded]="dp.isOpen"><i
                                                                 class="icon ion-md-calendar"></i></button>
                                                     </div>
                                                     <div *ngIf="showErrorDate == true" class="invalid-mess">
-                                                        Period is incorrect, the to date must be greater than the from
-                                                        date
+                                                        Period is incorrect, the to date must be greater than the from date
                                                     </div>
                                                 </div>
                                             </div>
@@ -96,14 +82,8 @@
                                                 <div class="form-group form-group">
                                                     <label class="label d-block mb-0">{{'To' | translate}} </label>
                                                     <div class="input-wrapper">
-                                                        <input type="text" name="end-date"
-                                                            class="form-control form-control-sm date"
-                                                            placeholder="YYYY/MM/DD" #dp2="bsDatepicker" bsDatepicker
-                                                            formControlName="toDate" autocomplete="off"
-                                                            (bsValueChange)="onValueChangeTo($event)"
-                                                            [bsConfig]="{ dateInputFormat: 'YYYY/MM/DD', containerClass: 'theme-blue' }">
-                                                        <button type="button" class="btn btn-none btn-sm"
-                                                            (click)="dp2.toggle()" [attr.aria-expanded]="dp2.isOpen"><i
+                                                        <input type="text" name="end-date" class="form-control form-control-sm date" placeholder="YYYY/MM/DD" #dp2="bsDatepicker" bsDatepicker formControlName="toDate" autocomplete="off" (bsValueChange)="onValueChangeTo($event)" [bsConfig]="{ dateInputFormat: 'YYYY/MM/DD', containerClass: 'theme-blue' }">
+                                                        <button type="button" class="btn btn-none btn-sm" (click)="dp2.toggle()" [attr.aria-expanded]="dp2.isOpen"><i
                                                                 class="icon ion-md-calendar"></i></button>
                                                     </div>
                                                 </div>
@@ -111,8 +91,7 @@
                                             <div class="col-md-3 col-lg-2">
                                                 <div class="form-group">
                                                     <label class="label d-none d-lg-block mb-0">&nbsp;</label>
-                                                    <button (click)="searchTranHistory()"
-                                                        class="btn btn-success btn-search btn-block btn-sm">{{'Apply' | translate}}</button>
+                                                    <button (click)="searchTranHistory()" class="btn btn-success btn-search btn-block btn-sm">{{'Apply' | translate}}</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -138,8 +117,7 @@
                                     <tbody>
                                         <ng-container>
                                             <tr *ngFor="let item of listReport">
-                                                <td><a href="javascript:;"
-                                                        (click)="openDetail(item?.id)">{{item?.id}}</a></td>
+                                                <td><a href="javascript:;" (click)="openDetail(item?.id)">{{item?.id}}</a></td>
                                                 <td>{{item?.create_date}}</td>
                                                 <td>{{item?.funding_type}}</td>
                                                 <td>{{item?.method}}</td>
@@ -153,8 +131,7 @@
                                                         {{'In progress' | translate}}</span></td>
                                                 <td *ngIf="item?.status == 2" class="text-right">
                                                     <span>{{'Cancel' | translate}} </span></td>
-                                                <td *ngIf="item?.status == 1" class="text-right"><span
-                                                        class="text-success"><i class="icon ion-md-checkmark"></i>
+                                                <td *ngIf="item?.status == 1" class="text-right"><span class="text-success"><i class="icon ion-md-checkmark"></i>
                                                         {{'Completed' | translate}} </span></td>
                                             </tr>
                                         </ng-container>
@@ -178,37 +155,27 @@
                             <div class="d-md-flex align-items-center justify-content-between mb-2 border-top pt-2">
                                 <div class="mb-2 mb-md-0">
                                     <div class="d-inline-block mr-2">
-                                        <select (change)="changeTotalItem($event)" [(ngModel)]="pageSize"
-                                            class="form-control form-control-sm">
+                                        <select (change)="changeTotalItem($event)" [(ngModel)]="pageSize" class="form-control form-control-sm">
                                             <option *ngFor="let item of listTotalItem" value="{{item}}">{{item}}
                                             </option>
                                         </select>
                                     </div>
-                                    <div class="small text-secondary d-inline-block mr-2">{{'Showing' | translate}}
-                                        {{recordFrom}} {{'To' | translate}} {{recordTo}} {{'of' | translate}}
-                                        {{totalItem}} {{'entries' | translate}}
+                                    <div class="small text-secondary d-inline-block mr-2">{{'Showing' | translate}} {{recordFrom}} {{'To' | translate}} {{recordTo}} {{'of' | translate}} {{totalItem}} {{'entries' | translate}}
                                     </div>
                                 </div>
                                 <ul class="pagination pagination-sm mb-0">
-                                    <pagination [(ngModel)]="currentPage" id="pagination" [totalItems]="totalPage"
-                                        [boundaryLinks]="true" class="pagination pagination-sm justify-content-end"
-                                        (pageChanged)="pageChanged($event)"
-                                        previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;"
+                                    <pagination [(ngModel)]="currentPage" id="pagination" [totalItems]="totalPage" [boundaryLinks]="true" class="pagination pagination-sm justify-content-end" (pageChanged)="pageChanged($event)" previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;"
                                         lastText="&raquo;" [maxSize]="5">
                                     </pagination>
                                 </ul>
 
                             </div>
                         </div>
-                        <div class="tab-pane fade" id="v-pills-deposit" role="tabpanel"
-                            aria-labelledby="v-pills-deposit-tab">
-                            <h3 class="mb-3"><i class="icon ion-md-time text-secondary"></i>
-                                {{'Deposit History' | translate}}</h3>
+                        <div class="tab-pane fade" id="v-pills-deposit" role="tabpanel" aria-labelledby="v-pills-deposit-tab">
+                            <h3 class="mb-3"><i class="icon ion-md-time text-secondary"></i> {{'Deposit History' | translate}}</h3>
                         </div>
-                        <div class="tab-pane fade" id="v-pills-withdrawal" role="tabpanel"
-                            aria-labelledby="v-pills-withdrawal-tab">
-                            <h3 class="mb-3"><i class="icon ion-md-time text-secondary"></i>
-                                {{'Withdrawal History' | translate}}</h3>
+                        <div class="tab-pane fade" id="v-pills-withdrawal" role="tabpanel" aria-labelledby="v-pills-withdrawal-tab">
+                            <h3 class="mb-3"><i class="icon ion-md-time text-secondary"></i> {{'Withdrawal History' | translate}}</h3>
                         </div>
                     </div>
                 </div>

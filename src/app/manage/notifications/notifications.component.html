@@ -10,10 +10,10 @@
             <div class="row">
                 <div class="col-md-3 col-lg-2">
                     <div class="nav flex-md-column nav-pills mb-3 filter-nav" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                        <a class="nav-link active" id="v-pills-all-tab" data-toggle="pill" href="#v-pills-all" (click)="getListNotifications(pageSize, 1, unreadAll, -1)" role="tab" aria-controls="v-pills-all" aria-selected="true">{{'All' | translate}}<span *ngIf="totalAll > 0" class="badge">{{totalAll}}</span></a>
-                        <a class="nav-link" id="v-pills-important-tab" data-toggle="pill" href="#v-pills-important" #importantTab (click)="getListNotifications(pageSize, 1, unreadImportant, 0)" role="tab" aria-controls="v-pills-important" aria-selected="false">{{'Important' | translate}}<span *ngIf="totalImportant > 0" class="badge">{{totalImportant}}</span></a>
-                        <a class="nav-link" id="v-pills-notifications-tab" data-toggle="pill" (click)="getListNotifications(pageSize, 1, unreadImportant, 1)" href="#v-pills-notifications" role="tab" aria-controls="v-pills-notifications" aria-selected="false">{{'Notifications' | translate}}<span *ngIf="totalNotification > 0" class="badge">{{totalNotification}}</span></a>
-                        <a class="nav-link" id="v-pills-campaign-tab" data-toggle="pill" href="#v-pills-campaign" (click)="getListNotifications(pageSize, 1, unreadImportant, 2)" role="tab" aria-controls="v-pills-campaign" aria-selected="false">{{'Campaign' | translate}}<span *ngIf="totalCampagn > 0" class="badge">{{totalCampagn}}</span></a>
+                        <a class="nav-link active" id="v-pills-all-tab" data-toggle="pill" href="#v-pills-all" (click)="changeTab(-1)" role="tab" aria-controls="v-pills-all" aria-selected="true">{{'All' | translate}}<span *ngIf="totalAll > 0" class="badge">{{totalAll}}</span></a>
+                        <a class="nav-link" id="v-pills-important-tab" data-toggle="pill" href="#v-pills-important" #importantTab (click)="changeTab(0)" role="tab" aria-controls="v-pills-important" aria-selected="false">{{'Important' | translate}}<span *ngIf="totalImportant > 0" class="badge">{{totalImportant}}</span></a>
+                        <a class="nav-link" id="v-pills-notifications-tab" data-toggle="pill" (click)="changeTab(1)" href="#v-pills-notifications" role="tab" aria-controls="v-pills-notifications" aria-selected="false">{{'Notifications' | translate}}<span *ngIf="totalNotification > 0" class="badge">{{totalNotification}}</span></a>
+                        <a class="nav-link" id="v-pills-campaign-tab" data-toggle="pill" href="#v-pills-campaign" (click)="changeTab(2)" role="tab" aria-controls="v-pills-campaign" aria-selected="false">{{'Campaign' | translate}}<span *ngIf="totalCampagn > 0" class="badge">{{totalCampagn}}</span></a>
                     </div>
                 </div>
                 <div class="col-md-9 col-lg-10">
@@ -50,11 +50,22 @@
                                     </div>
                                 </ng-container>
                             </div>
-                            <nav class="border-top pt-3">
-                                <pagination [(ngModel)]="currentPage" id="pagination" [boundaryLinks]="true" class="pagination pagination-sm justify-content-end" (pageChanged)="pageChanged($event)" [totalItems]="totalItem" previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;"
-                                    lastText="&raquo;" [maxSize]="5">
-                                </pagination>
-                            </nav>
+                            <div class="d-flex align-items-center justify-content-between mb-2">
+                                <div>
+                                    <div class="d-inline-block mr-2">
+                                        <select (change)="changeTotalItem($event)" [(ngModel)]="pageSize" class="form-control form-control-sm">
+                                            <option *ngFor="let item of listTotalItem" value="{{item}}">{{item}}</option>
+                                        </select>
+                                    </div>
+                                    <div class="small text-secondary d-inline-block mr-2">{{'Showing' | translate}} {{recordFrom}} {{'to' | translate}} {{recordTo}} {{'of' | translate}} {{totalItem}} {{'entries' | translate}}
+                                    </div>
+                                </div>
+                                <ul class="pagination pagination-sm mb-0">
+                                    <pagination [(ngModel)]="currentPage" id="pagination" appPagination [boundaryLinks]="true" class="pagination pagination-sm justify-content-end" (pageChanged)="pageChanged($event)" [totalItems]="totalPage" previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;"
+                                        lastText="&raquo;" [maxSize]="5">
+                                    </pagination>
+                                </ul>
+                            </div>
                         </div>
                         <div class="tab-pane fade" id="v-pills-important" role="tabpanel" aria-labelledby="v-pills-important-tab">
                             <h4><strong>{{'Important Notifications' | translate}}</strong></h4>
@@ -98,18 +109,30 @@
                                     </div>
                                 </ng-container>
                             </div>
-                            <nav class="border-top pt-3">
-                                <pagination [(ngModel)]="currentPage" id="pagination" [boundaryLinks]="true" class="pagination pagination-sm justify-content-end" (pageChanged)="pageChanged($event)" [totalItems]="totalItem" previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;"
-                                    lastText="&raquo;" [maxSize]="5">
-                                </pagination>
-                            </nav>
+                            <div class="d-flex align-items-center justify-content-between mb-2">
+                                <div>
+                                    <div class="d-inline-block mr-2">
+                                        <select (change)="changeTotalItem($event)" [(ngModel)]="pageSize" class="form-control form-control-sm">
+                                            <option *ngFor="let item of listTotalItem" value="{{item}}">{{item}}</option>
+                                        </select>
+                                    </div>
+                                    <div class="small text-secondary d-inline-block mr-2">{{'Showing' | translate}} {{recordFrom}} {{'to' | translate}} {{recordTo}} {{'of' | translate}} {{totalItem}} {{'entries' | translate}}
+                                    </div>
+                                </div>
+                                <ul class="pagination pagination-sm mb-0">
+                                    <pagination [(ngModel)]="currentPage" id="pagination" appPagination [boundaryLinks]="true" class="pagination pagination-sm justify-content-end" (pageChanged)="pageChanged($event)" [totalItems]="totalPage" previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;"
+                                        lastText="&raquo;" [maxSize]="5">
+                                    </pagination>
+                                </ul>
+                            </div>
+
                         </div>
                         <div class="tab-pane fade" id="v-pills-notifications" role="tabpanel" aria-labelledby="v-pills-notifications-tab">
                             <h4><strong>{{'System Notifications' | translate}}</strong></h4>
                             <div class="mb-2">
                                 <label class="container-switch small">
                                     <div class="switch">
-                                      <input type="checkbox" name="unread_all" [checked]="unreadAll" (change)="filterUnreadNoti()">
+                                      <input type="checkbox" name="unread_all" [checked]="unreadNotification" (change)="filterUnreadNoti()">
                                       <span class="slider round"></span>
                                     </div>
                                     {{'Only show unread Notification' | translate}}
@@ -130,11 +153,23 @@
                                     </div>
                                 </ng-container>
                             </div>
-                            <nav class="border-top pt-3">
-                                <pagination [(ngModel)]="currentPage" id="pagination" [boundaryLinks]="true" class="pagination pagination-sm justify-content-end" (pageChanged)="pageChanged($event)" [totalItems]="totalItem" previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;"
-                                    lastText="&raquo;" [maxSize]="5">
-                                </pagination>
-                            </nav>
+                            <div class="d-flex align-items-center justify-content-between mb-2">
+                                <div>
+                                    <div class="d-inline-block mr-2">
+                                        <select (change)="changeTotalItem($event)" [(ngModel)]="pageSize" class="form-control form-control-sm">
+                                            <option *ngFor="let item of listTotalItem" value="{{item}}">{{item}}</option>
+                                        </select>
+                                    </div>
+                                    <div class="small text-secondary d-inline-block mr-2">{{'Showing' | translate}} {{recordFrom}} {{'to' | translate}} {{recordTo}} {{'of' | translate}} {{totalItem}} {{'entries' | translate}}
+                                    </div>
+                                </div>
+                                <ul class="pagination pagination-sm mb-0">
+                                    <pagination [(ngModel)]="currentPage" id="pagination" appPagination [boundaryLinks]="true" class="pagination pagination-sm justify-content-end" (pageChanged)="pageChanged($event)" [totalItems]="totalPage" previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;"
+                                        lastText="&raquo;" [maxSize]="5">
+                                    </pagination>
+                                </ul>
+                            </div>
+
                         </div>
                         <div class="tab-pane fade" id="v-pills-campaign" role="tabpanel" aria-labelledby="v-pills-campaign-tab">
                             <h4><strong> {{'Campaign Notifications' | translate}}</strong> </h4>
@@ -162,11 +197,23 @@
                                     </div>
                                 </ng-container>
                             </div>
-                            <nav class="border-top pt-3">
-                                <pagination [(ngModel)]="currentPage" id="pagination" [boundaryLinks]="true" class="pagination pagination-sm justify-content-end" (pageChanged)="pageChanged($event)" [totalItems]="totalItem" previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;"
-                                    lastText="&raquo;" [maxSize]="5">
-                                </pagination>
-                            </nav>
+                            <div class="d-flex align-items-center justify-content-between mb-2">
+                                <div>
+                                    <div class="d-inline-block mr-2">
+                                        <select (change)="changeTotalItem($event)" [(ngModel)]="pageSize" class="form-control form-control-sm">
+                                            <option *ngFor="let item of listTotalItem" value="{{item}}">{{item}}</option>
+                                        </select>
+                                    </div>
+                                    <div class="small text-secondary d-inline-block mr-2">{{'Showing' | translate}} {{recordFrom}} {{'to' | translate}} {{recordTo}} {{'of' | translate}} {{totalItem}} {{'entries' | translate}}
+                                    </div>
+                                </div>
+                                <ul class="pagination pagination-sm mb-0">
+                                    <pagination [(ngModel)]="currentPage" id="pagination" appPagination [boundaryLinks]="true" class="pagination pagination-sm justify-content-end" (pageChanged)="pageChanged($event)" [totalItems]="totalPage" previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;"
+                                        lastText="&raquo;" [maxSize]="5">
+                                    </pagination>
+                                </ul>
+                            </div>
+
                         </div>
                     </div>
                 </div>

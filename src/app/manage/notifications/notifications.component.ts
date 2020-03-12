@@ -37,6 +37,10 @@ export class NotificationsComponent implements OnInit {
   unreadNotification: boolean;
   unreadCampagn: boolean;
   checkType: any;
+  recordFrom: number;
+  recordTo: number;
+  listTotalItem: Array<number> = [10, 20, 30];
+  totalPage: number;
   TABS = {
     ALL: { name: 'ALL', value: -1 },
     IMPORTANT: { name: 'IMPORTANT', value: 0 },
@@ -50,10 +54,7 @@ export class NotificationsComponent implements OnInit {
     private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
-    this.unreadAll = false;
-    this.unreadCampagn = false;
-    this.unreadImportant = false;
-    this.unreadNotification = false;
+    this.initFilterRead();
     this.currentPage = 1;
     this.pageSize = 10;
     this.checkAgreement = false;
@@ -89,7 +90,10 @@ export class NotificationsComponent implements OnInit {
           item.publish_date = moment(item.publish_date).format('YYYY/MM/DD HH:MM');
         });
         this.totalItem = this.pageNotification.data.count;
+        this.totalPage = (this.totalItem / this.pageSize) * 10;
         this.spinnerService.hide();
+        this.recordFrom = this.pageSize * (this.currentPage - 1) + 1;
+        this.recordTo = this.recordFrom + (this.listNotification.length - 1);
       }
     });
     this.getTotalNotification();
@@ -201,6 +205,48 @@ export class NotificationsComponent implements OnInit {
     }
   }
 
+  changeTab(type: number) {
+    this.pageSize = 10;
+    this.initFilterRead();
+    switch (type) {
+      case this.TABS.ALL.value:
+        this.tab = this.TABS.ALL.name;
+        this.getListNotifications(this.pageSize, this.currentPage, this.unreadAll, this.TABS.ALL.value);
+        break;
+      case this.TABS.IMPORTANT.value:
+        this.tab = this.TABS.IMPORTANT.name;
+        this.getListNotifications(this.pageSize, this.currentPage, this.unreadImportant, this.TABS.IMPORTANT.value);
+        break;
+      case this.TABS.NOTIFICATIONS.value:
+        this.tab = this.TABS.NOTIFICATIONS.name;
+        this.getListNotifications(this.pageSize, this.currentPage, this.unreadNotification, this.TABS.NOTIFICATIONS.value);
+        break;
+      case this.TABS.CAMPAIGN.value:
+        this.tab = this.TABS.CAMPAIGN.name;
+        this.getListNotifications(this.pageSize, this.currentPage, this.unreadCampagn, this.TABS.CAMPAIGN.value);
+        break;
+    }
+  }
+
+  changeTotalItem(event) {
+    this.pageSize = event.target.value;
+    this.currentPage = 1;
+    switch (this.tab) {
+      case this.TABS.ALL.name:
+        this.getListNotifications(this.pageSize, this.currentPage, this.unreadAll, this.TABS.ALL.value);
+        break;
+      case this.TABS.IMPORTANT.name:
+        this.getListNotifications(this.pageSize, this.currentPage, this.unreadImportant, this.TABS.IMPORTANT.value);
+        break;
+      case this.TABS.NOTIFICATIONS.name:
+        this.getListNotifications(this.pageSize, this.currentPage, this.unreadNotification, this.TABS.NOTIFICATIONS.value);
+        break;
+      case this.TABS.CAMPAIGN.name:
+        this.getListNotifications(this.pageSize, this.currentPage, this.unreadCampagn, this.TABS.CAMPAIGN.value);
+        break;
+    }
+  }
+
   showDetail(index: number, item: Notification) {
     if (item.agreement_flg === 1) {
       this.contentAgeement = item.news_content;
@@ -235,6 +281,13 @@ export class NotificationsComponent implements OnInit {
 
   showimportant() {
     $('.test').toggleClass('opened');
+  }
+
+  initFilterRead() {
+    this.unreadAll = false;
+    this.unreadCampagn = false;
+    this.unreadImportant = false;
+    this.unreadNotification = false;
   }
 
 }
