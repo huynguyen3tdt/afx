@@ -18,6 +18,7 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { LoginGuard } from './core/guard/login.guard';
 import { AuthGuard } from './core/guard/auth.guard';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 const appEnvInitializerFn = (envConfig: EnvConfigService) => {
   return () => {
@@ -54,6 +55,7 @@ const Routing: ModuleWithProviders = RouterModule.forRoot(AppRoutes, {
         deps: [HttpClient]
       }
     }),
+    BrowserAnimationsModule
   ],
   providers: [
     EnvConfigService,

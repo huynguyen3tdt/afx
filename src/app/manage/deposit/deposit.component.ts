@@ -167,7 +167,6 @@ export class DepositComponent implements OnInit {
     this.depositService.billingSystem(param).subscribe(response => {
       this.spinnerService.hide();
       if (response.meta.code === 200) {
-        console.log('in in in');
         this.listTran.ngOnChanges();
       }
     });

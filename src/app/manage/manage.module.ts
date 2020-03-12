@@ -16,6 +16,8 @@ import { CurrencyDirective } from '../core/directive/currency.directive';
 import { TranslateModule } from '@ngx-translate/core';
 import { PdfJsViewerModule } from 'ng2-pdfjs-viewer';
 import { ListTransactionComponent } from './list-transaction/list-transaction.component';
+import {MultiSelectModule} from 'primeng/multiselect';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
     imports: [
@@ -27,7 +29,8 @@ import { ListTransactionComponent } from './list-transaction/list-transaction.co
         PaginationModule.forRoot(),
         Ng4LoadingSpinnerModule.forRoot(),
         TranslateModule,
-        PdfJsViewerModule
+        PdfJsViewerModule,
+        MultiSelectModule,
     ],
     providers: [],
     declarations: [
