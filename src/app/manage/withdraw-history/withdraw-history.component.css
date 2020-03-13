@@ -26,7 +26,6 @@
     :host ::ng-deep .ui-multiselect-header{
     display: none;
 }
-:host ::ng-deep .ui-multiselect-panel{
-  min-width: 0px;
-  width: 138px;
+:host ::ng-deep .ui-multiselect-label{
+  width: 110px;
 }
