@@ -207,5 +207,6 @@
   "Minimum amount is not below": "最低額は以下ではありません",
   "New": "新着",
   "Detail": "詳細",
-  "Other banking facilities": "その他の金融機関"
+  "Other banking facilities": "その他の金融機関",
+  "Benificiary bank": "受取銀行"
 }

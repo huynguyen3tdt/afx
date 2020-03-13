@@ -105,7 +105,7 @@
                                 <table class="table table-sm table-hover mb-3" cellspacing="0" cellpadding="0">
                                     <thead>
                                         <tr>
-                                            <th class="border-top-0" width="120">{{'Transaction ID' | translate}}</th>
+                                            <th class="border-top-0" width="140">{{'Transaction ID' | translate}}</th>
                                             <th class="border-top-0">{{'Date' | translate}}</th>
                                             <th class="border-top-0">{{'Type' | translate}}</th>
                                             <th class="border-top-0">{{'Payment method' | translate}}</th>
@@ -118,21 +118,23 @@
                                         <ng-container>
                                             <tr *ngFor="let item of listReport">
                                                 <td><a href="javascript:;" (click)="openDetail(item?.id)">{{item?.id}}</a></td>
-                                                <td>{{item?.create_date}}</td>
-                                                <td>{{item?.funding_type}}</td>
-                                                <td>{{item?.method}}</td>
-                                                <td *ngIf="item?.funding_type == 'Deposit'" class="text-right">{{item?.amount}}</td>
-                                                <td *ngIf="item?.funding_type == 'Withdrawal'" class="text-right">-{{item?.amount}}</td>
+                                                <td><a style="cursor: pointer;" (click)="openDetail(item?.id)">{{item?.create_date}}</a></td>
+                                                <td><a style="cursor: pointer;" (click)="openDetail(item?.id)">{{item?.funding_type}}</a></td>
+                                                <td><a style="cursor: pointer;" (click)="openDetail(item?.id)">{{item?.method}}</a></td>
+                                                <td *ngIf="item?.funding_type == 'Deposit'" class="text-right">
+                                                    <a style="cursor: pointer;" (click)="openDetail(item?.id)">{{item?.amount}}</a></td>
+                                                <td *ngIf="item?.funding_type == 'Withdrawal'" class="text-right">
+                                                    <a style="cursor: pointer;" (click)="openDetail(item?.id)">-{{item?.amount}}</a></td>
                                                 <td *ngIf="item?.status == 4" class="text-right"><span
                                                         class="text-info"><i class="icon ion-md-hourglass"></i>
-                                                        {{'New' | translate}}</span></td>
+                                                        <a style="cursor: pointer;" (click)="openDetail(item?.id)">{{'New' | translate}}</a></span></td>
                                                 <td *ngIf="item?.status == 3" class="text-right"><span
                                                         class="text-info"><i class="icon ion-md-hourglass"></i>
-                                                        {{'In progress' | translate}}</span></td>
+                                                        <a style="cursor: pointer;" (click)="openDetail(item?.id)">{{'In progress' | translate}}</a></span></td>
                                                 <td *ngIf="item?.status == 2" class="text-right">
-                                                    <span>{{'Cancel' | translate}} </span></td>
+                                                    <span><a style="cursor: pointer;" (click)="openDetail(item?.id)">{{'Cancel' | translate}} </a></span></td>
                                                 <td *ngIf="item?.status == 1" class="text-right"><span class="text-success"><i class="icon ion-md-checkmark"></i>
-                                                        {{'Completed' | translate}} </span></td>
+                                                  <a style="cursor: pointer;" (click)="openDetail(item?.id)">{{'Completed' | translate}}</a> </span></td>
                                             </tr>
                                         </ng-container>
                                     </tbody>
@@ -215,11 +217,11 @@
                             <td>{{tranHistoryDetail?.method}}</td>
                         </tr>
                         <tr *ngIf="tranHistoryDetail?.method == 'Quick deposit'">
-                            <td width="180">{{'Payment service' | translate}}</td>
+                            <td width="180">{{'Benificiary bank' | translate}}</td>
                             <td>{{tranHistoryDetail?.name}}</td>
                         </tr>
                         <tr *ngIf="tranHistoryDetail?.method == 'Bank transfer'">
-                            <td width="180">{{'Payment service' | translate}}</td>
+                            <td width="180">{{'Benificiary bank' | translate}}</td>
                             <td>{{tranHistoryDetail?.name}}</td>
                         </tr>
                         <tr>
