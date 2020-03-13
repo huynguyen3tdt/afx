@@ -30,9 +30,9 @@ export class ReportListComponent implements OnInit {
   showErrorDate: boolean;
   totalPage: number;
   TABS = {
-    ALL: { name: 'ALL', value: 0 },
-    DAILY: { name: 'DAILY', value: 1 },
-    YEARLY: { name: 'YEARLY', value: 2 },
+    ALL: { name: 'ALL', value: '' },
+    DAILY: { name: 'DAILY', value: 'd' },
+    YEARLY: { name: 'YEARLY', value: 'y' },
   };
 
   DURATION = {
