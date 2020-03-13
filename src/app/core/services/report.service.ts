@@ -17,7 +17,7 @@ export class ReportService {
               private envConfigService: EnvConfigService) { }
 
   getReport(accountNumber: number, pageSize: number, pageNumber: number,
-            type?: number, dateFrom?: string, dateTo?: string): Observable<ReportResponseModel> {
+            type?: string, dateFrom?: string, dateTo?: string): Observable<ReportResponseModel> {
     let URL = '';
     if (type) {
       URL = `?account_numb=${accountNumber}&type_report=${type}&page_size=${pageSize}&page=${pageNumber}`;

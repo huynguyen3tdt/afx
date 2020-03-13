@@ -62,7 +62,7 @@ export class ReportListComponent implements OnInit {
     this.setDate(this.DURATION.YEAR);
   }
 
-  getReport(accountNumber: number, pageNumber: number, pageSize: number, type?: number, dateFrom?: string, dateTo?: string) {
+  getReport(accountNumber: number, pageNumber: number, pageSize: number, type?: string, dateFrom?: string, dateTo?: string) {
     this.spinnerService.show();
     this.checkTab(type);
     this.reportservice.getReport(accountNumber, pageSize, pageNumber, type, dateFrom, dateTo).subscribe(response => {
