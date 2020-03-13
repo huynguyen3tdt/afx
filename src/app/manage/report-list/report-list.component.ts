@@ -119,7 +119,7 @@ export class ReportListComponent implements OnInit {
     this.searchReport();
   }
 
-  checkTab(type: number, callSearh?: string) {
+  checkTab(type: string, callSearh?: string) {
     switch (type) {
       case this.TABS.ALL.value:
         this.tab = this.TABS.ALL.name;
