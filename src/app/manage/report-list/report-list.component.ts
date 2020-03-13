@@ -30,9 +30,9 @@ export class ReportListComponent implements OnInit {
   showErrorDate: boolean;
   totalPage: number;
   TABS = {
-    ALL: { name: 'ALL', value: 0 },
-    DAILY: { name: 'DAILY', value: 1 },
-    YEARLY: { name: 'YEARLY', value: 2 },
+    ALL: { name: 'ALL', value: '' },
+    DAILY: { name: 'DAILY', value: 'd' },
+    YEARLY: { name: 'YEARLY', value: 'y' },
   };
 
   DURATION = {
@@ -62,7 +62,7 @@ export class ReportListComponent implements OnInit {
     this.setDate(this.DURATION.YEAR);
   }
 
-  getReport(accountNumber: number, pageNumber: number, pageSize: number, type?: number, dateFrom?: string, dateTo?: string) {
+  getReport(accountNumber: number, pageNumber: number, pageSize: number, type?: string, dateFrom?: string, dateTo?: string) {
     this.spinnerService.show();
     this.checkTab(type);
     this.reportservice.getReport(accountNumber, pageSize, pageNumber, type, dateFrom, dateTo).subscribe(response => {
@@ -119,7 +119,7 @@ export class ReportListComponent implements OnInit {
     this.searchReport();
   }
 
-  checkTab(type: number, callSearh?: string) {
+  checkTab(type: string, callSearh?: string) {
     switch (type) {
       case this.TABS.ALL.value:
         this.tab = this.TABS.ALL.name;
