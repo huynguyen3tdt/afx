@@ -1,4 +1,20 @@
 .d-none, .d-md-inline {
     padding-left: 5px;
 }
+.editable {
+  display: none;
+  /* Default is none*/
+}
 
+.table-profile tr {
+  border-bottom: 1px solid #fff;
+}
+
+.table-profile tr.focus td,
+.table-profile tr.focus:hover td {
+  background-color: #FFFAF4;
+}
+
+.table-profile tr.row-action {
+  display: none;
+}
