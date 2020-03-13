@@ -438,7 +438,7 @@ export class AccountInformationComponent implements OnInit {
     this.showBranch = true;
   }
 
-  changeBank(){
+  changeBank() {
     this.showBank = true;
     this.showBranch = false;
   }
@@ -470,7 +470,7 @@ export class AccountInformationComponent implements OnInit {
     });
   }
 
-  changeHira(item){
+  changeHira(item) {
     console.log('iteemm', item);
   }
 
