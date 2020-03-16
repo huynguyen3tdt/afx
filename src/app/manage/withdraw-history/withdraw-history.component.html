@@ -216,13 +216,17 @@
                             <td width="180">{{'Payment method' | translate}}</td>
                             <td>{{tranHistoryDetail?.method}}</td>
                         </tr>
-                        <tr *ngIf="tranHistoryDetail?.method == 'Quick deposit'">
-                            <td width="180">{{'Benificiary bank' | translate}}</td>
+                        <tr *ngIf="tranHistoryDetail?.method == 'Quick deposit' && tranHistoryDetail?.funding_type == 'Deposit'">
+                          <td width="180">{{'Payment service' | translate}}</td>
+                          <td>{{tranHistoryDetail?.name}}</td>
+                        </tr>
+                        <tr *ngIf="tranHistoryDetail?.method == 'Bank transfer' && tranHistoryDetail?.funding_type == 'Deposit'">
+                            <td width="180">{{'Payment service' | translate}}</td>
                             <td>{{tranHistoryDetail?.name}}</td>
                         </tr>
-                        <tr *ngIf="tranHistoryDetail?.method == 'Bank transfer'">
-                            <td width="180">{{'Benificiary bank' | translate}}</td>
-                            <td>{{tranHistoryDetail?.name}}</td>
+                        <tr *ngIf="tranHistoryDetail?.method == 'Bank transfer' && tranHistoryDetail?.funding_type == 'Withdrawal'">
+                          <td width="180">{{'Benificiary bank' | translate}}</td>
+                          <td>{{tranHistoryDetail?.name}}</td>
                         </tr>
                         <tr>
                             <td width="180">{{'Amount' | translate}}</td>
