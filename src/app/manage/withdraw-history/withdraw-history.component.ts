@@ -80,7 +80,6 @@ export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
     this.currentPage = 1;
     this.pageSize = 10;
     this.listTradingAccount = JSON.parse(localStorage.getItem(ACCOUNT_IDS));
-    console.log('accountID', this.listTradingAccount)
     this.initSearchForm();
     if (!this.querytab) {
       this.getTranHistory(this.searchForm.controls.tradingAccount.value, this.currentPage, this.pageSize, this.TABS.ALL.value,

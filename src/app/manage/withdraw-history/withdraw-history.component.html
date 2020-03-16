@@ -200,9 +200,9 @@
             <div class="modal-body">
                 <table class="table table-hover table-sm" cellspacing="0" cellpadding="0">
                     <tbody>
-                        <tr>
+                        <tr *ngFor="let item of listTradingAccount">
                             <td width="180" class="border-top-0">{{'Trading account' | translate}}</td>
-                            <td class="border-top-0">{{listTradingAccount[0]?.value}}</td>
+                            <td class="border-top-0" >{{item?.value}}</td>
                         </tr>
                         <tr>
                             <td width="180">{{'Date time' | translate}}</td>

@@ -433,7 +433,7 @@ export class AccountInformationComponent implements OnInit {
     this.userService.getListBank().subscribe( response => {
       if (response.meta.code === 200) {
         this.listBank = response.data;
-        console.log('bankkk', this.listBank);
+
       }
     });
   }
