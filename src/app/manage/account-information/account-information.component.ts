@@ -457,7 +457,6 @@ export class AccountInformationComponent implements OnInit {
 
   changeFontSize(fontsize: string) {
     const listFontSize = ['font-size-sm', 'font-size-md', 'font-size-lg'];
-    console.log('fonrtSizeee ', fontsize);
     listFontSize.forEach(element => {
       if (fontsize === element) {
         $(`#${element}`).addClass('active');
