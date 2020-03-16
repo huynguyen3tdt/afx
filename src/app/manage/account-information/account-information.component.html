@@ -869,37 +869,12 @@
                   <div class="row">
                       <div class="col-lg-7">
                           <h6 class="c-title mb-2">Selecting the initial character of bank name</h6>
-                          <table class="table-characters mb-3">
-                              <tbody>
-                                  <tr>
-                                    <ng-container *ngFor="let item of listHira">
-                                      <td><button class="btn btn-sm btn-character" (click)="changeHira(item)">{{item}}</button></td>
-                                    </ng-container>
-                                  </tr>
-                                  <tr>
-                                    <ng-container *ngFor="let item of listHira2">
-                                      <td *ngIf="item == ' '"><button class="btn btn-sm btn-none">&nbsp;</button></td>
-                                      <td *ngIf="item != ' '"><button class="btn btn-sm btn-character" (click)="changeHira(item)">{{item}}</button></td>
-                                    </ng-container>
-                                  </tr>
-                                  <tr>
-                                    <ng-container *ngFor="let item of listHira3">
-                                      <td><button class="btn btn-sm btn-character" (click)="changeHira(item)">{{item}}</button></td>
-                                    </ng-container>
-                                  </tr>
-                                  <tr>
-                                    <ng-container *ngFor="let item of listHira4">
-                                      <td *ngIf="item == ' '"><button class="btn btn-sm btn-none">&nbsp;</button></td>
-                                      <td *ngIf="item != ' '"><button class="btn btn-sm btn-character" (click)="changeHira(item)">{{item}}</button></td>
-                                    </ng-container>
-                                  </tr>
-                                  <tr>
-                                    <ng-container *ngFor="let item of listHira5">
-                                      <td><button class="btn btn-sm btn-character" (click)="changeHira(item)">{{item}}</button></td>
-                                    </ng-container>
-                                  </tr>
-                              </tbody>
-                          </table>
+                          <div class="box-characters mb-3">
+                            <ng-container *ngFor="let item of listHira">
+                              <button *ngIf="item == ' '" class="btn btn-sm btn-none">&nbsp;</button>
+                              <button class="btn btn-sm btn-character" *ngIf="item != ' '" (click)="changeHira(item)">{{item}}</button>
+                            </ng-container>
+                          </div>
                           <h6 class="c-title mb-2">Entering a bank name</h6>
                           <div class="d-flex mb-3">
                               <div class="flex-grow-1"><input type="text" name="" class="form-control form-control-sm" placeholder=""></div>
@@ -924,37 +899,12 @@
                   <div class="row">
                       <div class="col-lg-7">
                           <h6 class="c-title mb-2">Please select the branch name of the selected financial institution</h6>
-                          <table class="table-characters mb-3">
-                              <tbody>
-                                <tr>
-                                  <ng-container *ngFor="let item of listHira">
-                                    <td><button class="btn btn-sm btn-character" (click)="changeHira(item)">{{item}}</button></td>
-                                  </ng-container>
-                                </tr>
-                                <tr>
-                                  <ng-container *ngFor="let item of listHira2">
-                                    <td *ngIf="item == ' '"><button class="btn btn-sm btn-none">&nbsp;</button></td>
-                                    <td *ngIf="item != ' '"><button class="btn btn-sm btn-character" (click)="changeHira(item)">{{item}}</button></td>
-                                  </ng-container>
-                                </tr>
-                                <tr>
-                                  <ng-container *ngFor="let item of listHira3">
-                                    <td><button class="btn btn-sm btn-character" (click)="changeHira(item)">{{item}}</button></td>
-                                  </ng-container>
-                                </tr>
-                                <tr>
-                                  <ng-container *ngFor="let item of listHira4">
-                                    <td *ngIf="item == ' '"><button class="btn btn-sm btn-none">&nbsp;</button></td>
-                                    <td *ngIf="item != ' '"><button class="btn btn-sm btn-character" (click)="changeHira(item)">{{item}}</button></td>
-                                  </ng-container>
-                                </tr>
-                                <tr>
-                                  <ng-container *ngFor="let item of listHira5">
-                                    <td><button class="btn btn-sm btn-character" (click)="changeHira(item)">{{item}}</button></td>
-                                  </ng-container>
-                                </tr>
-                              </tbody>
-                          </table>
+                          <div class="box-characters mb-3">
+                            <ng-container *ngFor="let item of listHira">
+                              <button *ngIf="item == ' '" class="btn btn-sm btn-none">&nbsp;</button>
+                              <button class="btn btn-sm btn-character" *ngIf="item != ' '" (click)="changeHira(item)">{{item}}</button>
+                            </ng-container>
+                          </div>
                           <h6 class="c-title mb-2">Entering a branch name</h6>
                           <div class="d-flex mb-3">
                               <div class="flex-grow-1"><input type="text" name="" class="form-control form-control-sm" placeholder=""></div>

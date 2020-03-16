@@ -1677,10 +1677,14 @@ h1{
 .box-characters{
 	display: flex;
 	flex-wrap: wrap;
+	min-width: 320px;
+	margin: 0 -2px;
 }
 .box-characters .btn {
 	min-width: 32px;
-	margin: 2px;
+	flex-basis: 10%;
+	box-sizing: border-box;
+	border:2px solid #fff;
 }
 .box-characters .btn.btn-character{
 	background: #d7e5ea;

@@ -109,8 +109,8 @@
                                             <th class="border-top-0">{{'Date' | translate}}</th>
                                             <th class="border-top-0">{{'Type' | translate}}</th>
                                             <th class="border-top-0">{{'Payment method' | translate}}</th>
-                                            <th class="border-top-0 text-right">{{'Amount' | translate}}</th>
-                                            <th class="border-top-0 text-right" width="120">{{'Status' | translate}}
+                                            <th class="border-top-0 text-right" width="50">{{'Amount' | translate}}</th>
+                                            <th class="border-top-0 text-right" width="140">{{'Status' | translate}}
                                             </th>
                                         </tr>
                                     </thead>
@@ -122,9 +122,9 @@
                                                 <td><a style="cursor: pointer;" (click)="openDetail(item?.id)">{{item?.funding_type}}</a></td>
                                                 <td><a style="cursor: pointer;" (click)="openDetail(item?.id)">{{item?.method}}</a></td>
                                                 <td *ngIf="item?.funding_type == 'Deposit'" class="text-right">
-                                                    <a style="cursor: pointer;" (click)="openDetail(item?.id)">{{item?.amount}}</a></td>
+                                                    <a style="cursor: pointer;" (click)="openDetail(item?.id)">{{item?.amount | number}}</a></td>
                                                 <td *ngIf="item?.funding_type == 'Withdrawal'" class="text-right">
-                                                    <a style="cursor: pointer;" (click)="openDetail(item?.id)">-{{item?.amount}}</a></td>
+                                                    <a style="cursor: pointer;" (click)="openDetail(item?.id)">-{{item?.amount | number}}</a></td>
                                                 <td *ngIf="item?.status == 4" class="text-right"><span
                                                         class="text-info"><i class="icon ion-md-hourglass"></i>
                                                         <a style="cursor: pointer;" (click)="openDetail(item?.id)">{{'New' | translate}}</a></span></td>

@@ -80,11 +80,15 @@ export class AccountInformationComponent implements OnInit {
   showBranch: boolean;
   showChangeBank: boolean;
   listBank = [];
-  listHira = ['あ', 'か', 'さ', 'た', 'な', 'は', 'ま', 'や', 'ら', 'わ'];
-  listHira2 = ['い', 'き', 'し', 'ち', 'に', 'ひ', 'み', ' ', 'り', ' '];
-  listHira3 = ['う', 'く', 'す', 'つ', 'ぬ', 'ふ', 'む', 'ゆ', 'る', 'を'];
-  listHira4 = ['え', 'け', 'せ', 'て', 'ね', 'へ', 'め', ' ', 'れ', ' '];
-  listHira5 = ['こ', 'そ', 'と', 'の', 'ほ', 'も', 'よ', 'ろ', 'ん'];
+  listHira = ['あ', 'か', 'さ', 'た', 'な', 'は', 'ま', 'や', 'ら', 'わ',
+              'い', 'き', 'し', 'ち', 'に', 'ひ', 'み', ' ', 'り', ' ',
+              'う', 'く', 'す', 'つ', 'ぬ', 'ふ', 'む', 'ゆ', 'る', 'を',
+              'え', 'け', 'せ', 'て', 'ね', 'へ', 'め', ' ', 'れ', ' ',
+              'こ', 'そ', 'と', 'の', 'ほ', 'も', 'よ', 'ろ', 'ん'];
+  // listHira2 = [];
+  // listHira3 = [];
+  // listHira4 = [];
+  // listHira5 = ['こ', 'そ', 'と', 'の', 'ほ', 'も', 'よ', 'ろ', 'ん'];
 
   ngOnInit() {
     this.isCompany = localStorage.getItem(IS_COMPANY);
@@ -462,6 +466,7 @@ export class AccountInformationComponent implements OnInit {
   changeBank() {
     this.showBank = true;
     this.showBranch = false;
+    this.showChangeBank = false;
   }
   saveBankAccount() {
 
