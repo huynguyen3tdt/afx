@@ -855,11 +855,11 @@
               </button>
           </div>
           <div class="modal-body">
-              <div class="section-selected-bank" *ngIf="showChangeBank == true">
+              <div class="section-selected-bank" *ngIf="showBranch == true">
                   <p class="mb-1">Selected financial institution name:</p>
                   <div class="d-flex justify-content-between align-items-center">
                       <div>
-                          <h4 class="mb-0 text-primary"><strong>Mitsubishi UFJ</strong></h4>
+                          <h4 class="mb-0 text-primary"><strong>{{currentBank?.name}}</strong></h4>
                       </div>
                       <div><button class="btn btn-sm btn-primary btn-change-bank" (click)="changeBank()">Change Bank</button></div>
                   </div>
@@ -871,26 +871,27 @@
                           <h6 class="c-title mb-2">Selecting the initial character of bank name</h6>
                           <div class="box-characters mb-3">
                             <ng-container *ngFor="let item of listHira">
-                              <button *ngIf="item == ' '" class="btn btn-sm btn-none">&nbsp;</button>
-                              <button class="btn btn-sm btn-character" *ngIf="item != ' '" (click)="changeHira(item)">{{item}}</button>
+                              <button *ngIf="item.key_hira == ' '" class="btn btn-sm btn-none">&nbsp;</button>
+                              <button class="{{item.class}}" *ngIf="item.key_hira != ' ' &&  item.class != 'btn btn-sm btn-character disabled'" (click)="changeHira(item)">{{item.key_hira}}</button>
+                              <button class="btn btn-sm btn-character" *ngIf="item.class == 'btn btn-sm btn-character disabled'" disabled>{{item.key_hira}}</button>
                             </ng-container>
                           </div>
                           <h6 class="c-title mb-2">Entering a bank name</h6>
-                          <div class="d-flex mb-3">
-                              <div class="flex-grow-1"><input type="text" name="" class="form-control form-control-sm" placeholder=""></div>
-                              <div class="ml-2"><button class="btn btn-sm btn-primary">Search</button></div>
+                          <div class="d-flex mb-3" [formGroup]="bankNameForm">
+                              <div class="flex-grow-1"><input type="text" name="" class="form-control form-control-sm" placeholder="" formControlName="bank_name"></div>
+                              <div class="ml-2"><button class="btn btn-sm btn-primary" (click)="searchBankName()">Search</button></div>
                           </div>
                           <h6 class="c-title mb-2">Enter bank code</h6>
-                          <div class="d-flex">
-                              <div class="flex-grow-1"><input type="text" name="" class="form-control form-control-sm" placeholder=""></div>
-                              <div class="ml-2"><button class="btn btn-sm btn-primary">Search</button></div>
+                          <div class="d-flex" [formGroup]="bankCodeForm">
+                              <div class="flex-grow-1"><input type="text" name="" class="form-control form-control-sm" placeholder="" formControlName="bank_code"></div>
+                              <div class="ml-2"><button class="btn btn-sm btn-primary" (click)="searchBankCode()">Search</button></div>
                           </div>
                       </div>
                       <div class="col-lg-5">
                           <h6 class="c-title mb-1">Select Bank</h6>
                           <div class="list-group list-bank border" style="height: 336px;">
-                              <a href="javascript:;" class="list-group-item list-group-item-action">Shikoku</a>
-                              <a href="javascript:;" class="list-group-item list-group-item-action">Shikoku roukin</a>
+                              <a href="javascript:;" class="list-group-item list-group-item-action"  *ngFor="let item of bankSearch" (click)="selectBank(item)">{{item.name}}</a>
+                              <!-- <a href="javascript:;" class="list-group-item list-group-item-action">Shikoku roukin</a> -->
                           </div>
                       </div>
                   </div>
@@ -900,19 +901,20 @@
                       <div class="col-lg-7">
                           <h6 class="c-title mb-2">Please select the branch name of the selected financial institution</h6>
                           <div class="box-characters mb-3">
-                            <ng-container *ngFor="let item of listHira">
-                              <button *ngIf="item == ' '" class="btn btn-sm btn-none">&nbsp;</button>
-                              <button class="btn btn-sm btn-character" *ngIf="item != ' '" (click)="changeHira(item)">{{item}}</button>
+                            <ng-container *ngFor="let item of listHiraBranch">
+                              <button *ngIf="item.key_hira == ' '" class="btn btn-sm btn-none">&nbsp;</button>
+                              <button class="{{item.class}}" *ngIf="item.key_hira != ' ' &&  item.class != 'btn btn-sm btn-character disabled'" (click)="changeHiraBranch(item)">{{item.key_hira}}</button>
+                              <button class="btn btn-sm btn-character" *ngIf="item.class == 'btn btn-sm btn-character disabled'" disabled>{{item.key_hira}}</button>
                             </ng-container>
                           </div>
                           <h6 class="c-title mb-2">Entering a branch name</h6>
-                          <div class="d-flex mb-3">
-                              <div class="flex-grow-1"><input type="text" name="" class="form-control form-control-sm" placeholder=""></div>
-                              <div class="ml-2"><button class="btn btn-sm btn-primary">Search</button></div>
+                          <div class="d-flex mb-3" [formGroup]="branchNameForm">
+                              <div class="flex-grow-1"><input type="text" name="" class="form-control form-control-sm" placeholder="" formControlName="branch_name"></div>
+                              <div class="ml-2"><button class="btn btn-sm btn-primary" (click)="searchBranchName()">Search</button></div>
                           </div>
                           <h6 class="c-title mb-2">Enter branch code</h6>
-                          <div class="d-flex">
-                              <div class="flex-grow-1"><input type="text" name="" class="form-control form-control-sm" placeholder=""></div>
+                          <div class="d-flex" [formGroup]="branchCodeForm">
+                              <div class="flex-grow-1"><input type="text" name="" (click)="searchBranchCode()" class="form-control form-control-sm" placeholder="" formControlName="branch_code"></div>
                               <div class="ml-2"><button class="btn btn-sm btn-primary">Search</button></div>
                           </div>
                       </div>

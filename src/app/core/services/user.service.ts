@@ -7,6 +7,7 @@ import { EnvConfigService } from './env-config.service';
 import { catchError } from 'rxjs/operators';
 import { UserResponse, CorporateResponse } from '../model/user.model';
 import { ResponseWihtoutDataModel } from '../model/none-data-response.model';
+import { SearchBankResponseModel } from '../model/bank-response.model';
 
 @Injectable({
   providedIn: 'root'
@@ -66,6 +67,40 @@ export class UserService {
     );
   }
 
+  getBranch(bankId: number): Observable<ResponseWihtoutDataModel> {
+    return this.httpClient
+      .get(`${this.envConfigService.getConfig()}/${AppSettings.API_BRANCH}` + `?bank_id=${bankId}`)
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          return new Observable((observer: InnerSubscriber<any, any>) => {
+            observer.next(error);
+          });
+        })
+      );
+  }
+
+  getSearchBank(firstChar: string, name: string, bic: string): Observable<SearchBankResponseModel> {
+    let URL = '';
+    if (firstChar) {
+      URL += `?first_char=${firstChar}`;
+    }
+    if (name) {
+      URL += `?name=${name}`;
+    }
+    if (bic) {
+      URL += `?bic=${bic}`;
+    }
+    return this.httpClient
+      .get(`${this.envConfigService.getConfig()}/${AppSettings.API_BANK_SEARCH}` + URL)
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          return new Observable((observer: InnerSubscriber<any, any>) => {
+            observer.next(error);
+          });
+        })
+      );
+  }
+
   getListBank(): Observable<ResponseWihtoutDataModel> {
     return this.httpClient
       .get(`${this.envConfigService.getConfig()}/${AppSettings.API_LIST_BANK}`)
@@ -78,4 +113,25 @@ export class UserService {
       );
   }
 
+  getSearchBranch(bankId: number, firstChar: string, branchName: string, BranchCode: string): Observable<ResponseWihtoutDataModel> {
+    let URL = '';
+    if (firstChar && bankId) {
+      URL += `?bank_id=${bankId}&first_char=${firstChar}`;
+    }
+    if (branchName && bankId) {
+      URL += `?bank_id=${bankId}&branch_name=${branchName}`;
+    }
+    if (BranchCode && bankId) {
+      URL += `?bank_id=${bankId}&branch_code =${BranchCode}`;
+    }
+    return this.httpClient
+      .get(`${this.envConfigService.getConfig()}/${AppSettings.API_BRANCH_SEARCH}` + URL)
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          return new Observable((observer: InnerSubscriber<any, any>) => {
+            observer.next(error);
+          });
+        })
+      );
+  }
 }

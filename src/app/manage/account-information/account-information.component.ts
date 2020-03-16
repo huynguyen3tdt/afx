@@ -11,6 +11,9 @@ import { AccountType } from 'src/app/core/model/report-response.model';
 import { passwordValidation } from 'src/app/core/helper/custom-validate.helper';
 import { AuthenService } from 'src/app/core/services/authen.service';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
+import { element } from 'protractor';
+import { SearchHiraModel, BankModel } from 'src/app/core/model/bank-response.model';
+import { listHiraBank } from 'src/app/core/constant/hira-list-constant';
 declare var $: any;
 
 
@@ -28,8 +31,7 @@ export class AccountInformationComponent implements OnInit {
     private withdrawRequestService: WithdrawRequestService,
     private userService: UserService,
     private authenService: AuthenService,
-  ) {
-  }
+  ) {}
   accountInfor: Mt5Model;
   withdrawAmount: WithdrawAmountModel;
   editAddress: boolean;
@@ -52,6 +54,8 @@ export class AccountInformationComponent implements OnInit {
   branchNameForm: FormGroup;
   branchCodeForm: FormGroup;
   bankAccountForm: FormGroup;
+  bankNameForm: FormGroup;
+  bankCodeForm: FormGroup;
   countries = ['Vietnamese', 'English'];
   postcode: any;
   isSubmitted: boolean;
@@ -79,18 +83,20 @@ export class AccountInformationComponent implements OnInit {
   showBank: boolean;
   showBranch: boolean;
   showChangeBank: boolean;
+  firstChar: string;
+  name: string;
+  bic: string;
+  bankSearch;
   listBank = [];
-  listHira = ['あ', 'か', 'さ', 'た', 'な', 'は', 'ま', 'や', 'ら', 'わ',
-              'い', 'き', 'し', 'ち', 'に', 'ひ', 'み', ' ', 'り', ' ',
-              'う', 'く', 'す', 'つ', 'ぬ', 'ふ', 'む', 'ゆ', 'る', 'を',
-              'え', 'け', 'せ', 'て', 'ね', 'へ', 'め', ' ', 'れ', ' ',
-              'こ', 'そ', 'と', 'の', 'ほ', 'も', 'よ', 'ろ', 'ん'];
-  // listHira2 = [];
-  // listHira3 = [];
-  // listHira4 = [];
-  // listHira5 = ['こ', 'そ', 'と', 'の', 'ほ', 'も', 'よ', 'ろ', 'ん'];
+  listHira: SearchHiraModel[]
+  listHiraBranch: SearchHiraModel[];
+  characBranch;
+  branchSearch;
+  bankId;
+  currentBank: BankModel;
 
   ngOnInit() {
+    this.initHiraCode();
     this.isCompany = localStorage.getItem(IS_COMPANY);
     this.listTradingAccount = JSON.parse(localStorage.getItem(ACCOUNT_IDS));
     if (this.listTradingAccount) {
@@ -99,8 +105,10 @@ export class AccountInformationComponent implements OnInit {
     this.initUserForm();
     this.initCorporateForm();
     this.initSettingForm();
-    this.initBranchNameForm();
+    this.initBankNameForm();
+    this.initBankCodeForm();
     this.initBranchCodeForm();
+    this.initBranchNameForm();
     this.initBankAccountForm();
     this.bankAccount = true;
     this.editBank = false;
@@ -162,6 +170,16 @@ export class AccountInformationComponent implements OnInit {
     localStorage.setItem('locale', event);
   }
 
+  initBankNameForm() {
+    this.bankNameForm = new FormGroup({
+      bank_name: new FormControl('')
+    });
+  }
+  initBankCodeForm() {
+    this.bankCodeForm = new FormGroup({
+      bank_code: new FormControl('')
+    });
+  }
   initBranchNameForm() {
     this.branchNameForm = new FormGroup({
       branch_name: new FormControl('')
@@ -437,10 +455,50 @@ export class AccountInformationComponent implements OnInit {
     this.userService.getListBank().subscribe( response => {
       if (response.meta.code === 200) {
         this.listBank = response.data;
-
+        this.listBank.forEach(item => {
+          this.listHira.forEach(element => {
+            if (element.key_kata === item) {
+              element.class = 'btn btn-sm btn-character active';
+            }
+          });
+        });
       }
     });
   }
+  getBranch(bankId: number) {
+    console.log('listHiraBranchhhh0000000000000000000000 ', this.listHiraBranch);
+    this.initHiraCode();
+    this.userService.getBranch(bankId).subscribe( response => {
+      if (response.meta.code === 200) {
+        this.characBranch = response.data;
+        console.log('----------- ', this.characBranch);
+        console.log('listHiraBranchhhh111111111111111 ', this.listHiraBranch);
+        this.characBranch.forEach(item => {
+          this.listHiraBranch.forEach(element => {
+            if (element.key_kata === item) {
+              element.class = 'btn btn-sm btn-character active';
+            }
+          });
+        });
+        console.log('listHiraBranchhhh ', this.listHiraBranch);
+      }
+    });
+  }
+  getSearchBank(firstChar: string, name: string, bic: string) {
+      this.userService.getSearchBank(firstChar, name, bic).subscribe(response => {
+        if (response.meta.code) {
+          this.bankSearch = response.data;
+        }
+      });
+  }
+  getSearchBranch(bankId: number, firstChar: string, branName: string, branchCode: string) {
+    this.userService.getSearchBranch(bankId, firstChar, branName, branchCode).subscribe(response => {
+      if (response.meta.code) {
+        this.branchSearch = response.data;
+      }
+    });
+}
+
   editBankAccount() {
     this.editBank = true;
     this.bankAccount = false;
@@ -448,25 +506,26 @@ export class AccountInformationComponent implements OnInit {
     this.bankAccountForm.controls.bank_branch.setValue(this.bankInfor.branch_code);
   }
   showBankInfor(type: number) {
+    this.initHiraCode();
     if (type === 1) {
       $('#modal-select-bank').modal('show');
-      this.showChangeBank = true;
       this.showBank = false;
       this.showBranch = true;
+      this.getBranch(this.bankSearch.id);
     } else if (type === 2) {
       $('#modal-select-bank').modal('show');
       this.showBank = true;
       this.showBranch = false;
-      this.showChangeBank = false;
       this.getListBank();
     }
 
   }
 
   changeBank() {
+    this.initHiraCode();
     this.showBank = true;
     this.showBranch = false;
-    this.showChangeBank = false;
+    this.getListBank();
   }
   saveBankAccount() {
 
@@ -496,7 +555,153 @@ export class AccountInformationComponent implements OnInit {
   }
 
   changeHira(item) {
-    // console.log('iteemm', item);
+    this.listHira.forEach( element => {
+      if (element.class !== 'btn btn-sm btn-character disabled') {
+        if (element.key_hira === item.key_hira) {
+          element.class = 'btn btn-sm btn-character choose';
+        } else {
+          element.class = 'btn btn-sm btn-character active';
+        }
+      }
+    });
+    this.getSearchBank(item.key_kata, '', '');
+  }
+
+  changeHiraBranch(item) {
+    this.listHiraBranch.forEach( element => {
+      if (element.class !== 'btn btn-sm btn-character disabled') {
+        if (element.key_hira === item.key_hira) {
+          element.class = 'btn btn-sm btn-character choose';
+        } else {
+          element.class = 'btn btn-sm btn-character active';
+        }
+      }
+    });
+    this.getSearchBranch(this.bankId, item.key_kata, '', '');
+  }
+
+  searchBranchName() {
+    this.getSearchBranch(this.bankId, '', this.branchNameForm.controls.branch_name.value, '');
+  }
+  searchBranchCode() {
+    this.getSearchBranch(this.bankId, '', this.branchCodeForm.controls.branch_code.value, '');
+  }
+  searchBankName() {
+    this.getSearchBank('', this.bankNameForm.controls.bank_name.value, '');
+  }
+  searchBankCode() {
+    this.getSearchBank('', '', this.bankCodeForm.controls.bank_code.value);
+  }
+  selectBank(item: BankModel) {
+    this.showBank = false;
+    this.showBranch = true;
+    this.currentBank = item;
+    this.getBranch(this.currentBank.id);
+  }
+
+  initHiraCode() {
+    this.listHira = [
+      {key_hira: 'あ', key_kata: 'ｱ', class: 'btn btn-sm btn-character disabled'},
+      {key_hira: 'か', key_kata: 'ｶ', class: 'btn btn-sm btn-character disabled'},
+      {key_hira: 'さ', key_kata: 'ｻ', class: 'btn btn-sm btn-character disabled'},
+      {key_hira: 'た', key_kata: 'ﾀ', class: 'btn btn-sm btn-character disabled'},
+      {key_hira: 'な', key_kata: 'ﾅ', class: 'btn btn-sm btn-character disabled'},
+      {key_hira: 'は', key_kata: 'ﾊ', class: 'btn btn-sm btn-character disabled'},
+      {key_hira: 'ま', key_kata: 'ﾏ', class: 'btn btn-sm btn-character disabled'},
+      {key_hira: 'や', key_kata: 'ﾔ', class: 'btn btn-sm btn-character disabled'},
+      {key_hira: 'さ', key_kata: 'ｻ', class: 'btn btn-sm btn-character disabled'},
+      {key_hira: 'わ', key_kata: 'ﾜ', class: 'btn btn-sm btn-character disabled'},
+      {key_hira: 'い', key_kata: 'ｲ', class: 'btn btn-sm btn-character disabled'},
+      {key_hira: 'き', key_kata: 'ｷ', class: 'btn btn-sm btn-character disabled'},
+      {key_hira: 'し', key_kata: 'ｼ', class: 'btn btn-sm btn-character disabled'},
+      {key_hira: 'ち', key_kata: 'ﾁ', class: 'btn btn-sm btn-character disabled'},
+      {key_hira: 'に', key_kata: 'ﾆ', class: 'btn btn-sm btn-character disabled'},
+      {key_hira: 'ひ', key_kata: 'ﾋ', class: 'btn btn-sm btn-character disabled'},
+      {key_hira: 'み', key_kata: 'ﾐ', class: 'btn btn-sm btn-character disabled'},
+      {key_hira: ' ', key_kata: ' ', class: 'btn-none'},
+      {key_hira: 'り', key_kata: 'ﾘ', class: 'btn btn-sm btn-character disabled'},
+      {key_hira: ' ', key_kata: ' ', class: 'btn-none'},
+      {key_hira: 'う', key_kata: 'ｳ', class: 'btn btn-sm btn-character disabled'},
+      {key_hira: 'く', key_kata: 'ｸ', class: 'btn btn-sm btn-character disabled'},
+      {key_hira: 'す', key_kata: 'ｽ', class: 'btn btn-sm btn-character disabled'},
+      {key_hira: 'つ', key_kata: 'ﾂ', class: 'btn btn-sm btn-character disabled'},
+      {key_hira: 'ぬ', key_kata: 'ﾇ', class: 'btn btn-sm btn-character disabled'},
+      {key_hira: 'ふ', key_kata: 'ﾌ', class: 'btn btn-sm btn-character disabled'},
+      {key_hira: 'む', key_kata: 'ﾑ', class: 'btn btn-sm btn-character disabled'},
+      {key_hira: 'ゆ', key_kata: 'ﾕ', class: 'btn btn-sm btn-character disabled'},
+      {key_hira: 'る', key_kata: 'ﾙ', class: 'btn btn-sm btn-character disabled'},
+      {key_hira: 'を', key_kata: 'ｦ', class: 'btn btn-sm btn-character disabled'},
+      {key_hira: 'え', key_kata: 'ｴ', class: 'btn btn-sm btn-character disabled'},
+      {key_hira: 'け', key_kata: 'ｹ', class: 'btn btn-sm btn-character disabled'},
+      {key_hira: 'せ', key_kata: 'ｾ', class: 'btn btn-sm btn-character disabled'},
+      {key_hira: 'て', key_kata: 'ﾃ', class: 'btn btn-sm btn-character disabled'},
+      {key_hira: 'ね', key_kata: 'ﾈ', class: 'btn btn-sm btn-character disabled'},
+      {key_hira: 'へ', key_kata: 'ﾍ', class: 'btn btn-sm btn-character disabled'},
+      {key_hira: 'め', key_kata: 'ﾒ', class: 'btn btn-sm btn-character disabled'},
+      {key_hira: ' ', key_kata: ' ', class: 'btn-none'},
+      {key_hira: 'れ', key_kata: 'ﾚ', class: 'btn btn-sm btn-character disabled'},
+      {key_hira: ' ', key_kata: ' ', class: 'btn-none'},
+      {key_hira: 'こ', key_kata: 'ｺ', class: 'btn btn-sm btn-character disabled'},
+      {key_hira: 'そ', key_kata: 'ｿ', class: 'btn btn-sm btn-character disabled'},
+      {key_hira: 'と', key_kata: 'ﾄ', class: 'btn btn-sm btn-character disabled'},
+      {key_hira: 'の', key_kata: 'ﾉ', class: 'btn btn-sm btn-character disabled'},
+      {key_hira: 'ほ', key_kata: 'ﾎ', class: 'btn btn-sm btn-character disabled'},
+      {key_hira: 'も', key_kata: 'ﾓ', class: 'btn btn-sm btn-character disabled'},
+      {key_hira: 'よ', key_kata: 'ﾖ', class: 'btn btn-sm btn-character disabled'},
+      {key_hira: 'ろ', key_kata: 'ﾛ', class: 'btn btn-sm btn-character disabled'},
+      {key_hira: 'ん', key_kata: 'ﾝ', class: 'btn btn-sm btn-character disabled'}
+      ];
+    this.listHiraBranch = [
+      {key_hira: 'あ', key_kata: 'ｱ', class: 'btn btn-sm btn-character disabled'},
+      {key_hira: 'か', key_kata: 'ｶ', class: 'btn btn-sm btn-character disabled'},
+      {key_hira: 'さ', key_kata: 'ｻ', class: 'btn btn-sm btn-character disabled'},
+      {key_hira: 'た', key_kata: 'ﾀ', class: 'btn btn-sm btn-character disabled'},
+      {key_hira: 'な', key_kata: 'ﾅ', class: 'btn btn-sm btn-character disabled'},
+      {key_hira: 'は', key_kata: 'ﾊ', class: 'btn btn-sm btn-character disabled'},
+      {key_hira: 'ま', key_kata: 'ﾏ', class: 'btn btn-sm btn-character disabled'},
+      {key_hira: 'や', key_kata: 'ﾔ', class: 'btn btn-sm btn-character disabled'},
+      {key_hira: 'さ', key_kata: 'ｻ', class: 'btn btn-sm btn-character disabled'},
+      {key_hira: 'わ', key_kata: 'ﾜ', class: 'btn btn-sm btn-character disabled'},
+      {key_hira: 'い', key_kata: 'ｲ', class: 'btn btn-sm btn-character disabled'},
+      {key_hira: 'き', key_kata: 'ｷ', class: 'btn btn-sm btn-character disabled'},
+      {key_hira: 'し', key_kata: 'ｼ', class: 'btn btn-sm btn-character disabled'},
+      {key_hira: 'ち', key_kata: 'ﾁ', class: 'btn btn-sm btn-character disabled'},
+      {key_hira: 'に', key_kata: 'ﾆ', class: 'btn btn-sm btn-character disabled'},
+      {key_hira: 'ひ', key_kata: 'ﾋ', class: 'btn btn-sm btn-character disabled'},
+      {key_hira: 'み', key_kata: 'ﾐ', class: 'btn btn-sm btn-character disabled'},
+      {key_hira: ' ', key_kata: ' ', class: 'btn-none'},
+      {key_hira: 'り', key_kata: 'ﾘ', class: 'btn btn-sm btn-character disabled'},
+      {key_hira: ' ', key_kata: ' ', class: 'btn-none'},
+      {key_hira: 'う', key_kata: 'ｳ', class: 'btn btn-sm btn-character disabled'},
+      {key_hira: 'く', key_kata: 'ｸ', class: 'btn btn-sm btn-character disabled'},
+      {key_hira: 'す', key_kata: 'ｽ', class: 'btn btn-sm btn-character disabled'},
+      {key_hira: 'つ', key_kata: 'ﾂ', class: 'btn btn-sm btn-character disabled'},
+      {key_hira: 'ぬ', key_kata: 'ﾇ', class: 'btn btn-sm btn-character disabled'},
+      {key_hira: 'ふ', key_kata: 'ﾌ', class: 'btn btn-sm btn-character disabled'},
+      {key_hira: 'む', key_kata: 'ﾑ', class: 'btn btn-sm btn-character disabled'},
+      {key_hira: 'ゆ', key_kata: 'ﾕ', class: 'btn btn-sm btn-character disabled'},
+      {key_hira: 'る', key_kata: 'ﾙ', class: 'btn btn-sm btn-character disabled'},
+      {key_hira: 'を', key_kata: 'ｦ', class: 'btn btn-sm btn-character disabled'},
+      {key_hira: 'え', key_kata: 'ｴ', class: 'btn btn-sm btn-character disabled'},
+      {key_hira: 'け', key_kata: 'ｹ', class: 'btn btn-sm btn-character disabled'},
+      {key_hira: 'せ', key_kata: 'ｾ', class: 'btn btn-sm btn-character disabled'},
+      {key_hira: 'て', key_kata: 'ﾃ', class: 'btn btn-sm btn-character disabled'},
+      {key_hira: 'ね', key_kata: 'ﾈ', class: 'btn btn-sm btn-character disabled'},
+      {key_hira: 'へ', key_kata: 'ﾍ', class: 'btn btn-sm btn-character disabled'},
+      {key_hira: 'め', key_kata: 'ﾒ', class: 'btn btn-sm btn-character disabled'},
+      {key_hira: ' ', key_kata: ' ', class: 'btn-none'},
+      {key_hira: 'れ', key_kata: 'ﾚ', class: 'btn btn-sm btn-character disabled'},
+      {key_hira: ' ', key_kata: ' ', class: 'btn-none'},
+      {key_hira: 'こ', key_kata: 'ｺ', class: 'btn btn-sm btn-character disabled'},
+      {key_hira: 'そ', key_kata: 'ｿ', class: 'btn btn-sm btn-character disabled'},
+      {key_hira: 'と', key_kata: 'ﾄ', class: 'btn btn-sm btn-character disabled'},
+      {key_hira: 'の', key_kata: 'ﾉ', class: 'btn btn-sm btn-character disabled'},
+      {key_hira: 'ほ', key_kata: 'ﾎ', class: 'btn btn-sm btn-character disabled'},
+      {key_hira: 'も', key_kata: 'ﾓ', class: 'btn btn-sm btn-character disabled'},
+      {key_hira: 'よ', key_kata: 'ﾖ', class: 'btn btn-sm btn-character disabled'},
+      {key_hira: 'ろ', key_kata: 'ﾛ', class: 'btn btn-sm btn-character disabled'},
+      {key_hira: 'ん', key_kata: 'ﾝ', class: 'btn btn-sm btn-character disabled'}
+      ];
   }
 
 }

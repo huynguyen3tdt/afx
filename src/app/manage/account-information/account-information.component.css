@@ -18,3 +18,8 @@
 .table-profile tr.row-action {
   display: none;
 }
+
+.btn.btn-sm.btn-character.choose {
+  background-color: green;
+  color: white;
+}
