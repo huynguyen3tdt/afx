@@ -65,4 +65,17 @@ export class UserService {
       })
     );
   }
+
+  getListBank(): Observable<ResponseWihtoutDataModel> {
+    return this.httpClient
+      .get(`${this.envConfigService.getConfig()}/${AppSettings.API_LIST_BANK}`)
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          return new Observable((observer: InnerSubscriber<any, any>) => {
+            observer.next(error);
+          });
+        })
+      );
+  }
+
 }

@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { WithdrawRequestService } from 'src/app/core/services/withdraw-request.service';
-import { Mt5Model, WithdrawAmountModel } from 'src/app/core/model/withdraw-request-response.model';
+import { Mt5Model, WithdrawAmountModel, BankInforModel } from 'src/app/core/model/withdraw-request-response.model';
 import { UserService } from './../../core/services/user.service';
-import { UserModel, CorporateResponse, CorporateModel } from 'src/app/core/model/user.model';
+import { UserModel, CorporateResponse, CorporateModel} from 'src/app/core/model/user.model';
 import { FormGroup, FormControl } from '@angular/forms';
 import { IS_COMPANY, ACCOUNT_IDS, FONTSIZE_AFX } from 'src/app/core/constant/authen-constant';
 import { GlobalService } from 'src/app/core/services/global.service';
@@ -11,7 +11,6 @@ import { AccountType } from 'src/app/core/model/report-response.model';
 import { passwordValidation } from 'src/app/core/helper/custom-validate.helper';
 import { AuthenService } from 'src/app/core/services/authen.service';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
-import { BankInforModel } from './../../core/model/withdraw-request-response.model';
 declare var $: any;
 
 
@@ -76,7 +75,16 @@ export class AccountInformationComponent implements OnInit {
   successPassword: boolean;
   bankAccount: boolean;
   editBank: boolean;
-
+  bankInfor: BankInforModel;
+  showBank: boolean;
+  showBranch: boolean;
+  showChangeBank: boolean;
+  listBank = [];
+  listHira = ['あ', 'か', 'さ', 'た', 'な', 'は', 'ま', 'や', 'ら', 'わ'];
+  listHira2 = ['い', 'き', 'し', 'ち', 'に', 'ひ', 'み', ' ', 'り', ' '];
+  listHira3 = ['う', 'く', 'す', 'つ', 'ぬ', 'ふ', 'む', 'ゆ', 'る', 'を'];
+  listHira4 = ['え', 'け', 'せ', 'て', 'ね', 'へ', 'め', ' ', 'れ', ' '];
+  listHira5 = ['こ', 'そ', 'と', 'の', 'ほ', 'も', 'よ', 'ろ', 'ん'];
 
   ngOnInit() {
     this.isCompany = localStorage.getItem(IS_COMPANY);
@@ -223,6 +231,16 @@ export class AccountInformationComponent implements OnInit {
       if (response.meta.code === 200) {
         this.spinnerService.hide();
         this.withdrawAmount = response.data;
+      }
+    });
+  }
+
+  getBankInfor() {
+    this.withdrawRequestService.getBankInfor().subscribe(response => {
+      this.spinnerService.show();
+      if (response.meta.code === 200) {
+        this.spinnerService.hide();
+        this.bankInfor = response.data;
       }
     });
   }
@@ -410,13 +428,40 @@ export class AccountInformationComponent implements OnInit {
       }
     });
   }
+
+  getListBank() {
+    this.userService.getListBank().subscribe( response => {
+      if (response.meta.code === 200) {
+        this.listBank = response.data;
+
+      }
+    });
+  }
   editBankAccount() {
     this.editBank = true;
     this.bankAccount = false;
+    this.bankAccountForm.controls.beneficiary_bank.setValue(this.bankInfor.name);
+    this.bankAccountForm.controls.bank_branch.setValue(this.bankInfor.branch_code);
+  }
+  showBankInfor(type: number) {
+    if (type === 1) {
+      $('#modal-select-bank').modal('show');
+      this.showChangeBank = true;
+      this.showBank = false;
+      this.showBranch = true;
+    } else if (type === 2) {
+      $('#modal-select-bank').modal('show');
+      this.showBank = true;
+      this.showBranch = false;
+      this.showChangeBank = false;
+      this.getListBank();
+    }
 
   }
-  showBankInfor() {
-    $('#modal-select-bank').modal('show');
+
+  changeBank() {
+    this.showBank = true;
+    this.showBranch = false;
   }
   saveBankAccount() {
 
@@ -433,7 +478,6 @@ export class AccountInformationComponent implements OnInit {
 
   changeFontSize(fontsize: string) {
     const listFontSize = ['font-size-sm', 'font-size-md', 'font-size-lg'];
-    console.log('fonrtSizeee ', fontsize);
     listFontSize.forEach(element => {
       if (fontsize === element) {
         $(`#${element}`).addClass('active');
@@ -444,6 +488,10 @@ export class AccountInformationComponent implements OnInit {
         $('body').removeClass(element);
       }
     });
+  }
+
+  changeHira(item) {
+    // console.log('iteemm', item);
   }
 
 }

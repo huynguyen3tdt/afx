@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, ElementRef, Input } from '@angular/core';
 import { WithdrawRequestService } from 'src/app/core/services/withdraw-request.service';
 import { FormGroup, FormControl } from '@angular/forms';
 import { TransactionModel, BankInforModel } from 'src/app/core/model/withdraw-request-response.model';
@@ -24,6 +24,8 @@ declare var $: any;
 export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
   @ViewChild('depositTab', { static: false }) depositTab: ElementRef;
   @ViewChild('withdrawTab', { static: false }) withdrawTab: ElementRef;
+
+
   listBankInfor: BankInforModel;
   listDwHistory: Array<TransactionModel>;
   listReport: Array<TransactionModel>;
@@ -84,6 +86,7 @@ export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
         this.formatDate(this.searchForm.controls.fromDate.value), this.formatDate(this.searchForm.controls.toDate.value));
     }
   }
+
 
   ngAfterViewInit(): void {
     setTimeout(() => {

@@ -30,7 +30,7 @@ export class ListTransactionComponent implements OnInit, OnChanges {
 
   ngOnChanges(): void {
     if (this.accountID) {
-      this.getTranHistory(Number(this.accountID.split('-')[1]), 1, 2, this.tranType);
+      this.getTranHistory(Number(this.accountID.split('-')[1]), 1, 5, this.tranType);
     }
   }
 

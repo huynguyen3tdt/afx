@@ -24,4 +24,6 @@ export class AppSettings {
     public static API_REPORT_STATUS             = `api/${versionAPI}/reports/status/`;
     public static API_POST_WITHDRAW             = `api/${versionAPI}/withdraws/`;
     public static API_CHANGE_CORPORATION        = `api/${versionAPI}/users/corporation/`;
+    public static API_LIST_BANK                 = `api/${versionAPI}/common/jp/bank/`;
+
 }
