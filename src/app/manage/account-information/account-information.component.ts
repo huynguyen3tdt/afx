@@ -78,6 +78,8 @@ export class AccountInformationComponent implements OnInit {
   bankInfor: BankInforModel;
   showBank: boolean;
   showBranch: boolean;
+  showChangeBank: boolean;
+  listBank = [];
   listHira = ['あ', 'か', 'さ', 'た', 'な', 'は', 'ま', 'や', 'ら', 'わ'];
   listHira2 = ['い', 'き', 'し', 'ち', 'に', 'ひ', 'み', ' ', 'り', ' '];
   listHira3 = ['う', 'く', 'す', 'つ', 'ぬ', 'ふ', 'む', 'ゆ', 'る', 'を'];
@@ -426,16 +428,35 @@ export class AccountInformationComponent implements OnInit {
       }
     });
   }
+
+  getListBank() {
+    this.userService.getListBank().subscribe( response => {
+      if (response.meta.code === 200) {
+        this.listBank = response.data;
+        console.log('bankkk', this.listBank);
+      }
+    });
+  }
   editBankAccount() {
     this.editBank = true;
     this.bankAccount = false;
     this.bankAccountForm.controls.beneficiary_bank.setValue(this.bankInfor.name);
     this.bankAccountForm.controls.bank_branch.setValue(this.bankInfor.branch_code);
   }
-  showBankInfor() {
-    $('#modal-select-bank').modal('show');
-    this.showBank = false;
-    this.showBranch = true;
+  showBankInfor(type: number) {
+    if (type === 1) {
+      $('#modal-select-bank').modal('show');
+      this.showChangeBank = true;
+      this.showBank = false;
+      this.showBranch = true;
+    } else if (type === 2) {
+      $('#modal-select-bank').modal('show');
+      this.showBank = true;
+      this.showBranch = false;
+      this.showChangeBank = false;
+      this.getListBank();
+    }
+
   }
 
   changeBank() {
