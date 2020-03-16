@@ -471,7 +471,7 @@ export class AccountInformationComponent implements OnInit {
   }
 
   changeHira(item) {
-    console.log('iteemm', item);
+    // console.log('iteemm', item);
   }
 
 }
