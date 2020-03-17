@@ -14,6 +14,7 @@ import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { element } from 'protractor';
 import { SearchHiraModel, BankModel, BranchModel } from 'src/app/core/model/bank-response.model';
 import { listHiraBank } from 'src/app/core/constant/hira-list-constant';
+import { MizuhoBank, RakutenBank, SumitomoMitsuiBank, MitsubishiUFJBank, JapanNetBank, JapanPostBank } from 'src/app/core/constant/japan-constant';
 declare var $: any;
 
 
@@ -84,13 +85,12 @@ export class AccountInformationComponent implements OnInit {
   firstChar: string;
   name: string;
   bic: string;
-  bankSearch;
+  bankSearch: Array<BankModel>;
   characBank = [];
   listHira: SearchHiraModel[];
   listHiraBranch: SearchHiraModel[];
   characBranch = [];
-  branchSearch;
-  bankId;
+  branchSearch: Array<BranchModel>;
   currentBank: BankModel;
   currentBranch: BranchModel;
 
@@ -496,13 +496,33 @@ export class AccountInformationComponent implements OnInit {
     this.bankAccountForm.controls.bank_account_type.setValue(this.bankInfor.fx_acc_type.toString());
     this.bankAccountForm.controls.bank_account_number.setValue(this.bankInfor.acc_number);
   }
-  showBankInfor(type: number) {
+  showBankInfor(type: number, bankName?: string) {
     this.initHiraCode();
     if (type === 1) {
       $('#modal-select-bank').modal('show');
+      switch (bankName) {
+        case MizuhoBank.name:
+          this.currentBank = MizuhoBank;
+          break;
+        case RakutenBank.name:
+          this.currentBank = RakutenBank;
+          break;
+        case SumitomoMitsuiBank.name:
+          this.currentBank = SumitomoMitsuiBank;
+          break;
+        case MitsubishiUFJBank.name:
+          this.currentBank = MitsubishiUFJBank;
+          break;
+        case JapanNetBank.name:
+          this.currentBank = JapanNetBank;
+          break;
+        case JapanPostBank.name:
+          this.currentBank = JapanPostBank;
+          break;
+      }
       this.showBank = false;
       this.showBranch = true;
-      this.getAllCharacBranch(this.bankId);
+      this.getAllCharacBranch(this.currentBank.id);
     } else if (type === 2) {
       $('#modal-select-bank').modal('show');
       this.showBank = true;
@@ -657,6 +677,7 @@ export class AccountInformationComponent implements OnInit {
       {key_hira: ' ', key_kata: ' ', class: 'btn-none'},
       {key_hira: 'れ', key_kata: 'ﾚ', class: 'btn btn-sm btn-character disabled'},
       {key_hira: ' ', key_kata: ' ', class: 'btn-none'},
+      {key_hira: 'お', key_kata: 'ｵ', class: 'btn btn-sm btn-character disabled'},
       {key_hira: 'こ', key_kata: 'ｺ', class: 'btn btn-sm btn-character disabled'},
       {key_hira: 'そ', key_kata: 'ｿ', class: 'btn btn-sm btn-character disabled'},
       {key_hira: 'と', key_kata: 'ﾄ', class: 'btn btn-sm btn-character disabled'},
@@ -708,6 +729,7 @@ export class AccountInformationComponent implements OnInit {
       {key_hira: ' ', key_kata: ' ', class: 'btn-none'},
       {key_hira: 'れ', key_kata: 'ﾚ', class: 'btn btn-sm btn-character disabled'},
       {key_hira: ' ', key_kata: ' ', class: 'btn-none'},
+      {key_hira: 'お', key_kata: 'ｵ', class: 'btn btn-sm btn-character disabled'},
       {key_hira: 'こ', key_kata: 'ｺ', class: 'btn btn-sm btn-character disabled'},
       {key_hira: 'そ', key_kata: 'ｿ', class: 'btn btn-sm btn-character disabled'},
       {key_hira: 'と', key_kata: 'ﾄ', class: 'btn btn-sm btn-character disabled'},

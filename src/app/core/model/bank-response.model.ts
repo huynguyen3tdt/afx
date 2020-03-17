@@ -7,7 +7,7 @@ export interface SearchBankResponseModel {
 }
 export interface SearchBranchResponseModel {
   meta: MetaResponseModel;
-  data: Array<BankModel>;
+  data: Array<BranchModel>;
 
 }
 export interface BankModel {
