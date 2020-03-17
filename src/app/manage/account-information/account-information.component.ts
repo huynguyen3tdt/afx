@@ -606,6 +606,7 @@ export class AccountInformationComponent implements OnInit {
     this.showBranch = true;
     this.currentBank = item;
     this.getAllCharacBranch(this.currentBank.id);
+    this.branchSearch = null;
   }
   selectBranch(item: BranchModel) {
     $('#modal-select-bank').modal('hide');
