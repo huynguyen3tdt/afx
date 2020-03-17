@@ -51,11 +51,9 @@ export class AccountInformationComponent implements OnInit {
   userForm: FormGroup;
   corporateForm: FormGroup;
   changePassForm: FormGroup;
-  branchNameForm: FormGroup;
-  branchCodeForm: FormGroup;
+  branchForm: FormGroup;
   bankAccountForm: FormGroup;
-  bankNameForm: FormGroup;
-  bankCodeForm: FormGroup;
+  bankForm: FormGroup;
   countries = ['Vietnamese', 'English'];
   postcode: any;
   isSubmitted: boolean;
@@ -106,10 +104,8 @@ export class AccountInformationComponent implements OnInit {
     this.initUserForm();
     this.initCorporateForm();
     this.initSettingForm();
-    this.initBankNameForm();
-    this.initBankCodeForm();
-    this.initBranchCodeForm();
-    this.initBranchNameForm();
+    this.initBankForm();
+    this.initBranchForm();
     this.initBankAccountForm();
     this.bankAccount = true;
     this.editBank = false;
@@ -171,26 +167,20 @@ export class AccountInformationComponent implements OnInit {
     localStorage.setItem('locale', event);
   }
 
-  initBankNameForm() {
-    this.bankNameForm = new FormGroup({
-      bank_name: new FormControl('')
-    });
-  }
-  initBankCodeForm() {
-    this.bankCodeForm = new FormGroup({
+  initBankForm() {
+    this.bankForm = new FormGroup({
+      bank_name: new FormControl(''),
       bank_code: new FormControl('')
     });
   }
-  initBranchNameForm() {
-    this.branchNameForm = new FormGroup({
-      branch_name: new FormControl('')
-    });
-  }
-  initBranchCodeForm() {
-    this.branchCodeForm = new FormGroup({
+
+  initBranchForm() {
+    this.branchForm = new FormGroup({
+      branch_name: new FormControl(''),
       branch_code: new FormControl('')
     });
   }
+
   initBankAccountForm() {
     this.bankAccountForm = new FormGroup({
       beneficiary_bank: new FormControl(''),
@@ -584,17 +574,22 @@ export class AccountInformationComponent implements OnInit {
     this.getSearchBranch(this.currentBank.id, item.key_kata, '', '');
   }
 
-  searchBranchName() {
-    this.getSearchBranch(this.currentBank.id, '', this.branchNameForm.controls.branch_name.value, '');
+  searchBranch(type: number) {
+    if (type === 1) {
+      this.getSearchBranch(this.currentBank.id, '', this.branchForm.controls.branch_name.value, '');
+    }
+    if (type === 2) {
+      this.getSearchBranch(this.currentBank.id, '', '', this.branchForm.controls.branch_code.value);
+    }
   }
-  searchBranchCode() {
-    this.getSearchBranch(this.currentBank.id, '', '', this.branchCodeForm.controls.branch_code.value);
-  }
-  searchBankName() {
-    this.getSearchBank('', this.bankNameForm.controls.bank_name.value, '');
-  }
-  searchBankCode() {
-    this.getSearchBank('', '', this.bankCodeForm.controls.bank_code.value);
+
+  searchBank(type: number) {
+    if (type === 1) {
+      this.getSearchBank('', this.bankForm.controls.bank_name.value, '');
+    }
+    if (type === 2) {
+      this.getSearchBank('', '', this.bankForm.controls.bank_code.value);
+    }
   }
   selectBank(item: BankModel) {
     this.showBank = false;

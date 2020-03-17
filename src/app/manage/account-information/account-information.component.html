@@ -879,17 +879,19 @@
                               <button class="btn btn-sm btn-character" *ngIf="item.class == 'btn btn-sm btn-character disabled'" disabled>{{item.key_hira}}</button>
                             </ng-container>
                           </div>
+                          <form [formGroup]="bankForm">
+                            <h6 class="c-title mb-2">Entering a bank name</h6>
+                            <div class="d-flex mb-3">
+                                <div class="flex-grow-1"><input type="text" name="" class="form-control form-control-sm" placeholder="" formControlName="bank_name"></div>
+                                <div class="ml-2"><button class="btn btn-sm btn-primary" (click)="searchBank(1)">Search</button></div>
+                            </div>
+                            <h6 class="c-title mb-2">Enter bank code</h6>
+                            <div class="d-flex">
+                                <div class="flex-grow-1"><input type="text" name="" class="form-control form-control-sm" placeholder="" formControlName="bank_code"></div>
+                                <div class="ml-2"><button class="btn btn-sm btn-primary" (click)="searchBank(2)">Search</button></div>
+                            </div>
+                          </form>
 
-                          <h6 class="c-title mb-2">Entering a bank name</h6>
-                          <div class="d-flex mb-3" [formGroup]="bankNameForm">
-                              <div class="flex-grow-1"><input type="text" name="" class="form-control form-control-sm" placeholder="" formControlName="bank_name"></div>
-                              <div class="ml-2"><button class="btn btn-sm btn-primary" (click)="searchBankName()">Search</button></div>
-                          </div>
-                          <h6 class="c-title mb-2">Enter bank code</h6>
-                          <div class="d-flex" [formGroup]="bankCodeForm">
-                              <div class="flex-grow-1"><input type="text" name="" class="form-control form-control-sm" placeholder="" formControlName="bank_code"></div>
-                              <div class="ml-2"><button class="btn btn-sm btn-primary" (click)="searchBankCode()">Search</button></div>
-                          </div>
                       </div>
                       <div class="col-lg-5">
                           <h6 class="c-title mb-1">Select Bank</h6>
@@ -911,16 +913,19 @@
                               <button class="btn btn-sm btn-character" *ngIf="item.class == 'btn btn-sm btn-character disabled'" disabled>{{item.key_hira}}</button>
                             </ng-container>
                           </div>
-                          <h6 class="c-title mb-2">Entering a branch name</h6>
-                          <div class="d-flex mb-3" [formGroup]="branchNameForm">
-                              <div class="flex-grow-1"><input type="text" name="" class="form-control form-control-sm" placeholder="" formControlName="branch_name"></div>
-                              <div class="ml-2"><button class="btn btn-sm btn-primary" (click)="searchBranchName()">Search</button></div>
-                          </div>
-                          <h6 class="c-title mb-2">Enter branch code</h6>
-                          <div class="d-flex" [formGroup]="branchCodeForm">
-                              <div class="flex-grow-1"><input type="text" name="" class="form-control form-control-sm" placeholder="" formControlName="branch_code"></div>
-                              <div class="ml-2"><button class="btn btn-sm btn-primary"  (click)="searchBranchCode()">Search</button></div>
-                          </div>
+                          <form [formGroup]="branchForm">
+                            <h6 class="c-title mb-2">Entering a branch name</h6>
+                            <div class="d-flex mb-3">
+                                <div class="flex-grow-1"><input type="text" name="" class="form-control form-control-sm" placeholder="" formControlName="branch_name"></div>
+                                <div class="ml-2"><button class="btn btn-sm btn-primary" (click)="searchBranch(1)">Search</button></div>
+                            </div>
+                            <h6 class="c-title mb-2">Enter branch code</h6>
+                            <div class="d-flex">
+                                <div class="flex-grow-1"><input type="text" name="" class="form-control form-control-sm" placeholder="" formControlName="branch_code"></div>
+                                <div class="ml-2"><button class="btn btn-sm btn-primary"  (click)="searchBranch(2)">Search</button></div>
+                            </div>
+                          </form>
+
                       </div>
                       <div class="col-lg-5">
                           <h6 class="c-title mb-1">Select Branch</h6>
