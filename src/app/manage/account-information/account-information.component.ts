@@ -11,10 +11,13 @@ import { AccountType } from 'src/app/core/model/report-response.model';
 import { passwordValidation } from 'src/app/core/helper/custom-validate.helper';
 import { AuthenService } from 'src/app/core/services/authen.service';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
-import { element } from 'protractor';
 import { SearchHiraModel, BankModel, BranchModel } from 'src/app/core/model/bank-response.model';
-import { listHiraBank } from 'src/app/core/constant/hira-list-constant';
-import { MizuhoBank, RakutenBank, SumitomoMitsuiBank, MitsubishiUFJBank, JapanNetBank, JapanPostBank } from 'src/app/core/constant/japan-constant';
+import { MizuhoBank,
+         RakutenBank,
+         SumitomoMitsuiBank,
+         MitsubishiUFJBank,
+         JapanNetBank,
+         JapanPostBank } from 'src/app/core/constant/japan-constant';
 declare var $: any;
 
 

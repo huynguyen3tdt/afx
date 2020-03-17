@@ -24,7 +24,7 @@ const numeral = require('numeral');
   styleUrls: ['./deposit.component.css']
 })
 export class DepositComponent implements OnInit {
-  @ViewChild('listTran', { static: false }) listTran: ListTransactionComponent;
+  @ViewChild('listTran', { static: true }) listTran: ListTransactionComponent;
   constructor(private depositService: DepositService,
               private withdrawRequestService: WithdrawRequestService,
               private spinnerService: Ng4LoadingSpinnerService,

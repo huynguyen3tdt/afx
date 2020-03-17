@@ -13,7 +13,7 @@ import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
   styleUrls: ['./forgot-password.component.css']
 })
 export class ForgotPasswordComponent implements OnInit, AfterViewInit, OnDestroy {
-  @ViewChild('loginid', { static: false }) loginid: ElementRef;
+  @ViewChild('loginid', { static: true }) loginid: ElementRef;
 
   forgotPasswordForm: FormGroup;
   isSubmitted: boolean;

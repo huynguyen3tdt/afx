@@ -27,7 +27,7 @@ import * as moment from 'moment';
   styleUrls: ['./withdraw-request.component.css']
 })
 export class WithdrawRequestComponent implements OnInit {
-  @ViewChild('listTran', { static: false }) listTran: ListTransactionComponent;
+  @ViewChild('listTran', { static: true }) listTran: ListTransactionComponent;
   mt5Infor: Mt5Model;
   accountType;
   bankInfor: BankInforModel;

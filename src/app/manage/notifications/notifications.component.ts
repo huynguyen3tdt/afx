@@ -15,7 +15,7 @@ declare var $: any;
   styleUrls: ['./notifications.component.css']
 })
 export class NotificationsComponent implements OnInit {
-  @ViewChild('importantTab', { static: false }) importantTab: ElementRef;
+  @ViewChild('importantTab', { static: true }) importantTab: ElementRef;
   currentPage: number;
   pageSize: number;
   listNotification: Array<Notification>;

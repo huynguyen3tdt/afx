@@ -22,8 +22,8 @@ declare var $: any;
   styleUrls: ['./withdraw-history.component.css']
 })
 export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
-  @ViewChild('depositTab', { static: false }) depositTab: ElementRef;
-  @ViewChild('withdrawTab', { static: false }) withdrawTab: ElementRef;
+  @ViewChild('depositTab', { static: true }) depositTab: ElementRef;
+  @ViewChild('withdrawTab', { static: true }) withdrawTab: ElementRef;
 
 
   listBankInfor: BankInforModel;
