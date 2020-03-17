@@ -85,10 +85,10 @@ export class AccountInformationComponent implements OnInit {
   name: string;
   bic: string;
   bankSearch;
-  listBank = [];
+  characBank = [];
   listHira: SearchHiraModel[];
   listHiraBranch: SearchHiraModel[];
-  characBranch;
+  characBranch = [];
   branchSearch;
   bankId;
   currentBank: BankModel;
@@ -442,11 +442,11 @@ export class AccountInformationComponent implements OnInit {
     });
   }
 
-  getListBank() {
-    this.userService.getListBank().subscribe( response => {
+  getBank() {
+    this.userService.getBank().subscribe( response => {
       if (response.meta.code === 200) {
-        this.listBank = response.data;
-        this.listBank.forEach(item => {
+        this.characBank = response.data;
+        this.characBank.forEach(item => {
           // tslint:disable-next-line: no-shadowed-variable
           this.listHira.forEach(element => {
             if (element.key_kata === item) {
@@ -507,7 +507,7 @@ export class AccountInformationComponent implements OnInit {
       $('#modal-select-bank').modal('show');
       this.showBank = true;
       this.showBranch = false;
-      this.getListBank();
+      this.getBank();
     }
 
   }
@@ -516,7 +516,7 @@ export class AccountInformationComponent implements OnInit {
     this.initHiraCode();
     this.showBank = true;
     this.showBranch = false;
-    this.getListBank();
+    this.getBank();
   }
   saveBankAccount() {
 

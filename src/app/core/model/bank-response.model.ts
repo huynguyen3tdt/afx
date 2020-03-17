@@ -5,6 +5,11 @@ export interface SearchBankResponseModel {
   data: Array<BankModel>;
 
 }
+export interface SearchBranchResponseModel {
+  meta: MetaResponseModel;
+  data: Array<BankModel>;
+
+}
 export interface BankModel {
   id: number;
   name: string;

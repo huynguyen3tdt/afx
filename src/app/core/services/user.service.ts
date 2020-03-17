@@ -5,9 +5,9 @@ import { Observable } from 'rxjs/internal/Observable';
 import { InnerSubscriber } from 'rxjs/internal/InnerSubscriber';
 import { EnvConfigService } from './env-config.service';
 import { catchError } from 'rxjs/operators';
-import { UserResponse, CorporateResponse } from '../model/user.model';
+import { UserResponse, CorporateResponse, BankResponse } from '../model/user.model';
 import { ResponseWihtoutDataModel } from '../model/none-data-response.model';
-import { SearchBankResponseModel } from '../model/bank-response.model';
+import { SearchBankResponseModel, SearchBranchResponseModel } from '../model/bank-response.model';
 
 @Injectable({
   providedIn: 'root'
@@ -67,7 +67,7 @@ export class UserService {
     );
   }
 
-  getBranch(bankId: number): Observable<ResponseWihtoutDataModel> {
+  getBranch(bankId: number): Observable<BankResponse> {
     return this.httpClient
       .get(`${this.envConfigService.getConfig()}/${AppSettings.API_BRANCH}` + `?bank_id=${bankId}`)
       .pipe(
@@ -101,9 +101,9 @@ export class UserService {
       );
   }
 
-  getListBank(): Observable<ResponseWihtoutDataModel> {
+  getBank(): Observable<BankResponse> {
     return this.httpClient
-      .get(`${this.envConfigService.getConfig()}/${AppSettings.API_LIST_BANK}`)
+      .get(`${this.envConfigService.getConfig()}/${AppSettings.API_BANK}`)
       .pipe(
         catchError((error: HttpErrorResponse) => {
           return new Observable((observer: InnerSubscriber<any, any>) => {
@@ -113,7 +113,7 @@ export class UserService {
       );
   }
 
-  getSearchBranch(bankId: number, firstChar: string, branchName: string, branchCode: string): Observable<ResponseWihtoutDataModel> {
+  getSearchBranch(bankId: number, firstChar: string, branchName: string, branchCode: string): Observable<SearchBranchResponseModel> {
     let URL = '';
     if (firstChar && bankId) {
       URL += `?bank_id=${bankId}&first_char=${firstChar}`;
