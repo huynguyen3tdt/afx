@@ -8,6 +8,7 @@ import { catchError } from 'rxjs/operators';
 import { UserResponse, CorporateResponse, BankResponse } from '../model/user.model';
 import { ResponseWihtoutDataModel } from '../model/none-data-response.model';
 import { SearchBankResponseModel, SearchBranchResponseModel } from '../model/bank-response.model';
+import { WithdrawHistoryModel } from '../model/withdraw-request-response.model';
 
 @Injectable({
   providedIn: 'root'
@@ -67,7 +68,7 @@ export class UserService {
     );
   }
 
-  getBranch(bankId: number): Observable<BankResponse> {
+  getAllCharacBranch(bankId: number): Observable<BankResponse> {
     return this.httpClient
       .get(`${this.envConfigService.getConfig()}/${AppSettings.API_BRANCH}` + `?bank_id=${bankId}`)
       .pipe(
@@ -101,7 +102,7 @@ export class UserService {
       );
   }
 
-  getBank(): Observable<BankResponse> {
+  getAllCharacBank(): Observable<BankResponse> {
     return this.httpClient
       .get(`${this.envConfigService.getConfig()}/${AppSettings.API_BANK}`)
       .pipe(
@@ -133,5 +134,17 @@ export class UserService {
           });
         })
       );
+  }
+
+  changeBank(param): Observable<WithdrawHistoryModel> {
+    return this.httpClient
+      .put(`${this.envConfigService.getConfig()}/${AppSettings.API_CHANGE_BANK}`, param)
+      .pipe(
+      catchError((error: HttpErrorResponse) => {
+        return new Observable((observer: InnerSubscriber<any, any>) => {
+          observer.next(error);
+        });
+      })
+    );
   }
 }

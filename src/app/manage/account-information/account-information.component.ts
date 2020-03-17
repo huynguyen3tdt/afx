@@ -442,8 +442,8 @@ export class AccountInformationComponent implements OnInit {
     });
   }
 
-  getBank() {
-    this.userService.getBank().subscribe( response => {
+  getAllCharacBank() {
+    this.userService.getAllCharacBank().subscribe( response => {
       if (response.meta.code === 200) {
         this.characBank = response.data;
         this.characBank.forEach(item => {
@@ -457,9 +457,9 @@ export class AccountInformationComponent implements OnInit {
       }
     });
   }
-  getBranch(bankId: number) {
+  getAllCharacBranch(bankId: number) {
     this.initHiraCode();
-    this.userService.getBranch(bankId).subscribe( response => {
+    this.userService.getAllCharacBranch(bankId).subscribe( response => {
       if (response.meta.code === 200) {
         this.characBranch = response.data;
         this.characBranch.forEach(item => {
@@ -473,16 +473,16 @@ export class AccountInformationComponent implements OnInit {
       }
     });
   }
-  getSearchBank(firstChar: string, name: string, bic: string) {
+  searchBank(firstChar: string, name: string, bic: string) {
       this.userService.getSearchBank(firstChar, name, bic).subscribe(response => {
-        if (response.meta.code) {
+        if (response.meta.code === 200) {
           this.bankSearch = response.data;
         }
       });
   }
-  getSearchBranch(bankId: number, firstChar: string, branName: string, branchCode: string) {
+  searchBranch(bankId: number, firstChar: string, branName: string, branchCode: string) {
     this.userService.getSearchBranch(bankId, firstChar, branName, branchCode).subscribe(response => {
-      if (response.meta.code) {
+      if (response.meta.code === 200) {
         this.branchSearch = response.data;
       }
     });
@@ -502,12 +502,12 @@ export class AccountInformationComponent implements OnInit {
       $('#modal-select-bank').modal('show');
       this.showBank = false;
       this.showBranch = true;
-      this.getBranch(this.bankId);
+      this.getAllCharacBranch(this.bankId);
     } else if (type === 2) {
       $('#modal-select-bank').modal('show');
       this.showBank = true;
       this.showBranch = false;
-      this.getBank();
+      this.getAllCharacBank();
     }
 
   }
@@ -516,10 +516,20 @@ export class AccountInformationComponent implements OnInit {
     this.initHiraCode();
     this.showBank = true;
     this.showBranch = false;
-    this.getBank();
+    this.getAllCharacBank();
   }
   saveBankAccount() {
+    // const param = {
+    //   branch_id: this.currentBranch,
+    //   acc_number: this.bankInfor.acc_number,
+    //   bank_id: this.currentBank,
+    //   fx_acc_type: this.bankInfor.fx_acc_type.toString(),
+    // };
+    // this.userService.changeBank(param).subscribe(response => {
+    //   if (response.meta.code === 200) {
 
+    //   }
+    // });
   }
   cancelBankAccount() {
     this.editBank = false;
@@ -557,7 +567,7 @@ export class AccountInformationComponent implements OnInit {
         }
       }
     });
-    this.getSearchBank(item.key_kata, '', '');
+    this.searchBank(item.key_kata, '', '');
   }
 
   changeHiraBranch(item) {
@@ -571,31 +581,31 @@ export class AccountInformationComponent implements OnInit {
         }
       }
     });
-    this.getSearchBranch(this.currentBank.id, item.key_kata, '', '');
+    this.searchBranch(this.currentBank.id, item.key_kata, '', '');
   }
 
-  searchBranch(type: number) {
+  searchBranchSubmit(type: number) {
     if (type === 1) {
-      this.getSearchBranch(this.currentBank.id, '', this.branchForm.controls.branch_name.value, '');
+      this.searchBranch(this.currentBank.id, '', this.branchForm.controls.branch_name.value, '');
     }
     if (type === 2) {
-      this.getSearchBranch(this.currentBank.id, '', '', this.branchForm.controls.branch_code.value);
+      this.searchBranch(this.currentBank.id, '', '', this.branchForm.controls.branch_code.value);
     }
   }
 
-  searchBank(type: number) {
+  searchBankSubmit(type: number) {
     if (type === 1) {
-      this.getSearchBank('', this.bankForm.controls.bank_name.value, '');
+      this.searchBank('', this.bankForm.controls.bank_name.value, '');
     }
     if (type === 2) {
-      this.getSearchBank('', '', this.bankForm.controls.bank_code.value);
+      this.searchBank('', '', this.bankForm.controls.bank_code.value);
     }
   }
   selectBank(item: BankModel) {
     this.showBank = false;
     this.showBranch = true;
     this.currentBank = item;
-    this.getBranch(this.currentBank.id);
+    this.getAllCharacBranch(this.currentBank.id);
   }
   selectBranch(item: BranchModel) {
     $('#modal-select-bank').modal('hide');
