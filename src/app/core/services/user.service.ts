@@ -113,7 +113,7 @@ export class UserService {
       );
   }
 
-  getSearchBranch(bankId: number, firstChar: string, branchName: string, BranchCode: string): Observable<ResponseWihtoutDataModel> {
+  getSearchBranch(bankId: number, firstChar: string, branchName: string, branchCode: string): Observable<ResponseWihtoutDataModel> {
     let URL = '';
     if (firstChar && bankId) {
       URL += `?bank_id=${bankId}&first_char=${firstChar}`;
@@ -121,8 +121,8 @@ export class UserService {
     if (branchName && bankId) {
       URL += `?bank_id=${bankId}&branch_name=${branchName}`;
     }
-    if (BranchCode && bankId) {
-      URL += `?bank_id=${bankId}&branch_code =${BranchCode}`;
+    if (branchCode && bankId) {
+      URL += `?bank_id=${bankId}&branch_code=${branchCode}`;
     }
     return this.httpClient
       .get(`${this.envConfigService.getConfig()}/${AppSettings.API_BRANCH_SEARCH}` + URL)

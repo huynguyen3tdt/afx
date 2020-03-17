@@ -12,7 +12,7 @@ import { passwordValidation } from 'src/app/core/helper/custom-validate.helper';
 import { AuthenService } from 'src/app/core/services/authen.service';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { element } from 'protractor';
-import { SearchHiraModel, BankModel } from 'src/app/core/model/bank-response.model';
+import { SearchHiraModel, BankModel, BranchModel } from 'src/app/core/model/bank-response.model';
 import { listHiraBank } from 'src/app/core/constant/hira-list-constant';
 declare var $: any;
 
@@ -88,12 +88,13 @@ export class AccountInformationComponent implements OnInit {
   bic: string;
   bankSearch;
   listBank = [];
-  listHira: SearchHiraModel[]
+  listHira: SearchHiraModel[];
   listHiraBranch: SearchHiraModel[];
   characBranch;
   branchSearch;
   bankId;
   currentBank: BankModel;
+  currentBranch: BranchModel;
 
   ngOnInit() {
     this.initHiraCode();
@@ -456,6 +457,7 @@ export class AccountInformationComponent implements OnInit {
       if (response.meta.code === 200) {
         this.listBank = response.data;
         this.listBank.forEach(item => {
+          // tslint:disable-next-line: no-shadowed-variable
           this.listHira.forEach(element => {
             if (element.key_kata === item) {
               element.class = 'btn btn-sm btn-character active';
@@ -466,21 +468,18 @@ export class AccountInformationComponent implements OnInit {
     });
   }
   getBranch(bankId: number) {
-    console.log('listHiraBranchhhh0000000000000000000000 ', this.listHiraBranch);
     this.initHiraCode();
     this.userService.getBranch(bankId).subscribe( response => {
       if (response.meta.code === 200) {
         this.characBranch = response.data;
-        console.log('----------- ', this.characBranch);
-        console.log('listHiraBranchhhh111111111111111 ', this.listHiraBranch);
         this.characBranch.forEach(item => {
+          // tslint:disable-next-line: no-shadowed-variable
           this.listHiraBranch.forEach(element => {
             if (element.key_kata === item) {
               element.class = 'btn btn-sm btn-character active';
             }
           });
         });
-        console.log('listHiraBranchhhh ', this.listHiraBranch);
       }
     });
   }
@@ -504,6 +503,8 @@ export class AccountInformationComponent implements OnInit {
     this.bankAccount = false;
     this.bankAccountForm.controls.beneficiary_bank.setValue(this.bankInfor.name);
     this.bankAccountForm.controls.bank_branch.setValue(this.bankInfor.branch_code);
+    this.bankAccountForm.controls.bank_account_type.setValue(this.bankInfor.fx_acc_type.toString());
+    this.bankAccountForm.controls.bank_account_number.setValue(this.bankInfor.acc_number);
   }
   showBankInfor(type: number) {
     this.initHiraCode();
@@ -511,7 +512,7 @@ export class AccountInformationComponent implements OnInit {
       $('#modal-select-bank').modal('show');
       this.showBank = false;
       this.showBranch = true;
-      this.getBranch(this.bankSearch.id);
+      this.getBranch(this.bankId);
     } else if (type === 2) {
       $('#modal-select-bank').modal('show');
       this.showBank = true;
@@ -542,6 +543,7 @@ export class AccountInformationComponent implements OnInit {
 
   changeFontSize(fontsize: string) {
     const listFontSize = ['font-size-sm', 'font-size-md', 'font-size-lg'];
+    // tslint:disable-next-line: no-shadowed-variable
     listFontSize.forEach(element => {
       if (fontsize === element) {
         $(`#${element}`).addClass('active');
@@ -555,6 +557,7 @@ export class AccountInformationComponent implements OnInit {
   }
 
   changeHira(item) {
+    // tslint:disable-next-line: no-shadowed-variable
     this.listHira.forEach( element => {
       if (element.class !== 'btn btn-sm btn-character disabled') {
         if (element.key_hira === item.key_hira) {
@@ -568,6 +571,7 @@ export class AccountInformationComponent implements OnInit {
   }
 
   changeHiraBranch(item) {
+    // tslint:disable-next-line: no-shadowed-variable
     this.listHiraBranch.forEach( element => {
       if (element.class !== 'btn btn-sm btn-character disabled') {
         if (element.key_hira === item.key_hira) {
@@ -577,14 +581,14 @@ export class AccountInformationComponent implements OnInit {
         }
       }
     });
-    this.getSearchBranch(this.bankId, item.key_kata, '', '');
+    this.getSearchBranch(this.currentBank.id, item.key_kata, '', '');
   }
 
   searchBranchName() {
-    this.getSearchBranch(this.bankId, '', this.branchNameForm.controls.branch_name.value, '');
+    this.getSearchBranch(this.currentBank.id, '', this.branchNameForm.controls.branch_name.value, '');
   }
   searchBranchCode() {
-    this.getSearchBranch(this.bankId, '', this.branchCodeForm.controls.branch_code.value, '');
+    this.getSearchBranch(this.currentBank.id, '', '', this.branchCodeForm.controls.branch_code.value);
   }
   searchBankName() {
     this.getSearchBank('', this.bankNameForm.controls.bank_name.value, '');
@@ -598,6 +602,12 @@ export class AccountInformationComponent implements OnInit {
     this.currentBank = item;
     this.getBranch(this.currentBank.id);
   }
+  selectBranch(item: BranchModel) {
+    $('#modal-select-bank').modal('hide');
+    this.currentBranch = item;
+    this.bankAccountForm.controls.beneficiary_bank.setValue(this.currentBank.name);
+    this.bankAccountForm.controls.bank_branch.setValue(this.currentBranch.branch_name);
+  }
 
   initHiraCode() {
     this.listHira = [
@@ -609,7 +619,7 @@ export class AccountInformationComponent implements OnInit {
       {key_hira: 'は', key_kata: 'ﾊ', class: 'btn btn-sm btn-character disabled'},
       {key_hira: 'ま', key_kata: 'ﾏ', class: 'btn btn-sm btn-character disabled'},
       {key_hira: 'や', key_kata: 'ﾔ', class: 'btn btn-sm btn-character disabled'},
-      {key_hira: 'さ', key_kata: 'ｻ', class: 'btn btn-sm btn-character disabled'},
+      {key_hira: 'ら', key_kata: 'ｻ', class: 'btn btn-sm btn-character disabled'},
       {key_hira: 'わ', key_kata: 'ﾜ', class: 'btn btn-sm btn-character disabled'},
       {key_hira: 'い', key_kata: 'ｲ', class: 'btn btn-sm btn-character disabled'},
       {key_hira: 'き', key_kata: 'ｷ', class: 'btn btn-sm btn-character disabled'},
@@ -660,7 +670,7 @@ export class AccountInformationComponent implements OnInit {
       {key_hira: 'は', key_kata: 'ﾊ', class: 'btn btn-sm btn-character disabled'},
       {key_hira: 'ま', key_kata: 'ﾏ', class: 'btn btn-sm btn-character disabled'},
       {key_hira: 'や', key_kata: 'ﾔ', class: 'btn btn-sm btn-character disabled'},
-      {key_hira: 'さ', key_kata: 'ｻ', class: 'btn btn-sm btn-character disabled'},
+      {key_hira: 'ら', key_kata: 'ｻ', class: 'btn btn-sm btn-character disabled'},
       {key_hira: 'わ', key_kata: 'ﾜ', class: 'btn btn-sm btn-character disabled'},
       {key_hira: 'い', key_kata: 'ｲ', class: 'btn btn-sm btn-character disabled'},
       {key_hira: 'き', key_kata: 'ｷ', class: 'btn btn-sm btn-character disabled'},
