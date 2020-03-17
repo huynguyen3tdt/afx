@@ -852,26 +852,26 @@
   <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
       <div class="modal-content">
           <div class="modal-header pt-2 pb-2 bg-light">
-              <h5 class="modal-title">Choosing a financial institution</h5>
+              <h5 class="modal-title">{{'Choosing a financial institution' | translate}}</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
               </button>
           </div>
           <div class="modal-body">
               <div class="section-selected-bank" *ngIf="showBranch == true">
-                  <p class="mb-1">Selected financial institution name:</p>
+                  <p class="mb-1">{{'Selected financial institution name:' | translate}}</p>
                   <div class="d-flex justify-content-between align-items-center">
                       <div>
                           <h4 class="mb-0 text-primary"><strong>{{currentBank?.name}}</strong></h4>
                       </div>
-                      <div><button class="btn btn-sm btn-primary btn-change-bank" (click)="changeBank()">Change Bank</button></div>
+                      <div><button class="btn btn-sm btn-primary btn-change-bank" (click)="changeBank()">{{'Change Bank' | translate}}</button></div>
                   </div>
                   <hr>
               </div>
               <div class="section-select-bank" *ngIf="showBank == true">
                   <div class="row">
                       <div class="col-lg-7">
-                          <h6 class="c-title mb-2">Selecting the initial character of bank name</h6>
+                          <h6 class="c-title mb-2">{{'Selecting the initial character of bank name' | translate}}</h6>
                           <div class="box-characters mb-3">
                             <ng-container *ngFor="let item of listHira">
                               <button *ngIf="item.key_hira == ' '" class="btn btn-sm btn-none">&nbsp;</button>
@@ -880,21 +880,21 @@
                             </ng-container>
                           </div>
                           <form [formGroup]="bankForm">
-                            <h6 class="c-title mb-2">Entering a bank name</h6>
+                            <h6 class="c-title mb-2">{{'Entering a bank name' | translate}}</h6>
                             <div class="d-flex mb-3">
                                 <div class="flex-grow-1"><input type="text" name="" class="form-control form-control-sm" placeholder="" formControlName="bank_name"></div>
-                                <div class="ml-2"><button class="btn btn-sm btn-primary" (click)="searchBankSubmit(1)">Search</button></div>
+                                <div class="ml-2"><button class="btn btn-sm btn-primary" (click)="searchBankSubmit(1)">{{'Search' | translate}}</button></div>
                             </div>
-                            <h6 class="c-title mb-2">Enter bank code</h6>
+                            <h6 class="c-title mb-2">{{'Enter bank code' | translate}}</h6>
                             <div class="d-flex">
                                 <div class="flex-grow-1"><input type="text" name="" class="form-control form-control-sm" placeholder="" formControlName="bank_code"></div>
-                                <div class="ml-2"><button class="btn btn-sm btn-primary" (click)="searchBankSubmit(2)">Search</button></div>
+                                <div class="ml-2"><button class="btn btn-sm btn-primary" (click)="searchBankSubmit(2)">{{'Search' | translate}}</button></div>
                             </div>
                           </form>
 
                       </div>
                       <div class="col-lg-5">
-                          <h6 class="c-title mb-1">Select Bank</h6>
+                          <h6 class="c-title mb-1">{{'Select Bank' | translate}}</h6>
                           <div class="list-group list-bank border" style="height: 336px;">
                               <a href="javascript:;" class="list-group-item list-group-item-action"  *ngFor="let item of bankSearch" (click)="selectBank(item)">{{item.name}}</a>
                               <!-- <a href="javascript:;" class="list-group-item list-group-item-action">Shikoku roukin</a> -->
@@ -905,7 +905,7 @@
               <div class="section-select-branch" *ngIf="showBranch == true">
                   <div class="row">
                       <div class="col-lg-7">
-                          <h6 class="c-title mb-2">Please select the branch name of the selected financial institution</h6>
+                          <h6 class="c-title mb-2">{{'Please select the branch name of the selected financial institution' | translate}}</h6>
                           <div class="box-characters mb-3">
                             <ng-container *ngFor="let item of listHiraBranch">
                               <button *ngIf="item.key_hira == ' '" class="btn btn-sm btn-none">&nbsp;</button>
@@ -914,21 +914,21 @@
                             </ng-container>
                           </div>
                           <form [formGroup]="branchForm">
-                            <h6 class="c-title mb-2">Entering a branch name</h6>
+                            <h6 class="c-title mb-2">{{'Entering a branch name' | translate}}</h6>
                             <div class="d-flex mb-3">
                                 <div class="flex-grow-1"><input type="text" name="" class="form-control form-control-sm" placeholder="" formControlName="branch_name"></div>
-                                <div class="ml-2"><button class="btn btn-sm btn-primary" (click)="searchBranchSubmit(1)">Search</button></div>
+                                <div class="ml-2"><button class="btn btn-sm btn-primary" (click)="searchBranchSubmit(1)">{{'Search' | translate}}</button></div>
                             </div>
-                            <h6 class="c-title mb-2">Enter branch code</h6>
+                            <h6 class="c-title mb-2">{{'Enter branch code' | translate}}</h6>
                             <div class="d-flex">
                                 <div class="flex-grow-1"><input type="text" name="" class="form-control form-control-sm" placeholder="" formControlName="branch_code"></div>
-                                <div class="ml-2"><button class="btn btn-sm btn-primary"  (click)="searchBranchSubmit(2)">Search</button></div>
+                                <div class="ml-2"><button class="btn btn-sm btn-primary"  (click)="searchBranchSubmit(2)">{{'Search' | translate}}</button></div>
                             </div>
                           </form>
 
                       </div>
                       <div class="col-lg-5">
-                          <h6 class="c-title mb-1">Select Branch</h6>
+                          <h6 class="c-title mb-1">{{'Select Branch' | translate}}</h6>
                           <div class="list-group list-bank border" style="height: 342px;">
                               <a href="javascript:;" class="list-group-item list-group-item-action" *ngFor="let item of branchSearch" (click)="selectBranch(item)">{{item?.branch_name}}</a>
                           </div>
