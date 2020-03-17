@@ -22,8 +22,8 @@ declare var $: any;
   styleUrls: ['./withdraw-history.component.css']
 })
 export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
-  @ViewChild('depositTab', { static: false }) depositTab: ElementRef;
-  @ViewChild('withdrawTab', { static: false }) withdrawTab: ElementRef;
+  @ViewChild('depositTab', { static: true }) depositTab: ElementRef;
+  @ViewChild('withdrawTab', { static: true }) withdrawTab: ElementRef;
 
 
   listBankInfor: BankInforModel;
@@ -67,7 +67,7 @@ export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
               private activatedRoute: ActivatedRoute) {
                 this.STATUS = [
                   {label: 'New', value: {id: 4, name: 'New'}},
-                  {label: 'In process', value: {id: 3, name: 'In process'}},
+                  {label: 'In-process', value: {id: 3, name: 'In-process'}},
                   {label: 'Complete', value: {id: 1, name: 'Complete'}},
                   {label: 'Cancel', value: {id: 2, name: 'Cancel'}},
               ];
@@ -97,7 +97,7 @@ export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
         this.withdrawTab.nativeElement.click();
       }
       if (this.querytab === 'detailwithdrawal') {
-        this.searchForm.controls.status.setValue([{id: 4, name: 'New'}, {id: 3, name: 'In process'}]);
+        this.searchForm.controls.status.setValue([{id: 4, name: 'New'}, {id: 3, name: 'In-process'}]);
         this.changeStatus();
         this.withdrawTab.nativeElement.click();
       }

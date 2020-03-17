@@ -24,8 +24,8 @@ declare const $: any;
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit, AfterViewInit {
-  @ViewChild('username', { static: false }) username: ElementRef;
-  @ViewChild('password', { static: false }) password: ElementRef;
+  @ViewChild('username', { static: true }) username: ElementRef;
+  @ViewChild('password', { static: true }) password: ElementRef;
   loginFormGroup: FormGroup;
   isSubmitted: boolean;
   isPc: boolean;

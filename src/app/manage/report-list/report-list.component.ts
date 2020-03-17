@@ -15,7 +15,7 @@ declare var $: any;
   styleUrls: ['./report-list.component.css']
 })
 export class ReportListComponent implements OnInit {
-  @ViewChild('pdfViewer', { static: false }) public pdfViewer;
+  @ViewChild('pdfViewer', { static: true }) public pdfViewer;
   currentPage: number;
   pageSize: number;
   totalItem: number;

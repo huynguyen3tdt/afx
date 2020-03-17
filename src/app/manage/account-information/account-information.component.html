@@ -529,9 +529,12 @@
                                     <div class="col-md-4 col-lg-3">
                                         <label class="label">{{'Account type' | translate}}</label>
                                     </div>
-                                    <div class="col-md-8 col-lg-6">
-                                        <strong>{{bankInfor?.fx_acc_type}}</strong>
+                                    <div class="col-md-8 col-lg-6" *ngIf="bankInfor?.fx_acc_type == 1">
+                                        <strong>{{'Savings' | translate}}</strong>
                                     </div>
+                                    <div class="col-md-8 col-lg-6" *ngIf="bankInfor?.fx_acc_type == 2">
+                                      <strong>{{'Checkings' | translate}}</strong>
+                                  </div>
                                 </div>
                                 <div class="row mb-1">
                                     <div class="col-md-4 col-lg-3">
@@ -562,7 +565,7 @@
                                 <div class="list-banks-wrapper">
                                     <ul class="list-banks">
                                         <li class="bank-item">
-                                          <a href="javascript:;" (click)="showBankInfor(1)">
+                                          <a href="javascript:;" (click)="showBankInfor(1,'三菱ＵＦＪ')">
                                               <div class="text-center">
                                                   <div><img src="assets/images/bank_logo/ufj.png" alt="Mizuho Bank" class="bank_logo"></div>
                                                   <div class="d-none">Mitsubishi UFJ Bank</div>
@@ -572,7 +575,7 @@
 
 
                                         <li class="bank-item">
-                                            <a href="javascript:;" (click)="showBankInfor(1)">
+                                            <a href="javascript:;" (click)="showBankInfor(1,'三井住友')">
                                                 <div class="text-center">
                                                     <div><img src="assets/images/bank_logo/smbc.png" alt="Mizuho Bank" class="bank_logo"></div>
                                                     <div class="d-none">Sumitomo Mitsui Bank</div>
@@ -580,7 +583,7 @@
                                             </a>
                                         </li>
                                         <li class="bank-item">
-                                            <a href="javascript:;" (click)="showBankInfor(1)">
+                                            <a href="javascript:;" (click)="showBankInfor(1,'みずほ')">
                                                 <div class="text-center">
                                                     <div><img src="assets/images/bank_logo/mizuho.png" alt="Mizuho Bank" class="bank_logo"></div>
                                                     <div class="d-none">Mizuho Bank</div>
@@ -588,7 +591,7 @@
                                             </a>
                                         </li>
                                         <li class="bank-item">
-                                            <a href="javascript:;" (click)="showBankInfor(1)">
+                                            <a href="javascript:;" (click)="showBankInfor(1,'楽天')">
                                                 <div class="text-center">
                                                     <div><img src="assets/images/bank_logo/rakuten.png" alt="Mizuho Bank" class="bank_logo"></div>
                                                     <div class="d-none">Rakuten Bank</div>
@@ -596,22 +599,14 @@
                                             </a>
                                         </li>
                                         <li class="bank-item">
-                                            <a href="javascript:;" (click)="showBankInfor(1)">
+                                            <a href="javascript:;" (click)="showBankInfor(1,'ジャパンネット')">
                                                 <div class="text-center">
                                                     <div><img src="assets/images/bank_logo/jnb.png" alt="Mizuho Bank" class="bank_logo"></div>
                                                     <div class="d-none">Japan Net Bank</div>
                                                 </div>
                                             </a>
                                         </li>
-                                        <li class="bank-item">
-                                            <a href="javascript:;" (click)="showBankInfor(1)">
-                                                <div class="text-center">
-                                                    <div><img src="assets/images/bank_logo/sbi.png" alt="Mizuho Bank" class="bank_logo"></div>
-                                                    <div class="d-none">Sumishin SBI Net Bank</div>
-                                                </div>
-                                            </a>
-                                        </li>
-                                        <li class="bank-item" (click)="showBankInfor(1)">
+                                        <li class="bank-item" (click)="showBankInfor(1,'ゆうちょ')">
                                             <a href="javascript:;">
                                                 <div class="text-center">
                                                     <div><img src="assets/images/bank_logo/jpb.png" alt="Japan Post Bank" class="bank_logo"></div>
@@ -650,12 +645,12 @@
                                         <div class="col-md-8 col-lg-6">
                                             <label class="container-radio small mb-1 mr-2">
                                           <div><strong>{{'Savings' | translate}}</strong></div>
-                                          <input type="radio" name="bank_account_type" formControlName="bank_account_type" value="0" checked="checked">
+                                          <input type="radio" name="bank_account_type" formControlName="bank_account_type" value="1" checked="checked">
                                           <span class="checkmark"></span>
                                       </label>
                                             <label class="container-radio small mb-1">
                                           <div><strong>{{'Checkings' | translate}}</strong></div>
-                                          <input type="radio" name="bank_account_type" formControlName="bank_account_type" value="1">
+                                          <input type="radio" name="bank_account_type" formControlName="bank_account_type" value="2">
                                           <span class="checkmark"></span>
                                       </label>
                                         </div>
@@ -673,7 +668,7 @@
                                             <label class="label">{{'Account holder name' | translate}}</label>
                                         </div>
                                         <div class="col-md-8 col-lg-6">
-                                            カワセタロウ
+                                            {{bankInfor?.acc_holder_name}}
                                         </div>
                                     </div>
                                     <div class="row mb-2">
@@ -849,73 +844,52 @@
   <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
       <div class="modal-content">
           <div class="modal-header pt-2 pb-2 bg-light">
-              <h5 class="modal-title">Choosing a financial institution</h5>
+              <h5 class="modal-title">{{'Choosing a financial institution' | translate}}</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
               </button>
           </div>
           <div class="modal-body">
-              <div class="section-selected-bank" *ngIf="showChangeBank == true">
-                  <p class="mb-1">Selected financial institution name:</p>
+              <div class="section-selected-bank" *ngIf="showBranch == true">
+                  <p class="mb-1">{{'Selected financial institution name:' | translate}}</p>
                   <div class="d-flex justify-content-between align-items-center">
                       <div>
-                          <h4 class="mb-0 text-primary"><strong>Mitsubishi UFJ</strong></h4>
+                          <h4 class="mb-0 text-primary"><strong>{{currentBank?.name}}</strong></h4>
                       </div>
-                      <div><button class="btn btn-sm btn-primary btn-change-bank" (click)="changeBank()">Change Bank</button></div>
+                      <div><button class="btn btn-sm btn-primary btn-change-bank" (click)="changeBank()">{{'Change Bank' | translate}}</button></div>
                   </div>
                   <hr>
               </div>
               <div class="section-select-bank" *ngIf="showBank == true">
                   <div class="row">
                       <div class="col-lg-7">
-                          <h6 class="c-title mb-2">Selecting the initial character of bank name</h6>
-                          <table class="table-characters mb-3">
-                              <tbody>
-                                  <tr>
-                                    <ng-container *ngFor="let item of listHira">
-                                      <td><button class="btn btn-sm btn-character" (click)="changeHira(item)">{{item}}</button></td>
-                                    </ng-container>
-                                  </tr>
-                                  <tr>
-                                    <ng-container *ngFor="let item of listHira2">
-                                      <td *ngIf="item == ' '"><button class="btn btn-sm btn-none">&nbsp;</button></td>
-                                      <td *ngIf="item != ' '"><button class="btn btn-sm btn-character" (click)="changeHira(item)">{{item}}</button></td>
-                                    </ng-container>
-                                  </tr>
-                                  <tr>
-                                    <ng-container *ngFor="let item of listHira3">
-                                      <td><button class="btn btn-sm btn-character" (click)="changeHira(item)">{{item}}</button></td>
-                                    </ng-container>
-                                  </tr>
-                                  <tr>
-                                    <ng-container *ngFor="let item of listHira4">
-                                      <td *ngIf="item == ' '"><button class="btn btn-sm btn-none">&nbsp;</button></td>
-                                      <td *ngIf="item != ' '"><button class="btn btn-sm btn-character" (click)="changeHira(item)">{{item}}</button></td>
-                                    </ng-container>
-                                  </tr>
-                                  <tr>
-                                    <ng-container *ngFor="let item of listHira5">
-                                      <td><button class="btn btn-sm btn-character" (click)="changeHira(item)">{{item}}</button></td>
-                                    </ng-container>
-                                  </tr>
-                              </tbody>
-                          </table>
-                          <h6 class="c-title mb-2">Entering a bank name</h6>
-                          <div class="d-flex mb-3">
-                              <div class="flex-grow-1"><input type="text" name="" class="form-control form-control-sm" placeholder=""></div>
-                              <div class="ml-2"><button class="btn btn-sm btn-primary">Search</button></div>
+                          <h6 class="c-title mb-2">{{'Selecting the initial character of bank name' | translate}}</h6>
+                          <div class="box-characters mb-3">
+                            <ng-container *ngFor="let item of listHira">
+                              <button *ngIf="item.key_hira == ' '" class="btn btn-sm btn-none">&nbsp;</button>
+                              <button class="{{item.class}}" *ngIf="item.key_hira != ' ' &&  item.class != 'btn btn-sm btn-character disabled'" (click)="changeHira(item)">{{item.key_hira}}</button>
+                              <button class="btn btn-sm btn-character" *ngIf="item.class == 'btn btn-sm btn-character disabled'" disabled>{{item.key_hira}}</button>
+                            </ng-container>
                           </div>
-                          <h6 class="c-title mb-2">Enter bank code</h6>
-                          <div class="d-flex">
-                              <div class="flex-grow-1"><input type="text" name="" class="form-control form-control-sm" placeholder=""></div>
-                              <div class="ml-2"><button class="btn btn-sm btn-primary">Search</button></div>
-                          </div>
+                          <form [formGroup]="bankForm">
+                            <h6 class="c-title mb-2">{{'Entering a bank name' | translate}}</h6>
+                            <div class="d-flex mb-3">
+                                <div class="flex-grow-1"><input type="text" name="" class="form-control form-control-sm" placeholder="" formControlName="bank_name"></div>
+                                <div class="ml-2"><button class="btn btn-sm btn-primary" (click)="searchBankSubmit(1)">{{'Search' | translate}}</button></div>
+                            </div>
+                            <h6 class="c-title mb-2">{{'Enter bank code' | translate}}</h6>
+                            <div class="d-flex">
+                                <div class="flex-grow-1"><input type="text" name="" class="form-control form-control-sm" placeholder="" formControlName="bank_code"></div>
+                                <div class="ml-2"><button class="btn btn-sm btn-primary" (click)="searchBankSubmit(2)">{{'Search' | translate}}</button></div>
+                            </div>
+                          </form>
+
                       </div>
                       <div class="col-lg-5">
-                          <h6 class="c-title mb-1">Select Bank</h6>
+                          <h6 class="c-title mb-1">{{'Select Bank' | translate}}</h6>
                           <div class="list-group list-bank border" style="height: 336px;">
-                              <a href="javascript:;" class="list-group-item list-group-item-action">Shikoku</a>
-                              <a href="javascript:;" class="list-group-item list-group-item-action">Shikoku roukin</a>
+                              <a href="javascript:;" class="list-group-item list-group-item-action"  *ngFor="let item of bankSearch" (click)="selectBank(item)">{{item.name}}</a>
+                              <!-- <a href="javascript:;" class="list-group-item list-group-item-action">Shikoku roukin</a> -->
                           </div>
                       </div>
                   </div>
@@ -923,56 +897,32 @@
               <div class="section-select-branch" *ngIf="showBranch == true">
                   <div class="row">
                       <div class="col-lg-7">
-                          <h6 class="c-title mb-2">Please select the branch name of the selected financial institution</h6>
-                          <table class="table-characters mb-3">
-                              <tbody>
-                                <tr>
-                                  <ng-container *ngFor="let item of listHira">
-                                    <td><button class="btn btn-sm btn-character" (click)="changeHira(item)">{{item}}</button></td>
-                                  </ng-container>
-                                </tr>
-                                <tr>
-                                  <ng-container *ngFor="let item of listHira2">
-                                    <td *ngIf="item == ' '"><button class="btn btn-sm btn-none">&nbsp;</button></td>
-                                    <td *ngIf="item != ' '"><button class="btn btn-sm btn-character" (click)="changeHira(item)">{{item}}</button></td>
-                                  </ng-container>
-                                </tr>
-                                <tr>
-                                  <ng-container *ngFor="let item of listHira3">
-                                    <td><button class="btn btn-sm btn-character" (click)="changeHira(item)">{{item}}</button></td>
-                                  </ng-container>
-                                </tr>
-                                <tr>
-                                  <ng-container *ngFor="let item of listHira4">
-                                    <td *ngIf="item == ' '"><button class="btn btn-sm btn-none">&nbsp;</button></td>
-                                    <td *ngIf="item != ' '"><button class="btn btn-sm btn-character" (click)="changeHira(item)">{{item}}</button></td>
-                                  </ng-container>
-                                </tr>
-                                <tr>
-                                  <ng-container *ngFor="let item of listHira5">
-                                    <td><button class="btn btn-sm btn-character" (click)="changeHira(item)">{{item}}</button></td>
-                                  </ng-container>
-                                </tr>
-                              </tbody>
-                          </table>
-                          <h6 class="c-title mb-2">Entering a branch name</h6>
-                          <div class="d-flex mb-3">
-                              <div class="flex-grow-1"><input type="text" name="" class="form-control form-control-sm" placeholder=""></div>
-                              <div class="ml-2"><button class="btn btn-sm btn-primary">Search</button></div>
+                          <h6 class="c-title mb-2">{{'Please select the branch name of the selected financial institution' | translate}}</h6>
+                          <div class="box-characters mb-3">
+                            <ng-container *ngFor="let item of listHiraBranch">
+                              <button *ngIf="item.key_hira == ' '" class="btn btn-sm btn-none">&nbsp;</button>
+                              <button class="{{item.class}}" *ngIf="item.key_hira != ' ' &&  item.class != 'btn btn-sm btn-character disabled'" (click)="changeHiraBranch(item)">{{item.key_hira}}</button>
+                              <button class="btn btn-sm btn-character" *ngIf="item.class == 'btn btn-sm btn-character disabled'" disabled>{{item.key_hira}}</button>
+                            </ng-container>
                           </div>
-                          <h6 class="c-title mb-2">Enter branch code</h6>
-                          <div class="d-flex">
-                              <div class="flex-grow-1"><input type="text" name="" class="form-control form-control-sm" placeholder=""></div>
-                              <div class="ml-2"><button class="btn btn-sm btn-primary">Search</button></div>
-                          </div>
+                          <form [formGroup]="branchForm">
+                            <h6 class="c-title mb-2">{{'Entering a branch name' | translate}}</h6>
+                            <div class="d-flex mb-3">
+                                <div class="flex-grow-1"><input type="text" name="" class="form-control form-control-sm" placeholder="" formControlName="branch_name"></div>
+                                <div class="ml-2"><button class="btn btn-sm btn-primary" (click)="searchBranchSubmit(1)">{{'Search' | translate}}</button></div>
+                            </div>
+                            <h6 class="c-title mb-2">{{'Enter branch code' | translate}}</h6>
+                            <div class="d-flex">
+                                <div class="flex-grow-1"><input type="text" name="" class="form-control form-control-sm" placeholder="" formControlName="branch_code"></div>
+                                <div class="ml-2"><button class="btn btn-sm btn-primary"  (click)="searchBranchSubmit(2)">{{'Search' | translate}}</button></div>
+                            </div>
+                          </form>
+
                       </div>
                       <div class="col-lg-5">
-                          <h6 class="c-title mb-1">Select Branch</h6>
+                          <h6 class="c-title mb-1">{{'Select Branch' | translate}}</h6>
                           <div class="list-group list-bank border" style="height: 342px;">
-                              <a href="javascript:;" class="list-group-item list-group-item-action">Ki kyou</a>
-                              <a href="javascript:;" class="list-group-item list-group-item-action">Kisaragi</a>
-                              <a href="javascript:;" class="list-group-item list-group-item-action">Kisarazu</a>
-                              <a href="javascript:;" class="list-group-item list-group-item-action">Kishiwadajou</a>
+                              <a href="javascript:;" class="list-group-item list-group-item-action" *ngFor="let item of branchSearch" (click)="selectBranch(item)">{{item?.branch_name}}</a>
                           </div>
                       </div>
                   </div>

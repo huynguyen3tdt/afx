@@ -11,6 +11,11 @@ export interface CorporateResponse {
   data: CorporateModel;
 }
 
+export interface BankResponse {
+  meta: MetaResponseModel;
+  data: Array<string>;
+}
+
 export interface UserModel {
   name: string;
   fx_dob: string;
