@@ -329,9 +329,11 @@ export class AccountInformationComponent implements OnInit {
         break;
       case 'cor-phone':
         this.editCorPhone = true;
+        console.log('this.editCorPhone', this.editCorPhone)
         break;
       case 'cor-fax':
         this.editCorFax = true;
+        console.log('this.editCorFax', this.editCorFax)
         break;
       case 'department':
         this.editPersonBod = true;
