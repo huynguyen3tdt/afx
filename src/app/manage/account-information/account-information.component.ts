@@ -3,21 +3,23 @@ import { TranslateService } from '@ngx-translate/core';
 import { WithdrawRequestService } from 'src/app/core/services/withdraw-request.service';
 import { Mt5Model, WithdrawAmountModel, BankInforModel } from 'src/app/core/model/withdraw-request-response.model';
 import { UserService } from './../../core/services/user.service';
-import { UserModel, CorporateResponse, CorporateModel} from 'src/app/core/model/user.model';
+import { UserModel, CorporateResponse, CorporateModel } from 'src/app/core/model/user.model';
 import { FormGroup, FormControl } from '@angular/forms';
 import { IS_COMPANY, ACCOUNT_IDS, FONTSIZE_AFX } from 'src/app/core/constant/authen-constant';
 import { GlobalService } from 'src/app/core/services/global.service';
 import { AccountType } from 'src/app/core/model/report-response.model';
-import { passwordValidation } from 'src/app/core/helper/custom-validate.helper';
+import { passwordValidation, requiredInput } from 'src/app/core/helper/custom-validate.helper';
 import { AuthenService } from 'src/app/core/services/authen.service';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { SearchHiraModel, BankModel, BranchModel } from 'src/app/core/model/bank-response.model';
-import { MizuhoBank,
-         RakutenBank,
-         SumitomoMitsuiBank,
-         MitsubishiUFJBank,
-         JapanNetBank,
-         JapanPostBank } from 'src/app/core/constant/japan-constant';
+import {
+  MizuhoBank,
+  RakutenBank,
+  SumitomoMitsuiBank,
+  MitsubishiUFJBank,
+  JapanNetBank,
+  JapanPostBank
+} from 'src/app/core/constant/japan-constant';
 declare var $: any;
 
 
@@ -35,7 +37,7 @@ export class AccountInformationComponent implements OnInit {
     private withdrawRequestService: WithdrawRequestService,
     private userService: UserService,
     private authenService: AuthenService,
-  ) {}
+  ) { }
   accountInfor: Mt5Model;
   withdrawAmount: WithdrawAmountModel;
   editAddress: boolean;
@@ -60,7 +62,6 @@ export class AccountInformationComponent implements OnInit {
   bankForm: FormGroup;
   countries = ['Vietnamese', 'English'];
   postcode: any;
-  isSubmitted: boolean;
   prefecture: any;
   county: any;
   showSave = false;
@@ -96,6 +97,8 @@ export class AccountInformationComponent implements OnInit {
   branchSearch: Array<BranchModel>;
   currentBank: BankModel;
   currentBranch: BranchModel;
+  isSubmittedUser: boolean;
+  isSubmittedCor: boolean;
 
   ngOnInit() {
     this.initHiraCode();
@@ -130,13 +133,13 @@ export class AccountInformationComponent implements OnInit {
 
   initUserForm() {
     this.userForm = new FormGroup({
-      postCode: new FormControl(),
-      searchPrefe: new FormControl(),
-      searchCountry: new FormControl(),
-      house_numb: new FormControl(),
-      name_build: new FormControl(),
-      email: new FormControl(),
-      phone: new FormControl(),
+      postCode: new FormControl('', requiredInput),
+      searchPrefe: new FormControl('', requiredInput),
+      searchCountry: new FormControl('', requiredInput),
+      house_numb: new FormControl('', requiredInput),
+      name_build: new FormControl('', requiredInput),
+      email: new FormControl('', requiredInput),
+      phone: new FormControl('', requiredInput),
     });
   }
   initCorporateForm() {
@@ -261,8 +264,16 @@ export class AccountInformationComponent implements OnInit {
     });
   }
 
+  // userSubmit() {
+  //   this.isSubmittedUser = true;
+  //   if (this.userForm.invalid) {
+  //     return;
+  //   } else {
+  //     $('#modal-confirm').modal('show');
+  //   }
+  // }
   changeUser() {
-    this.isSubmitted = true;
+    this.isSubmittedUser = true;
     if (this.userForm.invalid) {
       return;
     }
@@ -329,11 +340,9 @@ export class AccountInformationComponent implements OnInit {
         break;
       case 'cor-phone':
         this.editCorPhone = true;
-        console.log('this.editCorPhone', this.editCorPhone)
         break;
       case 'cor-fax':
         this.editCorFax = true;
-        console.log('this.editCorFax', this.editCorFax)
         break;
       case 'department':
         this.editPersonBod = true;
@@ -432,8 +441,9 @@ export class AccountInformationComponent implements OnInit {
         fx_dept: this.corporateForm.controls.person_bod.value
       }
     };
-    this.userService.changeCorporation(param).subscribe( response => {
+    this.userService.changeCorporation(param).subscribe(response => {
       if (response.meta.code === 200) {
+        this.showSaveCor = false;
         this.editCorAddress = false;
         this.editCorPhone = false;
         this.editCorFax = false;
@@ -448,7 +458,7 @@ export class AccountInformationComponent implements OnInit {
   }
 
   getAllCharacBank() {
-    this.userService.getAllCharacBank().subscribe( response => {
+    this.userService.getAllCharacBank().subscribe(response => {
       if (response.meta.code === 200) {
         this.characBank = response.data;
         this.characBank.forEach(item => {
@@ -464,7 +474,7 @@ export class AccountInformationComponent implements OnInit {
   }
   getAllCharacBranch(bankId: number) {
     this.initHiraCode();
-    this.userService.getAllCharacBranch(bankId).subscribe( response => {
+    this.userService.getAllCharacBranch(bankId).subscribe(response => {
       if (response.meta.code === 200) {
         this.characBranch = response.data;
         this.characBranch.forEach(item => {
@@ -479,11 +489,11 @@ export class AccountInformationComponent implements OnInit {
     });
   }
   searchBank(firstChar: string, name: string, bic: string) {
-      this.userService.getSearchBank(firstChar, name, bic).subscribe(response => {
-        if (response.meta.code === 200) {
-          this.bankSearch = response.data;
-        }
-      });
+    this.userService.getSearchBank(firstChar, name, bic).subscribe(response => {
+      if (response.meta.code === 200) {
+        this.bankSearch = response.data;
+      }
+    });
   }
   searchBranch(bankId: number, firstChar: string, branName: string, branchCode: string) {
     this.userService.getSearchBranch(bankId, firstChar, branName, branchCode).subscribe(response => {
@@ -491,7 +501,7 @@ export class AccountInformationComponent implements OnInit {
         this.branchSearch = response.data;
       }
     });
-}
+  }
 
   editBankAccount() {
     this.editBank = true;
@@ -563,8 +573,8 @@ export class AccountInformationComponent implements OnInit {
   }
 
   openSetting() {
-   const fontSizeCurrent = localStorage.getItem(FONTSIZE_AFX);
-   $(`#${fontSizeCurrent}`).addClass('active');
+    const fontSizeCurrent = localStorage.getItem(FONTSIZE_AFX);
+    $(`#${fontSizeCurrent}`).addClass('active');
   }
 
   changeFontSize(fontsize: string) {
@@ -584,7 +594,7 @@ export class AccountInformationComponent implements OnInit {
 
   changeHira(item) {
     // tslint:disable-next-line: no-shadowed-variable
-    this.listHira.forEach( element => {
+    this.listHira.forEach(element => {
       if (element.class !== 'btn btn-sm btn-character disabled') {
         if (element.key_hira === item.key_hira) {
           element.class = 'btn btn-sm btn-character choose';
@@ -598,7 +608,7 @@ export class AccountInformationComponent implements OnInit {
 
   changeHiraBranch(item) {
     // tslint:disable-next-line: no-shadowed-variable
-    this.listHiraBranch.forEach( element => {
+    this.listHiraBranch.forEach(element => {
       if (element.class !== 'btn btn-sm btn-character disabled') {
         if (element.key_hira === item.key_hira) {
           element.class = 'btn btn-sm btn-character choose';
@@ -643,109 +653,109 @@ export class AccountInformationComponent implements OnInit {
 
   initHiraCode() {
     this.listHira = [
-      {key_hira: 'あ', key_kata: 'ｱ', class: 'btn btn-sm btn-character disabled'},
-      {key_hira: 'か', key_kata: 'ｶ', class: 'btn btn-sm btn-character disabled'},
-      {key_hira: 'さ', key_kata: 'ｻ', class: 'btn btn-sm btn-character disabled'},
-      {key_hira: 'た', key_kata: 'ﾀ', class: 'btn btn-sm btn-character disabled'},
-      {key_hira: 'な', key_kata: 'ﾅ', class: 'btn btn-sm btn-character disabled'},
-      {key_hira: 'は', key_kata: 'ﾊ', class: 'btn btn-sm btn-character disabled'},
-      {key_hira: 'ま', key_kata: 'ﾏ', class: 'btn btn-sm btn-character disabled'},
-      {key_hira: 'や', key_kata: 'ﾔ', class: 'btn btn-sm btn-character disabled'},
-      {key_hira: 'ら', key_kata: 'ｻ', class: 'btn btn-sm btn-character disabled'},
-      {key_hira: 'わ', key_kata: 'ﾜ', class: 'btn btn-sm btn-character disabled'},
-      {key_hira: 'い', key_kata: 'ｲ', class: 'btn btn-sm btn-character disabled'},
-      {key_hira: 'き', key_kata: 'ｷ', class: 'btn btn-sm btn-character disabled'},
-      {key_hira: 'し', key_kata: 'ｼ', class: 'btn btn-sm btn-character disabled'},
-      {key_hira: 'ち', key_kata: 'ﾁ', class: 'btn btn-sm btn-character disabled'},
-      {key_hira: 'に', key_kata: 'ﾆ', class: 'btn btn-sm btn-character disabled'},
-      {key_hira: 'ひ', key_kata: 'ﾋ', class: 'btn btn-sm btn-character disabled'},
-      {key_hira: 'み', key_kata: 'ﾐ', class: 'btn btn-sm btn-character disabled'},
-      {key_hira: ' ', key_kata: ' ', class: 'btn-none'},
-      {key_hira: 'り', key_kata: 'ﾘ', class: 'btn btn-sm btn-character disabled'},
-      {key_hira: ' ', key_kata: ' ', class: 'btn-none'},
-      {key_hira: 'う', key_kata: 'ｳ', class: 'btn btn-sm btn-character disabled'},
-      {key_hira: 'く', key_kata: 'ｸ', class: 'btn btn-sm btn-character disabled'},
-      {key_hira: 'す', key_kata: 'ｽ', class: 'btn btn-sm btn-character disabled'},
-      {key_hira: 'つ', key_kata: 'ﾂ', class: 'btn btn-sm btn-character disabled'},
-      {key_hira: 'ぬ', key_kata: 'ﾇ', class: 'btn btn-sm btn-character disabled'},
-      {key_hira: 'ふ', key_kata: 'ﾌ', class: 'btn btn-sm btn-character disabled'},
-      {key_hira: 'む', key_kata: 'ﾑ', class: 'btn btn-sm btn-character disabled'},
-      {key_hira: 'ゆ', key_kata: 'ﾕ', class: 'btn btn-sm btn-character disabled'},
-      {key_hira: 'る', key_kata: 'ﾙ', class: 'btn btn-sm btn-character disabled'},
-      {key_hira: 'を', key_kata: 'ｦ', class: 'btn btn-sm btn-character disabled'},
-      {key_hira: 'え', key_kata: 'ｴ', class: 'btn btn-sm btn-character disabled'},
-      {key_hira: 'け', key_kata: 'ｹ', class: 'btn btn-sm btn-character disabled'},
-      {key_hira: 'せ', key_kata: 'ｾ', class: 'btn btn-sm btn-character disabled'},
-      {key_hira: 'て', key_kata: 'ﾃ', class: 'btn btn-sm btn-character disabled'},
-      {key_hira: 'ね', key_kata: 'ﾈ', class: 'btn btn-sm btn-character disabled'},
-      {key_hira: 'へ', key_kata: 'ﾍ', class: 'btn btn-sm btn-character disabled'},
-      {key_hira: 'め', key_kata: 'ﾒ', class: 'btn btn-sm btn-character disabled'},
-      {key_hira: ' ', key_kata: ' ', class: 'btn-none'},
-      {key_hira: 'れ', key_kata: 'ﾚ', class: 'btn btn-sm btn-character disabled'},
-      {key_hira: ' ', key_kata: ' ', class: 'btn-none'},
-      {key_hira: 'お', key_kata: 'ｵ', class: 'btn btn-sm btn-character disabled'},
-      {key_hira: 'こ', key_kata: 'ｺ', class: 'btn btn-sm btn-character disabled'},
-      {key_hira: 'そ', key_kata: 'ｿ', class: 'btn btn-sm btn-character disabled'},
-      {key_hira: 'と', key_kata: 'ﾄ', class: 'btn btn-sm btn-character disabled'},
-      {key_hira: 'の', key_kata: 'ﾉ', class: 'btn btn-sm btn-character disabled'},
-      {key_hira: 'ほ', key_kata: 'ﾎ', class: 'btn btn-sm btn-character disabled'},
-      {key_hira: 'も', key_kata: 'ﾓ', class: 'btn btn-sm btn-character disabled'},
-      {key_hira: 'よ', key_kata: 'ﾖ', class: 'btn btn-sm btn-character disabled'},
-      {key_hira: 'ろ', key_kata: 'ﾛ', class: 'btn btn-sm btn-character disabled'},
-      {key_hira: 'ん', key_kata: 'ﾝ', class: 'btn btn-sm btn-character disabled'}
-      ];
+      { key_hira: 'あ', key_kata: 'ｱ', class: 'btn btn-sm btn-character disabled' },
+      { key_hira: 'か', key_kata: 'ｶ', class: 'btn btn-sm btn-character disabled' },
+      { key_hira: 'さ', key_kata: 'ｻ', class: 'btn btn-sm btn-character disabled' },
+      { key_hira: 'た', key_kata: 'ﾀ', class: 'btn btn-sm btn-character disabled' },
+      { key_hira: 'な', key_kata: 'ﾅ', class: 'btn btn-sm btn-character disabled' },
+      { key_hira: 'は', key_kata: 'ﾊ', class: 'btn btn-sm btn-character disabled' },
+      { key_hira: 'ま', key_kata: 'ﾏ', class: 'btn btn-sm btn-character disabled' },
+      { key_hira: 'や', key_kata: 'ﾔ', class: 'btn btn-sm btn-character disabled' },
+      { key_hira: 'ら', key_kata: 'ｻ', class: 'btn btn-sm btn-character disabled' },
+      { key_hira: 'わ', key_kata: 'ﾜ', class: 'btn btn-sm btn-character disabled' },
+      { key_hira: 'い', key_kata: 'ｲ', class: 'btn btn-sm btn-character disabled' },
+      { key_hira: 'き', key_kata: 'ｷ', class: 'btn btn-sm btn-character disabled' },
+      { key_hira: 'し', key_kata: 'ｼ', class: 'btn btn-sm btn-character disabled' },
+      { key_hira: 'ち', key_kata: 'ﾁ', class: 'btn btn-sm btn-character disabled' },
+      { key_hira: 'に', key_kata: 'ﾆ', class: 'btn btn-sm btn-character disabled' },
+      { key_hira: 'ひ', key_kata: 'ﾋ', class: 'btn btn-sm btn-character disabled' },
+      { key_hira: 'み', key_kata: 'ﾐ', class: 'btn btn-sm btn-character disabled' },
+      { key_hira: ' ', key_kata: ' ', class: 'btn-none' },
+      { key_hira: 'り', key_kata: 'ﾘ', class: 'btn btn-sm btn-character disabled' },
+      { key_hira: ' ', key_kata: ' ', class: 'btn-none' },
+      { key_hira: 'う', key_kata: 'ｳ', class: 'btn btn-sm btn-character disabled' },
+      { key_hira: 'く', key_kata: 'ｸ', class: 'btn btn-sm btn-character disabled' },
+      { key_hira: 'す', key_kata: 'ｽ', class: 'btn btn-sm btn-character disabled' },
+      { key_hira: 'つ', key_kata: 'ﾂ', class: 'btn btn-sm btn-character disabled' },
+      { key_hira: 'ぬ', key_kata: 'ﾇ', class: 'btn btn-sm btn-character disabled' },
+      { key_hira: 'ふ', key_kata: 'ﾌ', class: 'btn btn-sm btn-character disabled' },
+      { key_hira: 'む', key_kata: 'ﾑ', class: 'btn btn-sm btn-character disabled' },
+      { key_hira: 'ゆ', key_kata: 'ﾕ', class: 'btn btn-sm btn-character disabled' },
+      { key_hira: 'る', key_kata: 'ﾙ', class: 'btn btn-sm btn-character disabled' },
+      { key_hira: 'を', key_kata: 'ｦ', class: 'btn btn-sm btn-character disabled' },
+      { key_hira: 'え', key_kata: 'ｴ', class: 'btn btn-sm btn-character disabled' },
+      { key_hira: 'け', key_kata: 'ｹ', class: 'btn btn-sm btn-character disabled' },
+      { key_hira: 'せ', key_kata: 'ｾ', class: 'btn btn-sm btn-character disabled' },
+      { key_hira: 'て', key_kata: 'ﾃ', class: 'btn btn-sm btn-character disabled' },
+      { key_hira: 'ね', key_kata: 'ﾈ', class: 'btn btn-sm btn-character disabled' },
+      { key_hira: 'へ', key_kata: 'ﾍ', class: 'btn btn-sm btn-character disabled' },
+      { key_hira: 'め', key_kata: 'ﾒ', class: 'btn btn-sm btn-character disabled' },
+      { key_hira: ' ', key_kata: ' ', class: 'btn-none' },
+      { key_hira: 'れ', key_kata: 'ﾚ', class: 'btn btn-sm btn-character disabled' },
+      { key_hira: ' ', key_kata: ' ', class: 'btn-none' },
+      { key_hira: 'お', key_kata: 'ｵ', class: 'btn btn-sm btn-character disabled' },
+      { key_hira: 'こ', key_kata: 'ｺ', class: 'btn btn-sm btn-character disabled' },
+      { key_hira: 'そ', key_kata: 'ｿ', class: 'btn btn-sm btn-character disabled' },
+      { key_hira: 'と', key_kata: 'ﾄ', class: 'btn btn-sm btn-character disabled' },
+      { key_hira: 'の', key_kata: 'ﾉ', class: 'btn btn-sm btn-character disabled' },
+      { key_hira: 'ほ', key_kata: 'ﾎ', class: 'btn btn-sm btn-character disabled' },
+      { key_hira: 'も', key_kata: 'ﾓ', class: 'btn btn-sm btn-character disabled' },
+      { key_hira: 'よ', key_kata: 'ﾖ', class: 'btn btn-sm btn-character disabled' },
+      { key_hira: 'ろ', key_kata: 'ﾛ', class: 'btn btn-sm btn-character disabled' },
+      { key_hira: 'ん', key_kata: 'ﾝ', class: 'btn btn-sm btn-character disabled' }
+    ];
     this.listHiraBranch = [
-      {key_hira: 'あ', key_kata: 'ｱ', class: 'btn btn-sm btn-character disabled'},
-      {key_hira: 'か', key_kata: 'ｶ', class: 'btn btn-sm btn-character disabled'},
-      {key_hira: 'さ', key_kata: 'ｻ', class: 'btn btn-sm btn-character disabled'},
-      {key_hira: 'た', key_kata: 'ﾀ', class: 'btn btn-sm btn-character disabled'},
-      {key_hira: 'な', key_kata: 'ﾅ', class: 'btn btn-sm btn-character disabled'},
-      {key_hira: 'は', key_kata: 'ﾊ', class: 'btn btn-sm btn-character disabled'},
-      {key_hira: 'ま', key_kata: 'ﾏ', class: 'btn btn-sm btn-character disabled'},
-      {key_hira: 'や', key_kata: 'ﾔ', class: 'btn btn-sm btn-character disabled'},
-      {key_hira: 'ら', key_kata: 'ｻ', class: 'btn btn-sm btn-character disabled'},
-      {key_hira: 'わ', key_kata: 'ﾜ', class: 'btn btn-sm btn-character disabled'},
-      {key_hira: 'い', key_kata: 'ｲ', class: 'btn btn-sm btn-character disabled'},
-      {key_hira: 'き', key_kata: 'ｷ', class: 'btn btn-sm btn-character disabled'},
-      {key_hira: 'し', key_kata: 'ｼ', class: 'btn btn-sm btn-character disabled'},
-      {key_hira: 'ち', key_kata: 'ﾁ', class: 'btn btn-sm btn-character disabled'},
-      {key_hira: 'に', key_kata: 'ﾆ', class: 'btn btn-sm btn-character disabled'},
-      {key_hira: 'ひ', key_kata: 'ﾋ', class: 'btn btn-sm btn-character disabled'},
-      {key_hira: 'み', key_kata: 'ﾐ', class: 'btn btn-sm btn-character disabled'},
-      {key_hira: ' ', key_kata: ' ', class: 'btn-none'},
-      {key_hira: 'り', key_kata: 'ﾘ', class: 'btn btn-sm btn-character disabled'},
-      {key_hira: ' ', key_kata: ' ', class: 'btn-none'},
-      {key_hira: 'う', key_kata: 'ｳ', class: 'btn btn-sm btn-character disabled'},
-      {key_hira: 'く', key_kata: 'ｸ', class: 'btn btn-sm btn-character disabled'},
-      {key_hira: 'す', key_kata: 'ｽ', class: 'btn btn-sm btn-character disabled'},
-      {key_hira: 'つ', key_kata: 'ﾂ', class: 'btn btn-sm btn-character disabled'},
-      {key_hira: 'ぬ', key_kata: 'ﾇ', class: 'btn btn-sm btn-character disabled'},
-      {key_hira: 'ふ', key_kata: 'ﾌ', class: 'btn btn-sm btn-character disabled'},
-      {key_hira: 'む', key_kata: 'ﾑ', class: 'btn btn-sm btn-character disabled'},
-      {key_hira: 'ゆ', key_kata: 'ﾕ', class: 'btn btn-sm btn-character disabled'},
-      {key_hira: 'る', key_kata: 'ﾙ', class: 'btn btn-sm btn-character disabled'},
-      {key_hira: 'を', key_kata: 'ｦ', class: 'btn btn-sm btn-character disabled'},
-      {key_hira: 'え', key_kata: 'ｴ', class: 'btn btn-sm btn-character disabled'},
-      {key_hira: 'け', key_kata: 'ｹ', class: 'btn btn-sm btn-character disabled'},
-      {key_hira: 'せ', key_kata: 'ｾ', class: 'btn btn-sm btn-character disabled'},
-      {key_hira: 'て', key_kata: 'ﾃ', class: 'btn btn-sm btn-character disabled'},
-      {key_hira: 'ね', key_kata: 'ﾈ', class: 'btn btn-sm btn-character disabled'},
-      {key_hira: 'へ', key_kata: 'ﾍ', class: 'btn btn-sm btn-character disabled'},
-      {key_hira: 'め', key_kata: 'ﾒ', class: 'btn btn-sm btn-character disabled'},
-      {key_hira: ' ', key_kata: ' ', class: 'btn-none'},
-      {key_hira: 'れ', key_kata: 'ﾚ', class: 'btn btn-sm btn-character disabled'},
-      {key_hira: ' ', key_kata: ' ', class: 'btn-none'},
-      {key_hira: 'お', key_kata: 'ｵ', class: 'btn btn-sm btn-character disabled'},
-      {key_hira: 'こ', key_kata: 'ｺ', class: 'btn btn-sm btn-character disabled'},
-      {key_hira: 'そ', key_kata: 'ｿ', class: 'btn btn-sm btn-character disabled'},
-      {key_hira: 'と', key_kata: 'ﾄ', class: 'btn btn-sm btn-character disabled'},
-      {key_hira: 'の', key_kata: 'ﾉ', class: 'btn btn-sm btn-character disabled'},
-      {key_hira: 'ほ', key_kata: 'ﾎ', class: 'btn btn-sm btn-character disabled'},
-      {key_hira: 'も', key_kata: 'ﾓ', class: 'btn btn-sm btn-character disabled'},
-      {key_hira: 'よ', key_kata: 'ﾖ', class: 'btn btn-sm btn-character disabled'},
-      {key_hira: 'ろ', key_kata: 'ﾛ', class: 'btn btn-sm btn-character disabled'},
-      {key_hira: 'ん', key_kata: 'ﾝ', class: 'btn btn-sm btn-character disabled'}
-      ];
+      { key_hira: 'あ', key_kata: 'ｱ', class: 'btn btn-sm btn-character disabled' },
+      { key_hira: 'か', key_kata: 'ｶ', class: 'btn btn-sm btn-character disabled' },
+      { key_hira: 'さ', key_kata: 'ｻ', class: 'btn btn-sm btn-character disabled' },
+      { key_hira: 'た', key_kata: 'ﾀ', class: 'btn btn-sm btn-character disabled' },
+      { key_hira: 'な', key_kata: 'ﾅ', class: 'btn btn-sm btn-character disabled' },
+      { key_hira: 'は', key_kata: 'ﾊ', class: 'btn btn-sm btn-character disabled' },
+      { key_hira: 'ま', key_kata: 'ﾏ', class: 'btn btn-sm btn-character disabled' },
+      { key_hira: 'や', key_kata: 'ﾔ', class: 'btn btn-sm btn-character disabled' },
+      { key_hira: 'ら', key_kata: 'ｻ', class: 'btn btn-sm btn-character disabled' },
+      { key_hira: 'わ', key_kata: 'ﾜ', class: 'btn btn-sm btn-character disabled' },
+      { key_hira: 'い', key_kata: 'ｲ', class: 'btn btn-sm btn-character disabled' },
+      { key_hira: 'き', key_kata: 'ｷ', class: 'btn btn-sm btn-character disabled' },
+      { key_hira: 'し', key_kata: 'ｼ', class: 'btn btn-sm btn-character disabled' },
+      { key_hira: 'ち', key_kata: 'ﾁ', class: 'btn btn-sm btn-character disabled' },
+      { key_hira: 'に', key_kata: 'ﾆ', class: 'btn btn-sm btn-character disabled' },
+      { key_hira: 'ひ', key_kata: 'ﾋ', class: 'btn btn-sm btn-character disabled' },
+      { key_hira: 'み', key_kata: 'ﾐ', class: 'btn btn-sm btn-character disabled' },
+      { key_hira: ' ', key_kata: ' ', class: 'btn-none' },
+      { key_hira: 'り', key_kata: 'ﾘ', class: 'btn btn-sm btn-character disabled' },
+      { key_hira: ' ', key_kata: ' ', class: 'btn-none' },
+      { key_hira: 'う', key_kata: 'ｳ', class: 'btn btn-sm btn-character disabled' },
+      { key_hira: 'く', key_kata: 'ｸ', class: 'btn btn-sm btn-character disabled' },
+      { key_hira: 'す', key_kata: 'ｽ', class: 'btn btn-sm btn-character disabled' },
+      { key_hira: 'つ', key_kata: 'ﾂ', class: 'btn btn-sm btn-character disabled' },
+      { key_hira: 'ぬ', key_kata: 'ﾇ', class: 'btn btn-sm btn-character disabled' },
+      { key_hira: 'ふ', key_kata: 'ﾌ', class: 'btn btn-sm btn-character disabled' },
+      { key_hira: 'む', key_kata: 'ﾑ', class: 'btn btn-sm btn-character disabled' },
+      { key_hira: 'ゆ', key_kata: 'ﾕ', class: 'btn btn-sm btn-character disabled' },
+      { key_hira: 'る', key_kata: 'ﾙ', class: 'btn btn-sm btn-character disabled' },
+      { key_hira: 'を', key_kata: 'ｦ', class: 'btn btn-sm btn-character disabled' },
+      { key_hira: 'え', key_kata: 'ｴ', class: 'btn btn-sm btn-character disabled' },
+      { key_hira: 'け', key_kata: 'ｹ', class: 'btn btn-sm btn-character disabled' },
+      { key_hira: 'せ', key_kata: 'ｾ', class: 'btn btn-sm btn-character disabled' },
+      { key_hira: 'て', key_kata: 'ﾃ', class: 'btn btn-sm btn-character disabled' },
+      { key_hira: 'ね', key_kata: 'ﾈ', class: 'btn btn-sm btn-character disabled' },
+      { key_hira: 'へ', key_kata: 'ﾍ', class: 'btn btn-sm btn-character disabled' },
+      { key_hira: 'め', key_kata: 'ﾒ', class: 'btn btn-sm btn-character disabled' },
+      { key_hira: ' ', key_kata: ' ', class: 'btn-none' },
+      { key_hira: 'れ', key_kata: 'ﾚ', class: 'btn btn-sm btn-character disabled' },
+      { key_hira: ' ', key_kata: ' ', class: 'btn-none' },
+      { key_hira: 'お', key_kata: 'ｵ', class: 'btn btn-sm btn-character disabled' },
+      { key_hira: 'こ', key_kata: 'ｺ', class: 'btn btn-sm btn-character disabled' },
+      { key_hira: 'そ', key_kata: 'ｿ', class: 'btn btn-sm btn-character disabled' },
+      { key_hira: 'と', key_kata: 'ﾄ', class: 'btn btn-sm btn-character disabled' },
+      { key_hira: 'の', key_kata: 'ﾉ', class: 'btn btn-sm btn-character disabled' },
+      { key_hira: 'ほ', key_kata: 'ﾎ', class: 'btn btn-sm btn-character disabled' },
+      { key_hira: 'も', key_kata: 'ﾓ', class: 'btn btn-sm btn-character disabled' },
+      { key_hira: 'よ', key_kata: 'ﾖ', class: 'btn btn-sm btn-character disabled' },
+      { key_hira: 'ろ', key_kata: 'ﾛ', class: 'btn btn-sm btn-character disabled' },
+      { key_hira: 'ん', key_kata: 'ﾝ', class: 'btn btn-sm btn-character disabled' }
+    ];
   }
 
 }

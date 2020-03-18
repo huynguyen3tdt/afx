@@ -152,7 +152,12 @@
                                                                         {{'Verificaion in process' | translate}}</span></div> -->
                                                         </div>
                                                         <div *ngIf="editAddress == true" class="editable d-block">
-                                                            <input type="text" name="postcode" formControlName="postCode" class="form-control form-control-sm mb-1" value="" placeholder="">
+                                                            <input type="text" name="postcode" formControlName="postCode" class="form-control form-control-sm mb-1" value="" placeholder=""
+                                                            [ngClass]="{'invalid': isSubmittedUser && userForm?.controls['postCode'].errors}">
+
+                                                        </div>
+                                                        <div *ngIf="isSubmittedUser && userForm?.controls['postCode'].errors?.Required" class="text-danger">
+                                                          <div>{{'This field is required' | translate}}</div>
                                                         </div>
                                                     </td>
                                                     <td width="15">&nbsp;</td>
@@ -208,7 +213,11 @@
                                                                         class="icon ion-md-hourglass"></i> Verificaion in process</span></div>
                                                         </div>
                                                         <div *ngIf="editEmail == true" class="editable d-block">
-                                                            <input type="text" name="email" formControlName="email" class="form-control form-control-sm mb-1" value="" placeholder="">
+                                                            <input type="text" name="email" formControlName="email" class="form-control form-control-sm mb-1" value="" placeholder=""
+                                                            [ngClass]="{'invalid': isSubmittedUser && userForm?.controls['email'].errors}">
+                                                            <div *ngIf="isSubmittedUser && userForm?.controls['email'].errors?.Required" class="text-danger">
+                                                              <div>{{'This field is required' | translate}}</div>
+                                                            </div>
                                                             <div class="text-right">
                                                                 <button type="button" (click)="cancelEdit('email')" class="btn btn-sm btn-cancel btn-outline-secondary pt-0 pb-0">{{'Cancel' | translate}}</button>
                                                             </div>
@@ -228,11 +237,16 @@
                                                                 </span></div> -->
                                                         </div>
                                                         <div *ngIf="editPhone == true" class="editable d-block">
-                                                            <input type="text" name="phone" formControlName="phone" class="form-control form-control-sm mb-1" value="+" placeholder="">
+                                                            <input type="text" name="phone" formControlName="phone" class="form-control form-control-sm mb-1" value="+" placeholder=""
+                                                              [ngClass]="{'invalid': isSubmittedUser && userForm?.controls['phone'].errors}">
+                                                            <div *ngIf="isSubmittedUser && userForm?.controls['phone'].errors?.Required" class="text-danger">
+                                                                <div>{{'This field is required' | translate}}</div>
+                                                            </div>
                                                             <div class="text-right">
                                                                 <button type="button" (click)="cancelEdit('phone')" class="btn btn-sm btn-cancel btn-outline-secondary pt-0 pb-0">{{'Cancel' | translate}}</button>
                                                             </div>
                                                         </div>
+
                                                     </td>
                                                     <td width="15"><a href="javascript:;" class="edit-link" *ngIf="editPhone == false" data-toggle="tooltip" data-placement="top" (click)="showEditField('phone')" title="Edit Phone"><i class="icon ion-md-create"></i></a>
                                                     </td>
