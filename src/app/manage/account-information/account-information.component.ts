@@ -495,7 +495,7 @@ export class AccountInformationComponent implements OnInit {
     this.editBank = true;
     this.bankAccount = false;
     this.bankAccountForm.controls.beneficiary_bank.setValue(this.bankInfor.name);
-    this.bankAccountForm.controls.bank_branch.setValue(this.bankInfor.branch_code);
+    this.bankAccountForm.controls.bank_branch.setValue(this.bankInfor.branch_name);
     this.bankAccountForm.controls.bank_account_type.setValue(this.bankInfor.fx_acc_type.toString());
     this.bankAccountForm.controls.bank_account_number.setValue(this.bankInfor.acc_number);
   }
@@ -542,21 +542,22 @@ export class AccountInformationComponent implements OnInit {
     this.getAllCharacBank();
   }
   saveBankAccount() {
-    // const param = {
-    //   branch_id: this.currentBranch,
-    //   acc_number: this.bankInfor.acc_number,
-    //   bank_id: this.currentBank,
-    //   fx_acc_type: this.bankInfor.fx_acc_type.toString(),
-    // };
-    // this.userService.changeBank(param).subscribe(response => {
-    //   if (response.meta.code === 200) {
+    const param = {
+      branch_id: this.currentBranch.id,
+      acc_number: this.bankAccountForm.controls.bank_account_number.value,
+      bank_id: this.currentBank.id,
+      fx_acc_type: this.bankAccountForm.controls.bank_account_type.value.toString(),
+    };
+    this.userService.changeBank(param).subscribe(response => {
+      if (response.meta.code === 200) {
 
-    //   }
-    // });
+      }
+    });
   }
   cancelBankAccount() {
     this.editBank = false;
     this.bankAccount = true;
+    this.getBankInfor();
   }
 
   openSetting() {
