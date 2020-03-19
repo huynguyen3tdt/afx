@@ -432,8 +432,8 @@ export class AccountInformationComponent implements OnInit {
           this.listAddressCor = response.data;
           this.corporateForm.controls.cor_postcode.setValue(this.listAddressCor.postno);
           this.corporateForm.controls.cor_district.setValue(this.listAddressCor.city + this.listAddressCor.town);
-          this.corporateForm.controls.cor_build.setValue(this.listAddressCor.old_postcode);
-          this.corporateForm.controls.cor_house.setValue(this.listAddressCor.city);
+          this.corporateForm.controls.cor_build.setValue(this.listAddressCor.city);
+          this.corporateForm.controls.cor_house.setValue(this.listAddressCor.old_postcode);
           this.corporateForm.controls.cor_prefec.setValue(this.listAddressCor.prefecture);
         }
       });
