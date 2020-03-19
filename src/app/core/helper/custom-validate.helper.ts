@@ -27,6 +27,21 @@ const INVALID_PASSWORD_LENGTH = {
     message: 'New password needs to be 8 characters or more and has at least 1 alphabet letter'
   };
 
+const DEFAULT_SALARY_REQUIRED_SPECIAL = {
+    SalarySpecial: true,
+    message: 'Not Special'
+};
+
+const DEFAULT_SALARY_REQUIRED = {
+  Salary: true,
+  message: 'Salary must bigger than 3500000'
+};
+
+const DEFAULT_SALARY_REQUIRED_LENGTH = {
+  SalaryLength: true,
+  message: 'Length > 10'
+};
+
 const DIGITS_PATTERN = '^\\d+$';
 const SALARY_PATTEN = '^[0-9, ]*$';
 const NOT_SPECIAL_CHARACTERS_FOR_EMAIL = '^[a-zA-Z0-9-._ ]*$';
@@ -79,6 +94,29 @@ export function passwordValidation(control: AbstractControl) {
     return INVALID_PASSWORD_LENGTH;
   } else if (control.value.length < 8) {
     return INVALID_PASSWORD_LENGTH;
+  }
+  return null;
+}
+
+export function validationPhoneNumber(control: AbstractControl) {
+  if (control.value === '' || control.value === undefined) {
+      return null;
+  }
+  if (control.value) {
+      // tslint:disable-next-line: variable-name
+      const string = control.value.toString().split('');
+      if (string.length > 0 &&  string.indexOf('-') > -1) {
+          return DEFAULT_SALARY_REQUIRED_SPECIAL;
+      }
+      if (string.length > 0 &&  string.indexOf(' ') > -1) {
+          return DEFAULT_SALARY_REQUIRED;
+      }
+      if (isNaN(control.value) === true && control.value !== '') {
+          return DEFAULT_SALARY_REQUIRED;
+      }
+      if (control.value && (control.value.length < 10)) {
+          return DEFAULT_SALARY_REQUIRED_LENGTH;
+      }
   }
   return null;
 }

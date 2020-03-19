@@ -152,13 +152,13 @@
                                                                         {{'Verificaion in process' | translate}}</span></div> -->
                                                         </div>
                                                         <div *ngIf="editAddress == true" class="editable d-block">
-                                                            <input type="text" name="postcode" formControlName="postCode" class="form-control form-control-sm mb-1" value="" placeholder=""
+                                                            <input type="text" name="postcode" formControlName="postCode" (change)="changeAddress(1)" maxlength="7" class="form-control form-control-sm mb-1" value="" placeholder=""
                                                             [ngClass]="{'invalid': isSubmittedUser && userForm?.controls['postCode'].errors}">
+                                                            <div *ngIf="isSubmittedUser && userForm?.controls['postCode'].errors?.Required" class="invalid-feedback">
+                                                              <div>{{'This field is required' | translate}}</div>
+                                                            </div>
+                                                        </div>
 
-                                                        </div>
-                                                        <div *ngIf="isSubmittedUser && userForm?.controls['postCode'].errors?.Required" class="text-danger">
-                                                          <div>{{'This field is required' | translate}}</div>
-                                                        </div>
                                                     </td>
                                                     <td width="15">&nbsp;</td>
                                                 </tr>
@@ -175,24 +175,89 @@
                                                         <div *ngIf="editAddress == true" class="editable d-block">
                                                             <div class="row no-gutters">
                                                                 <div class="col-sm-6 pr-md-1">
-                                                                    <select formControlName="searchPrefe" class="form-control form-control-sm mb-1 select2" style="width: 100%">
-                                                                        <option value="{{prefecture}}">{{prefecture}}</option>
+                                                                    <select formControlName="searchPrefe" class="form-control form-control-sm mb-1 select2" style="width: 100%"
+                                                                    [ngClass]="{'invalid': isSubmittedUser && userForm?.controls['searchPrefe'].errors}">
+                                                                      <option value="北海道">北海道</option>
+                                                                      <option value="青森県">青森県</option>
+                                                                      <option value="岩手県">岩手県</option>
+                                                                      <option value="宮城県">宮城県</option>
+                                                                      <option value="秋田県">秋田県</option>
+                                                                      <option value="山形県">山形県</option>
+                                                                      <option value="福島県">福島県</option>
+                                                                      <option value="茨城県">茨城県</option>
+                                                                      <option value="栃木県">栃木県</option>
+                                                                      <option value="群馬県">群馬県</option>
+                                                                      <option value="埼玉県">埼玉県</option>
+                                                                      <option value="千葉県">千葉県</option>
+                                                                      <option value="東京都">東京都</option>
+                                                                      <option value="神奈川県">神奈川県</option>
+                                                                      <option value="新潟県">新潟県</option>
+                                                                      <option value="富山県">富山県</option>
+                                                                      <option value="石川県">石川県</option>
+                                                                      <option value="福井県">福井県</option>
+                                                                      <option value="山梨県">山梨県</option>
+                                                                      <option value="長野県">長野県</option>
+                                                                      <option value="岐阜県">岐阜県</option>
+                                                                      <option value="静岡県">静岡県</option>
+                                                                      <option value="愛知県">愛知県</option>
+                                                                      <option value="三重県">三重県</option>
+                                                                      <option value="滋賀県">滋賀県</option>
+                                                                      <option value="京都府">京都府</option>
+                                                                      <option value="大阪府">大阪府</option>
+                                                                      <option value="兵庫県">兵庫県</option>
+                                                                      <option value="奈良県">奈良県</option>
+                                                                      <option value="和歌山県">和歌山県</option>
+                                                                      <option value="鳥取県">鳥取県</option>
+                                                                      <option value="島根県">島根県</option>
+                                                                      <option value="岡山県">岡山県</option>
+                                                                      <option value="広島県">広島県</option>
+                                                                      <option value="山口県">山口県</option>
+                                                                      <option value="徳島県">徳島県</option>
+                                                                      <option value="香川県">香川県</option>
+                                                                      <option value="愛媛県">愛媛県</option>
+                                                                      <option value="高知県">高知県</option>
+                                                                      <option value="福岡県">福岡県</option>
+                                                                      <option value="佐賀県">佐賀県</option>
+                                                                      <option value="長崎県">長崎県</option>
+                                                                      <option value="熊本県">熊本県</option>
+                                                                      <option value="大分県">大分県</option>
+                                                                      <option value="宮崎県">宮崎県</option>
+                                                                      <option value="鹿児島県">鹿児島県</option>
+                                                                      <option value="沖縄県">沖縄県</option>
                                                                     </select>
+                                                                    <div *ngIf="isSubmittedUser&& userForm?.controls['searchPrefe'].errors?.Required" class="invalid-feedback">
+                                                                      <div>{{'This field is required' | translate}}</div>
+                                                                    </div>
                                                                 </div>
-                                                                <div class="col-sm-6 pl-md-1">
-                                                                    <select formControlName="searchCountry" class="form-control form-control-sm mb-1 select2" style="width: 100%">
+                                                                <!-- <div class="col-sm-6 pl-md-1">
+                                                                    <select  class="form-control form-control-sm mb-1 select2" style="width: 100%">
                                                                         <option value="{{county}}">{{county}}</option>
                                                                     </select>
+                                                                </div> -->
+                                                                <div class="col-sm-6 pl-md-1">
+                                                                  <input type="text" name="" class="form-control form-control-sm mb-1" formControlName="searchCountry" value="" maxlength="100"
+                                                                    [ngClass]="{'invalid': isSubmittedUser && userForm?.controls['searchCountry'].errors}">
+                                                                    <div *ngIf="isSubmittedUser&& userForm?.controls['searchCountry'].errors?.Required" class="invalid-feedback">
+                                                                      <div>{{'This field is required' | translate}}</div>
+                                                                    </div>
                                                                 </div>
                                                             </div>
-
                                                             <div class="row no-gutters">
                                                                 <div class="col-sm-6 pr-md-1">
-                                                                    <input type="text" name="cor-address" class="form-control form-control-sm mb-1" formControlName="house_numb" value="" placeholder="House Number">
+                                                                    <input type="text" name="cor-address" class="form-control form-control-sm mb-1" maxlength="11" formControlName="house_numb" value="" placeholder="House Number"
+                                                                    [ngClass]="{'invalid': isSubmittedUser && userForm?.controls['house_numb'].errors}">
                                                                 </div>
                                                                 <div class="col-sm-6 pl-md-1">
-                                                                    <input type="text" name="cor-address" class="form-control form-control-sm mb-1" formControlName="name_build" value="" placeholder="Building Name">
+                                                                    <input type="text" name="cor-address" class="form-control form-control-sm mb-1" maxlength="100" formControlName="name_build" value="" placeholder="Building Name">
                                                                 </div>
+                                                            </div>
+                                                            <div class="row no-gutters">
+                                                              <div *ngIf="isSubmittedUser && userForm?.controls['house_numb'].errors?.Required" class="invalid-feedback col-sm-6 pr-md-1">
+                                                                <div>{{'This field is required' | translate}}</div>
+                                                              </div>
+                                                              <!-- <div *ngIf="isSubmittedUser && userForm?.controls['name_build'].errors?.Required" class="invalid-feedback col-sm-6 pl-md-1">
+                                                                <div>{{'This field is required' | translate}}</div>
+                                                              </div> -->
                                                             </div>
                                                             <div class="text-right">
                                                                 <button type="button" (click)="cancelEdit('address')" class="btn btn-sm btn-cancel btn-outline-secondary pt-0 pb-0">{{'Cancel' | translate}}</button>
@@ -213,10 +278,13 @@
                                                                         class="icon ion-md-hourglass"></i> Verificaion in process</span></div>
                                                         </div>
                                                         <div *ngIf="editEmail == true" class="editable d-block">
-                                                            <input type="text" name="email" formControlName="email" class="form-control form-control-sm mb-1" value="" placeholder=""
+                                                            <input type="text" name="email" formControlName="email" maxlength="100" class="form-control form-control-sm mb-1" value="" placeholder=""
                                                             [ngClass]="{'invalid': isSubmittedUser && userForm?.controls['email'].errors}">
-                                                            <div *ngIf="isSubmittedUser && userForm?.controls['email'].errors?.Required" class="text-danger">
+                                                            <div *ngIf="isSubmittedUser && userForm?.controls['email'].errors?.Required" class="invalid-feedback">
                                                               <div>{{'This field is required' | translate}}</div>
+                                                            </div>
+                                                            <div *ngIf="isSubmittedUser && userForm?.controls['email'].errors?.Email" class="invalid-feedback">
+                                                              <div *ngIf="userForm?.controls['email'].errors?.Email">{{'E-mail address is incorrect.' | translate}}</div>
                                                             </div>
                                                             <div class="text-right">
                                                                 <button type="button" (click)="cancelEdit('email')" class="btn btn-sm btn-cancel btn-outline-secondary pt-0 pb-0">{{'Cancel' | translate}}</button>
@@ -237,10 +305,23 @@
                                                                 </span></div> -->
                                                         </div>
                                                         <div *ngIf="editPhone == true" class="editable d-block">
-                                                            <input type="text" name="phone" formControlName="phone" class="form-control form-control-sm mb-1" value="+" placeholder=""
-                                                              [ngClass]="{'invalid': isSubmittedUser && userForm?.controls['phone'].errors}">
-                                                            <div *ngIf="isSubmittedUser && userForm?.controls['phone'].errors?.Required" class="text-danger">
+                                                            <input type="tel" name="phone" formControlName="phone" maxlength="11" class="form-control form-control-sm mb-1" value="+" placeholder=""
+                                                              [ngClass]="{'invalid': isSubmittedUser && (userForm?.controls['phone'].errors || userForm?.controls['phone'].errors?.SalaryLength
+                                                              || userForm?.controls['phone'].errors?.Salary || userForm?.controls['phone'].errors?.SalarySpecial)}">
+                                                            <div *ngIf="isSubmittedUser && userForm?.controls['phone'].errors?.Required" class="invalid-feedback">
                                                                 <div>{{'This field is required' | translate}}</div>
+                                                            </div>
+                                                            <div style="display:block" *ngIf="isSubmittedUser && userForm?.controls['phone'].errors?.SalaryLength"
+                                                            class="invalid-feedback">
+                                                              <div *ngIf="userForm?.controls['phone'].errors?.SalaryLength">{{'Phone number must be at least 10 characters long.' | translate}}</div>
+                                                            </div>
+                                                            <div style="display:block" *ngIf="isSubmittedUser && userForm?.controls['phone'].errors?.Salary" class="invalid-feedback">
+                                                              <div *ngIf="userForm?.controls['phone'].errors?.Salary">{{'Please enter your phone number in single-byte numbers.' | translate}}</div>
+                                                            </div>
+                                                            <div style="display:block" *ngIf="isSubmittedUser && userForm?.controls['phone'].errors?.SalarySpecial"
+                                                            class="invalid-feedback">
+                                                              <div *ngIf="userForm?.controls['phone'].errors?.SalarySpecial">
+                                                                {{'Enter the phone number without a hyphen (-).' | translate}}</div>
                                                             </div>
                                                             <div class="text-right">
                                                                 <button type="button" (click)="cancelEdit('phone')" class="btn btn-sm btn-cancel btn-outline-secondary pt-0 pb-0">{{'Cancel' | translate}}</button>
@@ -255,7 +336,7 @@
                                                 <tr class="row-action d-block" *ngIf="showSave == true">
                                                     <td width="150">&nbsp;</td>
                                                     <td>
-                                                        <button type="button" data-toggle="modal" data-target="#modal-confirm" class="btn btn-save btn-success pl-3 pr-3">{{'Save' | translate}}</button>
+                                                        <button type="button" (click)="userSubmit()" class="btn btn-save btn-success pl-3 pr-3">{{'Save' | translate}}</button>
                                                     </td>
                                                     <td width="15">&nbsp;</td>
                                                 </tr>
@@ -294,7 +375,11 @@
                                                             </i> {{'Updated' | translate}}</span></div> -->
                                                         </div>
                                                         <div class="editable d-block" *ngIf="editCorAddress == true">
-                                                            <input type="text" name="postcode" fromControlName="cor_postcode" class="form-control form-control-sm mb-1" value="0001234" placeholder="">
+                                                            <input type="text" name="postcode" formControlName="cor_postcode" maxlength="7" class="form-control form-control-sm mb-1" (change)="changeAddress(2)" placeholder=""
+                                                            [ngClass]="{'invalid': isSubmittedCor && corporateForm.controls['cor_postcode'].errors}">
+                                                            <div *ngIf="isSubmittedCor && corporateForm?.controls['cor_postcode'].errors?.Required" class="invalid-feedback">
+                                                              <div>{{'This field is required' | translate}}</div>
+                                                            </div>
                                                         </div>
                                                     </td>
                                                     <td width="15">&nbsp;</td>
@@ -312,22 +397,88 @@
                                                         <div class="editable d-block" *ngIf="editCorAddress == true">
                                                             <div class="row no-gutters">
                                                                 <div class="col-sm-6 pr-md-1">
-                                                                    <select class="form-control form-control-sm mb-1 select2" style="width: 100%" formControlName="cor_prefec">
-                                                                      <option [value]="corPrefecture">{{corPrefecture}}</option>
+                                                                    <select class="form-control form-control-sm mb-1 select2" style="width: 100%" formControlName="cor_prefec"
+                                                                      [ngClass]="{'invalid': isSubmittedCor && corporateForm.controls['cor_prefec'].errors}">
+                                                                      <!-- <option value="{{corPrefecture}}">{{corPrefecture}}</option> -->
+                                                                      <option value="北海道">北海道</option>
+                                                                      <option value="青森県">青森県</option>
+                                                                      <option value="岩手県">岩手県</option>
+                                                                      <option value="宮城県">宮城県</option>
+                                                                      <option value="秋田県">秋田県</option>
+                                                                      <option value="山形県">山形県</option>
+                                                                      <option value="福島県">福島県</option>
+                                                                      <option value="茨城県">茨城県</option>
+                                                                      <option value="栃木県">栃木県</option>
+                                                                      <option value="群馬県">群馬県</option>
+                                                                      <option value="埼玉県">埼玉県</option>
+                                                                      <option value="千葉県">千葉県</option>
+                                                                      <option value="東京都">東京都</option>
+                                                                      <option value="神奈川県">神奈川県</option>
+                                                                      <option value="新潟県">新潟県</option>
+                                                                      <option value="富山県">富山県</option>
+                                                                      <option value="石川県">石川県</option>
+                                                                      <option value="福井県">福井県</option>
+                                                                      <option value="山梨県">山梨県</option>
+                                                                      <option value="長野県">長野県</option>
+                                                                      <option value="岐阜県">岐阜県</option>
+                                                                      <option value="静岡県">静岡県</option>
+                                                                      <option value="愛知県">愛知県</option>
+                                                                      <option value="三重県">三重県</option>
+                                                                      <option value="滋賀県">滋賀県</option>
+                                                                      <option value="京都府">京都府</option>
+                                                                      <option value="大阪府">大阪府</option>
+                                                                      <option value="兵庫県">兵庫県</option>
+                                                                      <option value="奈良県">奈良県</option>
+                                                                      <option value="和歌山県">和歌山県</option>
+                                                                      <option value="鳥取県">鳥取県</option>
+                                                                      <option value="島根県">島根県</option>
+                                                                      <option value="岡山県">岡山県</option>
+                                                                      <option value="広島県">広島県</option>
+                                                                      <option value="山口県">山口県</option>
+                                                                      <option value="徳島県">徳島県</option>
+                                                                      <option value="香川県">香川県</option>
+                                                                      <option value="愛媛県">愛媛県</option>
+                                                                      <option value="高知県">高知県</option>
+                                                                      <option value="福岡県">福岡県</option>
+                                                                      <option value="佐賀県">佐賀県</option>
+                                                                      <option value="長崎県">長崎県</option>
+                                                                      <option value="熊本県">熊本県</option>
+                                                                      <option value="大分県">大分県</option>
+                                                                      <option value="宮崎県">宮崎県</option>
+                                                                      <option value="鹿児島県">鹿児島県</option>
+                                                                      <option value="沖縄県">沖縄県</option>
+                                                                      <div *ngIf="isSubmittedCor && corporateForm?.controls['cor_prefec'].errors?.Required" class="invalid-feedback">
+                                                                        <div>{{'This field is required' | translate}}</div>
+                                                                      </div>
                                                                   </select>
                                                                 </div>
                                                                 <div class="col-sm-6 pl-md-1">
-                                                                    <select class="form-control form-control-sm mb-1 select2" style="width: 100%" formControlName="cor_district">
+                                                                  <input type="text" name="cor-address" class="form-control form-control-sm mb-1" formControlName="cor_district" value="" maxlength="100"
+                                                                    [ngClass]="{'invalid': isSubmittedCor && corporateForm?.controls['cor_district'].errors}">
+                                                                    <div *ngIf="isSubmittedCor && corporateForm?.controls['cor_district'].errors?.Required" class="invalid-feedback">
+                                                                      <div>{{'This field is required' | translate}}</div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <!-- <div class="col-sm-6 pl-md-1">
+                                                                    <select class="form-control form-control-sm mb-1 select2" style="width: 100%" formControlName="">
                                                                       <option [value]="corDistrict">{{corDistrict}}</option>
                                                                   </select>
-                                                                </div>
+                                                                </div> -->
                                                             </div>
                                                             <div class="row no-gutters">
                                                                 <div class="col-sm-6 pr-md-1">
-                                                                    <input type="text" name="cor-address" class="form-control form-control-sm mb-1" formControlName="cor_house" value="" placeholder="House Number">
+                                                                    <input type="text" name="cor-address" maxlength="11" class="form-control form-control-sm mb-1" formControlName="cor_house" value="" placeholder="House Number"
+                                                                      [ngClass]="{'invalid': isSubmittedCor && corporateForm?.controls['cor_house'].errors}">
+                                                                      <div *ngIf="isSubmittedCor && corporateForm?.controls['cor_house'].errors?.Required" class="invalid-feedback">
+                                                                        <div>{{'This field is required' | translate}}</div>
+                                                                      </div>
                                                                 </div>
                                                                 <div class="col-sm-6 pl-md-1">
-                                                                    <input type="text" name="cor-address" class="form-control form-control-sm mb-1" formControlName="cor_build" value="" placeholder="Building Name">
+                                                                    <input type="text" name="cor-address" maxlength="100" class="form-control form-control-sm mb-1" formControlName="cor_build" value="" placeholder="Building Name">
+                                                                      <!-- <div *ngIf="isSubmittedCor && corporateForm?.controls['cor_build'].errors?.Required" class="invalid-feedback">
+                                                                        <div>{{'This field is required' | translate}}</div>
+                                                                      </div> -->
                                                                 </div>
                                                             </div>
                                                             <div class="text-right">
@@ -347,7 +498,24 @@
                                                             <!-- <div class="status d-none small"><span class="text-success"><i class="icon ion-md-checkmark"></i>  {{'Updated' | translate}}</span></div> -->
                                                         </div>
                                                         <div class="editable d-block" *ngIf="editCorPhone == true">
-                                                            <input type="text" name="cor-phone" class="form-control form-control-sm mb-1" value="+84389999999" placeholder="" formControlName="cor_phone">
+                                                            <input type="tel" name="cor-phone" class="form-control form-control-sm mb-1" maxlength="11" value="+84389999999" placeholder="" formControlName="cor_phone"
+                                                            [ngClass]="{'invalid': isSubmittedCor && (corporateForm.controls['cor_phone'].errors || corporateForm.controls['cor_phone'].errors?.SalaryLength
+                                                              || corporateForm.controls['cor_phone'].errors?.Salary || corporateForm.controls['cor_phone'].errors?.SalarySpecial)}">
+                                                            <div *ngIf="isSubmittedCor && corporateForm.controls['cor_phone'].errors?.Required" class="invalid-feedback">
+                                                              <div>{{'This field is required' | translate}}</div>
+                                                            </div>
+                                                            <div style="display:block" *ngIf="isSubmittedCor && corporateForm.controls['cor_phone'].errors?.SalaryLength"
+                                                            class="invalid-feedback">
+                                                              <div *ngIf="corporateForm.controls['cor_phone'].errors?.SalaryLength">{{'Phone number must be at least 10 characters long.' | translate}}</div>
+                                                            </div>
+                                                            <div style="display:block" *ngIf="isSubmittedCor && corporateForm.controls['cor_phone'].errors?.Salary" class="invalid-feedback">
+                                                              <div *ngIf="corporateForm.controls['cor_phone'].errors?.Salary">{{'Please enter your phone number in single-byte numbers.' | translate}}</div>
+                                                            </div>
+                                                            <div style="display:block" *ngIf="isSubmittedCor && corporateForm.controls['cor_phone'].errors?.SalarySpecial"
+                                                            class="invalid-feedback">
+                                                              <div *ngIf="corporateForm.controls['cor_phone'].errors?.SalarySpecial">
+                                                                {{'Enter the phone number without a hyphen (-).' | translate}}</div>
+                                                            </div>
                                                             <div class="text-right">
                                                                 <button type="button" class="btn btn-sm btn-cancel btn-outline-secondary pt-0 pb-0" (click)="cancelEditCor('cor-phone')"> {{'Cancel' | translate}}</button>
                                                             </div>
@@ -363,7 +531,11 @@
                                                             <!-- <div class="status d-none small"><span class="text-success"><i class="icon ion-md-checkmark"></i>  {{'Updated' | translate}} </span></div> -->
                                                         </div>
                                                         <div class="editable d-block" *ngIf="editCorFax == true">
-                                                            <input type="text" name="cor-fax" class="form-control form-control-sm mb-1" value="+84389999999" placeholder="" formControlName="cor_fax">
+                                                            <input type="text" name="cor-fax" class="form-control form-control-sm mb-1" value="+84389999999" maxlength="11" placeholder="" formControlName="cor_fax"
+                                                              [ngClass]="{'invalid': isSubmittedCor && corporateForm?.controls['cor_fax'].errors}">
+                                                            <div *ngIf="isSubmittedCor && corporateForm?.controls['cor_fax'].errors?.Required" class="invalid-feedback">
+                                                              <div>{{'This field is required' | translate}}</div>
+                                                            </div>
                                                             <div class="text-right">
                                                                 <button type="button" class="btn btn-sm btn-cancel btn-outline-secondary pt-0 pb-0" (click)="cancelEditCor('cor-fax')"> {{'Cancel' | translate}}</button>
                                                             </div>
@@ -385,7 +557,11 @@
                                                             <!-- <div class="status d-none small"><span class="text-success"><i class="icon ion-md-checkmark"></i>  {{'Updated' | translate}} </span></div> -->
                                                         </div>
                                                         <div class="editable d-block" *ngIf="editPersonBod == true">
-                                                            <input type="text" name="department" class="form-control form-control-sm mb-1" value="BOD" placeholder="" formControlName="person_bod">
+                                                            <input type="text" name="department" class="form-control form-control-sm mb-1" maxlength="100" value="BOD" placeholder="" formControlName="person_bod"
+                                                              [ngClass]="{'invalid': isSubmittedCor && corporateForm?.controls['person_bod'].errors}">
+                                                            <div *ngIf="isSubmittedCor && corporateForm?.controls['person_bod'].errors?.Required" class="invalid-feedback">
+                                                              <div>{{'This field is required' | translate}}</div>
+                                                            </div>
                                                             <div class="text-right">
                                                                 <button type="button" class="btn btn-sm btn-cancel btn-outline-secondary pt-0 pb-0" (click)="cancelEditCor('department')"> {{'Cancel' | translate}}</button>
                                                             </div>
@@ -401,7 +577,11 @@
                                                             <!-- <div class="status d-none small"><span class="text-success"><i class="icon ion-md-checkmark"></i> {{'Updated' | translate}} </span></div> -->
                                                         </div>
                                                         <div class="editable d-block" *ngIf="editPersonPic == true">
-                                                            <input type="text" name="pic-position" class="form-control form-control-sm mb-1" value="CEO" placeholder="PIC Position" formControlName="person_pic">
+                                                            <input type="text" name="pic-position" class="form-control form-control-sm mb-1" maxlength="100" value="CEO" placeholder="PIC Position" formControlName="person_pic"
+                                                              [ngClass]="{'invalid': isSubmittedCor && corporateForm?.controls['person_pic'].errors}">
+                                                            <div *ngIf="isSubmittedCor && corporateForm?.controls['person_pic'].errors?.Required" class="invalid-feedback">
+                                                              <div>{{'This field is required' | translate}}</div>
+                                                            </div>
                                                             <div class="text-right">
                                                                 <button type="button" class="btn btn-sm btn-cancel btn-outline-secondary pt-0 pb-0" (click)="cancelEditCor('pic-position')">{{'Cancel' | translate}}</button>
                                                             </div>
@@ -417,7 +597,11 @@
                                                             <!-- <div class="status d-none small"><span class="text-success"><i class="icon ion-md-checkmark"></i> {{'Updated' | translate}} </span></div> -->
                                                         </div>
                                                         <div class="editable d-block" *ngIf="editPersonPicname == true">
-                                                            <input type="text" name="pic-name" class="form-control form-control-sm mb-1" value="Nguyễn Tuấn Anh" placeholder="PIC name" formControlName="per_picname">
+                                                            <input type="text" name="pic-name" class="form-control form-control-sm mb-1" maxlength="100" value="Nguyễn Tuấn Anh" placeholder="PIC name" formControlName="per_picname"
+                                                              [ngClass]="{'invalid': isSubmittedCor && corporateForm?.controls['per_picname'].errors}">
+                                                            <div *ngIf="isSubmittedCor && corporateForm?.controls['per_picname'].errors?.Required" class="invalid-feedback">
+                                                              <div>{{'This field is required' | translate}}</div>
+                                                            </div>
                                                         </div>
                                                     </td>
                                                     <td width="15">&nbsp;</td>
@@ -430,7 +614,11 @@
                                                             <!-- <div class="status d-none small"><span class="text-success"><i class="icon ion-md-checkmark"></i> {{'Updated' | translate}} </span></div> -->
                                                         </div>
                                                         <div class="editable d-block" *ngIf="editPersonPicname == true">
-                                                            <input type="text" name="pic-name" class="form-control form-control-sm mb-1" value="グエン・トゥアン・アン" placeholder="PIC name" formControlName="person_picname">
+                                                            <input type="text" name="pic-name" class="form-control form-control-sm mb-1" maxlength="100" value="グエン・トゥアン・アン" placeholder="PIC name" formControlName="person_picname"
+                                                              [ngClass]="{'invalid': isSubmittedCor && corporateForm?.controls['person_picname'].errors}">
+                                                            <div *ngIf="isSubmittedCor && corporateForm?.controls['person_picname'].errors?.Required" class="invalid-feedback">
+                                                              <div>{{'This field is required' | translate}}</div>
+                                                            </div>
                                                             <div class="text-right">
                                                                 <button type="button" class="btn btn-sm btn-cancel btn-outline-secondary pt-0 pb-0" (click)="cancelEditCor('pic-name')">{{'Cancel' | translate}}</button>
                                                             </div>
@@ -462,7 +650,24 @@
                                                             <!-- <div class="status d-none small"><span class="text-success"><i class="icon ion-md-checkmark"></i> {{'Updated' | translate}} </span></div> -->
                                                         </div>
                                                         <div class="editable d-block" *ngIf="editPersonPhone == true">
-                                                            <input type="text" name="p-phone" class="form-control form-control-sm mb-1" value="+84123456789" placeholder="" formControlName="person_phone">
+                                                            <input type="tel" name="p-phone" class="form-control form-control-sm mb-1"  maxlength="11" value="+84123456789" placeholder="" formControlName="person_phone"
+                                                            [ngClass]="{'invalid': isSubmittedCor && (corporateForm.controls['person_phone'].errors || corporateForm.controls['person_phone'].errors?.SalaryLength
+                                                              || corporateForm.controls['person_phone'].errors?.Salary || corporateForm.controls['person_phone'].errors?.SalarySpecial)}">
+                                                            <div *ngIf="isSubmittedCor && corporateForm.controls['person_phone'].errors?.Required" class="invalid-feedback">
+                                                              <div>{{'This field is required' | translate}}</div>
+                                                            </div>
+                                                            <div style="display:block" *ngIf="isSubmittedCor && corporateForm.controls['person_phone'].errors?.SalaryLength"
+                                                            class="invalid-feedback">
+                                                              <div *ngIf="corporateForm.controls['person_phone'].errors?.SalaryLength">{{'Phone number must be at least 10 characters long.' | translate}</div>
+                                                            </div>
+                                                            <div style="display:block" *ngIf="isSubmittedCor && corporateForm.controls['person_phone'].errors?.Salary" class="invalid-feedback">
+                                                              <div *ngIf="corporateForm.controls['person_phone'].errors?.Salary">{{'Please enter your phone number in single-byte numbers.' | translate}}</div>
+                                                            </div>
+                                                            <div style="display:block" *ngIf="isSubmittedCor && corporateForm.controls['person_phone'].errors?.SalarySpecial"
+                                                            class="invalid-feedback">
+                                                              <div *ngIf="corporateForm.controls['person_phone'].errors?.SalarySpecial">
+                                                                {{'Enter the phone number without a hyphen (-).' | translate}}</div>
+                                                            </div>
                                                             <div class="text-right">
                                                                 <button type="button" class="btn btn-sm btn-cancel btn-outline-secondary pt-0 pb-0" (click)="cancelEditCor('p-phone')">{{'Cancel' | translate}}</button>
                                                             </div>
@@ -479,7 +684,14 @@
                                                             <i class="icon ion-md-hourglass"></i> {{'Verificaion in process' | translate}}</span></div>
                                                         </div>
                                                         <div class="editable d-block" *ngIf="editPersonEmail == true">
-                                                            <input type="text" name="p-email" class="form-control form-control-sm mb-1" value="chauchu@tamdongtam.vn" placeholder="" formControlName="person_email">
+                                                            <input type="text" name="p-email" class="form-control form-control-sm mb-1" maxlength="100" value="chauchu@tamdongtam.vn" placeholder="" formControlName="person_email"
+                                                              [ngClass]="{'invalid': isSubmittedCor && corporateForm.corporateForm?.controls['person_email'].errors}">
+                                                            <div *ngIf="isSubmittedCor && corporateForm?.controls['person_email'].errors?.Required" class="invalid-feedback">
+                                                              <div>{{'This field is required' | translate}}</div>
+                                                            </div>
+                                                            <div *ngIf="isSubmittedCor && corporateForm?.controls['person_email'].errors?.Email" class="invalid-feedback">
+                                                              <div *ngIf="corporateForm?.controls['person_email'].errors?.person_email">{{'E-mail address is incorrect.' | translate}}</div>
+                                                            </div>
                                                             <div class="text-right">
                                                                 <button type="button" class="btn btn-sm btn-cancel btn-outline-secondary pt-0 pb-0" (click)="cancelEditCor('p-email')">{{'Cancel' | translate}}</button>
                                                             </div>

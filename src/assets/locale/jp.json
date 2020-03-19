@@ -208,5 +208,9 @@
   "New": "新着",
   "Detail": "詳細",
   "Other banking facilities": "その他の金融機関",
-  "Benificiary bank": "受取銀行"
+  "Benificiary bank": "受取銀行",
+  "Phone number must be at least 10 characters long.": "電話番号は、10文字以上で入力してください。",
+  "Please enter your phone number in single-byte numbers.": "電話番号は、半角数字で入力してください。",
+  "Enter the phone number without a hyphen (-).": "電話番号は、ハイフン(-)なしで入力してください。",
+  "E-mail address is incorrect.": "メールアドレスが正しくありません。"
 }

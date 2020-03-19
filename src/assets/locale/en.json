@@ -206,8 +206,11 @@
     "New": "New",
     "Detail": "Detail",
     "Other banking facilities": "Other banking facilities",
-    "Benificiary bank": "Benificiary bank"
-
+    "Benificiary bank": "Benificiary bank",
+    "Phone number must be at least 10 characters long.": "Phone number must be at least 10 characters long.",
+    "Please enter your phone number in single-byte numbers.": "Please enter your phone number in single-byte numbers.",
+    "Enter the phone number without a hyphen (-).": "Enter the phone number without a hyphen (-).",
+    "E-mail address is incorrect.": "E-mail address is incorrect."
 
 
 }

@@ -3,12 +3,12 @@ import { TranslateService } from '@ngx-translate/core';
 import { WithdrawRequestService } from 'src/app/core/services/withdraw-request.service';
 import { Mt5Model, WithdrawAmountModel, BankInforModel } from 'src/app/core/model/withdraw-request-response.model';
 import { UserService } from './../../core/services/user.service';
-import { UserModel, CorporateResponse, CorporateModel } from 'src/app/core/model/user.model';
+import { UserModel, CorporateResponse, CorporateModel, AddressModel } from 'src/app/core/model/user.model';
 import { FormGroup, FormControl } from '@angular/forms';
 import { IS_COMPANY, ACCOUNT_IDS, FONTSIZE_AFX } from 'src/app/core/constant/authen-constant';
 import { GlobalService } from 'src/app/core/services/global.service';
 import { AccountType } from 'src/app/core/model/report-response.model';
-import { passwordValidation, requiredInput } from 'src/app/core/helper/custom-validate.helper';
+import { passwordValidation, requiredInput, emailValidation, validationPhoneNumber } from 'src/app/core/helper/custom-validate.helper';
 import { AuthenService } from 'src/app/core/services/authen.service';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { SearchHiraModel, BankModel, BranchModel } from 'src/app/core/model/bank-response.model';
@@ -99,6 +99,8 @@ export class AccountInformationComponent implements OnInit {
   currentBranch: BranchModel;
   isSubmittedUser: boolean;
   isSubmittedCor: boolean;
+  listAddressCor: AddressModel;
+  listAddressUser: AddressModel;
 
   ngOnInit() {
     this.initHiraCode();
@@ -137,26 +139,26 @@ export class AccountInformationComponent implements OnInit {
       searchPrefe: new FormControl('', requiredInput),
       searchCountry: new FormControl('', requiredInput),
       house_numb: new FormControl('', requiredInput),
-      name_build: new FormControl('', requiredInput),
-      email: new FormControl('', requiredInput),
-      phone: new FormControl('', requiredInput),
+      name_build: new FormControl(''),
+      email: new FormControl('', emailValidation),
+      phone: new FormControl('', [requiredInput, validationPhoneNumber]),
     });
   }
   initCorporateForm() {
     this.corporateForm = new FormGroup({
-      cor_postcode: new FormControl(),
-      cor_prefec: new FormControl(),
-      cor_district: new FormControl(),
-      cor_house: new FormControl(),
-      cor_build: new FormControl(),
-      cor_phone: new FormControl(),
-      cor_fax: new FormControl(),
-      person_bod: new FormControl(),
-      person_pic: new FormControl(),
-      per_picname: new FormControl(),
-      person_picname: new FormControl(),
-      person_phone: new FormControl(),
-      person_email: new FormControl(),
+      cor_postcode: new FormControl('', requiredInput),
+      cor_prefec: new FormControl('', requiredInput),
+      cor_district: new FormControl('', requiredInput),
+      cor_house: new FormControl('', requiredInput),
+      cor_build: new FormControl(''),
+      cor_phone: new FormControl('', [requiredInput, validationPhoneNumber]),
+      cor_fax: new FormControl('', requiredInput),
+      person_bod: new FormControl('', requiredInput),
+      person_pic: new FormControl('', requiredInput),
+      per_picname: new FormControl('', requiredInput),
+      person_picname: new FormControl('', requiredInput),
+      person_phone: new FormControl('', [requiredInput, validationPhoneNumber]),
+      person_email: new FormControl('', emailValidation),
     });
   }
   initSettingForm() {
@@ -201,7 +203,7 @@ export class AccountInformationComponent implements OnInit {
       if (response.meta.code === 200) {
         this.userInfor = response.data;
         this.prefecture = response.data.address.value.city;
-        this.county = response.data.address.value.street;
+        // this.county = response.data.address.value.street;
         this.userForm.controls.postCode.setValue(this.userInfor.zip.value);
         this.userForm.controls.searchPrefe.setValue(this.userInfor.address.value.city);
         this.userForm.controls.searchCountry.setValue(this.userInfor.address.value.street);
@@ -218,8 +220,8 @@ export class AccountInformationComponent implements OnInit {
       if (response.meta.code === 200) {
         this.spinnerService.hide();
         this.corporateInfor = response.data;
-        this.corPrefecture = this.corporateInfor.corporation.address.value.city;
-        this.corDistrict = this.corporateInfor.corporation.address.value.street;
+        this.corporateForm.controls.cor_prefec.setValue(this.corporateInfor.corporation.address.value.city);
+        this.corporateForm.controls.cor_district.setValue(this.corporateInfor.corporation.address.value.street);
         this.corporateForm.controls.cor_postcode.setValue(this.corporateInfor.corporation.zip.value);
         this.corporateForm.controls.cor_house.setValue(this.corporateInfor.corporation.address.value.street2);
         this.corporateForm.controls.cor_build.setValue(this.corporateInfor.corporation.address.value.fx_street3);
@@ -264,19 +266,14 @@ export class AccountInformationComponent implements OnInit {
     });
   }
 
-  // userSubmit() {
-  //   this.isSubmittedUser = true;
-  //   if (this.userForm.invalid) {
-  //     return;
-  //   } else {
-  //     $('#modal-confirm').modal('show');
-  //   }
-  // }
-  changeUser() {
+  userSubmit() {
     this.isSubmittedUser = true;
     if (this.userForm.invalid) {
       return;
     }
+    $('#modal-confirm').modal('show');
+  }
+  changeUser() {
     const param = {
       zip: this.userForm.controls.postCode.value,
       address: {
@@ -414,8 +411,42 @@ export class AccountInformationComponent implements OnInit {
       }
     });
   }
+  // postNo
+  changeAddress(type: number) {
+    if (type === 1) {
+      const postNo = this.userForm.controls.postCode.value;
+      this.userService.getAddress(postNo).subscribe(response => {
+        if (response.meta.code === 200) {
+          this.listAddressUser = response.data;
+          this.userForm.controls.postCode.setValue(this.listAddressUser.postno);
+          this.userForm.controls.searchPrefe.setValue(this.listAddressUser.prefecture);
+          this.userForm.controls.searchCountry.setValue(this.listAddressUser.city + this.listAddressUser.town);
+          this.userForm.controls.house_numb.setValue(this.listAddressUser.old_postcode);
+          this.userForm.controls.name_build.setValue(this.listAddressUser.city);
+        }
+      });
+    } else if (type === 2) {
+      const postNo = this.corporateForm.controls.cor_postcode.value;
+      this.userService.getAddress(postNo).subscribe(response => {
+        if (response.meta.code === 200) {
+          this.listAddressCor = response.data;
+          this.corporateForm.controls.cor_postcode.setValue(this.listAddressCor.postno);
+          this.corporateForm.controls.cor_district.setValue(this.listAddressCor.city + this.listAddressCor.town);
+          this.corporateForm.controls.cor_build.setValue(this.listAddressCor.old_postcode);
+          this.corporateForm.controls.cor_house.setValue(this.listAddressCor.city);
+          this.corporateForm.controls.cor_prefec.setValue(this.listAddressCor.prefecture);
+        }
+      });
+    }
+  }
   SaveCor() {
-    $('#modal-corporation').modal('show');
+    this.isSubmittedCor = true;
+    if (this.corporateForm.invalid) {
+      return;
+    } else {
+      $('#modal-corporation').modal('show');
+    }
+
   }
   updateCorporate() {
     const param = {
