@@ -12,6 +12,7 @@ import {
   MIN_WITHDRAW,
   ACCOUNT_IDS,
   ACCOUNT_TYPE,
+  LOCALE,
 } from './../../core/constant/authen-constant';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthenService } from 'src/app/core/services/authen.service';
@@ -107,6 +108,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
         localStorage.setItem(TOKEN_AFX, response.data.access_token);
         localStorage.setItem(ACCOUNT_IDS, JSON.stringify(response.data.account_ids));
         localStorage.setItem(IS_COMPANY, response.data.is_company.toString());
+        localStorage.setItem(LOCALE, 'en');
         localStorage.setItem(MIN_DEPOST, response.data.module_funding_min_deposit.toString());
         localStorage.setItem(MIN_WITHDRAW, response.data.module_funding_min_withdraw.toString());
         localStorage.setItem(FIRST_LOGIN, '1');

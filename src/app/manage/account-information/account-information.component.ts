@@ -5,7 +5,7 @@ import { Mt5Model, WithdrawAmountModel, BankInforModel } from 'src/app/core/mode
 import { UserService } from './../../core/services/user.service';
 import { UserModel, CorporateResponse, CorporateModel, AddressModel } from 'src/app/core/model/user.model';
 import { FormGroup, FormControl } from '@angular/forms';
-import { IS_COMPANY, ACCOUNT_IDS, FONTSIZE_AFX } from 'src/app/core/constant/authen-constant';
+import { IS_COMPANY, ACCOUNT_IDS, FONTSIZE_AFX, LOCALE } from 'src/app/core/constant/authen-constant';
 import { GlobalService } from 'src/app/core/services/global.service';
 import { AccountType } from 'src/app/core/model/report-response.model';
 import { passwordValidation,
@@ -172,11 +172,11 @@ export class AccountInformationComponent implements OnInit {
       confirm_password: new FormControl('', [passwordValidation]),
       language: new FormControl(),
     });
-    this.changePassForm.controls.language.setValue(localStorage.getItem('locale'));
+    this.changePassForm.controls.language.setValue(localStorage.getItem(LOCALE));
   }
   changeLang(event) {
     this.translate.use(event);
-    localStorage.setItem('locale', event);
+    localStorage.setItem(LOCALE, event);
   }
 
   initBankForm() {
