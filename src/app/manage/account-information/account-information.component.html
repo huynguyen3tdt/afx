@@ -153,11 +153,11 @@
                                                         </div>
                                                         <div *ngIf="editAddress == true" class="editable d-block">
                                                             <input type="text" name="postcode" formControlName="postCode" (change)="changeAddress(1)" maxlength="7" class="form-control form-control-sm mb-1" value="" placeholder=""
-                                                            [ngClass]="{'invalid': isSubmittedUser && userForm?.controls['postCode'].errors
+                                                            [ngClass]="{'invalid': isSubmittedUser && (userForm?.controls['postCode'].errors
                                                                           || userForm?.controls['postCode'].errors?.lengthlower7
                                                                           || userForm?.controls['postCode'].errors?.Salary
                                                                           || userForm?.controls['postCode'].errors?.SalarySpecial
-                                                                          || userForm?.controls['postCode'].errors?.Error}">
+                                                                          || userForm?.controls['postCode'].errors?.Error)}">
                                                             <div *ngIf="isSubmittedUser && userForm?.controls['postCode'].errors?.Required"
                                                                 class="invalid-feedback">
                                                                 <div *ngIf="userForm?.controls['postCode'].errors?.Required">
