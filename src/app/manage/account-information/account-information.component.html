@@ -153,7 +153,11 @@
                                                         </div>
                                                         <div *ngIf="editAddress == true" class="editable d-block">
                                                             <input type="text" name="postcode" formControlName="postCode" (change)="changeAddress(1)" maxlength="7" class="form-control form-control-sm mb-1" value="" placeholder=""
-                                                            [ngClass]="{'invalid': isSubmittedUser && userForm?.controls['postCode'].errors}">
+                                                            [ngClass]="{'invalid': isSubmittedUser && userForm?.controls['postCode'].errors
+                                                                          || userForm?.controls['postCode'].errors?.lengthlower7
+                                                                          || userForm?.controls['postCode'].errors?.Salary
+                                                                          || userForm?.controls['postCode'].errors?.SalarySpecial
+                                                                          || userForm?.controls['postCode'].errors?.Error}">
                                                             <div *ngIf="isSubmittedUser && userForm?.controls['postCode'].errors?.Required"
                                                                 class="invalid-feedback">
                                                                 <div *ngIf="userForm?.controls['postCode'].errors?.Required">
@@ -397,7 +401,7 @@
                                                         </div>
                                                         <div class="editable d-block" *ngIf="editCorAddress == true">
                                                             <input type="text" name="postcode" formControlName="cor_postcode" maxlength="7" class="form-control form-control-sm mb-1" (change)="changeAddress(2)" placeholder=""
-                                                            [ngClass]="{'invalid': isSubmittedCor && (corporateForm.controls['cor_postcode'].errors.Required
+                                                            [ngClass]="{'invalid': isSubmittedCor && (corporateForm.controls['cor_postcode'].errors
                                                                         || corporateForm?.controls['cor_postcode'].errors?.lengthlower7
                                                                         || corporateForm?.controls['cor_postcode'].errors?.Salary
                                                                         || corporateForm?.controls['cor_postcode'].errors?.SalarySpecial
