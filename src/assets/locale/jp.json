@@ -212,5 +212,10 @@
   "Phone number must be at least 10 characters long.": "電話番号は、10文字以上で入力してください。",
   "Please enter your phone number in single-byte numbers.": "電話番号は、半角数字で入力してください。",
   "Enter the phone number without a hyphen (-).": "電話番号は、ハイフン(-)なしで入力してください。",
-  "E-mail address is incorrect.": "メールアドレスが正しくありません。"
+  "E-mail address is incorrect.": "メールアドレスが正しくありません。",
+  "Please enter your zip code.": " 郵便番号を入力してください。",
+  "Postal code is incorrect.": "郵便番号が正しくありません。",
+  "Enter the postal code using single-byte numbers.": "郵便番号は、半角数字で入力してください。",
+  "Enter the postal code without a hyphen (-).": "郵便番号は、ハイフン(-)なしで入力してください。",
+  "Enter your zip code using single-byte numbers.": "郵便番号は半角数字で入力してください。"
 }
