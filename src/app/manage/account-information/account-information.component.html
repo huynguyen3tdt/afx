@@ -735,7 +735,7 @@
                                                         </div>
                                                         <div class="editable d-block" *ngIf="editPersonEmail == true">
                                                             <input type="text" name="p-email" class="form-control form-control-sm mb-1" maxlength="100" value="chauchu@tamdongtam.vn" placeholder="" formControlName="person_email"
-                                                              [ngClass]="{'invalid': isSubmittedCor && corporateForm.corporateForm?.controls['person_email'].errors}">
+                                                              [ngClass]="{'invalid': isSubmittedCor && corporateForm?.controls['person_email'].errors}">
                                                             <div *ngIf="isSubmittedCor && corporateForm?.controls['person_email'].errors?.Required" class="invalid-feedback">
                                                               <div>{{'This field is required' | translate}}</div>
                                                             </div>
