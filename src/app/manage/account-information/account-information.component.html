@@ -154,8 +154,29 @@
                                                         <div *ngIf="editAddress == true" class="editable d-block">
                                                             <input type="text" name="postcode" formControlName="postCode" (change)="changeAddress(1)" maxlength="7" class="form-control form-control-sm mb-1" value="" placeholder=""
                                                             [ngClass]="{'invalid': isSubmittedUser && userForm?.controls['postCode'].errors}">
-                                                            <div *ngIf="isSubmittedUser && userForm?.controls['postCode'].errors?.Required" class="invalid-feedback">
-                                                              <div>{{'This field is required' | translate}}</div>
+                                                            <div *ngIf="isSubmittedUser && userForm?.controls['postCode'].errors?.Required"
+                                                                class="invalid-feedback">
+                                                                <div *ngIf="userForm?.controls['postCode'].errors?.Required">
+                                                                  {{'Please enter your zip code.' | translate}}
+                                                                </div>
+                                                            </div>
+                                                            <div *ngIf="isSubmittedUser && userForm?.controls['postCode'].errors?.lengthlower7"
+                                                                class="invalid-feedback">
+                                                                <div *ngIf="userForm?.controls['postCode'].errors?.lengthlower7"> {{'Postal code is incorrect.' | translate}}</div>
+                                                            </div>
+                                                            <div *ngIf="isSubmittedUser && userForm?.controls['postCode'].errors?.Salary"
+                                                                class="invalid-feedback">
+                                                                <div *ngIf="userForm?.controls['postCode'].errors?.Salary"> {{'Enter the postal code using single-byte numbers.' | translate}}</div>
+                                                            </div>
+                                                            <div *ngIf="isSubmittedUser && userForm?.controls['postCode'].errors?.SalarySpecial"
+                                                                class="invalid-feedback">
+                                                                <div *ngIf="userForm?.controls['postCode'].errors?.SalarySpecial"> {{'Enter the postal code without a hyphen (-).' | translate}}
+                                                                </div>
+                                                            </div>
+                                                            <div *ngIf="isSubmittedUser && userForm?.controls['postCode'].errors?.Error"
+                                                                class="invalid-feedback">
+                                                                <div *ngIf="userForm?.controls['postCode'].errors?.Error"> {{'Enter your zip code using single-byte numbers.' | translate}}
+                                                                </div>
                                                             </div>
                                                         </div>
 
@@ -376,10 +397,39 @@
                                                         </div>
                                                         <div class="editable d-block" *ngIf="editCorAddress == true">
                                                             <input type="text" name="postcode" formControlName="cor_postcode" maxlength="7" class="form-control form-control-sm mb-1" (change)="changeAddress(2)" placeholder=""
-                                                            [ngClass]="{'invalid': isSubmittedCor && corporateForm.controls['cor_postcode'].errors}">
-                                                            <div *ngIf="isSubmittedCor && corporateForm?.controls['cor_postcode'].errors?.Required" class="invalid-feedback">
+                                                            [ngClass]="{'invalid': isSubmittedCor && (corporateForm.controls['cor_postcode'].errors.Required
+                                                                        || corporateForm?.controls['cor_postcode'].errors?.lengthlower7
+                                                                        || corporateForm?.controls['cor_postcode'].errors?.Salary
+                                                                        || corporateForm?.controls['cor_postcode'].errors?.SalarySpecial
+                                                                        || corporateForm?.controls['cor_postcode'].errors?.Error)}">
+                                                            <!-- <div *ngIf="isSubmittedCor && corporateForm?.controls['cor_postcode'].errors?.Required" class="invalid-feedback">
                                                               <div>{{'This field is required' | translate}}</div>
+                                                            </div> -->
+                                                            <div *ngIf="isSubmittedCor && corporateForm?.controls['cor_postcode'].errors?.Required"
+                                                                class="invalid-feedback">
+                                                                <div *ngIf="corporateForm?.controls['cor_postcode'].errors?.Required">
+                                                                  {{'Please enter your zip code.' | translate}}
+                                                                </div>
                                                             </div>
+                                                            <div *ngIf="isSubmittedCor && corporateForm?.controls['cor_postcode'].errors?.lengthlower7"
+                                                                class="invalid-feedback">
+                                                                <div *ngIf="corporateForm?.controls['cor_postcode'].errors?.lengthlower7"> {{'Postal code is incorrect.' | translate}}</div>
+                                                            </div>
+                                                            <div *ngIf="isSubmittedCor && corporateForm?.controls['cor_postcode'].errors?.Salary"
+                                                                class="invalid-feedback">
+                                                                <div *ngIf="corporateForm?.controls['cor_postcode'].errors?.Salary"> {{'Enter the postal code using single-byte numbers.' | translate}}</div>
+                                                            </div>
+                                                            <div *ngIf="isSubmittedCor && corporateForm?.controls['cor_postcode'].errors?.SalarySpecial"
+                                                                class="invalid-feedback">
+                                                                <div *ngIf="corporateForm?.controls['cor_postcode'].errors?.SalarySpecial"> {{'Enter the postal code without a hyphen (-).' | translate}}
+                                                                </div>
+                                                            </div>
+                                                            <div *ngIf="isSubmittedCor && corporateForm?.controls['cor_postcode'].errors?.Error"
+                                                                class="invalid-feedback">
+                                                                <div *ngIf="corporateForm?.controls['cor_postcode'].errors?.Error"> {{'Enter your zip code using single-byte numbers.' | translate}}
+                                                                </div>
+                                                            </div>
+
                                                         </div>
                                                     </td>
                                                     <td width="15">&nbsp;</td>
@@ -930,7 +980,7 @@
                                 <div class="col-md-4 col-lg-3">
                                     &nbsp;
                                 </div>
-                                <div *ngIf="isSubmittedSetting && changePassForm?.controls['current_password']?.errors?.RequiredPass" class="text-danger col-md-8 col-lg-9">
+                                <div *ngIf="isSubmittedSetting && changePassForm?.controls['current_password']?.errors?.RequiredPass" class="invalid-feedback col-md-8 col-lg-9">
                                     <div>{{'This field is required' | translate}}</div>
                                 </div>
                             </div>
@@ -946,7 +996,7 @@
                                 <div class="col-md-4 col-lg-3">
                                     &nbsp;
                                 </div>
-                                <div *ngIf="isSubmittedSetting && changePassForm?.controls['new_password']?.errors?.RequiredPass" class="text-danger col-md-8 col-lg-9">
+                                <div *ngIf="isSubmittedSetting && changePassForm?.controls['new_password']?.errors?.RequiredPass" class="invalid-feedback col-md-8 col-lg-9">
                                     <div>{{'This field is required' | translate}}</div>
                                 </div>
                             </div>
@@ -955,31 +1005,47 @@
                                     <label class="label mt-1">{{'Confirm password' | translate}}</label>
                                 </div>
                                 <div class="col-md-8 col-lg-9">
-                                    <input type="password" name="confirm-password" class="form-control form-control-sm" value="" formControlName="confirm_password" placeholder="" style="max-width: 240px" [ngClass]="{'invalid': isSubmittedSetting && (changePassForm.controls['confirm_password'].errors || changePassForm?.controls['confirm_password']?.errors?.RequiredPass)}">
+                                    <input type="password" name="confirm-password" class="form-control form-control-sm" value="" formControlName="confirm_password" placeholder="" style="max-width: 240px"
+                                     [ngClass]="{'invalid': isSubmittedSetting && (changePassForm.controls['confirm_password'].errors || changePassForm?.controls['confirm_password']?.errors?.RequiredPass)}">
+                                     <div *ngIf="isSubmittedSetting && changePassForm?.controls['confirm_password']?.errors?.RequiredPass" class="invalid-feedback">
+                                      <div>{{'This field is required' | translate}}</div>
+                                    </div>
+                                    <div *ngIf="isSubmittedSetting == true && errorMessage == true" class="invalid-feedback">
+                                        <div class="small">{{'Current password and new passwords cannot be the same' | translate}}</div>
+                                    </div>
+                                    <div *ngIf="successPassword == true" class="text-success">
+                                        <div class="small">{{'You have successfully changed the password' | translate}}</div>
+                                    </div>
+                                    <div *ngIf="errorPassword == true" class="invalid-feedback">
+                                        <div class="small">{{'Password incorrect' | translate}}</div>
+                                    </div>
+                                    <div *ngIf="isSubmittedSetting && changePassForm?.controls['new_password']?.errors?.RequiredPassLength" class="invalid-feedback">
+                                        <div class="small">
+                                            {{'New password needs to be 8 characters or more and has at least 1 alphabet letter' | translate}}</div>
+                                    </div>
                                 </div>
-
                             </div>
-                            <div class="row">
+                            <!-- <div class="row">
                                 <div class="col-md-4 col-lg-3">
                                     &nbsp;
                                 </div>
-                                <div *ngIf="isSubmittedSetting && changePassForm?.controls['confirm_password']?.errors?.RequiredPass" class="text-danger col-md-8 col-lg-9">
+                                <div *ngIf="isSubmittedSetting && changePassForm?.controls['confirm_password']?.errors?.RequiredPass" class="invalid-feedback col-md-8 col-lg-9">
                                     <div>{{'This field is required' | translate}}</div>
                                 </div>
-                                <div *ngIf="isSubmittedSetting == true && errorMessage == true" class="text-danger col-md-8 col-lg-9">
+                                <div *ngIf="isSubmittedSetting == true && errorMessage == true" class="invalid-feedback col-md-8 col-lg-9">
                                     <div class="small">{{'Current password and new passwords cannot be the same' | translate}}</div>
                                 </div>
                                 <div *ngIf="successPassword == true" class="text-success col-md-8 col-lg-9">
                                     <div class="small">{{'You have successfully changed the password' | translate}}</div>
                                 </div>
-                                <div *ngIf="errorPassword == true" class="text-danger col-md-8 col-lg-9">
+                                <div *ngIf="errorPassword == true" class="invalid-feedback col-md-8 col-lg-9">
                                     <div class="small">{{'Password incorrect' | translate}}</div>
                                 </div>
-                                <div *ngIf="isSubmittedSetting && changePassForm?.controls['new_password']?.errors?.RequiredPassLength" class="text-danger col-md-8 col-lg-9">
+                                <div *ngIf="isSubmittedSetting && changePassForm?.controls['new_password']?.errors?.RequiredPassLength" class="invalid-feedback col-md-8 col-lg-9">
                                     <div class="small">
                                         {{'New password needs to be 8 characters or more and has at least 1 alphabet letter' | translate}}</div>
                                 </div>
-                            </div>
+                            </div> -->
 
                             <div class="row">
                                 <div class="col-md-4 col-lg-3">

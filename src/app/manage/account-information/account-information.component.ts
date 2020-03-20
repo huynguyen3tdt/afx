@@ -8,7 +8,11 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { IS_COMPANY, ACCOUNT_IDS, FONTSIZE_AFX } from 'src/app/core/constant/authen-constant';
 import { GlobalService } from 'src/app/core/services/global.service';
 import { AccountType } from 'src/app/core/model/report-response.model';
-import { passwordValidation, requiredInput, emailValidation, validationPhoneNumber } from 'src/app/core/helper/custom-validate.helper';
+import { passwordValidation,
+         requiredInput,
+         emailValidation,
+         validationPhoneNumber,
+         salaryInput } from 'src/app/core/helper/custom-validate.helper';
 import { AuthenService } from 'src/app/core/services/authen.service';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { SearchHiraModel, BankModel, BranchModel } from 'src/app/core/model/bank-response.model';
@@ -135,7 +139,7 @@ export class AccountInformationComponent implements OnInit {
 
   initUserForm() {
     this.userForm = new FormGroup({
-      postCode: new FormControl('', requiredInput),
+      postCode: new FormControl('', salaryInput),
       searchPrefe: new FormControl('', requiredInput),
       searchCountry: new FormControl('', requiredInput),
       house_numb: new FormControl('', requiredInput),
@@ -146,7 +150,7 @@ export class AccountInformationComponent implements OnInit {
   }
   initCorporateForm() {
     this.corporateForm = new FormGroup({
-      cor_postcode: new FormControl('', requiredInput),
+      cor_postcode: new FormControl('', salaryInput),
       cor_prefec: new FormControl('', requiredInput),
       cor_district: new FormControl('', requiredInput),
       cor_house: new FormControl('', requiredInput),
