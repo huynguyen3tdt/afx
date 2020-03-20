@@ -5,7 +5,7 @@ import { Observable } from 'rxjs/internal/Observable';
 import { InnerSubscriber } from 'rxjs/internal/InnerSubscriber';
 import { EnvConfigService } from './env-config.service';
 import { catchError } from 'rxjs/operators';
-import { UserResponse, CorporateResponse, BankResponse } from '../model/user.model';
+import { UserResponse, CorporateResponse, BankResponse, AddressResponse } from '../model/user.model';
 import { ResponseWihtoutDataModel } from '../model/none-data-response.model';
 import { SearchBankResponseModel, SearchBranchResponseModel } from '../model/bank-response.model';
 import { WithdrawHistoryModel } from '../model/withdraw-request-response.model';
@@ -146,5 +146,17 @@ export class UserService {
         });
       })
     );
+  }
+
+  getAddress(postNo: number): Observable<AddressResponse> {
+    return this.httpClient
+      .get(`${this.envConfigService.getConfig()}/${AppSettings.API_ADDRESS}` + '?post_no=' + postNo)
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          return new Observable((observer: InnerSubscriber<any, any>) => {
+            observer.next(error);
+          });
+        })
+      );
   }
 }

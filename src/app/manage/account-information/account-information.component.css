@@ -23,3 +23,8 @@
   background-color: green;
   color: white;
 }
+.invalid-feedback{
+  font-size: 12px;
+  display:block
+}
+
