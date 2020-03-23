@@ -57,6 +57,7 @@ export class WithdrawRequestComponent implements OnInit {
   formatDateYear: string;
   formatDateHour: string;
   locale: string;
+  lastestTime: string;
 
 
   constructor(private withdrawRequestService: WithdrawRequestService,
@@ -106,7 +107,7 @@ export class WithdrawRequestComponent implements OnInit {
         this.mt5Infor = response.data;
         this.equity = this.mt5Infor.equity;
         this.usedMargin = this.mt5Infor.used_margin;
-        this.mt5Infor.lastest_time = moment(this.mt5Infor.lastest_time).format(this.formatDateHour);
+        this.lastestTime = moment(this.mt5Infor.lastest_time).format(this.formatDateHour);
       }
       this.countWithdraw();
     });

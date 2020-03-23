@@ -109,6 +109,7 @@ export class AccountInformationComponent implements OnInit {
   listAddressUser: AddressModel;
   locale: string;
   formatDateHour: string;
+  lastestTime: string;
 
   ngOnInit() {
     this.locale = localStorage.getItem(LOCALE);
@@ -256,7 +257,7 @@ export class AccountInformationComponent implements OnInit {
       this.spinnerService.hide();
       if (response.meta.code === 200) {
         this.accountInfor = response.data;
-        this.accountInfor.lastest_time = moment(this.accountInfor.lastest_time).format(this.formatDateHour)
+        this.lastestTime = moment(this.accountInfor.lastest_time).format(this.formatDateHour);
       }
     });
   }

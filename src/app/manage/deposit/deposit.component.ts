@@ -58,6 +58,7 @@ export class DepositComponent implements OnInit {
   formatDateYear: string;
   formatDateHour: string;
   locale: string;
+  lastestTime: string;
 
   ngOnInit() {
     this.locale = localStorage.getItem(LOCALE);
@@ -127,7 +128,8 @@ export class DepositComponent implements OnInit {
         this.mt5Infor = response.data;
         this.equity = this.mt5Infor.equity;
         this.usedMargin = this.mt5Infor.used_margin;
-        this.mt5Infor.lastest_time = moment(this.mt5Infor.lastest_time).format(this.formatDateHour);
+        this.lastestTime = moment(this.mt5Infor.lastest_time).format(this.formatDateHour);
+        // console.log(this.mt5Infor.lastest_time)
         this.spinnerService.hide();
       }
       this.countDeposit();
