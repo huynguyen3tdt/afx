@@ -6,6 +6,8 @@ import { InnerSubscriber } from 'rxjs/internal/InnerSubscriber';
 import { EnvConfigService } from './env-config.service';
 import { catchError } from 'rxjs/operators';
 import { ReportResponseModel, ReportChangeResponseModel } from '../model/report-response.model';
+import { LOCALE } from '../constant/authen-constant';
+import * as moment from 'moment';
 
 
 @Injectable({
@@ -19,15 +21,22 @@ export class ReportService {
   getReport(accountNumber: number, pageSize: number, pageNumber: number,
             type?: string, dateFrom?: string, dateTo?: string): Observable<ReportResponseModel> {
     let URL = '';
+    const locale = localStorage.getItem(LOCALE);
     if (type) {
       URL = `?account_numb=${accountNumber}&type_report=${type}&page_size=${pageSize}&page=${pageNumber}`;
     } else {
       URL = `?account_numb=${accountNumber}&page_size=${pageSize}&page=${pageNumber}`;
     }
     if (dateFrom && dateFrom !== 'Invalid date') {
+      if (locale === 'en') {
+        dateFrom = moment(new Date(dateFrom)).format('DD-MM-YYYY');
+      }
       URL += `&date_from=${dateFrom}`;
     }
     if (dateTo && dateTo !== 'Invalid date') {
+      if (locale === 'en') {
+        dateTo = moment(new Date(dateTo)).format('DD-MM-YYYY');
+      }
       URL += `&date_to=${dateTo}`;
     }
     return this.httpClient
