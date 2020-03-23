@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
-import { TOKEN_AFX, FIRST_LOGIN } from 'src/app/core/constant/authen-constant';
+import { TOKEN_AFX, FIRST_LOGIN, LOCALE } from 'src/app/core/constant/authen-constant';
 import { AuthenService } from 'src/app/core/services/authen.service';
 import { NotificationsService } from 'src/app/core/services/notifications.service';
 import { PageNotificationResponse, Notification } from 'src/app/core/model/page-noti.model';
 import * as moment from 'moment';
+import { EN_FORMATDATE, JAPAN_FORMATDATE } from 'src/app/core/constant/format-date-constant';
 declare const $: any;
 declare const TweenMax: any;
 
@@ -20,6 +21,8 @@ export class HeaderComponent implements OnInit {
   currentPage;
   pageSize;
   unreadAll: boolean;
+  formatDateYear: string;
+  locale: string;
   TABS = {
     ALL: { name: 'ALL', value: -1 },
     IMPORTANT: { name: 'IMPORTANT', value: 0 },
@@ -35,6 +38,12 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.locale = localStorage.getItem(LOCALE);
+    if (this.locale === 'en') {
+      this.formatDateYear = EN_FORMATDATE;
+    } else if (this.locale === 'jp') {
+      this.formatDateYear = JAPAN_FORMATDATE;
+    }
     this.unreadAll = true;
     this.layout_setup();
     this.currentPage = 1;
@@ -109,7 +118,7 @@ export class HeaderComponent implements OnInit {
         this.pageNotification = response;
         this.listNotification = this.pageNotification.data.results;
         this.listNotification.forEach(item => {
-          item.publish_date = moment(item.publish_date).format('YYYY/MM/DD');
+          item.publish_date = moment(item.publish_date).format(this.formatDateYear);
         });
       }
     });

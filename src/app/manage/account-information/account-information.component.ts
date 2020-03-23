@@ -24,6 +24,8 @@ import {
   JapanNetBank,
   JapanPostBank
 } from 'src/app/core/constant/japan-constant';
+import { EN_FORMATDATE_HH_MM, JAPAN_FORMATDATE_HH_MM } from 'src/app/core/constant/format-date-constant';
+import * as moment from 'moment';
 declare var $: any;
 
 
@@ -105,8 +107,16 @@ export class AccountInformationComponent implements OnInit {
   isSubmittedCor: boolean;
   listAddressCor: AddressModel;
   listAddressUser: AddressModel;
+  locale: string;
+  formatDateHour: string;
 
   ngOnInit() {
+    this.locale = localStorage.getItem(LOCALE);
+    if (this.locale === 'en') {
+      this.formatDateHour = EN_FORMATDATE_HH_MM;
+    } else if (this.locale === 'jp') {
+      this.formatDateHour = JAPAN_FORMATDATE_HH_MM;
+    }
     this.initHiraCode();
     this.isCompany = localStorage.getItem(IS_COMPANY);
     this.listTradingAccount = JSON.parse(localStorage.getItem(ACCOUNT_IDS));
@@ -246,6 +256,7 @@ export class AccountInformationComponent implements OnInit {
       this.spinnerService.hide();
       if (response.meta.code === 200) {
         this.accountInfor = response.data;
+        this.accountInfor.lastest_time = moment(this.accountInfor.lastest_time).format(this.formatDateHour)
       }
     });
   }
