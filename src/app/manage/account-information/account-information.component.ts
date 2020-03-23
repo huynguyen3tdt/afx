@@ -5,7 +5,7 @@ import { Mt5Model, WithdrawAmountModel, BankInforModel } from 'src/app/core/mode
 import { UserService } from './../../core/services/user.service';
 import { UserModel, CorporateResponse, CorporateModel, AddressModel } from 'src/app/core/model/user.model';
 import { FormGroup, FormControl } from '@angular/forms';
-import { IS_COMPANY, ACCOUNT_IDS, FONTSIZE_AFX } from 'src/app/core/constant/authen-constant';
+import { IS_COMPANY, ACCOUNT_IDS, FONTSIZE_AFX, LOCALE } from 'src/app/core/constant/authen-constant';
 import { GlobalService } from 'src/app/core/services/global.service';
 import { AccountType } from 'src/app/core/model/report-response.model';
 import { passwordValidation,
@@ -24,6 +24,8 @@ import {
   JapanNetBank,
   JapanPostBank
 } from 'src/app/core/constant/japan-constant';
+import { EN_FORMATDATE_HH_MM, JAPAN_FORMATDATE_HH_MM } from 'src/app/core/constant/format-date-constant';
+import * as moment from 'moment';
 declare var $: any;
 
 
@@ -105,8 +107,17 @@ export class AccountInformationComponent implements OnInit {
   isSubmittedCor: boolean;
   listAddressCor: AddressModel;
   listAddressUser: AddressModel;
+  locale: string;
+  formatDateHour: string;
+  lastestTime: string;
 
   ngOnInit() {
+    this.locale = localStorage.getItem(LOCALE);
+    if (this.locale === 'en') {
+      this.formatDateHour = EN_FORMATDATE_HH_MM;
+    } else if (this.locale === 'jp') {
+      this.formatDateHour = JAPAN_FORMATDATE_HH_MM;
+    }
     this.initHiraCode();
     this.isCompany = localStorage.getItem(IS_COMPANY);
     this.listTradingAccount = JSON.parse(localStorage.getItem(ACCOUNT_IDS));
@@ -172,11 +183,11 @@ export class AccountInformationComponent implements OnInit {
       confirm_password: new FormControl('', [passwordValidation]),
       language: new FormControl(),
     });
-    this.changePassForm.controls.language.setValue(localStorage.getItem('locale'));
+    this.changePassForm.controls.language.setValue(localStorage.getItem(LOCALE));
   }
   changeLang(event) {
     this.translate.use(event);
-    localStorage.setItem('locale', event);
+    localStorage.setItem(LOCALE, event);
   }
 
   initBankForm() {
@@ -246,6 +257,7 @@ export class AccountInformationComponent implements OnInit {
       this.spinnerService.hide();
       if (response.meta.code === 200) {
         this.accountInfor = response.data;
+        this.lastestTime = moment(this.accountInfor.lastest_time).format(this.formatDateHour);
       }
     });
   }

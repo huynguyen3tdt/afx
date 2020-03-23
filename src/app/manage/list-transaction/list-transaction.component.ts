@@ -3,10 +3,11 @@ import { WithdrawRequestService } from 'src/app/core/services/withdraw-request.s
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { Router, ActivatedRoute } from '@angular/router';
 import { TransactionModel } from 'src/app/core/model/withdraw-request-response.model';
-import { JAPAN_FORMATDATE_HH_MM } from 'src/app/core/constant/format-date-constant';
+import { JAPAN_FORMATDATE_HH_MM, EN_FORMATDATE, EN_FORMATDATE_HH_MM, JAPAN_FORMATDATE } from 'src/app/core/constant/format-date-constant';
 import { PaymentMethod, TYPEOFTRANHISTORY } from 'src/app/core/constant/payment-method-constant';
 declare var $: any;
 import * as moment from 'moment';
+import { LOCALE } from 'src/app/core/constant/authen-constant';
 
 @Component({
   selector: 'app-list-transaction',
@@ -20,12 +21,23 @@ export class ListTransactionComponent implements OnInit, OnChanges {
   titleTransaction: string;
   listTransaction: Array<TransactionModel>;
   transactionDetail: TransactionModel;
+  locale: string;
+  formatDateYear: string;
+  formatDateHour: string;
 
   constructor(private withdrawRequestService: WithdrawRequestService,
               private spinnerService: Ng4LoadingSpinnerService,
               private router: Router) { }
 
   ngOnInit() {
+    this.locale = localStorage.getItem(LOCALE);
+    if (this.locale === 'en') {
+      this.formatDateYear = EN_FORMATDATE;
+      this.formatDateHour = EN_FORMATDATE_HH_MM;
+    } else if (this.locale === 'jp') {
+      this.formatDateYear = JAPAN_FORMATDATE;
+      this.formatDateHour = JAPAN_FORMATDATE_HH_MM;
+    }
   }
 
   ngOnChanges(): void {
@@ -41,7 +53,7 @@ export class ListTransactionComponent implements OnInit, OnChanges {
         this.spinnerService.hide();
         this.listTransaction = response.data.results;
         this.listTransaction.forEach(item => {
-          item.create_date = moment(item.create_date).format(JAPAN_FORMATDATE_HH_MM);
+          item.create_date = moment(item.create_date).format(this.formatDateHour);
           item.funding_type = this.checkType(item.funding_type);
           item.method = this.checkPaymentMedthod(item.method);
         });
@@ -53,7 +65,7 @@ export class ListTransactionComponent implements OnInit, OnChanges {
     this.withdrawRequestService.getDetailTranHistory(tranId).subscribe(response => {
       if (response.meta.code === 200) {
         this.transactionDetail = response.data;
-        this.transactionDetail.create_date = moment(this.transactionDetail.create_date).format(JAPAN_FORMATDATE_HH_MM);
+        this.transactionDetail.create_date = moment(this.transactionDetail.create_date).format(this.formatDateHour);
         this.transactionDetail.method = this.checkPaymentMedthod(this.transactionDetail.method);
         this.transactionDetail.funding_type = this.checkType(this.transactionDetail.funding_type);
         $('#tran_detail').modal('show');

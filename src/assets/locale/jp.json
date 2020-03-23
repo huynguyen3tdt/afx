@@ -67,7 +67,7 @@
   "Showing": "表示",
   "entries": "件",
   "Yearly Customer Statement": "年間取引報告書",
-  "Daily Customer Statement": "取引報告書 兼 取引残高報告書 兼 証拠金受領書 （日次）",
+  "Daily Customer Statement": "日次顧客声明",
   "All Customer Statement": "すべての帳票",
   "Created date": "作成日",
   "Name": "名称",
@@ -217,5 +217,5 @@
   "Postal code is incorrect.": "郵便番号が正しくありません。",
   "Enter the postal code using single-byte numbers.": "郵便番号は、半角数字で入力してください。",
   "Enter the postal code without a hyphen (-).": "郵便番号は、ハイフン(-)なしで入力してください。",
-  "Enter your zip code using single-byte numbers.": "郵便番号は半角数字で入力してください。"
+  "Enter your zip code using single-byte numbers.": "郵便番号は半角数字で入力してください。 "
 }
