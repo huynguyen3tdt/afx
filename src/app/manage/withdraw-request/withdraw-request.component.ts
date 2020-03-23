@@ -8,10 +8,10 @@ import { BankInforModel,
          TransactionModel,
          WithdrawAmountModel,
          postWithdrawModel} from 'src/app/core/model/withdraw-request-response.model';
-import { MIN_WITHDRAW, ACCOUNT_IDS } from './../../core/constant/authen-constant';
+import { MIN_WITHDRAW, ACCOUNT_IDS, LOCALE } from './../../core/constant/authen-constant';
 import { GlobalService } from 'src/app/core/services/global.service';
 import { AccountType } from 'src/app/core/model/report-response.model';
-import { JAPAN_FORMATDATE_HH_MM } from 'src/app/core/constant/format-date-constant';
+import { JAPAN_FORMATDATE_HH_MM, EN_FORMATDATE, EN_FORMATDATE_HH_MM, JAPAN_FORMATDATE} from 'src/app/core/constant/format-date-constant';
 import { PaymentMethod, TYPEOFTRANHISTORY } from 'src/app/core/constant/payment-method-constant';
 import { Router } from '@angular/router';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
@@ -50,9 +50,13 @@ export class WithdrawRequestComponent implements OnInit {
   listWithdraw: Array<TransactionModel>;
   listWithdrawRequest: postWithdrawModel;
   withdrawTranDetail: TransactionModel;
-  newDate: Date;
+  newDate: string;
   listBankTranfer: Array<DepositModel>;
   transactionType: number;
+  statusSearch: string;
+  formatDateYear: string;
+  formatDateHour: string;
+  locale: string;
 
   constructor(private withdrawRequestService: WithdrawRequestService,
               private spinnerService: Ng4LoadingSpinnerService,
@@ -61,6 +65,14 @@ export class WithdrawRequestComponent implements OnInit {
               private depositService: DepositService) { }
 
   ngOnInit() {
+    this.locale = localStorage.getItem(LOCALE);
+    if (this.locale === 'en') {
+      this.formatDateYear = EN_FORMATDATE;
+      this.formatDateHour = EN_FORMATDATE_HH_MM;
+    } else if (this.locale === 'jp') {
+      this.formatDateYear = JAPAN_FORMATDATE;
+      this.formatDateHour = JAPAN_FORMATDATE_HH_MM;
+    }
     this.transactionType = Number(TYPEOFTRANHISTORY.WITHDRAWAL.key);
     this.listTradingAccount = JSON.parse(localStorage.getItem(ACCOUNT_IDS));
     if (this.listTradingAccount) {
@@ -159,7 +171,7 @@ export class WithdrawRequestComponent implements OnInit {
 
   showConfirm() {
     $('#modal-withdraw-confirm').modal('show');
-    this.newDate = new Date();
+    this.newDate = moment(new Date()).format(this.formatDateHour);
     this.getDepositBank();
   }
   sendConfirm() {
