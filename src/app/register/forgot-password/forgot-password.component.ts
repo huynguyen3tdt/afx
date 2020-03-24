@@ -6,6 +6,8 @@ import { AuthenService } from 'src/app/core/services/authen.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { element } from 'protractor';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
+import { LOCALE } from 'src/app/core/constant/authen-constant';
+import { EN_FORMATDATE, JAPAN_FORMATDATE} from 'src/app/core/constant/format-date-constant';
 
 @Component({
   selector: 'app-forgot-password',
@@ -23,6 +25,8 @@ export class ForgotPasswordComponent implements OnInit, AfterViewInit, OnDestroy
   time: number;
   interval;
   showInterval: boolean;
+  locale: string;
+  formatDateYear: string;
 
   constructor(
     private authenService: AuthenService,
@@ -31,6 +35,12 @@ export class ForgotPasswordComponent implements OnInit, AfterViewInit, OnDestroy
     private spinnerService: Ng4LoadingSpinnerService) { }
 
   ngOnInit() {
+    this.locale = localStorage.getItem(LOCALE);
+    if (this.locale === 'en') {
+      this.formatDateYear = EN_FORMATDATE;
+    } else if (this.locale === 'jp') {
+      this.formatDateYear = JAPAN_FORMATDATE;
+    }
     this.showInterval = false;
     this.initForgotPasswordForm();
     this.activatedRoute.queryParams.subscribe(param => {
