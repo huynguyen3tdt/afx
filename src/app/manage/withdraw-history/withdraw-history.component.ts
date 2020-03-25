@@ -55,9 +55,9 @@ export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
   formatDateHour: string;
   locale: string;
   TABS = {
-    ALL: { name: 'ALL', value: 0 },
-    DEPOSIT: { name: 'DEPOSIT', value: 1 },
-    WITHDRAWAL: { name: 'WITHDRAWAL', value: 2 },
+    ALL: { name: 'ALL', value: '0' },
+    DEPOSIT: { name: 'DEPOSIT', value: 'd' },
+    WITHDRAWAL: { name: 'WITHDRAWAL', value: 'w' },
   };
   DURATION = {
     DAY: 'day',
@@ -126,7 +126,7 @@ export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
   }
 
   getTranHistory(accountNumber: number,
-                 pageNumber: number, pageSize: number, type?: number, dateFrom?: string, dateTo?: string, statusSearch?: string) {
+                 pageNumber: number, pageSize: number, type?: string, dateFrom?: string, dateTo?: string, statusSearch?: string) {
     this.spinnerService.show();
     this.checkTab(type);
     this.withdrawRequestService.getDwHistory(accountNumber, pageSize, pageNumber, type, dateFrom,
@@ -209,7 +209,7 @@ export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
     this.searchTranHistory();
   }
 
-  checkTab(type: number, callSearh?: string) {
+  checkTab(type: string, callSearh?: string) {
     switch (type) {
       case this.TABS.ALL.value:
         this.tab = this.TABS.ALL.name;

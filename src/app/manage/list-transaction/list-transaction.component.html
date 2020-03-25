@@ -24,8 +24,8 @@
                         <td><a style="cursor: pointer;" (click)="openDetail(item?.id)">{{item?.funding_type}}</a></td>
                         <td><a style="cursor: pointer;" (click)="openDetail(item?.id)">{{item?.method}}</a></td>
                         <!-- <td class="text-right">JPY</td> -->
-                        <td class="text-right" *ngIf="tranType == 2">-{{item?.amount | number}}</td>
-                        <td class="text-right" *ngIf="tranType == 1">{{item?.amount | number}}</td>
+                        <td class="text-right" *ngIf="tranType == 'w'">-{{item?.amount | number}}</td>
+                        <td class="text-right" *ngIf="tranType == 'd'">{{item?.amount | number}}</td>
                         <!-- <td class="text-right"><span class="text-info"><i class="icon ion-md-hourglass"></i>
                                 Pending</span></td> -->
 
@@ -40,8 +40,8 @@
                     </tr>
                     <tr>
                         <td colspan="7">
-                            <a *ngIf="tranType == 1" href="javascript:;"  routerLink="/manage/withdrawHistory/" target="_blank" [queryParams]="{tab: 'DEPOSIT'}"> {{'View entire operation history' | translate}}</a>
-                            <a *ngIf="tranType == 2" href="javascript:;"  routerLink="/manage/withdrawHistory/" target="_blank" [queryParams]="{tab: 'WITHDRAWAL'}"> {{'View entire operation history' | translate}}</a>
+                            <a *ngIf="tranType == 'd'" href="javascript:;"  routerLink="/manage/withdrawHistory/" target="_blank" [queryParams]="{tab: 'DEPOSIT'}"> {{'View entire operation history' | translate}}</a>
+                            <a *ngIf="tranType == 'w'" href="javascript:;"  routerLink="/manage/withdrawHistory/" target="_blank" [queryParams]="{tab: 'WITHDRAWAL'}"> {{'View entire operation history' | translate}}</a>
                         </td>
                     </tr>
                 </tbody>
@@ -94,8 +94,8 @@
                       </tr>
                         <tr>
                             <td width="180">{{'Amount' | translate}}</td>
-                            <td *ngIf="tranType == 1"><strong>{{transactionDetail?.amount | number}}</strong> <span class="small text-secondary"></span>{{transactionDetail?.currency}}</td>
-                            <td *ngIf="tranType == 2"><strong>-{{transactionDetail?.amount | number}}</strong> <span class="small text-secondary"></span>{{transactionDetail?.currency}}</td>
+                            <td *ngIf="tranType == 'd'"><strong>{{transactionDetail?.amount | number}}</strong> <span class="small text-secondary"></span>{{transactionDetail?.currency}}</td>
+                            <td *ngIf="tranType == 'w'"><strong>-{{transactionDetail?.amount | number}}</strong> <span class="small text-secondary"></span>{{transactionDetail?.currency}}</td>
                         </tr>
                         <tr>
                             <td width="180">{{'Status' | translate}}</td>

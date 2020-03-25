@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { requiredInput } from 'src/app/core/helper/custom-validate.helper';
 import { DepositModel } from 'src/app/core/model/deposit-response.model';
@@ -25,6 +25,7 @@ const numeral = require('numeral');
 })
 export class DepositComponent implements OnInit {
   @ViewChild('listTran', { static: true }) listTran: ListTransactionComponent;
+  @ViewChild('BJPSystem', { static: true }) BJPSystem: ElementRef;
   constructor(private depositService: DepositService,
               private withdrawRequestService: WithdrawRequestService,
               private spinnerService: Ng4LoadingSpinnerService,
@@ -54,11 +55,13 @@ export class DepositComponent implements OnInit {
   listDeposit: Array<TransactionModel>;
   depositTranDetail: TransactionModel;
   listDwAmount: WithdrawAmountModel;
-  transactionType: number;
+  transactionType: string;
   formatDateYear: string;
   formatDateHour: string;
   locale: string;
   lastestTime: string;
+  controlNo: string;
+  tranAmount;
 
   ngOnInit() {
     this.locale = localStorage.getItem(LOCALE);
@@ -69,7 +72,7 @@ export class DepositComponent implements OnInit {
       this.formatDateYear = JAPAN_FORMATDATE;
       this.formatDateHour = JAPAN_FORMATDATE_HH_MM;
     }
-    this.transactionType = Number(TYPEOFTRANHISTORY.DEPOSIT.key);
+    this.transactionType = TYPEOFTRANHISTORY.DEPOSIT.key;
     this.listTradingAccount = JSON.parse(localStorage.getItem(ACCOUNT_IDS));
     if (this.listTradingAccount) {
       this.accountID = this.listTradingAccount[0].value;
@@ -94,6 +97,8 @@ export class DepositComponent implements OnInit {
     this.depositTransactionForm = new FormGroup({
       deposit: new FormControl(numeral(10000).format('0,0'), requiredInput)
     });
+    this.depositValue = numeral(this.depositTransactionForm.controls.deposit.value).value();
+
   }
 
   getDepositBank() {
@@ -168,6 +173,7 @@ export class DepositComponent implements OnInit {
 
   }
   onSubmit() {
+    console.log('in in in ');
     this.isSubmitted = true;
     if (this.depositTransactionForm.invalid) {
       return;
@@ -177,11 +183,16 @@ export class DepositComponent implements OnInit {
       amount: numeral(this.depositTransactionForm.controls.deposit.value).value(),
       account_id: Number(this.accountID.split('-')[1])
     };
+    console.log('in in in 222222 ');
     this.spinnerService.show();
     this.depositService.billingSystem(param).subscribe(response => {
+      console.log('responseee ', response);
       this.spinnerService.hide();
       if (response.meta.code === 200) {
-        this.listTran.ngOnChanges();
+        this.controlNo = response.data.id.toString();
+        setTimeout(() => {
+          this.BJPSystem.nativeElement.click();
+        }, 100);
       }
     });
   }

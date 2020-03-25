@@ -77,10 +77,10 @@ export class WithdrawRequestService {
   }
 
   getDwHistory(accountNumber: number, pageSize: number, pageNumber: number,
-               type?: number, dateFrom?: string, dateTo?: string, statusSearch?: string): Observable<WithdrawHistory> {
+               type?: string, dateFrom?: string, dateTo?: string, statusSearch?: string): Observable<WithdrawHistory> {
     let URL = '';
     const locale = localStorage.getItem(LOCALE);
-    if (type !== -1) {
+    if (type) {
       URL = `?account_id=${accountNumber}&type=${type}&page_size=${pageSize}&page=${pageNumber}`;
     } else {
       URL = `?account_id=${accountNumber}&page_size=${pageSize}&page=${pageNumber}`;
