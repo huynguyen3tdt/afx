@@ -16,7 +16,7 @@ import { LOCALE } from 'src/app/core/constant/authen-constant';
 })
 export class ListTransactionComponent implements OnInit, OnChanges {
   @Input() accountID: string;
-  @Input() tranType: number;
+  @Input() tranType: string;
 
   titleTransaction: string;
   listTransaction: Array<TransactionModel>;
@@ -46,7 +46,7 @@ export class ListTransactionComponent implements OnInit, OnChanges {
     }
   }
 
-  getTranHistory(accountNumber: number, pageSize: number, pageNumber: number, type?: number, dateFrom?: string, dateTo?: string) {
+  getTranHistory(accountNumber: number, pageSize: number, pageNumber: number, type?: string, dateFrom?: string, dateTo?: string) {
     this.spinnerService.show();
     this.withdrawRequestService.getDwHistory(accountNumber, pageNumber, pageSize, type, dateFrom, dateTo).subscribe(response => {
       if (response.meta.code === 200) {

@@ -55,7 +55,7 @@ export class WithdrawRequestComponent implements OnInit {
   withdrawTranDetail: TransactionModel;
   newDate: string;
   listBankTranfer: Array<DepositModel>;
-  transactionType: number;
+  transactionType: string;
   statusSearch: string;
   formatDateYear: string;
   formatDateHour: string;
@@ -80,7 +80,7 @@ export class WithdrawRequestComponent implements OnInit {
       this.formatDateYear = JAPAN_FORMATDATE;
       this.formatDateHour = JAPAN_FORMATDATE_HH_MM;
     }
-    this.transactionType = Number(TYPEOFTRANHISTORY.WITHDRAWAL.key);
+    this.transactionType = TYPEOFTRANHISTORY.WITHDRAWAL.key;
     this.listTradingAccount = JSON.parse(localStorage.getItem(ACCOUNT_IDS));
     if (this.listTradingAccount) {
       this.accountID = this.listTradingAccount[0].value;

@@ -260,6 +260,16 @@
         </div>
     </div>
 </div>
+<FORM  NAME="frm" hidden method="post"  action="https://www.e5.billingjapan.co.jp/NASApp/bjp/PB71SelectBankServlet_Ph1">
+    <input type="hidden" name="PORTAL_CODE" value="000101">
+    <input type="hidden" name="SHOP_CODE" value="0155200563">
+    <input type="hidden" name="BANK_CODE" value="0003">
+    <input type="hidden" name="CTRL_NO" value="{{controlNo}}">
+    <input type="hidden" name="TRAN_AMOUNT" value="{{depositValue}}">
+    <input type="hidden" name="VALID_RETURN_URL" value="https://afx-api.ecomedic.vn/api/v1/deposits/post_back/">
+    <input type="hidden" name="INVALID_RETURN_URL" value="https://afx-api.ecomedic.vn/api/v1/deposits/post_back/">
+    <input #BJPSystem type="submit" value="Pay">
+</FORM>
 
 <div class="modal fade" id="modal-rule" tabindex="-1" role="dialog" aria-labelledby="ruleTitle" aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg" role="document">
@@ -349,3 +359,5 @@
     </div>
 </div>
 <ng4-loading-spinner> </ng4-loading-spinner>
+
+<!-- depositTransactionForm.controls.deposit.value -->
