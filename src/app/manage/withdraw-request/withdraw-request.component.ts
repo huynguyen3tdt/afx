@@ -3,15 +3,17 @@ import { WithdrawRequestService } from 'src/app/core/services/withdraw-request.s
 // import { ACCOUNT_TYPE } from 'src/app/core/constant/authen-constant';
 import { FormGroup, FormControl } from '@angular/forms';
 import { requiredInput } from 'src/app/core/helper/custom-validate.helper';
-import { BankInforModel,
-         Mt5Model,
-         TransactionModel,
-         WithdrawAmountModel,
-         postWithdrawModel} from 'src/app/core/model/withdraw-request-response.model';
+import {
+  BankInforModel,
+  Mt5Model,
+  TransactionModel,
+  WithdrawAmountModel,
+  postWithdrawModel
+} from 'src/app/core/model/withdraw-request-response.model';
 import { MIN_WITHDRAW, ACCOUNT_IDS, LOCALE } from './../../core/constant/authen-constant';
 import { GlobalService } from 'src/app/core/services/global.service';
 import { AccountType } from 'src/app/core/model/report-response.model';
-import { JAPAN_FORMATDATE_HH_MM, EN_FORMATDATE, EN_FORMATDATE_HH_MM, JAPAN_FORMATDATE} from 'src/app/core/constant/format-date-constant';
+import { JAPAN_FORMATDATE_HH_MM, EN_FORMATDATE, EN_FORMATDATE_HH_MM, JAPAN_FORMATDATE } from 'src/app/core/constant/format-date-constant';
 import { PaymentMethod, TYPEOFTRANHISTORY } from 'src/app/core/constant/payment-method-constant';
 import { Router } from '@angular/router';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
@@ -28,6 +30,7 @@ import * as moment from 'moment';
 })
 export class WithdrawRequestComponent implements OnInit {
   @ViewChild('listTran', { static: true }) listTran: ListTransactionComponent;
+
   mt5Infor: Mt5Model;
   accountType;
   bankInfor: BankInforModel;
@@ -58,7 +61,9 @@ export class WithdrawRequestComponent implements OnInit {
   formatDateHour: string;
   locale: string;
   lastestTime: string;
-
+  freeMargin: number;
+  withdrawAmount: boolean;
+  withdrawableAmount: number;
 
   constructor(private withdrawRequestService: WithdrawRequestService,
               private spinnerService: Ng4LoadingSpinnerService,
@@ -173,9 +178,32 @@ export class WithdrawRequestComponent implements OnInit {
   }
 
   showConfirm() {
+    this.withdrawAmount = false;
+    const numeral = require('numeral');
+    this.depositValue = numeral(this.withdrawForm.controls.amount.value).value();
+    this.withdrawableAmount = numeral(this.mt5Infor.free_margin).value();
+    if (this.depositValue < numeral(this.minWithdraw).value()) {
+      this.withdrawError = true;
+      return;
+    }
+    if (this.withdrawableAmount < this.depositValue) {
+      this.withdrawAmount = true;
+      return;
+    }
+
     $('#modal-withdraw-confirm').modal('show');
     this.newDate = moment(new Date()).format(this.formatDateHour);
     this.getDepositBank();
+  }
+  changeAmount() {
+    if (this.withdrawForm.controls.wholeMoney.value === true) {
+      $('#amount').attr('disabled', true);
+      this.withdrawAmount = false;
+      const numeral = require('numeral');
+      this.freeMargin = numeral(this.withdrawForm.controls.amount.value).value();
+    } else {
+      $('#amount').attr('disabled', false);
+    }
   }
   sendConfirm() {
     $('#modal_withdraw').modal('show');
@@ -187,7 +215,7 @@ export class WithdrawRequestComponent implements OnInit {
       account_id: this.account,
       currency: 'JPY'
     };
-    this.withdrawRequestService.postWithdraw(param).subscribe( response => {
+    this.withdrawRequestService.postWithdraw(param).subscribe(response => {
       if (response.meta.code === 200) {
         this.listWithdrawRequest = response.data;
 

@@ -48,9 +48,12 @@
                                 </div>
                                 <div class="mb-1 d-flex justify-content-between">
                                     <label class="label">{{'Withdrawable amount' | translate}}</label>
-                                    <div>
+                                    <div *ngIf="withdrawForm.controls.wholeMoney.value == false">
                                         <strong>{{mt5Infor?.free_margin | number}}</strong>
                                     </div>
+                                    <div *ngIf="withdrawForm.controls.wholeMoney.value == true">
+                                      <strong>{{freeMargin | number}}</strong>
+                                  </div>
                                 </div>
                                 <div class="mb-1 d-flex justify-content-between">
                                     <label class="label">{{'Margin Level' | translate}}</label>
@@ -86,13 +89,17 @@
                                 </div>
                                 <div class="mb-3">
                                     <label class="label"><strong>{{'Withdrawal Amount' | translate}}</strong></label>
-                                    <input type="text" name="amount" class="form-control form-control-lg text-right font-weight-bold text-success" placeholder="" formControlName="amount" currency (change)="changeWithdtaw($event.target.value)" autocomplete="off" [ngClass]="{'invalid': isSubmitted && withdrawForm.controls['amount'].errors}">
+                                    <input type="text" name="amount" id="amount" class="form-control form-control-lg text-right font-weight-bold text-success" placeholder="" formControlName="amount" currency
+                                      (change)="changeWithdtaw($event.target.value)" autocomplete="off" [ngClass]="{'invalid': isSubmitted && withdrawForm.controls['amount'].errors}">
                                     <div *ngIf="withdrawError == true" class="invalid-mess">
-                                        <div>Minimum amount is not below {{minWithdraw}}</div>
+                                        <div>Minimum amount is not below {{minWithdraw | number}}</div>
+                                    </div>
+                                    <div *ngIf="withdrawAmount == true" class="invalid-mess">
+                                      <div>Withdrawal amount is not above the withdrawable amount</div>
                                     </div>
                                     <div class="mt-2">
                                       <label class="container-checkbox small">{{'Whole of money' | translate}}
-                                        <input type="checkbox" name="Junior" formControlName="wholeMoney">
+                                        <input type="checkbox" name="Junior" formControlName="wholeMoney" (change)="changeAmount()">
                                         <span class="checkmark"></span>
                                       </label>
                                     </div>
@@ -179,7 +186,7 @@
                 </tr>
                 <tr>
                     <td width="180">{{'Withdrawal amount' | translate}}</td>
-                    <td><strong>-10000</strong></td>
+                    <td><strong>-{{depositValue | number}}</strong></td>
                 </tr>
                 <tr>
                     <td width="180">{{'Currency' | translate}}</td>
