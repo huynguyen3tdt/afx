@@ -23,13 +23,15 @@ import { ListTransactionComponent } from '../list-transaction/list-transaction.c
 declare var $: any;
 import * as moment from 'moment';
 
+const numeral = require('numeral');
+
 @Component({
   selector: 'app-withdraw-request',
   templateUrl: './withdraw-request.component.html',
   styleUrls: ['./withdraw-request.component.css']
 })
 export class WithdrawRequestComponent implements OnInit {
-  @ViewChild('listTran', { static: true }) listTran: ListTransactionComponent;
+  @ViewChild('listTran', { static: false }) listTran: ListTransactionComponent;
 
   mt5Infor: Mt5Model;
   accountType;
@@ -61,10 +63,10 @@ export class WithdrawRequestComponent implements OnInit {
   formatDateHour: string;
   locale: string;
   lastestTime: string;
-  freeMargin: number;
-  withdrawAmount: boolean;
-  withdrawableAmount: number;
-
+  withdrawAmountError: boolean;
+  withdrawFee: number;
+  totalAmount: number;
+  // withdrawAmount
   constructor(private withdrawRequestService: WithdrawRequestService,
               private spinnerService: Ng4LoadingSpinnerService,
               private router: Router,
@@ -72,6 +74,7 @@ export class WithdrawRequestComponent implements OnInit {
               private depositService: DepositService) { }
 
   ngOnInit() {
+    this.withdrawFee = 0;
     this.locale = localStorage.getItem(LOCALE);
     if (this.locale === 'en') {
       this.formatDateYear = EN_FORMATDATE;
@@ -96,11 +99,11 @@ export class WithdrawRequestComponent implements OnInit {
   }
 
   initWithdrawForm() {
-    const numeral = require('numeral');
     this.withdrawForm = new FormGroup({
       amount: new FormControl(numeral(10000).format('0,0'), requiredInput),
       wholeMoney: new FormControl(false),
     });
+    this.totalAmount = numeral(this.withdrawForm.controls.amount.value).value() - this.withdrawFee;
   }
 
 
@@ -114,7 +117,7 @@ export class WithdrawRequestComponent implements OnInit {
         this.usedMargin = this.mt5Infor.used_margin;
         this.lastestTime = moment(this.mt5Infor.lastest_time).format(this.formatDateHour);
       }
-      this.countWithdraw();
+      this.calculateWithdraw();
     });
   }
   getBankInfor() {
@@ -150,17 +153,25 @@ export class WithdrawRequestComponent implements OnInit {
   }
 
   changeWithdtaw(event: any) {
-    const numeral = require('numeral');
     this.depositValue = numeral(this.withdrawForm.controls.amount.value).value();
-    if (this.depositValue < 10000) {
+    if (this.depositValue < numeral(this.minWithdraw).value()) {
       this.withdrawError = true;
+    } else {
+      this.withdrawError = false;
+    }
+    if (this.mt5Infor.free_margin < this.depositValue) {
+      this.withdrawAmountError = true;
+    } else {
+      this.withdrawAmountError = false;
+    }
+    if (this.withdrawError === true || this.withdrawAmountError === true) {
       return;
     }
-    this.withdrawError = false;
-    this.countWithdraw();
+    this.totalAmount = numeral(this.withdrawForm.controls.amount.value).value() - this.withdrawFee;
+    this.calculateWithdraw();
   }
-  countWithdraw() {
-    const numeral = require('numeral');
+
+  calculateWithdraw() {
     this.errMessage = false;
     this.equityEstimate = Math.floor(this.equity - numeral(this.withdrawForm.controls.amount.value).value());
     this.marginLevelEstimate = this.globalService.calculateMarginLevel(this.equityEstimate, this.usedMargin);
@@ -178,37 +189,29 @@ export class WithdrawRequestComponent implements OnInit {
   }
 
   showConfirm() {
-    this.withdrawAmount = false;
-    const numeral = require('numeral');
-    this.depositValue = numeral(this.withdrawForm.controls.amount.value).value();
-    this.withdrawableAmount = numeral(this.mt5Infor.free_margin).value();
-    if (this.depositValue < numeral(this.minWithdraw).value()) {
-      this.withdrawError = true;
+    if (this.withdrawError === true || this.withdrawAmountError === true) {
       return;
     }
-    if (this.withdrawableAmount < this.depositValue) {
-      this.withdrawAmount = true;
-      return;
-    }
-
     $('#modal-withdraw-confirm').modal('show');
     this.newDate = moment(new Date()).format(this.formatDateHour);
     this.getDepositBank();
   }
+
   changeAmount() {
     if (this.withdrawForm.controls.wholeMoney.value === true) {
       $('#amount').attr('disabled', true);
-      this.withdrawAmount = false;
-      const numeral = require('numeral');
-      this.freeMargin = numeral(this.withdrawForm.controls.amount.value).value();
+      this.withdrawAmountError = false;
+      this.withdrawForm.controls.amount.setValue(numeral(this.mt5Infor.free_margin).format('0,0'));
     } else {
       $('#amount').attr('disabled', false);
     }
   }
+
   sendConfirm() {
-    $('#modal_withdraw').modal('show');
     $('#modal-withdraw-confirm').modal('hide');
-    const numeral = require('numeral');
+    $('#modal-withdraw-confirm').on('hidden.bs.modal', () => {
+      $('#modal_withdraw').modal('show');
+    });
     this.depositValue = numeral(this.withdrawForm.controls.amount.value).value();
     const param = {
       amount: this.depositValue,
@@ -218,9 +221,7 @@ export class WithdrawRequestComponent implements OnInit {
     this.withdrawRequestService.postWithdraw(param).subscribe(response => {
       if (response.meta.code === 200) {
         this.listWithdrawRequest = response.data;
-
         this.listTran.ngOnChanges();
-
       }
     });
   }
