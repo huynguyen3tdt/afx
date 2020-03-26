@@ -743,7 +743,7 @@
             </div>
         </div>
     </div>
-    <!-- Modal Configm Bank -->
+    <!-- Modal Select Bank -->
     <div class="modal fade" id="modal-select-bank" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" data-backdrop="static">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
@@ -768,70 +768,57 @@
                         <div class="row">
                             <div class="col-lg-7">
                                 <h6 class="c-title mb-2">Selecting the initial character of bank name</h6>
-                                <table class="table-characters mb-3">
-                                    <tbody>
-                                        <tr>
-                                            <td><button class="btn btn-sm btn-character">あ</button></td>
-                                            <td><button class="btn btn-sm btn-character">か</button></td>
-                                            <td><button class="btn btn-sm btn-character">さ</button></td>
-                                            <td><button class="btn btn-sm btn-character">た</button></td>
-                                            <td><button class="btn btn-sm btn-character">な</button></td>
-                                            <td><button class="btn btn-sm btn-character">は</button></td>
-                                            <td><button class="btn btn-sm btn-character">ま</button></td>
-                                            <td><button class="btn btn-sm btn-character">や</button></td>
-                                            <td><button class="btn btn-sm btn-character">ら</button></td>
-                                            <td><button class="btn btn-sm btn-character">わ</button></td>
-                                        </tr>
-                                        <tr>
-                                            <td><button class="btn btn-sm btn-character">い</button></td>
-                                            <td><button class="btn btn-sm btn-character">き</button></td>
-                                            <td><button class="btn btn-sm btn-character active">し</button></td>
-                                            <td><button class="btn btn-sm btn-character">ち</button></td>
-                                            <td><button class="btn btn-sm btn-character">に</button></td>
-                                            <td><button class="btn btn-sm btn-character">ひ</button></td>
-                                            <td><button class="btn btn-sm btn-character">み</button></td>
-                                            <td><button class="btn btn-sm btn-none">&nbsp;</button></td>
-                                            <td><button class="btn btn-sm btn-character">り</button></td>
-                                            <td><button class="btn btn-sm btn-none">&nbsp;</button></td>
-                                        </tr>
-                                        <tr>
-                                            <td><button class="btn btn-sm btn-character">う</button></td>
-                                            <td><button class="btn btn-sm btn-character">く</button></td>
-                                            <td><button class="btn btn-sm btn-character">す</button></td>
-                                            <td><button class="btn btn-sm btn-character">つ</button></td>
-                                            <td><button class="btn btn-sm btn-character">ぬ</button></td>
-                                            <td><button class="btn btn-sm btn-character">ふ</button></td>
-                                            <td><button class="btn btn-sm btn-character">む</button></td>
-                                            <td><button class="btn btn-sm btn-character">ゆ</button></td>
-                                            <td><button class="btn btn-sm btn-character">る</button></td>
-                                            <td><button class="btn btn-sm btn-character">を</button></td>
-                                        </tr>
-                                        <tr>
-                                            <td><button class="btn btn-sm btn-character">え</button></td>
-                                            <td><button class="btn btn-sm btn-character">け</button></td>
-                                            <td><button class="btn btn-sm btn-character">せ</button></td>
-                                            <td><button class="btn btn-sm btn-character">て</button></td>
-                                            <td><button class="btn btn-sm btn-character">ね</button></td>
-                                            <td><button class="btn btn-sm btn-character">へ</button></td>
-                                            <td><button class="btn btn-sm btn-character">め</button></td>
-                                            <td><button class="btn btn-sm btn-none">&nbsp;</button></td>
-                                            <td><button class="btn btn-sm btn-character">れ</button></td>
-                                            <td><button class="btn btn-sm btn-none">&nbsp;</button></td>
-                                        </tr>
-                                        <tr>
-                                            <td><button class="btn btn-sm btn-character">こ</button></td>
-                                            <td><button class="btn btn-sm btn-character">そ</button></td>
-                                            <td><button class="btn btn-sm btn-character">と</button></td>
-                                            <td><button class="btn btn-sm btn-character">の</button></td>
-                                            <td><button class="btn btn-sm btn-character">ほ</button></td>
-                                            <td><button class="btn btn-sm btn-character">も</button></td>
-                                            <td><button class="btn btn-sm btn-character">よ</button></td>
-                                            <td><button class="btn btn-sm btn-character">ろ</button></td>
-                                            <td><button class="btn btn-sm btn-character">ん</button></td>
-                                            <td>&nbsp;</td>
-                                        </tr>
-                                    </tbody>
-                                </table>                               
+                                <div class="box-characters mb-3">
+                                    <button class="btn btn-sm btn-character">あ</button>
+                                    <button class="btn btn-sm btn-character">か</button>
+                                    <button class="btn btn-sm btn-character">さ</button>
+                                    <button class="btn btn-sm btn-character">た</button>
+                                    <button class="btn btn-sm btn-character">な</button>
+                                    <button class="btn btn-sm btn-character">は</button>
+                                    <button class="btn btn-sm btn-character">ま</button>
+                                    <button class="btn btn-sm btn-character">や</button>
+                                    <button class="btn btn-sm btn-character">ら</button>
+                                    <button class="btn btn-sm btn-character">わ</button>
+                                    <button class="btn btn-sm btn-character">い</button>
+                                    <button class="btn btn-sm btn-character">き</button>
+                                    <button class="btn btn-sm btn-character active">し</button>
+                                    <button class="btn btn-sm btn-character">ち</button>
+                                    <button class="btn btn-sm btn-character">に</button>
+                                    <button class="btn btn-sm btn-character">ひ</button>
+                                    <button class="btn btn-sm btn-character">み</button>
+                                    <button class="btn btn-sm btn-none">&nbsp;</button>
+                                    <button class="btn btn-sm btn-character">り</button>
+                                    <button class="btn btn-sm btn-none">&nbsp;</button>
+                                    <button class="btn btn-sm btn-character">う</button>
+                                    <button class="btn btn-sm btn-character">く</button>
+                                    <button class="btn btn-sm btn-character">す</button>
+                                    <button class="btn btn-sm btn-character">つ</button>
+                                    <button class="btn btn-sm btn-character">ぬ</button>
+                                    <button class="btn btn-sm btn-character">ふ</button>
+                                    <button class="btn btn-sm btn-character">む</button>
+                                    <button class="btn btn-sm btn-character">ゆ</button>
+                                    <button class="btn btn-sm btn-character">る</button>
+                                    <button class="btn btn-sm btn-character">を</button>
+                                    <button class="btn btn-sm btn-character">え</button>
+                                    <button class="btn btn-sm btn-character">け</button>
+                                    <button class="btn btn-sm btn-character">せ</button>
+                                    <button class="btn btn-sm btn-character">て</button>
+                                    <button class="btn btn-sm btn-character">ね</button>
+                                    <button class="btn btn-sm btn-character">へ</button>
+                                    <button class="btn btn-sm btn-character">め</button>
+                                    <button class="btn btn-sm btn-none">&nbsp;</button>
+                                    <button class="btn btn-sm btn-character">れ</button>
+                                    <button class="btn btn-sm btn-none">&nbsp;</button>
+                                    <button class="btn btn-sm btn-character">こ</button>
+                                    <button class="btn btn-sm btn-character">そ</button>
+                                    <button class="btn btn-sm btn-character">と</button>
+                                    <button class="btn btn-sm btn-character">の</button>
+                                    <button class="btn btn-sm btn-character">ほ</button>
+                                    <button class="btn btn-sm btn-character">も</button>
+                                    <button class="btn btn-sm btn-character">よ</button>
+                                    <button class="btn btn-sm btn-character">ろ</button>
+                                    <button class="btn btn-sm btn-character">ん</button>
+                                </div>                              
                                 <h6 class="c-title mb-2">Entering a bank name</h6>
                                 <div class="d-flex mb-3">
                                     <div class="flex-grow-1"><input type="text" name="" class="form-control form-control-sm" placeholder=""></div>
@@ -856,70 +843,57 @@
                         <div class="row">
                             <div class="col-lg-7">
                                 <h6 class="c-title mb-2">Please select the branch name of the selected financial institution</h6>
-                                <table class="table-characters mb-3">
-                                    <tbody>
-                                        <tr>
-                                            <td><button class="btn btn-sm btn-character">あ</button></td>
-                                            <td><button class="btn btn-sm btn-character">か</button></td>
-                                            <td><button class="btn btn-sm btn-character">さ</button></td>
-                                            <td><button class="btn btn-sm btn-character">た</button></td>
-                                            <td><button class="btn btn-sm btn-character">な</button></td>
-                                            <td><button class="btn btn-sm btn-character">は</button></td>
-                                            <td><button class="btn btn-sm btn-character">ま</button></td>
-                                            <td><button class="btn btn-sm btn-character">や</button></td>
-                                            <td><button class="btn btn-sm btn-character">ら</button></td>
-                                            <td><button class="btn btn-sm btn-character">わ</button></td>
-                                        </tr>
-                                        <tr>
-                                            <td><button class="btn btn-sm btn-character">い</button></td>
-                                            <td><button class="btn btn-sm btn-character">き</button></td>
-                                            <td><button class="btn btn-sm btn-character active">し</button></td>
-                                            <td><button class="btn btn-sm btn-character">ち</button></td>
-                                            <td><button class="btn btn-sm btn-character">に</button></td>
-                                            <td><button class="btn btn-sm btn-character">ひ</button></td>
-                                            <td><button class="btn btn-sm btn-character">み</button></td>
-                                            <td><button class="btn btn-sm btn-none">&nbsp;</button></td>
-                                            <td><button class="btn btn-sm btn-character">り</button></td>
-                                            <td><button class="btn btn-sm btn-none">&nbsp;</button></td>
-                                        </tr>
-                                        <tr>
-                                            <td><button class="btn btn-sm btn-character">う</button></td>
-                                            <td><button class="btn btn-sm btn-character">く</button></td>
-                                            <td><button class="btn btn-sm btn-character">す</button></td>
-                                            <td><button class="btn btn-sm btn-character">つ</button></td>
-                                            <td><button class="btn btn-sm btn-character">ぬ</button></td>
-                                            <td><button class="btn btn-sm btn-character">ふ</button></td>
-                                            <td><button class="btn btn-sm btn-character">む</button></td>
-                                            <td><button class="btn btn-sm btn-character">ゆ</button></td>
-                                            <td><button class="btn btn-sm btn-character">る</button></td>
-                                            <td><button class="btn btn-sm btn-character">を</button></td>
-                                        </tr>
-                                        <tr>
-                                            <td><button class="btn btn-sm btn-character">え</button></td>
-                                            <td><button class="btn btn-sm btn-character">け</button></td>
-                                            <td><button class="btn btn-sm btn-character">せ</button></td>
-                                            <td><button class="btn btn-sm btn-character">て</button></td>
-                                            <td><button class="btn btn-sm btn-character">ね</button></td>
-                                            <td><button class="btn btn-sm btn-character">へ</button></td>
-                                            <td><button class="btn btn-sm btn-character">め</button></td>
-                                            <td><button class="btn btn-sm btn-none">&nbsp;</button></td>
-                                            <td><button class="btn btn-sm btn-character">れ</button></td>
-                                            <td><button class="btn btn-sm btn-none">&nbsp;</button></td>
-                                        </tr>
-                                        <tr>
-                                            <td><button class="btn btn-sm btn-character">こ</button></td>
-                                            <td><button class="btn btn-sm btn-character">そ</button></td>
-                                            <td><button class="btn btn-sm btn-character">と</button></td>
-                                            <td><button class="btn btn-sm btn-character">の</button></td>
-                                            <td><button class="btn btn-sm btn-character">ほ</button></td>
-                                            <td><button class="btn btn-sm btn-character">も</button></td>
-                                            <td><button class="btn btn-sm btn-character">よ</button></td>
-                                            <td><button class="btn btn-sm btn-character">ろ</button></td>
-                                            <td><button class="btn btn-sm btn-character">ん</button></td>
-                                            <td>&nbsp;</td>
-                                        </tr>
-                                    </tbody>
-                                </table>  
+                                <div class="box-characters mb-3">
+                                    <button class="btn btn-sm btn-character">あ</button>
+                                    <button class="btn btn-sm btn-character">か</button>
+                                    <button class="btn btn-sm btn-character">さ</button>
+                                    <button class="btn btn-sm btn-character">た</button>
+                                    <button class="btn btn-sm btn-character">な</button>
+                                    <button class="btn btn-sm btn-character">は</button>
+                                    <button class="btn btn-sm btn-character">ま</button>
+                                    <button class="btn btn-sm btn-character">や</button>
+                                    <button class="btn btn-sm btn-character">ら</button>
+                                    <button class="btn btn-sm btn-character">わ</button>
+                                    <button class="btn btn-sm btn-character">い</button>
+                                    <button class="btn btn-sm btn-character">き</button>
+                                    <button class="btn btn-sm btn-character active">し</button>
+                                    <button class="btn btn-sm btn-character">ち</button>
+                                    <button class="btn btn-sm btn-character">に</button>
+                                    <button class="btn btn-sm btn-character">ひ</button>
+                                    <button class="btn btn-sm btn-character">み</button>
+                                    <button class="btn btn-sm btn-none">&nbsp;</button>
+                                    <button class="btn btn-sm btn-character">り</button>
+                                    <button class="btn btn-sm btn-none">&nbsp;</button>
+                                    <button class="btn btn-sm btn-character">う</button>
+                                    <button class="btn btn-sm btn-character">く</button>
+                                    <button class="btn btn-sm btn-character">す</button>
+                                    <button class="btn btn-sm btn-character">つ</button>
+                                    <button class="btn btn-sm btn-character">ぬ</button>
+                                    <button class="btn btn-sm btn-character">ふ</button>
+                                    <button class="btn btn-sm btn-character">む</button>
+                                    <button class="btn btn-sm btn-character">ゆ</button>
+                                    <button class="btn btn-sm btn-character">る</button>
+                                    <button class="btn btn-sm btn-character">を</button>
+                                    <button class="btn btn-sm btn-character">え</button>
+                                    <button class="btn btn-sm btn-character">け</button>
+                                    <button class="btn btn-sm btn-character">せ</button>
+                                    <button class="btn btn-sm btn-character">て</button>
+                                    <button class="btn btn-sm btn-character">ね</button>
+                                    <button class="btn btn-sm btn-character">へ</button>
+                                    <button class="btn btn-sm btn-character">め</button>
+                                    <button class="btn btn-sm btn-none">&nbsp;</button>
+                                    <button class="btn btn-sm btn-character">れ</button>
+                                    <button class="btn btn-sm btn-none">&nbsp;</button>
+                                    <button class="btn btn-sm btn-character">こ</button>
+                                    <button class="btn btn-sm btn-character">そ</button>
+                                    <button class="btn btn-sm btn-character">と</button>
+                                    <button class="btn btn-sm btn-character">の</button>
+                                    <button class="btn btn-sm btn-character">ほ</button>
+                                    <button class="btn btn-sm btn-character">も</button>
+                                    <button class="btn btn-sm btn-character">よ</button>
+                                    <button class="btn btn-sm btn-character">ろ</button>
+                                    <button class="btn btn-sm btn-character">ん</button>
+                                </div>
                                 <h6 class="c-title mb-2">Entering a branch name</h6>
                                 <div class="d-flex mb-3">
                                     <div class="flex-grow-1"><input type="text" name="" class="form-control form-control-sm" placeholder=""></div>
