@@ -24,7 +24,7 @@ const numeral = require('numeral');
   styleUrls: ['./deposit.component.css']
 })
 export class DepositComponent implements OnInit {
-  @ViewChild('listTran', { static: true }) listTran: ListTransactionComponent;
+  @ViewChild('listTran', { static: false }) listTran: ListTransactionComponent;
   @ViewChild('BJPSystem', { static: true }) BJPSystem: ElementRef;
   constructor(private depositService: DepositService,
               private withdrawRequestService: WithdrawRequestService,
@@ -87,7 +87,6 @@ export class DepositComponent implements OnInit {
     }
     this.initDepositAmountForm();
     this.initDepositTransactionForm();
-    // this.getDepositBank();
   }
   initDepositAmountForm() {
     this.depositAmountForm = new FormGroup({
@@ -137,11 +136,10 @@ export class DepositComponent implements OnInit {
         this.equity = this.mt5Infor.equity;
         this.usedMargin = this.mt5Infor.used_margin;
         this.lastestTime = moment(this.mt5Infor.lastest_time).format(this.formatDateHour);
-        // console.log(this.mt5Infor.lastest_time)
         this.spinnerService.hide();
       }
-      this.countDeposit();
-      this.countDepositAmount();
+      this.calculateDeposit();
+      this.calculateDepositAmount();
     });
   }
 
@@ -192,10 +190,10 @@ export class DepositComponent implements OnInit {
     };
     this.spinnerService.show();
     this.depositService.billingSystem(param).subscribe(response => {
-      console.log('responseee ', response);
       this.spinnerService.hide();
       if (response.meta.code === 200) {
         this.controlNo = response.data.id.toString();
+        this.listTran.ngOnChanges();
         setTimeout(() => {
           this.BJPSystem.nativeElement.click();
         }, 100);
@@ -204,24 +202,24 @@ export class DepositComponent implements OnInit {
   }
   changeDeposit(event: any) {
     this.depositValue = numeral(this.depositTransactionForm.controls.deposit.value).value();
-    if (this.depositValue < 1000) {
+    if (this.depositValue < numeral(this.minDeposit).value) {
       this.depositError = true;
       return;
     }
     this.depositError = false;
     this.totalAmount = this.depositFee + this.depositValue;
-    this.countDeposit();
+    this.calculateDeposit();
   }
   changeDepositCal(event: any) {
     this.depositAmount = numeral(this.depositAmountForm.controls.deposit.value).value();
-    if (this.depositAmount < 1000) {
+    if (this.depositAmount < numeral(this.minDeposit).value) {
       this.bankError = true;
       return;
     }
     this.bankError = false;
-    this.countDepositAmount();
+    this.calculateDepositAmount();
   }
-  countDeposit() {
+  calculateDeposit() {
     this.errMessageQuickDeposit = false;
     this.equityEstimate = Math.floor(this.equity + numeral(this.depositTransactionForm.controls.deposit.value).value());
     this.marginLevelEstimate = this.globalService.calculateMarginLevel(this.equityEstimate, this.usedMargin);
@@ -229,7 +227,7 @@ export class DepositComponent implements OnInit {
       this.errMessageQuickDeposit = true;
     }
   }
-  countDepositAmount() {
+  calculateDepositAmount() {
     this.errMessageBankTran = false;
     this.equityDeposit = Math.floor(this.equity + numeral(this.depositAmountForm.controls.deposit.value).value());
     this.marginLevelEstimate = this.globalService.calculateMarginLevel(this.equityDeposit, this.usedMargin);

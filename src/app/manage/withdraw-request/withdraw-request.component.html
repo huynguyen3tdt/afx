@@ -48,12 +48,9 @@
                                 </div>
                                 <div class="mb-1 d-flex justify-content-between">
                                     <label class="label">{{'Withdrawable amount' | translate}}</label>
-                                    <div *ngIf="withdrawForm.controls.wholeMoney.value == false">
+                                    <div>
                                         <strong>{{mt5Infor?.free_margin | number}}</strong>
                                     </div>
-                                    <div *ngIf="withdrawForm.controls.wholeMoney.value == true">
-                                      <strong>{{freeMargin | number}}</strong>
-                                  </div>
                                 </div>
                                 <div class="mb-1 d-flex justify-content-between">
                                     <label class="label">{{'Margin Level' | translate}}</label>
@@ -94,7 +91,7 @@
                                     <div *ngIf="withdrawError == true" class="invalid-mess">
                                         <div>Minimum amount is not below {{minWithdraw | number}}</div>
                                     </div>
-                                    <div *ngIf="withdrawAmount == true" class="invalid-mess">
+                                    <div *ngIf="withdrawAmountError == true" class="invalid-mess">
                                       <div>Withdrawal amount is not above the withdrawable amount</div>
                                     </div>
                                     <div class="mt-2">
