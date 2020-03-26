@@ -62,9 +62,12 @@ export class DepositComponent implements OnInit {
   lastestTime: string;
   controlNo: string;
   tranAmount;
+  totalAmount: number;
+  depositFee: number;
 
   ngOnInit() {
     this.locale = localStorage.getItem(LOCALE);
+    this.depositFee = 0;
     if (this.locale === 'en') {
       this.formatDateYear = EN_FORMATDATE;
       this.formatDateHour = EN_FORMATDATE_HH_MM;
@@ -86,7 +89,6 @@ export class DepositComponent implements OnInit {
     this.initDepositTransactionForm();
     // this.getDepositBank();
   }
-
   initDepositAmountForm() {
     this.depositAmountForm = new FormGroup({
       deposit: new FormControl(numeral(10000).format('0,0'), requiredInput)
@@ -98,6 +100,7 @@ export class DepositComponent implements OnInit {
       deposit: new FormControl(numeral(10000).format('0,0'), requiredInput)
     });
     this.depositValue = numeral(this.depositTransactionForm.controls.deposit.value).value();
+    this.totalAmount = this.depositFee + this.depositValue;
 
   }
 
@@ -173,9 +176,13 @@ export class DepositComponent implements OnInit {
 
   }
   onSubmit() {
-    console.log('in in in ');
     this.isSubmitted = true;
     if (this.depositTransactionForm.invalid) {
+      return;
+    }
+    this.depositValue = numeral(this.depositTransactionForm.controls.deposit.value).value();
+    if (this.depositValue < 1000) {
+      this.depositError = true;
       return;
     }
     const param = {
@@ -183,7 +190,6 @@ export class DepositComponent implements OnInit {
       amount: numeral(this.depositTransactionForm.controls.deposit.value).value(),
       account_id: Number(this.accountID.split('-')[1])
     };
-    console.log('in in in 222222 ');
     this.spinnerService.show();
     this.depositService.billingSystem(param).subscribe(response => {
       console.log('responseee ', response);
@@ -198,16 +204,17 @@ export class DepositComponent implements OnInit {
   }
   changeDeposit(event: any) {
     this.depositValue = numeral(this.depositTransactionForm.controls.deposit.value).value();
-    if (this.depositValue < 10000) {
+    if (this.depositValue < 1000) {
       this.depositError = true;
       return;
     }
     this.depositError = false;
+    this.totalAmount = this.depositFee + this.depositValue;
     this.countDeposit();
   }
   changeDepositCal(event: any) {
     this.depositAmount = numeral(this.depositAmountForm.controls.deposit.value).value();
-    if (this.depositAmount < 10000) {
+    if (this.depositAmount < 1000) {
       this.bankError = true;
       return;
     }

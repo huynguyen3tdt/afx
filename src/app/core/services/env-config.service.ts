@@ -27,5 +27,6 @@ export class EnvConfigService {
     if (this.envConfig) {
       return this.envConfig.backEnd;
     }
+    return 'https://afx-api.ecomedic.vn';
   }
 }

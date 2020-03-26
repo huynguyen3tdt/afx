@@ -64,6 +64,8 @@ export class WithdrawRequestComponent implements OnInit {
   freeMargin: number;
   withdrawAmount: boolean;
   withdrawableAmount: number;
+  withdrawFee: number;
+  totalAmount;
 
   constructor(private withdrawRequestService: WithdrawRequestService,
               private spinnerService: Ng4LoadingSpinnerService,
@@ -72,6 +74,7 @@ export class WithdrawRequestComponent implements OnInit {
               private depositService: DepositService) { }
 
   ngOnInit() {
+    this.withdrawFee = 0;
     this.locale = localStorage.getItem(LOCALE);
     if (this.locale === 'en') {
       this.formatDateYear = EN_FORMATDATE;
@@ -101,6 +104,7 @@ export class WithdrawRequestComponent implements OnInit {
       amount: new FormControl(numeral(10000).format('0,0'), requiredInput),
       wholeMoney: new FormControl(false),
     });
+    this.totalAmount = numeral(this.withdrawForm.controls.amount.value).value() - this.withdrawFee;
   }
 
 
@@ -156,6 +160,7 @@ export class WithdrawRequestComponent implements OnInit {
       this.withdrawError = true;
       return;
     }
+    this.totalAmount = numeral(this.withdrawForm.controls.amount.value).value() - this.withdrawFee;
     this.withdrawError = false;
     this.countWithdraw();
   }
