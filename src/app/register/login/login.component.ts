@@ -13,6 +13,7 @@ import {
   ACCOUNT_IDS,
   ACCOUNT_TYPE,
   LOCALE,
+  FXNAME1,
 } from './../../core/constant/authen-constant';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthenService } from 'src/app/core/services/authen.service';
@@ -113,6 +114,9 @@ export class LoginComponent implements OnInit, AfterViewInit {
         }
         if (response.data.module_funding_min_withdraw) {
           localStorage.setItem(MIN_WITHDRAW, response.data.module_funding_min_withdraw.toString());
+        }
+        if (response.data.fx_name1) {
+          localStorage.setItem(FXNAME1, response.data.fx_name1);
         }
         localStorage.setItem(FIRST_LOGIN, '1');
         if (response.data.pwd_change_flg === false) {
