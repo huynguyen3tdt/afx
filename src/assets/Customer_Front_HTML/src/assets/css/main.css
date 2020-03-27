@@ -43,6 +43,12 @@ a:hover{
 	font-size: 16px;
 	line-height: 1;
 }
+.font-size-64{
+	font-size: 64px;
+}
+.line-height-1{
+	line-height: 1;
+}
 .btn-link-24 {
 	line-height: 24px;
 	display: inline-block;
@@ -70,6 +76,10 @@ a:hover{
     border-color: #f99b26;
     color: #fff;
 }
+ .btn-warning:focus,
+ .btn-warning:active{
+ 	color: #fff !important;
+ }
  .btn-warning:hover,
  .btn-outline-warning:hover{
  	opacity: 0.9;
@@ -166,11 +176,14 @@ a:hover{
 .btn-none{
 	background: none;	
 }
-.btn-primary{
+.btn-primary,
+.btn-primary:focus,
+.btn-primary:active{
 	color: #fff;
 	background-color: #0D688F;
 	border-color: #0D688F;
 }
+
 .btn-outline-primary{
 	color: #0D688F;
 	background-color: rgba(255,255,255,0);
@@ -188,7 +201,8 @@ a:hover{
 }
 /* Main */
 body{
-	font-family: "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", Osaka, メイリオ, Meiryo, "ＭＳ Ｐゴシック", "MS PGothic", "ＭＳ ゴシック" , "MS Gothic", "Noto Sans CJK JP", TakaoPGothic, sans-serif;
+	/*font-family: "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", Osaka, メイリオ, Meiryo, "ＭＳ Ｐゴシック", "MS PGothic", "ＭＳ ゴシック" , "MS Gothic", "Noto Sans CJK JP", TakaoPGothic, sans-serif;*/
+	font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
 	background-color: #EFF3F8;
 	font-size: 15px;
 	color: #000;
@@ -484,6 +498,7 @@ body{
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	background: none;
 }
 .card-login {
 	background:#fff url(../images/login-welcome-bg.png) 0 0 no-repeat;
@@ -1677,10 +1692,14 @@ h1{
 .box-characters{
 	display: flex;
 	flex-wrap: wrap;
+	min-width: 320px;
+	margin: 0 -2px;
 }
 .box-characters .btn {
 	min-width: 32px;
-	margin: 2px;
+	flex-basis: 10%;
+	box-sizing: border-box;
+	border:2px solid #fff;
 }
 .box-characters .btn.btn-character{
 	background: #d7e5ea;
@@ -1730,3 +1749,4 @@ h1{
 .list-group-item.active{
 	background-color: #0D688F;
 }
+

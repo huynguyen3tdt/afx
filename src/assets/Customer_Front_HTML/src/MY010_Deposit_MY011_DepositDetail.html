@@ -89,10 +89,14 @@
                                             </div>
                                             <div class="col-md-6 col-lg-5">
                                                 <h4 class="text-primary border-bottom pb-1 mb-3"><i class="afx-icon-deposit"></i> Deposit Transactions</h4>
+                                                
                                                 <div class="form form-line">
                                                     <div class="form form-line">
                                                         <div class="mb-3">
-                                                            <label class="label">Deposit Amount</label>
+                                                            <div class="d-flex justify-content-md-between">
+                                                                <label class="label">Deposit Amount</label>
+                                                                <div class="small text-secondary">Minimum: 1000</div>
+                                                            </div>                                                            
                                                             <input type="text" name="amount" class="form-control form-control-lg text-right font-weight-bold text-warning" value="10,000" placeholder="">
                                                         </div>
                                                         <div class="mb-1 d-flex justify-content-between">
@@ -114,8 +118,12 @@
                                                             <div><strong>174.28%</strong></div>
                                                         </div>
                                                     </div>
+                                                </div>    
+                                                <div class="mb-1 d-flex justify-content-between align-items-center">
+                                                    <label class="label">Bank</label>
+                                                    <div><strong>Mizuho Bank</strong> <a href="javascript:;" data-toggle="modal" data-target="#modal-select-bank">Change</a></div>
                                                 </div>
-                                                <p class="small text-secondary p-2 bg-light">Notice: Minimum single deposit amount is ......</p>
+                                                                                      
                                                 <button class="btn btn-warning btn-block text-uppercase btn-lg mb-3" data-toggle="modal" data-target="#modal-deposit-confirm"><strong>Deposit</strong></button>
                                                 <p class="text-center" style="line-height: 1.2"><a href="javascript:;" data-toggle="modal" data-target="#modal-rule"><i class="icon ion-md-information-circle"></i> General rules for depositing and withdrawing funds</a></p>
                                             </div>
@@ -708,6 +716,183 @@
             </div>
         </div>
     </div>
+    <!-- Modal Select Bank -->
+    <div class="modal fade" id="modal-select-bank" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header pt-2 pb-2 bg-light">
+                    <h5 class="modal-title">Choosing a financial institution</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="section-selected-bank">
+                        <p class="mb-1">Selected financial institution name:</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h4 class="mb-0 text-primary"><strong>Mitsubishi UFJ</strong></h4>
+                            </div>
+                            <div><button class="btn btn-sm btn-primary btn-change-bank">Change Bank</button></div>
+                        </div>
+                        <hr>
+                    </div>
+                    <div class="section-select-bank d-none">
+                        <div class="row">
+                            <div class="col-lg-7">
+                                <h6 class="c-title mb-2">Selecting the initial character of bank name</h6>
+                                <div class="box-characters mb-3">
+                                    <button class="btn btn-sm btn-character">あ</button>
+                                    <button class="btn btn-sm btn-character">か</button>
+                                    <button class="btn btn-sm btn-character">さ</button>
+                                    <button class="btn btn-sm btn-character">た</button>
+                                    <button class="btn btn-sm btn-character">な</button>
+                                    <button class="btn btn-sm btn-character">は</button>
+                                    <button class="btn btn-sm btn-character">ま</button>
+                                    <button class="btn btn-sm btn-character">や</button>
+                                    <button class="btn btn-sm btn-character">ら</button>
+                                    <button class="btn btn-sm btn-character">わ</button>
+                                    <button class="btn btn-sm btn-character">い</button>
+                                    <button class="btn btn-sm btn-character">き</button>
+                                    <button class="btn btn-sm btn-character active">し</button>
+                                    <button class="btn btn-sm btn-character">ち</button>
+                                    <button class="btn btn-sm btn-character">に</button>
+                                    <button class="btn btn-sm btn-character">ひ</button>
+                                    <button class="btn btn-sm btn-character">み</button>
+                                    <button class="btn btn-sm btn-none">&nbsp;</button>
+                                    <button class="btn btn-sm btn-character">り</button>
+                                    <button class="btn btn-sm btn-none">&nbsp;</button>
+                                    <button class="btn btn-sm btn-character">う</button>
+                                    <button class="btn btn-sm btn-character">く</button>
+                                    <button class="btn btn-sm btn-character">す</button>
+                                    <button class="btn btn-sm btn-character">つ</button>
+                                    <button class="btn btn-sm btn-character">ぬ</button>
+                                    <button class="btn btn-sm btn-character">ふ</button>
+                                    <button class="btn btn-sm btn-character">む</button>
+                                    <button class="btn btn-sm btn-character">ゆ</button>
+                                    <button class="btn btn-sm btn-character">る</button>
+                                    <button class="btn btn-sm btn-character">を</button>
+                                    <button class="btn btn-sm btn-character">え</button>
+                                    <button class="btn btn-sm btn-character">け</button>
+                                    <button class="btn btn-sm btn-character">せ</button>
+                                    <button class="btn btn-sm btn-character">て</button>
+                                    <button class="btn btn-sm btn-character">ね</button>
+                                    <button class="btn btn-sm btn-character">へ</button>
+                                    <button class="btn btn-sm btn-character">め</button>
+                                    <button class="btn btn-sm btn-none">&nbsp;</button>
+                                    <button class="btn btn-sm btn-character">れ</button>
+                                    <button class="btn btn-sm btn-none">&nbsp;</button>
+                                    <button class="btn btn-sm btn-character">こ</button>
+                                    <button class="btn btn-sm btn-character">そ</button>
+                                    <button class="btn btn-sm btn-character">と</button>
+                                    <button class="btn btn-sm btn-character">の</button>
+                                    <button class="btn btn-sm btn-character">ほ</button>
+                                    <button class="btn btn-sm btn-character">も</button>
+                                    <button class="btn btn-sm btn-character">よ</button>
+                                    <button class="btn btn-sm btn-character">ろ</button>
+                                    <button class="btn btn-sm btn-character">ん</button>
+                                </div>                              
+                                <h6 class="c-title mb-2">Entering a bank name</h6>
+                                <div class="d-flex mb-3">
+                                    <div class="flex-grow-1"><input type="text" name="" class="form-control form-control-sm" placeholder=""></div>
+                                    <div class="ml-2"><button class="btn btn-sm btn-primary">Search</button></div>
+                                </div>
+                                <h6 class="c-title mb-2">Enter bank code</h6>
+                                <div class="d-flex">
+                                    <div class="flex-grow-1"><input type="text" name="" class="form-control form-control-sm" placeholder=""></div>
+                                    <div class="ml-2"><button class="btn btn-sm btn-primary">Search</button></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-5">
+                                <h6 class="c-title mb-1">Select Bank</h6>
+                                <div class="list-group list-bank border" style="height: 336px;">
+                                    <a href="javascript:;" class="list-group-item list-group-item-action">Shikoku</a>
+                                    <a href="javascript:;" class="list-group-item list-group-item-action">Shikoku roukin</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="section-select-branch">
+                        <div class="row">
+                            <div class="col-lg-7">
+                                <h6 class="c-title mb-2">Please select the branch name of the selected financial institution</h6>
+                                <div class="box-characters mb-3">
+                                    <button class="btn btn-sm btn-character">あ</button>
+                                    <button class="btn btn-sm btn-character">か</button>
+                                    <button class="btn btn-sm btn-character">さ</button>
+                                    <button class="btn btn-sm btn-character">た</button>
+                                    <button class="btn btn-sm btn-character">な</button>
+                                    <button class="btn btn-sm btn-character">は</button>
+                                    <button class="btn btn-sm btn-character">ま</button>
+                                    <button class="btn btn-sm btn-character">や</button>
+                                    <button class="btn btn-sm btn-character">ら</button>
+                                    <button class="btn btn-sm btn-character">わ</button>
+                                    <button class="btn btn-sm btn-character">い</button>
+                                    <button class="btn btn-sm btn-character">き</button>
+                                    <button class="btn btn-sm btn-character active">し</button>
+                                    <button class="btn btn-sm btn-character">ち</button>
+                                    <button class="btn btn-sm btn-character">に</button>
+                                    <button class="btn btn-sm btn-character">ひ</button>
+                                    <button class="btn btn-sm btn-character">み</button>
+                                    <button class="btn btn-sm btn-none">&nbsp;</button>
+                                    <button class="btn btn-sm btn-character">り</button>
+                                    <button class="btn btn-sm btn-none">&nbsp;</button>
+                                    <button class="btn btn-sm btn-character">う</button>
+                                    <button class="btn btn-sm btn-character">く</button>
+                                    <button class="btn btn-sm btn-character">す</button>
+                                    <button class="btn btn-sm btn-character">つ</button>
+                                    <button class="btn btn-sm btn-character">ぬ</button>
+                                    <button class="btn btn-sm btn-character">ふ</button>
+                                    <button class="btn btn-sm btn-character">む</button>
+                                    <button class="btn btn-sm btn-character">ゆ</button>
+                                    <button class="btn btn-sm btn-character">る</button>
+                                    <button class="btn btn-sm btn-character">を</button>
+                                    <button class="btn btn-sm btn-character">え</button>
+                                    <button class="btn btn-sm btn-character">け</button>
+                                    <button class="btn btn-sm btn-character">せ</button>
+                                    <button class="btn btn-sm btn-character">て</button>
+                                    <button class="btn btn-sm btn-character">ね</button>
+                                    <button class="btn btn-sm btn-character">へ</button>
+                                    <button class="btn btn-sm btn-character">め</button>
+                                    <button class="btn btn-sm btn-none">&nbsp;</button>
+                                    <button class="btn btn-sm btn-character">れ</button>
+                                    <button class="btn btn-sm btn-none">&nbsp;</button>
+                                    <button class="btn btn-sm btn-character">こ</button>
+                                    <button class="btn btn-sm btn-character">そ</button>
+                                    <button class="btn btn-sm btn-character">と</button>
+                                    <button class="btn btn-sm btn-character">の</button>
+                                    <button class="btn btn-sm btn-character">ほ</button>
+                                    <button class="btn btn-sm btn-character">も</button>
+                                    <button class="btn btn-sm btn-character">よ</button>
+                                    <button class="btn btn-sm btn-character">ろ</button>
+                                    <button class="btn btn-sm btn-character">ん</button>
+                                </div>
+                                <h6 class="c-title mb-2">Entering a branch name</h6>
+                                <div class="d-flex mb-3">
+                                    <div class="flex-grow-1"><input type="text" name="" class="form-control form-control-sm" placeholder=""></div>
+                                    <div class="ml-2"><button class="btn btn-sm btn-primary">Search</button></div>
+                                </div>
+                                <h6 class="c-title mb-2">Enter branch code</h6>
+                                <div class="d-flex">
+                                    <div class="flex-grow-1"><input type="text" name="" class="form-control form-control-sm" placeholder=""></div>
+                                    <div class="ml-2"><button class="btn btn-sm btn-primary">Search</button></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-5">
+                                <h6 class="c-title mb-1">Select Branch</h6>
+                                <div class="list-group list-bank border" style="height: 342px;">
+                                    <a href="javascript:;" class="list-group-item list-group-item-action">Ki kyou</a>
+                                    <a href="javascript:;" class="list-group-item list-group-item-action">Kisaragi</a>
+                                    <a href="javascript:;" class="list-group-item list-group-item-action">Kisarazu</a>
+                                    <a href="javascript:;" class="list-group-item list-group-item-action">Kishiwadajou</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <script src="assets/includes/plugins.js"></script>
     <script src="assets/js/main.js"></script>
     <!-- BEGGIN Only For this page -->
@@ -717,6 +902,27 @@
 
         $(function() {
             $('.list-banks .bank-item a').matchHeight();
+        });
+
+        $('#modal-deposit-confirm .btn-confirm').click(function(event) {
+            window.open("MY011_QuickDeposit_Result.html","_blank"); 
+        });
+
+        //Banks
+        $('.btn-change-bank, .section-select-bank .list-bank .list-group-item').click(function(e) {
+            e.preventDefault();
+            $('.section-selected-bank, .section-select-bank, .section-select-branch').toggleClass('d-none');
+        });
+
+        $('.list-bank .list-group-item').click(function(e) {
+            e.preventDefault();
+            $(this).parents('.list-bank').find('.list-group-item').not(this).removeClass('active');
+            $(this).addClass('active');
+        });
+
+        $('.section-select-branch .list-bank .list-group-item').click(function(e) {
+            e.preventDefault();
+            $('#modal-select-bank').modal('hide');
         });
 
     });
