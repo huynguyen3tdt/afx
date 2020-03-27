@@ -4,7 +4,7 @@ import { requiredInput } from 'src/app/core/helper/custom-validate.helper';
 import { DepositModel } from 'src/app/core/model/deposit-response.model';
 import { DepositService } from 'src/app/core/services/deposit.service';
 import { element } from 'protractor';
-import { MIN_DEPOST, ACCOUNT_IDS, LOCALE } from 'src/app/core/constant/authen-constant';
+import { MIN_DEPOST, ACCOUNT_IDS, LOCALE, FXNAME1 } from 'src/app/core/constant/authen-constant';
 import { WithdrawRequestService } from './../../core/services/withdraw-request.service';
 import { Mt5Model, TransactionModel, WithdrawAmountModel } from 'src/app/core/model/withdraw-request-response.model';
 import { AccountType } from 'src/app/core/model/report-response.model';
@@ -64,9 +64,13 @@ export class DepositComponent implements OnInit {
   tranAmount;
   totalAmount: number;
   depositFee: number;
+  remark: string;
+  customerName: string;
 
   ngOnInit() {
     this.locale = localStorage.getItem(LOCALE);
+    this.customerName = localStorage.getItem(FXNAME1);
+    console.log('custoerNameee ', this.customerName);
     this.depositFee = 0;
     if (this.locale === 'en') {
       this.formatDateYear = EN_FORMATDATE;
@@ -84,6 +88,8 @@ export class DepositComponent implements OnInit {
     if (this.accountID) {
       this.getMt5Infor(Number(this.accountID.split('-')[1]));
       this.getDwAmount(Number(this.accountID.split('-')[1]));
+      this.remark = this.accountID.split('-')[1];
+      console.log('remarrk ', this.remark);
     }
     this.initDepositAmountForm();
     this.initDepositTransactionForm();
@@ -237,5 +243,9 @@ export class DepositComponent implements OnInit {
   }
   onRefesh() {
     this.getMt5Infor(Number(this.accountID.split('-')[1]));
+  }
+
+  changeAccountId() {
+    this.remark = this.accountID.split('-')[1];
   }
 }

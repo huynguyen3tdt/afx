@@ -11,6 +11,7 @@ export interface LoginResponseModel {
         module_funding_min_deposit: number;
         module_funding_min_withdraw: number;
         lang: string;
+        fx_name1: string;
     };
 }
 
