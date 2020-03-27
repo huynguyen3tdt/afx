@@ -199,6 +199,7 @@ export class DepositComponent implements OnInit {
       this.spinnerService.hide();
       if (response.meta.code === 200) {
         this.controlNo = response.data.id.toString();
+        this.remark = this.accountID.split('-')[1];
         this.listTran.ngOnChanges();
         setTimeout(() => {
           this.BJPSystem.nativeElement.click();
