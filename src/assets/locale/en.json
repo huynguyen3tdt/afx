@@ -215,5 +215,11 @@
   "Postal code is incorrect.": "Postal code is incorrect.",
   "Enter the postal code using single-byte numbers.": "Enter the postal code using single-byte numbers.",
   "Enter the postal code without a hyphen (-).": "Enter the postal code without a hyphen (-).",
-  "Enter your zip code using single-byte numbers.": "Enter your zip code using single-byte numbers."
+  "Enter your zip code using single-byte numbers.": "Enter your zip code using single-byte numbers.",
+  "Mitsubishi UFJ": "Mitsubishi UFJ",
+  "UFJ bank": "UFJ bank",
+  "Sumitomo Mitsui": "Sumitomo Mitsui",
+  "Mizuho": "Mizuho",
+  "Rakuten": "Rakuten",
+  "Japan Net": "Japan Net"
 }

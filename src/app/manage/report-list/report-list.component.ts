@@ -2,11 +2,11 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ReportService } from 'src/app/core/services/report.service';
 import { ReportIDS, AccountType } from 'src/app/core/model/report-response.model';
 import { FormGroup, FormControl } from '@angular/forms';
-import { ACCOUNT_IDS, LOCALE } from 'src/app/core/constant/authen-constant';
+import { ACCOUNT_IDS, LOCALE, TIMEZONEAFX, TIMEZONESERVER } from 'src/app/core/constant/authen-constant';
 import { JAPAN_FORMATDATE, EN_FORMATDATE, EN_FORMATDATE_HH_MM, JAPAN_FORMATDATE_HH_MM } from 'src/app/core/constant/format-date-constant';
-import * as moment from 'moment';
 import { GlobalService } from 'src/app/core/services/global.service';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
+import moment from 'moment-timezone';
 declare var $: any;
 
 @Component({
@@ -32,6 +32,7 @@ export class ReportListComponent implements OnInit {
   locale: string;
   formatDateYear: string;
   formatDateHour: string;
+  timeZone: string;
   TABS = {
     ALL: { name: 'ALL', value: '' },
     DAILY: { name: 'DAILY', value: 'd' },
@@ -48,6 +49,7 @@ export class ReportListComponent implements OnInit {
               private spinnerService: Ng4LoadingSpinnerService, ) { }
 
   ngOnInit() {
+    this.timeZone = localStorage.getItem(TIMEZONEAFX);
     this.locale = localStorage.getItem(LOCALE);
     if (this.locale === 'en') {
       this.formatDateYear = EN_FORMATDATE;
@@ -83,7 +85,8 @@ export class ReportListComponent implements OnInit {
         this.totalItem = response.data.count;
         this.totalPage = (this.totalItem / pageSize) * 10;
         this.listReport.forEach(item => {
-          item.create_date = moment(item.create_date).format(this.formatDateYear);
+          item.create_date += TIMEZONESERVER;
+          item.create_date = moment(item.create_date).tz(this.timeZone).format(this.formatDateYear);
         });
         this.recordFrom = this.pageSize * (this.currentPage - 1) + 1;
         this.recordTo = this.recordFrom + (this.listReport.length - 1);

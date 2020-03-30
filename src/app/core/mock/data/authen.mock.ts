@@ -18,6 +18,7 @@ export const MOCK_LOGIN_RESPONSE = {
     module_funding_min_withdraw: 10000,
     fee: 20,
     lang: 'English',
-    fx_name1: '23'
+    fx_name1: '23',
+    tz: 'Asia/Tokyo'
   }
 };

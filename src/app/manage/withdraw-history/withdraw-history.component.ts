@@ -2,9 +2,8 @@ import { Component, OnInit, AfterViewInit, ViewChild, ElementRef, Input } from '
 import { WithdrawRequestService } from 'src/app/core/services/withdraw-request.service';
 import { FormGroup, FormControl } from '@angular/forms';
 import { TransactionModel, BankInforModel } from 'src/app/core/model/withdraw-request-response.model';
-import * as moment from 'moment';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
-import { ACCOUNT_IDS, LOCALE } from 'src/app/core/constant/authen-constant';
+import { ACCOUNT_IDS, LOCALE, TIMEZONEAFX, TIMEZONESERVER } from 'src/app/core/constant/authen-constant';
 import { JAPAN_FORMATDATE, JAPAN_FORMATDATE_HH_MM, EN_FORMATDATE, EN_FORMATDATE_HH_MM } from 'src/app/core/constant/format-date-constant';
 import {
   PaymentMethod,
@@ -14,6 +13,7 @@ import { GlobalService } from 'src/app/core/services/global.service';
 import { AccountType } from 'src/app/core/model/report-response.model';
 import {SelectItem} from 'primeng/api';
 import { ActivatedRoute } from '@angular/router';
+import moment from 'moment-timezone';
 declare var $: any;
 
 @Component({
@@ -54,6 +54,7 @@ export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
   formatDateYear: string;
   formatDateHour: string;
   locale: string;
+  timeZone: string;
   TABS = {
     ALL: { name: 'ALL', value: '0' },
     DEPOSIT: { name: 'DEPOSIT', value: 'd' },
@@ -77,6 +78,7 @@ export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
                }
 
   ngOnInit() {
+    this.timeZone = localStorage.getItem(TIMEZONEAFX);
     this.locale = localStorage.getItem(LOCALE);
     if (this.locale === 'en') {
       this.formatDateYear = EN_FORMATDATE;
@@ -137,7 +139,8 @@ export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
         this.totalItem = response.data.count;
         this.totalPage = (response.data.count / pageSize) * 10;
         this.listReport.forEach(item => {
-          item.create_date = moment(item.create_date).format(this.formatDateHour);
+          item.create_date += TIMEZONESERVER;
+          item.create_date = moment(item.create_date).tz(this.timeZone).format(this.formatDateHour);
           item.funding_type = this.checkType(item.funding_type);
           item.method = this.checkPaymentMedthod(item.method);
         });
@@ -261,7 +264,8 @@ export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
     this.withdrawRequestService.getDetailTranHistory(tranId).subscribe(response => {
       if (response.meta.code === 200) {
         this.tranHistoryDetail = response.data;
-        this.tranHistoryDetail.create_date = moment(this.tranHistoryDetail.create_date).format(this.formatDateHour);
+        this.tranHistoryDetail.create_date += TIMEZONESERVER;
+        this.tranHistoryDetail.create_date = moment(this.tranHistoryDetail.create_date).tz(this.timeZone).format(this.formatDateHour);
         this.tranHistoryDetail.method = this.checkPaymentMedthod(this.tranHistoryDetail.method);
         this.tranHistoryDetail.funding_type = this.checkType(this.tranHistoryDetail.funding_type);
         $('#tran_detail').modal('show');

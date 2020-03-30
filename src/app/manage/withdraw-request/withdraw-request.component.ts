@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { WithdrawRequestService } from 'src/app/core/services/withdraw-request.service';
-// import { ACCOUNT_TYPE } from 'src/app/core/constant/authen-constant';
+// import { ACCOUNT_TYPE, TIMEZONEAFX } from 'src/app/core/constant/authen-constant';
 import { FormGroup, FormControl } from '@angular/forms';
 import { requiredInput } from 'src/app/core/helper/custom-validate.helper';
 import {
@@ -10,7 +10,7 @@ import {
   WithdrawAmountModel,
   postWithdrawModel
 } from 'src/app/core/model/withdraw-request-response.model';
-import { MIN_WITHDRAW, ACCOUNT_IDS, LOCALE } from './../../core/constant/authen-constant';
+import { MIN_WITHDRAW, ACCOUNT_IDS, LOCALE, TIMEZONEAFX } from './../../core/constant/authen-constant';
 import { GlobalService } from 'src/app/core/services/global.service';
 import { AccountType } from 'src/app/core/model/report-response.model';
 import { JAPAN_FORMATDATE_HH_MM, EN_FORMATDATE, EN_FORMATDATE_HH_MM, JAPAN_FORMATDATE } from 'src/app/core/constant/format-date-constant';
@@ -20,9 +20,8 @@ import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { DepositService } from 'src/app/core/services/deposit.service';
 import { DepositModel } from 'src/app/core/model/deposit-response.model';
 import { ListTransactionComponent } from '../list-transaction/list-transaction.component';
+import moment from 'moment-timezone';
 declare var $: any;
-import * as moment from 'moment';
-
 const numeral = require('numeral');
 
 @Component({
@@ -66,6 +65,7 @@ export class WithdrawRequestComponent implements OnInit {
   withdrawAmountError: boolean;
   withdrawFee: number;
   totalAmount: number;
+  timeZone: string;
   // withdrawAmount
   constructor(private withdrawRequestService: WithdrawRequestService,
               private spinnerService: Ng4LoadingSpinnerService,
@@ -75,6 +75,7 @@ export class WithdrawRequestComponent implements OnInit {
 
   ngOnInit() {
     this.withdrawFee = 0;
+    this.timeZone = localStorage.getItem(TIMEZONEAFX);
     this.locale = localStorage.getItem(LOCALE);
     if (this.locale === 'en') {
       this.formatDateYear = EN_FORMATDATE;
@@ -115,7 +116,7 @@ export class WithdrawRequestComponent implements OnInit {
         this.mt5Infor = response.data;
         this.equity = this.mt5Infor.equity;
         this.usedMargin = this.mt5Infor.used_margin;
-        this.lastestTime = moment(this.mt5Infor.lastest_time).format(this.formatDateHour);
+        this.lastestTime = moment(this.mt5Infor.lastest_time).tz(this.timeZone).format(this.formatDateHour);
       }
       this.calculateWithdraw();
     });

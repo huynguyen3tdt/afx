@@ -4,19 +4,19 @@ import { requiredInput } from 'src/app/core/helper/custom-validate.helper';
 import { DepositModel } from 'src/app/core/model/deposit-response.model';
 import { DepositService } from 'src/app/core/services/deposit.service';
 import { element } from 'protractor';
-import { MIN_DEPOST, ACCOUNT_IDS, LOCALE, FXNAME1 } from 'src/app/core/constant/authen-constant';
+import { MIN_DEPOST, ACCOUNT_IDS, LOCALE, FXNAME1, TIMEZONEAFX, TIMEZONESERVER } from 'src/app/core/constant/authen-constant';
 import { WithdrawRequestService } from './../../core/services/withdraw-request.service';
 import { Mt5Model, TransactionModel, WithdrawAmountModel } from 'src/app/core/model/withdraw-request-response.model';
 import { AccountType } from 'src/app/core/model/report-response.model';
 import { GlobalService } from 'src/app/core/services/global.service';
 import { JAPAN_FORMATDATE_HH_MM, EN_FORMATDATE, EN_FORMATDATE_HH_MM, JAPAN_FORMATDATE } from 'src/app/core/constant/format-date-constant';
-declare var $: any;
-import * as moment from 'moment';
+import moment from 'moment-timezone';
 import { PaymentMethod, TYPEOFTRANHISTORY } from 'src/app/core/constant/payment-method-constant';
 import { Router } from '@angular/router';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { ListTransactionComponent } from '../list-transaction/list-transaction.component';
 const numeral = require('numeral');
+declare var $: any;
 
 @Component({
   selector: 'app-deposit',
@@ -66,11 +66,13 @@ export class DepositComponent implements OnInit {
   depositFee: number;
   remark: string;
   customerName: string;
+  timeZone: string;
+  bankCode: string;
 
   ngOnInit() {
     this.locale = localStorage.getItem(LOCALE);
     this.customerName = localStorage.getItem(FXNAME1);
-    console.log('custoerNameee ', this.customerName);
+    this.timeZone = localStorage.getItem(TIMEZONEAFX);
     this.depositFee = 0;
     if (this.locale === 'en') {
       this.formatDateYear = EN_FORMATDATE;
@@ -89,7 +91,6 @@ export class DepositComponent implements OnInit {
       this.getMt5Infor(Number(this.accountID.split('-')[1]));
       this.getDwAmount(Number(this.accountID.split('-')[1]));
       this.remark = this.accountID.split('-')[1];
-      console.log('remarrk ', this.remark);
     }
     this.initDepositAmountForm();
     this.initDepositTransactionForm();
@@ -102,7 +103,8 @@ export class DepositComponent implements OnInit {
 
   initDepositTransactionForm() {
     this.depositTransactionForm = new FormGroup({
-      deposit: new FormControl(numeral(10000).format('0,0'), requiredInput)
+      deposit: new FormControl(numeral(10000).format('0,0'), requiredInput),
+      bankCode: new FormControl('0005')
     });
     this.depositValue = numeral(this.depositTransactionForm.controls.deposit.value).value();
     this.totalAmount = this.depositFee + this.depositValue;
@@ -141,7 +143,7 @@ export class DepositComponent implements OnInit {
         this.mt5Infor = response.data;
         this.equity = this.mt5Infor.equity;
         this.usedMargin = this.mt5Infor.used_margin;
-        this.lastestTime = moment(this.mt5Infor.lastest_time).format(this.formatDateHour);
+        this.lastestTime = moment(this.mt5Infor.lastest_time).tz(this.timeZone).format(this.formatDateHour);
         this.spinnerService.hide();
       }
       this.calculateDeposit();
@@ -248,5 +250,9 @@ export class DepositComponent implements OnInit {
 
   changeAccountId() {
     this.remark = this.accountID.split('-')[1];
+  }
+
+  changeBankDeposit() {
+    this.bankCode = this.depositTransactionForm.controls.bankCode.value;
   }
 }

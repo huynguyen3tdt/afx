@@ -2,13 +2,13 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { NotificationsService } from 'src/app/core/services/notifications.service';
 import { PageNotificationResponse, Notification, TotalNotification } from 'src/app/core/model/page-noti.model';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
-import * as moment from 'moment';
 import { FormGroup, FormControl } from '@angular/forms';
 import { requiredInput } from 'src/app/core/helper/custom-validate.helper';
 import { ActivatedRoute } from '@angular/router';
-import { FIRST_LOGIN, LOCALE } from 'src/app/core/constant/authen-constant';
+import { FIRST_LOGIN, LOCALE, TIMEZONEAFX, TIMEZONESERVER } from 'src/app/core/constant/authen-constant';
 import { EN_FORMATDATE_HH_MM, JAPAN_FORMATDATE_HH_MM } from 'src/app/core/constant/format-date-constant';
 declare var $: any;
+import moment from 'moment-timezone';
 
 @Component({
   selector: 'app-notifications',
@@ -44,6 +44,7 @@ export class NotificationsComponent implements OnInit {
   totalPage: number;
   formatDateHour: string;
   locale: string;
+  timeZone: string;
   TABS = {
     ALL: { name: 'ALL', value: -1 },
     IMPORTANT: { name: 'IMPORTANT', value: 0 },
@@ -57,6 +58,7 @@ export class NotificationsComponent implements OnInit {
     private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
+    this.timeZone = localStorage.getItem(TIMEZONEAFX);
     this.locale = localStorage.getItem(LOCALE);
     if (this.locale === 'en') {
       this.formatDateHour = EN_FORMATDATE_HH_MM;
@@ -96,7 +98,8 @@ export class NotificationsComponent implements OnInit {
         this.pageNotification = response;
         this.listNotification = this.pageNotification.data.results;
         this.listNotification.forEach(item => {
-          item.publish_date = moment(item.publish_date).format(this.formatDateHour);
+          item.publish_date += TIMEZONESERVER;
+          item.publish_date = moment(item.publish_date).tz(this.timeZone).format(this.formatDateHour);
         });
         this.totalItem = this.pageNotification.data.count;
         this.totalPage = (this.totalItem / this.pageSize) * 10;

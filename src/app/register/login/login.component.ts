@@ -14,6 +14,7 @@ import {
   ACCOUNT_TYPE,
   LOCALE,
   FXNAME1,
+  TIMEZONEAFX,
 } from './../../core/constant/authen-constant';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthenService } from 'src/app/core/services/authen.service';
@@ -117,6 +118,11 @@ export class LoginComponent implements OnInit, AfterViewInit {
         }
         if (response.data.fx_name1) {
           localStorage.setItem(FXNAME1, response.data.fx_name1);
+        }
+        if (response.data.tz) {
+          localStorage.setItem(TIMEZONEAFX, response.data.tz);
+        } else {
+          localStorage.setItem(TIMEZONEAFX, 'Asia/Tokyo');
         }
         localStorage.setItem(FIRST_LOGIN, '1');
         if (response.data.pwd_change_flg === false) {

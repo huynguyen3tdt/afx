@@ -84,6 +84,24 @@
                                             <div *ngIf="depositError == true" class="invalid-mess">
                                                 <div>{{'Minimum amount is not below 1,000' | translate}}</div>
                                             </div>
+                                            <div class="mb-1 d-flex justify-content-between align-items-center">
+                                                <label class="label">Bank</label>
+                                                <div>
+                                                    <div class="d-inline-block">
+                                                        <select 
+                                                        class="form-control form-control-sm mb-0 bg-none" 
+                                                        formControlName="bankCode" 
+                                                        (change)="changeBankDeposit()" style="min-width: 160px;">
+                                                        <option value="0005">{{'Mitsubishi UFJ' | translate}}</option>
+                                                        <option value="0008">{{'UFJ bank' | translate}}</option>
+                                                        <option value="0009">{{'Sumitomo Mitsui' | translate}}</option>
+                                                        <option value="0003">{{'Mizuho' | translate}}</option>
+                                                        <option value="0036">{{'Rakuten' | translate}}</option>
+                                                        <option value="0033">{{'Japan Net' | translate}}</option>
+                                                      </select>
+                                                    </div>
+                                                </div>
+                                            </div>
                                             <div class="mb-1 d-flex justify-content-between">
                                                 <label class="label">{{'Currency' | translate}}</label>
                                                 <div>
@@ -260,11 +278,11 @@
         </div>
     </div>
 </div>
-{{remark}}
+
 <FORM  NAME="frm" hidden method="post"  action="https://www.e5.billingjapan.co.jp/NASApp/bjp/PB71SelectBankServlet">
     <input type="hidden" name="PORTAL_CODE" value="000101">
     <input type="hidden" name="SHOP_CODE" value="0155200563">
-    <input type="hidden" name="BANK_CODE" value="0008">
+    <input type="hidden" name="BANK_CODE" value="{{bankCode}}">
     <input type="hidden" name="REMARKS_1" value="{{remark}}">
     <input type="hidden" name="CTRL_NO" value="{{controlNo}}">
     <input type="hidden" name="TRAN_AMOUNT" value="{{depositValue}}">
