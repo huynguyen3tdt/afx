@@ -41,7 +41,11 @@ export class GlobalService {
 
   calculateMarginLevel(equityDeposit: number, usedMargin: number) {
     let marginLevel: number;
-    marginLevel = Math.floor((equityDeposit / usedMargin) * 100);
+    if (usedMargin === 0) {
+      marginLevel = 0;
+    } else {
+      marginLevel = Math.floor((equityDeposit / usedMargin) * 100);
+    }
     return marginLevel;
   }
 }

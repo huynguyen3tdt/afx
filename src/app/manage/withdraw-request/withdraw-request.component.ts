@@ -153,9 +153,9 @@ export class WithdrawRequestComponent implements OnInit {
     });
   }
 
-  changeWithdtaw(event: any) {
+  changeWithdraw(event: any) {
     this.depositValue = numeral(this.withdrawForm.controls.amount.value).value();
-    if (this.depositValue < numeral(this.minWithdraw).value()) {
+    if (this.depositValue < Number(this.minWithdraw)) {
       this.withdrawError = true;
     } else {
       this.withdrawError = false;

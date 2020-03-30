@@ -211,7 +211,7 @@ export class DepositComponent implements OnInit {
   }
   changeDeposit(event: any) {
     this.depositValue = numeral(this.depositTransactionForm.controls.deposit.value).value();
-    if (this.depositValue < numeral(this.minDeposit).value) {
+    if (this.depositValue < Number(this.minDeposit)) {
       this.depositError = true;
       return;
     }
@@ -221,7 +221,7 @@ export class DepositComponent implements OnInit {
   }
   changeDepositCal(event: any) {
     this.depositAmount = numeral(this.depositAmountForm.controls.deposit.value).value();
-    if (this.depositAmount < numeral(this.minDeposit).value) {
+    if (this.depositAmount < Number(this.minDeposit)) {
       this.bankError = true;
       return;
     }
