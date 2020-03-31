@@ -112,6 +112,7 @@ export class NotificationsComponent implements OnInit {
   }
   getTotalNotification() {
     this.notificationsService.getTotalNotification().subscribe(response => {
+      console.log('responseee ', response);
       if (response.meta.code === 200) {
         this.totalNoti = response.data;
         this.totalCampagn = this.totalNoti.campaign;
