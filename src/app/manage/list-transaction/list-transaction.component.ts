@@ -56,8 +56,6 @@ export class ListTransactionComponent implements OnInit, OnChanges {
           item.create_date =
           // moment(new Date(item.create_date).toLocaleString('ja-JP', { timeZone: 'Asia/Tokyo' })).format(this.formatDateHour);
           moment(item.create_date).tz(this.timeZone).format(this.formatDateHour);
-          item.funding_type = this.checkType(item.funding_type);
-          item.method = this.checkPaymentMedthod(item.method);
         });
       }
     });
@@ -69,30 +67,10 @@ export class ListTransactionComponent implements OnInit, OnChanges {
         this.transactionDetail = response.data;
         this.transactionDetail.create_date += TIMEZONESERVER;
         this.transactionDetail.create_date = moment(this.transactionDetail.create_date).tz(this.timeZone).format(this.formatDateHour);
-        this.transactionDetail.method = this.checkPaymentMedthod(this.transactionDetail.method);
-        this.transactionDetail.funding_type = this.checkType(this.transactionDetail.funding_type);
+        console.log('transactionDetailll ', this.transactionDetail);
         $('#tran_detail').modal('show');
       }
     });
-  }
-
-  checkPaymentMedthod(type: string) {
-    if (type === PaymentMethod.QUICKDEPOSIT.key) {
-      return PaymentMethod.QUICKDEPOSIT.name;
-    }
-    if (type === PaymentMethod.BANKTRANSFER.key) {
-      return PaymentMethod.BANKTRANSFER.name;
-    }
-    return '';
-  }
-  checkType(type: string) {
-    if (type === TYPEOFTRANHISTORY.DEPOSIT.key) {
-      return TYPEOFTRANHISTORY.DEPOSIT.name;
-    }
-    if (type === TYPEOFTRANHISTORY.WITHDRAWAL.key) {
-      return TYPEOFTRANHISTORY.WITHDRAWAL.name;
-    }
-    return '';
   }
 
   // goToHistory() {

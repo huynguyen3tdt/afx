@@ -218,22 +218,22 @@
                             <td width="180">{{'Payment method' | translate}}</td>
                             <td>{{tranHistoryDetail?.method}}</td>
                         </tr>
-                        <tr *ngIf="tranHistoryDetail?.method == 'Quick deposit' && tranHistoryDetail?.funding_type == 'Deposit'">
+                        <tr *ngIf="tranHistoryDetail?.method == 'qd' && tranHistoryDetail?.funding_type == 'd'">
                           <td width="180">{{'Payment service' | translate}}</td>
                           <td>{{tranHistoryDetail?.name}}</td>
                         </tr>
-                        <tr *ngIf="tranHistoryDetail?.method == 'Bank transfer' && tranHistoryDetail?.funding_type == 'Deposit'">
+                        <tr *ngIf="tranHistoryDetail?.method == 'bt' && tranHistoryDetail?.funding_type == 'd'">
                             <td width="180">{{'Payment service' | translate}}</td>
                             <td>{{tranHistoryDetail?.name}}</td>
                         </tr>
-                        <tr *ngIf="tranHistoryDetail?.method == 'Bank transfer' && tranHistoryDetail?.funding_type == 'Withdrawal'">
+                        <tr *ngIf="tranHistoryDetail?.method == 'bt' && tranHistoryDetail?.funding_type == 'w'">
                           <td width="180">{{'Benificiary bank' | translate}}</td>
                           <td>{{tranHistoryDetail?.name}}</td>
                         </tr>
                         <tr>
                             <td width="180">{{'Amount' | translate}}</td>
-                            <td *ngIf="tranHistoryDetail?.funding_type == 'Deposit'"><strong>{{tranHistoryDetail?.amount | number}}</strong> <span class="small text-secondary"></span>{{tranHistoryDetail?.currency}}</td>
-                            <td *ngIf="tranHistoryDetail?.funding_type == 'Withdrawal'"><strong>-{{tranHistoryDetail?.amount | number}}</strong> <span class="small text-secondary"></span>{{tranHistoryDetail?.currency}}</td>
+                            <td *ngIf="tranHistoryDetail?.funding_type == 'd'"><strong>{{tranHistoryDetail?.amount | number}}</strong> <span class="small text-secondary"></span>{{tranHistoryDetail?.currency}}</td>
+                            <td *ngIf="tranHistoryDetail?.funding_type == 'w'"><strong>-{{tranHistoryDetail?.amount | number}}</strong> <span class="small text-secondary"></span>{{tranHistoryDetail?.currency}}</td>
                         </tr>
                         <tr>
                             <td width="180">{{'Status' | translate}}</td>

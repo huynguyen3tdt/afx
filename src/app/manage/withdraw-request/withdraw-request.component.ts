@@ -206,6 +206,7 @@ export class WithdrawRequestComponent implements OnInit {
     } else {
       $('#amount').attr('disabled', false);
     }
+    this.calculateWithdraw();
   }
 
   sendConfirm() {

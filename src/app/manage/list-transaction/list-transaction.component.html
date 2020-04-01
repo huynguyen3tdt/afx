@@ -80,15 +80,15 @@
                             <td width="180">{{'Payment method' | translate}}</td>
                             <td>{{transactionDetail?.method}}</td>
                         </tr>
-                        <tr *ngIf="transactionDetail?.method == 'Quick deposit' && transactionDetail?.funding_type == 'Deposit'">
+                        <tr *ngIf="transactionDetail?.method == 'qd' && transactionDetail?.funding_type == 'd'">
                             <td width="180">{{'Payment service' | translate}}</td>
                             <td>{{transactionDetail?.name}}</td>
                         </tr>
-                        <tr *ngIf="transactionDetail?.method == 'Bank transfer' && transactionDetail?.funding_type == 'Deposit'">
+                        <tr *ngIf="transactionDetail?.method == 'bt' && transactionDetail?.funding_type == 'd'">
                             <td width="180">{{'Payment service' | translate}}</td>
                             <td>{{transactionDetail?.name}}</td>
                         </tr>
-                        <tr *ngIf="transactionDetail?.method == 'Bank transfer' && transactionDetail?.funding_type == 'Withdrawal'">
+                        <tr *ngIf="transactionDetail?.method == 'bt' && transactionDetail?.funding_type == 'w'">
                           <td width="180">{{'Benificiary bank' | translate}}</td>
                           <td>{{transactionDetail?.name}}</td>
                       </tr>

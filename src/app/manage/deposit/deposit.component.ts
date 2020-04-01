@@ -239,7 +239,7 @@ export class DepositComponent implements OnInit {
   calculateDepositAmount() {
     this.errMessageBankTran = false;
     this.equityDeposit = Math.floor(this.equity + numeral(this.depositAmountForm.controls.deposit.value).value());
-    this.marginLevelEstimate = this.globalService.calculateMarginLevel(this.equityDeposit, this.usedMargin);
+    this.marginLevelEstimateBank = this.globalService.calculateMarginLevel(this.equityDeposit, this.usedMargin);
     if (this.marginLevelEstimateBank <= 100 && this.marginLevelEstimateBank > 0) {
       this.errMessageBankTran = true;
     }

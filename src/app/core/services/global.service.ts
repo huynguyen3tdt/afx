@@ -44,8 +44,9 @@ export class GlobalService {
     if (usedMargin === 0) {
       marginLevel = 0;
     } else {
-      marginLevel = Math.floor((equityDeposit / usedMargin) * 100);
+      marginLevel = parseFloat(((equityDeposit / usedMargin) * 100).toFixed(2));
     }
+
     return marginLevel;
   }
 }

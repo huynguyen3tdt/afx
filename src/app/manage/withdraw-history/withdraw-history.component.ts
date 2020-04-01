@@ -141,8 +141,6 @@ export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
         this.listReport.forEach(item => {
           item.create_date += TIMEZONESERVER;
           item.create_date = moment(item.create_date).tz(this.timeZone).format(this.formatDateHour);
-          item.funding_type = this.checkType(item.funding_type);
-          item.method = this.checkPaymentMedthod(item.method);
         });
         this.recordFrom = this.pageSize * (this.currentPage - 1) + 1;
         this.recordTo = this.recordFrom + (this.listReport.length - 1);
@@ -266,8 +264,6 @@ export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
         this.tranHistoryDetail = response.data;
         this.tranHistoryDetail.create_date += TIMEZONESERVER;
         this.tranHistoryDetail.create_date = moment(this.tranHistoryDetail.create_date).tz(this.timeZone).format(this.formatDateHour);
-        this.tranHistoryDetail.method = this.checkPaymentMedthod(this.tranHistoryDetail.method);
-        this.tranHistoryDetail.funding_type = this.checkType(this.tranHistoryDetail.funding_type);
         $('#tran_detail').modal('show');
       }
     });
@@ -284,37 +280,6 @@ export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
     return null;
   }
 
-  checkPaymentMedthod(type: string) {
-    if (type === PaymentMethod.QUICKDEPOSIT.key) {
-      return PaymentMethod.QUICKDEPOSIT.name;
-    }
-    if (type === PaymentMethod.BANKTRANSFER.key) {
-      return PaymentMethod.BANKTRANSFER.name;
-    }
-    return '';
-  }
-  checkType(type: string) {
-    if (type === TYPEOFTRANHISTORY.DEPOSIT.key) {
-      return TYPEOFTRANHISTORY.DEPOSIT.name;
-    }
-    if (type === TYPEOFTRANHISTORY.WITHDRAWAL.key) {
-      return TYPEOFTRANHISTORY.WITHDRAWAL.name;
-    }
-    return '';
-  }
-
-  checkStatus(status: number) {
-    if (status === STATUSTRANHISTORY.COMPLETE.key) {
-      return STATUSTRANHISTORY.COMPLETE.name;
-    }
-    if (status === STATUSTRANHISTORY.CANCEL.key) {
-      return STATUSTRANHISTORY.CANCEL.name;
-    }
-    if (status === STATUSTRANHISTORY.PENDING.key) {
-      return STATUSTRANHISTORY.PENDING.name;
-    }
-    return null;
-  }
   changeStatus() {
     this.statusSearch = '';
     this.currentPage = 1;
