@@ -49,7 +49,8 @@ export class NotificationsComponent implements OnInit {
     ALL: { name: 'ALL', value: -1 },
     IMPORTANT: { name: 'IMPORTANT', value: 0 },
     NOTIFICATIONS: { name: 'NOTIFICATIONS', value: 1 },
-    CAMPAIGN: { name: 'CAMPAIGN', value: 2 }
+    CAMPAIGN: { name: 'CAMPAIGN', value: 2 },
+    SYSTEM_IMPORTANT: {name: 'SYS_IMPORTATNT', value: '01'}
   };
 
   constructor(

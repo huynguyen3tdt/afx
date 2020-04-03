@@ -1,4 +1,4 @@
-export const PaymentMethod = {
+export const PAYMENTMETHOD = {
     QUICKDEPOSIT: {key: 'qd', name: 'Quick deposit'},
     BANKTRANSFER: {key: 'bt', name: 'Bank transfer'}
 };
@@ -12,6 +12,7 @@ export const TYPEOFTRANHISTORY = {
 export const STATUSTRANHISTORY = {
     COMPLETE: {key: 1, name: 'Complete'},
     CANCEL: {key: 2, name: 'Cancel'},
-    PENDING: {key: 3, name: 'Pending'}
+    PENDING: {key: 3, name: 'Pending'},
+    NEW: {key: 4, name: 'New'}
 };
 

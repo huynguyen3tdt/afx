@@ -10,10 +10,10 @@
             <div class="row">
                 <div class="col-md-3 col-lg-2">
                     <div class="nav flex-md-column nav-pills mb-3 filter-nav" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                        <a class="nav-link active" id="v-pills-all-tab" data-toggle="pill" href="#v-pills-all" (click)="changeTab(-1)" role="tab" aria-controls="v-pills-all" aria-selected="true">{{'All' | translate}}<span *ngIf="totalAll > 0" class="badge">{{totalAll}}</span></a>
-                        <a class="nav-link" id="v-pills-important-tab" data-toggle="pill" href="#v-pills-important" #importantTab (click)="changeTab(0)" role="tab" aria-controls="v-pills-important" aria-selected="false">{{'Important' | translate}}<span *ngIf="totalImportant > 0" class="badge">{{totalImportant}}</span></a>
-                        <a class="nav-link" id="v-pills-notifications-tab" data-toggle="pill" (click)="changeTab(1)" href="#v-pills-notifications" role="tab" aria-controls="v-pills-notifications" aria-selected="false">{{'Notifications' | translate}}<span *ngIf="totalNotification > 0" class="badge">{{totalNotification}}</span></a>
-                        <a class="nav-link" id="v-pills-campaign-tab" data-toggle="pill" href="#v-pills-campaign" (click)="changeTab(2)" role="tab" aria-controls="v-pills-campaign" aria-selected="false">{{'Campaign' | translate}}<span *ngIf="totalCampagn > 0" class="badge">{{totalCampagn}}</span></a>
+                        <a class="nav-link active" id="v-pills-all-tab" data-toggle="pill" href="#v-pills-all" (click)="changeTab(TABS.ALL.value)" role="tab" aria-controls="v-pills-all" aria-selected="true">{{'All' | translate}}<span *ngIf="totalAll > 0" class="badge">{{totalAll}}</span></a>
+                        <a class="nav-link" id="v-pills-important-tab" data-toggle="pill" href="#v-pills-important" #importantTab (click)="changeTab(TABS.IMPORTANT.value)" role="tab" aria-controls="v-pills-important" aria-selected="false">{{'Important' | translate}}<span *ngIf="totalImportant > 0" class="badge">{{totalImportant}}</span></a>
+                        <a class="nav-link" id="v-pills-notifications-tab" data-toggle="pill" (click)="changeTab(TABS.NOTIFICATIONS.value)" href="#v-pills-notifications" role="tab" aria-controls="v-pills-notifications" aria-selected="false">{{'Notifications' | translate}}<span *ngIf="totalNotification > 0" class="badge">{{totalNotification}}</span></a>
+                        <a class="nav-link" id="v-pills-campaign-tab" data-toggle="pill" href="#v-pills-campaign" (click)="changeTab(TABS.CAMPAIGN.value)" role="tab" aria-controls="v-pills-campaign" aria-selected="false">{{'Campaign' | translate}}<span *ngIf="totalCampagn > 0" class="badge">{{totalCampagn}}</span></a>
                     </div>
                 </div>
                 <div class="col-md-9 col-lg-10">
@@ -33,9 +33,9 @@
                                 <ng-container *ngFor="let item of listNotification; let i = index">
                                     <div (click)="showDetail(i, item)" id="noti_{{i}}" [ngClass]="{'unread': item.read_flg == false}" class="notification-item">
                                         <div class="badge-wrap">
-                                            <span *ngIf="item?.news_type == '0' || item?.news_type == '01'" class="badge badge-danger d-lg-block mb-lg-1">  {{'Important' | translate}}</span>
-                                            <span *ngIf="item?.news_type == '1' || item?.news_type == '01'" class="badge badge-warning d-lg-block mb-lg-1"> {{'System' | translate}}</span>
-                                            <span *ngIf="item?.news_type == '2'" class="badge badge-success d-lg-block mb-lg-1"> {{'Campaign' | translate}}</span>
+                                            <span *ngIf="item?.news_type == TABS.IMPORTANT.value || item?.news_type == TABS.SYSTEM_IMPORTANT.value" class="badge badge-danger d-lg-block mb-lg-1">  {{'Important' | translate}}</span>
+                                            <span *ngIf="item?.news_type == TABS.NOTIFICATIONS.value || item?.news_type == TABS.SYSTEM_IMPORTANT.value" class="badge badge-warning d-lg-block mb-lg-1"> {{'System' | translate}}</span>
+                                            <span *ngIf="item?.news_type == TABS.CAMPAIGN.value" class="badge badge-success d-lg-block mb-lg-1"> {{'Campaign' | translate}}</span>
                                         </div>
                                         <div class="item-header">
                                             <h5 class="item-title"><a href="javascript:;">{{item?.news_title}}</a></h5>
@@ -96,7 +96,7 @@
                                     <div (click)="showDetail(i, item)" id="important_{{i}}" [ngClass]="{'unread': item.read_flg == false}" class="notification-item item-agreement">
                                         <div class="badge-wrap">
                                             <span class="badge badge-danger d-lg-block mb-lg-1">{{'Important' | translate}}</span>
-                                            <span *ngIf="item?.news_type == '01'" class="badge badge-warning d-lg-block mb-lg-1"> {{'System' | translate}}</span>
+                                            <span *ngIf="item?.news_type == TABS.SYSTEM_IMPORTANT.value" class="badge badge-warning d-lg-block mb-lg-1"> {{'System' | translate}}</span>
                                         </div>
                                         <div class="item-header">
                                             <h5 class="item-title"><a href="javascript:;">{{item?.news_title}}</a></h5>
@@ -143,7 +143,7 @@
                                 <ng-container *ngFor="let item of listNotification; let i = index">
                                     <div (click)="showDetail(i, item)" id="system_{{i}}" [ngClass]="{'unread': item.read_flg == false}" class="notification-item">
                                         <div class="badge-wrap">
-                                            <span *ngIf="item?.news_type == 1" class="badge badge-warning d-lg-block mb-lg-1">{{'System' | translate}}</span>
+                                            <span class="badge badge-warning d-lg-block mb-lg-1">{{'System' | translate}}</span>
                                         </div>
                                         <div class="item-header">
                                             <h5 class="item-title"><a href="javascript:;">{{item?.news_title}}</a></h5>
@@ -187,7 +187,7 @@
                                 <ng-container *ngFor="let item of listNotification; let i = index">
                                     <div (click)="showDetail(i, item)" id="campain_{{i}}" [ngClass]="{'unread': item.read_flg == false}" class="notification-item">
                                         <div class="badge-wrap">
-                                            <span *ngIf="item?.news_type == 2" class="badge badge-success d-lg-block mb-lg-1">{{'Campaign' | translate}}</span>
+                                            <span class="badge badge-success d-lg-block mb-lg-1">{{'Campaign' | translate}}</span>
                                         </div>
                                         <div class="item-header">
                                             <h5 class="item-title"><a href="javascript:;">{{item?.news_title}}</a></h5>

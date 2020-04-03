@@ -11,7 +11,7 @@ import { AccountType } from 'src/app/core/model/report-response.model';
 import { GlobalService } from 'src/app/core/services/global.service';
 import { JAPAN_FORMATDATE_HH_MM, EN_FORMATDATE, EN_FORMATDATE_HH_MM, JAPAN_FORMATDATE } from 'src/app/core/constant/format-date-constant';
 import moment from 'moment-timezone';
-import { PaymentMethod, TYPEOFTRANHISTORY } from 'src/app/core/constant/payment-method-constant';
+import { TYPEOFTRANHISTORY } from 'src/app/core/constant/payment-method-constant';
 import { Router } from '@angular/router';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { ListTransactionComponent } from '../list-transaction/list-transaction.component';

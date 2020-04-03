@@ -29,3 +29,6 @@
 :host ::ng-deep .ui-multiselect-label{
   width: 110px;
 }
+a {
+  cursor: pointer;
+}

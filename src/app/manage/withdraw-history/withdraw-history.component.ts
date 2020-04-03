@@ -6,7 +6,7 @@ import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { ACCOUNT_IDS, LOCALE, TIMEZONEAFX, TIMEZONESERVER } from 'src/app/core/constant/authen-constant';
 import { JAPAN_FORMATDATE, JAPAN_FORMATDATE_HH_MM, EN_FORMATDATE, EN_FORMATDATE_HH_MM } from 'src/app/core/constant/format-date-constant';
 import {
-  PaymentMethod,
+  PAYMENTMETHOD,
   TYPEOFTRANHISTORY,
   STATUSTRANHISTORY } from 'src/app/core/constant/payment-method-constant';
 import { GlobalService } from 'src/app/core/services/global.service';
@@ -55,6 +55,9 @@ export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
   formatDateHour: string;
   locale: string;
   timeZone: string;
+  transactionStatus;
+  typeTranHistory;
+  paymentMethod;
   TABS = {
     ALL: { name: 'ALL', value: '0' },
     DEPOSIT: { name: 'DEPOSIT', value: 'd' },
@@ -78,6 +81,9 @@ export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
                }
 
   ngOnInit() {
+    this.typeTranHistory = TYPEOFTRANHISTORY;
+    this.transactionStatus = STATUSTRANHISTORY;
+    this.paymentMethod = PAYMENTMETHOD;
     this.timeZone = localStorage.getItem(TIMEZONEAFX);
     this.locale = localStorage.getItem(LOCALE);
     if (this.locale === 'en') {
@@ -268,6 +274,7 @@ export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
         this.tranHistoryDetail.create_date = moment(this.tranHistoryDetail.create_date).tz(this.timeZone).format(this.formatDateHour);
         this.tranHistoryDetail.method = this.checkPaymentMedthod(this.tranHistoryDetail.method);
         this.tranHistoryDetail.funding_type = this.checkType(this.tranHistoryDetail.funding_type);
+        console.log('---- ', this.tranHistoryDetail);
         $('#tran_detail').modal('show');
       }
     });
@@ -294,11 +301,11 @@ export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
   }
 
   checkPaymentMedthod(type: string) {
-    if (type === PaymentMethod.QUICKDEPOSIT.key) {
-      return PaymentMethod.QUICKDEPOSIT.name;
+    if (type === PAYMENTMETHOD.QUICKDEPOSIT.key) {
+      return PAYMENTMETHOD.QUICKDEPOSIT.name;
     }
-    if (type === PaymentMethod.BANKTRANSFER.key) {
-      return PaymentMethod.BANKTRANSFER.name;
+    if (type === PAYMENTMETHOD.BANKTRANSFER.key) {
+      return PAYMENTMETHOD.BANKTRANSFER.name;
     }
     return '';
   }
