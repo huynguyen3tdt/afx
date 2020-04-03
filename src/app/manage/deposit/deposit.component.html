@@ -82,7 +82,7 @@
                                                     autocomplete="off" value="10,000" placeholder="">
                                             </div>
                                             <div *ngIf="depositError == true" class="invalid-mess">
-                                                <div>{{'Minimum amount is not below 1,000' | translate}}</div>
+                                                <div>{{'Minimum amount is not below' | translate}} {{minDeposit}}</div>
                                             </div>
                                             <div class="mb-1 d-flex justify-content-between align-items-center">
                                                 <label class="label">Bank</label>
@@ -271,7 +271,7 @@
                                                     <input type="text" name="amount" formControlName="deposit" currency autocomplete="off" class="form-control form-control-lg text-right font-weight-bold text-warning" (change)="changeDepositCal($event.target.value)" value="10,000" placeholder="">
                                                 </div>
                                                 <div *ngIf="bankError == true" class="invalid-mess">
-                                                    <div>Minimum amount is not below {{minDeposit | number}}</div>
+                                                    <div>{{'Minimum amount is not below' | translate}} {{minDeposit | number}}</div>
                                                 </div>
                                                 <div class="mb-1 d-flex justify-content-between">
                                                     <label class="label">{{'Currency' | translate}}</label>
@@ -289,9 +289,9 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <p class="small text-secondary p-2 bg-light">{{'Notice: Minimum single deposit amount is 1,000' | translate}}</p>
+                                    <p class="small text-secondary p-2 bg-light">{{'Notice: Minimum single deposit amount is' | translate}} {{minDeposit | number}}</p>
                                     <div *ngIf="errMessageBankTran == true" class="invalid-mess">
-                                        <div>Your Margin Level is nearly the Margin Call Level</div>
+                                        <div>{{'Your Margin Level is nearly the Margin Call Level' | translate}}</div>
                                     </div>
                                     <p class="text-center" style="line-height: 1.2"><a href="javascript:;" data-toggle="modal" data-target="#modal-rule"><i
                                                 class="icon ion-md-information-circle"></i> {{'General rules for depositing and withdrawing funds' | translate}}</a></p>
@@ -345,14 +345,14 @@
                             <li>Bank transfer</li>
                         </ul>
                     </li>
-                    <li>The minimum deposit amount is 10,000 JPY for one time.</li>
+                    <li>The minimum deposit amount is {{minDeposit}} JPY for one time.</li>
                 </ul>
                 <h4 class="text-primary">II. Withdraw al.</h4>
                 <ul>
                     <li>Funds may only be withdrawn to owner accounts in order to ensure financial security and prevent money laundering.</li>
                     <li>Phillip will withdraw on your trading account and transfer to your bank account at the bank's working hours from 8:30 AM- 16:00 PM Monday to Friday.</li>
                     <li>Withdrawal order make over 16:00PM  will be forwarded the next day.</li>
-                    <li>Minimum withdrawal amount of  10,000 JPY  for each withdrawal.</li>
+                    <li>Minimum withdrawal amount of  {{minDeposit}} JPY  for each withdrawal.</li>
                     <li>The maximum amount is  the total amount in your trading account.</li>
                     <li>The first withdrawal order must be enough 48 hours from the first deposit order.</li>
                 </ul>

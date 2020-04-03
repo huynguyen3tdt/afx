@@ -89,10 +89,10 @@
                                     <input type="text" name="amount" id="amount" class="form-control form-control-lg text-right font-weight-bold text-success" placeholder="" formControlName="amount" currency
                                       (change)="changeWithdraw($event.target.value)" autocomplete="off" [ngClass]="{'invalid': isSubmitted && withdrawForm.controls['amount'].errors}">
                                     <div *ngIf="withdrawError == true" class="invalid-mess">
-                                        <div>Minimum amount is not below {{minWithdraw | number}}</div>
+                                        <div>{{'Minimum amount is not below' | translate}} {{minWithdraw | number}}</div>
                                     </div>
                                     <div *ngIf="withdrawAmountError == true" class="invalid-mess">
-                                      <div>Withdrawal amount is not above the withdrawable amount</div>
+                                      <div>{{'Withdrawal amount is not above the withdrawable amount' | translate}}</div>
                                     </div>
                                     <div class="mt-2">
                                       <label class="container-checkbox small">{{'Whole of money' | translate}}
