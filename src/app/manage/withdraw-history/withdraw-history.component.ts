@@ -97,7 +97,7 @@ export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
     this.pageSize = 10;
     this.listTradingAccount = JSON.parse(localStorage.getItem(ACCOUNT_IDS));
     this.initSearchForm();
-    if (!this.querytab) {
+    if (!this.querytab && this.searchForm.controls.tradingAccount.value) {
       this.getTranHistory(this.searchForm.controls.tradingAccount.value.split('-')[1], this.currentPage, this.pageSize, this.TABS.ALL.value,
         this.formatDate(this.searchForm.controls.fromDate.value), this.formatDate(this.searchForm.controls.toDate.value));
     }
@@ -191,7 +191,7 @@ export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
     // if (this.showErrorDate === true) {
     //   return;
     // }
-    if (this.searchForm.controls.tradingAccount.value.toString().indexOf('-') !== -1) {
+    if (this.searchForm.controls.tradingAccount.value && this.searchForm.controls.tradingAccount.value.toString().indexOf('-') !== -1) {
       accounID = this.searchForm.controls.tradingAccount.value.split('-')[1];
     }
     switch (this.tab) {
