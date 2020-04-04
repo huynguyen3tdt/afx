@@ -80,15 +80,20 @@
                             <td width="180">{{'Payment method' | translate}}</td>
                             <td>{{transactionDetail?.method}}</td>
                         </tr>
-                        <tr *ngIf="transactionDetail?.method == paymentMethod.QUICKDEPOSIT.name && transactionDetail?.funding_type == typeTranHistory.DEPOSIT.name">
+                        <!-- {{transactionDetail?.method}}- {{paymentMethod.QUICKDEPOSIT.nameJp}}
+                        {{transactionDetail?.funding_type}} - {{typeTranHistory.DEPOSIT.name}} - {{typeTranHistory.WITHDRAWAL.name}} -->
+                        <tr *ngIf="((transactionDetail?.method == paymentMethod.QUICKDEPOSIT.name || transactionDetail?.method == paymentMethod.QUICKDEPOSIT.nameJP) 
+                        && (transactionDetail?.funding_type == typeTranHistory.DEPOSIT.name || transactionDetail?.funding_type == typeTranHistory.DEPOSIT.nameJP))">
                             <td width="180">{{'Payment service' | translate}}</td>
                             <td>{{transactionDetail?.name}}</td>
                         </tr>
-                        <tr *ngIf="transactionDetail?.method == paymentMethod.BANKTRANSFER.name && transactionDetail?.funding_type == typeTranHistory.DEPOSIT.name">
+                        <tr *ngIf="((transactionDetail?.method == paymentMethod.BANKTRANSFER.name || transactionDetail?.method == paymentMethod.BANKTRANSFER.nameJP)
+                         && (transactionDetail?.funding_type == typeTranHistory.DEPOSIT.name || transactionDetail?.funding_type == typeTranHistory.DEPOSIT.nameJP))">
                             <td width="180">{{'Payment service' | translate}}</td>
                             <td>{{transactionDetail?.name}}</td>
                         </tr>
-                        <tr *ngIf="transactionDetail?.method == paymentMethod.BANKTRANSFER.name && transactionDetail?.funding_type == typeTranHistory.WITHDRAWAL.name">
+                        <tr *ngIf="((transactionDetail?.method == paymentMethod.BANKTRANSFER.name || transactionDetail?.method == paymentMethod.BANKTRANSFER.nameJP)
+                        && (transactionDetail?.funding_type == typeTranHistory.WITHDRAWAL.name || transactionDetail?.funding_type == typeTranHistory.WITHDRAWAL.nameJP))">
                           <td width="180">{{'Benificiary bank' | translate}}</td>
                           <td>{{transactionDetail?.name}}</td>
                       </tr>

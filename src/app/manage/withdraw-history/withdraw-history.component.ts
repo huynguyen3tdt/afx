@@ -8,10 +8,11 @@ import { JAPAN_FORMATDATE, JAPAN_FORMATDATE_HH_MM, EN_FORMATDATE, EN_FORMATDATE_
 import {
   PAYMENTMETHOD,
   TYPEOFTRANHISTORY,
-  STATUSTRANHISTORY } from 'src/app/core/constant/payment-method-constant';
+  STATUSTRANHISTORY
+} from 'src/app/core/constant/payment-method-constant';
 import { GlobalService } from 'src/app/core/services/global.service';
 import { AccountType } from 'src/app/core/model/report-response.model';
-import {SelectItem} from 'primeng/api';
+import { SelectItem } from 'primeng/api';
 import { ActivatedRoute } from '@angular/router';
 import moment from 'moment-timezone';
 declare var $: any;
@@ -71,14 +72,9 @@ export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
   // STATUS = ['Complete', 'Pending', 'In process', 'Cancel'];
   constructor(private withdrawRequestService: WithdrawRequestService,
               private spinnerService: Ng4LoadingSpinnerService,
+              private globalService: GlobalService,
               private activatedRoute: ActivatedRoute) {
-                this.STATUS = [
-                  {label: 'New', value: {id: 4, name: 'New'}},
-                  {label: 'In-process', value: {id: 3, name: 'In-process'}},
-                  {label: 'Complete', value: {id: 1, name: 'Complete'}},
-                  {label: 'Cancel', value: {id: 2, name: 'Cancel'}},
-              ];
-               }
+  }
 
   ngOnInit() {
     this.typeTranHistory = TYPEOFTRANHISTORY;
@@ -93,6 +89,7 @@ export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
       this.formatDateYear = JAPAN_FORMATDATE;
       this.formatDateHour = JAPAN_FORMATDATE_HH_MM;
     }
+    this.initStatus();
     this.activatedRoute.queryParams.subscribe(res => {
       this.querytab = res.tab;
     });
@@ -101,7 +98,7 @@ export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
     this.listTradingAccount = JSON.parse(localStorage.getItem(ACCOUNT_IDS));
     this.initSearchForm();
     if (!this.querytab) {
-      this.getTranHistory(this.searchForm.controls.tradingAccount.value, this.currentPage, this.pageSize, this.TABS.ALL.value,
+      this.getTranHistory(this.searchForm.controls.tradingAccount.value.split('-')[1], this.currentPage, this.pageSize, this.TABS.ALL.value,
         this.formatDate(this.searchForm.controls.fromDate.value), this.formatDate(this.searchForm.controls.toDate.value));
     }
   }
@@ -116,16 +113,38 @@ export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
         this.withdrawTab.nativeElement.click();
       }
       if (this.querytab === 'detailwithdrawal') {
-        this.searchForm.controls.status.setValue([{id: 4, name: 'New'}, {id: 3, name: 'In-process'}]);
+        if (this.locale === 'en') {
+          this.searchForm.controls.status.setValue([{ id: 4, name: 'New' }, { id: 3, name: 'In-process' }]);
+        } else {
+          this.searchForm.controls.status.setValue([{ id: 4, name: 'すべて' }, { id: 3, name: '処理中' }]);
+        }
         this.changeStatus();
         this.withdrawTab.nativeElement.click();
       }
     }, 100);
   }
 
+  initStatus() {
+    if (this.locale === 'en') {
+      this.STATUS = [
+        { label: 'New', value: { id: 4, name: 'New' } },
+        { label: 'In-process', value: { id: 3, name: 'In-process' } },
+        { label: 'Complete', value: { id: 1, name: 'Complete' } },
+        { label: 'Cancel', value: { id: 2, name: 'Cancel' } },
+      ];
+    } else {
+      this.STATUS = [
+        { label: 'すべて', value: { id: 4, name: 'すべて' } },
+        { label: '処理中', value: { id: 3, name: '処理中' } },
+        { label: '完了', value: { id: 1, name: '完了' } },
+        { label: 'キャンセル', value: { id: 2, name: 'キャンセル' } },
+      ];
+    }
+  }
+
   initSearchForm() {
     this.searchForm = new FormGroup({
-      tradingAccount: new FormControl(this.listTradingAccount ? this.listTradingAccount[0].account_id : null),
+      tradingAccount: new FormControl(this.listTradingAccount ? this.listTradingAccount[0].value : null),
       fromDate: new FormControl(null),
       toDate: new FormControl(null),
       status: new FormControl([])
@@ -139,25 +158,26 @@ export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
     this.checkTab(type);
     this.withdrawRequestService.getDwHistory(accountNumber, pageSize, pageNumber, type, dateFrom,
       dateTo, statusSearch).subscribe(response => {
-      if (response.meta.code === 200) {
-        this.spinnerService.hide();
-        this.listReport = response.data.results;
-        this.totalItem = response.data.count;
-        this.totalPage = (response.data.count / pageSize) * 10;
-        this.listReport.forEach(item => {
-          item.create_date += TIMEZONESERVER;
-          item.create_date = moment(item.create_date).tz(this.timeZone).format(this.formatDateHour);
-          item.funding_type = this.checkType(item.funding_type);
-          item.method = this.checkPaymentMedthod(item.method);
-        });
-        this.recordFrom = this.pageSize * (this.currentPage - 1) + 1;
-        this.recordTo = this.recordFrom + (this.listReport.length - 1);
-      }
-    });
+        if (response.meta.code === 200) {
+          this.spinnerService.hide();
+          this.listReport = response.data.results;
+          this.totalItem = response.data.count;
+          this.totalPage = (response.data.count / pageSize) * 10;
+          this.listReport.forEach(item => {
+            item.create_date += TIMEZONESERVER;
+            item.create_date = moment(item.create_date).tz(this.timeZone).format(this.formatDateHour);
+            item.funding_type = this.globalService.checkType(item.funding_type);
+            item.method = this.globalService.checkPaymentMedthod(item.method);
+          });
+          this.recordFrom = this.pageSize * (this.currentPage - 1) + 1;
+          this.recordTo = this.recordFrom + (this.listReport.length - 1);
+        }
+      });
   }
 
   searchTranHistory() {
     this.showErrorDate = false;
+    let accounID;
     if (this.searchForm.controls.fromDate.value !== null && this.searchForm.controls.fromDate.value.toString().indexOf('/') === -1) {
       this.searchForm.controls.fromDate.setValue(moment(new Date(this.searchForm.controls.fromDate.value)).format(this.formatDateYear));
     }
@@ -171,19 +191,22 @@ export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
     // if (this.showErrorDate === true) {
     //   return;
     // }
+    if (this.searchForm.controls.tradingAccount.value.toString().indexOf('-') !== -1) {
+      accounID = this.searchForm.controls.tradingAccount.value.split('-')[1];
+    }
     switch (this.tab) {
       case this.TABS.ALL.name:
-        this.getTranHistory(this.searchForm.controls.tradingAccount.value, this.currentPage, this.pageSize, this.TABS.ALL.value,
+        this.getTranHistory(accounID, this.currentPage, this.pageSize, this.TABS.ALL.value,
           this.formatDate(this.searchForm.controls.fromDate.value), this.formatDate(this.searchForm.controls.toDate.value),
           this.statusSearch);
         break;
       case this.TABS.DEPOSIT.name:
-        this.getTranHistory(this.searchForm.controls.tradingAccount.value, this.currentPage, this.pageSize, this.TABS.DEPOSIT.value,
+        this.getTranHistory(accounID, this.currentPage, this.pageSize, this.TABS.DEPOSIT.value,
           this.formatDate(this.searchForm.controls.fromDate.value), this.formatDate(this.searchForm.controls.toDate.value),
           this.statusSearch);
         break;
       case this.TABS.WITHDRAWAL.name:
-        this.getTranHistory(this.searchForm.controls.tradingAccount.value, this.currentPage, this.pageSize, this.TABS.WITHDRAWAL.value,
+        this.getTranHistory(accounID, this.currentPage, this.pageSize, this.TABS.WITHDRAWAL.value,
           this.formatDate(this.searchForm.controls.fromDate.value), this.formatDate(this.searchForm.controls.toDate.value),
           this.statusSearch);
         break;
@@ -208,8 +231,8 @@ export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
   }
 
   pageChanged(event) {
-      this.currentPage = event.page;
-      this.searchTranHistory();
+    this.currentPage = event.page;
+    this.searchTranHistory();
   }
 
   changeTotalItem(event) {
@@ -247,7 +270,7 @@ export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
   onValueChangeFrom(event) {
     this.showErrorDate = false;
     if ((new Date(event).getTime()) >
-    new Date(this.searchForm.controls.toDate.value).getTime()) {
+      new Date(this.searchForm.controls.toDate.value).getTime()) {
       this.showErrorDate = true;
     }
     // if (moment(this.searchForm.controls.fromDate.value) > moment(this.searchForm.controls.toDate.value)) {
@@ -258,7 +281,7 @@ export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
   onValueChangeTo(event) {
     this.showErrorDate = false;
     if ((new Date(this.searchForm.controls.fromDate.value).getTime()) >
-    new Date(event).getTime()) {
+      new Date(event).getTime()) {
       this.showErrorDate = true;
     }
     // if (moment(this.searchForm.controls.fromDate.value) > moment(this.searchForm.controls.toDate.value)) {
@@ -272,9 +295,8 @@ export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
         this.tranHistoryDetail = response.data;
         this.tranHistoryDetail.create_date += TIMEZONESERVER;
         this.tranHistoryDetail.create_date = moment(this.tranHistoryDetail.create_date).tz(this.timeZone).format(this.formatDateHour);
-        this.tranHistoryDetail.method = this.checkPaymentMedthod(this.tranHistoryDetail.method);
-        this.tranHistoryDetail.funding_type = this.checkType(this.tranHistoryDetail.funding_type);
-        console.log('---- ', this.tranHistoryDetail);
+        this.tranHistoryDetail.method = this.globalService.checkPaymentMedthod(this.tranHistoryDetail.method);
+        this.tranHistoryDetail.funding_type = this.globalService.checkType(this.tranHistoryDetail.funding_type);
         $('#tran_detail').modal('show');
       }
     });
@@ -300,24 +322,24 @@ export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
     this.searchTranHistory();
   }
 
-  checkPaymentMedthod(type: string) {
-    if (type === PAYMENTMETHOD.QUICKDEPOSIT.key) {
-      return PAYMENTMETHOD.QUICKDEPOSIT.name;
-    }
-    if (type === PAYMENTMETHOD.BANKTRANSFER.key) {
-      return PAYMENTMETHOD.BANKTRANSFER.name;
-    }
-    return '';
-  }
-  checkType(type: string) {
-    if (type === TYPEOFTRANHISTORY.DEPOSIT.key) {
-      return TYPEOFTRANHISTORY.DEPOSIT.name;
-    }
-    if (type === TYPEOFTRANHISTORY.WITHDRAWAL.key) {
-      return TYPEOFTRANHISTORY.WITHDRAWAL.name;
-    }
-    return '';
-  }
+  // checkPaymentMedthod(type: string) {
+  //   if (type === PAYMENTMETHOD.QUICKDEPOSIT.key) {
+  //     return PAYMENTMETHOD.QUICKDEPOSIT.name;
+  //   }
+  //   if (type === PAYMENTMETHOD.BANKTRANSFER.key) {
+  //     return PAYMENTMETHOD.BANKTRANSFER.name;
+  //   }
+  //   return '';
+  // }
+  // checkType(type: string) {
+  //   if (type === TYPEOFTRANHISTORY.DEPOSIT.key) {
+  //     return TYPEOFTRANHISTORY.DEPOSIT.name;
+  //   }
+  //   if (type === TYPEOFTRANHISTORY.WITHDRAWAL.key) {
+  //     return TYPEOFTRANHISTORY.WITHDRAWAL.name;
+  //   }
+  //   return '';
+  // }
 
   checkStatus(status: number) {
     if (status === STATUSTRANHISTORY.COMPLETE.key) {
@@ -330,6 +352,11 @@ export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
       return STATUSTRANHISTORY.PENDING.name;
     }
     return null;
+  }
+
+  changeTradingAccount() {
+    console.log('accountIDĐ ', this.searchForm.controls.tradingAccount.value.split('-')[1]);
+    this.searchTranHistory();
   }
 
 }

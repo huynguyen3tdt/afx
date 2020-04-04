@@ -176,7 +176,7 @@ export class WithdrawRequestComponent implements OnInit {
     this.errMessage = false;
     this.equityEstimate = Math.floor(this.equity - numeral(this.withdrawForm.controls.amount.value).value());
     this.marginLevelEstimate = this.globalService.calculateMarginLevel(this.equityEstimate, this.usedMargin);
-    if (this.marginLevelEstimate <= 100 && this.marginLevelEstimate > 0) {
+    if (this.marginLevelEstimate <= 120 && this.marginLevelEstimate > 0) {
       this.errMessage = true;
     }
   }

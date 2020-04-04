@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AccountType } from '../model/report-response.model';
+import { TYPEOFTRANHISTORY, PAYMENTMETHOD } from '../constant/payment-method-constant';
+import { LOCALE } from '../constant/authen-constant';
 
 export const ACCOUNT_TYPE = {
   ACCOUNT_FX: {account_type: 1, name: 'FX'},
@@ -44,9 +46,48 @@ export class GlobalService {
     if (usedMargin === 0) {
       marginLevel = 0;
     } else {
-      marginLevel = parseFloat(((equityDeposit / usedMargin) * 100).toFixed(2));
+      marginLevel = ((equityDeposit / usedMargin) * 100);
     }
 
     return marginLevel;
+  }
+
+  checkType(type: string) {
+    const locale = localStorage.getItem(LOCALE);
+    console.log('localeee ', locale);
+    if (type === TYPEOFTRANHISTORY.DEPOSIT.key) {
+      if (locale === 'en') {
+        return TYPEOFTRANHISTORY.DEPOSIT.name;
+      } else {
+        return TYPEOFTRANHISTORY.DEPOSIT.nameJP;
+      }
+    }
+    if (type === TYPEOFTRANHISTORY.WITHDRAWAL.key) {
+      if (locale === 'en') {
+        return TYPEOFTRANHISTORY.WITHDRAWAL.name;
+      } else {
+        return TYPEOFTRANHISTORY.WITHDRAWAL.nameJP;
+      }
+    }
+    return '';
+  }
+
+  checkPaymentMedthod(type: string) {
+    const locale = localStorage.getItem(LOCALE);
+    if (type === PAYMENTMETHOD.QUICKDEPOSIT.key) {
+      if (locale === 'en') {
+        return PAYMENTMETHOD.QUICKDEPOSIT.name;
+      } else {
+        return PAYMENTMETHOD.QUICKDEPOSIT.nameJP;
+      }
+    }
+    if (type === PAYMENTMETHOD.BANKTRANSFER.key) {
+      if (locale === 'en') {
+        return PAYMENTMETHOD.BANKTRANSFER.name;
+      } else {
+        return PAYMENTMETHOD.BANKTRANSFER.nameJP;
+      }
+    }
+    return '';
   }
 }

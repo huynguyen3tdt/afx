@@ -22,7 +22,7 @@
                             <div class="row">
                                 <div class="col-md-6 col-lg-7">
                                     <div class="p-3 border mb-3 form form-line bg-light">
-                                        <h5 class="text-primary mb-2"><strong>MT5</strong> {{'Information' | translate}}</h5>
+                                        <h5 class="text-primary mb-2">{{'MT5 Information' | translate}}</h5>
                                         <div class="d-flex justify-content-between align-items-center mb-2">
                                             <div class="d-flex align-items-center">
                                                 <label class="label mb-0 mr-2 pt-1">{{'Trading account' | translate}}</label>
@@ -61,7 +61,7 @@
                                         <div class="mb-1 d-flex justify-content-between">
                                             <label class="label">{{'Margin Level' | translate}}</label>
                                             <div>
-                                                <strong>{{mt5Infor?.margin_level | number}}%</strong>
+                                                <strong>{{mt5Infor?.margin_level | number: '1.2-2'}}%</strong>
                                             </div>
                                         </div>
                                         <div class="d-flex align-items-center">
@@ -72,7 +72,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6 col-lg-5">
-                                    <h4 class="text-primary border-bottom pb-1 mb-3 title-deposit">11{{'Deposit Transactions' | translate}}
+                                    <h4 class="text-primary border-bottom pb-1 mb-3 title-deposit">{{'Deposit Transactions' | translate}}
                                     </h4>
                                     <div [formGroup]="depositTransactionForm" class="form form-line">
                                         <div class="form form-line">
@@ -85,15 +85,15 @@
                                                 <div>{{'Minimum amount is not below' | translate}} {{minDeposit}}</div>
                                             </div>
                                             <div class="mb-1 d-flex justify-content-between align-items-center">
-                                                <label class="label">Bank</label>
+                                                <label class="label">{{'Bank' | translate}}</label>
                                                 <div>
                                                     <div class="d-inline-block">
                                                         <select 
                                                         class="form-control form-control-sm mb-0 bg-none" 
                                                         formControlName="bankCode" 
                                                         (change)="changeBankDeposit()" style="min-width: 160px;">
-                                                        <option value="0005">{{'Mitsubishi UFJ' | translate}}</option>
-                                                        <option value="0008">{{'UFJ bank' | translate}}</option>
+                                                        <option value="0008">{{'Mitsubishi UFJ' | translate}}</option>
+                                                        <!-- <option value="0008">{{'UFJ bank' | translate}}</option> -->
                                                         <option value="0009">{{'Sumitomo Mitsui' | translate}}</option>
                                                         <option value="0003">{{'Mizuho' | translate}}</option>
                                                         <option value="0036">{{'Rakuten' | translate}}</option>
@@ -118,11 +118,12 @@
                                             </div>
                                             <div class="mb-1 d-flex justify-content-between align-items-center">
                                                 <label class="label">{{'Margin Level estimate' | translate}}</label>
-                                                <div><strong>{{marginLevelEstimate}}%</strong></div>
+                                                <div><strong>{{marginLevelEstimate | number: '1.2-2'}}%</strong></div>
                                             </div>
                                         </div>
                                     </div>
-                                    <p class="small text-secondary p-2 bg-light">Notice: Minimum single deposit amount is {{minDeposit | number}}</p>
+                                    <p class="small text-secondary p-2 bg-light" *ngIf="locale == en">Notice: Minimum single deposit amount is {{minDeposit | number}}</p>
+                                    <p class="small text-secondary p-2 bg-light" *ngIf="locale == jp">※最低入金額は{{minDeposit | number}}円となります。</p>
                                     <div *ngIf="errMessageQuickDeposit == true" class="invalid-mess">
                                         <div>{{'Your Margin Level is nearly the Margin Call Levels' | translate}}</div>
                                     </div>

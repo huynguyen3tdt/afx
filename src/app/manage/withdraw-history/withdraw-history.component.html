@@ -33,9 +33,9 @@
                                     <div class="col-4 col-lg-2">
                                         <div class="form-group">
                                             <label class="label d-block mb-0 mr-2">{{'Trading account' | translate}}</label>
-                                            <select disabled formControlName="tradingAccount" class="form-control form-control-sm">
+                                            <select disabled formControlName="tradingAccount" (change)="changeTradingAccount()" class="form-control form-control-sm">
                                                 <option *ngFor="let item of listTradingAccount"
-                                                    value="{{item?.account_id}}">
+                                                    value="{{item.value}}">
                                                     {{item.value}}</option>
                                             </select>
                                         </div>
@@ -59,9 +59,9 @@
                                                 <div class="form-group form-group">
                                                     <label class="label d-none d-lg-block mb-0">&nbsp;</label>
                                                     <div class="btn-group d-flex">
-                                                        <button type="button" (click)="setDate(DURATION.DAY)" class="btn btn-sm btn-outline-secondary" style="width: 30px">{{'D' | translate}}</button>
-                                                        <button type="button" (click)="setDate(DURATION.MONTH)" class="btn btn-sm btn-outline-secondary">{{'M' | translate}}</button>
                                                         <button type="button" (click)="setDate(DURATION.YEAR)" class="btn btn-sm btn-outline-secondary">{{'Y' | translate}}</button>
+                                                        <button type="button" (click)="setDate(DURATION.MONTH)" class="btn btn-sm btn-outline-secondary">{{'M' | translate}}</button>
+                                                        <button type="button" (click)="setDate(DURATION.DAY)" class="btn btn-sm btn-outline-secondary" style="width: 30px">{{'D' | translate}}</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -123,9 +123,9 @@
                                                 <td><a (click)="openDetail(item?.id)">{{item?.create_date}}</a></td>
                                                 <td><a (click)="openDetail(item?.id)">{{item?.funding_type}}</a></td>
                                                 <td><a (click)="openDetail(item?.id)">{{item?.method}}</a></td>
-                                                <td *ngIf="item?.funding_type == typeTranHistory.DEPOSIT.name" class="text-right">
+                                                <td *ngIf="item?.funding_type == typeTranHistory.DEPOSIT.name || item?.funding_type == typeTranHistory.DEPOSIT.nameJP" class="text-right">
                                                     <a (click)="openDetail(item?.id)">{{item?.amount | number}}</a></td>
-                                                <td *ngIf="item?.funding_type == typeTranHistory.WITHDRAWAL.name" class="text-right">
+                                                <td *ngIf="item?.funding_type == typeTranHistory.WITHDRAWAL.name || item?.funding_type == typeTranHistory.WITHDRAWAL.nameJP" class="text-right">
                                                     <a (click)="openDetail(item?.id)">-{{item?.amount | number}}</a></td>
                                                 <td *ngIf="item?.status == transactionStatus.NEW.key" class="text-right"><span
                                                         class="text-info"><i class="icon ion-md-hourglass"></i>
@@ -164,7 +164,8 @@
                                             </option>
                                         </select>
                                     </div>
-                                    <div class="small text-secondary d-inline-block mr-2">{{'Showing' | translate}} {{recordFrom}} {{'To' | translate}} {{recordTo}} {{'of' | translate}} {{totalItem}} {{'entries' | translate}}
+                                    <div *ngIf="locale == 'en'" class="small text-secondary d-inline-block mr-2">Showing {{recordFrom}} To {{recordTo}} of {{totalItem}} entries</div>
+                                    <div *ngIf="locale == 'jp'" class="small text-secondary d-inline-block mr-2">{{totalItem}}件のうち{{recordTo}}件表示
                                     </div>
                                 </div>
                                 <ul class="pagination pagination-sm mb-0">
@@ -202,9 +203,9 @@
             <div class="modal-body">
                 <table class="table table-hover table-sm" cellspacing="0" cellpadding="0">
                     <tbody>
-                        <tr *ngFor="let item of listTradingAccount">
+                        <tr>
                             <td width="180" class="border-top-0">{{'Trading account' | translate}}</td>
-                            <td class="border-top-0" >{{item?.value}}</td>
+                            <td class="border-top-0" >{{this.searchForm.controls.tradingAccount.value}}</td>
                         </tr>
                         <tr>
                             <td width="180">{{'Date time' | translate}}</td>
@@ -218,22 +219,25 @@
                             <td width="180">{{'Payment method' | translate}}</td>
                             <td>{{tranHistoryDetail?.method}}</td>
                         </tr>
-                        <tr *ngIf="tranHistoryDetail?.method == paymentMethod.QUICKDEPOSIT.name && tranHistoryDetail?.funding_type == typeTranHistory.DEPOSIT.name">
+                        <tr *ngIf="((tranHistoryDetail?.method == paymentMethod.QUICKDEPOSIT.name || tranHistoryDetail?.method == paymentMethod.QUICKDEPOSIT.nameJP)
+                        && (tranHistoryDetail?.funding_type == typeTranHistory.DEPOSIT.name || tranHistoryDetail?.funding_type == typeTranHistory.DEPOSIT.nameJP))">
                           <td width="180">{{'Payment service' | translate}}</td>
                           <td>{{tranHistoryDetail?.name}}</td>
                         </tr>
-                        <tr *ngIf="tranHistoryDetail?.method == paymentMethod.BANKTRANSFER.name && tranHistoryDetail?.funding_type == typeTranHistory.DEPOSIT.name">
+                        <tr *ngIf="((tranHistoryDetail?.method == paymentMethod.BANKTRANSFER.name || tranHistoryDetail?.method == paymentMethod.BANKTRANSFER.nameJP)
+                        && (tranHistoryDetail?.funding_type == typeTranHistory.DEPOSIT.name || tranHistoryDetail?.funding_type == typeTranHistory.DEPOSIT.nameJP))">
                             <td width="180">{{'Payment service' | translate}}</td>
                             <td>{{tranHistoryDetail?.name}}</td>
                         </tr>
-                        <tr *ngIf="tranHistoryDetail?.method == paymentMethod.BANKTRANSFER.name && tranHistoryDetail?.funding_type == typeTranHistory.WITHDRAWAL.name">
+                        <tr *ngIf="((tranHistoryDetail?.method == paymentMethod.BANKTRANSFER.name || tranHistoryDetail?.method == paymentMethod.BANKTRANSFER.nameJP)
+                        && (tranHistoryDetail?.funding_type == typeTranHistory.WITHDRAWAL.name || tranHistoryDetail?.funding_type == typeTranHistory.WITHDRAWAL.nameJP))">
                           <td width="180">{{'Benificiary bank' | translate}}</td>
                           <td>{{tranHistoryDetail?.name}}</td>
                         </tr>
                         <tr>
                             <td width="180">{{'Amount' | translate}}</td>
-                            <td *ngIf="tranHistoryDetail?.funding_type == typeTranHistory.DEPOSIT.name"><strong>{{tranHistoryDetail?.amount | number}}</strong> <span class="small text-secondary"></span>{{tranHistoryDetail?.currency}}</td>
-                            <td *ngIf="tranHistoryDetail?.funding_type == typeTranHistory.WITHDRAWAL.name"><strong>-{{tranHistoryDetail?.amount | number}}</strong> <span class="small text-secondary"></span>{{tranHistoryDetail?.currency}}</td>
+                            <td *ngIf="tranHistoryDetail?.funding_type == typeTranHistory.DEPOSIT.name || tranHistoryDetail?.funding_type == typeTranHistory.DEPOSIT.nameJP"><strong>{{tranHistoryDetail?.amount | number}}</strong> <span class="small text-secondary"></span>{{tranHistoryDetail?.currency}}</td>
+                            <td *ngIf="tranHistoryDetail?.funding_type == typeTranHistory.WITHDRAWAL.name || tranHistoryDetail?.funding_type == typeTranHistory.WITHDRAWAL.nameJP"><strong>-{{tranHistoryDetail?.amount | number}}</strong> <span class="small text-secondary"></span>{{tranHistoryDetail?.currency}}</td>
                         </tr>
                         <tr>
                             <td width="180">{{'Status' | translate}}</td>

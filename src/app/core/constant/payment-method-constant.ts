@@ -1,12 +1,12 @@
 export const PAYMENTMETHOD = {
-    QUICKDEPOSIT: {key: 'qd', name: 'Quick deposit'},
-    BANKTRANSFER: {key: 'bt', name: 'Bank transfer'}
+    QUICKDEPOSIT: {key: 'qd', nameJP: 'クイック入金', name: 'Quick deposit'},
+    BANKTRANSFER: {key: 'bt', nameJP: '銀行振込', name: 'Bank transfer'}
 };
 
 
 export const TYPEOFTRANHISTORY = {
-    DEPOSIT: {key: 'd', name: 'Deposit'},
-    WITHDRAWAL: {key: 'w', name: 'Withdrawal'}
+    DEPOSIT: {key: 'd', nameJP: '入金', name: 'Deposit'},
+    WITHDRAWAL: {key: 'w', nameJP: '出金', name: 'Withdrawal'}
 };
 
 export const STATUSTRANHISTORY = {

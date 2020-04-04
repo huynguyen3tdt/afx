@@ -73,9 +73,15 @@
                             </h4>
                             <div class="form form-line">
                                 <div class="mb-1 d-flex justify-content-between">
+                                    <label class="label">{{'Withdrawal Account' | translate}}</label>
+                                    <div>
+                                        <strong>{{bankInfor?.name}} {{bankInfor?.branch_name}}</strong>
+                                    </div>
+                                </div>
+                                <div class="mb-1 d-flex justify-content-between">
                                     <label class="label">{{'Bank Account Number' | translate}}</label>
                                     <div>
-                                        <strong>{{bankInfor?.zip}}</strong>
+                                        <strong>{{bankInfor?.fx_acc_type}}{{bankInfor?.acc_number}}</strong>
                                     </div>
                                 </div>
                                 <div class="mb-1 d-flex justify-content-between">
@@ -117,16 +123,18 @@
                                 <div class="mb-1 d-flex justify-content-between">
                                     <label class="label">{{'Margin Level estimate' | translate}}</label>
                                     <div>
-                                        <strong>{{marginLevelEstimate}}%</strong>
+                                        <strong>{{marginLevelEstimate | number: '1.2-2'}}%</strong>
                                     </div>
                                 </div>
                             </div>
-                            <p class="small text-secondary p-2 bg-light">{{'Notice: Minimum single withdrawal amount is' | translate}} {{minWithdraw}}
+                            <p class="small text-secondary p-2 bg-light" *ngIf="locale == 'en'">Notice: Minimum single withdrawal amount is {{minWithdraw}}
                             </p>
+                            <p class="small text-secondary p-2 bg-light" *ngIf="locale == 'jp'">※全額出金以外の最低出金額は{{minWithdraw | number}}円となります。 
+                                </p>
                             <div *ngIf="errMessage == true" class="invalid-mess">
                                 <div>{{'Your Margin Level is nearly the Margin Call Level' | translate}}</div>
                             </div>
-                            <button class="btn btn-success btn-block text-uppercase btn-lg mb-3" (click)="showConfirm()"><strong>{{'Withdrawal'| translate}}</strong></button>
+                            <button class="btn btn-success btn-block text-uppercase btn-lg mb-3" (click)="showConfirm()"><strong>{{'Withdrawal Request'| translate}}</strong></button>
                             <p class="text-center" style="line-height: 1.2"><a href="javascript:;" data-toggle="modal" data-target="#modal-rule"><i class="icon ion-md-information-circle"></i>
                             {{'General rules for depositing and withdrawing funds' | translate}}</a></p>
                         </div>
@@ -191,7 +199,7 @@
                 </tr>
                 <tr>
                     <td width="180">{{'Margin level estimate' | translate}}</td>
-                    <td>{{marginLevelEstimate}}%</td>
+                    <td>{{marginLevelEstimate | number: '1.2-2'}}%</td>
                 </tr>
             </tbody>
         </table>

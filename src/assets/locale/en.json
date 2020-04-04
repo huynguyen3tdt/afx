@@ -222,5 +222,10 @@
   "Mizuho": "Mizuho",
   "Rakuten": "Rakuten",
   "Japan Net": "Japan Net",
-  "Withdrawal amount is not above the withdrawable amount": "Withdrawal amount is not above the withdrawable amount"
+  "Withdrawal amount is not above the withdrawable amount": "Withdrawal amount is not above the withdrawable amount",
+  "Withdrawal Account": "Withdrawal Account",
+  "Bank Name": "Bank Name",
+  "Y": "Y",
+  "M": "M",
+  "D": "D"
 }

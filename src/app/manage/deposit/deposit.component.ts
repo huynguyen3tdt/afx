@@ -232,7 +232,7 @@ export class DepositComponent implements OnInit {
     this.errMessageQuickDeposit = false;
     this.equityEstimate = Math.floor(this.equity + numeral(this.depositTransactionForm.controls.deposit.value).value());
     this.marginLevelEstimate = this.globalService.calculateMarginLevel(this.equityEstimate, this.usedMargin);
-    if (this.marginLevelEstimate <= 100 && this.marginLevelEstimate > 0) {
+    if (this.marginLevelEstimate <= 120 && this.marginLevelEstimate > 0) {
       this.errMessageQuickDeposit = true;
     }
   }
@@ -240,7 +240,7 @@ export class DepositComponent implements OnInit {
     this.errMessageBankTran = false;
     this.equityDeposit = Math.floor(this.equity + numeral(this.depositAmountForm.controls.deposit.value).value());
     this.marginLevelEstimateBank = this.globalService.calculateMarginLevel(this.equityDeposit, this.usedMargin);
-    if (this.marginLevelEstimateBank <= 100 && this.marginLevelEstimateBank > 0) {
+    if (this.marginLevelEstimateBank <= 120 && this.marginLevelEstimateBank > 0) {
       this.errMessageBankTran = true;
     }
   }
