@@ -18,9 +18,9 @@
                 <div class="col-md-9 col-lg-10">
                     <div class="tab-content" id="v-pills-tabContent">
                         <div class="tab-pane fade show active" id="v-pills-all" role="tabpanel" aria-labelledby="v-pills-all-tab">
-                            <h3 *ngIf="tab == 'ALL'" class="mb-3">{{'All Customer Statement' | translate}}</h3>
-                            <h3 *ngIf="tab == 'DAILY'" class="mb-3">{{'Transaction Report' | translate}}</h3>
-                            <h3 *ngIf="tab == 'YEARLY'" class="mb-3">{{'System Notifications' | translate}}</h3>
+                            <h3 *ngIf="tab == 'ALL'" class="mb-3">{{'All' | translate}}</h3>
+                            <h3 *ngIf="tab == 'DAILY'" class="mb-3">{{'Daily Customer Statement' | translate}}</h3>
+                            <h3 *ngIf="tab == 'YEARLY'" class="mb-3">{{'Yearly Customer Statement' | translate}}</h3>
                             <div [formGroup]="searchForm" class="form mb-3 form-search-box">
                                 <div class="row">
                                     <div class="col-4 col-lg-3">
@@ -37,9 +37,9 @@
                                                 <div class="form-group">
                                                     <label class="label d-none d-lg-block mb-0">&nbsp;</label>
                                                     <div class="btn-group d-flex">
-                                                        <button type="button" (click)="setDate(DURATION.DAY)" class="btn btn-sm btn-outline-secondary">{{'D' | translate}}</button>
-                                                        <button type="button" (click)="setDate(DURATION.MONTH)" class="btn btn-sm btn-outline-secondary">{{'M' | translate}}</button>
                                                         <button type="button" (click)="setDate(DURATION.YEAR)" class="btn btn-sm btn-outline-secondary">{{'Y' | translate}}</button>
+                                                        <button type="button" (click)="setDate(DURATION.MONTH)" class="btn btn-sm btn-outline-secondary">{{'M' | translate}}</button>
+                                                        <button type="button" (click)="setDate(DURATION.DAY)" class="btn btn-sm btn-outline-secondary">{{'D' | translate}}</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -102,7 +102,7 @@
                                             <td *ngIf="item?.read_flg == true" class="text-right align-middle"><span class="text-success">{{'Done' | translate}}</span></td>
                                             <td *ngIf="item?.read_flg == false" class="text-right align-middle"><span class="text-danger">{{'Not yet' | translate}}</span></td>
                                             <td class="text-right align-middle">
-                                                <button (click)="downLoadFile(item)" class="btn btn-sm btn-outline-secondary pt-0 pb-0"><i
+                                                <button (click)="downLoadFile(item)" class="btn btn-sm btn-success btn-outline-secondary pt-0 pb-0"><i
                                                         class="icon ion-md-download"></i></button>
                                             </td>
                                         </tr>
