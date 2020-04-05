@@ -43,6 +43,7 @@ export class AccountInformationComponent implements OnInit {
     private withdrawRequestService: WithdrawRequestService,
     private userService: UserService,
     private authenService: AuthenService,
+    private globalService: GlobalService
   ) { }
   accountInfor: Mt5Model;
   withdrawAmount: WithdrawAmountModel;
@@ -225,6 +226,7 @@ export class AccountInformationComponent implements OnInit {
         this.userForm.controls.house_numb.setValue(this.userInfor.address.value.street2);
         this.userForm.controls.email.setValue(this.userInfor.email.value);
         this.userForm.controls.phone.setValue(this.userInfor.mobile);
+        this.userInfor.fx_gender = this.globalService.checkGender(this.userInfor.fx_gender);
       }
     });
   }
@@ -248,6 +250,7 @@ export class AccountInformationComponent implements OnInit {
         this.corporateForm.controls.person_picname.setValue(this.corporateInfor.pic.fx_name1);
         this.corporateForm.controls.person_phone.setValue(this.corporateInfor.pic.mobile);
         this.corporateForm.controls.person_email.setValue(this.corporateInfor.pic.email.value);
+        this.corporateInfor.pic.fx_gender.value = this.globalService.checkGender(this.corporateInfor.pic.fx_gender.value);
       }
     });
   }
@@ -481,7 +484,7 @@ export class AccountInformationComponent implements OnInit {
       pic: {
         name: this.corporateForm.controls.per_picname.value,
         fx_name1: this.corporateForm.controls.person_picname.value,
-        fx_gender: this.corporateInfor.pic.fx_gender.value,
+        fx_gender: this.globalService.convertGender(this.corporateInfor.pic.fx_gender.value),
         email: this.corporateForm.controls.person_email.value,
         mobile: this.corporateForm.controls.person_phone.value,
         function: this.corporateForm.controls.person_pic.value,

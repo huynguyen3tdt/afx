@@ -90,4 +90,30 @@ export class GlobalService {
     }
     return '';
   }
+
+  checkGender(value: string) {
+    const locale = localStorage.getItem(LOCALE);
+    if (value === 'M') {
+        if (locale === 'en') {
+            return 'Male';
+        } else {
+            return '男性';
+        }
+    } else {
+        if (locale === 'en') {
+            return 'Female';
+        } else {
+            return '女性';
+        }
+    }
+  }
+
+  convertGender(value: string) {
+    if (value === 'Male' || value === '男性') {
+      return 'M';
+    }
+    if (value === 'Female' || value === '女性') {
+      return 'F';
+    }
+  }
 }
