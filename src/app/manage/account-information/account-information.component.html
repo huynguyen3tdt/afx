@@ -35,7 +35,7 @@
                             <a class="nav-item nav-link" id="nav-bank-tab" data-toggle="tab" href="#nav-corporate" role="tab" (click)="getCorporateInfor()" *ngIf="isCompany == 'true'" aria-controls="nav-corporate" aria-selected="false"><i class="icon ion-md-briefcase"></i> <strong
                                     class="d-none d-md-inline">{{'Corporate Infomation' | translate}}</strong></a>
                             <a class="nav-item nav-link" id="nav-bank-tab" data-toggle="tab" href="#nav-bank" role="tab" (click)="getBankInfor()" aria-controls="nav-bank" aria-selected="false"><i class="icon ion-md-card"></i> <strong
-                                    class="d-none d-md-inline">{{'Bank Account' | translate}}</strong></a>
+                                    class="d-none d-md-inline">{{'Withdrawal Account' | translate}}</strong></a>
                             <a class="nav-item nav-link" id="nav-setting-tab" data-toggle="tab" href="#nav-setting" role="tab" (click)="openSetting()" aria-controls="nav-setting" aria-selected="false"><i
                                     class="icon ion-md-settings"></i> <strong
                                     class="d-none d-md-inline">{{'Setting' | translate}}</strong></a>
@@ -771,7 +771,7 @@
                         <!-- END Corporate -->
                         <!-- BEGIN BANK ACCOUNT -->
                         <div class="tab-pane fade" id="nav-bank" role="tabpanel" aria-labelledby="nav-bank-tab">
-                            <h3 class="border-bottom pb-1 mb-3">{{'Bank Account' | translate}}</h3>
+                            <h3 class="border-bottom pb-1 mb-3">{{'Withdrawal Account Info' | translate}}</h3>
                             <div class="bank_info" *ngIf="bankAccount">
                                 <div class="row mb-1">
                                     <div class="col-md-4 col-lg-3">
