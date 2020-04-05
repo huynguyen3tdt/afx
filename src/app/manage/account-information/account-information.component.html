@@ -300,7 +300,7 @@
                                                             <strong><a
                                                                     href="javascript:;">{{userInfor?.email?.value}}</a></strong>
                                                             <div *ngIf="userInfor?.email?.status == 1" class="status small"><span class="text-info"><i
-                                                                        class="icon ion-md-hourglass"></i> Verificaion in process</span></div>
+                                                                        class="icon ion-md-hourglass"></i> {{'Verificaion in process' | translate}}</span></div>
                                                         </div>
                                                         <div *ngIf="editEmail == true" class="editable d-block">
                                                             <input type="text" name="email" formControlName="email" maxlength="100" class="form-control form-control-sm mb-1" value="" placeholder=""
@@ -967,7 +967,8 @@
                         <!-- END BANK ACCOUNT -->
 
                         <!-- BEGIN SETTING -->
-                        <div class="tab-pane fade" id="nav-setting" role="tabpanel" aria-labelledby="nav-setting-tab" [formGroup]="changePassForm">
+                        <div class="tab-pane fade" id="nav-setting" role="tabpanel" aria-labelledby="nav-setting-tab" >
+                            <form [formGroup]="changePassForm">
                             <h3 class="border-bottom pb-1 mb-3">{{'Setting' | translate}}</h3>
                             <h5 class="label mb-0"><strong>{{'Change Passwords' | translate}}</strong></h5>
                             <p class="small text-secondary">{{'It is a good idea to use a strong password that you are not using elsewhere' | translate}}</p>
@@ -976,7 +977,9 @@
                                     <label class="label mt-1">{{'Current password' | translate}}</label>
                                 </div>
                                 <div class="col-md-8 col-lg-9">
-                                    <input type="password" name="current_password" class="form-control form-control-sm" value="" formControlName="current_password" placeholder="" style="max-width: 240px" [ngClass]="{'invalid': isSubmittedSetting && changePassForm.controls['current_password'].errors}">
+                                    <input type="password" class="form-control form-control-sm" value="" formControlName="current_password" placeholder="" style="max-width: 240px" 
+                                    autocomplete="false"
+                                    [ngClass]="{'invalid': isSubmittedSetting && changePassForm.controls['current_password'].errors}">
                                 </div>
 
                             </div>
@@ -993,7 +996,9 @@
                                     <label class="label mt-1">{{'New password' | translate}}</label>
                                 </div>
                                 <div class="col-md-8 col-lg-9">
-                                    <input type="password" name="new-password" class="form-control form-control-sm" value="" formControlName="new_password" placeholder="" style="max-width: 240px" [ngClass]="{'invalid': isSubmittedSetting && (changePassForm.controls['new_password'].errors || changePassForm?.controls['new_password']?.errors?.RequiredPass)}">
+                                    <input type="password" class="form-control form-control-sm" value="" formControlName="new_password" placeholder="" style="max-width: 240px" 
+                                    autocomplete="false"
+                                    [ngClass]="{'invalid': isSubmittedSetting && (changePassForm.controls['new_password'].errors || changePassForm?.controls['new_password']?.errors?.RequiredPass)}">
                                 </div>
                             </div>
                             <div class="row">
@@ -1010,6 +1015,7 @@
                                 </div>
                                 <div class="col-md-8 col-lg-9">
                                     <input type="password" name="confirm-password" class="form-control form-control-sm" value="" formControlName="confirm_password" placeholder="" style="max-width: 240px"
+                                    autocomplete="false"
                                      [ngClass]="{'invalid': isSubmittedSetting && (changePassForm.controls['confirm_password'].errors || changePassForm?.controls['confirm_password']?.errors?.RequiredPass)}">
                                      <div *ngIf="isSubmittedSetting && changePassForm?.controls['confirm_password']?.errors?.RequiredPass" class="invalid-feedback">
                                       <div>{{'This field is required' | translate}}</div>
@@ -1084,6 +1090,7 @@
                                   </select>
                                 </div>
                             </div>
+                        </form>
                         </div>
                         <!-- END SETTING -->
                     </div>
