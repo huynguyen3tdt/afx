@@ -69,7 +69,6 @@ export class NotificationsComponent implements OnInit {
     this.initFilterRead();
     this.currentPage = 1;
     this.pageSize = 10;
-    this.checkAgreement = false;
     this.activatedRoute.queryParams.subscribe(param => {
       if (param.fisrtLogin) {
         this.showNoti = true;
@@ -78,15 +77,9 @@ export class NotificationsComponent implements OnInit {
       }
     });
     this.getListNotifications(this.pageSize, this.currentPage, this.unreadAll, this.TABS.ALL.value);
-    this.initFormAgreement();
     this.getTotalNotification();
   }
 
-  initFormAgreement() {
-    this.formAgreement = new FormGroup({
-      checkAgreement: new FormControl(false, requiredInput)
-    });
-  }
   getListNotifications(pageSize: number, pageNumber: number, unread: boolean, type?: number) {
     this.checkTab(type);
     this.listNotification = [];
@@ -159,15 +152,12 @@ export class NotificationsComponent implements OnInit {
   }
 
   confirmAgreement() {
-    // if (this.formAgreement.controls.checkAgreement.value === false) {
-    //   return;
-    // }
     const param = {
       noti_id: this.agreementID
     };
     this.notificationsService.changeAgreementStatus(param).subscribe(response => {
       if (response.meta.code === 200) {
-        this.checkAgreement = false;
+        this.changeReadStatus(this.agreementID);
         if (this.tab === this.TABS.ALL.name) {
           this.getListNotifications(this.pageSize, this.currentPage, this.unreadAll, this.TABS.ALL.value);
         } else {
@@ -175,12 +165,7 @@ export class NotificationsComponent implements OnInit {
         }
       }
     });
-    this.checkAgreement = false;
     this.getTotalNotification();
-  }
-
-  hideAgreementModal() {
-    this.checkAgreement = false;
   }
 
   pageChanged(event) {
@@ -261,23 +246,14 @@ export class NotificationsComponent implements OnInit {
   }
 
   showDetail(index: number, item: Notification) {
-    if (item.agreement_flg === 1) {
-      this.contentAgeement = item.news_content;
-      this.agreementID = item.id;
-    }
     switch (this.tab) {
       case this.TABS.ALL.name:
         $(`#noti_${index}`).toggleClass('opened');
         $(`#noti_${index}`).removeClass('unread');
         break;
       case this.TABS.IMPORTANT.name:
-        if (item.agreement_flg === 0) {
-          $(`#important_${index}`).toggleClass('opened');
-          $(`#important_${index}`).removeClass('unread');
-        } else {
-          $(`#important_${index}`).toggleClass('opened');
-          $(`#important_${index}`).removeClass('unread');
-        }
+        $(`#important_${index}`).toggleClass('opened');
+        $(`#important_${index}`).removeClass('unread');
         break;
       case this.TABS.NOTIFICATIONS.name:
         $(`#system_${index}`).toggleClass('opened');
@@ -288,8 +264,29 @@ export class NotificationsComponent implements OnInit {
         $(`#campain_${index}`).removeClass('unread');
         break;
     }
+    if (item.agreement_flg === 1) {
+      this.contentAgeement = item.news_content;
+      this.agreementID = item.id;
+      if (item.agree_flg === false) {
+        return;
+      }
+    }
     this.changeReadStatus(item.id);
     this.getTotalNotification();
+  }
+
+  checkAgreementIsRead(item: Notification) {
+    if (item.agreement_flg === 1) {
+      this.contentAgeement = item.news_content;
+      this.agreementID = item.id;
+      if (item.agree_flg === true) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
   }
 
   showimportant() {

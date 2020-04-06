@@ -760,7 +760,7 @@ body{
 	padding-right: 15px;
 }
 .list-notifications .notification-item.opened .item-content {
-	max-height: 320px;
+	max-height: 10000em;
 	padding: 10px 15px 5px;
 	transition: max-height 0.25s ease-in;
 	overflow-y: auto;

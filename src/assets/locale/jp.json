@@ -125,7 +125,7 @@
   "Campaign Notifications": "キャンペーン情報",
   "I agree with the above terms": "上記の条件に同意します。",
   "You are having ": "持っています。",
-  "Ok": "O",
+  "Ok": "OK",
   "MT5 Information": "口座情報",
   "Transaction Report": "取引帳票",
   "Pending": "保留",
@@ -152,7 +152,7 @@
   "DOB": "生年月日",
   "If you have forgotten your login ID / email address, please contact us from here.": "ログインID／メールアドレスをお忘れの方は、こちらよりお問い合わせください。",
   "Submit": "送信",
-  "Return to login screen": "ログイン画面へ戻す",
+  "Return to login screen": "ログイン画面に戻る",
   "Please waiting": "しばらくお待ちください。",
   "seconds to Return to login screen page.": "ログインページに戻るまでの秒数。",
   "Change Password": "パスワード変更",
@@ -226,5 +226,6 @@
   "Withdrawal amount is not above the withdrawable amount": "Withdrawal amount is not above the withdrawable amount",
   "Withdrawal Account": "出金口座",
   "Withdrawal Account Info": "メニューと一致させる",
-  "Bank Name": "金融機関名選択"
+  "Bank Name": "金融機関名選択",
+  "Click here if you forgot your Login ID": "ログインID／メールアドレスをお忘れの方は、こちらよりお問い合わせください。"
 }
