@@ -102,7 +102,8 @@
                                             <h5 class="item-title"><a href="javascript:;">{{item?.news_title}}</a></h5>
                                             <div class="item-meta">{{item?.publish_date}}</div>
                                         </div>
-                                        <div class="item-content">
+                                        <div *ngIf="item?.agreement_flg != 1" class="item-content" [innerHTML]="item?.news_content"></div>
+                                        <div *ngIf="item?.agreement_flg == 1" class="item-content">
                                             <div [innerHTML]="item?.news_content"></div>
                                             <button (click)="confirmAgreement()" [disabled]="item.agree_flg == true ? true : false" type="button" class="btn btn-primary f-right">Confirm</button>
                                         </div>
@@ -261,7 +262,7 @@
             <div class="modal-body text-center">
                 <p class="mb-0"><i class="icon ion-md-alert text-danger" style="font-size: 48px;line-height: 1"></i></p>
                 <p> {{'You are having ' | translate}}<strong>{{totalNoti?.important}}</strong> {{'important notification' | translate}}</p>
-                <button type="button" class="btn btn-sm btn-primary pl-4 pr-4" data-dismiss="modal">Ok{{'Ok' | translate}}</button>
+                <button type="button" class="btn btn-sm btn-primary pl-4 pr-4" data-dismiss="modal">{{'Ok' | translate}}</button>
             </div>
         </div>
     </div>
