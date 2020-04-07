@@ -224,11 +224,11 @@
                           <td width="180">{{'Payment service' | translate}}</td>
                           <td>{{tranHistoryDetail?.name}}</td>
                         </tr>
-                        <tr *ngIf="((tranHistoryDetail?.method == paymentMethod.BANKTRANSFER.name || tranHistoryDetail?.method == paymentMethod.BANKTRANSFER.nameJP)
+                        <!-- <tr *ngIf="((tranHistoryDetail?.method == paymentMethod.BANKTRANSFER.name || tranHistoryDetail?.method == paymentMethod.BANKTRANSFER.nameJP)
                         && (tranHistoryDetail?.funding_type == typeTranHistory.DEPOSIT.name || tranHistoryDetail?.funding_type == typeTranHistory.DEPOSIT.nameJP))">
                             <td width="180">{{'Payment service' | translate}}</td>
                             <td>{{tranHistoryDetail?.name}}</td>
-                        </tr>
+                        </tr> -->
                         <tr *ngIf="((tranHistoryDetail?.method == paymentMethod.BANKTRANSFER.name || tranHistoryDetail?.method == paymentMethod.BANKTRANSFER.nameJP)
                         && (tranHistoryDetail?.funding_type == typeTranHistory.WITHDRAWAL.name || tranHistoryDetail?.funding_type == typeTranHistory.WITHDRAWAL.nameJP))">
                           <td width="180">{{'Benificiary bank' | translate}}</td>
