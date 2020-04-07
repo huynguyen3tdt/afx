@@ -61,6 +61,7 @@ export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
   typeTranHistory;
   paymentMethod;
   defaultLabel: string;
+  language;
   TABS = {
     ALL: { name: 'ALL', value: '0' },
     DEPOSIT: { name: 'DEPOSIT', value: 'd' },
@@ -79,6 +80,7 @@ export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    this.language = LANGUAGLE;
     this.typeTranHistory = TYPEOFTRANHISTORY;
     this.transactionStatus = STATUSTRANHISTORY;
     this.paymentMethod = PAYMENTMETHOD;

@@ -69,8 +69,10 @@ export class DepositComponent implements OnInit {
   customerName: string;
   timeZone: string;
   bankCode: string;
+  language;
 
   ngOnInit() {
+    this.language = LANGUAGLE;
     this.locale = localStorage.getItem(LOCALE);
     this.customerName = localStorage.getItem(FXNAME1);
     this.timeZone = localStorage.getItem(TIMEZONEAFX);

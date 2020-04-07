@@ -164,8 +164,8 @@
                                             </option>
                                         </select>
                                     </div>
-                                    <div *ngIf="locale == 'en'" class="small text-secondary d-inline-block mr-2">Showing {{recordFrom}} To {{recordTo}} of {{totalItem}} entries</div>
-                                    <div *ngIf="locale == 'jp'" class="small text-secondary d-inline-block mr-2">{{totalItem}}件のうち{{recordTo}}件表示
+                                    <div *ngIf="locale == language.english" class="small text-secondary d-inline-block mr-2">Showing {{recordFrom}} To {{recordTo}} of {{totalItem}} entries</div>
+                                    <div *ngIf="locale == language.japan" class="small text-secondary d-inline-block mr-2">{{totalItem}}件のうち{{recordTo}}件表示
                                     </div>
                                 </div>
                                 <ul class="pagination pagination-sm mb-0">

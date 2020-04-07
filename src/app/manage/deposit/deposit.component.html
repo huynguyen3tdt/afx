@@ -122,8 +122,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <p class="small text-secondary p-2 bg-light" *ngIf="locale == 'en'">Notice: Minimum single deposit amount is {{minDeposit | number}}</p>
-                                    <p class="small text-secondary p-2 bg-light" *ngIf="locale == 'jp'">※最低入金額は{{minDeposit | number}}円となります。</p>
+                                    <p class="small text-secondary p-2 bg-light" *ngIf="locale == language.english">Notice: Minimum single deposit amount is {{minDeposit | number}}</p>
+                                    <p class="small text-secondary p-2 bg-light" *ngIf="locale == language.japan">※最低入金額は{{minDeposit | number}}円となります。</p>
                                     <div *ngIf="errMessageQuickDeposit == true" class="invalid-mess">
                                         <div>{{'Your Margin Level is nearly the Margin Call Levels' | translate}}</div>
                                     </div>

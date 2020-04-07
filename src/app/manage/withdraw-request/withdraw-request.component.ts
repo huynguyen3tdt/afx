@@ -67,6 +67,7 @@ export class WithdrawRequestComponent implements OnInit {
   withdrawFee: number;
   totalAmount: number;
   timeZone: string;
+  language;
   // withdrawAmount
   constructor(private withdrawRequestService: WithdrawRequestService,
               private spinnerService: Ng4LoadingSpinnerService,
@@ -75,6 +76,7 @@ export class WithdrawRequestComponent implements OnInit {
               private depositService: DepositService) { }
 
   ngOnInit() {
+    this.language = LANGUAGLE;
     this.withdrawFee = 0;
     this.timeZone = localStorage.getItem(TIMEZONEAFX);
     this.locale = localStorage.getItem(LOCALE);
