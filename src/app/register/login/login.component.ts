@@ -104,8 +104,8 @@ export class LoginComponent implements OnInit, AfterViewInit {
           localStorage.setItem(PASSWORD_LOGIN, btoa(this.loginFormGroup.value.passWord));
           localStorage.setItem(REMEMBER_LOGIN, 'true');
         } else {
-          localStorage.removeItem(USERNAME_LOGIN);
-          localStorage.removeItem(PASSWORD_LOGIN);
+          localStorage.setItem(USERNAME_LOGIN, btoa(this.loginFormGroup.value.userName));
+          localStorage.setItem(PASSWORD_LOGIN, btoa(this.loginFormGroup.value.passWord));
           localStorage.setItem(REMEMBER_LOGIN, 'false');
         }
         response.data.account_ids = this.getListAccountIds(response.data.account_ids);
