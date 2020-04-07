@@ -59,6 +59,7 @@ export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
   transactionStatus;
   typeTranHistory;
   paymentMethod;
+  defaultLabel: string;
   TABS = {
     ALL: { name: 'ALL', value: '0' },
     DEPOSIT: { name: 'DEPOSIT', value: 'd' },
@@ -85,9 +86,11 @@ export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
     if (this.locale === 'en') {
       this.formatDateYear = EN_FORMATDATE;
       this.formatDateHour = EN_FORMATDATE_HH_MM;
+      this.defaultLabel = 'All';
     } else if (this.locale === 'jp') {
       this.formatDateYear = JAPAN_FORMATDATE;
       this.formatDateHour = JAPAN_FORMATDATE_HH_MM;
+      this.defaultLabel = 'すべて';
     }
     this.initStatus();
     this.activatedRoute.queryParams.subscribe(res => {
@@ -116,7 +119,7 @@ export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
         if (this.locale === 'en') {
           this.searchForm.controls.status.setValue([{ id: 4, name: 'New' }, { id: 3, name: 'In-process' }]);
         } else {
-          this.searchForm.controls.status.setValue([{ id: 4, name: 'すべて' }, { id: 3, name: '処理中' }]);
+          this.searchForm.controls.status.setValue([{ id: 4, name: 'ニュース' }, { id: 3, name: '処理中' }]);
         }
         this.changeStatus();
         this.withdrawTab.nativeElement.click();
@@ -134,7 +137,7 @@ export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
       ];
     } else {
       this.STATUS = [
-        { label: 'すべて', value: { id: 4, name: 'すべて' } },
+        { label: 'ニュース', value: { id: 4, name: 'ニュース' } },
         { label: '処理中', value: { id: 3, name: '処理中' } },
         { label: '完了', value: { id: 1, name: '完了' } },
         { label: 'キャンセル', value: { id: 2, name: 'キャンセル' } },

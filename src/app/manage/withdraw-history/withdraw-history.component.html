@@ -46,7 +46,7 @@
                                                 <div class="form-group">
                                                     <label
                                                         class="label d-block mb-0 mr-2">{{'Status' | translate}}</label>
-                                                        <p-multiSelect [options]="STATUS"  [panelStyle]="{minWidth:'20em'}" formControlName="status" (onChange)="changeStatus()"></p-multiSelect>
+                                                        <p-multiSelect [defaultLabel]="defaultLabel" [options]="STATUS"  [panelStyle]="{minWidth:'20em'}" formControlName="status" (onChange)="changeStatus()"></p-multiSelect>
                                                     <!-- <select  formControlName="tradingAccount"
                                                         class="form-control form-control-sm" multiple>
                                                         <option *ngFor="let item of STATUS"
@@ -110,7 +110,7 @@
                                             <th class="border-top-0" width="140">{{'Transaction ID' | translate}}</th>
                                             <th class="border-top-0">{{'Date' | translate}}</th>
                                             <th class="border-top-0">{{'Type' | translate}}</th>
-                                            <th class="border-top-0">{{'Payment method' | translate}}</th>
+                                            <th class="border-top-0">{{'Payment Method' | translate}}</th>
                                             <th class="border-top-0 text-right" width="50">{{'Amount' | translate}}</th>
                                             <th class="border-top-0 text-right" width="140">{{'Status' | translate}}
                                             </th>
@@ -216,7 +216,7 @@
                             <td>{{tranHistoryDetail?.funding_type}}</td>
                         </tr>
                         <tr>
-                            <td width="180">{{'Payment method' | translate}}</td>
+                            <td width="180">{{'Payment Method' | translate}}</td>
                             <td>{{tranHistoryDetail?.method}}</td>
                         </tr>
                         <tr *ngIf="((tranHistoryDetail?.method == paymentMethod.QUICKDEPOSIT.name || tranHistoryDetail?.method == paymentMethod.QUICKDEPOSIT.nameJP)
