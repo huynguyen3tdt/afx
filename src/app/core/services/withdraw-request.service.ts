@@ -16,6 +16,7 @@ import {
 import { ResponseWihtoutDataModel } from '../model/none-data-response.model';
 import * as moment from 'moment';
 import { LOCALE } from '../constant/authen-constant';
+import { LANGUAGLE } from '../constant/language-constant';
 
 
 @Injectable({
@@ -86,13 +87,13 @@ export class WithdrawRequestService {
       URL = `?account_id=${accountNumber}&page_size=${pageSize}&page=${pageNumber}`;
     }
     if (dateFrom && dateFrom !== 'Invalid date') {
-      if (locale === 'en') {
+      if (locale === LANGUAGLE.english) {
         dateFrom = moment(new Date(dateFrom)).format('DD-MM-YYYY');
       }
       URL += `&date_from=${dateFrom}`;
     }
     if (dateTo && dateTo !== 'Invalid date') {
-      if (locale === 'en') {
+      if (locale === LANGUAGLE.english) {
         dateTo = moment(new Date(dateTo)).format('DD-MM-YYYY');
       }
       URL += `&date_to=${dateTo}`;

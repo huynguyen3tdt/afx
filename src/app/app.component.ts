@@ -15,7 +15,8 @@ export class AppComponent implements OnInit {
     jqKeyboard.init();
     if (localStorage.getItem(LOCALE)) {
       const browserLang = localStorage.getItem(LOCALE);
-      translate.use(browserLang.match(/en|jp/) ? browserLang : 'en');
+      console.log('browserLang ', browserLang);
+      translate.use(browserLang.match(/en_US|ja_JP/) ? browserLang : 'en_US');
     } else {
       localStorage.setItem(LOCALE, 'en');
       translate.setDefaultLang('en');

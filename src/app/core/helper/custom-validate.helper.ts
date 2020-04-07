@@ -52,6 +52,21 @@ const JP_ERROR = {
   message: 'が正しくありません。'
 };
 
+const DEFAULT_INVALID_SPECIAL = {
+  SalarySpecial: true,
+  message: 'Not Special'
+};
+
+const DEFAULT_PHONE_REQUIRED = {
+  Phone: true,
+  message: ''
+};
+
+const DEFAULT_PHONE_LENGTH = {
+  phoneLength: true,
+  message: 'Length >= 10'
+};
+
 const DIGITS_PATTERN = '^\\d+$';
 const SALARY_PATTEN = '^[0-9, ]*$';
 const NOT_SPECIAL_CHARACTERS_FOR_EMAIL = '^[a-zA-Z0-9-._ ]*$';
@@ -109,24 +124,23 @@ export function passwordValidation(control: AbstractControl) {
 }
 
 export function validationPhoneNumber(control: AbstractControl) {
-  if (control.value === '' || control.value === undefined) {
-      return null;
+  if (!control.value || typeof control.value === 'string' && !control.value.trim()) {
+    return DEFAULT_INVALID_REQUIRED;
   }
   if (control.value) {
-      // tslint:disable-next-line: variable-name
-      const string = control.value.toString().split('');
-      if (string.length > 0 &&  string.indexOf('-') > -1) {
-          return DEFAULT_REQUIRED_SPECIAL;
-      }
-      if (string.length > 0 &&  string.indexOf(' ') > -1) {
-          return DEFAULT_LENGTH_REQUIRED;
-      }
-      if (isNaN(control.value) === true && control.value !== '') {
-          return DEFAULT_LENGTH_REQUIRED;
-      }
-      if (control.value && (control.value.length < 10)) {
-          return DEFAULT_LENGTH_BIGER10;
-      }
+    const phone = control.value.toString().split('');
+    if (phone.length > 0 && phone.indexOf('-') > -1) {
+      return DEFAULT_INVALID_SPECIAL;
+    }
+    if (phone.length > 0 && phone.indexOf(' ') > -1) {
+      return DEFAULT_PHONE_REQUIRED;
+    }
+    if (isNaN(control.value) === true && control.value !== '') {
+      return DEFAULT_PHONE_REQUIRED;
+    }
+    if (control.value && (control.value.length < 10)) {
+      return DEFAULT_PHONE_LENGTH;
+    }
   }
   return null;
 }

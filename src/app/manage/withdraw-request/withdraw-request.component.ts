@@ -21,6 +21,7 @@ import { DepositService } from 'src/app/core/services/deposit.service';
 import { DepositModel } from 'src/app/core/model/deposit-response.model';
 import { ListTransactionComponent } from '../list-transaction/list-transaction.component';
 import moment from 'moment-timezone';
+import { LANGUAGLE } from 'src/app/core/constant/language-constant';
 declare var $: any;
 const numeral = require('numeral');
 
@@ -77,10 +78,10 @@ export class WithdrawRequestComponent implements OnInit {
     this.withdrawFee = 0;
     this.timeZone = localStorage.getItem(TIMEZONEAFX);
     this.locale = localStorage.getItem(LOCALE);
-    if (this.locale === 'en') {
+    if (this.locale === LANGUAGLE.english) {
       this.formatDateYear = EN_FORMATDATE;
       this.formatDateHour = EN_FORMATDATE_HH_MM;
-    } else if (this.locale === 'jp') {
+    } else if (this.locale === LANGUAGLE.japan) {
       this.formatDateYear = JAPAN_FORMATDATE;
       this.formatDateHour = JAPAN_FORMATDATE_HH_MM;
     }

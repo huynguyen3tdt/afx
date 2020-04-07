@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { AccountType } from '../model/report-response.model';
 import { TYPEOFTRANHISTORY, PAYMENTMETHOD } from '../constant/payment-method-constant';
 import { LOCALE } from '../constant/authen-constant';
+import { LANGUAGLE } from '../constant/language-constant';
 
 export const ACCOUNT_TYPE = {
   ACCOUNT_FX: {account_type: 1, name: 'FX'},
@@ -56,14 +57,14 @@ export class GlobalService {
     const locale = localStorage.getItem(LOCALE);
     console.log('localeee ', locale);
     if (type === TYPEOFTRANHISTORY.DEPOSIT.key) {
-      if (locale === 'en') {
+      if (locale === LANGUAGLE.english) {
         return TYPEOFTRANHISTORY.DEPOSIT.name;
       } else {
         return TYPEOFTRANHISTORY.DEPOSIT.nameJP;
       }
     }
     if (type === TYPEOFTRANHISTORY.WITHDRAWAL.key) {
-      if (locale === 'en') {
+      if (locale === LANGUAGLE.english) {
         return TYPEOFTRANHISTORY.WITHDRAWAL.name;
       } else {
         return TYPEOFTRANHISTORY.WITHDRAWAL.nameJP;
@@ -75,14 +76,14 @@ export class GlobalService {
   checkPaymentMedthod(type: string) {
     const locale = localStorage.getItem(LOCALE);
     if (type === PAYMENTMETHOD.QUICKDEPOSIT.key) {
-      if (locale === 'en') {
+      if (locale === LANGUAGLE.english) {
         return PAYMENTMETHOD.QUICKDEPOSIT.name;
       } else {
         return PAYMENTMETHOD.QUICKDEPOSIT.nameJP;
       }
     }
     if (type === PAYMENTMETHOD.BANKTRANSFER.key) {
-      if (locale === 'en') {
+      if (locale === LANGUAGLE.english) {
         return PAYMENTMETHOD.BANKTRANSFER.name;
       } else {
         return PAYMENTMETHOD.BANKTRANSFER.nameJP;
@@ -94,13 +95,13 @@ export class GlobalService {
   checkGender(value: string) {
     const locale = localStorage.getItem(LOCALE);
     if (value === 'M') {
-        if (locale === 'en') {
+        if (locale === LANGUAGLE.english) {
             return 'Male';
         } else {
             return '男性';
         }
     } else {
-        if (locale === 'en') {
+        if (locale === LANGUAGLE.english) {
             return 'Female';
         } else {
             return '女性';

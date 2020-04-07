@@ -9,6 +9,7 @@ declare var $: any;
 import moment from 'moment-timezone';
 import { LOCALE, TIMEZONEAFX, TIMEZONESERVER } from 'src/app/core/constant/authen-constant';
 import { GlobalService } from 'src/app/core/services/global.service';
+import { LANGUAGLE } from 'src/app/core/constant/language-constant';
 
 @Component({
   selector: 'app-list-transaction',
@@ -39,9 +40,9 @@ export class ListTransactionComponent implements OnInit, OnChanges {
     this.transactionStatus = STATUSTRANHISTORY;
     this.paymentMethod = PAYMENTMETHOD;
     this.locale = localStorage.getItem(LOCALE);
-    if (this.locale === 'en') {
+    if (this.locale === LANGUAGLE.english) {
       this.formatDateHour = EN_FORMATDATE_HH_MM;
-    } else if (this.locale === 'jp') {
+    } else if (this.locale === LANGUAGLE.japan) {
       this.formatDateHour = JAPAN_FORMATDATE_HH_MM;
     }
     this.timeZone = localStorage.getItem(TIMEZONEAFX);
