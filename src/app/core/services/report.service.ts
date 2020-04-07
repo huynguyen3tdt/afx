@@ -8,6 +8,7 @@ import { catchError } from 'rxjs/operators';
 import { ReportResponseModel, ReportChangeResponseModel } from '../model/report-response.model';
 import { LOCALE } from '../constant/authen-constant';
 import * as moment from 'moment';
+import { LANGUAGLE } from '../constant/language-constant';
 
 
 @Injectable({
@@ -28,13 +29,13 @@ export class ReportService {
       URL = `?account_numb=${accountNumber}&page_size=${pageSize}&page=${pageNumber}`;
     }
     if (dateFrom && dateFrom !== 'Invalid date') {
-      if (locale === 'en') {
+      if (locale === LANGUAGLE.english) {
         dateFrom = moment(new Date(dateFrom)).format('DD-MM-YYYY');
       }
       URL += `&date_from=${dateFrom}`;
     }
     if (dateTo && dateTo !== 'Invalid date') {
-      if (locale === 'en') {
+      if (locale === LANGUAGLE.english) {
         dateTo = moment(new Date(dateTo)).format('DD-MM-YYYY');
       }
       URL += `&date_to=${dateTo}`;

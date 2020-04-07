@@ -15,6 +15,7 @@ import { AccountType } from 'src/app/core/model/report-response.model';
 import { SelectItem } from 'primeng/api';
 import { ActivatedRoute } from '@angular/router';
 import moment from 'moment-timezone';
+import { LANGUAGLE } from 'src/app/core/constant/language-constant';
 declare var $: any;
 
 @Component({
@@ -60,6 +61,7 @@ export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
   typeTranHistory;
   paymentMethod;
   defaultLabel: string;
+  language;
   TABS = {
     ALL: { name: 'ALL', value: '0' },
     DEPOSIT: { name: 'DEPOSIT', value: 'd' },
@@ -78,16 +80,17 @@ export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    this.language = LANGUAGLE;
     this.typeTranHistory = TYPEOFTRANHISTORY;
     this.transactionStatus = STATUSTRANHISTORY;
     this.paymentMethod = PAYMENTMETHOD;
     this.timeZone = localStorage.getItem(TIMEZONEAFX);
     this.locale = localStorage.getItem(LOCALE);
-    if (this.locale === 'en') {
+    if (this.locale === LANGUAGLE.english) {
       this.formatDateYear = EN_FORMATDATE;
       this.formatDateHour = EN_FORMATDATE_HH_MM;
       this.defaultLabel = 'All';
-    } else if (this.locale === 'jp') {
+    } else if (this.locale === LANGUAGLE.japan) {
       this.formatDateYear = JAPAN_FORMATDATE;
       this.formatDateHour = JAPAN_FORMATDATE_HH_MM;
       this.defaultLabel = 'すべて';
@@ -116,7 +119,7 @@ export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
         this.withdrawTab.nativeElement.click();
       }
       if (this.querytab === 'detailwithdrawal') {
-        if (this.locale === 'en') {
+        if (this.locale === LANGUAGLE.english) {
           this.searchForm.controls.status.setValue([{ id: 4, name: 'New' }, { id: 3, name: 'In-process' }]);
         } else {
           this.searchForm.controls.status.setValue([{ id: 4, name: 'ニュース' }, { id: 3, name: '処理中' }]);
@@ -128,7 +131,7 @@ export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
   }
 
   initStatus() {
-    if (this.locale === 'en') {
+    if (this.locale === LANGUAGLE.english) {
       this.STATUS = [
         { label: 'New', value: { id: 4, name: 'New' } },
         { label: 'In-process', value: { id: 3, name: 'In-process' } },
@@ -307,9 +310,9 @@ export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
 
   formatDate(date: string) {
     if (date) {
-      if (this.locale === 'jp') {
+      if (this.locale === LANGUAGLE.japan) {
         return date.split('/')[2] + '-' + date.split('/')[1] + '-' + date.split('/')[0];
-      } else if (this.locale === 'en') {
+      } else if (this.locale === LANGUAGLE.english) {
         return date.split('/')[0] + '-' + date.split('/')[1] + '-' + date.split('/')[2];
       }
     }

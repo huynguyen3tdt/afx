@@ -5,7 +5,7 @@ import { Mt5Model, WithdrawAmountModel, BankInforModel } from 'src/app/core/mode
 import { UserService } from './../../core/services/user.service';
 import { UserModel, CorporateResponse, CorporateModel, AddressModel } from 'src/app/core/model/user.model';
 import { FormGroup, FormControl } from '@angular/forms';
-import { IS_COMPANY, ACCOUNT_IDS, FONTSIZE_AFX, LOCALE } from 'src/app/core/constant/authen-constant';
+import { IS_COMPANY, ACCOUNT_IDS, FONTSIZE_AFX, LOCALE, TIMEZONEAFX } from 'src/app/core/constant/authen-constant';
 import { GlobalService } from 'src/app/core/services/global.service';
 import { AccountType } from 'src/app/core/model/report-response.model';
 import { passwordValidation,
@@ -25,7 +25,8 @@ import {
   JapanPostBank
 } from 'src/app/core/constant/japan-constant';
 import { EN_FORMATDATE_HH_MM, JAPAN_FORMATDATE_HH_MM } from 'src/app/core/constant/format-date-constant';
-import * as moment from 'moment';
+import { LANGUAGLE } from 'src/app/core/constant/language-constant';
+import moment from 'moment-timezone';
 declare var $: any;
 
 
@@ -111,12 +112,14 @@ export class AccountInformationComponent implements OnInit {
   locale: string;
   formatDateHour: string;
   lastestTime: string;
+  timeZone: string;
 
   ngOnInit() {
+    this.timeZone = localStorage.getItem(TIMEZONEAFX);
     this.locale = localStorage.getItem(LOCALE);
-    if (this.locale === 'en') {
+    if (this.locale === LANGUAGLE.english) {
       this.formatDateHour = EN_FORMATDATE_HH_MM;
-    } else if (this.locale === 'jp') {
+    } else if (this.locale === LANGUAGLE.japan) {
       this.formatDateHour = JAPAN_FORMATDATE_HH_MM;
     }
     this.initHiraCode();
@@ -157,7 +160,7 @@ export class AccountInformationComponent implements OnInit {
       house_numb: new FormControl('', requiredInput),
       name_build: new FormControl(''),
       email: new FormControl('', emailValidation),
-      phone: new FormControl('', [requiredInput, validationPhoneNumber]),
+      phone: new FormControl('', validationPhoneNumber),
     });
   }
   initCorporateForm() {
@@ -167,13 +170,13 @@ export class AccountInformationComponent implements OnInit {
       cor_district: new FormControl('', requiredInput),
       cor_house: new FormControl('', requiredInput),
       cor_build: new FormControl(''),
-      cor_phone: new FormControl('', [requiredInput, validationPhoneNumber]),
+      cor_phone: new FormControl('', validationPhoneNumber),
       cor_fax: new FormControl('', requiredInput),
       person_bod: new FormControl('', requiredInput),
       person_pic: new FormControl('', requiredInput),
       per_picname: new FormControl('', requiredInput),
       person_picname: new FormControl('', requiredInput),
-      person_phone: new FormControl('', [requiredInput, validationPhoneNumber]),
+      person_phone: new FormControl('', validationPhoneNumber),
       person_email: new FormControl('', emailValidation),
     });
   }
@@ -186,9 +189,14 @@ export class AccountInformationComponent implements OnInit {
     });
     this.changePassForm.controls.language.setValue(localStorage.getItem(LOCALE));
   }
-  changeLang(event) {
-    this.translate.use(event);
-    localStorage.setItem(LOCALE, event);
+  changeLang(language) {
+    this.translate.use(language);
+    localStorage.setItem(LOCALE, language);
+    const param = {
+      lang: language
+    };
+    this.userService.changeLanguage(param).subscribe(response => {
+    });
   }
 
   initBankForm() {
@@ -244,13 +252,15 @@ export class AccountInformationComponent implements OnInit {
         this.corporateForm.controls.cor_build.setValue(this.corporateInfor.corporation.address.value.fx_street3);
         this.corporateForm.controls.cor_phone.setValue(this.corporateInfor.corporation.mobile);
         this.corporateForm.controls.cor_fax.setValue(this.corporateInfor.corporation.fx_fax.value);
-        this.corporateForm.controls.person_bod.setValue(this.corporateInfor.pic.fx_dept);
-        this.corporateForm.controls.person_pic.setValue(this.corporateInfor.pic.function);
-        this.corporateForm.controls.per_picname.setValue(this.corporateInfor.pic.name);
-        this.corporateForm.controls.person_picname.setValue(this.corporateInfor.pic.fx_name1);
-        this.corporateForm.controls.person_phone.setValue(this.corporateInfor.pic.mobile);
-        this.corporateForm.controls.person_email.setValue(this.corporateInfor.pic.email.value);
-        this.corporateInfor.pic.fx_gender.value = this.globalService.checkGender(this.corporateInfor.pic.fx_gender.value);
+        if (this.corporateInfor.pic) {
+          this.corporateForm.controls.person_bod.setValue(this.corporateInfor.pic.fx_dept);
+          this.corporateForm.controls.person_pic.setValue(this.corporateInfor.pic.function);
+          this.corporateForm.controls.per_picname.setValue(this.corporateInfor.pic.name);
+          this.corporateForm.controls.person_picname.setValue(this.corporateInfor.pic.fx_name1);
+          this.corporateForm.controls.person_phone.setValue(this.corporateInfor.pic.mobile);
+          this.corporateForm.controls.person_email.setValue(this.corporateInfor.pic.email.value);
+          this.corporateInfor.pic.fx_gender.value = this.globalService.checkGender(this.corporateInfor.pic.fx_gender.value);
+        }
       }
     });
   }
@@ -260,7 +270,7 @@ export class AccountInformationComponent implements OnInit {
       this.spinnerService.hide();
       if (response.meta.code === 200) {
         this.accountInfor = response.data;
-        this.lastestTime = moment(this.accountInfor.lastest_time).format(this.formatDateHour);
+        this.lastestTime = moment(this.accountInfor.lastest_time).tz(this.timeZone).format(this.formatDateHour);
       }
     });
   }
@@ -271,6 +281,9 @@ export class AccountInformationComponent implements OnInit {
       if (response.meta.code === 200) {
         this.spinnerService.hide();
         this.withdrawAmount = response.data;
+        if (!this.withdrawAmount.withdraw_amount_pending || this.withdrawAmount.withdraw_amount_pending === null) {
+          this.withdrawAmount.withdraw_amount_pending = 0;
+        }
       }
     });
   }

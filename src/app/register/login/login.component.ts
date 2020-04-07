@@ -19,6 +19,7 @@ import {
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthenService } from 'src/app/core/services/authen.service';
 import { AccountType } from 'src/app/core/model/report-response.model';
+import { TranslateService } from '@ngx-translate/core';
 declare const $: any;
 
 @Component({
@@ -37,7 +38,8 @@ export class LoginComponent implements OnInit, AfterViewInit {
   constructor(
     private router: Router,
     private authenService: AuthenService,
-    private activatedRoute: ActivatedRoute) {
+    private activatedRoute: ActivatedRoute,
+    private translate: TranslateService) {
   }
 
   ngOnInit() {
@@ -102,8 +104,8 @@ export class LoginComponent implements OnInit, AfterViewInit {
           localStorage.setItem(PASSWORD_LOGIN, btoa(this.loginFormGroup.value.passWord));
           localStorage.setItem(REMEMBER_LOGIN, 'true');
         } else {
-          localStorage.removeItem(USERNAME_LOGIN);
-          localStorage.removeItem(PASSWORD_LOGIN);
+          localStorage.setItem(USERNAME_LOGIN, btoa(this.loginFormGroup.value.userName));
+          localStorage.setItem(PASSWORD_LOGIN, btoa(this.loginFormGroup.value.passWord));
           localStorage.setItem(REMEMBER_LOGIN, 'false');
         }
         response.data.account_ids = this.getListAccountIds(response.data.account_ids);
@@ -123,6 +125,10 @@ export class LoginComponent implements OnInit, AfterViewInit {
           localStorage.setItem(TIMEZONEAFX, response.data.tz);
         } else {
           localStorage.setItem(TIMEZONEAFX, 'Asia/Tokyo');
+        }
+        if (response.data.lang) {
+          localStorage.setItem(LOCALE, response.data.lang);
+          this.translate.use(response.data.lang);
         }
         localStorage.setItem(FIRST_LOGIN, '1');
         if (response.data.pwd_change_flg === false) {

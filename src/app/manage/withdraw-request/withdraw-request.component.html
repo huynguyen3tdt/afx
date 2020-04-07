@@ -127,9 +127,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <p class="small text-secondary p-2 bg-light" *ngIf="locale == 'en'">Notice: Minimum single withdrawal amount is {{minWithdraw}}
+                            <p class="small text-secondary p-2 bg-light" *ngIf="locale == language.english">Notice: Minimum single withdrawal amount is {{minWithdraw}}
                             </p>
-                            <p class="small text-secondary p-2 bg-light" *ngIf="locale == 'jp'">※全額出金以外の最低出金額は{{minWithdraw | number}}円となります。 
+                            <p class="small text-secondary p-2 bg-light" *ngIf="locale == language.japan">※全額出金以外の最低出金額は{{minWithdraw | number}}円となります。 
                                 </p>
                             <div *ngIf="errMessage == true" class="invalid-mess">
                                 <div>{{'Your Margin Level is nearly the Margin Call Level' | translate}}</div>

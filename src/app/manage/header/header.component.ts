@@ -6,6 +6,8 @@ import { NotificationsService } from 'src/app/core/services/notifications.servic
 import { PageNotificationResponse, Notification } from 'src/app/core/model/page-noti.model';
 import * as moment from 'moment';
 import { EN_FORMATDATE, JAPAN_FORMATDATE } from 'src/app/core/constant/format-date-constant';
+import { AccountType } from 'src/app/core/model/report-response.model';
+import { LANGUAGLE } from 'src/app/core/constant/language-constant';
 declare const $: any;
 declare const TweenMax: any;
 
@@ -29,6 +31,8 @@ export class HeaderComponent implements OnInit {
     NOTIFICATIONS: { name: 'NOTIFICATIONS', value: 1 },
     CAMPAIGN: { name: 'CAMPAIGN', value: 2 }
   };
+  listTradingAccount: Array<AccountType>;
+  accountID: string;
 
   constructor(private router: Router, private authenService: AuthenService,
               private notificationsService: NotificationsService, ) {
@@ -39,16 +43,19 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
     this.locale = localStorage.getItem(LOCALE);
-    if (this.locale === 'en') {
+    if (this.locale === LANGUAGLE.english) {
       this.formatDateYear = EN_FORMATDATE;
-    } else if (this.locale === 'jp') {
+    } else if (this.locale === LANGUAGLE.japan) {
       this.formatDateYear = JAPAN_FORMATDATE;
     }
     this.unreadAll = true;
     this.layout_setup();
     this.currentPage = 1;
     this.pageSize = 3;
-    this.getListNotifications(this.pageSize, this.currentPage, this.unreadAll, this.TABS.ALL.value);
+    if (this.listTradingAccount) {
+      this.accountID = this.listTradingAccount[0].value;
+      this.getListNotifications(this.accountID, this.pageSize, this.currentPage, this.unreadAll, this.TABS.ALL.value);
+    }
   }
 
   activeRouter(url) {
@@ -108,12 +115,9 @@ export class HeaderComponent implements OnInit {
       close_offcanvas();
     });
   }
-  getListNotifications(pageSize: number, pageNumber: number, unread: boolean, type?: number) {
+  getListNotifications(accountNumber: string, pageSize: number, pageNumber: number, unread: boolean, type?: number) {
     this.listNotification = [];
-    if (type !== -1) {
-      localStorage.setItem(FIRST_LOGIN, '0');
-    }
-    this.notificationsService.getListNotifications(pageSize, pageNumber, unread, type).subscribe(response => {
+    this.notificationsService.getListNotifications(accountNumber, pageSize, pageNumber, unread, type).subscribe(response => {
       if (response.meta.code === 200) {
         this.pageNotification = response;
         this.listNotification = this.pageNotification.data.results;

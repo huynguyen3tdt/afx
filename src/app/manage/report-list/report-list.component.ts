@@ -7,6 +7,7 @@ import { JAPAN_FORMATDATE, EN_FORMATDATE, EN_FORMATDATE_HH_MM, JAPAN_FORMATDATE_
 import { GlobalService } from 'src/app/core/services/global.service';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import moment from 'moment-timezone';
+import { LANGUAGLE } from 'src/app/core/constant/language-constant';
 declare var $: any;
 
 @Component({
@@ -51,10 +52,10 @@ export class ReportListComponent implements OnInit {
   ngOnInit() {
     this.timeZone = localStorage.getItem(TIMEZONEAFX);
     this.locale = localStorage.getItem(LOCALE);
-    if (this.locale === 'en') {
+    if (this.locale === LANGUAGLE.english) {
       this.formatDateYear = EN_FORMATDATE;
       this.formatDateHour = EN_FORMATDATE_HH_MM;
-    } else if (this.locale === 'jp') {
+    } else if (this.locale === LANGUAGLE.japan) {
       this.formatDateYear = JAPAN_FORMATDATE;
       this.formatDateHour = JAPAN_FORMATDATE_HH_MM;
     }
@@ -187,9 +188,9 @@ export class ReportListComponent implements OnInit {
 
   formatDate(date: string) {
     if (date) {
-      if (this.locale === 'jp') {
+      if (this.locale === LANGUAGLE.japan) {
         return date.split('/')[2] + '-' + date.split('/')[1] + '-' + date.split('/')[0];
-      } else if (this.locale === 'en') {
+      } else if (this.locale === LANGUAGLE.english) {
         return date.split('/')[0] + '-' + date.split('/')[1] + '-' + date.split('/')[2];
       }
     }

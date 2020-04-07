@@ -10,11 +10,12 @@ import { Mt5Model, TransactionModel, WithdrawAmountModel } from 'src/app/core/mo
 import { AccountType } from 'src/app/core/model/report-response.model';
 import { GlobalService } from 'src/app/core/services/global.service';
 import { JAPAN_FORMATDATE_HH_MM, EN_FORMATDATE, EN_FORMATDATE_HH_MM, JAPAN_FORMATDATE } from 'src/app/core/constant/format-date-constant';
-import moment from 'moment-timezone';
 import { TYPEOFTRANHISTORY } from 'src/app/core/constant/payment-method-constant';
 import { Router } from '@angular/router';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { ListTransactionComponent } from '../list-transaction/list-transaction.component';
+import { LANGUAGLE } from 'src/app/core/constant/language-constant';
+import moment from 'moment-timezone';
 const numeral = require('numeral');
 declare var $: any;
 
@@ -68,16 +69,18 @@ export class DepositComponent implements OnInit {
   customerName: string;
   timeZone: string;
   bankCode: string;
+  language;
 
   ngOnInit() {
+    this.language = LANGUAGLE;
     this.locale = localStorage.getItem(LOCALE);
     this.customerName = localStorage.getItem(FXNAME1);
     this.timeZone = localStorage.getItem(TIMEZONEAFX);
     this.depositFee = 0;
-    if (this.locale === 'en') {
+    if (this.locale === LANGUAGLE.english) {
       this.formatDateYear = EN_FORMATDATE;
       this.formatDateHour = EN_FORMATDATE_HH_MM;
-    } else if (this.locale === 'jp') {
+    } else if (this.locale === LANGUAGLE.japan) {
       this.formatDateYear = JAPAN_FORMATDATE;
       this.formatDateHour = JAPAN_FORMATDATE_HH_MM;
     }

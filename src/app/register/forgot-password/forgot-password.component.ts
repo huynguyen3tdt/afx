@@ -8,6 +8,7 @@ import { element } from 'protractor';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { LOCALE } from 'src/app/core/constant/authen-constant';
 import { EN_FORMATDATE, JAPAN_FORMATDATE} from 'src/app/core/constant/format-date-constant';
+import { LANGUAGLE } from 'src/app/core/constant/language-constant';
 
 @Component({
   selector: 'app-forgot-password',
@@ -36,9 +37,9 @@ export class ForgotPasswordComponent implements OnInit, AfterViewInit, OnDestroy
 
   ngOnInit() {
     this.locale = localStorage.getItem(LOCALE);
-    if (this.locale === 'en') {
+    if (this.locale === LANGUAGLE.english) {
       this.formatDateYear = EN_FORMATDATE;
-    } else if (this.locale === 'jp') {
+    } else if (this.locale === LANGUAGLE.japan) {
       this.formatDateYear = JAPAN_FORMATDATE;
     }
     this.showInterval = false;

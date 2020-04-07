@@ -108,7 +108,7 @@
                                                 </tr>
                                                 <tr>
                                                     <td>{{'Unrealize PL' | translate}}</td>
-                                                    <td class="text-right"><strong>0</strong></td>
+                                                    <td class="text-right"><strong>{{accountInfor?.unrealize_pl | number}}%</strong></td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -338,15 +338,7 @@
                                                             </div>
                                                             <div style="display:block" *ngIf="isSubmittedUser && userForm?.controls['phone'].errors?.SalaryLength"
                                                             class="invalid-feedback">
-                                                              <div *ngIf="userForm?.controls['phone'].errors?.SalaryLength">{{'Phone number must be at least 10 characters long.' | translate}}</div>
-                                                            </div>
-                                                            <div style="display:block" *ngIf="isSubmittedUser && userForm?.controls['phone'].errors?.Salary" class="invalid-feedback">
-                                                              <div *ngIf="userForm?.controls['phone'].errors?.Salary">{{'Please enter your phone number in single-byte numbers.' | translate}}</div>
-                                                            </div>
-                                                            <div style="display:block" *ngIf="isSubmittedUser && userForm?.controls['phone'].errors?.SalarySpecial"
-                                                            class="invalid-feedback">
-                                                              <div *ngIf="userForm?.controls['phone'].errors?.SalarySpecial">
-                                                                {{'Enter the phone number without a hyphen (-).' | translate}}</div>
+                                                              <div *ngIf="userForm?.controls['phone'].errors?.phoneLength">{{'Phone number must be at least 10 characters long.' | translate}}</div>
                                                             </div>
                                                             <div class="text-right">
                                                                 <button type="button" (click)="cancelEdit('phone')" class="btn btn-sm btn-cancel btn-outline-secondary pt-0 pb-0">{{'Cancel' | translate}}</button>
@@ -560,15 +552,7 @@
                                                             </div>
                                                             <div style="display:block" *ngIf="isSubmittedCor && corporateForm.controls['cor_phone'].errors?.SalaryLength"
                                                             class="invalid-feedback">
-                                                              <div *ngIf="corporateForm.controls['cor_phone'].errors?.SalaryLength">{{'Phone number must be at least 10 characters long.' | translate}}</div>
-                                                            </div>
-                                                            <div style="display:block" *ngIf="isSubmittedCor && corporateForm.controls['cor_phone'].errors?.Salary" class="invalid-feedback">
-                                                              <div *ngIf="corporateForm.controls['cor_phone'].errors?.Salary">{{'Please enter your phone number in single-byte numbers.' | translate}}</div>
-                                                            </div>
-                                                            <div style="display:block" *ngIf="isSubmittedCor && corporateForm.controls['cor_phone'].errors?.SalarySpecial"
-                                                            class="invalid-feedback">
-                                                              <div *ngIf="corporateForm.controls['cor_phone'].errors?.SalarySpecial">
-                                                                {{'Enter the phone number without a hyphen (-).' | translate}}</div>
+                                                              <div *ngIf="corporateForm.controls['cor_phone'].errors?.phoneLength">{{'Phone number must be at least 10 characters long.' | translate}}</div>
                                                             </div>
                                                             <div class="text-right">
                                                                 <button type="button" class="btn btn-sm btn-cancel btn-outline-secondary pt-0 pb-0" (click)="cancelEditCor('cor-phone')"> {{'Cancel' | translate}}</button>
@@ -712,15 +696,7 @@
                                                             </div>
                                                             <div style="display:block" *ngIf="isSubmittedCor && corporateForm.controls['person_phone'].errors?.SalaryLength"
                                                             class="invalid-feedback">
-                                                              <div *ngIf="corporateForm.controls['person_phone'].errors?.SalaryLength">{{'Phone number must be at least 10 characters long.' | translate}</div>
-                                                            </div>
-                                                            <div style="display:block" *ngIf="isSubmittedCor && corporateForm.controls['person_phone'].errors?.Salary" class="invalid-feedback">
-                                                              <div *ngIf="corporateForm.controls['person_phone'].errors?.Salary">{{'Please enter your phone number in single-byte numbers.' | translate}}</div>
-                                                            </div>
-                                                            <div style="display:block" *ngIf="isSubmittedCor && corporateForm.controls['person_phone'].errors?.SalarySpecial"
-                                                            class="invalid-feedback">
-                                                              <div *ngIf="corporateForm.controls['person_phone'].errors?.SalarySpecial">
-                                                                {{'Enter the phone number without a hyphen (-).' | translate}}</div>
+                                                              <div *ngIf="corporateForm.controls['person_phone'].errors?.phoneLength">{{'Phone number must be at least 10 characters long.' | translate}</div>
                                                             </div>
                                                             <div class="text-right">
                                                                 <button type="button" class="btn btn-sm btn-cancel btn-outline-secondary pt-0 pb-0" (click)="cancelEditCor('p-phone')">{{'Cancel' | translate}}</button>
@@ -1085,8 +1061,8 @@
                                 </div>
                                 <div class="col-md-8 col-lg-9">
                                     <select formControlName="language" (change)="changeLang($event.target.value)" class="form-control form-control-sm select2" style="max-width: 240px;">
-                                      <option value="en">English</option>
-                                      <option value="jp">Japanese</option>
+                                      <option value="en_US">English</option>
+                                      <option value="ja_JP">Japanese</option>
                                   </select>
                                 </div>
                             </div>
