@@ -113,6 +113,10 @@ export class AccountInformationComponent implements OnInit {
   formatDateHour: string;
   lastestTime: string;
   timeZone: string;
+  STATUS_INFO = {
+    approve: 'a',
+    inProgress: 'p'
+  };
 
   ngOnInit() {
     this.timeZone = localStorage.getItem(TIMEZONEAFX);
