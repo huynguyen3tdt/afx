@@ -270,7 +270,6 @@ export class AccountInformationComponent implements OnInit {
       this.spinnerService.hide();
       if (response.meta.code === 200) {
         this.accountInfor = response.data;
-        console.log()
         this.lastestTime = moment(this.accountInfor.lastest_time).tz(this.timeZone).format(this.formatDateHour);
       }
     });
