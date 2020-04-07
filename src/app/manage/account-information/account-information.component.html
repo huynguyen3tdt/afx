@@ -29,11 +29,11 @@
                     <nav class="mb-0">
                         <div class="nav nav-tabs" id="nav-tab" role="tablist">
                             <a class="nav-item nav-link active" id="nav-account-tab" data-toggle="tab" href="#nav-account" role="tab" (click)="getMt5Infor(this.accountID)" aria-controls="nav-account" aria-selected="true"><i
-                                    class="icon ion-md-person"></i> <strong class="d-none d-md-inline">{{'Account Infomation' | translate}}</strong></a>
+                                    class="icon ion-md-person"></i> <strong class="d-none d-md-inline">{{'Account Information' | translate}}</strong></a>
                             <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" (click)="getUserInfo()" *ngIf="isCompany == 'false'" role="tab" aria-controls="nav-profile" aria-selected="true"><i
                                     class="icon ion-md-contact"></i> <strong class="d-none d-md-inline">{{'User Infomation' | translate}}</strong></a>
                             <a class="nav-item nav-link" id="nav-bank-tab" data-toggle="tab" href="#nav-corporate" role="tab" (click)="getCorporateInfor()" *ngIf="isCompany == 'true'" aria-controls="nav-corporate" aria-selected="false"><i class="icon ion-md-briefcase"></i> <strong
-                                    class="d-none d-md-inline">{{'Corporate Infomation' | translate}}</strong></a>
+                                    class="d-none d-md-inline">{{'Corporate Information' | translate}}</strong></a>
                             <a class="nav-item nav-link" id="nav-bank-tab" data-toggle="tab" href="#nav-bank" role="tab" (click)="getBankInfor()" aria-controls="nav-bank" aria-selected="false"><i class="icon ion-md-card"></i> <strong
                                     class="d-none d-md-inline">{{'Withdrawal Account' | translate}}</strong></a>
                             <a class="nav-item nav-link" id="nav-setting-tab" data-toggle="tab" href="#nav-setting" role="tab" (click)="openSetting()" aria-controls="nav-setting" aria-selected="false"><i
@@ -46,7 +46,7 @@
                     <div class="tab-content border" id="nav-tabContent">
                         <!-- BEGIN ACCOUNT -->
                         <div class="tab-pane fade show active" id="nav-account" role="tabpanel" aria-labelledby="nav-account-tab">
-                            <h4 class="border-bottom pb-1 mb-3">{{'Account Infomation' | translate}}</h4>
+                            <h4 class="border-bottom pb-1 mb-3">{{'Account Information' | translate}}</h4>
                             <div class="row">
                                 <div class="col-lg-8">
                                     <div class="d-flex justify-content-between align-items-center mb-2">
@@ -153,11 +153,7 @@
                                                         </div>
                                                         <div *ngIf="editAddress == true" class="editable d-block">
                                                             <input type="text" name="postcode" formControlName="postCode" (change)="changeAddress(1)" maxlength="7" class="form-control form-control-sm mb-1" value="" placeholder=""
-                                                            [ngClass]="{'invalid': isSubmittedUser && (userForm?.controls['postCode'].errors
-                                                                          || userForm?.controls['postCode'].errors?.lengthlower7
-                                                                          || userForm?.controls['postCode'].errors?.Salary
-                                                                          || userForm?.controls['postCode'].errors?.SalarySpecial
-                                                                          || userForm?.controls['postCode'].errors?.Error)}">
+                                                            [ngClass]="{'invalid': isSubmittedUser && (userForm?.controls['postCode'].errors)}">
                                                             <div *ngIf="isSubmittedUser && userForm?.controls['postCode'].errors?.Required"
                                                                 class="invalid-feedback">
                                                                 <div *ngIf="userForm?.controls['postCode'].errors?.Required">
@@ -168,20 +164,6 @@
                                                                 class="invalid-feedback">
                                                                 <div *ngIf="userForm?.controls['postCode'].errors?.lengthlower7"> {{'Postal code is incorrect.' | translate}}</div>
                                                             </div>
-                                                            <div *ngIf="isSubmittedUser && userForm?.controls['postCode'].errors?.Salary"
-                                                                class="invalid-feedback">
-                                                                <div *ngIf="userForm?.controls['postCode'].errors?.Salary"> {{'Enter the postal code using single-byte numbers.' | translate}}</div>
-                                                            </div>
-                                                            <div *ngIf="isSubmittedUser && userForm?.controls['postCode'].errors?.SalarySpecial"
-                                                                class="invalid-feedback">
-                                                                <div *ngIf="userForm?.controls['postCode'].errors?.SalarySpecial"> {{'Enter the postal code without a hyphen (-).' | translate}}
-                                                                </div>
-                                                            </div>
-                                                            <div *ngIf="isSubmittedUser && userForm?.controls['postCode'].errors?.Error"
-                                                                class="invalid-feedback">
-                                                                <div *ngIf="userForm?.controls['postCode'].errors?.Error"> {{'Enter your zip code using single-byte numbers.' | translate}}
-                                                                </div>
-                                                            </div>
                                                         </div>
 
                                                     </td>
@@ -191,9 +173,9 @@
                                                     <td>{{'Address' | translate}}</td>
                                                     <td>
                                                         <div *ngIf="editAddress == false" class="currentvalue">
-                                                            <div><strong>{{userInfor?.address?.value?.street2}},{{userInfor?.address?.value?.city}}</strong>
+                                                            <div><strong>{{userInfor?.address?.value?.city}}, {{userInfor?.address?.value?.street}}</strong>
                                                             </div>
-                                                            <div><strong>{{userInfor?.address?.value?.street}}</strong></div>
+                                                            <div><strong>{{userInfor?.address?.value?.street2}}, {{userInfor?.address?.value?.fx_street3}}</strong></div>
                                                             <div *ngIf="userInfor?.address?.status == STATUS_INFO.inProgress" class="status small"><span class="text-info"><i
                                                                         class="icon ion-md-hourglass"></i> {{'Verificaion in process' | translate}}</span></div>
                                                         </div>
@@ -309,7 +291,7 @@
                                                               <div>{{'This field is required' | translate}}</div>
                                                             </div>
                                                             <div *ngIf="isSubmittedUser && userForm?.controls['email'].errors?.Email" class="invalid-feedback">
-                                                              <div *ngIf="userForm?.controls['email'].errors?.Email">{{'E-mail address is incorrect.' | translate}}</div>
+                                                              <div *ngIf="userForm?.controls['email'].errors">{{'Invalid email' | translate}}</div>
                                                             </div>
                                                             <div class="text-right">
                                                                 <button type="button" (click)="cancelEdit('email')" class="btn btn-sm btn-cancel btn-outline-secondary pt-0 pb-0">{{'Cancel' | translate}}</button>
@@ -366,7 +348,7 @@
                         <!-- END ACCOUNT -->
                         <!-- BEGIN Corporate -->
                         <div class="tab-pane fade" id="nav-corporate" role="tabpanel" aria-labelledby="nav-corporate-tab">
-                            <h3 class="border-bottom pb-1 mb-3">{{'Corporate Infomation' | translate}}</h3>
+                            <h3 class="border-bottom pb-1 mb-3">{{'Corporate Information' | translate}}</h3>
                             <div class="row" [formGroup]="corporateForm">
                                 <div class="col-lg-8">
                                     <div class="table-responsive">
@@ -393,11 +375,7 @@
                                                         </div>
                                                         <div class="editable d-block" *ngIf="editCorAddress == true">
                                                             <input type="text" name="postcode" formControlName="cor_postcode" maxlength="7" class="form-control form-control-sm mb-1" (change)="changeAddress(2)" placeholder=""
-                                                            [ngClass]="{'invalid': isSubmittedCor && (corporateForm.controls['cor_postcode'].errors
-                                                                        || corporateForm?.controls['cor_postcode'].errors?.lengthlower7
-                                                                        || corporateForm?.controls['cor_postcode'].errors?.Salary
-                                                                        || corporateForm?.controls['cor_postcode'].errors?.SalarySpecial
-                                                                        || corporateForm?.controls['cor_postcode'].errors?.Error)}">
+                                                            [ngClass]="{'invalid': isSubmittedCor && (corporateForm.controls['cor_postcode'].errors)}">
                                                             <!-- <div *ngIf="isSubmittedCor && corporateForm?.controls['cor_postcode'].errors?.Required" class="invalid-feedback">
                                                               <div>{{'This field is required' | translate}}</div>
                                                             </div> -->
@@ -405,24 +383,6 @@
                                                                 class="invalid-feedback">
                                                                 <div *ngIf="corporateForm?.controls['cor_postcode'].errors?.Required">
                                                                   {{'Please enter your zip code.' | translate}}
-                                                                </div>
-                                                            </div>
-                                                            <div *ngIf="isSubmittedCor && corporateForm?.controls['cor_postcode'].errors?.lengthlower7"
-                                                                class="invalid-feedback">
-                                                                <div *ngIf="corporateForm?.controls['cor_postcode'].errors?.lengthlower7"> {{'Postal code is incorrect.' | translate}}</div>
-                                                            </div>
-                                                            <div *ngIf="isSubmittedCor && corporateForm?.controls['cor_postcode'].errors?.Salary"
-                                                                class="invalid-feedback">
-                                                                <div *ngIf="corporateForm?.controls['cor_postcode'].errors?.Salary"> {{'Enter the postal code using single-byte numbers.' | translate}}</div>
-                                                            </div>
-                                                            <div *ngIf="isSubmittedCor && corporateForm?.controls['cor_postcode'].errors?.SalarySpecial"
-                                                                class="invalid-feedback">
-                                                                <div *ngIf="corporateForm?.controls['cor_postcode'].errors?.SalarySpecial"> {{'Enter the postal code without a hyphen (-).' | translate}}
-                                                                </div>
-                                                            </div>
-                                                            <div *ngIf="isSubmittedCor && corporateForm?.controls['cor_postcode'].errors?.Error"
-                                                                class="invalid-feedback">
-                                                                <div *ngIf="corporateForm?.controls['cor_postcode'].errors?.Error"> {{'Enter your zip code using single-byte numbers.' | translate}}
                                                                 </div>
                                                             </div>
 
@@ -667,18 +627,21 @@
                                                 <tr class="row-pic-gender">
                                                     <td width="150">{{'PIC Gender' | translate}}</td>
                                                     <td>
-                                                        <div class="currentvalue">
+                                                        <div class="currentvalue" *ngIf="editGender == false">
                                                             <strong>{{corporateInfor?.pic?.fx_gender?.value}}</strong>
                                                             <!-- <div class="status d-none small"><span class="text-success"><i class="icon ion-md-checkmark"></i> {{'Updated' | translate}} </span></div> -->
                                                         </div>
-                                                        <!-- <div class="editable">
+                                                        <div class="editable d-block" *ngIf="editGender == true">
                                                           <select class="form-control form-control-sm mb-1 select2" style="width: 100%" formControlName="person_gender">
-                                                              <option>Male</option>
-                                                              <option>Female</option>
+                                                              <option value="M">{{'Male' | translate}}</option>
+                                                              <option value="F">{{'Female' | translate}}</option>
                                                           </select>
-                                                      </div> -->
+                                                          <div class="text-right">
+                                                            <button type="button" class="btn btn-sm btn-cancel btn-outline-secondary pt-0 pb-0" (click)="cancelEditCor('p-gender')">{{'Cancel' | translate}}</button>
+                                                        </div>
+                                                      </div>
                                                     </td>
-                                                    <td width="15">&nbsp;</td>
+                                                    <td width="15"><a href="javascript:;" class="edit-link" data-toggle="tooltip" data-placement="top" title="Edit Phone" (click)="showEditFieldCor('p-gender')"><i class="icon ion-md-create"></i></a></td>
                                                 </tr>
                                                 <tr class="row-phone">
                                                     <td>{{'Phone' | translate}}</td>
@@ -714,13 +677,13 @@
                                                             <i class="icon ion-md-hourglass"></i> {{'Verificaion in process' | translate}}</span></div>
                                                         </div>
                                                         <div class="editable d-block" *ngIf="editPersonEmail == true">
-                                                            <input type="text" name="p-email" class="form-control form-control-sm mb-1" maxlength="100" value="chauchu@tamdongtam.vn" placeholder="" formControlName="person_email"
-                                                              [ngClass]="{'invalid': isSubmittedCor && corporateForm?.controls['person_email'].errors}">
+                                                            <input type="text" name="p-email" maxlength="100" value="chauchu@tamdongtam.vn" placeholder="" formControlName="person_email"
+                                                              [className]="isSubmittedCor && corporateForm?.controls['person_email'].errors ? 'form-control form-control-sm mb-1 invalid' : 'form-control form-control-sm mb-1'">
                                                             <div *ngIf="isSubmittedCor && corporateForm?.controls['person_email'].errors?.Required" class="invalid-feedback">
                                                               <div>{{'This field is required' | translate}}</div>
                                                             </div>
-                                                            <div *ngIf="isSubmittedCor && corporateForm?.controls['person_email'].errors?.Email" class="invalid-feedback">
-                                                              <div *ngIf="corporateForm?.controls['person_email'].errors?.person_email">{{'E-mail address is incorrect.' | translate}}</div>
+                                                            <div *ngIf="isSubmittedCor && corporateForm?.controls['person_email'].errors" class="invalid-feedback">
+                                                              <div *ngIf="corporateForm?.controls['person_email'].errors?.person_email">{{'Invalid email' | translate}}</div>
                                                             </div>
                                                             <div class="text-right">
                                                                 <button type="button" class="btn btn-sm btn-cancel btn-outline-secondary pt-0 pb-0" (click)="cancelEditCor('p-email')">{{'Cancel' | translate}}</button>
@@ -984,6 +947,14 @@
                                 <div *ngIf="isSubmittedSetting && changePassForm?.controls['new_password']?.errors?.RequiredPass" class="invalid-feedback col-md-8 col-lg-9">
                                     <div>{{'This field is required' | translate}}</div>
                                 </div>
+                                <div class="col-md-8 col-lg-9">
+                                        <div *ngIf="isSubmittedSetting && changePassForm?.controls['new_password']?.errors?.RequiredPassLength" class="invalid-feedback">
+                                                <div class="small">
+                                                    {{'New password needs to be 8 characters or more and has at least 1 alphabet letter' | translate}}
+                                                </div>
+                                        </div>
+                                </div>
+                                
                             </div>
                             <div class="row">
                                 <div class="col-md-4 col-lg-3">
@@ -1005,7 +976,7 @@
                                     <div *ngIf="errorPassword == true" class="invalid-feedback">
                                         <div class="small">{{'Password incorrect' | translate}}</div>
                                     </div>
-                                    <div *ngIf="isSubmittedSetting && changePassForm?.controls['new_password']?.errors?.RequiredPassLength" class="invalid-feedback">
+                                    <div *ngIf="isSubmittedSetting && changePassForm?.controls['confirm_password']?.errors?.RequiredPassLength" class="invalid-feedback">
                                         <div class="small">
                                             {{'New password needs to be 8 characters or more and has at least 1 alphabet letter' | translate}}</div>
                                     </div>

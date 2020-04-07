@@ -75,7 +75,7 @@
   "Bank": "Bank",
   "Corporate": "Corporate",
   "User": "User",
-  "Account Infomation": "Account Infomation",
+  "Account Information": "Account Information",
   "Tradding Accounts": "Tradding Account",
   "Withdrawable amount": "Withdrawable amount",
   "Withdrawal amount is pending": "Withdrawal amount is pending",
@@ -105,7 +105,7 @@
   "Updated": "Updated",
   "Corporate name (Furigana)": "Corporate name (Furigana)",
   "Corporate name": "Corporate name",
-  "Corporate Infomation": "Corporate Infomation",
+  "Corporate Information": "Corporate Information",
   "English": "English",
   "Language": "Language",
   "Font Size": "Font Size",
@@ -209,7 +209,7 @@
   "Phone number must be at least 10 characters long.": "Phone number must be at least 10 characters long.",
   "Please enter your phone number in single-byte numbers.": "Please enter your phone number in single-byte numbers.",
   "Enter the phone number without a hyphen (-).": "Enter the phone number without a hyphen (-).",
-  "E-mail address is incorrect.": "E-mail address is incorrect.",
+  "Invalid email": "Invalid email",
   "Please enter your zip code.": "Please enter your zip code.",
   "Postal code is incorrect.": "Postal code is incorrect.",
   "Enter the postal code using single-byte numbers.": "Enter the postal code using single-byte numbers.",
@@ -227,5 +227,7 @@
   "Bank Name": "Bank Name",
   "Y": "Y",
   "M": "M",
-  "D": "D"
+  "D": "D",
+  "Male": "Male",
+  "Female": "Female"
 }

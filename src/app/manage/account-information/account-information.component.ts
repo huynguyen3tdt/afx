@@ -59,6 +59,7 @@ export class AccountInformationComponent implements OnInit {
   editPersonPicname: boolean;
   editPersonPhone: boolean;
   editPersonEmail: boolean;
+  editGender: boolean;
   // editLanguage: boolean;
   userInfor: UserModel;
   corporateInfor: CorporateModel;
@@ -114,8 +115,8 @@ export class AccountInformationComponent implements OnInit {
   lastestTime: string;
   timeZone: string;
   STATUS_INFO = {
-    approve: 'a',
-    inProgress: 'p'
+    approve: 'A',
+    inProgress: 'P'
   };
 
   ngOnInit() {
@@ -151,6 +152,7 @@ export class AccountInformationComponent implements OnInit {
     this.editPersonPicname = false;
     this.editPersonPhone = false;
     this.editPersonEmail = false;
+    this.editGender = false;
     this.getMt5Infor(this.accountID);
     this.getWithDrawAmount(this.accountID);
 
@@ -180,6 +182,7 @@ export class AccountInformationComponent implements OnInit {
       person_pic: new FormControl('', requiredInput),
       per_picname: new FormControl('', requiredInput),
       person_picname: new FormControl('', requiredInput),
+      person_gender: new FormControl('', requiredInput),
       person_phone: new FormControl('', validationPhoneNumber),
       person_email: new FormControl('', emailValidation),
     });
@@ -236,6 +239,7 @@ export class AccountInformationComponent implements OnInit {
         this.userForm.controls.searchPrefe.setValue(this.userInfor.address.value.city);
         this.userForm.controls.searchCountry.setValue(this.userInfor.address.value.street);
         this.userForm.controls.house_numb.setValue(this.userInfor.address.value.street2);
+        this.userForm.controls.name_build.setValue(this.userInfor.address.value.fx_street3);
         this.userForm.controls.email.setValue(this.userInfor.email.value);
         this.userForm.controls.phone.setValue(this.userInfor.mobile);
         this.userInfor.fx_gender = this.globalService.checkGender(this.userInfor.fx_gender);
@@ -263,6 +267,7 @@ export class AccountInformationComponent implements OnInit {
           this.corporateForm.controls.person_picname.setValue(this.corporateInfor.pic.fx_name1);
           this.corporateForm.controls.person_phone.setValue(this.corporateInfor.pic.mobile);
           this.corporateForm.controls.person_email.setValue(this.corporateInfor.pic.email.value);
+          this.corporateForm.controls.person_gender.setValue(this.corporateInfor.pic.fx_gender.value);
           this.corporateInfor.pic.fx_gender.value = this.globalService.checkGender(this.corporateInfor.pic.fx_gender.value);
         }
       }
@@ -339,12 +344,19 @@ export class AccountInformationComponent implements OnInit {
     this.showSave = true;
     switch (field) {
       case 'address':
+        this.userForm.controls.postCode.setValue(this.userInfor.zip.value);
+        this.userForm.controls.searchPrefe.setValue(this.userInfor.address.value.city);
+        this.userForm.controls.searchCountry.setValue(this.userInfor.address.value.street);
+        this.userForm.controls.house_numb.setValue(this.userInfor.address.value.street2);
+        this.userForm.controls.name_build.setValue(this.userInfor.address.value.fx_street3);
         this.editAddress = true;
         break;
       case 'email':
+        this.userForm.controls.email.setValue(this.userInfor.email.value);
         this.editEmail = true;
         break;
       case 'phone':
+        this.userForm.controls.phone.setValue(this.userInfor.mobile);
         this.editPhone = true;
         break;
     }
@@ -369,28 +381,44 @@ export class AccountInformationComponent implements OnInit {
     this.showSaveCor = true;
     switch (field) {
       case 'cor-address':
+        this.corporateForm.controls.cor_prefec.setValue(this.corporateInfor.corporation.address.value.city);
+        this.corporateForm.controls.cor_district.setValue(this.corporateInfor.corporation.address.value.street);
+        this.corporateForm.controls.cor_postcode.setValue(this.corporateInfor.corporation.zip.value);
+        this.corporateForm.controls.cor_house.setValue(this.corporateInfor.corporation.address.value.street2);
+        this.corporateForm.controls.cor_build.setValue(this.corporateInfor.corporation.address.value.fx_street3);
         this.editCorAddress = true;
         break;
       case 'cor-phone':
+        this.corporateForm.controls.cor_phone.setValue(this.corporateInfor.corporation.mobile);
         this.editCorPhone = true;
         break;
       case 'cor-fax':
+        this.corporateForm.controls.cor_fax.setValue(this.corporateInfor.corporation.fx_fax.value);
         this.editCorFax = true;
         break;
       case 'department':
+        this.corporateForm.controls.person_bod.setValue(this.corporateInfor.pic.fx_dept);
         this.editPersonBod = true;
         break;
       case 'pic-position':
+        this.corporateForm.controls.person_pic.setValue(this.corporateInfor.pic.function);
         this.editPersonPic = true;
         break;
       case 'pic-name':
+        this.corporateForm.controls.person_picname.setValue(this.corporateInfor.pic.fx_name1);
         this.editPersonPicname = true;
         break;
       case 'p-phone':
+        this.corporateForm.controls.person_phone.setValue(this.corporateInfor.pic.mobile);
         this.editPersonPhone = true;
         break;
       case 'p-email':
+        this.corporateForm.controls.person_email.setValue(this.corporateInfor.pic.email.value);
         this.editPersonEmail = true;
+        break;
+      case 'p-gender':
+        this.corporateForm.controls.person_gender.setValue(this.corporateInfor.pic.fx_gender.value);
+        this.editGender = true;
         break;
     }
   }
@@ -420,6 +448,9 @@ export class AccountInformationComponent implements OnInit {
         break;
       case 'p-email':
         this.editPersonEmail = false;
+        break;
+      case 'p-gender':
+        this.editGender = false;
         break;
     }
   }
@@ -485,6 +516,7 @@ export class AccountInformationComponent implements OnInit {
 
   }
   updateCorporate() {
+    console.log('in in in');
     const param = {
       corporation: {
         zip: this.corporateForm.controls.cor_postcode.value,
@@ -501,7 +533,7 @@ export class AccountInformationComponent implements OnInit {
       pic: {
         name: this.corporateForm.controls.per_picname.value,
         fx_name1: this.corporateForm.controls.person_picname.value,
-        fx_gender: this.globalService.convertGender(this.corporateInfor.pic.fx_gender.value),
+        fx_gender: this.corporateForm.controls.person_gender.value,
         email: this.corporateForm.controls.person_email.value,
         mobile: this.corporateForm.controls.person_phone.value,
         function: this.corporateForm.controls.person_pic.value,
@@ -519,6 +551,7 @@ export class AccountInformationComponent implements OnInit {
         this.editPersonPicname = false;
         this.editPersonPhone = false;
         this.editPersonEmail = false;
+        this.editGender = false;
         this.getCorporateInfor();
       }
     });

@@ -115,8 +115,6 @@ export function passwordValidation(control: AbstractControl) {
   }
   if (control.value.search(/[a-zA-Z]/) < 0) {
     return INVALID_PASSWORD_LENGTH;
-  } else if (control.value.search(/[0-9]/) < 0) {
-    return INVALID_PASSWORD_LENGTH;
   } else if (control.value.length < 8) {
     return INVALID_PASSWORD_LENGTH;
   }
