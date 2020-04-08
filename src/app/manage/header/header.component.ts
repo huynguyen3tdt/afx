@@ -33,6 +33,7 @@ export class HeaderComponent implements OnInit {
   };
   listTradingAccount: Array<AccountType>;
   accountID: string;
+  isPc: boolean;
 
   constructor(private router: Router, private authenService: AuthenService,
               private notificationsService: NotificationsService, ) {
@@ -42,6 +43,7 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.checkDevice();
     this.locale = localStorage.getItem(LOCALE);
     if (this.locale === LANGUAGLE.english) {
       this.formatDateYear = EN_FORMATDATE;
@@ -126,5 +128,14 @@ export class HeaderComponent implements OnInit {
         });
       }
     });
+  }
+
+  checkDevice() {
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    if (isMobile) {
+      this.isPc = false;
+    } else {
+      this.isPc = true;
+    }
   }
 }
