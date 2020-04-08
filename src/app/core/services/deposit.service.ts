@@ -39,4 +39,15 @@ export class DepositService {
         })
       );
   }
+
+  getBankCompany(): Observable<DepositResponse> {
+    return this.httpClient.get(`${this.envConfigService.getConfig()}/${AppSettings.API_BANK_COMPANY}`)
+        .pipe(
+          catchError((error: HttpErrorResponse) => {
+            return new Observable((observer: InnerSubscriber<any, any>) => {
+              observer.next(error);
+            });
+          })
+        );
+  }
 }

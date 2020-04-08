@@ -13,7 +13,7 @@
                     <nav class="mb-0">
                         <div class="nav nav-tabs" id="nav-tab" role="tablist">
                             <a class="nav-item nav-link active" id="nav-billing-tab" data-toggle="tab" href="#nav-billing" role="tab" aria-controls="nav-billing" aria-selected="true"><strong>{{'Quick deposit' | translate}}</strong></a>
-                            <a class="nav-item nav-link" id="nav-bank-tab" data-toggle="tab" href="#nav-bank" role="tab" aria-controls="nav-bank" aria-selected="true" (click)="getDepositBank()"><strong>{{'Bank Tranfer' | translate}}</strong></a>
+                            <a class="nav-item nav-link" id="nav-bank-tab" data-toggle="tab" href="#nav-bank" role="tab" aria-controls="nav-bank" aria-selected="true" (click)="getBankCompany()"><strong>{{'Bank Tranfer' | translate}}</strong></a>
                         </div>
                     </nav>
                     <div class="tab-content border-0 p-0 pt-3 mb-3" id="nav-tabContent">
@@ -78,7 +78,8 @@
                                         <div class="form form-line">
                                             <div class="mb-3">
                                                 <label class="label">{{'Deposit Amount' | translate}}</label>
-                                                <input type="text" name="amount" formControlName="deposit" (change)="changeDeposit($event.target.value)" currency [ngClass]="{'invalid': isSubmitted && depositTransactionForm.controls['deposit'].errors}" class="form-control form-control-lg text-right font-weight-bold text-warning deposit"
+                                                <input type="text" name="amount" formControlName="deposit" (change)="changeDeposit($event.target.value)" currency 
+                                                [ngClass]="{'invalid': isSubmitted && depositTransactionForm.controls['deposit'].errors}" class="form-control form-control-lg text-right font-weight-bold text-warning deposit"
                                                     autocomplete="off" value="10,000" placeholder="">
                                             </div>
                                             <div *ngIf="depositError == true" class="invalid-mess">
@@ -139,7 +140,7 @@
                             <div class="row">
                                 <div class="col-lg-7">
                                     <div class="list-banks-wrapper">
-                                        <ul class="idTabs list-banks">
+                                        <!-- <ul class="idTabs list-banks">
                                             <ng-container *ngFor="let bank of listBankTranfer;let i = index">
                                                 <li (click)="showInforBank('bank_' + bank?.id)" class="bank-item">
                                                     <a id="bank_{{bank?.id}}">
@@ -150,11 +151,67 @@
                                                     </a>
                                                 </li>
                                             </ng-container>
-
+                                        </ul> -->
+                                        <ul class="idTabs list-banks">
+                                            <ng-container *ngFor="let item of listBankTranfer">
+                                                <li (click)="showInforBank('ufj_bank')" class="bank-item" *ngIf="item?.name == '三菱ＵＦＪ'">
+                                                    <a id="ufj_bank">
+                                                        <div class="text-center">
+                                                            <div><img src="assets/images/bank_logo/ufj.png"
+                                                                    alt="Mizuho Bank" class="bank_logo"></div>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                                <li (click)="showInforBank('mizuho_bank')" class="bank-item" *ngIf="item?.name == 'みずほ'">
+                                                    <a id="mizuho_bank">
+                                                        <div class="text-center">
+                                                            <div><img src="assets/images/bank_logo/mizuho.png"
+                                                                    alt="Mizuho Bank" class="bank_logo"></div>
+                                                            <div class="d-none">Mizuho Bank</div>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                                <li (click)="showInforBank('sm_bank')" class="bank-item" *ngIf="item?.name == '三井住友'">
+                                                    <a id="sm_bank">
+                                                        <div class="text-center">
+                                                            <div><img src="assets/images/bank_logo/smbc.png"
+                                                                    alt="Mizuho Bank" class="bank_logo"></div>
+                                                            <div class="d-none">Sumitomo Mitsui Bank</div>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                                <li (click)="showInforBank('jpb_bank')" class="bank-item" *ngIf="item?.name == 'ゆうちょ'">
+                                                    <a id="jpb_bank">
+                                                        <div class="text-center">
+                                                            <div><img src="assets/images/bank_logo/jpb.png"
+                                                                    alt="Japan Post Bank" class="bank_logo"></div>
+                                                            <div class="d-none">Japan Post Bank</div>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                                <li (click)="showInforBank('jn_bank')" class="bank-item" *ngIf="item?.name == 'ジャパンネット'">
+                                                    <a id="jn_bank">
+                                                        <div class="text-center">
+                                                            <div><img src="assets/images/bank_logo/jnb.png"
+                                                                    alt="Mizuho Bank" class="bank_logo"></div>
+                                                            <div class="d-none">Japan Net Bank</div>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                                <li (click)="showInforBank('rakuten_bank')" class="bank-item" *ngIf="item?.name == '楽天'">
+                                                    <a id="rakuten_bank">
+                                                        <div class="text-center">
+                                                            <div><img src="assets/images/bank_logo/rakuten.png"
+                                                                    alt="Mizuho Bank" class="bank_logo"></div>
+                                                            <div class="d-none">Rakuten Bank</div>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            </ng-container> 
                                         </ul>
-                                    </div>
+                                    </div>       
                                     <p class="mb-1"><strong>{{'Please find details for a wire transfer below:' | translate}}</strong></p>
-                                    <ng-container *ngFor="let item of listBankTranfer;let i = index">
+                                    <!-- <ng-container *ngFor="let item of listBankTranfer;let i = index">
                                         <div id="bank_{{item?.id}}" class="mb-2">
                                             <table class="table border table-sm" cellpadding="0" cellspacing="0">
                                                 <tbody>
@@ -189,15 +246,224 @@
                                                 </tbody>
                                             </table>
                                         </div>
-                                    </ng-container>
-                                    <!-- <div class="small font-italic text-secondary mt-2">
-                                        <p class="mb-0">{{'※Warnings:' | translate}}</p>
-                                        <ul class="reset">
-                                            <li>{{'Please try to deposit funds in the same currency as your trading account, as we do not cover exchange rate costs.' | translate}}</li>
-                                            <li>{{'Any bank transfers sent to Philip Showken must be made from a bank account registered in the client is full name, otherwise your funds may be returned to the source.' | translate}}</li>
-                                        </ul>
+                                    </ng-container> -->
+                                    
+                                    <div id="ufj_bank" class="mb-2">
+                                        <ng-container *ngFor="let item of listBankTranfer">
+                                            <table *ngIf="item?.name == '三菱ＵＦＪ'" class="table border table-sm" cellpadding="0" cellspacing="0">
+                                                <tbody>
+                                                    <tr>
+                                                        <td width="120">銀行名</td>
+                                                        <td><strong>{{item?.name}}</strong></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>支店名</td>
+                                                        <td><strong>{{item?.branch_name}}</strong></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>支店番号</td>
+                                                        <td><strong>{{item?.branch_code}}</strong></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>口座種類</td>
+                                                        <td><strong>{{item?.fx_acc_type}}</strong></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>口座番号</td>
+                                                        <td><strong>{{item?.acc_number}}</strong></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>口座名義</td>
+                                                        <td><strong>{{item?.acc_holder_name}}</strong></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>通貨</td>
+                                                        <td><strong>{{item?.currency}}</strong></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </ng-container>                                           
                                     </div>
-                                    <p>&nbsp;</p> -->
+                                    <div id="mizuho_bank" class="mb-2">
+                                        <ng-container *ngFor="let item of listBankTranfer">
+                                            <table *ngIf="item?.name == 'みずほ'" class="table border table-sm" cellpadding="0" cellspacing="0">
+                                                <tbody>
+                                                    <tr>
+                                                        <td width="120">銀行名</td>
+                                                        <td><strong>{{item?.name}}</strong></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>支店名</td>
+                                                        <td><strong>{{item?.branch_name}}</strong></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>支店番号</td>
+                                                        <td><strong>{{item?.branch_code}}</strong></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>口座種類</td>
+                                                        <td><strong>{{item?.fx_acc_type}}</strong></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>口座番号</td>
+                                                        <td><strong>{{item?.acc_number}}</strong></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>口座名義</td>
+                                                        <td><strong>{{item?.acc_holder_name}}</strong></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>通貨</td>
+                                                        <td><strong>{{item?.currency}}</strong></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </ng-container> 
+                                    </div>
+                                    <div id="sm_bank" class="mb-2">
+                                        <ng-container *ngFor="let item of listBankTranfer">
+                                            <table *ngIf="item?.name == '三井住友'" class="table border table-sm" cellpadding="0" cellspacing="0">
+                                                <tbody>
+                                                    <tr>
+                                                        <td width="120">銀行名</td>
+                                                        <td><strong>{{item?.name}}</strong></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>支店名</td>
+                                                        <td><strong>{{item?.branch_name}}</strong></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>支店番号</td>
+                                                        <td><strong>{{item?.branch_code}}</strong></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>口座種類</td>
+                                                        <td><strong>{{item?.fx_acc_type}}</strong></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>口座番号</td>
+                                                        <td><strong>{{item?.acc_number}}</strong></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>口座名義</td>
+                                                        <td><strong>{{item?.acc_holder_name}}</strong></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>通貨</td>
+                                                        <td><strong>{{item?.currency}}</strong></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </ng-container> 
+                                    </div>
+                                    <div id="jpb_bank" class="mb-2">
+                                        <ng-container *ngFor="let item of listBankTranfer">
+                                            <table *ngIf="item?.name == 'ゆうちょ'" class="table border table-sm" cellpadding="0" cellspacing="0">
+                                                <tbody>
+                                                    <tr>
+                                                        <td width="120">銀行名</td>
+                                                        <td><strong>{{item?.name}}</strong></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>支店名</td>
+                                                        <td><strong>{{item?.branch_name}}</strong></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>支店番号</td>
+                                                        <td><strong>{{item?.branch_code}}</strong></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>口座種類</td>
+                                                        <td><strong>{{item?.fx_acc_type}}</strong></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>口座番号</td>
+                                                        <td><strong>{{item?.acc_number}}</strong></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>口座名義</td>
+                                                        <td><strong>{{item?.acc_holder_name}}</strong></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>通貨</td>
+                                                        <td><strong>{{item?.currency}}</strong></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </ng-container> 
+                                    </div>
+                                    <div id="jn_bank" class="mb-2">
+                                        <ng-container *ngFor="let item of listBankTranfer">
+                                            <table *ngIf="item?.name == 'ジャパンネット'" class="table border table-sm" cellpadding="0" cellspacing="0">
+                                                <tbody>
+                                                    <tr>
+                                                        <td width="120">銀行名</td>
+                                                        <td><strong>{{item?.name}}</strong></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>支店名</td>
+                                                        <td><strong>{{item?.branch_name}}</strong></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>支店番号</td>
+                                                        <td><strong>{{item?.branch_code}}</strong></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>口座種類</td>
+                                                        <td><strong>{{item?.fx_acc_type}}</strong></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>口座番号</td>
+                                                        <td><strong>{{item?.acc_number}}</strong></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>口座名義</td>
+                                                        <td><strong>{{item?.acc_holder_name}}</strong></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>通貨</td>
+                                                        <td><strong>{{item?.currency}}</strong></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </ng-container> 
+                                    </div>
+                                    <div id="rakuten_bank" class="mb-2">
+                                        <ng-container *ngFor="let item of listBankTranfer">
+                                            <table *ngIf="item?.name == '楽天'" class="table border table-sm" cellpadding="0" cellspacing="0">
+                                                <tbody>
+                                                    <tr>
+                                                        <td width="120">銀行名</td>
+                                                        <td><strong>{{item?.name}}</strong></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>支店名</td>
+                                                        <td><strong>{{item?.branch_name}}</strong></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>支店番号</td>
+                                                        <td><strong>{{item?.branch_code}}</strong></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>口座種類</td>
+                                                        <td><strong>{{item?.fx_acc_type}}</strong></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>口座番号</td>
+                                                        <td><strong>{{item?.acc_number}}</strong></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>口座名義</td>
+                                                        <td><strong>{{item?.acc_holder_name}}</strong></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>通貨</td>
+                                                        <td><strong>{{item?.currency}}</strong></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </ng-container> 
+                                    </div>
                                 </div>
                                 <div class="col-lg-5">
                                     <div class="p-3 border mb-3 form form-line bg-light">

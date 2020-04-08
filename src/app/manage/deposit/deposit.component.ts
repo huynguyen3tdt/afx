@@ -72,6 +72,7 @@ export class DepositComponent implements OnInit {
   language;
 
   ngOnInit() {
+    this.showInforBank('ufj_bank');
     this.language = LANGUAGLE;
     this.locale = localStorage.getItem(LOCALE);
     this.customerName = localStorage.getItem(FXNAME1);
@@ -114,27 +115,15 @@ export class DepositComponent implements OnInit {
 
   }
 
-  getDepositBank() {
+  getBankCompany() {
     this.spinnerService.show();
-    this.depositService.getDepositBank().subscribe(response => {
+    this.depositService.getBankCompany().subscribe(response => {
       if (response.meta.code === 200) {
         this.spinnerService.hide();
         this.listBankTranfer = response.data;
-        this.listBankTranfer.forEach(item => {
-          item.id = item.id;
-          item.name = item.name;
-          item.fx_logo_path = item.fx_logo_path;
-          item.acc_number = item.acc_number;
-          item.acc_holder_name = item.acc_holder_name;
-          item.branch_name = item.branch_name;
-          item.branch_code = item.branch_code;
-          item.fx_acc_type = item.fx_acc_type;
-          item.bic = item.bic;
-          item.currency = item.currency;
-        });
-        if (this.listBankTranfer.length > 0) {
-          this.showInforBank(`bank_${this.listBankTranfer[0].id}`);
-        }
+        // if (this.listBankTranfer.length > 0) {
+        //   this.showInforBank(`bank_${this.listBankTranfer[0].id}`);
+        // }
       }
     });
   }
@@ -164,25 +153,38 @@ export class DepositComponent implements OnInit {
     });
   }
 
-  showInforBank(index) {
-    setTimeout(() => {
-      const listTab = [];
-      // tslint:disable-next-line: no-shadowed-variable
-      this.listBankTranfer.forEach(element => {
-        listTab.push(`bank_${element.id}`);
-      });
-      // tslint:disable-next-line: no-shadowed-variable
-      listTab.forEach(element => {
-        if (index === element) {
-          $(`a#${element}`).addClass('selected');
-          $(`div#${element}`).show();
-        } else {
-          $(`a#${element}`).removeClass('selected');
-          $(`div#${element}`).hide();
-        }
-      });
-    }, 50);
+  // showInforBank(index) {
+  //   setTimeout(() => {
+  //     const listTab = [];
+  //     // tslint:disable-next-line: no-shadowed-variable
+  //     this.listBankTranfer.forEach(element => {
+  //       listTab.push(`bank_${element.id}`);
+  //     });
+  //     // tslint:disable-next-line: no-shadowed-variable
+  //     listTab.forEach(element => {
+  //       if (index === element) {
+  //         $(`a#${element}`).addClass('selected');
+  //         $(`div#${element}`).show();
+  //       } else {
+  //         $(`a#${element}`).removeClass('selected');
+  //         $(`div#${element}`).hide();
+  //       }
+  //     });
+  //   }, 50);
 
+  // }
+  showInforBank(bank: string) {
+    const listTab = ['ufj_bank', 'mizuho_bank', 'sm_bank', 'jpb_bank', 'jn_bank', 'rakuten_bank'];
+    // tslint:disable-next-line:no-shadowed-variable
+    listTab.forEach(element => {
+      if (bank === element) {
+        $(`a#${element}`).addClass('selected');
+        $(`div#${element}`).show();
+      } else {
+        $(`a#${element}`).removeClass('selected');
+        $(`div#${element}`).hide();
+      }
+    });
   }
   onSubmit() {
     this.isSubmitted = true;

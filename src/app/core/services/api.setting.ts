@@ -31,4 +31,5 @@ export class AppSettings {
     public static API_CHANGE_BANK               = `api/${versionAPI}/withdraws/bank_infor/`;
     public static API_ADDRESS                   = `api/${versionAPI}/common/jp/address/`;
     public static API_LANGUAGE                  = `api/${versionAPI}/language/`;
+    public static API_BANK_COMPANY              = `api/${versionAPI}/deposits/bank_company/`;
 }
