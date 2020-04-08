@@ -14,7 +14,8 @@
                 <!-- BEGIN HEADER TOP NAV -->
                 <ul class="header-top-nav nav">
                     <li class="nav-item nav-item-dmt5">
-                        <a href="javascript:;" class="nav-link">MT5</a>
+                        <a target="_blank" *ngIf="isPc == true" href="https://www.metatrader5.com/en/download" class="nav-link">MT5</a>
+                        <a target="_blank" *ngIf="isPc == false" href="https://www.metatrader5.com/en/download" class="nav-link">MT5</a>
                     </li>
                     <li class="nav-item nav-item-notification dropdown has-notification">
                         <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icon ion-md-notifications"></i></a>
