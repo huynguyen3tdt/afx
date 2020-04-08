@@ -119,6 +119,9 @@ export class WithdrawRequestComponent implements OnInit {
         this.mt5Infor = response.data;
         this.equity = this.mt5Infor.equity;
         this.usedMargin = this.mt5Infor.used_margin;
+        if (this.mt5Infor.free_margin < Number(this.minWithdraw)) {
+          this.mt5Infor.free_margin = 0;
+        }
         this.lastestTime = moment(this.mt5Infor.lastest_time).tz(this.timeZone).format(this.formatDateHour);
       }
       this.calculateWithdraw();
@@ -157,22 +160,11 @@ export class WithdrawRequestComponent implements OnInit {
   }
 
   changeWithdraw(event: any) {
-    this.depositValue = numeral(this.withdrawForm.controls.amount.value).value();
-    if (this.depositValue < Number(this.minWithdraw)) {
-      this.withdrawError = true;
-    } else {
-      this.withdrawError = false;
-    }
-    if (this.mt5Infor.free_margin < this.depositValue) {
-      this.withdrawAmountError = true;
-    } else {
-      this.withdrawAmountError = false;
-    }
-    if (this.withdrawError === true || this.withdrawAmountError === true) {
-      return;
-    }
-    this.totalAmount = numeral(this.withdrawForm.controls.amount.value).value() - this.withdrawFee;
-    this.calculateWithdraw();
+   if (this.checkValidateWithDrawal() === false) {
+     return;
+   }
+   this.totalAmount = numeral(this.withdrawForm.controls.amount.value).value() - this.withdrawFee;
+   this.calculateWithdraw();
   }
 
   calculateWithdraw() {
@@ -193,7 +185,7 @@ export class WithdrawRequestComponent implements OnInit {
   }
 
   showConfirm() {
-    if (this.withdrawError === true || this.withdrawAmountError === true) {
+    if (this.checkValidateWithDrawal() === false) {
       return;
     }
     $('#modal-withdraw-confirm').modal('show');
@@ -229,5 +221,24 @@ export class WithdrawRequestComponent implements OnInit {
         this.listTran.ngOnChanges();
       }
     });
+  }
+
+  checkValidateWithDrawal() {
+    this.depositValue = numeral(this.withdrawForm.controls.amount.value).value();
+    if (this.depositValue < Number(this.minWithdraw)) {
+      this.withdrawError = true;
+    } else {
+      this.withdrawError = false;
+    }
+    if (this.mt5Infor.free_margin < this.depositValue) {
+      this.withdrawAmountError = true;
+    } else {
+      this.withdrawAmountError = false;
+    }
+    if (this.withdrawError === true || this.withdrawAmountError === true) {
+      return false;
+    } else {
+      return true;
+    }
   }
 }
