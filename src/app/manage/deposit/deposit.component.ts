@@ -108,7 +108,7 @@ export class DepositComponent implements OnInit {
   initDepositTransactionForm() {
     this.depositTransactionForm = new FormGroup({
       deposit: new FormControl(numeral(10000).format('0,0'), requiredInput),
-      bankCode: new FormControl('0005')
+      bankCode: new FormControl('0008', requiredInput)
     });
     this.depositValue = numeral(this.depositTransactionForm.controls.deposit.value).value();
     this.totalAmount = this.depositFee + this.depositValue;
@@ -136,6 +136,9 @@ export class DepositComponent implements OnInit {
         this.equity = this.mt5Infor.equity;
         this.usedMargin = this.mt5Infor.used_margin;
         this.lastestTime = moment(this.mt5Infor.lastest_time).tz(this.timeZone).format(this.formatDateHour);
+        if (this.mt5Infor.free_margin < Number(this.minDeposit)) {
+          this.mt5Infor.free_margin = 0;
+        }
         this.spinnerService.hide();
       }
       this.calculateDeposit();
