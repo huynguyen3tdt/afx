@@ -210,7 +210,9 @@
                                             </ng-container> 
                                         </ul>
                                     </div>       
-                                    <p class="mb-1"><strong>{{'Please find details for a wire transfer below:' | translate}}</strong></p>
+                                    <p class="mb-1"><strong>{{'Please transfer to the following account.' | translate}}</strong></p>
+                                    <p class="mb-1"><strong>{{'As soon as we confirm the payment, we will notify you of the payment.' | translate}}</strong></p>
+                                    <p class="mb-1"><strong>{{'Please note that the name of the transfer person cannot be accepted unless it is the same as the name of the registered account of the Company.' | translate}}</strong></p>
                                     <!-- <ng-container *ngFor="let item of listBankTranfer;let i = index">
                                         <div id="bank_{{item?.id}}" class="mb-2">
                                             <table class="table border table-sm" cellpadding="0" cellspacing="0">
@@ -556,10 +558,9 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <p class="small text-secondary p-2 bg-light">{{'Notice: Minimum single deposit amount is' | translate}} {{minDeposit | number}}</p>
-                                    <!-- <div *ngIf="errMessageBankTran == true" class="invalid-mess">
-                                        <div>{{'Your Margin Level is nearly the Margin Call Level' | translate}}</div>
-                                    </div> -->
+                                    <p class="small text-secondary p-2 bg-light" *ngIf="locale == language.english">Notice: Minimum single deposit amount is {{minDeposit | number}}</p>
+                                    <p class="small text-secondary p-2 bg-light" *ngIf="locale == language.japan">※最低入金額は{{minDeposit | number}}円となります。</p>
+                                    
                                     <p class="text-center" style="line-height: 1.2"><a href="javascript:;" data-toggle="modal" data-target="#modal-rule"><i
                                                 class="icon ion-md-information-circle"></i> {{'General rules for depositing and withdrawing funds' | translate}}</a></p>
                                 </div>

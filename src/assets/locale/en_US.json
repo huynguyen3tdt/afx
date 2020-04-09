@@ -229,5 +229,8 @@
   "M": "M",
   "D": "D",
   "Male": "Male",
-  "Female": "Female"
+  "Female": "Female",
+  "Please note that the name of the transfer person cannot be accepted unless it is the same as the name of the registered account of the Company.": "Please note that the name of the transfer person cannot be accepted unless it is the same as the name of the registered account of the Company.",
+  "Please transfer to the following account.": "Please transfer to the following account.",
+  "As soon as we confirm the payment, we will notify you of the payment.": "As soon as we confirm the payment, we will notify you of the payment."
 }
