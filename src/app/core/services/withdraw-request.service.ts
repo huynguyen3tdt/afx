@@ -17,6 +17,7 @@ import { ResponseWihtoutDataModel } from '../model/none-data-response.model';
 import * as moment from 'moment';
 import { LOCALE } from '../constant/authen-constant';
 import { LANGUAGLE } from '../constant/language-constant';
+import { DATE_CLIENT_ENG, DATE_CLIENT_ENG_SUBMIT } from '../constant/format-date-constant';
 
 
 @Injectable({
@@ -88,13 +89,13 @@ export class WithdrawRequestService {
     }
     if (dateFrom && dateFrom !== 'Invalid date') {
       if (locale === LANGUAGLE.english) {
-        dateFrom = moment(new Date(dateFrom)).format('DD-MM-YYYY');
+        dateFrom = moment(dateFrom , DATE_CLIENT_ENG).format(DATE_CLIENT_ENG_SUBMIT);
       }
       URL += `&date_from=${dateFrom}`;
     }
     if (dateTo && dateTo !== 'Invalid date') {
       if (locale === LANGUAGLE.english) {
-        dateTo = moment(new Date(dateTo)).format('DD-MM-YYYY');
+        dateTo = moment(dateTo, DATE_CLIENT_ENG).format(DATE_CLIENT_ENG_SUBMIT);
       }
       URL += `&date_to=${dateTo}`;
     }
