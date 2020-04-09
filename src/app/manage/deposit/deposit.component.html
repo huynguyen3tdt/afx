@@ -558,10 +558,9 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <p class="small text-secondary p-2 bg-light">{{'The minimum deposit is' | translate}} {{minDeposit | number}} {{yen | translate}}</p>
-                                    <!-- <div *ngIf="errMessageBankTran == true" class="invalid-mess">
-                                        <div>{{'Your Margin Level is nearly the Margin Call Level' | translate}}</div>
-                                    </div> -->
+                                    <p class="small text-secondary p-2 bg-light" *ngIf="locale == language.english">Notice: Minimum single deposit amount is {{minDeposit | number}}</p>
+                                    <p class="small text-secondary p-2 bg-light" *ngIf="locale == language.japan">※最低入金額は{{minDeposit | number}}円となります。</p>
+                                    
                                     <p class="text-center" style="line-height: 1.2"><a href="javascript:;" data-toggle="modal" data-target="#modal-rule"><i
                                                 class="icon ion-md-information-circle"></i> {{'General rules for depositing and withdrawing funds' | translate}}</a></p>
                                 </div>
