@@ -122,7 +122,7 @@ export class NotificationsComponent implements OnInit {
         this.totalCampagn = this.totalNoti.campaign;
         this.totalImportant = this.totalNoti.important;
         this.totalNotification = this.totalNoti.notification;
-        this.totalAll = this.totalCampagn + this.totalImportant + this.totalNotification;
+        this.totalAll = this.totalNoti.total;
         if (this.showNoti === true && this.tab === 'ALL'
           && (localStorage.getItem(FIRST_LOGIN) === '1')
           && this.totalImportant > 0) {
@@ -218,7 +218,6 @@ export class NotificationsComponent implements OnInit {
   }
 
   changeTab(type: number) {
-    console.log('typeeee ', type);
     const accountNumber = this.accountID.split('-')[1];
     this.pageSize = 10;
     this.initFilterRead();
@@ -228,7 +227,6 @@ export class NotificationsComponent implements OnInit {
         this.getListNotifications(accountNumber, this.pageSize, this.currentPage, this.unreadAll, this.TABS.ALL.value);
         break;
       case this.TABS.IMPORTANT.value:
-        console.log('in in in');
         this.tab = this.TABS.IMPORTANT.name;
         this.getListNotifications(accountNumber, this.pageSize, this.currentPage, this.unreadImportant, this.TABS.IMPORTANT.value);
         break;

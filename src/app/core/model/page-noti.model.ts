@@ -43,6 +43,7 @@ export interface TotalNotification {
     important: number;
     notification: number;
     campaign: number;
+    total: number;
 }
 
 

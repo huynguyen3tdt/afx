@@ -27,7 +27,6 @@ export class NotificationsService {
     } else {
       checkUnread = 1;
     }
-    console.log('kkkkkkkkkkkkkkk ', type);
     if (type !== -1) {
       URL = `?trading_account_id=${accountNumber}&noti_type=${type}&not_read=${checkUnread}&page_size=${pageSize}&page=${pageNumber}`;
     } else {
