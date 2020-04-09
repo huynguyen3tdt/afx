@@ -34,6 +34,8 @@ export class HeaderComponent implements OnInit {
   listTradingAccount: Array<AccountType>;
   accountID: string;
   isPc: boolean;
+  isAndroid: boolean;
+  isIos: boolean;
 
   constructor(private router: Router, private authenService: AuthenService,
               private notificationsService: NotificationsService, ) {
@@ -132,8 +134,17 @@ export class HeaderComponent implements OnInit {
 
   checkDevice() {
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    // tslint:disable-next-line:no-string-literal
+    const userAgent = navigator.userAgent || navigator.vendor || window['opera'];
     if (isMobile) {
       this.isPc = false;
+      if (/android/i.test(userAgent)) {
+        this.isAndroid = true;
+    }
+      // tslint:disable-next-line:no-string-literal
+      if (/iPad|iPhone|iPod/.test(userAgent) && !window['MSStream']) {
+        this.isIos = true;
+    }
     } else {
       this.isPc = true;
     }

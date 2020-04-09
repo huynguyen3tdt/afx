@@ -28,6 +28,7 @@
               "./node_modules/bootstrap/dist/css/bootstrap.min.css",
               "./node_modules/ngx-bootstrap/datepicker/bs-datepicker.css",
               "src/styles.css",
+              "node_modules/ngx-toastr/toastr.css",
               "src/assets/css/main.css",
               "src/assets/css/jqkeyboard.css",
               "node_modules/primeng/resources/themes/nova-light/theme.css",
