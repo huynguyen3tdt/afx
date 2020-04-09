@@ -9,6 +9,7 @@ import { ReportResponseModel, ReportChangeResponseModel } from '../model/report-
 import { LOCALE } from '../constant/authen-constant';
 import * as moment from 'moment';
 import { LANGUAGLE } from '../constant/language-constant';
+import { DATE_CLIENT_ENG_SUBMIT, DATE_CLIENT_ENG } from '../constant/format-date-constant';
 
 
 @Injectable({
@@ -30,13 +31,13 @@ export class ReportService {
     }
     if (dateFrom && dateFrom !== 'Invalid date') {
       if (locale === LANGUAGLE.english) {
-        dateFrom = moment(new Date(dateFrom)).format('DD-MM-YYYY');
+        dateFrom = moment(dateFrom, DATE_CLIENT_ENG).format(DATE_CLIENT_ENG_SUBMIT);
       }
       URL += `&date_from=${dateFrom}`;
     }
     if (dateTo && dateTo !== 'Invalid date') {
       if (locale === LANGUAGLE.english) {
-        dateTo = moment(new Date(dateTo)).format('DD-MM-YYYY');
+        dateTo = moment(dateTo, DATE_CLIENT_ENG).format(DATE_CLIENT_ENG_SUBMIT);
       }
       URL += `&date_to=${dateTo}`;
     }
