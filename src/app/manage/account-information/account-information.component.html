@@ -52,7 +52,7 @@
                                     <div class="d-flex justify-content-between align-items-center mb-2">
                                         <div class="d-flex align-items-center">
                                             <div class="mr-2">
-                                                {{'Tradding Accounts' | translate}}
+                                                {{'Trading Accounts' | translate}}
                                             </div>
                                             <div class="d-inline-block">
                                                 <select [(ngModel)]="accountID" disabled class="form-control form-control-sm mb-0" style="min-width: 160px;">
@@ -331,9 +331,8 @@
                                                     <td width="15"><a href="javascript:;" class="edit-link" *ngIf="editPhone == false" data-toggle="tooltip" data-placement="top" (click)="showEditField('phone')" title="Edit Phone"><i class="icon ion-md-create"></i></a>
                                                     </td>
                                                 </tr>
-
-                                                <tr class="row-action d-block" *ngIf="showSave == true">
-                                                    <td width="150">&nbsp;</td>
+                                                <tr class="row-action d-table-row" *ngIf="showSave == true">
+                                                    <td>&nbsp;</td>
                                                     <td>
                                                         <button type="button" (click)="userSubmit()" class="btn btn-save btn-success pl-3 pr-3">{{'Save' | translate}}</button>
                                                     </td>
@@ -694,7 +693,7 @@
                                                         <a href="javascript:;" class="edit-link" data-toggle="tooltip" data-placement="top" title="Edit Email" (click)="showEditFieldCor('p-email')" *ngIf="editPersonEmail == false && corporateInfor?.pic?.email?.status == STATUS_INFO.approve"><i class="icon ion-md-create"></i></a>
                                                     </td>
                                                 </tr>
-                                                <tr class="row-action d-block" *ngIf="showSaveCor == true">
+                                                <tr class="row-action d-table-row" *ngIf="showSaveCor == true">
                                                     <td>&nbsp;</td>
                                                     <td>
                                                         <button type="button" class="btn btn-save btn-success pl-3 pr-3" (click)="SaveCor()">{{'Save' | translate}}</button>
