@@ -40,8 +40,8 @@
                       </tr>
                         <tr>
                             <td width="180">{{'Amount' | translate}}</td>
-                            <td *ngIf="transactionDetail?.funding_type == typeTranHistory?.DEPOSIT?.name || transactionDetail?.funding_type == typeTranHistory?.DEPOSIT?.nameJP"><strong>{{transactionDetail?.amount | number}}</strong> <span class="small text-secondary"></span>{{transactionDetail?.currency}}</td>
-                            <td *ngIf="transactionDetail?.funding_type == typeTranHistory?.WITHDRAWAL?.name || transactionDetail?.funding_type == typeTranHistory?.WITHDRAWAL?.nameJP"><strong>-{{transactionDetail?.amount | number}}</strong> <span class="small text-secondary"></span>{{transactionDetail?.currency}}</td>
+                            <td *ngIf="transactionDetail?.funding_type == typeTranHistory?.DEPOSIT?.name || transactionDetail?.funding_type == typeTranHistory?.DEPOSIT?.nameJP"><strong>{{transactionDetail?.amount | number}}</strong> <span class="small text-secondary"></span> {{transactionDetail?.currency}}</td>
+                            <td *ngIf="transactionDetail?.funding_type == typeTranHistory?.WITHDRAWAL?.name || transactionDetail?.funding_type == typeTranHistory?.WITHDRAWAL?.nameJP"><strong>-{{transactionDetail?.amount | number}}</strong> <span class="small text-secondary"></span> {{transactionDetail?.currency}}</td>
                         </tr>
                         <tr>
                             <td width="180">{{'Status' | translate}}</td>

@@ -70,6 +70,7 @@ export class DepositComponent implements OnInit {
   timeZone: string;
   bankCode: string;
   language;
+  traddingAccount: AccountType;
 
   ngOnInit() {
     this.showInforBank('ufj_bank');
@@ -88,7 +89,8 @@ export class DepositComponent implements OnInit {
     this.transactionType = TYPEOFTRANHISTORY.DEPOSIT.key;
     this.listTradingAccount = JSON.parse(localStorage.getItem(ACCOUNT_IDS));
     if (this.listTradingAccount) {
-      this.accountID = this.listTradingAccount[0].value;
+      this.traddingAccount = this.listTradingAccount[0];
+      this.accountID = this.traddingAccount.value;
     }
     this.minDeposit = localStorage.getItem(MIN_DEPOST);
     if (this.accountID) {
@@ -200,7 +202,7 @@ export class DepositComponent implements OnInit {
       return;
     }
     const param = {
-      currency: 'JPY',
+      currency: this.traddingAccount.currency,
       amount: numeral(this.depositTransactionForm.controls.deposit.value).value(),
       account_id: Number(this.accountID.split('-')[1])
     };
@@ -257,6 +259,10 @@ export class DepositComponent implements OnInit {
   }
 
   changeAccountId() {
+    this.traddingAccount = this.listTradingAccount.find((account: AccountType) => this.accountID === account.value);
+    this.accountID = this.traddingAccount.value;
+    this.getMt5Infor(Number(this.accountID.split('-')[1]));
+    this.getDwAmount(Number(this.accountID.split('-')[1]));
     this.remark = this.accountID.split('-')[1];
   }
 
