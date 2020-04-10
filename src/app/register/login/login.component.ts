@@ -184,8 +184,10 @@ export class LoginComponent implements OnInit, AfterViewInit {
         const dataObj: AccountType = {
           account_type: element.account_type,
           account_id: element.account_id,
-          value : element.value
+          value : element.value,
+          currency: element.currency
         };
+        console.log('dataObj ', dataObj);
         listData.push(dataObj);
       });
     }

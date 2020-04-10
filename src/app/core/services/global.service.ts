@@ -17,31 +17,6 @@ const numeral = require('numeral');
 export class GlobalService {
   constructor() { }
 
-  getListAccountIds(data) {
-    const listData = [];
-    if (data) {
-      // tslint:disable-next-line:no-shadowed-variable
-      data.map((element: any) => {
-        if (element.account_type === ACCOUNT_TYPE.ACCOUNT_FX.account_type) {
-          element.value = ACCOUNT_TYPE.ACCOUNT_FX.name + '-' + element.account_id;
-        }
-        if (element.account_type === ACCOUNT_TYPE.ACCOUNT_CFDIndex.account_type) {
-          element.value = ACCOUNT_TYPE.ACCOUNT_CFDIndex.name + '-' + element.account_id;
-        }
-        if (element.account_type === ACCOUNT_TYPE.ACCOUNT_CFDCom.account_type) {
-          element.value = ACCOUNT_TYPE.ACCOUNT_CFDCom.name + '-' + element.account_id;
-        }
-        const dataObj: AccountType = {
-          account_type: element.account_type,
-          account_id: element.account_id,
-          value : element.value
-        };
-        listData.push(dataObj);
-      });
-    }
-    return listData;
-  }
-
   calculateMarginLevel(equityDeposit: number, usedMargin: number) {
     let marginLevel: number;
     if (usedMargin === 0) {

@@ -68,6 +68,7 @@ export class WithdrawRequestComponent implements OnInit {
   totalAmount: number;
   timeZone: string;
   language;
+  traddingAccount: AccountType;
   // withdrawAmount
   constructor(private withdrawRequestService: WithdrawRequestService,
               private spinnerService: Ng4LoadingSpinnerService,
@@ -90,8 +91,8 @@ export class WithdrawRequestComponent implements OnInit {
     this.transactionType = TYPEOFTRANHISTORY.WITHDRAWAL.key;
     this.listTradingAccount = JSON.parse(localStorage.getItem(ACCOUNT_IDS));
     if (this.listTradingAccount) {
-      this.accountID = this.listTradingAccount[0].value;
-      this.account = this.listTradingAccount[0].account_id;
+      this.traddingAccount = this.listTradingAccount[0];
+      this.accountID = this.traddingAccount.value;
     }
     this.minWithdraw = localStorage.getItem(MIN_WITHDRAW);
     this.initWithdrawForm();
@@ -204,6 +205,13 @@ export class WithdrawRequestComponent implements OnInit {
     this.calculateWithdraw();
   }
 
+  changeAccount() {
+    this.traddingAccount = this.listTradingAccount.find((account: AccountType) => this.accountID === account.value);
+    this.accountID = this.traddingAccount.value;
+    this.getMt5Infor(Number(this.accountID.split('-')[1]));
+    this.getDwAmount(Number(this.accountID.split('-')[1]));
+  }
+
   sendConfirm() {
     $('#modal-withdraw-confirm').modal('hide');
     $('#modal-withdraw-confirm').on('hidden.bs.modal', () => {
@@ -212,8 +220,8 @@ export class WithdrawRequestComponent implements OnInit {
     this.depositValue = numeral(this.withdrawForm.controls.amount.value).value();
     const param = {
       amount: this.depositValue,
-      account_id: this.account,
-      currency: 'JPY'
+      account_id: this.accountID,
+      currency: this.traddingAccount.currency
     };
     this.withdrawRequestService.postWithdraw(param).subscribe(response => {
       if (response.meta.code === 200) {

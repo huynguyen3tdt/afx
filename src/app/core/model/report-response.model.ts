@@ -39,6 +39,7 @@ export interface AccountType {
   account_type: number;
   account_id: string;
   value: string;
+  currency: string;
 }
 
 export interface Report {
