@@ -127,7 +127,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <p class="small text-secondary p-2 bg-light" *ngIf="locale == language.english">Notice: Minimum single withdrawal amount is {{minWithdraw}}
+                            <p class="small text-secondary p-2 bg-light" *ngIf="locale == language.english">Notice: Minimum single withdrawal amount is {{minWithdraw | number}}
                             </p>
                             <p class="small text-secondary p-2 bg-light" *ngIf="locale == language.japan">※全額出金以外の最低出金額は{{minWithdraw | number}}円となります。 
                                 </p>
