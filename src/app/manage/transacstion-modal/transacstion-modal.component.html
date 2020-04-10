@@ -1,0 +1,58 @@
+<div bsModal #tranModal="bs-modal" class="modal fade" id="tran_detail" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header pt-2 pb-2">
+                <div>
+                    <h5 class="modal-title text-primary"><strong>{{'Transaction' | translate}} {{transactionDetail?.id}}</strong></h5>
+                </div>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="modal.hide()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table class="table table-hover table-sm" cellspacing="0" cellpadding="0">
+                    <tbody>
+                        <tr>
+                            <td width="180" class="border-top-0">{{'Trading account' | translate}}</td>
+                            <td class="border-top-0">{{accounID}}</td>
+                        </tr>
+                        <tr>
+                            <td width="180">{{'Date time' | translate}}</td>
+                            <td>{{transactionDetail?.create_date}}</td>
+                        </tr>
+                        <tr>
+                            <td width="180">{{'Type' | translate}}</td>
+                            <td>{{transactionDetail?.funding_type}}</td>
+                        </tr>
+                        <tr>
+                            <td width="180">{{'Payment Method' | translate}}</td>
+                            <td>{{transactionDetail?.method}}</td>
+                        </tr>
+                        <tr *ngIf="((transactionDetail?.method == paymentMethod?.QUICKDEPOSIT?.name || transactionDetail?.method == paymentMethod?.QUICKDEPOSIT?.nameJP) 
+                        && (transactionDetail?.funding_type == typeTranHistory?.DEPOSIT?.name || transactionDetail?.funding_type == typeTranHistory?.DEPOSIT?.nameJP))">
+                            <td width="180">{{'Payment service' | translate}}</td>
+                            <td>{{transactionDetail?.name}}</td>
+                        </tr>
+                        <tr *ngIf="((transactionDetail?.method == paymentMethod.BANKTRANSFER.name || transactionDetail?.method == paymentMethod.BANKTRANSFER.nameJP)
+                        && (transactionDetail?.funding_type == typeTranHistory.WITHDRAWAL.name || transactionDetail?.funding_type == typeTranHistory.WITHDRAWAL.nameJP))">
+                          <td width="180">{{'Benificiary bank' | translate}}</td>
+                          <td>{{transactionDetail?.name}}</td>
+                      </tr>
+                        <tr>
+                            <td width="180">{{'Amount' | translate}}</td>
+                            <td *ngIf="transactionDetail?.funding_type == typeTranHistory?.DEPOSIT?.name || transactionDetail?.funding_type == typeTranHistory?.DEPOSIT?.nameJP"><strong>{{transactionDetail?.amount | number}}</strong> <span class="small text-secondary"></span>{{transactionDetail?.currency}}</td>
+                            <td *ngIf="transactionDetail?.funding_type == typeTranHistory?.WITHDRAWAL?.name || transactionDetail?.funding_type == typeTranHistory?.WITHDRAWAL?.nameJP"><strong>-{{transactionDetail?.amount | number}}</strong> <span class="small text-secondary"></span>{{transactionDetail?.currency}}</td>
+                        </tr>
+                        <tr>
+                            <td width="180">{{'Status' | translate}}</td>
+                            <td *ngIf="transactionDetail?.status == transactionStatus.COMPLETE.key"><span class="text-success"><i class="icon ion-md-checkmark"></i> {{'Completed' | translate}}</span></td>
+                            <td *ngIf="transactionDetail?.status == transactionStatus.CANCEL.key"><span> {{'Cancel' | translate}}</span></td>
+                            <td *ngIf="transactionDetail?.status == transactionStatus.PENDING.key"><span class="text-info"><i class="icon ion-md-hourglass"></i> {{'In-progress' | translate}}</span></td>
+                            <td *ngIf="transactionDetail?.status == transactionStatus.NEW.key"><span class="text-info"><i class="icon ion-md-hourglass"></i> {{'New' | translate}}</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

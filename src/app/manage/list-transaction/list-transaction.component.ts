@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges, Input } from '@angular/core';
+import { Component, OnInit, OnChanges, Input, ViewChild } from '@angular/core';
 import { WithdrawRequestService } from 'src/app/core/services/withdraw-request.service';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -10,6 +10,7 @@ import moment from 'moment-timezone';
 import { LOCALE, TIMEZONEAFX, TIMEZONESERVER } from 'src/app/core/constant/authen-constant';
 import { GlobalService } from 'src/app/core/services/global.service';
 import { LANGUAGLE } from 'src/app/core/constant/language-constant';
+import { TransacstionModalComponent } from '../transacstion-modal/transacstion-modal.component';
 
 @Component({
   selector: 'app-list-transaction',
@@ -17,6 +18,7 @@ import { LANGUAGLE } from 'src/app/core/constant/language-constant';
   styleUrls: ['./list-transaction.component.css']
 })
 export class ListTransactionComponent implements OnInit, OnChanges {
+  @ViewChild('tranModal', { static: true }) tranModal: TransacstionModalComponent;
   @Input() accountID: string;
   @Input() tranType: string;
 
@@ -80,7 +82,8 @@ export class ListTransactionComponent implements OnInit, OnChanges {
         this.transactionDetail.create_date = moment(this.transactionDetail.create_date).tz(this.timeZone).format(this.formatDateHour);
         this.transactionDetail.method = this.globalService.checkPaymentMedthod(this.transactionDetail.method);
         this.transactionDetail.funding_type = this.globalService.checkType(this.transactionDetail.funding_type);
-        $('#tran_detail').modal('show');
+        this.tranModal.open(this.transactionDetail, this.accountID);
+        // $('#tran_detail').modal('show');
       }
     });
   }

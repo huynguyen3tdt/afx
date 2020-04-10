@@ -20,6 +20,7 @@ import { LoginGuard } from './core/guard/login.guard';
 import { AuthGuard } from './core/guard/auth.guard';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
+import { ModalModule } from 'ngx-bootstrap';
 
 const appEnvInitializerFn = (envConfig: EnvConfigService) => {
   return () => {
@@ -57,7 +58,8 @@ const Routing: ModuleWithProviders = RouterModule.forRoot(AppRoutes, {
       }
     }),
     BrowserAnimationsModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    ModalModule.forRoot()
   ],
   providers: [
     EnvConfigService,

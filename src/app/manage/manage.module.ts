@@ -17,7 +17,8 @@ import { TranslateModule } from '@ngx-translate/core';
 import { PdfJsViewerModule } from 'ng2-pdfjs-viewer';
 import { ListTransactionComponent } from './list-transaction/list-transaction.component';
 import {MultiSelectModule} from 'primeng/multiselect';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { TransacstionModalComponent } from './transacstion-modal/transacstion-modal.component';
+import { ModalModule } from 'ngx-bootstrap';
 
 @NgModule({
     imports: [
@@ -31,6 +32,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
         TranslateModule,
         PdfJsViewerModule,
         MultiSelectModule,
+        ModalModule
     ],
     providers: [],
     declarations: [
@@ -41,7 +43,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
       ReportListComponent,
       DepositComponent,
       CurrencyDirective,
-      ListTransactionComponent
+      ListTransactionComponent,
+      TransacstionModalComponent
     ],
     schemas: [NO_ERRORS_SCHEMA]
 })
