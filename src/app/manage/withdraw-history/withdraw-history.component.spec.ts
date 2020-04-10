@@ -10,6 +10,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { RouterModule, Routes, provideRoutes } from '@angular/router';
 import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
 import { MultiSelectModule } from 'primeng/multiselect';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 const config: Routes = [
   {
@@ -34,7 +35,8 @@ describe('WithdrawHistoryComponent', () => {
         Ng4LoadingSpinnerModule,
         MultiSelectModule
       ],
-      providers: [ provideRoutes(config) ]
+      providers: [ provideRoutes(config) ],
+      schemas: [NO_ERRORS_SCHEMA]
     })
     .compileComponents();
   }));

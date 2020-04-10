@@ -16,6 +16,7 @@ import { SelectItem } from 'primeng/api';
 import { ActivatedRoute } from '@angular/router';
 import moment from 'moment-timezone';
 import { LANGUAGLE } from 'src/app/core/constant/language-constant';
+import { TransacstionModalComponent } from '../transacstion-modal/transacstion-modal.component';
 declare var $: any;
 
 @Component({
@@ -24,10 +25,9 @@ declare var $: any;
   styleUrls: ['./withdraw-history.component.css']
 })
 export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
+  @ViewChild('tranModal', { static: true }) tranModal: TransacstionModalComponent;
   @ViewChild('depositTab', { static: true }) depositTab: ElementRef;
   @ViewChild('withdrawTab', { static: true }) withdrawTab: ElementRef;
-
-
   listBankInfor: BankInforModel;
   listDwHistory: Array<TransactionModel>;
   listReport: Array<TransactionModel>;
@@ -304,7 +304,8 @@ export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
         this.tranHistoryDetail.create_date = moment(this.tranHistoryDetail.create_date).tz(this.timeZone).format(this.formatDateHour);
         this.tranHistoryDetail.method = this.globalService.checkPaymentMedthod(this.tranHistoryDetail.method);
         this.tranHistoryDetail.funding_type = this.globalService.checkType(this.tranHistoryDetail.funding_type);
-        $('#tran_detail').modal('show');
+        this.tranModal.open(this.tranHistoryDetail, this.searchForm.controls.tradingAccount.value);
+        // $('#tran_detail').modal('show');
       }
     });
   }
@@ -328,25 +329,6 @@ export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
     });
     this.searchTranHistory();
   }
-
-  // checkPaymentMedthod(type: string) {
-  //   if (type === PAYMENTMETHOD.QUICKDEPOSIT.key) {
-  //     return PAYMENTMETHOD.QUICKDEPOSIT.name;
-  //   }
-  //   if (type === PAYMENTMETHOD.BANKTRANSFER.key) {
-  //     return PAYMENTMETHOD.BANKTRANSFER.name;
-  //   }
-  //   return '';
-  // }
-  // checkType(type: string) {
-  //   if (type === TYPEOFTRANHISTORY.DEPOSIT.key) {
-  //     return TYPEOFTRANHISTORY.DEPOSIT.name;
-  //   }
-  //   if (type === TYPEOFTRANHISTORY.WITHDRAWAL.key) {
-  //     return TYPEOFTRANHISTORY.WITHDRAWAL.name;
-  //   }
-  //   return '';
-  // }
 
   checkStatus(status: number) {
     if (status === STATUSTRANHISTORY.COMPLETE.key) {
