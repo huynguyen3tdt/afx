@@ -220,7 +220,7 @@ export class WithdrawRequestComponent implements OnInit {
     this.depositValue = numeral(this.withdrawForm.controls.amount.value).value();
     const param = {
       amount: this.depositValue,
-      account_id: this.accountID,
+      account_id: this.accountID.split('-')[1],
       currency: this.traddingAccount.currency
     };
     this.withdrawRequestService.postWithdraw(param).subscribe(response => {
