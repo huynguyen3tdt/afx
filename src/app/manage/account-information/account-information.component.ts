@@ -155,7 +155,7 @@ export class AccountInformationComponent implements OnInit {
     this.editGender = false;
     this.getMt5Infor(this.accountID);
     this.getWithDrawAmount(this.accountID);
-
+    this.getUserInfo();
   }
 
   initUserForm() {
@@ -456,14 +456,17 @@ export class AccountInformationComponent implements OnInit {
   }
   settingSave() {
     this.isSubmittedSetting = true;
+    this.successPassword = false;
+    this.errorPassword = false;
     if (this.changePassForm.invalid) {
       this.errorMessage = false;
       return;
     }
-    if (this.changePassForm.controls.new_password.value === this.changePassForm.controls.confirm_password.value) {
-      this.errorMessage = false;
-    } else {
-      this.errorMessage = true;
+    if (this.changePassForm.controls.new_password.value !== this.changePassForm.controls.confirm_password.value) {
+      return;
+    }
+    if (this.changePassForm.controls.current_password.value === this.changePassForm.controls.confirm_password.value
+      && this.changePassForm.controls.new_password.value === this.changePassForm.controls.confirm_password.value) {
       return;
     }
     const param = {
@@ -473,7 +476,7 @@ export class AccountInformationComponent implements OnInit {
     this.authenService.changePassword(param).subscribe(response => {
       if (response.meta.code === 200) {
         this.successPassword = true;
-      } else {
+      } else if (response.meta.code === 103) {
         this.errorPassword = true;
       }
     });
@@ -675,6 +678,9 @@ export class AccountInformationComponent implements OnInit {
   openSetting() {
     const fontSizeCurrent = localStorage.getItem(FONTSIZE_AFX);
     $(`#${fontSizeCurrent}`).addClass('active');
+    this.initSettingForm();
+    this.errorPassword = false;
+    this.isSubmittedSetting = false;
   }
 
   changeFontSize(fontsize: string) {
