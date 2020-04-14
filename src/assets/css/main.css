@@ -43,6 +43,12 @@ a:hover{
 	font-size: 16px;
 	line-height: 1;
 }
+.font-size-64{
+	font-size: 64px;
+}
+.line-height-1{
+	line-height: 1;
+}
 .btn-link-24 {
 	line-height: 24px;
 	display: inline-block;
@@ -70,6 +76,10 @@ a:hover{
     border-color: #f99b26;
     color: #fff;
 }
+ .btn-warning:focus,
+ .btn-warning:active{
+ 	color: #fff !important;
+ }
  .btn-warning:hover,
  .btn-outline-warning:hover{
  	opacity: 0.9;
@@ -166,11 +176,14 @@ a:hover{
 .btn-none{
 	background: none;	
 }
-.btn-primary{
+.btn-primary,
+.btn-primary:focus,
+.btn-primary:active{
 	color: #fff;
 	background-color: #0D688F;
 	border-color: #0D688F;
 }
+
 .btn-outline-primary{
 	color: #0D688F;
 	background-color: rgba(255,255,255,0);
@@ -188,7 +201,8 @@ a:hover{
 }
 /* Main */
 body{
-	font-family: "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", Osaka, メイリオ, Meiryo, "ＭＳ Ｐゴシック", "MS PGothic", "ＭＳ ゴシック" , "MS Gothic", "Noto Sans CJK JP", TakaoPGothic, sans-serif;
+	/*font-family: "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", Osaka, メイリオ, Meiryo, "ＭＳ Ｐゴシック", "MS PGothic", "ＭＳ ゴシック" , "MS Gothic", "Noto Sans CJK JP", TakaoPGothic, sans-serif;*/
+	font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
 	background-color: #EFF3F8;
 	font-size: 15px;
 	color: #000;
@@ -277,7 +291,7 @@ body{
 	padding-right: 20px;
 }
 .header-top-nav.nav .nav-item.nav-item-mt5 img {
-	max-height: 36px;
+	max-height: 32px;
 }
 @media screen and (max-width: 992px){
 	.header-top-nav.nav .nav-item .nav-link {
@@ -484,6 +498,7 @@ body{
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	background: none;
 }
 .card-login {
 	background:#fff url(../images/login-welcome-bg.png) 0 0 no-repeat;
@@ -603,6 +618,9 @@ body{
     width: 20px;
     text-align: left;
     display: inline-block;
+}
+.nav.offcanvas-nav > .nav-item.nav-item-mt5 .nav-link.has-icon .icon {
+	margin-left: -4px;
 }
 .nav.offcanvas-nav > .nav-item.has-child > .nav-link {
     padding-right: 40px;
@@ -1106,6 +1124,17 @@ ul.reset li {
 	right: 10px;
 	bottom: 10px;
 	background: rgba(255,255,255,0.5);
+}
+
+.col-mypage-content .box-item-checkbox, 
+.col-mypage-content .box-item-radio {
+	padding: 10px 10px 10px 30px;
+	background-color: #fff;
+}
+.col-mypage-content .container-checkbox .checkmark,
+.col-mypage-content .container-radio .checkmark {
+	left: 10px;
+	top: 10px;
 }
 @media screen and (min-width: 992px){
 	.card-profile{
@@ -1733,4 +1762,14 @@ h1{
 
 .list-group-item.active{
 	background-color: #0D688F;
+}
+
+/* Row small-gutters*/
+.row.small-gutters {
+	margin-left: -6px;
+	margin-right: -6px;
+}
+.small-gutters>.col, .small-gutters>[class*=col-] {
+	padding-left: 6px;
+	padding-right: 6px;
 }

@@ -12,7 +12,7 @@ import { passwordValidation,
          requiredInput,
          emailValidation,
          validationPhoneNumber,
-         salaryInput } from 'src/app/core/helper/custom-validate.helper';
+         postCodevalidation} from 'src/app/core/helper/custom-validate.helper';
 import { AuthenService } from 'src/app/core/services/authen.service';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { SearchHiraModel, BankModel, BranchModel } from 'src/app/core/model/bank-response.model';
@@ -155,12 +155,14 @@ export class AccountInformationComponent implements OnInit {
     this.editGender = false;
     this.getMt5Infor(this.accountID);
     this.getWithDrawAmount(this.accountID);
-    this.getUserInfo();
+    if (this.isCompany === 'false') {
+      this.getUserInfo();
+    }
   }
 
   initUserForm() {
     this.userForm = new FormGroup({
-      postCode: new FormControl('', salaryInput),
+      postCode: new FormControl('', postCodevalidation),
       searchPrefe: new FormControl('', requiredInput),
       searchCountry: new FormControl('', requiredInput),
       house_numb: new FormControl('', requiredInput),
@@ -171,7 +173,7 @@ export class AccountInformationComponent implements OnInit {
   }
   initCorporateForm() {
     this.corporateForm = new FormGroup({
-      cor_postcode: new FormControl('', salaryInput),
+      cor_postcode: new FormControl('', postCodevalidation),
       cor_prefec: new FormControl('', requiredInput),
       cor_district: new FormControl('', requiredInput),
       cor_house: new FormControl('', requiredInput),
@@ -307,76 +309,7 @@ export class AccountInformationComponent implements OnInit {
     });
   }
 
-  userSubmit() {
-    this.isSubmittedUser = true;
-    if (this.userForm.invalid) {
-      return;
-    }
-    $('#modal-confirm').modal('show');
-  }
-  changeUser() {
-    const param = {
-      zip: this.userForm.controls.postCode.value,
-      address: {
-        city: this.userForm.controls.searchPrefe.value,
-        street: this.userForm.controls.searchCountry.value,
-        street2: this.userForm.controls.house_numb.value,
-        fx_street3: this.userForm.controls.name_build.value,
-      },
-      email: this.userForm.controls.email.value,
-      mobile: this.userForm.controls.phone.value,
-      lang: ''
-    };
-    this.userService.updateUser(param).subscribe(response => {
-      if (response.meta.code === 200) {
-        this.showSave = false;
-        this.editAddress = false;
-        this.editEmail = false;
-        this.editPhone = false;
-        this.getUserInfo();
 
-      }
-    });
-
-  }
-
-  showEditField(field: string) {
-    this.showSave = true;
-    switch (field) {
-      case 'address':
-        this.userForm.controls.postCode.setValue(this.userInfor.zip.value);
-        this.userForm.controls.searchPrefe.setValue(this.userInfor.address.value.city);
-        this.userForm.controls.searchCountry.setValue(this.userInfor.address.value.street);
-        this.userForm.controls.house_numb.setValue(this.userInfor.address.value.street2);
-        this.userForm.controls.name_build.setValue(this.userInfor.address.value.fx_street3);
-        this.editAddress = true;
-        break;
-      case 'email':
-        this.userForm.controls.email.setValue(this.userInfor.email.value);
-        this.editEmail = true;
-        break;
-      case 'phone':
-        this.userForm.controls.phone.setValue(this.userInfor.mobile);
-        this.editPhone = true;
-        break;
-    }
-  }
-
-  cancelEdit(field: string) {
-    this.showSave = false;
-    switch (field) {
-      case 'address':
-        this.editAddress = false;
-        break;
-      case 'email':
-        this.editEmail = false;
-        break;
-      case 'phone':
-        this.editPhone = false;
-        break;
-    }
-
-  }
   showEditFieldCor(field: string) {
     this.showSaveCor = true;
     switch (field) {

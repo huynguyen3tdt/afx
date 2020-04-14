@@ -19,6 +19,8 @@ import { ListTransactionComponent } from './list-transaction/list-transaction.co
 import {MultiSelectModule} from 'primeng/multiselect';
 import { TransacstionModalComponent } from './transacstion-modal/transacstion-modal.component';
 import { ModalModule } from 'ngx-bootstrap';
+import { UserInforComponent } from './user-infor/user-infor.component';
+import { CorporateInfoComponent } from './corporate-info/corporate-info.component';
 
 @NgModule({
     imports: [
@@ -44,7 +46,9 @@ import { ModalModule } from 'ngx-bootstrap';
       DepositComponent,
       CurrencyDirective,
       ListTransactionComponent,
-      TransacstionModalComponent
+      TransacstionModalComponent,
+      UserInforComponent,
+      CorporateInfoComponent
     ],
     schemas: [NO_ERRORS_SCHEMA]
 })

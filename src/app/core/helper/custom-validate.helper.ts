@@ -143,7 +143,7 @@ export function validationPhoneNumber(control: AbstractControl) {
   return null;
 }
 
-export function salaryInput(control: AbstractControl) {
+export function postCodevalidation(control: AbstractControl) {
   const pattern = new RegExp(DIGITS_PATTERN);
   const patternNumber = new RegExp(FULL_SIZE_NUMBER);
   if (!control.value || typeof control.value === 'string' && !control.value.trim()) {
