@@ -34,7 +34,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
   isSubmitted: boolean;
   isPc: boolean;
   invalidAccount: boolean;
-  paddWordExpired: boolean;
+  passWordExpired: boolean;
 
   constructor(
     private router: Router,
@@ -90,6 +90,8 @@ export class LoginComponent implements OnInit, AfterViewInit {
 
   onSubmit() {
     this.isSubmitted = true;
+    this.passWordExpired = false;
+    this.invalidAccount = false;
     if (this.loginFormGroup.invalid) {
       return;
     }
@@ -143,7 +145,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
       } else if (response.meta.code === 102) {
         this.invalidAccount = true;
       } else if (response.meta.code === 101) {
-        this.paddWordExpired = true;
+        this.passWordExpired = true;
       }
 
     });

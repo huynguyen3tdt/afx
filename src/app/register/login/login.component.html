@@ -49,7 +49,7 @@
                             <div *ngIf="invalidAccount == true" class="invalid-mess mb-2">
                                     <div>{{'Invalid email or password' |translate}}</div>
                             </div>
-                            <div *ngIf="invalidAccount == true" class="invalid-mess mb-2">
+                            <div *ngIf="passWordExpired == true" class="invalid-mess mb-2">
                                 <div>{{'Password expired' |translate}}</div>
                             </div>
                             <div class="form-group">
