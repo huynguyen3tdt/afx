@@ -140,7 +140,7 @@
   "Login ID / Email": "Login ID / Email",
   "Passwords": "Passwords",
   "This field is required": "This field is required",
-  "Invalid email or password": "Invalid email or password",
+  "Login ID or password is not matching": "Login ID or password is not matching",
   "Remember me": "Remember me",
   "Open Visual Keyboard": "Open Visual Keyboard",
   "Forgot Password?": "Forgot Password?",
@@ -158,7 +158,7 @@
   "Change Password": "Change Password",
   "New Password": "New Password",
   "Confirm Password": "Confirm Password",
-  "New password needs to be 8 characters or more and has at least 1 alphabet letter": "New password needs to be 8 characters or more and has at least 1 alphabet letter",
+  "Password requires 8 characters or more and has at least 1 alphabet letter": "Password requires 8 characters or more and has at least 1 alphabet letter",
   "Current password and new passwords cannot be the same": "Current password and new passwords cannot be the same",
   "Password incorrect": "Password incorrect",
   "You have successfully changed the password": "You have successfully changed the password",
@@ -234,5 +234,8 @@
   "Please transfer to the following account.": "Please transfer to the following account.",
   "As soon as we confirm the payment, we will notify you of the payment.": "As soon as we confirm the payment, we will notify you of the payment.",
   "Deposit and Withdrawal History": "Deposit and Withdrawal History",
-  "New password and confirm password do not match": "New password and confirm password do not match"
+  "New password and confirm password do not match": "New password and confirm password do not match",
+  "Password expired": "Password expired",
+  "Login ID or DOB incorrect": "Login ID or DOB incorrect",
+  "The temporary password will be sent to the registered email address.": "The temporary password will be sent to the registered email address."
 }

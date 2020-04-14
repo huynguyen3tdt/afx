@@ -20,6 +20,13 @@ export class ErrorInterceptor implements HttpInterceptor {
           if (err.status === 401) {
             localStorage.removeItem(TOKEN_AFX);
             this.router.navigate(['/login']);
+            if (locale === LANGUAGLE.english) {
+              messageErr = 'Token expired';
+              typeErr = 'ERROR';
+            } else {
+              messageErr = 'トークンの有効期限が切れました。';
+              typeErr = 'エラー';
+            }
           }
           // if (err.status === 400) {
           //   if (locale === LANGUAGLE.english) {
@@ -38,6 +45,7 @@ export class ErrorInterceptor implements HttpInterceptor {
               typeErr = 'ERROR';
             } else {
               messageErr = '内部サーバーエラー';
+              typeErr = 'エラー';
             }
             this.toastr.error(messageErr, typeErr, {
               timeOut: TIMEOUT_TOAST

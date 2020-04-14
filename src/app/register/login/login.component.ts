@@ -34,6 +34,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
   isSubmitted: boolean;
   isPc: boolean;
   invalidAccount: boolean;
+  paddWordExpired: boolean;
 
   constructor(
     private router: Router,
@@ -141,6 +142,8 @@ export class LoginComponent implements OnInit, AfterViewInit {
         }
       } else if (response.meta.code === 102) {
         this.invalidAccount = true;
+      } else if (response.meta.code === 101) {
+        this.paddWordExpired = true;
       }
 
     });

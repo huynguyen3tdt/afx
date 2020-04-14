@@ -20,7 +20,6 @@ export class ForgotPasswordComponent implements OnInit, AfterViewInit, OnDestroy
 
   forgotPasswordForm: FormGroup;
   isSubmitted: boolean;
-  errorMess = '';
   successMess = '';
   errSubmit: boolean;
   time: number;
@@ -78,7 +77,6 @@ export class ForgotPasswordComponent implements OnInit, AfterViewInit, OnDestroy
         this.showInterval = true;
         this.spinnerService.hide();
         this.errSubmit = false;
-        this.successMess = '仮パスワードを登録メールアドレスにメール致しますので、ご確認ください。';
         this.interval = setInterval(() => {
           this.time = this.time - 1;
           if (this.time <= 0) {
@@ -92,7 +90,6 @@ export class ForgotPasswordComponent implements OnInit, AfterViewInit, OnDestroy
       } else if (response.meta.code === 102) {
         this.spinnerService.hide();
         this.errSubmit = true;
-        this.errorMess = 'Login ID and DOB is not matching';
       }
     });
   }
