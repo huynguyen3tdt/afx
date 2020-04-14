@@ -20,11 +20,11 @@ const DEFAULT_INVALID_REQUIRED = {
 
 const INVALID_PASSWORD = {
     RequiredPass: true,
-    message: 'New password needs to be 8 characters or more and has at least 1 alphabet letter'
+    message: 'Password requires 8 characters or more and has at least 1 alphabet letter'
   };
 const INVALID_PASSWORD_LENGTH = {
     RequiredPassLength: true,
-    message: 'New password needs to be 8 characters or more and has at least 1 alphabet letter'
+    message: 'Password requires 8 characters or more and has at least 1 alphabet letter'
   };
 
 const DEFAULT_REQUIRED_SPECIAL = {

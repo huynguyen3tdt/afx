@@ -948,7 +948,7 @@
                                 </div>
                                 <div class="col-md-8 col-lg-9">
                                         <div *ngIf="isSubmittedSetting && changePassForm?.controls['new_password']?.errors?.RequiredPassLength" class="invalid-mess">
-                                            {{'New password needs to be 8 characters or more and has at least 1 alphabet letter' | translate}}
+                                            {{'Password requires 8 characters or more and has at least 1 alphabet letter' | translate}}
                                         </div>
                                 </div>
                                 
@@ -982,7 +982,7 @@
                                     </div>
                                     <div *ngIf="isSubmittedSetting && changePassForm?.controls['confirm_password']?.errors?.RequiredPassLength"
                                         class="invalid-mess">
-                                        {{'New password needs to be 8 characters or more and has at least 1 alphabet letter' | translate}}
+                                        {{'Password requires 8 characters or more and has at least 1 alphabet letter' | translate}}
                                     </div>
                                 </div>
                             </div>

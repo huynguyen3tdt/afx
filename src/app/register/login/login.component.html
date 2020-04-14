@@ -49,6 +49,9 @@
                             <div *ngIf="invalidAccount == true" class="invalid-mess mb-2">
                                     <div>{{'Invalid email or password' |translate}}</div>
                             </div>
+                            <div *ngIf="invalidAccount == true" class="invalid-mess mb-2">
+                                <div>{{'Password expired' |translate}}</div>
+                            </div>
                             <div class="form-group">
                                 <label class="container-checkbox small">{{'Remember me' | translate}}
                                     <input type="checkbox" name="save_" formControlName="remember">

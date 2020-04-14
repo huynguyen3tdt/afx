@@ -600,9 +600,9 @@
     <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header pt-2 pb-2">
-                <h5 class="modal-title text-uppercase text-primary" id="ruleTitle"><i class="icon ion-md-list-box"></i> <strong>General rules for depositing and withdrawing funds</strong></h5>
+                <h5 class="modal-title text-uppercase text-primary" id="ruleTitle"><i class="icon ion-md-list-box"></i> <strong>{{'General rules for depositing and withdrawing funds' | translate}}</strong></h5>
             </div>
-            <div class="modal-body">
+            <div class="modal-body" *ngIf="locale == language.english">
                 <h4 class="text-primary">I. Deposit.</h4>
                 <ul class="list-default">
                     <li>Deposits may be made 24 hours a day, 7 days a week. </li>
@@ -620,7 +620,7 @@
                     <li>Funds may only be withdrawn to owner accounts in order to ensure financial security and prevent money laundering.</li>
                     <li>Phillip will withdraw on your trading account and transfer to your bank account at the bank's working hours from 8:30 AM- 16:00 PM Monday to Friday.</li>
                     <li>Withdrawal order make over 16:00PM  will be forwarded the next day.</li>
-                    <li>Minimum withdrawal amount of  {{minDeposit}} JPY  for each withdrawal.</li>
+                    <li>Minimum withdrawal amount of  {{minDeposit | number}} JPY  for each withdrawal.</li>
                     <li>The maximum amount is  the total amount in your trading account.</li>
                     <li>The first withdrawal order must be enough 48 hours from the first deposit order.</li>
                 </ul>
@@ -629,6 +629,44 @@
                     <li>The company retains the right to change the processing time for deposits and withdrawals without notifying clients in advance.</li>
                     <li>The company may place limits on the payment systems available to clients from certain countries.</li>
                     <li>The Company has the right to investigate, cancel, and/ or impose fees/ charges (dependant on payment method) on any withdrawal request originating from a trading account with no trading activity.</li>
+                </ul>
+                <div class="small text-secondary"><i class="icon ion-md-time"></i> <em>{{'Last updated:' | translate}} 2020/01/10 11:29</em></div>
+            </div>
+
+            <div class="modal-body" *ngIf="locale == language.japan">
+                <h4 class="text-primary">I.入金。</h4>
+                <ul class="list-default">
+                    <li>入金は原則として24時間年中無休で行うことができます。</li>
+                    <li>
+                        お客様は以下の方法により入金することができます。
+                        <ul>
+                            <li>クイック入金:</li>
+                            こちらのシステムを介して入金することにより自動的に取引口座に反映されます。
+                            <li>通常銀行振込：</li>
+                            こちらは当社財務部が銀行入金を当日9時～15時まで確認し反映するためお時間がかかります。
+                        </ul>
+                    </li>
+                    <li>是非クイック入金をご利用ください。なお最低入金額は1回{{minDeposit | number}}円です。</li>
+                </ul>
+                <h4 class="text-primary">II.出金。</h4>
+                <ul>
+                    <li>出金は、お客様名義の口座以外に出金することが出来ません。</li>
+                    <li>当日の15時までにご出金依頼を頂いた場合、当日を含め遅くとも3営業日後の15時までにお客様の銀行口座に振込手続きをいたします。</li>
+                    <li>15時を過ぎるご出金依頼は翌日扱いとさせていただきます。
+                        尚、出金のご依頼を頂くと取引口座からその資金は使えなくなります。</li>
+                    <li>お客様の銀行口座への着金までには時間がございますので、リスク管理にはご留意いただけますようお願いいたします。</li>
+                    <li>また、原則、１回の最低出金額は、全額出金する場合を除いて{{minDeposit | number}}円とさせていただきます。</li>
+                    <li>逆に１回の最高出金額は1億円未満とさせていただきます。
+                        最大出金可能金額は以下の計算式から算出できます。</li>
+                        残高（預り金）－評価損（評価益は加算となりません）－必要証拠金＜1億円
+                        ただし最大出金可能金額を出金依頼すると即時にロスカットになる可能性が高いので余裕をもってご出金依頼して下さい。
+                        初めてのご出金は、初めての入金から48時間経過する必要があります。
+                </ul>
+                <p>支払いシステムまたは銀行システムによって遅延が生じた場合、当社は入金および出金の処理の遅延について責任を負わないものとします。</p>
+                <ul>
+                    <li>なお当社はお客様に事前に通知することなく、こちらの入出金に関する一般規則を変更することが出来るものとします。</li>
+                    <li>また法令順守の観点から出金に制限を課す場合があります。</li>
+                    <li>最後に取引活動のない取引口座からの出金依頼に対して調査確認、拒否または振込手数料を課す場合があります。</li>
                 </ul>
                 <div class="small text-secondary"><i class="icon ion-md-time"></i> <em>{{'Last updated:' | translate}} 2020/01/10 11:29</em></div>
             </div>
