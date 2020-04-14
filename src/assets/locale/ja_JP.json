@@ -148,7 +148,7 @@
   "Reset password": "パスワードの再設定",
   "If you want to reset your password, please fill out the following information and press the submit button.": "パスワードを再設定する場合、以下の内容にご記入の上、送信ボタンを押してください。",
   "Login ID": "ログインID",
-  "DOB": "生年月日",
+  "DOB": "生年月日(法人の場合、取引担当者の生年月日)",
   "If you have forgotten your login ID / email address, please contact us from here.": "ログインID／メールアドレスをお忘れの方は、こちらよりお問い合わせください。",
   "Submit": "送信",
   "Return to login screen": "ログイン画面に戻る",
@@ -236,5 +236,7 @@
   "New password and confirm password do not match": "新しいパスワードと確認パスワードが一致しません",
   "Password expired": "パスワードの有効期限が切れています。",
   "Login ID or DOB incorrect": "ログインIDまたは生年月日が一致しません。",
-  "The temporary password will be sent to the registered email address.": "仮パスワードを登録メールアドレスにメール致しますので、ご確認ください。"
+  "The temporary password will be sent to the registered email address.": "仮パスワードを登録メールアドレスにメール致しますので、ご確認ください。",
+  "Your withdrawal request has been received:": "出金リクエストを受け取りました：",
+  "Reason: MT5 account balance is not enough money to withdraw": "理由：MT5アカウントの残高では引き出しに十分な金額がありません"
 }

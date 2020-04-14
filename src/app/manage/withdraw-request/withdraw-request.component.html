@@ -223,6 +223,8 @@
         </div>
       </div>
       <div class="modal-body">
+          <p *ngIf="checkWithDrawal == true">{{'Your withdrawal request has been received:' | translate }}</p>
+          <p *ngIf="checkWithDrawal == false">{{'Your withdrawal request has been rejected:' | translate }}</p>
         <table class="table table-hover table-sm small" cellspacing="0" cellpadding="0">
             <tbody>
                 <tr>
@@ -239,7 +241,8 @@
                 </tr>
             </tbody>
         </table>
-        <p>{{'Your withdrawal request has been received and is being processed within 3-4 business days' | translate}}?</p>
+        <p *ngIf="checkWithDrawal == true">{{'Your withdrawal request has been received and is being processed within 3-4 business days' | translate}}?</p>
+        <p *ngIf="checkWithDrawal == false">{{'Reason: MT5 account balance is not enough money to withdraw' | translate}}</p>
         <hr>
         <div class="text-center">
           <button type="button" class="btn btn-success" id="got_it" data-dismiss="modal">{{'Got it!' | translate}}</button>

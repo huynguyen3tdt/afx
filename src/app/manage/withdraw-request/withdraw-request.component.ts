@@ -69,6 +69,7 @@ export class WithdrawRequestComponent implements OnInit {
   timeZone: string;
   language;
   traddingAccount: AccountType;
+  checkWithDrawal: boolean;
   // withdrawAmount
   constructor(private withdrawRequestService: WithdrawRequestService,
               private spinnerService: Ng4LoadingSpinnerService,
@@ -213,10 +214,8 @@ export class WithdrawRequestComponent implements OnInit {
   }
 
   sendConfirm() {
+    this.checkWithDrawal = true;
     $('#modal-withdraw-confirm').modal('hide');
-    $('#modal-withdraw-confirm').on('hidden.bs.modal', () => {
-      $('#modal_withdraw').modal('show');
-    });
     this.depositValue = numeral(this.withdrawForm.controls.amount.value).value();
     const param = {
       amount: this.depositValue,
@@ -227,7 +226,10 @@ export class WithdrawRequestComponent implements OnInit {
       if (response.meta.code === 200) {
         this.listWithdrawRequest = response.data;
         this.listTran.ngOnChanges();
+      } else if (response.meta.code === 409) {
+        this.checkWithDrawal = false;
       }
+      $('#modal_withdraw').modal('show');
     });
   }
 
