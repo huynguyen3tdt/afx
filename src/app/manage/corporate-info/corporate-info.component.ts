@@ -16,6 +16,7 @@ declare var $: any;
 export class CorporateInfoComponent implements OnInit {
   corporateInfor: CorporateModel;
   corporateForm: FormGroup;
+  financialInforForm: FormGroup;
   picForm: FormGroup;
   editCorAddress: boolean;
   editCorPhone: boolean;
@@ -35,13 +36,19 @@ export class CorporateInfoComponent implements OnInit {
     approve: 'A',
     inProgress: 'P'
   };
+  formType = {
+    corporateInfor: 'corporateInfor',
+    pic: 'pic'
+  };
+  saveType;
   constructor(private spinnerService: Ng4LoadingSpinnerService,
               private userService: UserService,
               private globalService: GlobalService) { }
 
   ngOnInit() {
     this.listCityJapan = LISTCITY_JAPAN;
-    this.resetEdit();
+    this.resetEditPic();
+    this.resetEditCorporateInfor();
     this.initCorporateForm();
     this.getCorporateInfor();
     this.initPicForm();
@@ -70,6 +77,14 @@ export class CorporateInfoComponent implements OnInit {
       person_email: new FormControl('', emailValidation),
     });
   }
+
+  // initFinancialInforForm() {
+  //   this.financialInforForm = new FormGroup({
+  //     annualIncome: new FormControl('', requiredInput),
+  //     financialAsset: new FormControl('', requiredInput),
+  //     amountAvaiable: new FormControl('', requiredInput)
+  //   })
+  // }
 
   getCorporateInfor() {
     this.spinnerService.show();
@@ -136,31 +151,34 @@ export class CorporateInfoComponent implements OnInit {
         fx_dept: this.picForm.controls.person_bod.value
       }
     };
+    if (this.saveType === this.formType.corporateInfor) {
+      param.pic = null;
+    }
+    if (this.saveType === this.formType.pic) {
+      param.corporation = null;
+    }
     this.userService.changeCorporation(param).subscribe(response => {
       if (response.meta.code === 200) {
-        this.showSaveCorp = false;
-        this.editCorAddress = false;
-        this.editCorPhone = false;
-        this.editCorFax = false;
-        this.editPersonBod = false;
-        this.editPersonPic = false;
-        this.editPersonPicname = false;
-        this.editPersonPhone = false;
-        this.editPersonEmail = false;
-        this.editGender = false;
+        if (this.saveType === this.formType.corporateInfor) {
+          this.resetEditCorporateInfor();
+        }
+        if (this.saveType === this.formType.pic) {
+          this.resetEditPic();
+        }
         this.getCorporateInfor();
       }
     });
   }
 
   saveCorp(type) {
+    this.saveType = type;
     this.isSubmittedCor = true;
-    if (type === 'corporateInfor') {
+    if (this.saveType === this.formType.corporateInfor) {
       if (this.corporateForm.invalid) {
         return;
       }
     }
-    if (type === 'pic') {
+    if (this.saveType === this.formType.pic) {
       if (this.picForm.invalid) {
         return;
       }
@@ -170,10 +188,10 @@ export class CorporateInfoComponent implements OnInit {
   }
 
   showEditFieldCor(field: string, type: string) {
-    if (type === 'corporateInfor') {
+    if (type === this.formType.corporateInfor) {
       this.showSaveCorp = true;
     }
-    if (type === 'pic') {
+    if (type === this.formType.pic) {
       this.showSavePic = true;
     }
     switch (field) {
@@ -220,8 +238,13 @@ export class CorporateInfoComponent implements OnInit {
     }
   }
 
-  cancelEditCor(field: string) {
-    this.showSaveCorp = false;
+  cancelEditCor(field: string, type: string) {
+    if (type === this.formType.pic) {
+      this.showSavePic = false;
+    }
+    if (type === this.formType.corporateInfor) {
+      this.showSaveCorp = false;
+    }
     switch (field) {
       case 'cor-address':
         this.editCorAddress = false;
@@ -253,16 +276,21 @@ export class CorporateInfoComponent implements OnInit {
     }
   }
 
-  resetEdit() {
-    this.editCorAddress = false;
-    this.editCorPhone = false;
-    this.editCorFax = false;
+  resetEditPic() {
+    this.showSavePic = false;
     this.editPersonBod = false;
     this.editPersonPic = false;
     this.editPersonPicname = false;
     this.editPersonPhone = false;
     this.editPersonEmail = false;
     this.editGender = false;
+  }
+
+  resetEditCorporateInfor() {
+    this.showSaveCorp = false;
+    this.editCorAddress = false;
+    this.editCorPhone = false;
+    this.editCorFax = false;
   }
 
 }
