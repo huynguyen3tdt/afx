@@ -20,7 +20,7 @@
                         </div>
                         <div class="editable d-block" *ngIf="editCorAddress == true">
                             <input type="text" name="postcode" formControlName="cor_postcode" maxlength="7" class="form-control form-control-sm mb-1" (change)="changeAddress()" placeholder=""
-                            [ngClass]="{'invalid': isSubmittedCor && (corporateForm.controls['cor_postcode'].errors)}">
+                            [ngClass]="{'invalid':(corporateForm.controls['cor_postcode'].errors)}">
                             <div *ngIf="isSubmittedCor && corporateForm?.controls['cor_postcode'].errors?.Required"
                                 class="invalid-mess">
                                 <div *ngIf="corporateForm?.controls['cor_postcode'].errors?.Required">
@@ -47,7 +47,7 @@
                             <div class="row no-gutters">
                                 <div class="col-sm-6 pr-md-1">
                                     <select class="form-control form-control-sm mb-1 select2" style="width: 100%" formControlName="cor_prefec"
-                                      [ngClass]="{'invalid': isSubmittedCor && corporateForm.controls['cor_prefec'].errors}">
+                                      [ngClass]="{'invalid':corporateForm.controls['cor_prefec'].errors}">
                                       <option *ngFor="let item of listCityJapan" value="{{item}}">{{item}}</option>
                                       <div *ngIf="isSubmittedCor && corporateForm?.controls['cor_prefec'].errors?.Required" class="invalid-mess">
                                         <div>{{'This field is required' | translate}}</div>
@@ -56,7 +56,7 @@
                                 </div>
                                 <div class="col-sm-6 pl-md-1">
                                   <input type="text" name="cor-address" class="form-control form-control-sm mb-1" formControlName="cor_district" value="" maxlength="100"
-                                    [ngClass]="{'invalid': isSubmittedCor && corporateForm?.controls['cor_district'].errors}">
+                                    [ngClass]="{'invalid':corporateForm?.controls['cor_district'].errors}">
                                     <div *ngIf="isSubmittedCor && corporateForm?.controls['cor_district'].errors?.Required" class="invalid-mess">
                                       <div>{{'This field is required' | translate}}</div>
                                     </div>
@@ -65,7 +65,7 @@
                             <div class="row no-gutters">
                                 <div class="col-sm-6 pr-md-1">
                                     <input type="text" name="cor-address" maxlength="11" class="form-control form-control-sm mb-1" formControlName="cor_house" value="" placeholder="House Number"
-                                      [ngClass]="{'invalid': isSubmittedCor && corporateForm?.controls['cor_house'].errors}">
+                                      [ngClass]="{'invalid':corporateForm?.controls['cor_house'].errors}">
                                       <div *ngIf="isSubmittedCor && corporateForm?.controls['cor_house'].errors?.Required" class="invalid-mess">
                                         <div>{{'This field is required' | translate}}</div>
                                       </div>
@@ -93,7 +93,7 @@
                         </div>
                         <div class="editable d-block" *ngIf="editCorPhone == true">
                             <input type="tel" name="cor-phone" class="form-control form-control-sm mb-1" maxlength="11" placeholder="" formControlName="cor_phone"
-                            [ngClass]="{'invalid': isSubmittedCor && (corporateForm.controls['cor_phone'].errors || corporateForm.controls['cor_phone'].errors?.SalaryLength
+                            [ngClass]="{'invalid':(corporateForm.controls['cor_phone'].errors || corporateForm.controls['cor_phone'].errors?.SalaryLength
                               || corporateForm.controls['cor_phone'].errors?.Salary || corporateForm.controls['cor_phone'].errors?.SalarySpecial)}">
                             <div *ngIf="isSubmittedCor && corporateForm.controls['cor_phone'].errors?.Required" class="invalid-mess">
                               <div>{{'This field is required' | translate}}</div>
@@ -117,7 +117,7 @@
                         </div>
                         <div class="editable d-block" *ngIf="editCorFax == true">
                             <input type="text" name="cor-fax" class="form-control form-control-sm mb-1" maxlength="11" placeholder="" formControlName="cor_fax"
-                              [ngClass]="{'invalid': isSubmittedCor && corporateForm?.controls['cor_fax'].errors}">
+                              [ngClass]="{'invalid':corporateForm?.controls['cor_fax'].errors}">
                             <div *ngIf="isSubmittedCor && corporateForm?.controls['cor_fax'].errors?.Required" class="invalid-mess">
                               <div>{{'This field is required' | translate}}</div>
                             </div>
@@ -140,92 +140,85 @@
 </div>
 <div class="d-flex justify-content-between align-items-center mb-3 bg-light p-2">
     <h5 class="mb-0"><strong>Financial Information</strong></h5>
-    <a href="javascript:;" class="edit-link edit-link-financial" data-toggle="tooltip" data-placement="top"
+    <a href="javascript:;" class="edit-link edit-link-financial" data-toggle="tooltip" data-placement="top" (click)="editFinancial = true"
         title="Edit Financial Information"><i class="icon ion-md-create"></i></a>
 </div>
-<div class="financial_info">
+<div class="financial_info" *ngIf="editFinancial == false">
     <div class="row mb-1">
         <div class="col-md-4 col-lg-3">
-            <label class="label">B年収</label>
+            <label class="label">事業体の年商</label>
         </div>
         <div class="col-md-8 col-lg-6">
-            <strong>2000万円以上</strong>
+            <strong>{{financialInforForm?.controls?.businessEntityAnnual?.value | convertFinancial: 'corp'}}</strong>
         </div>
     </div>
     <div class="row mb-1">
         <div class="col-md-4 col-lg-3">
-            <label class="label">金融資産・自己資産</label>
+            <label class="label">事業体の税抜後年間所得</label>
         </div>
         <div class="col-md-8 col-lg-6">
-            <strong>5000万円以上</strong>
+            <strong>{{financialInforForm?.controls?.tax?.value | convertFinancial: 'corp'}}</strong>
         </div>
     </div>
     <div class="row mb-1">
         <div class="col-md-4 col-lg-3">
-            <label class="label">上記自己資産のうち投資に利用可能な額</label>
+            <label class="label">事業体の資本金</label>
         </div>
         <div class="col-md-8 col-lg-6">
-            <strong>5000万円以上</strong>
+            <strong>{{financialInforForm?.controls?.businessCapital?.value | convertFinancial: 'corp'}}</strong>
+        </div>
+    </div>
+    <div class="row mb-1">
+        <div class="col-md-4 col-lg-3">
+            <label class="label">事業体の投資可能額</label>
+        </div>
+        <div class="col-md-8 col-lg-6">
+            <strong>{{financialInforForm?.controls?.investment?.value | convertFinancial: 'corp'}}</strong>
         </div>
     </div>
 </div>
-<div class="financial_edit p-3 bg-light d-none">
+<div [formGroup]="financialInforForm" class="financial_edit p-3 bg-light" *ngIf="editFinancial == true">
     <div class="row mb-1">
         <div class="col-md-4 col-lg-3">
-            <label class="label">B年収</label>
+            <label class="label">事業体の年商</label>
         </div>
         <div class="col-md-8 col-lg-6">
-            <select class="form-control">
-                <option value="">選択してください</option>
-                <option value="0">30万円未満</option>
-                <option value="1">30万円～100万円未満</option>
-                <option value="2">100万円～250万円未満</option>
-                <option value="3">250万円～500万円未満</option>
-                <option value="4">500万円～1000万円未満</option>
-                <option value="5">1000万円～2500万円未満</option>
-                <option value="6">2500万円～5000万円未満</option>
-                <option value="7">5000万円～1億円未満</option>
-                <option value="8">1億円以上</option>
+            <select class="form-control" formControlName="businessEntityAnnual">
+                <option value="" disabled>選択してください</option>
+                <option *ngFor="let item of listBusinessEntityAnnualCorporation" value="{{item?.sequence}}">{{item?.value}}</option>
             </select>
         </div>
     </div>
     <div class="row mb-1">
         <div class="col-md-4 col-lg-3">
-            <label class="label">金融資産・自己資産</label>
+            <label class="label">事業体の税抜後年間所得</label>
         </div>
         <div class="col-md-8 col-lg-6">
-            <select class="form-control">
-                <option value="" data-val="0">選択してください</option>
-                <option value="8" data-val="100">1億円以上</option>
-                <option value="7" data-val="90">5000万円～1億円未満</option>
-                <option value="6" data-val="80">2500万円～5000万円未満</option>
-                <option value="5" data-val="70">1000万円～2500万円未満</option>
-                <option value="4" data-val="60">500万円～1000万円未満</option>
-                <option value="3" data-val="50">250万円～500万円未満</option>
-                <option value="2" data-val="40">100万円～250万円未満</option>
-                <option value="11" data-val="30">50万円～100万円未満</option>
-                <option value="1" data-val="20">10万円～50万円未満</option>
-                <option value="0" class="outcondition" data-val="10">10万円未満</option>
+            <select class="form-control" formControlName="tax">
+                <option value="" disabled>選択してください</option>
+                <option *ngFor="let item of listTaxCorporation" value="{{item?.sequence}}" data-val="100">{{item?.value}}</option>
             </select>
         </div>
     </div>
     <div class="row mb-1">
         <div class="col-md-4 col-lg-3">
-            <label class="label">上記自己資産のうち投資に利用可能な額</label>
+            <label class="label">事業体の資本金</label>
         </div>
         <div class="col-md-8 col-lg-6">
-            <select class="form-control">
-                <option value="">選択してください</option>
-                <option value="0">10万円未満</option>
-                <option value="1">10万円～50万円未満</option>
-                <option value="11">50万円～100万円未満</option>
-                <option value="2">100万円～250万円未満</option>
-                <option value="3">250万円～500万円未満</option>
-                <option value="4">500万円～1000万円未満</option>
-                <option value="5">1000万円～2500万円未満</option>
-                <option value="6">2500万円～5000万円未満</option>
-                <option value="7">5000万円～1億円未満</option>
-                <option value="8">1億円以上</option>
+            <select class="form-control" formControlName="businessCapital">
+                <option value="" disabled>選択してください</option>
+                <option *ngFor="let item of listBusinessCapitalCorporation" value="{{item?.sequence}}">{{item?.value}}</option>
+            </select>
+        </div>
+    </div>
+    <div class="row mb-1">
+        <div class="col-md-4 col-lg-3">
+            <label class="label">事業体の投資可能額</label>
+        </div>
+        <div class="col-md-8 col-lg-6">
+            <select class="form-control" formControlName="investment">
+                <option value="" disabled>選択してください</option>
+                <option *ngFor="let item of listInvestmentCorporation" value="{{item?.sequence}}">{{item?.value}}</option>
             </select>
         </div>
     </div>
@@ -234,7 +227,7 @@
             &nbsp;
         </div>
         <div class="col-md-8 col-lg-6">
-            <button class="btn btn-success btn-save">Save</button>
+            <button (click)="saveCorp(formType.financial)" class="btn btn-success btn-save">Save</button>
         </div>
     </div>
 </div>
@@ -252,7 +245,7 @@
                     </div>
                     <div class="editable d-block" *ngIf="editPersonBod == true">
                         <input type="text" name="department" class="form-control form-control-sm mb-1" maxlength="100" placeholder="" formControlName="person_bod"
-                          [ngClass]="{'invalid': isSubmittedCor && picForm?.controls['person_bod'].errors}">
+                          [ngClass]="{'invalid':picForm?.controls['person_bod'].errors}">
                         <div *ngIf="isSubmittedCor && picForm?.controls['person_bod'].errors?.Required" class="invalid-mess">
                           <div>{{'This field is required' | translate}}</div>
                         </div>
@@ -272,7 +265,7 @@
                     </div>
                     <div class="editable d-block" *ngIf="editPersonPic == true">
                         <input type="text" name="pic-position" class="form-control form-control-sm mb-1" maxlength="100" placeholder="PIC Position" formControlName="person_pic"
-                          [ngClass]="{'invalid': isSubmittedCor && picForm?.controls['person_pic'].errors}">
+                          [ngClass]="{'invalid':picForm?.controls['person_pic'].errors}">
                         <div *ngIf="isSubmittedCor && picForm?.controls['person_pic'].errors?.Required" class="invalid-mess">
                           <div>{{'This field is required' | translate}}</div>
                         </div>
@@ -293,7 +286,7 @@
                     </div>
                     <div class="editable d-block" *ngIf="editPersonPicname == true">
                         <input type="text" name="pic-name" class="form-control form-control-sm mb-1" maxlength="100" placeholder="PIC name" formControlName="per_picname"
-                          [ngClass]="{'invalid': isSubmittedCor && picForm?.controls['per_picname'].errors}">
+                          [ngClass]="{'invalid':picForm?.controls['per_picname'].errors}">
                         <div *ngIf="isSubmittedCor && picForm?.controls['per_picname'].errors?.Required" class="invalid-mess">
                           <div>{{'This field is required' | translate}}</div>
                         </div>
@@ -310,7 +303,7 @@
                     </div>
                     <div class="editable d-block" *ngIf="editPersonPicname == true">
                         <input type="text" name="pic-name" class="form-control form-control-sm mb-1" maxlength="100" placeholder="PIC name" formControlName="person_picname"
-                          [ngClass]="{'invalid': isSubmittedCor && picForm?.controls['person_picname'].errors}">
+                          [ngClass]="{'invalid':picForm?.controls['person_picname'].errors}">
                         <div *ngIf="isSubmittedCor && picForm?.controls['person_picname'].errors?.Required" class="invalid-mess">
                           <div>{{'This field is required' | translate}}</div>
                         </div>
@@ -350,7 +343,7 @@
                     </div>
                     <div class="editable d-block" *ngIf="editPersonPhone == true">
                         <input type="tel" name="p-phone" class="form-control form-control-sm mb-1"  maxlength="11" placeholder="" formControlName="person_phone"
-                        [ngClass]="{'invalid': isSubmittedCor && picForm.controls['person_phone'].errors}">
+                        [ngClass]="{'invalid':picForm.controls['person_phone'].errors}">
                         <div *ngIf="isSubmittedCor && picForm.controls['person_phone'].errors?.Required" class="invalid-mess">
                           <div>{{'This field is required' | translate}}</div>
                         </div>
@@ -406,16 +399,53 @@
 <div>&nbsp;</div>
 <div class="d-flex justify-content-between align-items-center mb-3 bg-light p-2">
     <h5 class="mb-0"><strong>PIC Investment Experience</strong></h5>
-    <a href="javascript:;" class="edit-link edit-link-investment" data-toggle="tooltip" data-placement="top"
+    <a href="javascript:;" class="edit-link edit-link-investment" data-toggle="tooltip" data-placement="top" (click)="editPurpose = true"
         title="Edit Investment Purpose"><i class="icon ion-md-create"></i></a>
 </div>
-<div class="investment_purpose">
+<div class="investment_purpose" *ngIf="editPurpose == false">
+    <div class="row mb-1">
+        <div class="col-md-4 col-lg-3">
+            <label class="label">投資目的</label>
+        </div>
+        <div class="col-md-8 col-lg-6">
+            <strong>{{purposeInvestForm?.controls?.investPurposeSortTerm?.value == true ? '短期売買 ' : ''}}
+                {{purposeInvestForm?.controls?.investPurposeMedium?.value == true ? '中長期運用 ' : ''}}
+                {{purposeInvestForm?.controls?.investPurposeExchange?.value == true ? '為替差益重視 ' : ''}}
+                {{purposeInvestForm?.controls?.investPurposeInterestRate?.value == true ? '金利・配当重視 ' : ''}}
+                {{purposeInvestForm?.controls?.investPurposeForeignCurrency?.value == true ? '外貨資産ヘッジ ' : ''}}
+                {{purposeInvestForm?.controls?.investPurposeOther?.value == true ? 'その他 ' : ''}}</strong>
+        </div>
+    </div>
+    <div class="row mb-1">
+            <div class="col-md-4 col-lg-3">
+                <label class="label">その他をご選択の場合</label>
+            </div>
+            <div class="col-md-8 col-lg-6">
+                <strong>{{purposeInvestForm?.controls?.otherPurpose?.value}}</strong>
+            </div>
+    </div>
+    <div class="row mb-1">
+            <div class="col-md-4 col-lg-3">
+                <label class="label">申込の経緯（取引の動機）</label>
+            </div>
+            <div class="col-md-8 col-lg-6">
+                <strong>{{purposeInvestForm?.controls?.backgroundApplication?.value | convertInvestmentPurpose : 'background'}}</strong>
+            </div>
+    </div>
+    <div class="row mb-1">
+            <div class="col-md-4 col-lg-3">
+                <label class="label">具体名をご記入ください </label>
+            </div>
+            <div class="col-md-8 col-lg-6">
+                <strong>{{purposeInvestForm?.controls?.specificName?.value}}</strong>
+            </div>
+    </div>
     <div class="row mb-1">
         <div class="col-md-4 col-lg-3">
             <label class="label">投資経験：FX取引</label>
         </div>
         <div class="col-md-8 col-lg-6">
-            <strong>5000万円以上</strong>
+            <strong>{{purposeInvestForm?.controls?.investExFx?.value | convertInvestmentPurpose: 'experience'}}</strong>
         </div>
     </div>
     <div class="row mb-1">
@@ -423,7 +453,7 @@
             <label class="label">投資経験：CFD取引</label>
         </div>
         <div class="col-md-8 col-lg-6">
-            <strong>５年以上</strong>
+            <strong>{{purposeInvestForm?.controls?.inversExCfd?.value | convertInvestmentPurpose: 'experience'}}</strong>
         </div>
     </div>
     <div class="row mb-1">
@@ -431,7 +461,7 @@
             <label class="label">投資経験：株式取引</label>
         </div>
         <div class="col-md-8 col-lg-6">
-            <strong>５年以上</strong>
+            <strong>{{purposeInvestForm?.controls?.investStockTrading?.value | convertInvestmentPurpose: 'experience'}}</strong>
         </div>
     </div>
     <div class="row mb-1">
@@ -439,7 +469,7 @@
             <label class="label">投資経験：信用取引</label>
         </div>
         <div class="col-md-8 col-lg-6">
-            <strong>５年以上</strong>
+            <strong>{{purposeInvestForm?.controls?.investMarginTrading?.value | convertInvestmentPurpose: 'experience'}}</strong>
         </div>
     </div>
     <div class="row mb-1">
@@ -447,7 +477,7 @@
             <label class="label">投資経験：商品先物</label>
         </div>
         <div class="col-md-8 col-lg-6">
-            <strong>５年以上</strong>
+            <strong>{{purposeInvestForm?.controls?.investCommodities?.value | convertInvestmentPurpose: 'experience'}}</strong>
         </div>
     </div>
     <div class="row mb-1">
@@ -455,7 +485,7 @@
             <label class="label">投資経験：その他</label>
         </div>
         <div class="col-md-8 col-lg-6">
-            <strong>上記以外の投資経験がある</strong>
+            <strong>{{purposeInvestForm?.controls?.other?.value == '1' ? '特になし' : '上記以外の投資経験がある'}}</strong>
         </div>
     </div>
     <div class="row mb-1">
@@ -463,7 +493,7 @@
             <label class="label mr-lg-2">投資経験がある金融商品名</label>
         </div>
         <div class="col-md-8 col-lg-6">
-            <strong>仮想通貨</strong>
+            <strong>{{purposeInvestForm?.controls?.financialInstrument?.value}}</strong>
         </div>
     </div>
     <div class="row mb-1">
@@ -471,55 +501,138 @@
             <label class="label mr-lg-2">取引経験</label>
         </div>
         <div class="col-md-8 col-lg-6">
-            <strong>５年以上</strong>
+            <strong> {{purposeInvestForm?.controls?.tradingExperience?.value | convertInvestmentPurpose: 'experience'}}</strong>
         </div>
     </div>
 </div>
-<div class="investment_purpose_edit p-3 bg-light d-none">
-    <div class="row mb-1">
-        <div class="col-md-4 col-lg-3">
-            <label class="label">投資経験：FX取引</label>
+<div [formGroup]="purposeInvestForm" class="investment_purpose_edit p-3 bg-light" *ngIf="editPurpose == true">
+    <label class="label mb-1">投資目的</label>
+    <div *ngIf="purposeInvestForm.controls.investPurpose.errors"
+                class="text-danger small mt-1">1つ以上の選択が必要です</div>
+    <div class="row small-gutters">
+        <div class="col-md-6 col-lg-4">
+            <label class="container-checkbox small box-item-checkbox mb-2">
+                <div class="text-center"><strong>短期売買</strong></div>
+                <input type="checkbox" formControlName="investPurposeSortTerm"  
+                (change)="changePurpose()" value="1">
+                <span class="checkmark"></span>
+            </label>
         </div>
-        <div class="col-md-8 col-lg-6">
-            <select class="form-control">
-                <option value="">選択してください</option>
-                <option value="0">未経験</option>
-                <option value="12">半年未満</option>
-                <option value="1">１年未満</option>
-                <option value="2">２年未満</option>
-                <option value="3">３年未満</option>
-                <option value="4">４年未満</option>
-                <option value="5">５年未満</option>
-                <option value="6">６年未満</option>
-                <option value="7">７年未満</option>
-                <option value="8">８年未満</option>
-                <option value="9">９年未満</option>
-                <option value="10">１０年未満</option>
-                <option value="11">１０年以上</option>
-            </select>
+        <div class="col-md-6 col-lg-4">
+            <label class="container-checkbox small  box-item-checkbox mb-2">
+                <div class="text-center"><strong>中長期運用</strong></div>
+                <input type="checkbox" (change)="changePurpose()"
+                formControlName="investPurposeMedium" value="2">
+                <span class="checkmark"></span>
+            </label>
+        </div>
+        <div class="col-md-6 col-lg-4">
+            <label class="container-checkbox small  box-item-checkbox mb-2">
+                <div class="text-center"><strong>為替差益重視</strong></div>
+                <input type="checkbox" (change)="changePurpose()"
+                formControlName="investPurposeExchange" value="3">
+                <span class="checkmark"></span>
+            </label>
+        </div>
+        <div class="col-md-6 col-lg-4">
+            <label class="container-checkbox small  box-item-checkbox mb-2">
+                <div class="text-center"><strong>金利・配当重視</strong></div>
+                <input type="checkbox" (change)="changePurpose()"
+                formControlName="investPurposeInterestRate" value="4">
+                <span class="checkmark"></span>
+            </label>
+        </div>
+        <div class="col-md-6 col-lg-4">
+            <label class="container-checkbox small  box-item-checkbox mb-2">
+                <div class="text-center"><strong>外貨資産ヘッジ</strong></div>
+                <input type="checkbox" (change)="changePurpose()"
+                formControlName="investPurposeForeignCurrency" value="5">
+                <span class="checkmark"></span>
+            </label>
+        </div>
+        <div class="col-md-6 col-lg-4">
+            <label class="container-checkbox small  box-item-checkbox mb-2">
+                <div class="text-center"><strong>その他</strong></div>
+                <input type="checkbox" (change)="changePurpose()"
+                formControlName="investPurposeOther" value="6">
+                <span class="checkmark"></span>
+            </label>
         </div>
     </div>
+    <div>&nbsp;</div>
+    <div class="row mb-1" *ngIf="purposeInvestForm.controls.investPurposeOther.value == true">
+        <div class="col-md-4 col-lg-3">
+            <label class="label mr-lg-2">その他をご選択の場合</label>
+        </div>
+        <div class="col-md-8 col-lg-6">
+            <input formControlName="otherPurpose" type="text" name="exx" value=""
+            [className]="purposeInvestForm.controls.otherPurpose.errors ? 'form-control invalid' : 'form-control'">
+            <div *ngIf="purposeInvestForm.controls.otherPurpose.errors" class="invalid-mess">
+                <div>この項目は必須項目です。</div>
+            </div>
+        </div>
+    </div>
+    <div class="row mb-1">
+        <div class="col-md-4 col-lg-3">
+            <label class="label">申込の経緯（取引の動機）</label>
+        </div>
+        <div class="col-md-8 col-lg-6">
+            <select formControlName="backgroundApplication" (change)="changeBackGroundApplication()"
+            [className]="purposeInvestForm.controls.backgroundApplication.errors ? 'form-control invalid' : 'form-control'">
+                <option value="" disabled>選択してください</option>
+                <option *ngFor="let item of listBackgroundApplicationInvidual" value="{{item?.sequence}}">{{item?.value}}</option>
+            </select>
+            <div *ngIf="purposeInvestForm.controls.backgroundApplication.errors" class="invalid-mess">
+                <div>この項目は必須項目です。</div>
+            </div>
+        </div>
+    </div>
+    <div class="row mb-1" *ngIf="purposeInvestForm.controls.backgroundApplication.value == 10">
+            <div class="col-md-4 col-lg-3">
+                <label class="label mr-lg-2">具体名をご記入ください</label>
+            </div>
+            <div class="col-md-8 col-lg-6">
+                <input formControlName="specificName" type="text" placeholder="例)先物・オプション・仮想通貨"
+                [className]="purposeInvestForm.controls.specificName.errors ? 'form-control invalid' : 'form-control'">
+                <div *ngIf="purposeInvestForm.controls.specificName.errors"
+                        class="invalid-mess">
+                        <div>この項目は必須項目です。</div>
+                    </div>
+            </div>
+    </div>
+    <div class="row mb-1">
+            <div class="col-md-4 col-lg-3">
+                <label class="label">投資経験：FX取引</label>
+            </div>
+            <div class="col-md-8 col-lg-6">
+                <select formControlName="investExFx" (change)="changeExPurPose()"
+                [className]="purposeInvestForm.controls.investExFx.errors ? 'form-control invalid' : 'form-control'">
+                    <option value="" disabled>選択してください</option>
+                    <option *ngFor="let item of listInvestExFxInvidual"
+                    value="{{item?.sequence}}">{{item?.value}}</option>
+                </select>
+                <div *ngIf="purposeInvestForm.controls.investExFx.errors" class="invalid-mess">
+                    <div *ngIf="purposeInvestForm?.controls?.investExFx?.errors?.ErrorEXP">デリバティブの経験が6か月未満の場合には口座を開設いただけません。</div>
+                    <div *ngIf="purposeInvestForm?.controls?.investExFx?.errors?.Required">この項目は必須項目です。</div>
+                </div>
+            </div>
+        </div>
     <div class="row mb-1">
         <div class="col-md-4 col-lg-3">
             <label class="label">投資経験：CFD取引</label>
         </div>
         <div class="col-md-8 col-lg-6">
-            <select class="form-control">
-                <option value="">選択してください</option>
-                <option value="0">未経験</option>
-                <option value="12">半年未満</option>
-                <option value="1">１年未満</option>
-                <option value="2">２年未満</option>
-                <option value="3">３年未満</option>
-                <option value="4">４年未満</option>
-                <option value="5">５年未満</option>
-                <option value="6">６年未満</option>
-                <option value="7">７年未満</option>
-                <option value="8">８年未満</option>
-                <option value="9">９年未満</option>
-                <option value="10">１０年未満</option>
-                <option value="11">１０年以上</option>
+            <select formControlName="inversExCfd" 
+            (change)="changeExPurPose()"
+            [className]="purposeInvestForm.controls.inversExCfd.errors ? 'form-control invalid' : 'form-control'">
+                <option value="" disabled>選択してください</option>
+                <option *ngFor="let item of listInvesExCfdInvidual"
+                value="{{item?.sequence}}">{{item?.value}}</option>
             </select>
+            <div *ngIf="purposeInvestForm.controls.inversExCfd.errors" class="invalid-mess">
+                <div *ngIf="purposeInvestForm?.controls?.inversExCfd?.errors?.ErrorEXP">デリバティブの経験が6か月未満の場合には口座を開設いただけません。</div>
+                <div *ngIf="purposeInvestForm?.controls?.inversExCfd?.errors?.Required">この項目は必須項目です。</div>
+            </div>
         </div>
     </div>
     <div>&nbsp;</div>
@@ -528,22 +641,15 @@
             <label class="label">投資経験：株式取引</label>
         </div>
         <div class="col-md-8 col-lg-6">
-            <select class="form-control">
-                <option value="">選択してください</option>
-                <option value="0">未経験</option>
-                <option value="12">半年未満</option>
-                <option value="1">１年未満</option>
-                <option value="2">２年未満</option>
-                <option value="3">３年未満</option>
-                <option value="4">４年未満</option>
-                <option value="5">５年未満</option>
-                <option value="6">６年未満</option>
-                <option value="7">７年未満</option>
-                <option value="8">８年未満</option>
-                <option value="9">９年未満</option>
-                <option value="10">１０年未満</option>
-                <option value="11">１０年以上</option>
+            <select formControlName="investStockTrading"
+            [className]="purposeInvestForm.controls.investStockTrading.errors ? 'form-control invalid' : 'form-control'">
+                <option value="" disabled>選択してください</option>
+                <option *ngFor="let item of listInvestStockTradingInvidual"
+                            value="{{item?.sequence}}">{{item?.value}}</option>
             </select>
+            <div *ngIf="purposeInvestForm.controls.investStockTrading.errors" class="invalid-mess">
+                <div>この項目は必須項目です。</div>
+            </div>
         </div>
     </div>
     <div class="row mb-1">
@@ -551,22 +657,15 @@
             <label class="label">投資経験：信用取引</label>
         </div>
         <div class="col-md-8 col-lg-6">
-            <select class="form-control">
-                <option value="">選択してください</option>
-                <option value="0">未経験</option>
-                <option value="12">半年未満</option>
-                <option value="1">１年未満</option>
-                <option value="2">２年未満</option>
-                <option value="3">３年未満</option>
-                <option value="4">４年未満</option>
-                <option value="5">５年未満</option>
-                <option value="6">６年未満</option>
-                <option value="7">７年未満</option>
-                <option value="8">８年未満</option>
-                <option value="9">９年未満</option>
-                <option value="10">１０年未満</option>
-                <option value="11">１０年以上</option>
+            <select formControlName="investMarginTrading"
+            [className]="purposeInvestForm.controls.investMarginTrading.errors ? 'form-control invalid' : 'form-control'">
+                <option value="" disabled>選択してください</option>
+                <option *ngFor="let item of listInvestMarginTradingInvidual"
+                            value="{{item?.sequence}}">{{item?.value}}</option>
             </select>
+            <div *ngIf="purposeInvestForm.controls.investMarginTrading.errors" class="invalid-mess">
+                <div>この項目は必須項目です。</div>
+            </div>
         </div>
     </div>
     <div class="row mb-1">
@@ -574,22 +673,18 @@
             <label class="label">投資経験：商品先物</label>
         </div>
         <div class="col-md-8 col-lg-6">
-            <select class="form-control">
-                <option value="">選択してください</option>
-                <option value="0">未経験</option>
-                <option value="12">半年未満</option>
-                <option value="1">１年未満</option>
-                <option value="2">２年未満</option>
-                <option value="3">３年未満</option>
-                <option value="4">４年未満</option>
-                <option value="5">５年未満</option>
-                <option value="6">６年未満</option>
-                <option value="7">７年未満</option>
-                <option value="8">８年未満</option>
-                <option value="9">９年未満</option>
-                <option value="10">１０年未満</option>
-                <option value="11">１０年以上</option>
+            <select formControlName="investCommodities" 
+            (change)="changeExPurPose()"
+            [className]="purposeInvestForm.controls.investCommodities.errors ? 'form-control invalid' : 'form-control'">
+                <option value="" disabled>選択してください</option>
+                <option *ngFor="let item of listInvestCommoditiesInvidual"
+                            value="{{item?.sequence}}">{{item?.value}}</option>
             </select>
+            <div *ngIf="purposeInvestForm.controls.investCommodities.errors" class="invalid-mess">
+                <div *ngIf="purposeInvestForm?.controls?.investCommodities?.errors?.ErrorEXP">デリバティブの経験が6か月未満の場合には口座を開設いただけません。
+                </div>
+                <div *ngIf="purposeInvestForm?.controls?.investCommodities?.errors?.Required">この項目は必須項目です。</div>
+            </div>
         </div>
     </div>
     <div class="row mb-1">
@@ -598,56 +693,61 @@
         </div>
         <div class="col-md-8 col-lg-6">
             <div class="container-radios-wrapper">
-                <label class="container-radio small  box-item-radio mb-2 active">
+                <label
+                [className]="purposeInvestForm.controls.other.value == '1' ? 'container-radio small  box-item-radio mb-2 active' : 'container-radio small  box-item-radio mb-2'">
                     <div class="text-center"><strong>特になし</strong></div>
-                    <input type="radio" name="ex_invest" value="0" checked>
+                    <input type="radio" formControlName="other" value="1" (change)="changeOtherEx()">
                     <span class="checkmark"></span>
                 </label>
-                <label class="container-radio small box-item-radio mb-2">
+                <label class="container-radio small box-item-radio mb-2"
+                [className]="purposeInvestForm.controls.other.value == '2' ? 'container-radio small  box-item-radio mb-2 active' : 'container-radio small  box-item-radio mb-2'">
                     <div class="text-center"><strong>上記以外の投資経験がある</strong></div>
-                    <input type="radio" name="ex_invest" value="1">
+                    <input type="radio" formControlName="other" value="2" (change)="changeOtherEx()">
                     <span class="checkmark"></span>
                 </label>
             </div>
         </div>
     </div>
-    <div class="row mb-1">
-        <div class="col-md-4 col-lg-3">
-            <label class="label mr-lg-2">投資経験がある金融商品名</label>
+    <ng-container *ngIf="purposeInvestForm.controls.other.value == '2'">
+        <div class="row mb-1">
+            <div class="col-md-4 col-lg-3">
+                <label class="label mr-lg-2">投資経験がある金融商品名</label>
+            </div>
+            <div class="col-md-8 col-lg-6">
+                <input type="text" formControlName="financialInstrument"
+                [className]="purposeInvestForm.controls.financialInstrument.errors ? 'form-control invalid' : 'form-control'">
+                <div *ngIf="purposeInvestForm.controls.financialInstrument.errors" class="invalid-mess">
+                    <div>この項目は必須項目です。</div>
+                </div>
+            </div>
         </div>
-        <div class="col-md-8 col-lg-6">
-            <input type="text" name="exx" value="" placeholder="例)先物・オプション・仮想通貨" class="form-control">
+    
+        <div class="row mb-1">
+            <div class="col-md-4 col-lg-3">
+                <label class="label mr-lg-2">取引経験</label>
+            </div>
+            <div class="col-md-8 col-lg-6">
+                <select formControlName="tradingExperience" (change)="changeExPurPose()"
+                [className]="purposeInvestForm.controls.tradingExperience.errors ? 'form-control invalid' : 'form-control'">
+                    <option value="" disabled>選択してください</option>
+                    <option *ngFor="let item of listTradingExperienceInvidual" value="{{item?.sequence}}">{{item?.value}}
+                    </option>
+                    <div *ngIf="purposeInvestForm.controls.tradingExperience.errors"
+                            class="invalid-mess">
+                            <!-- <div>この項目は必須項目です。</div> -->
+                            <div *ngIf="purposeInvestForm?.controls?.tradingExperience?.errors?.ErrorEXP">デリバティブの経験が6か月未満の場合には口座を開設いただけません。</div>
+                            <div *ngIf="purposeInvestForm?.controls?.tradingExperience?.errors?.Required">この項目は必須項目です。</div>
+                        </div>
+                </select>
+            </div>
         </div>
-    </div>
-    <div class="row mb-1">
-        <div class="col-md-4 col-lg-3">
-            <label class="label mr-lg-2">取引経験</label>
-        </div>
-        <div class="col-md-8 col-lg-6">
-            <select class="form-control">
-                <option value="">選択してください</option>
-                <option value="0">未経験</option>
-                <option value="12">半年未満</option>
-                <option value="1">１年未満</option>
-                <option value="2">２年未満</option>
-                <option value="3">３年未満</option>
-                <option value="4">４年未満</option>
-                <option value="5">５年未満</option>
-                <option value="6">６年未満</option>
-                <option value="7">７年未満</option>
-                <option value="8">８年未満</option>
-                <option value="9">９年未満</option>
-                <option value="10">１０年未満</option>
-                <option value="11">１０年以上</option>
-            </select>
-        </div>
-    </div>
+    </ng-container>
     <div class="row mb-1">
         <div class="col-md-4 col-lg-3">
             &nbsp;
         </div>
         <div class="col-md-8 col-lg-6">
-            <button class="btn btn-success btn-save">Save</button>
+            <button (click)="saveCorp(formType.purpose)" class="btn btn-success btn-save">Save</button>
         </div>
     </div>
 </div>

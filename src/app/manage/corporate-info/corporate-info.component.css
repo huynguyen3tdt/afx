@@ -1,0 +1,6 @@
+option[value=""][disabled] {
+    display: none;
+  }
+::placeholder {
+    opacity: 0.5;
+}

@@ -21,6 +21,8 @@ import { TransacstionModalComponent } from './transacstion-modal/transacstion-mo
 import { ModalModule } from 'ngx-bootstrap';
 import { UserInforComponent } from './user-infor/user-infor.component';
 import { CorporateInfoComponent } from './corporate-info/corporate-info.component';
+import { ConvertFinancialPipe } from '../core/pipe/convert-financial.pipe';
+import { ConvertInvestmentPurposePipe } from '../core/pipe/convert-purposeInvest.pipe';
 
 @NgModule({
     imports: [
@@ -48,7 +50,9 @@ import { CorporateInfoComponent } from './corporate-info/corporate-info.componen
       ListTransactionComponent,
       TransacstionModalComponent,
       UserInforComponent,
-      CorporateInfoComponent
+      CorporateInfoComponent,
+      ConvertFinancialPipe,
+      ConvertInvestmentPurposePipe
     ],
     schemas: [NO_ERRORS_SCHEMA]
 })

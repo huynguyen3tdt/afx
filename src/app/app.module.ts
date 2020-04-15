@@ -42,7 +42,7 @@ const Routing: ModuleWithProviders = RouterModule.forRoot(AppRoutes, {
     RegisterLayoutComponent,
     ManageLayoutComponent,
     HeaderComponent,
-    FooterComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
