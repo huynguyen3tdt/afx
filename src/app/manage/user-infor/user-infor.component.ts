@@ -8,7 +8,7 @@ import {
   annualIncomeValidation,
   experienceValidation
 } from 'src/app/core/helper/custom-validate.helper';
-import { UserModel, AddressModel, LabelModel } from 'src/app/core/model/user.model';
+import { UserModel, AddressModel, LabelModel, QuestionModel } from 'src/app/core/model/user.model';
 import { UserService } from 'src/app/core/services/user.service';
 import { GlobalService } from 'src/app/core/services/global.service';
 import { LISTCITY_JAPAN } from 'src/app/core/constant/japan-constant';
@@ -40,7 +40,6 @@ export class UserInforComponent implements OnInit {
   editPhone: boolean;
   showSave: boolean;
   userAddress: AddressModel;
-  isSubmittedUser: boolean;
   occupationSurveyForm: FormGroup;
   STATUS_INFO = {
     approve: 'A',
@@ -59,13 +58,22 @@ export class UserInforComponent implements OnInit {
   listCityJapan: Array<string>;
   editPurpose: boolean;
   editFinancial: boolean;
+  formType = {
+    userInfor: 'userInfor',
+    financial: 'financial',
+    purpose: 'purpose'
+  };
+  saveType: string;
+  listFinancialSubmit: Array<QuestionModel>;
+  listPurposeSubmit: Array<QuestionModel>;
+
   constructor(private userService: UserService, private globalService: GlobalService) { }
 
   ngOnInit() {
     this.listCityJapan = LISTCITY_JAPAN;
     this.editPurpose = false;
     this.editFinancial = false;
-    this.resetEdit();
+    this.resetEditUser();
     this.initUserForm();
     this.initOccupationSurveyForm();
     this.initPurposeInvestForm();
@@ -139,75 +147,71 @@ export class UserInforComponent implements OnInit {
         this.userInfor.fx_gender = this.globalService.checkGender(this.userInfor.fx_gender);
         if (this.userInfor.surveys.length > 0) {
           if (this.userInfor.surveys.find(item =>
-            item.question_cd === 'indi_inv_purpose' && item.value_text === '1')) {
+            item.question_cd === 'indi_inv_purpose' && item.sequence === 1)) {
             this.purposeInvestForm.controls.investPurposeSortTerm.setValue(true);
           }
 
           if (this.userInfor.surveys.find(item =>
-            item.question_cd === 'indi_inv_purpose' && item.value_text === '2')) {
+            item.question_cd === 'indi_inv_purpose' && item.sequence === 2)) {
             this.purposeInvestForm.controls.investPurposeMedium.setValue(true);
           }
           if (this.userInfor.surveys.find(item =>
-            item.question_cd === 'indi_inv_purpose' && item.value_text === '3')) {
+            item.question_cd === 'indi_inv_purpose' && item.sequence === 3)) {
             this.purposeInvestForm.controls.investPurposeExchange.setValue(true);
           }
           if (this.userInfor.surveys.find(item =>
-            item.question_cd === 'indi_inv_purpose' && item.value_text === '4')) {
+            item.question_cd === 'indi_inv_purpose' && item.sequence === 4)) {
             this.purposeInvestForm.controls.investPurposeInterestRate.setValue(true);
           }
 
           if (this.userInfor.surveys.find(item =>
-            item.question_cd === 'indi_inv_purpose' && item.value_text === '5')) {
+            item.question_cd === 'indi_inv_purpose' && item.sequence === 5)) {
             this.purposeInvestForm.controls.investPurposeForeignCurrency.setValue(true);
           }
 
           if (this.userInfor.surveys.find(item =>
-            item.question_cd === 'indi_inv_purpose' && item.value_text === '6')) {
+            item.question_cd === 'indi_inv_purpose' && item.sequence === 6)) {
             this.purposeInvestForm.controls.investPurposeOther.setValue(true);
           }
-
-          this.occupationSurveyForm.controls.amountAvaiable.setValue(
-            this.userInfor.surveys.find(item => item.question_cd === 'indi_investable').value_text
-          );
-
-          this.occupationSurveyForm.controls.annualIncome.setValue(
-            this.userInfor.surveys.find(item => item.question_cd === 'indi_income').value_text);
-
-          this.occupationSurveyForm.controls.financialAsset.setValue(
-            this.userInfor.surveys.find(item => item.question_cd === 'indi_income').value_text);
-
           this.purposeInvestForm.controls.investExFx.
-            setValue(this.userInfor.surveys.find(item => item.question_cd === 'indi_fx_exp').value_text);
+            setValue(this.userInfor.surveys.find(item => item.question_cd === 'indi_fx_exp').sequence);
 
           this.purposeInvestForm.controls.inversExCfd.
-            setValue(this.userInfor.surveys.find(item => item.question_cd === 'indi_cfd_exp').value_text);
+            setValue(this.userInfor.surveys.find(item => item.question_cd === 'indi_cfd_exp').sequence);
 
           this.purposeInvestForm.controls.investStockTrading.
-            setValue(this.userInfor.surveys.find(item => item.question_cd === 'indi_stock_exp').value_text);
+            setValue(this.userInfor.surveys.find(item => item.question_cd === 'indi_stock_exp').sequence);
 
           this.purposeInvestForm.controls.other.
-            setValue(this.userInfor.surveys.find(item => item.question_cd === 'indi_other_exp_yn').value_text);
+            setValue(this.userInfor.surveys.find(item => item.question_cd === 'indi_other_exp_yn').sequence.toString());
 
           this.purposeInvestForm.controls.backgroundApplication.
-            setValue(this.userInfor.surveys.find(item => item.question_cd === 'indi_source').value_text);
+            setValue(this.userInfor.surveys.find(item => item.question_cd === 'indi_source').sequence);
 
           this.purposeInvestForm.controls.specificName.
             setValue(this.userInfor.surveys.find(item => item.question_cd === 'indi_other_source').value_text);
 
           this.purposeInvestForm.controls.investMarginTrading.
-            setValue(this.userInfor.surveys.find(item => item.question_cd === 'indi_margin_exp').value_text);
+            setValue(this.userInfor.surveys.find(item => item.question_cd === 'indi_margin_exp').sequence);
 
           this.purposeInvestForm.controls.investCommodities.
-            setValue(this.userInfor.surveys.find(item => item.question_cd === 'indi_comm_exp').value_text);
+            setValue(this.userInfor.surveys.find(item => item.question_cd === 'indi_comm_exp').sequence);
 
           this.purposeInvestForm.controls.financialInstrument.
             setValue(this.userInfor.surveys.find(item => item.question_cd === 'indi_other_fin_name').value_text);
 
           this.purposeInvestForm.controls.tradingExperience.
-            setValue(this.userInfor.surveys.find(item => item.question_cd === 'indi_other_fin_exp').value_text);
+            setValue(this.userInfor.surveys.find(item => item.question_cd === 'indi_other_fin_exp').sequence);
+
+          this.occupationSurveyForm.controls.amountAvaiable.setValue(
+            this.userInfor.surveys.find(item => item.question_cd === 'indi_investable').sequence);
+
+          this.occupationSurveyForm.controls.annualIncome.setValue(
+            this.userInfor.surveys.find(item => item.question_cd === 'indi_income').sequence);
+
+          this.occupationSurveyForm.controls.financialAsset.setValue(
+            this.userInfor.surveys.find(item => item.question_cd === 'indi_capital').sequence);
         }
-        this.changeExPurPose();
-        this.changePurpose();
       }
     });
   }
@@ -226,10 +230,22 @@ export class UserInforComponent implements OnInit {
     });
   }
 
-  userSubmit() {
-    this.isSubmittedUser = true;
-    if (this.userForm.invalid) {
-      return;
+  saveUser(type: string) {
+    this.saveType = type;
+    if (this.saveType === this.formType.userInfor) {
+      if (this.userForm.invalid) {
+        return;
+      }
+    }
+    if (this.saveType === this.formType.financial) {
+      this.initListFinancialSubmit();
+    }
+    if (this.saveType === this.formType.purpose) {
+      if (this.purposeInvestForm.invalid) {
+        return;
+      } else {
+        this.initListPurposeSubmit();
+      }
     }
     $('#modal-confirm').modal('show');
   }
@@ -245,14 +261,26 @@ export class UserInforComponent implements OnInit {
       },
       email: this.userForm.controls.email.value,
       mobile: this.userForm.controls.phone.value,
-      lang: ''
+      lang: '',
+      surveys: []
     };
+    if (this.saveType === this.formType.financial) {
+      param.surveys = this.listFinancialSubmit;
+    }
+    if (this.saveType === this.formType.purpose) {
+      param.surveys = this.listPurposeSubmit;
+    }
     this.userService.updateUser(param).subscribe(response => {
       if (response.meta.code === 200) {
-        this.showSave = false;
-        this.editAddress = false;
-        this.editEmail = false;
-        this.editPhone = false;
+        if (this.saveType === this.formType.userInfor) {
+          this.resetEditUser();
+        }
+        if (this.saveType === this.formType.financial) {
+          this.editFinancial = false;
+        }
+        if (this.saveType === this.formType.purpose) {
+          this.editPurpose = false;
+        }
         this.getUserInfo();
       }
     });
@@ -309,7 +337,8 @@ export class UserInforComponent implements OnInit {
       this.purposeInvestForm.controls.investCommodities.updateValueAndValidity();
       if (Number(this.purposeInvestForm.controls.other.value) === 2
         && Number(this.purposeInvestForm.controls.tradingExperience.value) <= 2) {
-          this.globalService.resetFormControl(this.purposeInvestForm.controls.tradingExperience, experienceValidation);
+          this.purposeInvestForm.controls.tradingExperience.setValidators([experienceValidation]);
+          this.purposeInvestForm.controls.tradingExperience.updateValueAndValidity();
       }
       if (Number(this.purposeInvestForm.controls.other.value) === 2
         && Number(this.purposeInvestForm.controls.tradingExperience.value) > 2) {
@@ -324,9 +353,9 @@ export class UserInforComponent implements OnInit {
     if (Number(this.purposeInvestForm.controls.investExFx.value) > 2
       || Number(this.purposeInvestForm.controls.inversExCfd.value) > 2
       || Number(this.purposeInvestForm.controls.investCommodities.value) > 2) {
-      if (Number(this.purposeInvestForm.controls.other.value) === 2
-        && Number(this.purposeInvestForm.controls.tradingExperience.value) > 2) {
-        this.globalService.resetFormControl(this.purposeInvestForm.controls.tradingExperience, requiredInput);
+      if (Number(this.purposeInvestForm.controls.other.value) === 2) {
+          this.purposeInvestForm.controls.tradingExperience.setValidators([requiredInput]);
+          this.purposeInvestForm.controls.tradingExperience.updateValueAndValidity();
       }
       this.purposeInvestForm.controls.investExFx.setValidators([requiredInput]);
       this.purposeInvestForm.controls.investExFx.updateValueAndValidity();
@@ -338,7 +367,7 @@ export class UserInforComponent implements OnInit {
   }
 
   changeBackGroundApplication() {
-    if (Number(this.purposeInvestForm.controls.backgroundApplication.value) === 10) {
+    if (Number(this.purposeInvestForm.controls.backgroundApplication.value) === 7) {
       this.globalService.resetFormControl(this.purposeInvestForm.controls.specificName, requiredInput);
     } else {
       this.globalService.resetFormControl(this.purposeInvestForm.controls.specificName);
@@ -362,9 +391,11 @@ export class UserInforComponent implements OnInit {
     }
 
     if (this.purposeInvestForm.controls.investPurposeOther.value === true) {
-      this.globalService.resetFormControl(this.purposeInvestForm.controls.otherPurpose, requiredInput);
+      this.purposeInvestForm.controls.otherPurpose.setValidators([requiredInput]);
+      this.purposeInvestForm.controls.otherPurpose.updateValueAndValidity();
     } else {
-      this.globalService.resetFormControl(this.purposeInvestForm.controls.otherPurpose);
+      this.purposeInvestForm.controls.otherPurpose.setValidators([]);
+      this.purposeInvestForm.controls.otherPurpose.updateValueAndValidity();
     }
   }
 
@@ -389,10 +420,135 @@ export class UserInforComponent implements OnInit {
     }
   }
 
-  resetEdit() {
+  editPurposeInvest() {
+    this.editPurpose = true;
+    this.changeExPurPose();
+    this.changePurpose();
+  }
+
+  resetEditUser() {
     this.editAddress = false;
     this.editEmail = false;
     this.editPhone = false;
+    this.showSave = false;
+  }
+
+  initListFinancialSubmit() {
+    this.listFinancialSubmit = [
+      {
+        question_cd: 'indi_investable',
+        value_text: null,
+        sequence: this.occupationSurveyForm.controls.amountAvaiable.value
+      },
+      {
+        question_cd: 'indi_income',
+        value_text: null,
+        sequence: this.occupationSurveyForm.controls.annualIncome.value
+      },
+      {
+        question_cd: 'indi_capital',
+        value_text: null,
+        sequence:  this.occupationSurveyForm.controls.financialAsset.value
+      },
+    ];
+  }
+
+  initListPurposeSubmit() {
+    if (this.purposeInvestForm.controls.investPurposeOther.value === false) {
+      this.purposeInvestForm.controls.otherPurpose.setValue('');
+    }
+    this.purposeInvestForm.controls.investExFx.
+      setValue(this.userInfor.surveys.find(item => item.question_cd === 'indi_fx_exp').sequence);
+
+    this.listPurposeSubmit = [
+      {
+        question_cd: 'indi_other_exp_yn',
+        value_text: null,
+        sequence: Number(this.purposeInvestForm.controls.other.value)
+      },
+      {
+        question_cd: 'indi_other_fin_name',
+        value_text: this.purposeInvestForm.controls.financialInstrument.value
+        ? this.purposeInvestForm.controls.financialInstrument.value : null,
+        sequence: null
+      },
+      {
+        question_cd: 'indi_other_source',
+        value_text: this.purposeInvestForm.controls.specificName.value ? this.purposeInvestForm.controls.specificName.value : null,
+        sequence: null
+      },
+      {
+        question_cd: 'indi_source',
+        value_text: null,
+        sequence: Number(this.purposeInvestForm.controls.backgroundApplication.value)
+      },
+      {
+        question_cd: 'corp_other_inv',
+        value_text: this.purposeInvestForm.controls.otherPurpose.value ? this.purposeInvestForm.controls.otherPurpose.value : null,
+        sequence: null
+      },
+      {
+        question_cd: 'indi_cfd_exp',
+        value_text: null,
+        sequence: Number(this.purposeInvestForm.controls.inversExCfd.value)
+      },
+      {
+        question_cd: 'indi_other_fin_exp',
+        value_text: null,
+        sequence: this.purposeInvestForm.controls.tradingExperience.value
+        ? Number(this.purposeInvestForm.controls.tradingExperience.value) : null
+      },
+      {
+        question_cd: 'indi_fx_exp',
+        value_text: null,
+        sequence: Number(this.purposeInvestForm.controls.investExFx.value)
+      },
+      {
+        question_cd: 'indi_comm_exp',
+        value_text: null,
+        sequence: Number(this.purposeInvestForm.controls.investCommodities.value)
+      },
+      {
+        question_cd: 'indi_margin_exp',
+        value_text: null,
+        sequence: Number(this.purposeInvestForm.controls.investMarginTrading.value)
+      },
+      {
+        question_cd: 'indi_stock_exp',
+        value_text: null,
+        sequence: Number(this.purposeInvestForm.controls.investStockTrading.value)
+      },
+      {
+        question_cd: 'indi_inv_purpose',
+        value_text: null,
+        sequence: this.purposeInvestForm.controls.investPurposeSortTerm.value === true ? 1 : null
+      },
+      {
+        question_cd: 'indi_inv_purpose',
+        value_text: null,
+        sequence: this.purposeInvestForm.controls.investPurposeMedium.value === true ? 2 : null
+      },
+      {
+        question_cd: 'indi_inv_purpose',
+        value_text: null,
+        sequence: this.purposeInvestForm.controls.investPurposeExchange.value === true ? 3 : null
+      },
+      {
+        question_cd: 'indi_inv_purpose',
+        value_text: null,
+        sequence: this.purposeInvestForm.controls.investPurposeInterestRate.value === true ? 4 : null
+      },
+      {
+        question_cd: 'indi_inv_purpose',
+        value_text: null,
+        sequence: this.purposeInvestForm.controls.investPurposeForeignCurrency.value === true ? 5 : null
+      },
+      {
+        question_cd: 'indi_inv_purpose',
+        value_text: null,
+        sequence: this.purposeInvestForm.controls.investPurposeOther.value === true ? 6 : null
+      },
+    ];
   }
 
 }

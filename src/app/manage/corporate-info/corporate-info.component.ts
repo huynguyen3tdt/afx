@@ -190,80 +190,78 @@ export class CorporateInfoComponent implements OnInit {
         }
         if (this.corporateInfor.surveys.length > 0) {
           if (this.corporateInfor.surveys.find(item =>
-             item.question_cd === 'orp_inv_purpose' && item.value_text === '1')) {
+             item.question_cd === 'corp_inv_purpose' && item.sequence === 1)) {
             this.purposeInvestForm.controls.investPurposeSortTerm.setValue(true);
           }
 
           if (this.corporateInfor.surveys.find(item =>
-             item.question_cd === 'corp_inv_purpose' && item.value_text === '2')) {
+             item.question_cd === 'corp_inv_purpose' && item.sequence === 2)) {
             this.purposeInvestForm.controls.investPurposeMedium.setValue(true);
           }
           if (this.corporateInfor.surveys.find(item =>
-             item.question_cd === 'corp_inv_purpose' && item.value_text === '3')) {
+             item.question_cd === 'corp_inv_purpose' && item.sequence === 3)) {
             this.purposeInvestForm.controls.investPurposeExchange.setValue(true);
           }
           if (this.corporateInfor.surveys.find(item =>
-             item.question_cd === 'corp_inv_purpose' && item.value_text === '4')) {
+             item.question_cd === 'corp_inv_purpose' && item.sequence === 4)) {
             this.purposeInvestForm.controls.investPurposeInterestRate.setValue(true);
           }
 
           if (this.corporateInfor.surveys.find(item =>
-             item.question_cd === 'corp_inv_purpose' && item.value_text === '5')) {
+             item.question_cd === 'corp_inv_purpose' && item.sequence === 5)) {
             this.purposeInvestForm.controls.investPurposeForeignCurrency.setValue(true);
           }
 
           if (this.corporateInfor.surveys.find(item =>
-             item.question_cd === 'corp_inv_purpose' && item.value_text === '6')) {
+             item.question_cd === 'corp_inv_purpose' && item.sequence === 6)) {
             this.purposeInvestForm.controls.investPurposeOther.setValue(true);
           }
 
           this.purposeInvestForm.controls.other.
-          setValue(this.corporateInfor.surveys.find(item => item.question_cd === 'corp_pic_other_exp_yn').value_text);
+          setValue(this.corporateInfor.surveys.find(item => item.question_cd === 'corp_pic_other_exp_yn').sequence.toString());
 
           this.purposeInvestForm.controls.financialInstrument.
           setValue(this.corporateInfor.surveys.find(item => item.question_cd === 'corp_pic_other_name_exp').value_text);
 
           this.purposeInvestForm.controls.investStockTrading.
-          setValue(this.corporateInfor.surveys.find(item => item.question_cd === 'corp_pic_stock_exp').value_text);
+          setValue(this.corporateInfor.surveys.find(item => item.question_cd === 'corp_pic_stock_exp').sequence);
 
           this.purposeInvestForm.controls.investMarginTrading.
-          setValue(this.corporateInfor.surveys.find(item => item.question_cd === 'corp_pic_margin_exp').value_text);
+          setValue(this.corporateInfor.surveys.find(item => item.question_cd === 'corp_pic_margin_exp').sequence);
 
           this.purposeInvestForm.controls.investCommodities.
-          setValue(this.corporateInfor.surveys.find(item => item.question_cd === 'corp_pic_comm_exp').value_text);
+          setValue(this.corporateInfor.surveys.find(item => item.question_cd === 'corp_pic_comm_exp').sequence);
 
           this.purposeInvestForm.controls.investExFx.
-          setValue(this.corporateInfor.surveys.find(item => item.question_cd === 'corp_pic_fx_exp').value_text);
+          setValue(this.corporateInfor.surveys.find(item => item.question_cd === 'corp_pic_fx_exp').sequence);
 
           this.purposeInvestForm.controls.tradingExperience.
-          setValue(this.corporateInfor.surveys.find(item => item.question_cd === 'corp_pic_other_exp').value_text);
+          setValue(this.corporateInfor.surveys.find(item => item.question_cd === 'corp_pic_other_exp').sequence);
 
           this.purposeInvestForm.controls.inversExCfd.
-          setValue(this.corporateInfor.surveys.find(item => item.question_cd === 'corp_pic_cfd_exp').value_text);
+          setValue(this.corporateInfor.surveys.find(item => item.question_cd === 'corp_pic_cfd_exp').sequence);
 
           this.purposeInvestForm.controls.otherPurpose.
           setValue(this.corporateInfor.surveys.find(item => item.question_cd === 'corp_other_inv').value_text);
 
           this.purposeInvestForm.controls.backgroundApplication.
-          setValue(this.corporateInfor.surveys.find(item => item.question_cd === 'corp_source').value_text);
+          setValue(this.corporateInfor.surveys.find(item => item.question_cd === 'corp_source').sequence);
 
           this.purposeInvestForm.controls.specificName.
           setValue(this.corporateInfor.surveys.find(item => item.question_cd === 'corp_other_source').value_text);
 
           this.financialInforForm.controls.businessEntityAnnual.
-          setValue(this.corporateInfor.surveys.find(item => item.question_cd === 'corp_annual_sales').value_text);
+          setValue(this.corporateInfor.surveys.find(item => item.question_cd === 'corp_annual_sales').sequence);
 
           this.financialInforForm.controls.tax.
-          setValue(this.corporateInfor.surveys.find(item => item.question_cd === 'corp_sales_after_tax').value_text);
+          setValue(this.corporateInfor.surveys.find(item => item.question_cd === 'corp_sales_after_tax').sequence);
 
           this.financialInforForm.controls.businessCapital.
-          setValue(this.corporateInfor.surveys.find(item => item.question_cd === 'corp_capital').value_text);
+          setValue(this.corporateInfor.surveys.find(item => item.question_cd === 'corp_capital').sequence);
 
           this.financialInforForm.controls.investment.
-          setValue(this.corporateInfor.surveys.find(item => item.question_cd === 'corp_investable').value_text);
+          setValue(this.corporateInfor.surveys.find(item => item.question_cd === 'corp_investable').sequence);
         }
-        this.changeExPurPose();
-        this.changePurpose();
       }
     });
   }
@@ -319,7 +317,6 @@ export class CorporateInfoComponent implements OnInit {
       param.surveys = this.listFinancialSubmit;
     }
     if (this.saveType === this.formType.purpose) {
-      console.log(' in in in ', this.listPurposeSubmit);
       param.pic = null;
       param.corporation = null;
       param.surveys = this.listPurposeSubmit;
@@ -381,7 +378,8 @@ export class CorporateInfoComponent implements OnInit {
       this.purposeInvestForm.controls.investCommodities.updateValueAndValidity();
       if (Number(this.purposeInvestForm.controls.other.value) === 2
         && Number(this.purposeInvestForm.controls.tradingExperience.value) <= 2) {
-          this.globalService.resetFormControl(this.purposeInvestForm.controls.tradingExperience, experienceValidation);
+          this.purposeInvestForm.controls.tradingExperience.setValidators([experienceValidation]);
+          this.purposeInvestForm.controls.tradingExperience.updateValueAndValidity();
       }
       if (Number(this.purposeInvestForm.controls.other.value) === 2
         && Number(this.purposeInvestForm.controls.tradingExperience.value) > 2) {
@@ -396,9 +394,9 @@ export class CorporateInfoComponent implements OnInit {
     if (Number(this.purposeInvestForm.controls.investExFx.value) > 2
       || Number(this.purposeInvestForm.controls.inversExCfd.value) > 2
       || Number(this.purposeInvestForm.controls.investCommodities.value) > 2) {
-      if (Number(this.purposeInvestForm.controls.other.value) === 2
-        && Number(this.purposeInvestForm.controls.tradingExperience.value) > 2) {
-        this.globalService.resetFormControl(this.purposeInvestForm.controls.tradingExperience, requiredInput);
+      if (Number(this.purposeInvestForm.controls.other.value) === 2) {
+          this.purposeInvestForm.controls.tradingExperience.setValidators([requiredInput]);
+          this.purposeInvestForm.controls.tradingExperience.updateValueAndValidity();
       }
       this.purposeInvestForm.controls.investExFx.setValidators([requiredInput]);
       this.purposeInvestForm.controls.investExFx.updateValueAndValidity();
@@ -410,7 +408,7 @@ export class CorporateInfoComponent implements OnInit {
   }
 
   changeBackGroundApplication() {
-    if (Number(this.purposeInvestForm.controls.backgroundApplication.value) === 10) {
+    if (Number(this.purposeInvestForm.controls.backgroundApplication.value) === 7) {
       this.globalService.resetFormControl(this.purposeInvestForm.controls.specificName, requiredInput);
     } else {
       this.globalService.resetFormControl(this.purposeInvestForm.controls.specificName);
@@ -434,9 +432,11 @@ export class CorporateInfoComponent implements OnInit {
     }
 
     if (this.purposeInvestForm.controls.investPurposeOther.value === true) {
-      this.globalService.resetFormControl(this.purposeInvestForm.controls.otherPurpose, requiredInput);
+      this.purposeInvestForm.controls.otherPurpose.setValidators([requiredInput]);
+      this.purposeInvestForm.controls.otherPurpose.updateValueAndValidity();
     } else {
-      this.globalService.resetFormControl(this.purposeInvestForm.controls.otherPurpose);
+      this.purposeInvestForm.controls.otherPurpose.setValidators([]);
+      this.purposeInvestForm.controls.otherPurpose.updateValueAndValidity();
     }
   }
 
@@ -540,6 +540,12 @@ export class CorporateInfoComponent implements OnInit {
     }
   }
 
+  editPurposeInvest() {
+    this.editPurpose = true;
+    this.changeExPurPose();
+    this.changePurpose();
+  }
+
   resetEditPic() {
     this.showSavePic = false;
     this.editPersonBod = false;
@@ -561,95 +567,122 @@ export class CorporateInfoComponent implements OnInit {
     this.listFinancialSubmit = [
       {
         question_cd: 'corp_annual_sales',
-        value_text: this.financialInforForm.controls.businessEntityAnnual.value
+        value_text: null,
+        sequence: this.financialInforForm.controls.businessEntityAnnual.value
       },
       {
         question_cd: 'corp_sales_after_tax',
-        value_text: this.financialInforForm.controls.tax.value
+        value_text: null,
+        sequence: this.financialInforForm.controls.tax.value
       },
       {
         question_cd: 'corp_capital',
-        value_text: this.financialInforForm.controls.businessCapital.value
+        value_text: null,
+        sequence: this.financialInforForm.controls.businessCapital.value
       },
       {
         question_cd: 'corp_investable',
-        value_text: this.financialInforForm.controls.investment.value
+        value_text: null,
+        sequence: this.financialInforForm.controls.investment.value
       }
     ];
   }
 
   initListPurposeSubmit() {
+    if (this.purposeInvestForm.controls.investPurposeOther.value === false) {
+      this.purposeInvestForm.controls.otherPurpose.setValue('');
+    }
     this.listPurposeSubmit = [
       {
         question_cd: 'corp_pic_other_exp_yn',
-        value_text: this.purposeInvestForm.controls.other.value
+        value_text: null,
+        sequence: Number(this.purposeInvestForm.controls.other.value)
       },
       {
         question_cd: 'corp_pic_other_name_exp',
         value_text: this.purposeInvestForm.controls.financialInstrument.value
+        ? this.purposeInvestForm.controls.financialInstrument.value : null,
+        sequence: null
       },
       {
         question_cd: 'corp_other_source',
-        value_text: this.purposeInvestForm.controls.specificName.value
+        value_text: this.purposeInvestForm.controls.specificName.value ? this.purposeInvestForm.controls.specificName.value : null,
+        sequence: null
       },
       {
         question_cd: 'corp_source',
-        value_text: this.purposeInvestForm.controls.backgroundApplication.value
+        value_text: null,
+        sequence: Number(this.purposeInvestForm.controls.backgroundApplication.value)
       },
       {
         question_cd: 'corp_other_inv',
-        value_text: this.purposeInvestForm.controls.otherPurpose.value
+        value_text: this.purposeInvestForm.controls.otherPurpose.value ? this.purposeInvestForm.controls.otherPurpose.value : null,
+        sequence: null
       },
       {
         question_cd: 'corp_pic_cfd_exp',
-        value_text: this.purposeInvestForm.controls.inversExCfd.value
+        value_text: null,
+        sequence: Number(this.purposeInvestForm.controls.inversExCfd.value)
       },
       {
         question_cd: 'corp_pic_other_exp',
-        value_text: this.purposeInvestForm.controls.tradingExperience.value
+        value_text: null,
+        sequence: this.purposeInvestForm.controls.tradingExperience.value
+        ? Number(this.purposeInvestForm.controls.tradingExperience.value) : null
       },
       {
         question_cd: 'corp_pic_fx_exp',
-        value_text: this.purposeInvestForm.controls.investExFx.value
+        value_text: null,
+        sequence: Number(this.purposeInvestForm.controls.investExFx.value)
       },
       {
         question_cd: 'corp_pic_comm_exp',
-        value_text: this.purposeInvestForm.controls.investCommodities.value
+        value_text: null,
+        sequence: Number(this.purposeInvestForm.controls.investCommodities.value)
       },
       {
         question_cd: 'corp_pic_margin_exp',
-        value_text: this.purposeInvestForm.controls.investMarginTrading.value
+        value_text: null,
+        sequence: Number(this.purposeInvestForm.controls.investMarginTrading.value)
       },
       {
         question_cd: 'corp_pic_stock_exp',
-        value_text: this.purposeInvestForm.controls.investStockTrading.value
+        value_text: null,
+        sequence: Number(this.purposeInvestForm.controls.investStockTrading.value)
       },
       {
-        question_cd: 'orp_inv_purpose',
-        value_text: this.purposeInvestForm.controls.investPurposeSortTerm.value === true ? '1' : null
+        question_cd: 'corp_inv_purpose',
+        value_text: null,
+        sequence: this.purposeInvestForm.controls.investPurposeSortTerm.value === true ? 1 : null
       },
       {
-        question_cd: 'orp_inv_purpose',
-        value_text: this.purposeInvestForm.controls.investPurposeMedium.value === true ? '2' : null
+        question_cd: 'corp_inv_purpose',
+        value_text: null,
+        sequence: this.purposeInvestForm.controls.investPurposeMedium.value === true ? 2 : null
       },
       {
-        question_cd: 'orp_inv_purpose',
-        value_text: this.purposeInvestForm.controls.investPurposeExchange.value === true ? '3' : null
+        question_cd: 'corp_inv_purpose',
+        value_text: null,
+        sequence: this.purposeInvestForm.controls.investPurposeExchange.value === true ? 3 : null
       },
       {
-        question_cd: 'orp_inv_purpose',
-        value_text: this.purposeInvestForm.controls.investPurposeInterestRate.value === true ? '4' : null
+        question_cd: 'corp_inv_purpose',
+        value_text: null,
+        sequence: this.purposeInvestForm.controls.investPurposeInterestRate.value === true ? 4 : null
       },
       {
-        question_cd: 'orp_inv_purpose',
-        value_text: this.purposeInvestForm.controls.investPurposeForeignCurrency.value === true ? '5' : null
+        question_cd: 'corp_inv_purpose',
+        value_text: null,
+        sequence: this.purposeInvestForm.controls.investPurposeForeignCurrency.value === true ? 5 : null
       },
       {
-        question_cd: 'orp_inv_purpose',
-        value_text: this.purposeInvestForm.controls.investPurposeOther.value === true ? '6' : null
+        question_cd: 'corp_inv_purpose',
+        value_text: null,
+        sequence: this.purposeInvestForm.controls.investPurposeOther.value === true ? 6 : null
       },
     ];
-    this.listPurposeSubmit = this.listPurposeSubmit.filter(item => item.value_text !== null && item.value_text !== '');
+    console.log('aksdjalksdjalskjd ', this.purposeInvestForm.controls.financialInstrument.value);
+    // this.listPurposeSubmit = this.listPurposeSubmit.filter(item => item.value_text !== null || item.sequence !== null);
   }
 
 }

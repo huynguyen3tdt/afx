@@ -322,10 +322,12 @@ export class AccountInformationComponent implements OnInit {
   editBankAccount() {
     this.editBank = true;
     this.bankAccount = false;
-    this.bankAccountForm.controls.beneficiary_bank.setValue(this.bankInfor.name);
-    this.bankAccountForm.controls.bank_branch.setValue(this.bankInfor.branch_name);
-    this.bankAccountForm.controls.bank_account_type.setValue(this.bankInfor.fx_acc_type.toString());
-    this.bankAccountForm.controls.bank_account_number.setValue(this.bankInfor.acc_number);
+    // if (this.bankForm) {
+    //   this.bankAccountForm.controls.beneficiary_bank.setValue(this.bankInfor.name);
+    //   this.bankAccountForm.controls.bank_branch.setValue(this.bankInfor.branch_name);
+    //   this.bankAccountForm.controls.bank_account_type.setValue(this.bankInfor.fx_acc_type.toString());
+    //   this.bankAccountForm.controls.bank_account_number.setValue(this.bankInfor.acc_number);
+    // }
   }
   showBankInfor(type: number, bankName?: string) {
     this.initHiraCode();

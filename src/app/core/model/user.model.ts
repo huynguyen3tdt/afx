@@ -118,6 +118,7 @@ export interface LabelModel {
 export interface QuestionModel {
   question_cd: string;
   value_text: string;
+  sequence: number;
 }
 
 

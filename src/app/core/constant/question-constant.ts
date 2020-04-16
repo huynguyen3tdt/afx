@@ -274,6 +274,12 @@ export const backgroundApplicationInvidual = {
             quizz_mark: 0.0
         },
         {
+            id: 92,
+            sequence: 3,
+            value: 'SNS',
+            quizz_mark: 0.0
+        },
+        {
             id: 93,
             sequence: 4,
             value: '雑誌',
@@ -281,25 +287,19 @@ export const backgroundApplicationInvidual = {
         },
         {
             id: 95,
-            sequence: 6,
+            sequence: 5,
             value: '家族の紹介',
             quizz_mark: 0.0
         },
         {
             id: 96,
-            sequence: 7,
+            sequence: 6,
             value: '知人の紹介',
             quizz_mark: 0.0
         },
         {
-            id: 92,
-            sequence: 3,
-            value: 'SNS',
-            quizz_mark: 0.0
-        },
-        {
             id: 99,
-            sequence: 10,
+            sequence: 7,
             value: 'その他',
             quizz_mark: 0.0
         }
