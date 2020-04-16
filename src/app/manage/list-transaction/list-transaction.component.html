@@ -1,7 +1,8 @@
 <div class="card bg-white mb-3">
     <div class="card-body">
         <div class="d-flex justify-content-between align-items-center border-bottom mb-3 pb-2">
-            <h6 class="mb-0 text-uppercase text-primary"><i class="icon ion-md-time"></i> <strong> {{'Entire Operation History' | translate}}</strong></h6>
+            <h6 *ngIf="tranType == typeTranHistory.DEPOSIT.key" class="mb-0 text-uppercase text-primary"><i class="icon ion-md-time"></i> <strong> {{'Entire Deposit History' | translate}}</strong></h6>
+            <h6 *ngIf="tranType == typeTranHistory.WITHDRAWAL.key" class="mb-0 text-uppercase text-primary"><i class="icon ion-md-time"></i> <strong> {{'Entire Withdrawl History' | translate}}</strong></h6>
             <div class="text-right small text-secondary">{{'Currency:' | translate}} <strong>JPY</strong></div>
         </div>
         <div class="table-responsive">
@@ -29,8 +30,8 @@
                         <!-- <td class="text-right"><span class="text-info"><i class="icon ion-md-hourglass"></i>
                                 Pending</span></td> -->
 
-                        <td *ngIf="item?.status == transactionStatus.NEW.key" class="text-right"><span class="text-info"><i class="icon ion-md-hourglass"></i>
-                                  {{'New' | translate}}</span></td>
+                        <!-- <td *ngIf="item?.status == transactionStatus.NEW.key" class="text-right"><span class="text-info"><i class="icon ion-md-hourglass"></i>
+                                  {{'New' | translate}}</span></td> -->
                         <td *ngIf="item?.status == transactionStatus.PENDING.key" class="text-right"><span class="text-info"><i class="icon ion-md-hourglass"></i>
                           {{'In-progress' | translate}}</span></td>
                         <td *ngIf="item?.status == transactionStatus.CANCEL.key" class="text-right"><span> {{'Cancel' | translate}}</span></td>

@@ -38,7 +38,6 @@
   "Payment Method": "Payment Method",
   "Amount": "Amount",
   "Status": "Status",
-  "Entire Operation History": "Entire Operation History",
   "Currency:": "Currency:",
   "View entire operation history": "View entire operation history",
   "Phillip Securities Japan": "Phillip Securities Japan",
@@ -239,5 +238,9 @@
   "Login ID or DOB incorrect": "Login ID or DOB incorrect",
   "The temporary password will be sent to the registered email address.": "The temporary password will be sent to the registered email address.",
   "Your withdrawal request has been received:": "Your withdrawal request has been received:",
-  "Reason: MT5 account balance is not enough money to withdraw": "Reason: MT5 account balance is not enough money to withdraw"
+  "Reason: MT5 account balance is not enough money to withdraw": "Reason: MT5 account balance is not enough money to withdraw",
+  "Margin Level estimate after depposit": "Margin Level estimate after depposit",
+  "Margin Level estimate after withdraw": "Margin Level estimate after withdraw",
+  "Entire Deposit History": "Entire Deposit History",
+  "Entire Withdrawl History": "Entire Withdrawl History"
 }

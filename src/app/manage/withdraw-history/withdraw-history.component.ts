@@ -104,7 +104,6 @@ export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
     this.listTradingAccount = JSON.parse(localStorage.getItem(ACCOUNT_IDS));
     this.initSearchForm();
     if (!this.querytab && this.searchForm.controls.tradingAccount.value) {
-      console.log('ghjghjghj ', this.formatDate(this.searchForm.controls.fromDate.value));
       this.getTranHistory(this.searchForm.controls.tradingAccount.value.split('-')[1], this.currentPage, this.pageSize, this.TABS.ALL.value,
         this.formatDate(this.searchForm.controls.fromDate.value), this.formatDate(this.searchForm.controls.toDate.value));
     }
@@ -121,9 +120,9 @@ export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
       }
       if (this.querytab === 'detailwithdrawal') {
         if (this.locale === LANGUAGLE.english) {
-          this.searchForm.controls.status.setValue([{ id: 4, name: 'New' }, { id: 3, name: 'In-process' }]);
+          this.searchForm.controls.status.setValue([{ id: 3, name: 'In-process' }]);
         } else {
-          this.searchForm.controls.status.setValue([{ id: 4, name: 'ニュース' }, { id: 3, name: '処理中' }]);
+          this.searchForm.controls.status.setValue([{ id: 3, name: '処理中' }]);
         }
         this.changeStatus();
         this.withdrawTab.nativeElement.click();
@@ -134,14 +133,12 @@ export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
   initStatus() {
     if (this.locale === LANGUAGLE.english) {
       this.STATUS = [
-        { label: 'New', value: { id: 4, name: 'New' } },
         { label: 'In-process', value: { id: 3, name: 'In-process' } },
         { label: 'Complete', value: { id: 1, name: 'Complete' } },
         { label: 'Cancel', value: { id: 2, name: 'Cancel' } },
       ];
     } else {
       this.STATUS = [
-        { label: 'ニュース', value: { id: 4, name: 'ニュース' } },
         { label: '処理中', value: { id: 3, name: '処理中' } },
         { label: '完了', value: { id: 1, name: '完了' } },
         { label: 'キャンセル', value: { id: 2, name: 'キャンセル' } },
