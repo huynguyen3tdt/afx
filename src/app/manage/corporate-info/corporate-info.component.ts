@@ -319,6 +319,7 @@ export class CorporateInfoComponent implements OnInit {
       param.surveys = this.listFinancialSubmit;
     }
     if (this.saveType === this.formType.purpose) {
+      console.log(' in in in ', this.listPurposeSubmit);
       param.pic = null;
       param.corporation = null;
       param.surveys = this.listPurposeSubmit;
@@ -648,5 +649,7 @@ export class CorporateInfoComponent implements OnInit {
         value_text: this.purposeInvestForm.controls.investPurposeOther.value === true ? '6' : null
       },
     ];
+    this.listPurposeSubmit = this.listPurposeSubmit.filter(item => item.value_text !== null && item.value_text !== '');
   }
+
 }
