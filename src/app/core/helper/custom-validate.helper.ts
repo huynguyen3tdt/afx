@@ -20,11 +20,7 @@ const DEFAULT_INVALID_REQUIRED = {
 
 const INVALID_PASSWORD = {
     RequiredPass: true,
-    message: 'Password requires 8 characters or more and has at least 1 alphabet letter'
-  };
-const INVALID_PASSWORD_LENGTH = {
-    RequiredPassLength: true,
-    message: 'Password requires 8 characters or more and has at least 1 alphabet letter'
+    message: 'Password requires 8 characters and contain at least two of three types of characters (lower case, upper case and digits)'
   };
 
 const DEFAULT_REQUIRED_SPECIAL = {
@@ -121,14 +117,30 @@ export function requiredInput(control: AbstractControl) {
 
 export function passwordValidation(control: AbstractControl) {
   if (!control.value || typeof control.value === 'string' && !control.value.trim()) {
+    return DEFAULT_INVALID_REQUIRED;
+  }
+  if (validatePassWord(control.value) === false) {
     return INVALID_PASSWORD;
   }
-  if (control.value.search(/[a-zA-Z]/) < 0) {
-    return INVALID_PASSWORD_LENGTH;
-  } else if (control.value.length < 8) {
-    return INVALID_PASSWORD_LENGTH;
-  }
   return null;
+}
+
+function validatePassWord(passWord: string) {
+  let count = 0;
+  if (passWord.search(/[a-z]/) < 0) {
+    count++;
+  }
+  if (passWord.search(/[A-Z]/) < 0) {
+    count++;
+  }
+  if (passWord.search(/[0-9]/) < 0) {
+    count++;
+  }
+  if (count > 1 || passWord.length < 8) {
+    return false;
+  } else {
+    return true;
+  }
 }
 
 export function validationPhoneNumber(control: AbstractControl) {

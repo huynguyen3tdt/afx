@@ -345,9 +345,9 @@
                                     <label class="label mt-1">{{'Current password' | translate}}</label>
                                 </div>
                                 <div class="col-md-8 col-lg-9">
-                                    <input type="password" class="form-control form-control-sm" value="" formControlName="current_password" placeholder="" style="max-width: 240px" 
-                                    autocomplete="false"
-                                    [ngClass]="{'invalid': isSubmittedSetting && changePassForm.controls['current_password'].errors}">
+                                    <input type="password" class="form-control form-control-sm" formControlName="current_password" style="max-width: 240px" 
+                                    autocomplete="off"
+                                    [ngClass]="{'invalid': isSubmittedSetting && changePassForm.controls.current_password?.errors}">
                                 </div>
 
                             </div>
@@ -355,29 +355,37 @@
                                 <div class="col-md-4 col-lg-3">
                                     &nbsp;
                                 </div>
-                                <div *ngIf="isSubmittedSetting && changePassForm?.controls['current_password']?.errors?.RequiredPass" class="invalid-mess col-md-8 col-lg-9">
+                                <!-- <div *ngIf="isSubmittedSetting && changePassForm?.controls?.current_password?.errors?.RequiredPass" class="invalid-mess col-md-8 col-lg-9">
                                     <div>{{'This field is required' | translate}}</div>
-                                </div>
+                                </div> -->
+                                <div *ngIf="isSubmittedSetting && changePassForm?.controls?.current_password?.errors?.Required" class="invalid-mess col-md-8 col-lg-9">
+                                        {{'This field is required' | translate}}
+                                    </div>
+                                    <div class="col-md-8 col-lg-9">
+                                            <div *ngIf="isSubmittedSetting && changePassForm?.controls.current_password?.errors?.RequiredPass" class="invalid-mess">
+                                                {{'Password requires 8 characters or more and has at least 1 alphabet letter' | translate}}
+                                            </div>
+                                    </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-4 col-lg-3">
                                     <label class="label mt-1">{{'New password' | translate}}</label>
                                 </div>
                                 <div class="col-md-8 col-lg-9">
-                                    <input type="password" class="form-control form-control-sm" value="" formControlName="new_password" placeholder="" style="max-width: 240px" 
-                                    autocomplete="false"
-                                    [ngClass]="{'invalid': isSubmittedSetting && (changePassForm.controls['new_password'].errors || changePassForm?.controls['new_password']?.errors?.RequiredPass)}">
+                                    <input type="password" class="form-control form-control-sm" formControlName="new_password" style="max-width: 240px" 
+                                    autocomplete="off"
+                                    [ngClass]="{'invalid': isSubmittedSetting && (changePassForm?.controls?.new_password?.errors || changePassForm?.controls?.new_password?.errors?.RequiredPass)}">
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-4 col-lg-3">
                                     &nbsp;
                                 </div>
-                                <div *ngIf="isSubmittedSetting && changePassForm?.controls['new_password']?.errors?.RequiredPass" class="invalid-mess col-md-8 col-lg-9">
+                                <div *ngIf="isSubmittedSetting && changePassForm?.controls['new_password']?.errors?.Required" class="invalid-mess col-md-8 col-lg-9">
                                     {{'This field is required' | translate}}
                                 </div>
                                 <div class="col-md-8 col-lg-9">
-                                        <div *ngIf="isSubmittedSetting && changePassForm?.controls['new_password']?.errors?.RequiredPassLength" class="invalid-mess">
+                                        <div *ngIf="isSubmittedSetting && changePassForm?.controls['new_password']?.errors?.RequiredPass" class="invalid-mess">
                                             {{'Password requires 8 characters or more and has at least 1 alphabet letter' | translate}}
                                         </div>
                                 </div>
@@ -388,10 +396,10 @@
                                     <label class="label mt-1">{{'Confirm password' | translate}}</label>
                                 </div>
                                 <div class="col-md-8 col-lg-9">
-                                    <input type="password" name="confirm-password" class="form-control form-control-sm" value=""
-                                        formControlName="confirm_password" placeholder="" style="max-width: 240px" autocomplete="false"
+                                    <input type="password" class="form-control form-control-sm" value=""
+                                        formControlName="confirm_password" style="max-width: 240px" autocomplete="off"
                                         [ngClass]="{'invalid': isSubmittedSetting && (changePassForm.controls['confirm_password'].errors || changePassForm?.controls['confirm_password']?.errors?.RequiredPass)}">
-                                    <div *ngIf="isSubmittedSetting && changePassForm?.controls['confirm_password']?.errors?.RequiredPass"
+                                    <div *ngIf="isSubmittedSetting && changePassForm?.controls['confirm_password']?.errors?.Required"
                                         class="invalid-mess">
                                         <div>{{'This field is required' | translate}}</div>
                                     </div>
@@ -410,7 +418,7 @@
                                     <div *ngIf="errorPassword == true" class="invalid-mess">
                                         {{'Password incorrect' | translate}}
                                     </div>
-                                    <div *ngIf="isSubmittedSetting && changePassForm?.controls['confirm_password']?.errors?.RequiredPassLength"
+                                    <div *ngIf="isSubmittedSetting && changePassForm?.controls['confirm_password']?.errors?.RequiredPass"
                                         class="invalid-mess">
                                         {{'Password requires 8 characters or more and has at least 1 alphabet letter' | translate}}
                                     </div>
