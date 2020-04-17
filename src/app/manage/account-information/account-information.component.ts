@@ -394,6 +394,34 @@ export class AccountInformationComponent implements OnInit {
     this.getBankInfor();
   }
 
+  settingSave() {
+    this.isSubmittedSetting = true;
+    this.successPassword = false;
+    this.errorPassword = false;
+    if (this.changePassForm.invalid) {
+      this.errorMessage = false;
+      return;
+    }
+    if (this.changePassForm.controls.new_password.value !== this.changePassForm.controls.confirm_password.value) {
+      return;
+    }
+    if (this.changePassForm.controls.current_password.value === this.changePassForm.controls.confirm_password.value
+      && this.changePassForm.controls.new_password.value === this.changePassForm.controls.confirm_password.value) {
+      return;
+    }
+    const param = {
+      new_password: this.changePassForm.controls.confirm_password.value,
+      old_password: this.changePassForm.controls.current_password.value,
+    };
+    this.authenService.changePassword(param).subscribe(response => {
+      if (response.meta.code === 200) {
+        this.successPassword = true;
+      } else if (response.meta.code === 103) {
+        this.errorPassword = true;
+      }
+    });
+  }
+
   openSetting() {
     const fontSizeCurrent = localStorage.getItem(FONTSIZE_AFX);
     $(`#${fontSizeCurrent}`).addClass('active');
