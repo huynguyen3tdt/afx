@@ -25,7 +25,6 @@ describe('ResetPasswordComponent', () => {
         HttpClientModule,
         TranslateModule.forRoot(),
         RouterTestingModule,
-        // RouterModule.forRoot([])
       ],
       providers: [
         AuthenService,
