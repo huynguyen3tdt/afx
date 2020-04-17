@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import {FormControl, FormGroup, AbstractControl} from '@angular/forms';
 import {AuthenService} from '../../core/services/authen.service';
-import {Router} from '@angular/router';
+import {Router, ActivatedRoute} from '@angular/router';
 import { PASSWORD_LOGIN } from 'src/app/core/constant/authen-constant';
 import { passwordValidation, requiredInput } from 'src/app/core/helper/custom-validate.helper';
 
@@ -20,12 +20,20 @@ export class ResetPasswordComponent implements OnInit {
   showTypeConfirmPass = 'password';
   errorMess = '';
   oldPassword: string;
+  token: string;
   constructor(private authenService: AuthenService,
-              private router: Router) { }
+              private router: Router,
+              private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
     this.oldPassword = atob(localStorage.getItem(PASSWORD_LOGIN));
     this.initResetPassForm();
+    this.activatedRoute.queryParams.subscribe(res => {
+      console.log('resss ', res);
+      if (res.token) {
+        this.token = res.token;
+      }
+    });
   }
   initResetPassForm() {
     this.resetPassForm = new FormGroup({
@@ -46,11 +54,21 @@ export class ResetPasswordComponent implements OnInit {
       this.erroMessage = true;
       return;
     }
+    let paramSubmit;
     const param = {
       new_password: this.resetPassForm.controls.confirm_password.value,
       old_password: this.oldPassword
     };
-    this.authenService.changePassword(param).subscribe(response => {
+    const paramToken = {
+      new_password: this.resetPassForm.controls.confirm_password.value,
+      old_password: this.oldPassword
+    };
+    if (this.token) {
+      paramSubmit = paramToken;
+    } else {
+      paramSubmit = param;
+    }
+    this.authenService.reset(paramSubmit).subscribe(response => {
       if (response.meta.code === 200) {
         this.router.navigate(['/login']);
       } else if (response.meta.code === 103) {

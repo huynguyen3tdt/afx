@@ -32,4 +32,5 @@ export class AppSettings {
     public static API_ADDRESS                   = `api/${versionAPI}/common/jp/address/`;
     public static API_LANGUAGE                  = `api/${versionAPI}/language/`;
     public static API_BANK_COMPANY              = `api/${versionAPI}/deposits/bank_company/`;
+    public static API_RESET_PASSWORD            = `api/${versionAPI}/users/reset_pass/`;
 }

@@ -8,13 +8,13 @@ import {HttpClientModule} from '@angular/common/http';
 import {PaginationModule} from 'ngx-bootstrap';
 import {AuthenService} from '../../core/services/authen.service';
 import {EnvConfigService} from '../../core/services/env-config.service';
-import {Router} from '@angular/router';
+import {Router, RouterModule} from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('ResetPasswordComponent', () => {
   let component: ResetPasswordComponent;
   let fixture: ComponentFixture<ResetPasswordComponent>;
-  const router = {navigate: jasmine.createSpy('navigate')};
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -23,13 +23,14 @@ describe('ResetPasswordComponent', () => {
         ReactiveFormsModule,
         FormsModule,
         HttpClientModule,
-        TranslateModule.forRoot()
+        TranslateModule.forRoot(),
+        RouterTestingModule,
       ],
       providers: [
         AuthenService,
         EnvConfigService,
-        { provide: Router, useValue: router}
       ],
+      schemas: [ NO_ERRORS_SCHEMA ]
     })
     .compileComponents();
   }));

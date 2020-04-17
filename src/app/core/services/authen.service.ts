@@ -64,4 +64,16 @@ export class AuthenService {
       })
     );
   }
+
+  reset(param): Observable<ResponseWihtoutDataModel> {
+    return this.httpClient
+      .put(`${this.envConfigService.getConfig()}/${AppSettings.API_RESET_PASSWORD}`, param)
+      .pipe(
+      catchError((error: HttpErrorResponse) => {
+        return new Observable((observer: InnerSubscriber<any, any>) => {
+          observer.next(error);
+        });
+      })
+    );
+  }
 }
