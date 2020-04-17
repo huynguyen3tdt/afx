@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { LOCALE } from './core/constant/authen-constant';
+import { LANGUAGLE } from './core/constant/language-constant';
 declare const jqKeyboard: any;
 
 
@@ -18,8 +19,8 @@ export class AppComponent implements OnInit {
       console.log('browserLang ', browserLang);
       translate.use(browserLang.match(/en_US|ja_JP/) ? browserLang : 'en_US');
     } else {
-      localStorage.setItem(LOCALE, 'en');
-      translate.setDefaultLang('en');
+      localStorage.setItem(LOCALE, LANGUAGLE.english);
+      translate.setDefaultLang(LANGUAGLE.english);
     }
   }
 
