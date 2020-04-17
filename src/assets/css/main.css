@@ -1126,16 +1126,7 @@ ul.reset li {
 	background: rgba(255,255,255,0.5);
 }
 
-.col-mypage-content .box-item-checkbox, 
-.col-mypage-content .box-item-radio {
-	padding: 10px 10px 10px 30px;
-	background-color: #fff;
-}
-.col-mypage-content .container-checkbox .checkmark,
-.col-mypage-content .container-radio .checkmark {
-	left: 10px;
-	top: 10px;
-}
+
 @media screen and (min-width: 992px){
 	.card-profile{
 		margin-bottom: 0;

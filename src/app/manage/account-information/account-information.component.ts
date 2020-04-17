@@ -143,6 +143,7 @@ export class AccountInformationComponent implements OnInit {
     if (this.isCompany === 'false') {
       this.getUserInfo();
     }
+    this.getBankInfor();
   }
 
   changeTab(type: string) {
@@ -214,10 +215,10 @@ export class AccountInformationComponent implements OnInit {
 
   initBankAccountForm() {
     this.bankAccountForm = new FormGroup({
-      beneficiary_bank: new FormControl(''),
-      bank_branch: new FormControl(''),
-      bank_account_type: new FormControl(),
-      bank_account_number: new FormControl(''),
+      beneficiary_bank: new FormControl('', requiredInput),
+      bank_branch: new FormControl('', requiredInput),
+      bank_account_type: new FormControl('sa'),
+      bank_account_number: new FormControl('', requiredInput),
     });
   }
 
@@ -372,6 +373,9 @@ export class AccountInformationComponent implements OnInit {
     this.getAllCharacBank();
   }
   saveBankAccount() {
+    if (this.bankAccountForm.invalid) {
+      return;
+    }
     const param = {
       branch_id: this.currentBranch.id,
       acc_number: this.bankAccountForm.controls.bank_account_number.value,
@@ -380,7 +384,7 @@ export class AccountInformationComponent implements OnInit {
     };
     this.userService.changeBank(param).subscribe(response => {
       if (response.meta.code === 200) {
-
+        this.cancelBankAccount();
       }
     });
   }

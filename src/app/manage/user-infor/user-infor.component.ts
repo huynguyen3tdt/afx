@@ -200,6 +200,9 @@ export class UserInforComponent implements OnInit {
           this.purposeInvestForm.controls.financialInstrument.
             setValue(this.userInfor.surveys.find(item => item.question_cd === 'indi_other_fin_name').value_text);
 
+          this.purposeInvestForm.controls.otherPurpose.
+            setValue(this.userInfor.surveys.find(item => item.question_cd === 'indi_other_purpose').value_text);
+
           this.purposeInvestForm.controls.tradingExperience.
             setValue(this.userInfor.surveys.find(item => item.question_cd === 'indi_other_fin_exp').sequence);
 
@@ -266,9 +269,19 @@ export class UserInforComponent implements OnInit {
     };
     if (this.saveType === this.formType.financial) {
       param.surveys = this.listFinancialSubmit;
+      param.zip = null;
+      param.address = null;
+      param.email = null;
+      param.mobile = null;
+      param.lang = null;
     }
     if (this.saveType === this.formType.purpose) {
       param.surveys = this.listPurposeSubmit;
+      param.zip = null;
+      param.address = null;
+      param.email = null;
+      param.mobile = null;
+      param.lang = null;
     }
     this.userService.updateUser(param).subscribe(response => {
       if (response.meta.code === 200) {
@@ -483,7 +496,7 @@ export class UserInforComponent implements OnInit {
         sequence: Number(this.purposeInvestForm.controls.backgroundApplication.value)
       },
       {
-        question_cd: 'corp_other_inv',
+        question_cd: 'indi_other_purpose',
         value_text: this.purposeInvestForm.controls.otherPurpose.value ? this.purposeInvestForm.controls.otherPurpose.value : null,
         sequence: null
       },

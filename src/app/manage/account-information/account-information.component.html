@@ -267,7 +267,10 @@
                                             <label class="label mt-1">{{'Beneficiary Bank' | translate}}</label>
                                         </div>
                                         <div class="col-md-8 col-lg-6">
-                                            <input type="text" name="beneficiary_bank" formControlName="beneficiary_bank" class="form-control form-control-sm" value="" placeholder="" disabled="disabled">
+                                            <input type="text" name="beneficiary_bank" 
+                                                formControlName="beneficiary_bank" 
+                                                disabled="disabled"
+                                                [className]="bankAccountForm.controls.beneficiary_bank.errors ? 'form-control form-control-sm invalid' : 'form-control form-control-sm'">
                                         </div>
                                     </div>
                                     <div class="row mb-2">
@@ -275,7 +278,10 @@
                                             <label class="label mt-1">{{'Bank branch' | translate}}</label>
                                         </div>
                                         <div class="col-md-8 col-lg-6">
-                                            <input type="text" name="bank_branch" formControlName="bank_branch" class="form-control form-control-sm" value="" placeholder="" disabled="disabled">
+                                            <input type="text" name="bank_branch" 
+                                            formControlName="bank_branch"
+                                            disabled="disabled"
+                                            [className]="bankAccountForm.controls.bank_branch.errors ? 'form-control form-control-sm invalid' : 'form-control form-control-sm'">
                                         </div>
                                     </div>
                                     <div class="row mb-2 pt-1">
@@ -300,7 +306,9 @@
                                             <label class="label mt-1">{{'Bank Account Number' | translate}}</label>
                                         </div>
                                         <div class="col-md-8 col-lg-6">
-                                            <input type="text" name="bank_account_number" formControlName="bank_account_number" class="form-control form-control-sm" value="8847583745" placeholder="">
+                                            <input type="text" name="bank_account_number" 
+                                            formControlName="bank_account_number" 
+                                            [className]="bankAccountForm.controls.bank_account_number.errors ? 'form-control form-control-sm invalid' : 'form-control form-control-sm'">
                                         </div>
                                     </div>
                                     <div class="row mb-2">
