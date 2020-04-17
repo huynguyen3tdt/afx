@@ -58,5 +58,72 @@ jQuery(document).ready(function() {
 
 	$(function () {
 	  $('[data-toggle="tooltip"]').tooltip()
-	})
+	});
+
+	var scroll = new SmoothScroll('.scroll-top-link', {
+		speed: 300
+	});
+
+
+	var position = $(window).scrollTop(); 
+
+	$(window).scroll(function() {
+	    var scroll = $(window).scrollTop();
+	    if((scroll > position) && (scroll > 480)) {
+	       $('.scroll-top').css('bottom','20px');
+	    } else if((scroll < position) && (scroll < 480)) {
+	       $('.scroll-top').css('bottom','-100px');
+
+	    }
+	    position = scroll;
+	});
+	//Function Check Size
+	function check_usize(){
+		var usize = Cookies.get('usize');
+		console.log(usize);
+		
+		if(usize == 'sm'){
+			$('.switch-style .btn-group .btn').not('.btn-size-sm').removeClass('active');
+			$('.switch-style .btn-group .btn.btn-size-sm').addClass('active');
+			$('body').addClass('font-size-sm');
+		}else if(usize == 'lg'){
+			$('.switch-style .btn-group .btn').not('.btn-size-lg').removeClass('active');
+			$('.switch-style .btn-group .btn.btn-size-lg').addClass('active');
+			$('body').addClass('font-size-lg');
+		}else {
+			$('.switch-style .btn-group .btn').not('.btn-size-md').removeClass('active');
+			$('.switch-style .btn-group .btn.btn-size-md').addClass('active');
+			Cookies.set('usize','md');
+		}
+		
+	}
+	check_usize();
+	//Switch Style
+	$('.switch-style .btn-group .btn').click(function(e){
+		e.preventDefault();
+		$('.switch-style .btn-group .btn').not(this).removeClass('active');
+		var size = $(this).attr('data-size');
+		//console.log(size);
+		switch (size) {
+	        case 'sm':
+	            $('body').addClass('font-size-sm');	
+	            $('body').removeClass('font-size-md font-size-lg');	   
+	            Cookies.set('usize','sm');           
+	            break;
+	        case 'lg':
+	            $('body').addClass('font-size-lg');	
+	            $('body').removeClass('font-size-sm font-size-md');
+	            Cookies.set('usize','lg');	              
+	            break;
+	        default:
+	            $('body').removeClass('font-size-sm font-size-lg');	    
+	            Cookies.set('usize','md');        
+	            break;
+	    }
+		$(this).addClass('active');
+	});
+	$('.switch-style .btn.btn-close').click(function(e){
+		e.preventDefault();
+		$('.switch-style').hide();
+	});
 });

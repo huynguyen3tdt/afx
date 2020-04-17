@@ -3,6 +3,7 @@ import { AccountType } from '../model/report-response.model';
 import { TYPEOFTRANHISTORY, PAYMENTMETHOD } from '../constant/payment-method-constant';
 import { LOCALE } from '../constant/authen-constant';
 import { LANGUAGLE } from '../constant/language-constant';
+import { AbstractControl, ValidatorFn } from '@angular/forms';
 
 export const ACCOUNT_TYPE = {
   ACCOUNT_FX: {account_type: 1, name: 'FX'},
@@ -90,6 +91,18 @@ export class GlobalService {
     }
     if (value === 'Female' || value === '女性') {
       return 'F';
+    }
+  }
+
+  resetFormControl(formControl: AbstractControl, validator?: ValidatorFn) {
+    if (validator) {
+      formControl.setValue('');
+      formControl.setValidators([validator]);
+      formControl.updateValueAndValidity();
+    } else {
+      formControl.setValue('');
+      formControl.setValidators([]);
+      formControl.updateValueAndValidity();
     }
   }
 }

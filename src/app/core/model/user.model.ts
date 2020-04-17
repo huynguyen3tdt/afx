@@ -44,6 +44,7 @@ export interface UserModel {
   };
   mobile: string;
   lang: string;
+  surveys: Array<QuestionModel>;
 }
 
 export interface CorporateModel {
@@ -85,6 +86,7 @@ export interface CorporateModel {
     function: string,
     fx_dept: string,
   };
+  surveys: Array<QuestionModel>;
 }
 
 export interface AddressModel {
@@ -106,6 +108,17 @@ export interface AddressModel {
   street: string;
   over_division: string;
 }
+export interface LabelModel {
+  id: number;
+  sequence: number;
+  value: string;
+  quizz_mark: number;
+}
 
+export interface QuestionModel {
+  question_cd: string;
+  value_text: string;
+  sequence: number;
+}
 
 

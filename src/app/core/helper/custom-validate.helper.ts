@@ -67,6 +67,16 @@ const DEFAULT_PHONE_LENGTH = {
   message: 'Length >= 10'
 };
 
+const DEFAULT_INVALID_EXP = {
+  ErrorEXP: true,
+  message: 'If the FX trading experience is less than six months, you can not open an account.'
+};
+
+const DEFAULT_INVALID_ANNUALINCOME = {
+  ErrorIncome: true,
+  message: 'ご年収が150万円未満の場合には口座を開設頂けない場合がございます。'
+};
+
 const DIGITS_PATTERN = '^\\d+$';
 const SALARY_PATTEN = '^[0-9, ]*$';
 const NOT_SPECIAL_CHARACTERS_FOR_EMAIL = '^[a-zA-Z0-9-._ ]*$';
@@ -143,7 +153,7 @@ export function validationPhoneNumber(control: AbstractControl) {
   return null;
 }
 
-export function salaryInput(control: AbstractControl) {
+export function postCodevalidation(control: AbstractControl) {
   const pattern = new RegExp(DIGITS_PATTERN);
   const patternNumber = new RegExp(FULL_SIZE_NUMBER);
   if (!control.value || typeof control.value === 'string' && !control.value.trim()) {
@@ -161,6 +171,26 @@ export function salaryInput(control: AbstractControl) {
       } else if (control.value && (control.value.length < 7)) {
           return DEFAULT_LENGTH_LOWER7;
       }
+  }
+  return null;
+}
+
+export function experienceValidation(control: AbstractControl) {
+  if (!control.value || typeof control.value === 'string' && !control.value.trim()) {
+    return DEFAULT_INVALID_REQUIRED;
+  }
+  if (Number(control.value <= 2)) {
+    return DEFAULT_INVALID_EXP;
+  }
+  return null;
+}
+
+export function annualIncomeValidation(control: AbstractControl) {
+  if (!control.value || typeof control.value === 'string' && !control.value.trim()) {
+    return DEFAULT_INVALID_REQUIRED;
+  }
+  if (Number(control.value <= 1)) {
+    return DEFAULT_INVALID_ANNUALINCOME;
   }
   return null;
 }

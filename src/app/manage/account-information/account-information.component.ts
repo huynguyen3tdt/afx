@@ -3,7 +3,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { WithdrawRequestService } from 'src/app/core/services/withdraw-request.service';
 import { Mt5Model, WithdrawAmountModel, BankInforModel } from 'src/app/core/model/withdraw-request-response.model';
 import { UserService } from './../../core/services/user.service';
-import { UserModel, CorporateResponse, CorporateModel, AddressModel } from 'src/app/core/model/user.model';
+import { UserModel, CorporateModel, AddressModel } from 'src/app/core/model/user.model';
 import { FormGroup, FormControl } from '@angular/forms';
 import { IS_COMPANY, ACCOUNT_IDS, FONTSIZE_AFX, LOCALE, TIMEZONEAFX } from 'src/app/core/constant/authen-constant';
 import { GlobalService } from 'src/app/core/services/global.service';
@@ -12,7 +12,7 @@ import { passwordValidation,
          requiredInput,
          emailValidation,
          validationPhoneNumber,
-         salaryInput } from 'src/app/core/helper/custom-validate.helper';
+         postCodevalidation} from 'src/app/core/helper/custom-validate.helper';
 import { AuthenService } from 'src/app/core/services/authen.service';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { SearchHiraModel, BankModel, BranchModel } from 'src/app/core/model/bank-response.model';
@@ -48,18 +48,6 @@ export class AccountInformationComponent implements OnInit {
   ) { }
   accountInfor: Mt5Model;
   withdrawAmount: WithdrawAmountModel;
-  editAddress: boolean;
-  editEmail: boolean;
-  editPhone: boolean;
-  editCorAddress: boolean;
-  editCorPhone: boolean;
-  editCorFax: boolean;
-  editPersonBod: boolean;
-  editPersonPic: boolean;
-  editPersonPicname: boolean;
-  editPersonPhone: boolean;
-  editPersonEmail: boolean;
-  editGender: boolean;
   // editLanguage: boolean;
   userInfor: UserModel;
   corporateInfor: CorporateModel;
@@ -96,8 +84,8 @@ export class AccountInformationComponent implements OnInit {
   showBranch: boolean;
   showChangeBank: boolean;
   firstChar: string;
-  name: string;
-  bic: string;
+  // name: string;
+  // bic: string;
   bankSearch: Array<BankModel>;
   characBank = [];
   listHira: SearchHiraModel[];
@@ -118,6 +106,16 @@ export class AccountInformationComponent implements OnInit {
     approve: 'A',
     inProgress: 'P'
   };
+  TAB = {
+    accountInfo: 'accountInfo',
+    userInfo: 'userInfo',
+    corpInfo: 'corpInfo',
+    withDrawal: 'withDrawal',
+    setting: 'setting'
+  };
+
+  showTabCorpInfo: boolean;
+  showTabUserInfo: boolean;
 
   ngOnInit() {
     this.timeZone = localStorage.getItem(TIMEZONEAFX);
@@ -134,33 +132,44 @@ export class AccountInformationComponent implements OnInit {
       this.accountID = Number(this.listTradingAccount[0].account_id);
     }
     this.initUserForm();
-    this.initCorporateForm();
     this.initSettingForm();
     this.initBankForm();
     this.initBranchForm();
     this.initBankAccountForm();
     this.bankAccount = true;
     this.editBank = false;
-    this.editAddress = false;
-    this.editEmail = false;
-    this.editPhone = false;
-    this.editCorAddress = false;
-    this.editCorPhone = false;
-    this.editCorFax = false;
-    this.editPersonBod = false;
-    this.editPersonPic = false;
-    this.editPersonPicname = false;
-    this.editPersonPhone = false;
-    this.editPersonEmail = false;
-    this.editGender = false;
     this.getMt5Infor(this.accountID);
     this.getWithDrawAmount(this.accountID);
-    this.getUserInfo();
+    if (this.isCompany === 'false') {
+      this.getUserInfo();
+    }
+    this.getBankInfor();
+  }
+
+  changeTab(type: string) {
+    switch (type) {
+      case this.TAB.accountInfo:
+        this.getMt5Infor(this.accountID);
+        this.showTabCorpInfo = false;
+        this.showTabUserInfo = false;
+        break;
+      case this.TAB.userInfo:
+        this.showTabUserInfo = true;
+        break;
+      case this.TAB.corpInfo:
+        console.log('in in inininin');
+        this.showTabCorpInfo = true;
+        break;
+      case this.TAB.withDrawal:
+        break;
+      case this.TAB.setting:
+        break;
+    }
   }
 
   initUserForm() {
     this.userForm = new FormGroup({
-      postCode: new FormControl('', salaryInput),
+      postCode: new FormControl('', postCodevalidation),
       searchPrefe: new FormControl('', requiredInput),
       searchCountry: new FormControl('', requiredInput),
       house_numb: new FormControl('', requiredInput),
@@ -169,24 +178,7 @@ export class AccountInformationComponent implements OnInit {
       phone: new FormControl('', validationPhoneNumber),
     });
   }
-  initCorporateForm() {
-    this.corporateForm = new FormGroup({
-      cor_postcode: new FormControl('', salaryInput),
-      cor_prefec: new FormControl('', requiredInput),
-      cor_district: new FormControl('', requiredInput),
-      cor_house: new FormControl('', requiredInput),
-      cor_build: new FormControl(''),
-      cor_phone: new FormControl('', validationPhoneNumber),
-      cor_fax: new FormControl('', requiredInput),
-      person_bod: new FormControl('', requiredInput),
-      person_pic: new FormControl('', requiredInput),
-      per_picname: new FormControl('', requiredInput),
-      person_picname: new FormControl('', requiredInput),
-      person_gender: new FormControl('', requiredInput),
-      person_phone: new FormControl('', validationPhoneNumber),
-      person_email: new FormControl('', emailValidation),
-    });
-  }
+
   initSettingForm() {
     this.changePassForm = new FormGroup({
       current_password: new FormControl('', [passwordValidation]),
@@ -196,6 +188,7 @@ export class AccountInformationComponent implements OnInit {
     });
     this.changePassForm.controls.language.setValue(localStorage.getItem(LOCALE));
   }
+
   changeLang(language) {
     this.translate.use(language);
     localStorage.setItem(LOCALE, language);
@@ -222,10 +215,10 @@ export class AccountInformationComponent implements OnInit {
 
   initBankAccountForm() {
     this.bankAccountForm = new FormGroup({
-      beneficiary_bank: new FormControl(''),
-      bank_branch: new FormControl(''),
-      bank_account_type: new FormControl(),
-      bank_account_number: new FormControl(''),
+      beneficiary_bank: new FormControl('', requiredInput),
+      bank_branch: new FormControl('', requiredInput),
+      bank_account_type: new FormControl('sa'),
+      bank_account_number: new FormControl('', requiredInput),
     });
   }
 
@@ -247,32 +240,6 @@ export class AccountInformationComponent implements OnInit {
     });
   }
 
-  getCorporateInfor() {
-    this.spinnerService.show();
-    this.userService.getCorporateInfor().subscribe(response => {
-      if (response.meta.code === 200) {
-        this.spinnerService.hide();
-        this.corporateInfor = response.data;
-        this.corporateForm.controls.cor_prefec.setValue(this.corporateInfor.corporation.address.value.city);
-        this.corporateForm.controls.cor_district.setValue(this.corporateInfor.corporation.address.value.street);
-        this.corporateForm.controls.cor_postcode.setValue(this.corporateInfor.corporation.zip.value);
-        this.corporateForm.controls.cor_house.setValue(this.corporateInfor.corporation.address.value.street2);
-        this.corporateForm.controls.cor_build.setValue(this.corporateInfor.corporation.address.value.fx_street3);
-        this.corporateForm.controls.cor_phone.setValue(this.corporateInfor.corporation.mobile);
-        this.corporateForm.controls.cor_fax.setValue(this.corporateInfor.corporation.fx_fax.value);
-        if (this.corporateInfor.pic) {
-          this.corporateForm.controls.person_bod.setValue(this.corporateInfor.pic.fx_dept);
-          this.corporateForm.controls.person_pic.setValue(this.corporateInfor.pic.function);
-          this.corporateForm.controls.per_picname.setValue(this.corporateInfor.pic.name);
-          this.corporateForm.controls.person_picname.setValue(this.corporateInfor.pic.fx_name1);
-          this.corporateForm.controls.person_phone.setValue(this.corporateInfor.pic.mobile);
-          this.corporateForm.controls.person_email.setValue(this.corporateInfor.pic.email.value);
-          this.corporateForm.controls.person_gender.setValue(this.corporateInfor.pic.fx_gender.value);
-          this.corporateInfor.pic.fx_gender.value = this.globalService.checkGender(this.corporateInfor.pic.fx_gender.value);
-        }
-      }
-    });
-  }
   getMt5Infor(accountId) {
     this.spinnerService.show();
     this.withdrawRequestService.getmt5Infor(accountId).subscribe(response => {
@@ -303,259 +270,6 @@ export class AccountInformationComponent implements OnInit {
       if (response.meta.code === 200) {
         this.spinnerService.hide();
         this.bankInfor = response.data;
-      }
-    });
-  }
-
-  userSubmit() {
-    this.isSubmittedUser = true;
-    if (this.userForm.invalid) {
-      return;
-    }
-    $('#modal-confirm').modal('show');
-  }
-  changeUser() {
-    const param = {
-      zip: this.userForm.controls.postCode.value,
-      address: {
-        city: this.userForm.controls.searchPrefe.value,
-        street: this.userForm.controls.searchCountry.value,
-        street2: this.userForm.controls.house_numb.value,
-        fx_street3: this.userForm.controls.name_build.value,
-      },
-      email: this.userForm.controls.email.value,
-      mobile: this.userForm.controls.phone.value,
-      lang: ''
-    };
-    this.userService.updateUser(param).subscribe(response => {
-      if (response.meta.code === 200) {
-        this.showSave = false;
-        this.editAddress = false;
-        this.editEmail = false;
-        this.editPhone = false;
-        this.getUserInfo();
-
-      }
-    });
-
-  }
-
-  showEditField(field: string) {
-    this.showSave = true;
-    switch (field) {
-      case 'address':
-        this.userForm.controls.postCode.setValue(this.userInfor.zip.value);
-        this.userForm.controls.searchPrefe.setValue(this.userInfor.address.value.city);
-        this.userForm.controls.searchCountry.setValue(this.userInfor.address.value.street);
-        this.userForm.controls.house_numb.setValue(this.userInfor.address.value.street2);
-        this.userForm.controls.name_build.setValue(this.userInfor.address.value.fx_street3);
-        this.editAddress = true;
-        break;
-      case 'email':
-        this.userForm.controls.email.setValue(this.userInfor.email.value);
-        this.editEmail = true;
-        break;
-      case 'phone':
-        this.userForm.controls.phone.setValue(this.userInfor.mobile);
-        this.editPhone = true;
-        break;
-    }
-  }
-
-  cancelEdit(field: string) {
-    this.showSave = false;
-    switch (field) {
-      case 'address':
-        this.editAddress = false;
-        break;
-      case 'email':
-        this.editEmail = false;
-        break;
-      case 'phone':
-        this.editPhone = false;
-        break;
-    }
-
-  }
-  showEditFieldCor(field: string) {
-    this.showSaveCor = true;
-    switch (field) {
-      case 'cor-address':
-        this.corporateForm.controls.cor_prefec.setValue(this.corporateInfor.corporation.address.value.city);
-        this.corporateForm.controls.cor_district.setValue(this.corporateInfor.corporation.address.value.street);
-        this.corporateForm.controls.cor_postcode.setValue(this.corporateInfor.corporation.zip.value);
-        this.corporateForm.controls.cor_house.setValue(this.corporateInfor.corporation.address.value.street2);
-        this.corporateForm.controls.cor_build.setValue(this.corporateInfor.corporation.address.value.fx_street3);
-        this.editCorAddress = true;
-        break;
-      case 'cor-phone':
-        this.corporateForm.controls.cor_phone.setValue(this.corporateInfor.corporation.mobile);
-        this.editCorPhone = true;
-        break;
-      case 'cor-fax':
-        this.corporateForm.controls.cor_fax.setValue(this.corporateInfor.corporation.fx_fax.value);
-        this.editCorFax = true;
-        break;
-      case 'department':
-        this.corporateForm.controls.person_bod.setValue(this.corporateInfor.pic.fx_dept);
-        this.editPersonBod = true;
-        break;
-      case 'pic-position':
-        this.corporateForm.controls.person_pic.setValue(this.corporateInfor.pic.function);
-        this.editPersonPic = true;
-        break;
-      case 'pic-name':
-        this.corporateForm.controls.person_picname.setValue(this.corporateInfor.pic.fx_name1);
-        this.editPersonPicname = true;
-        break;
-      case 'p-phone':
-        this.corporateForm.controls.person_phone.setValue(this.corporateInfor.pic.mobile);
-        this.editPersonPhone = true;
-        break;
-      case 'p-email':
-        this.corporateForm.controls.person_email.setValue(this.corporateInfor.pic.email.value);
-        this.editPersonEmail = true;
-        break;
-      case 'p-gender':
-        this.corporateForm.controls.person_gender.setValue(this.corporateInfor.pic.fx_gender.value);
-        this.editGender = true;
-        break;
-    }
-  }
-  cancelEditCor(field: string) {
-    this.showSaveCor = false;
-    switch (field) {
-      case 'cor-address':
-        this.editCorAddress = false;
-        break;
-      case 'cor-phone':
-        this.editCorPhone = false;
-        break;
-      case 'cor-fax':
-        this.editCorFax = false;
-        break;
-      case 'department':
-        this.editPersonBod = false;
-        break;
-      case 'pic-position':
-        this.editPersonPic = false;
-        break;
-      case 'pic-name':
-        this.editPersonPicname = false;
-        break;
-      case 'p-phone':
-        this.editPersonPhone = false;
-        break;
-      case 'p-email':
-        this.editPersonEmail = false;
-        break;
-      case 'p-gender':
-        this.editGender = false;
-        break;
-    }
-  }
-  settingSave() {
-    this.isSubmittedSetting = true;
-    this.successPassword = false;
-    this.errorPassword = false;
-    if (this.changePassForm.invalid) {
-      this.errorMessage = false;
-      return;
-    }
-    if (this.changePassForm.controls.new_password.value !== this.changePassForm.controls.confirm_password.value) {
-      return;
-    }
-    if (this.changePassForm.controls.current_password.value === this.changePassForm.controls.confirm_password.value
-      && this.changePassForm.controls.new_password.value === this.changePassForm.controls.confirm_password.value) {
-      return;
-    }
-    const param = {
-      new_password: this.changePassForm.controls.confirm_password.value,
-      old_password: this.changePassForm.controls.current_password.value,
-    };
-    this.authenService.changePassword(param).subscribe(response => {
-      if (response.meta.code === 200) {
-        this.successPassword = true;
-      } else if (response.meta.code === 103) {
-        this.errorPassword = true;
-      }
-    });
-  }
-  // postNo
-  changeAddress(type: number) {
-    if (type === 1) {
-      const postNo = this.userForm.controls.postCode.value;
-      this.userService.getAddress(postNo).subscribe(response => {
-        if (response.meta.code === 200) {
-          this.listAddressUser = response.data;
-          this.userForm.controls.postCode.setValue(this.listAddressUser.postno);
-          this.userForm.controls.searchPrefe.setValue(this.listAddressUser.prefecture);
-          this.userForm.controls.searchCountry.setValue(this.listAddressUser.city + this.listAddressUser.town);
-          this.userForm.controls.house_numb.setValue(this.listAddressUser.old_postcode);
-          this.userForm.controls.name_build.setValue(this.listAddressUser.city);
-        }
-      });
-    } else if (type === 2) {
-      const postNo = this.corporateForm.controls.cor_postcode.value;
-      this.userService.getAddress(postNo).subscribe(response => {
-        if (response.meta.code === 200) {
-          this.listAddressCor = response.data;
-          this.corporateForm.controls.cor_postcode.setValue(this.listAddressCor.postno);
-          this.corporateForm.controls.cor_district.setValue(this.listAddressCor.city + this.listAddressCor.town);
-          this.corporateForm.controls.cor_build.setValue(this.listAddressCor.city);
-          this.corporateForm.controls.cor_house.setValue(this.listAddressCor.old_postcode);
-          this.corporateForm.controls.cor_prefec.setValue(this.listAddressCor.prefecture);
-        }
-      });
-    }
-  }
-  SaveCor() {
-    this.isSubmittedCor = true;
-    if (this.corporateForm.invalid) {
-      return;
-    } else {
-      $('#modal-corporation').modal('show');
-    }
-
-  }
-  updateCorporate() {
-    console.log('in in in');
-    const param = {
-      corporation: {
-        zip: this.corporateForm.controls.cor_postcode.value,
-        address: {
-          city: this.corporateForm.controls.cor_prefec.value,
-          street: this.corporateForm.controls.cor_district.value,
-          street2: this.corporateForm.controls.cor_house.value,
-          fx_street3: this.corporateForm.controls.cor_build.value,
-        },
-        mobile: this.corporateForm.controls.cor_phone.value,
-        fx_fax: this.corporateForm.controls.cor_fax.value,
-        lang: '',
-      },
-      pic: {
-        name: this.corporateForm.controls.per_picname.value,
-        fx_name1: this.corporateForm.controls.person_picname.value,
-        fx_gender: this.corporateForm.controls.person_gender.value,
-        email: this.corporateForm.controls.person_email.value,
-        mobile: this.corporateForm.controls.person_phone.value,
-        function: this.corporateForm.controls.person_pic.value,
-        fx_dept: this.corporateForm.controls.person_bod.value
-      }
-    };
-    this.userService.changeCorporation(param).subscribe(response => {
-      if (response.meta.code === 200) {
-        this.showSaveCor = false;
-        this.editCorAddress = false;
-        this.editCorPhone = false;
-        this.editCorFax = false;
-        this.editPersonBod = false;
-        this.editPersonPic = false;
-        this.editPersonPicname = false;
-        this.editPersonPhone = false;
-        this.editPersonEmail = false;
-        this.editGender = false;
-        this.getCorporateInfor();
       }
     });
   }
@@ -609,10 +323,12 @@ export class AccountInformationComponent implements OnInit {
   editBankAccount() {
     this.editBank = true;
     this.bankAccount = false;
-    this.bankAccountForm.controls.beneficiary_bank.setValue(this.bankInfor.name);
-    this.bankAccountForm.controls.bank_branch.setValue(this.bankInfor.branch_name);
-    this.bankAccountForm.controls.bank_account_type.setValue(this.bankInfor.fx_acc_type.toString());
-    this.bankAccountForm.controls.bank_account_number.setValue(this.bankInfor.acc_number);
+    // if (this.bankForm) {
+    //   this.bankAccountForm.controls.beneficiary_bank.setValue(this.bankInfor.name);
+    //   this.bankAccountForm.controls.bank_branch.setValue(this.bankInfor.branch_name);
+    //   this.bankAccountForm.controls.bank_account_type.setValue(this.bankInfor.fx_acc_type.toString());
+    //   this.bankAccountForm.controls.bank_account_number.setValue(this.bankInfor.acc_number);
+    // }
   }
   showBankInfor(type: number, bankName?: string) {
     this.initHiraCode();
@@ -657,6 +373,9 @@ export class AccountInformationComponent implements OnInit {
     this.getAllCharacBank();
   }
   saveBankAccount() {
+    if (this.bankAccountForm.invalid) {
+      return;
+    }
     const param = {
       branch_id: this.currentBranch.id,
       acc_number: this.bankAccountForm.controls.bank_account_number.value,
@@ -665,7 +384,7 @@ export class AccountInformationComponent implements OnInit {
     };
     this.userService.changeBank(param).subscribe(response => {
       if (response.meta.code === 200) {
-
+        this.cancelBankAccount();
       }
     });
   }

@@ -87,31 +87,4 @@ export class ListTransactionComponent implements OnInit, OnChanges {
       }
     });
   }
-
-  // checkPaymentMedthod(type: string) {
-  //   if (type === PAYMENTMETHOD.QUICKDEPOSIT.key) {
-  //     return PAYMENTMETHOD.QUICKDEPOSIT.name;
-  //   }
-  //   if (type === PAYMENTMETHOD.BANKTRANSFER.key) {
-  //     return PAYMENTMETHOD.BANKTRANSFER.name;
-  //   }
-  //   return '';
-  // }
-  // checkType(type: string) {
-  //   if (type === TYPEOFTRANHISTORY.DEPOSIT.key) {
-  //     if (this.locale === 'en') {
-  //       return TYPEOFTRANHISTORY.DEPOSIT.name;
-  //     } else {
-  //       return TYPEOFTRANHISTORY.DEPOSIT.nameJP;
-  //     }
-  //   }
-  //   if (type === TYPEOFTRANHISTORY.WITHDRAWAL.key) {
-  //     if (this.locale === 'en') {
-  //       return TYPEOFTRANHISTORY.WITHDRAWAL.name;
-  //     } else {
-  //       return TYPEOFTRANHISTORY.WITHDRAWAL.nameJP;
-  //     }
-  //   }
-  //   return '';
-  // }
 }
