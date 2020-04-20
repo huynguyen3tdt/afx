@@ -123,10 +123,8 @@
                                                 <td><a (click)="openDetail(item?.id)">{{item?.create_date}}</a></td>
                                                 <td><a (click)="openDetail(item?.id)">{{item?.funding_type}}</a></td>
                                                 <td><a (click)="openDetail(item?.id)">{{item?.method}}</a></td>
-                                                <td *ngIf="item?.funding_type == typeTranHistory.DEPOSIT.name || item?.funding_type == typeTranHistory.DEPOSIT.nameJP" class="text-right">
+                                                <td class="text-right">
                                                     <a (click)="openDetail(item?.id)">{{item?.amount | number}}</a></td>
-                                                <td *ngIf="item?.funding_type == typeTranHistory.WITHDRAWAL.name || item?.funding_type == typeTranHistory.WITHDRAWAL.nameJP" class="text-right">
-                                                    <a (click)="openDetail(item?.id)">-{{item?.amount | number}}</a></td>
                                                 <!-- <td *ngIf="item?.status == transactionStatus.NEW.key" class="text-right"><span
                                                         class="text-info"><i class="icon ion-md-hourglass"></i>
                                                         <a (click)="openDetail(item?.id)">{{'New' | translate}}</a></span></td> -->
@@ -156,7 +154,11 @@
                                 <button class="btn btn-outline-secondary pt-1 pb-1"><i
                                         class="icon ion-md-download"></i></button>
                             </div> -->
-                            <div class="d-md-flex align-items-center justify-content-between mb-2 border-top pt-2">
+                            <div class="text-right">
+                                <button (click)="exportToCSV()" class="btn btn-sm btn-success btn-outline-secondary pt-0 pb-0"><i
+                                    class="icon ion-md-download"></i></button>
+                            </div>
+                            <div class="d-md-flex align-items-center justify-content-between mb-2 pt-2">
                                 <div class="mb-2 mb-md-0">
                                     <div class="d-inline-block mr-2">
                                         <select (change)="changeTotalItem($event)" [(ngModel)]="pageSize" class="form-control form-control-sm">

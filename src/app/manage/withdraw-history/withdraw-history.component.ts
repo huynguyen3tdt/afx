@@ -162,8 +162,8 @@ export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
     this.checkTab(type);
     this.withdrawRequestService.getDwHistory(accountNumber, pageSize, pageNumber, type, dateFrom,
       dateTo, statusSearch).subscribe(response => {
+        this.spinnerService.hide();
         if (response.meta.code === 200) {
-          this.spinnerService.hide();
           this.listReport = response.data.results;
           this.totalItem = response.data.count;
           this.totalPage = (response.data.count / pageSize) * 10;
@@ -294,7 +294,9 @@ export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
   }
 
   openDetail(tranId: number) {
+    this.spinnerService.show();
     this.withdrawRequestService.getDetailTranHistory(tranId).subscribe(response => {
+      this.spinnerService.hide();
       if (response.meta.code === 200) {
         this.tranHistoryDetail = response.data;
         this.tranHistoryDetail.create_date += TIMEZONESERVER;
@@ -327,21 +329,44 @@ export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
     this.searchTranHistory();
   }
 
-  checkStatus(status: number) {
-    if (status === STATUSTRANHISTORY.COMPLETE.key) {
-      return STATUSTRANHISTORY.COMPLETE.name;
+  exportToCSV() {
+    const accounID = this.searchForm.controls.tradingAccount.value.split('-')[1];
+    let tabValue;
+    switch (this.tab) {
+      case this.TABS.ALL.name:
+        tabValue = this.TABS.ALL.value;
+        break;
+      case this.TABS.DEPOSIT.name:
+        tabValue = this.TABS.DEPOSIT.value;
+        break;
+      case this.TABS.WITHDRAWAL.name:
+        tabValue = this.TABS.WITHDRAWAL.value;
+        break;
     }
-    if (status === STATUSTRANHISTORY.CANCEL.key) {
-      return STATUSTRANHISTORY.CANCEL.name;
-    }
-    if (status === STATUSTRANHISTORY.PENDING.key) {
-      return STATUSTRANHISTORY.PENDING.name;
-    }
-    return null;
+    this.spinnerService.show();
+    this.withdrawRequestService.exportHistoryToCsv(accounID, tabValue,
+      this.formatDate(this.searchForm.controls.fromDate.value),
+      this.formatDate(this.searchForm.controls.toDate.value), this.statusSearch).subscribe(response => {
+        this.spinnerService.hide();
+        const file = new Blob([response], {
+          type: 'text/csv',
+        });
+        const fileURL = URL.createObjectURL(file);
+        const a = document.createElement('a');
+        let fileName;
+        if (this.locale === LANGUAGLE.english) {
+          fileName = `History(${this.searchForm.controls.fromDate.value}-${this.searchForm.controls.toDate.value}).csv`;
+        } else {
+          fileName = `入出金履歴(${this.searchForm.controls.fromDate.value}-${this.searchForm.controls.toDate.value}).csv`;
+        }
+        a.href = fileURL;
+        a.download = fileName;
+        document.body.appendChild(a);
+        a.click();
+      });
   }
 
   changeTradingAccount() {
-    console.log('accountIDĐ ', this.searchForm.controls.tradingAccount.value.split('-')[1]);
     this.searchTranHistory();
   }
 

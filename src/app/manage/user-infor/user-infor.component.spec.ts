@@ -6,6 +6,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { HttpClientModule } from '@angular/common/http';
 import { ConvertFinancialPipe } from 'src/app/core/pipe/convert-financial.pipe';
 import { ConvertInvestmentPurposePipe } from 'src/app/core/pipe/convert-purposeInvest.pipe';
+import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
 
 describe('UserInforComponent', () => {
   let component: UserInforComponent;
@@ -20,7 +21,8 @@ describe('UserInforComponent', () => {
         ReactiveFormsModule,
         FormsModule,
         HttpClientModule,
-        TranslateModule.forRoot()
+        TranslateModule.forRoot(),
+        Ng4LoadingSpinnerModule
       ],
     })
     .compileComponents();

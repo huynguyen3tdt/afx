@@ -47,7 +47,7 @@ export class ReportListComponent implements OnInit {
   };
 
   constructor(private reportservice: ReportService,
-              private spinnerService: Ng4LoadingSpinnerService, ) { }
+              private spinnerService: Ng4LoadingSpinnerService) { }
 
   ngOnInit() {
     this.timeZone = localStorage.getItem(TIMEZONEAFX);
@@ -201,7 +201,9 @@ export class ReportListComponent implements OnInit {
     const param = {
       report_id : id
     };
+    this.spinnerService.show();
     this.reportservice.changeReadStatus(param).subscribe(response => {
+      this.spinnerService.hide();
       if (response.meta.code === 200) {
         this.searchReport();
       }
@@ -210,7 +212,9 @@ export class ReportListComponent implements OnInit {
 
   openPDF(item: ReportIDS) {
     if (item.file_type === 'pdf') {
+      this.spinnerService.show();
       this.reportservice.downLoadReportFile(item.id).subscribe(response => {
+        this.spinnerService.hide();
         const file = new Blob([response], {
           type: 'application/pdf',
         });
@@ -222,7 +226,9 @@ export class ReportListComponent implements OnInit {
     }
   }
   downLoadFile(item: ReportIDS) {
+    this.spinnerService.show();
     this.reportservice.downLoadReportFile(item.id).subscribe(response => {
+      this.spinnerService.hide();
       let file;
       if (item.file_type === 'pdf') {
         file = new Blob([response], {

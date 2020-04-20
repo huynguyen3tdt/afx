@@ -68,7 +68,7 @@ export class WithdrawRequestService {
 
   postWithdraw(param): Observable<ResponseWihtoutDataModel> {
     return this.httpClient
-      .post(`${this.envConfigService.getConfig()}/${AppSettings.API_POST_WITHDRAW }`, param)
+      .post(`${this.envConfigService.getConfig()}/${AppSettings.API_POST_WITHDRAW}`, param)
       .pipe(
         catchError((error: HttpErrorResponse) => {
           return new Observable((observer: InnerSubscriber<any, any>) => {
@@ -89,7 +89,7 @@ export class WithdrawRequestService {
     }
     if (dateFrom && dateFrom !== 'Invalid date') {
       if (locale === LANGUAGLE.english) {
-        dateFrom = moment(dateFrom , DATE_CLIENT_ENG).format(DATE_CLIENT_ENG_SUBMIT);
+        dateFrom = moment(dateFrom, DATE_CLIENT_ENG).format(DATE_CLIENT_ENG_SUBMIT);
       }
       URL += `&date_from=${dateFrom}`;
     }
@@ -116,6 +116,41 @@ export class WithdrawRequestService {
   getDetailTranHistory(tranId: number): Observable<TransactionResponse> {
     return this.httpClient
       .get(`${this.envConfigService.getConfig()}/${AppSettings.API_WD_HISTORY}${tranId}/`)
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          return new Observable((observer: InnerSubscriber<any, any>) => {
+            observer.next(error);
+          });
+        })
+      );
+  }
+
+  exportHistoryToCsv(accountNumber: number, type?: string,
+                     dateFrom?: string, dateTo?: string, statusSearch?: string): Observable<ArrayBuffer> {
+    let URL = '';
+    const locale = localStorage.getItem(LOCALE);
+    if (type) {
+      URL = `?account_id=${accountNumber}&type=${type}`;
+    } else {
+      URL = `?account_id=${accountNumber}`;
+    }
+    if (dateFrom && dateFrom !== 'Invalid date') {
+      if (locale === LANGUAGLE.english) {
+        dateFrom = moment(dateFrom, DATE_CLIENT_ENG).format(DATE_CLIENT_ENG_SUBMIT);
+      }
+      URL += `&date_from=${dateFrom}`;
+    }
+    if (dateTo && dateTo !== 'Invalid date') {
+      if (locale === LANGUAGLE.english) {
+        dateTo = moment(dateTo, DATE_CLIENT_ENG).format(DATE_CLIENT_ENG_SUBMIT);
+      }
+      URL += `&date_to=${dateTo}`;
+    }
+    if (statusSearch) {
+      URL += `&status=${statusSearch}`;
+    }
+    return this.httpClient
+      .get(`${this.envConfigService.getConfig()}/${AppSettings.API_EXPORT_CSV}` + URL, { responseType: 'arraybuffer' })
       .pipe(
         catchError((error: HttpErrorResponse) => {
           return new Observable((observer: InnerSubscriber<any, any>) => {

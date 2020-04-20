@@ -33,4 +33,5 @@ export class AppSettings {
     public static API_LANGUAGE                  = `api/${versionAPI}/language/`;
     public static API_BANK_COMPANY              = `api/${versionAPI}/deposits/bank_company/`;
     public static API_RESET_PASSWORD            = `api/${versionAPI}/users/reset_pass/`;
+    public static API_EXPORT_CSV                = `api/${versionAPI}/funding/tran_history/download/`;
 }
