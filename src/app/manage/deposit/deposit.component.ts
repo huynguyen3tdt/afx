@@ -121,7 +121,7 @@ export class DepositComponent implements OnInit {
     this.spinnerService.show();
     this.depositService.getBankCompany().subscribe(response => {
       this.spinnerService.hide();
-      if (response.meta.code === 200) { 
+      if (response.meta.code === 200) {
         this.listBankTranfer = response.data;
         // if (this.listBankTranfer.length > 0) {
         //   this.showInforBank(`bank_${this.listBankTranfer[0].id}`);
