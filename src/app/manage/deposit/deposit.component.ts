@@ -120,8 +120,8 @@ export class DepositComponent implements OnInit {
   getBankCompany() {
     this.spinnerService.show();
     this.depositService.getBankCompany().subscribe(response => {
-      if (response.meta.code === 200) {
-        this.spinnerService.hide();
+      this.spinnerService.hide();
+      if (response.meta.code === 200) { 
         this.listBankTranfer = response.data;
         // if (this.listBankTranfer.length > 0) {
         //   this.showInforBank(`bank_${this.listBankTranfer[0].id}`);
@@ -133,6 +133,7 @@ export class DepositComponent implements OnInit {
   getMt5Infor(accountId) {
     this.spinnerService.show();
     this.withdrawRequestService.getmt5Infor(accountId).subscribe(response => {
+      this.spinnerService.hide();
       if (response.meta.code === 200) {
         this.mt5Infor = response.data;
         this.equity = this.mt5Infor.equity;
@@ -141,7 +142,6 @@ export class DepositComponent implements OnInit {
         if (this.mt5Infor.free_margin < Number(this.minDeposit)) {
           this.mt5Infor.free_margin = 0;
         }
-        this.spinnerService.hide();
       }
       this.calculateDeposit();
       this.calculateDepositAmount();
@@ -151,8 +151,8 @@ export class DepositComponent implements OnInit {
   getDwAmount(accountId) {
     this.spinnerService.show();
     this.withdrawRequestService.getDwAmount(accountId).subscribe(response => {
+      this.spinnerService.hide();
       if (response.meta.code === 200) {
-        this.spinnerService.hide();
         this.listDwAmount = response.data;
       }
     });

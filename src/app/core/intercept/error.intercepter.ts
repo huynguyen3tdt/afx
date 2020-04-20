@@ -28,17 +28,6 @@ export class ErrorInterceptor implements HttpInterceptor {
               typeErr = 'エラー';
             }
           }
-          // if (err.status === 400) {
-          //   if (locale === LANGUAGLE.english) {
-          //     messageErr = 'Internal client error';
-          //     typeErr = 'ERROR';
-          //   } else {
-          //     messageErr = '内部クライアントエラー';
-          //   }
-          //   this.toastr.error(messageErr, typeErr, {
-          //     timeOut: 3000
-          //   });
-          // }
           if (err.status === 500) {
             if (locale === LANGUAGLE.english) {
               messageErr = 'Internal server error';
@@ -51,7 +40,7 @@ export class ErrorInterceptor implements HttpInterceptor {
               timeOut: TIMEOUT_TOAST
             });
           }
-          return throwError(err.error);
+          return throwError(err);
         }));
     }
 }

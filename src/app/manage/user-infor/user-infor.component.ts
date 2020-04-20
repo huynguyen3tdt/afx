@@ -24,6 +24,7 @@ import {
   annualIncomeInvidual,
   financialAssetInvidual
 } from 'src/app/core/constant/question-constant';
+import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 declare var $: any;
 
 @Component({
@@ -67,7 +68,9 @@ export class UserInforComponent implements OnInit {
   listFinancialSubmit: Array<QuestionModel>;
   listPurposeSubmit: Array<QuestionModel>;
 
-  constructor(private userService: UserService, private globalService: GlobalService) { }
+  constructor(private userService: UserService,
+              private globalService: GlobalService,
+              private spinnerService: Ng4LoadingSpinnerService) { }
 
   ngOnInit() {
     this.listCityJapan = LISTCITY_JAPAN;
@@ -221,7 +224,9 @@ export class UserInforComponent implements OnInit {
 
   changeAddress() {
     const postNo = this.userForm.controls.postCode.value;
+    this.spinnerService.show();
     this.userService.getAddress(postNo).subscribe(response => {
+      this.spinnerService.hide();
       if (response.meta.code === 200) {
         this.userAddress = response.data;
         this.userForm.controls.postCode.setValue(this.userAddress.postno);
@@ -283,7 +288,9 @@ export class UserInforComponent implements OnInit {
       param.mobile = null;
       param.lang = null;
     }
+    this.spinnerService.show();
     this.userService.updateUser(param).subscribe(response => {
+      this.spinnerService.hide();
       if (response.meta.code === 200) {
         if (this.saveType === this.formType.userInfor) {
           this.resetEditUser();

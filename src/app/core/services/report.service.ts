@@ -51,7 +51,7 @@ export class ReportService {
         })
       );
   }
-  downLoadReportFile(reportId: number): Observable<any> {
+  downLoadReportFile(reportId: number): Observable<ArrayBuffer> {
     return this.httpClient
       .get(
         `${this.envConfigService.getConfig()}/${AppSettings.API_DOWNLOAD_REPORT_FILE}?report_id=${reportId}`,

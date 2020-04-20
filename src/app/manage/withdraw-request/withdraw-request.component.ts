@@ -116,8 +116,8 @@ export class WithdrawRequestComponent implements OnInit {
   getMt5Infor(accountId) {
     this.spinnerService.show();
     this.withdrawRequestService.getmt5Infor(accountId).subscribe(response => {
+      this.spinnerService.hide();
       if (response.meta.code === 200) {
-        this.spinnerService.hide();
         this.mt5Infor = response.data;
         this.equity = this.mt5Infor.equity;
         this.usedMargin = this.mt5Infor.used_margin;
@@ -132,8 +132,8 @@ export class WithdrawRequestComponent implements OnInit {
   getBankInfor() {
     this.spinnerService.show();
     this.withdrawRequestService.getBankInfor().subscribe(response => {
+      this.spinnerService.hide();
       if (response.meta.code === 200) {
-        this.spinnerService.hide();
         this.bankInfor = response.data;
 
       }
@@ -142,8 +142,8 @@ export class WithdrawRequestComponent implements OnInit {
   getDwAmount(accountId) {
     this.spinnerService.show();
     this.withdrawRequestService.getDwAmount(accountId).subscribe(response => {
+      this.spinnerService.hide();
       if (response.meta.code === 200) {
-        this.spinnerService.hide();
         this.listDwAmount = response.data;
       }
     });
@@ -151,8 +151,8 @@ export class WithdrawRequestComponent implements OnInit {
   getDepositBank() {
     this.spinnerService.show();
     this.depositService.getDepositBank().subscribe(response => {
+      this.spinnerService.hide();
       if (response.meta.code === 200) {
-        this.spinnerService.hide();
         this.listBankTranfer = response.data;
         this.listBankTranfer.forEach(item => {
           item.branch_code = item.branch_code;
@@ -222,7 +222,9 @@ export class WithdrawRequestComponent implements OnInit {
       account_id: this.accountID.split('-')[1],
       currency: this.traddingAccount.currency
     };
+    this.spinnerService.show();
     this.withdrawRequestService.postWithdraw(param).subscribe(response => {
+      this.spinnerService.hide();
       if (response.meta.code === 200) {
         this.listWithdrawRequest = response.data;
         this.listTran.ngOnChanges();

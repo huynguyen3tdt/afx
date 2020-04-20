@@ -32,3 +32,10 @@
 a {
   cursor: pointer;
 }
+.btn.btn-sm.btn-success.btn-outline-secondary.pt-0.pb-0 {
+  color: white;
+}
+.btn.btn-sm.btn-success.btn-outline-secondary.pt-0.pb-0:hover {
+  background-color: #0D688F !important;
+  color: aliceblue !important;
+}

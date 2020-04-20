@@ -10,4 +10,7 @@
     font-size: 80%;
     color: #dc3545;
 }
+strong {
+    font-weight: 500 !important;
+}
 

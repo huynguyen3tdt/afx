@@ -73,9 +73,9 @@ export class ForgotPasswordComponent implements OnInit, AfterViewInit, OnDestroy
     this.time = 5;
     this.spinnerService.show();
     this.authenService.forgotPassWord(param).subscribe(response => {
+      this.spinnerService.hide();
       if (response.meta.code === 200) {
         this.showInterval = true;
-        this.spinnerService.hide();
         this.errSubmit = false;
         this.interval = setInterval(() => {
           this.time = this.time - 1;
@@ -88,7 +88,6 @@ export class ForgotPasswordComponent implements OnInit, AfterViewInit, OnDestroy
           }
         }, 1000);
       } else if (response.meta.code === 102) {
-        this.spinnerService.hide();
         this.errSubmit = true;
       }
     });
