@@ -101,7 +101,6 @@ export class LoginComponent implements OnInit, AfterViewInit {
       device_type: this.isPc ? 'Pc' : 'Mobile'
     };
     this.authenService.login(param).subscribe(response => {
-      console.log('responseeee ', response);
       if (response.meta.code === 200) {
         localStorage.setItem(USERNAME_LOGIN, btoa(this.loginFormGroup.value.userName));
         localStorage.setItem(PASSWORD_LOGIN, btoa(this.loginFormGroup.value.passWord));
@@ -144,7 +143,6 @@ export class LoginComponent implements OnInit, AfterViewInit {
           });
         }
       } else if (response.meta.code === 102) {
-        console.log('111111111111111');
         this.invalidAccount = true;
       } else if (response.meta.code === 101) {
         this.passWordExpired = true;
