@@ -40,7 +40,7 @@ export class ErrorInterceptor implements HttpInterceptor {
               timeOut: TIMEOUT_TOAST
             });
           }
-          return throwError(err);
+          return throwError(err.error);
         }));
     }
 }

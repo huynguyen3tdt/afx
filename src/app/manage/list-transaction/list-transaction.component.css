@@ -1,3 +1,6 @@
 a {
     cursor: pointer;
 }
+.keep-all {
+    word-break:keep-all
+}

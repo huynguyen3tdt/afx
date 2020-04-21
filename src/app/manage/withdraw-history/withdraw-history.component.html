@@ -107,12 +107,12 @@
                                 <table class="table table-sm table-hover mb-3" cellspacing="0" cellpadding="0">
                                     <thead>
                                         <tr>
-                                            <th class="border-top-0" width="140">{{'Transaction ID' | translate}}</th>
-                                            <th class="border-top-0">{{'Date' | translate}}</th>
-                                            <th class="border-top-0">{{'Type' | translate}}</th>
-                                            <th class="border-top-0">{{'Payment Method' | translate}}</th>
-                                            <th class="border-top-0 text-right" width="50">{{'Amount' | translate}}</th>
-                                            <th class="border-top-0 text-right" width="140">{{'Status' | translate}}
+                                            <th class="border-top-0" width="140"><span class="keep-all">{{'Transaction ID' | translate}}</span></th>
+                                            <th class="border-top-0"><span class="keep-all">{{'Date' | translate}}</span></th>
+                                            <th class="border-top-0"><span class="keep-all">{{'Type' | translate}}</span></th>
+                                            <th class="border-top-0"><span class="keep-all">{{'Payment Method' | translate}}</span></th>
+                                            <th class="border-top-0 text-right" width="50"><span class="keep-all">{{'Amount' | translate}}</span></th>
+                                            <th class="border-top-0 text-right" width="140"><span class="keep-all">{{'Status' | translate}}</span>
                                             </th>
                                         </tr>
                                     </thead>
@@ -121,19 +121,19 @@
                                             <tr *ngFor="let item of listReport">
                                                 <td><a href="javascript:;" (click)="openDetail(item?.id)">{{item?.id}}</a></td>
                                                 <td><a (click)="openDetail(item?.id)">{{item?.create_date}}</a></td>
-                                                <td><a (click)="openDetail(item?.id)">{{item?.funding_type}}</a></td>
-                                                <td><a (click)="openDetail(item?.id)">{{item?.method}}</a></td>
+                                                <td><a (click)="openDetail(item?.id)"><span class="keep-all">{{item?.funding_type}}</span></a></td>
+                                                <td><a (click)="openDetail(item?.id)"><span class="keep-all">{{item?.method}}</span></a></td>
                                                 <td class="text-right">
                                                     <a (click)="openDetail(item?.id)">{{item?.amount | number}}</a></td>
                                                 <!-- <td *ngIf="item?.status == transactionStatus.NEW.key" class="text-right"><span
                                                         class="text-info"><i class="icon ion-md-hourglass"></i>
                                                         <a (click)="openDetail(item?.id)">{{'New' | translate}}</a></span></td> -->
                                                 <td *ngIf="item?.status == transactionStatus.PENDING.key" class="text-right"><span
-                                                        class="text-info"><i class="icon ion-md-hourglass"></i>
+                                                        class="text-info keep-all"><i class="icon ion-md-hourglass"></i>
                                                         <a (click)="openDetail(item?.id)">{{'In-progress' | translate}}</a></span></td>
                                                 <td *ngIf="item?.status == transactionStatus.CANCEL.key" class="text-right">
-                                                    <span><a (click)="openDetail(item?.id)">{{'Cancel' | translate}} </a></span></td>
-                                                <td *ngIf="item?.status == transactionStatus.COMPLETE.key" class="text-right"><span class="text-success"><i class="icon ion-md-checkmark"></i>
+                                                    <span class="keep-all"><a (click)="openDetail(item?.id)">{{'Cancel' | translate}} </a></span></td>
+                                                <td *ngIf="item?.status == transactionStatus.COMPLETE.key" class="text-right"><span class="text-success keep-all"><i class="icon ion-md-checkmark"></i>
                                                   <a  (click)="openDetail(item?.id)">{{'Completed' | translate}}</a> </span></td>
                                             </tr>
                                         </ng-container>

@@ -39,3 +39,6 @@ a {
   background-color: #0D688F !important;
   color: aliceblue !important;
 }
+.keep-all {
+  word-break:keep-all
+}
