@@ -176,47 +176,75 @@ export class UserInforComponent implements OnInit {
             item.question_cd === 'indi_inv_purpose' && item.sequence === 6)) {
             this.purposeInvestForm.controls.investPurposeOther.setValue(true);
           }
-          this.purposeInvestForm.controls.investExFx.
+
+          if (this.userInfor.surveys.find(item => item.question_cd === 'indi_fx_exp')) {
+            this.purposeInvestForm.controls.investExFx.
             setValue(this.userInfor.surveys.find(item => item.question_cd === 'indi_fx_exp').sequence);
+          }
 
-          this.purposeInvestForm.controls.inversExCfd.
+          if (this.userInfor.surveys.find(item => item.question_cd === 'indi_cfd_exp')) {
+            this.purposeInvestForm.controls.inversExCfd.
             setValue(this.userInfor.surveys.find(item => item.question_cd === 'indi_cfd_exp').sequence);
+          }
 
-          this.purposeInvestForm.controls.investStockTrading.
+          if (this.userInfor.surveys.find(item => item.question_cd === 'indi_stock_exp')) {
+            this.purposeInvestForm.controls.investStockTrading.
             setValue(this.userInfor.surveys.find(item => item.question_cd === 'indi_stock_exp').sequence);
+          }
 
-          this.purposeInvestForm.controls.other.
+          if (this.userInfor.surveys.find(item => item.question_cd === 'indi_other_exp_yn')) {
+            this.purposeInvestForm.controls.other.
             setValue(this.userInfor.surveys.find(item => item.question_cd === 'indi_other_exp_yn').sequence.toString());
+          }
 
-          this.purposeInvestForm.controls.backgroundApplication.
+          if (this.userInfor.surveys.find(item => item.question_cd === 'indi_source')) {
+            this.purposeInvestForm.controls.backgroundApplication.
             setValue(this.userInfor.surveys.find(item => item.question_cd === 'indi_source').sequence);
+          }
 
-          this.purposeInvestForm.controls.specificName.
+          if (this.userInfor.surveys.find(item => item.question_cd === 'indi_other_source')) {
+            this.purposeInvestForm.controls.specificName.
             setValue(this.userInfor.surveys.find(item => item.question_cd === 'indi_other_source').value_text);
+          }
 
-          this.purposeInvestForm.controls.investMarginTrading.
+          if (this.userInfor.surveys.find(item => item.question_cd === 'indi_margin_exp')) {
+            this.purposeInvestForm.controls.investMarginTrading.
             setValue(this.userInfor.surveys.find(item => item.question_cd === 'indi_margin_exp').sequence);
+          }
 
-          this.purposeInvestForm.controls.investCommodities.
+          if (this.userInfor.surveys.find(item => item.question_cd === 'indi_comm_exp')) {
+            this.purposeInvestForm.controls.investCommodities.
             setValue(this.userInfor.surveys.find(item => item.question_cd === 'indi_comm_exp').sequence);
+          }
 
-          this.purposeInvestForm.controls.financialInstrument.
+          if (this.userInfor.surveys.find(item => item.question_cd === 'indi_other_fin_name')) {
+            this.purposeInvestForm.controls.financialInstrument.
             setValue(this.userInfor.surveys.find(item => item.question_cd === 'indi_other_fin_name').value_text);
+          }
 
-          this.purposeInvestForm.controls.otherPurpose.
+          if (this.userInfor.surveys.find(item => item.question_cd === 'indi_other_purpose')) {
+            this.purposeInvestForm.controls.otherPurpose.
             setValue(this.userInfor.surveys.find(item => item.question_cd === 'indi_other_purpose').value_text);
+          }
 
-          this.purposeInvestForm.controls.tradingExperience.
+          if (this.userInfor.surveys.find(item => item.question_cd === 'indi_other_fin_exp')) {
+            this.purposeInvestForm.controls.tradingExperience.
             setValue(this.userInfor.surveys.find(item => item.question_cd === 'indi_other_fin_exp').sequence);
+          }
 
-          this.occupationSurveyForm.controls.amountAvaiable.setValue(
-            this.userInfor.surveys.find(item => item.question_cd === 'indi_investable').sequence);
+          if (this.userInfor.surveys.find(item => item.question_cd === 'indi_investable')) {
+            this.occupationSurveyForm.controls.amountAvaiable.setValue(
+              this.userInfor.surveys.find(item => item.question_cd === 'indi_investable').sequence);
+          }
 
-          this.occupationSurveyForm.controls.annualIncome.setValue(
-            this.userInfor.surveys.find(item => item.question_cd === 'indi_income').sequence);
-
-          this.occupationSurveyForm.controls.financialAsset.setValue(
-            this.userInfor.surveys.find(item => item.question_cd === 'indi_capital').sequence);
+          if (this.userInfor.surveys.find(item => item.question_cd === 'indi_income')) {
+            this.occupationSurveyForm.controls.annualIncome.setValue(
+              this.userInfor.surveys.find(item => item.question_cd === 'indi_income').sequence);
+          }
+          if (this.userInfor.surveys.find(item => item.question_cd === 'indi_capital')) {
+            this.occupationSurveyForm.controls.financialAsset.setValue(
+              this.userInfor.surveys.find(item => item.question_cd === 'indi_capital').sequence);
+          }
         }
       }
     });
@@ -270,7 +298,8 @@ export class UserInforComponent implements OnInit {
       email: this.userForm.controls.email.value,
       mobile: this.userForm.controls.phone.value,
       lang: '',
-      surveys: []
+      surveys: [],
+      survey_cd: 'phillip_individual'
     };
     if (this.saveType === this.formType.financial) {
       param.surveys = this.listFinancialSubmit;
@@ -477,8 +506,6 @@ export class UserInforComponent implements OnInit {
     if (this.purposeInvestForm.controls.investPurposeOther.value === false) {
       this.purposeInvestForm.controls.otherPurpose.setValue('');
     }
-    this.purposeInvestForm.controls.investExFx.
-      setValue(this.userInfor.surveys.find(item => item.question_cd === 'indi_fx_exp').sequence);
 
     this.listPurposeSubmit = [
       {
