@@ -137,7 +137,9 @@ export class UserInforComponent implements OnInit {
   }
 
   getUserInfo() {
+    this.spinnerService.show();
     this.userService.getUserInfor().subscribe(response => {
+      this.spinnerService.hide();
       if (response.meta.code === 200) {
         this.userInfor = response.data;
         this.userForm.controls.postCode.setValue(this.userInfor.zip.value);
