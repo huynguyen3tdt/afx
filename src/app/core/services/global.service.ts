@@ -31,7 +31,6 @@ export class GlobalService {
 
   checkType(type: string) {
     const locale = localStorage.getItem(LOCALE);
-    console.log('localeee ', locale);
     if (type === TYPEOFTRANHISTORY.DEPOSIT.key) {
       if (locale === LANGUAGLE.english) {
         return TYPEOFTRANHISTORY.DEPOSIT.name;
