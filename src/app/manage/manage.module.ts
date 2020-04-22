@@ -23,6 +23,8 @@ import { UserInforComponent } from './user-infor/user-infor.component';
 import { CorporateInfoComponent } from './corporate-info/corporate-info.component';
 import { ConvertFinancialPipe } from '../core/pipe/convert-financial.pipe';
 import { ConvertInvestmentPurposePipe } from '../core/pipe/convert-purposeInvest.pipe';
+import { Mt5InfoComponent } from './mt5-info/mt5-info.component';
+import { BankInfoComponent } from './bank-info/bank-info.component';
 
 @NgModule({
     imports: [
@@ -52,7 +54,9 @@ import { ConvertInvestmentPurposePipe } from '../core/pipe/convert-purposeInvest
       UserInforComponent,
       CorporateInfoComponent,
       ConvertFinancialPipe,
-      ConvertInvestmentPurposePipe
+      ConvertInvestmentPurposePipe,
+      Mt5InfoComponent,
+      BankInfoComponent
     ],
     schemas: [NO_ERRORS_SCHEMA]
 })

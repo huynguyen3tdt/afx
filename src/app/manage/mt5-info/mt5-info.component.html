@@ -1,0 +1,76 @@
+<h4 class="border-bottom pb-1 mb-3">{{'Account Information' | translate}}</h4>
+<div class="row">
+    <div class="col-lg-8">
+        <div class="d-flex justify-content-between align-items-center mb-2">
+            <div class="d-flex align-items-center">
+                <div class="mr-2">
+                    {{'Trading Accounts' | translate}}
+                </div>
+                <div class="d-inline-block">
+                    <select [(ngModel)]="accountID" disabled class="form-control form-control-sm mb-0"
+                        style="min-width: 160px;">
+                        <option *ngFor="let item of listTradingAccount" value="{{item?.account_id}}">{{item?.value}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div>{{'Currency:' | translate}}<strong> JPY</strong></div>
+        </div>
+        <hr>
+        <div class="table-responsive">
+            <table class="table table-borderless table-sm table-hover" cellspacing="0" cellpadding="0">
+                <tbody>
+                    <tr>
+                        <td>{{'Withdrawable amount' | translate}}</td>
+                        <td class="text-right">
+                            <strong>{{accountInfor?.free_margin  | number}}</strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>{{'Withdrawal amount is pending' | translate}}</td>
+                        <td class="text-right">
+                            <strong>{{withdrawAmount?.withdraw_amount_pending | number}}</strong>
+                        </td>
+                        <td colspan="7">
+                            <a href="javascript:;" routerLink="/manage/withdrawHistory/" target="_blank"
+                                [queryParams]="{tab: 'detailwithdrawal'}"> {{'Detail' | translate}}</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>{{'Balance' | translate}}</td>
+                        <td class="text-right">
+                            <strong>{{accountInfor?.balance | number}}</strong></td>
+                    </tr>
+                    <tr>
+                        <td>{{'Used Margin' | translate}}</td>
+                        <td class="text-right">
+                            <strong>{{accountInfor?.used_margin | number}}</strong></td>
+                    </tr>
+                    <tr>
+                        <td>{{'Free Margin' | translate}}</td>
+                        <td class="text-right">
+                            <strong>{{accountInfor?.free_margin | number}}</strong></td>
+                    </tr>
+                    <tr>
+                        <td>{{'Equity' | translate}}</td>
+                        <td class="text-right">
+                            <strong>{{accountInfor?.equity | number}}</strong></td>
+                    </tr>
+                    <tr>
+                        <td>{{'Margin Level' | translate}}</td>
+                        <td class="text-right">
+                            <strong>{{accountInfor?.margin_level | number}}%</strong></td>
+                    </tr>
+                    <tr>
+                        <td>{{'Unrealize PL' | translate}}</td>
+                        <td class="text-right"><strong>{{accountInfor?.unrealize_pl | number}}</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+            <p class="small text-secondary"><i class="icon ion-md-time"></i> <em>{{'Last updated:' | translate}}
+                    {{lastestTime}}
+                </em><br>{{'The system automatically updates data after 1 minute' | translate}}</p>
+        </div>
+    </div>
+</div>
+<ng4-loading-spinner></ng4-loading-spinner>
