@@ -274,6 +274,9 @@ export class UserInforComponent implements OnInit {
       }
     }
     if (this.saveType === this.formType.financial) {
+      if (this.occupationSurveyForm.invalid) {
+        return;
+      }
       this.initListFinancialSubmit();
     }
     if (this.saveType === this.formType.purpose) {

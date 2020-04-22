@@ -200,6 +200,7 @@ export class WithdrawRequestComponent implements OnInit {
       $('#amount').attr('disabled', true);
       this.withdrawAmountError = false;
       this.withdrawForm.controls.amount.setValue(numeral(this.mt5Infor.free_margin).format('0,0'));
+      this.checkValidateWithDrawal();
     } else {
       $('#amount').attr('disabled', false);
     }

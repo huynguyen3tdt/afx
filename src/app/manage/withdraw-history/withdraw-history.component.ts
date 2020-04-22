@@ -120,7 +120,7 @@ export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
       }
       if (this.querytab === 'detailwithdrawal') {
         if (this.locale === LANGUAGLE.english) {
-          this.searchForm.controls.status.setValue([{ id: 3, name: 'In-process' }]);
+          this.searchForm.controls.status.setValue([{ id: 3, name: 'In-progress' }]);
         } else {
           this.searchForm.controls.status.setValue([{ id: 3, name: '処理中' }]);
         }
@@ -133,8 +133,8 @@ export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
   initStatus() {
     if (this.locale === LANGUAGLE.english) {
       this.STATUS = [
-        { label: 'In-process', value: { id: 3, name: 'In-process' } },
-        { label: 'Complete', value: { id: 1, name: 'Complete' } },
+        { label: 'In-progress', value: { id: 3, name: 'In-progress' } },
+        { label: 'Completed', value: { id: 1, name: 'Completed' } },
         { label: 'Cancel', value: { id: 2, name: 'Cancel' } },
       ];
     } else {
