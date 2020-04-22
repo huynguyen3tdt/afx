@@ -55,19 +55,23 @@
                                         </div>
                                         <div *ngIf="item?.agreement_flg == 1" class="item-content">
                                             <div [innerHTML]="item?.news_content"></div>
-                                            <button (click)="confirmAgreement()" [disabled]="item.agree_flg == true ? true : false" type="button" class="btn btn-primary f-right">Confirm</button>
+                                            <button (click)="confirmAgreement()" [disabled]="item.agree_flg == true ? true : false" type="button" class="btn btn-primary f-right">{{'Confirm' | translate}}</button>
                                         </div>
                                     </div>
                                 </ng-container>
                             </div>
-                            <div class="d-flex align-items-center justify-content-between mb-2">
+                            <div class="d-flex align-items-center justify-content-between mb-2 mt-3">
                                 <div>
                                     <div class="d-inline-block mr-2">
                                         <select (change)="changeTotalItem($event)" [(ngModel)]="pageSize" class="form-control form-control-sm">
                                             <option *ngFor="let item of listTotalItem" value="{{item}}">{{item}}</option>
                                         </select>
                                     </div>
-                                    <div class="small text-secondary d-inline-block mr-2">{{'Showing' | translate}} {{recordFrom}} {{'to' | translate}} {{recordTo}} {{'of' | translate}} {{totalItem}} {{'entries' | translate}}
+                                    <div *ngIf="locale == language.english" class="small text-secondary d-inline-block mr-2">Showing {{recordFrom}} to
+                                        {{recordTo}} of {{totalItem}} entries
+                                    </div>
+                                    <div *ngIf="locale == language.japan" class="small text-secondary d-inline-block mr-2">{{totalItem}}件中{{recordFrom}} to
+                                        {{recordTo}}の表示
                                     </div>
                                 </div>
                                 <ul class="pagination pagination-sm mb-0">
@@ -121,14 +125,18 @@
                                     </div>
                                 </ng-container>
                             </div>
-                            <div class="d-flex align-items-center justify-content-between mb-2">
+                            <div class="d-flex align-items-center justify-content-between mb-2 mt-3">
                                 <div>
                                     <div class="d-inline-block mr-2">
                                         <select (change)="changeTotalItem($event)" [(ngModel)]="pageSize" class="form-control form-control-sm">
                                             <option *ngFor="let item of listTotalItem" value="{{item}}">{{item}}</option>
                                         </select>
                                     </div>
-                                    <div class="small text-secondary d-inline-block mr-2">{{'Showing' | translate}} {{recordFrom}} {{'to' | translate}} {{recordTo}} {{'of' | translate}} {{totalItem}} {{'entries' | translate}}
+                                    <div *ngIf="locale == language.english" class="small text-secondary d-inline-block mr-2">Showing {{recordFrom}} to
+                                        {{recordTo}} of {{totalItem}} entries
+                                    </div>
+                                    <div *ngIf="locale == language.japan" class="small text-secondary d-inline-block mr-2">{{totalItem}}件中{{recordFrom}} to
+                                        {{recordTo}}の表示
                                     </div>
                                 </div>
                                 <ul class="pagination pagination-sm mb-0">
@@ -171,14 +179,18 @@
                                     </div>
                                 </ng-container>
                             </div>
-                            <div class="d-flex align-items-center justify-content-between mb-2">
+                            <div class="d-flex align-items-center justify-content-between mb-2 mt-3">
                                 <div>
                                     <div class="d-inline-block mr-2">
                                         <select (change)="changeTotalItem($event)" [(ngModel)]="pageSize" class="form-control form-control-sm">
                                             <option *ngFor="let item of listTotalItem" value="{{item}}">{{item}}</option>
                                         </select>
                                     </div>
-                                    <div class="small text-secondary d-inline-block mr-2">{{'Showing' | translate}} {{recordFrom}} {{'to' | translate}} {{recordTo}} {{'of' | translate}} {{totalItem}} {{'entries' | translate}}
+                                    <div *ngIf="locale == language.english" class="small text-secondary d-inline-block mr-2">Showing {{recordFrom}} to
+                                        {{recordTo}} of {{totalItem}} entries
+                                    </div>
+                                    <div *ngIf="locale == language.japan" class="small text-secondary d-inline-block mr-2">{{totalItem}}件中{{recordFrom}} to
+                                        {{recordTo}}の表示
                                     </div>
                                 </div>
                                 <ul class="pagination pagination-sm mb-0">
@@ -215,14 +227,18 @@
                                     </div>
                                 </ng-container>
                             </div>
-                            <div class="d-flex align-items-center justify-content-between mb-2">
+                            <div class="d-flex align-items-center justify-content-between mb-2 mt-3">
                                 <div>
                                     <div class="d-inline-block mr-2">
                                         <select (change)="changeTotalItem($event)" [(ngModel)]="pageSize" class="form-control form-control-sm">
                                             <option *ngFor="let item of listTotalItem" value="{{item}}">{{item}}</option>
                                         </select>
                                     </div>
-                                    <div class="small text-secondary d-inline-block mr-2">{{'Showing' | translate}} {{recordFrom}} {{'to' | translate}} {{recordTo}} {{'of' | translate}} {{totalItem}} {{'entries' | translate}}
+                                    <div *ngIf="locale == language.english" class="small text-secondary d-inline-block mr-2">Showing {{recordFrom}} to
+                                        {{recordTo}} of {{totalItem}} entries
+                                    </div>
+                                    <div *ngIf="locale == language.japan" class="small text-secondary d-inline-block mr-2">{{totalItem}}件中{{recordFrom}} to
+                                        {{recordTo}}の表示
                                     </div>
                                 </div>
                                 <ul class="pagination pagination-sm mb-0">
@@ -277,7 +293,8 @@
         <div class="modal-content">
             <div class="modal-body text-center">
                 <p class="mb-0"><i class="icon ion-md-alert text-danger" style="font-size: 48px;line-height: 1"></i></p>
-                <p> {{'You are having ' | translate}}<strong>{{totalNoti?.important}}</strong> {{'Important Notifications' | translate}}</p>
+                <p *ngIf="locale == language.english">You are having <strong>{{totalNoti?.important}}</strong> Important Notifications</p>
+                <p *ngIf="locale == language.japan">重要なお知らせが <strong>{{totalNoti?.important}}</strong> 件あります。</p>
                 <button type="button" class="btn btn-sm btn-primary pl-4 pr-4" data-dismiss="modal">{{'Ok' | translate}}</button>
             </div>
         </div>

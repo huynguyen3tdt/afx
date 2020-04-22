@@ -56,6 +56,7 @@ export class NotificationsComponent implements OnInit {
     CAMPAIGN: { name: 'CAMPAIGN', value: 2 },
     SYSTEM_IMPORTANT: {name: 'SYS_IMPORTATNT', value: '01'}
   };
+  language;
 
   constructor(
     private notificationsService: NotificationsService,
@@ -63,6 +64,7 @@ export class NotificationsComponent implements OnInit {
     private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
+    this.language = LANGUAGLE;
     this.timeZone = localStorage.getItem(TIMEZONEAFX);
     this.locale = localStorage.getItem(LOCALE);
     if (this.locale === LANGUAGLE.english) {
@@ -265,27 +267,36 @@ export class NotificationsComponent implements OnInit {
     switch (this.tab) {
       case this.TABS.ALL.name:
         $(`#noti_${index}`).toggleClass('opened');
-        $(`#noti_${index}`).removeClass('unread');
+        if (this.checkAgreementIsRead(item) === true) {
+          $(`#noti_${index}`).removeClass('unread');
+        }
         break;
       case this.TABS.IMPORTANT.name:
         $(`#important_${index}`).toggleClass('opened');
-        $(`#important_${index}`).removeClass('unread');
+        if (this.checkAgreementIsRead(item) === true) {
+          $(`#important_${index}`).removeClass('unread');
+        }
         break;
       case this.TABS.NOTIFICATIONS.name:
         $(`#system_${index}`).toggleClass('opened');
-        $(`#system_${index}`).removeClass('unread');
+        if (this.checkAgreementIsRead(item) === true) {
+          $(`#system_${index}`).removeClass('unread');
+        }
         break;
       case this.TABS.CAMPAIGN.name:
         $(`#campain_${index}`).toggleClass('opened');
         $(`#campain_${index}`).removeClass('unread');
         break;
     }
-    if (item.agreement_flg === 1) {
-      this.contentAgeement = item.news_content;
-      this.agreementID = item.id;
-      if (item.agree_flg === false) {
-        return;
-      }
+    // if (item.agreement_flg === 1) {
+    //   this.contentAgeement = item.news_content;
+    //   this.agreementID = item.id;
+    //   if (item.agree_flg === false) {
+    //     return;
+    //   }
+    // }
+    if (this.checkAgreementIsRead(item) === false) {
+      return;
     }
     this.changeReadStatus(item.id);
     this.getTotalNotification();
@@ -295,13 +306,13 @@ export class NotificationsComponent implements OnInit {
     if (item.agreement_flg === 1) {
       this.contentAgeement = item.news_content;
       this.agreementID = item.id;
-      if (item.agree_flg === true) {
-        return true;
-      } else {
+      if (item.agree_flg === false) {
         return false;
+      } else {
+        return true;
       }
     } else {
-      return false;
+      return true;
     }
   }
 
