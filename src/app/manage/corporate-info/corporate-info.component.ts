@@ -384,6 +384,9 @@ export class CorporateInfoComponent implements OnInit {
       }
     }
     if (this.saveType === this.formType.financial) {
+      if (this.financialInforForm.invalid) {
+        return;
+      }
       this.initListFinancialSubmit();
     }
     if (this.saveType === this.formType.purpose) {
@@ -480,6 +483,16 @@ export class CorporateInfoComponent implements OnInit {
       this.globalService.resetFormControl(this.purposeInvestForm.controls.tradingExperience);
     }
     this.changeExPurPose();
+  }
+
+  changeBusinessCapital() {
+    this.listInvestmentCorporation = businessCapital.labels;
+    this.listInvestmentCorporation =
+      this.listInvestmentCorporation.filter(item => item.sequence <= Number(this.financialInforForm.controls.businessCapital.value));
+    if (Number(this.financialInforForm.controls.investment.value)
+      > Number(this.financialInforForm.controls.businessCapital.value)) {
+        this.financialInforForm.controls.investment.setValue('');
+    }
   }
 
   showEditFieldCor(field: string, type: string) {

@@ -248,7 +248,7 @@
                 <option *ngFor="let item of listFinancialAssetInvidual" value="{{item?.sequence}}">{{item?.value}}
                 </option>
             </select>
-            <div *ngIf="occupationSurveyForm.controls.amountAvaiable.errors" class="invalid-mess">
+            <div *ngIf="occupationSurveyForm.controls.financialAsset.errors" class="invalid-mess">
                 <div>この項目は必須項目です。</div>
             </div>
         </div>

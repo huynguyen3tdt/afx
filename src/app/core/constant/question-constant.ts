@@ -8,55 +8,43 @@ export const businessEntityAnnualCorporation = {
         {
             id: 359,
             sequence: 1,
-            value: '30万円未満',
+            value: '500万円未満',
             quizz_mark: 0.0
         },
         {
             id: 360,
             sequence: 2,
-            value: '30万円～100万円未満',
+            value: '500万円以上〜1000万未満',
             quizz_mark: 0.0
         },
         {
             id: 361,
             sequence: 3,
-            value: '100万円～250万円未満',
+            value: '1000万円以上〜3000万未満',
             quizz_mark: 0.0
         },
         {
             id: 362,
             sequence: 4,
-            value: '250万円～500万円未満',
+            value: '3000万円以上〜5000万未満',
             quizz_mark: 0.0
         },
         {
             id: 363,
             sequence: 5,
-            value: '500万円～1000万円未満',
+            value: '5000万円以上〜1億円未満',
             quizz_mark: 0.0
         },
         {
             id: 364,
             sequence: 6,
-            value: '1000万円～2500万円未満',
+            value: '1億円以上〜5億円未満',
             quizz_mark: 0.0
         },
         {
             id: 365,
             sequence: 7,
-            value: '2500万円～5000万円未満',
-            quizz_mark: 0.0
-        },
-        {
-            id: 366,
-            sequence: 8,
-            value: '5000万円～1億円未満',
-            quizz_mark: 0.0
-        },
-        {
-            id: 367,
-            sequence: 9,
-            value: '1億円以上',
+            value: '5億円以上',
             quizz_mark: 0.0
         }
     ]
@@ -72,55 +60,43 @@ export const taxCorporation = {
         {
             id: 368,
             sequence: 1,
-            value: '30万円未満',
+            value: '500万円未満',
             quizz_mark: 0.0
         },
         {
             id: 369,
             sequence: 2,
-            value: '30万円～100万円未満',
+            value: '500万円以上〜1000万未満',
             quizz_mark: 0.0
         },
         {
             id: 370,
             sequence: 3,
-            value: '100万円～250万円未満',
+            value: '1000万円以上〜3000万未満',
             quizz_mark: 0.0
         },
         {
             id: 371,
             sequence: 4,
-            value: '250万円～500万円未満',
+            value: '3000万円以上〜5000万未満',
             quizz_mark: 0.0
         },
         {
             id: 372,
             sequence: 5,
-            value: '500万円～1000万円未満',
+            value: '5000万円以上〜1億円未満',
             quizz_mark: 0.0
         },
         {
             id: 373,
             sequence: 6,
-            value: '1000万円～2500万円未満',
+            value: '1億円以上〜5億円未満',
             quizz_mark: 0.0
         },
         {
             id: 374,
             sequence: 7,
-            value: '2500万円～5000万円未満',
-            quizz_mark: 0.0
-        },
-        {
-            id: 375,
-            sequence: 8,
-            value: '5000万円～1億円未満',
-            quizz_mark: 0.0
-        },
-        {
-            id: 376,
-            sequence: 9,
-            value: '1億円以上',
+            value: '5億円以上',
             quizz_mark: 0.0
         }
     ]
@@ -136,59 +112,48 @@ export const businessCapital = {
         {
             id: 377,
             sequence: 1,
-            value: '30万円未満',
+            value: '500万円未満',
             quizz_mark: 0.0
         },
         {
             id: 378,
             sequence: 2,
-            value: '30万円～100万円未満',
+            value: '500万円以上〜1000万未満',
             quizz_mark: 0.0
         },
         {
             id: 379,
             sequence: 3,
-            value: '100万円～250万円未満',
+            value: '1000万円以上〜3000万未満',
             quizz_mark: 0.0
         },
         {
             id: 380,
             sequence: 4,
-            value: '250万円～500万円未満',
+            value: '3000万円以上〜5000万未満',
             quizz_mark: 0.0
         },
         {
             id: 381,
             sequence: 5,
-            value: '500万円～1000万円未満',
+            value: '5000万円以上〜1億円未満',
             quizz_mark: 0.0
         },
         {
             id: 382,
             sequence: 6,
-            value: '1000万円～2500万円未満',
+            value: '1億円以上〜5億円未満',
             quizz_mark: 0.0
         },
         {
             id: 383,
             sequence: 7,
-            value: '2500万円～5000万円未満',
-            quizz_mark: 0.0
-        },
-        {
-            id: 384,
-            sequence: 8,
-            value: '5000万円～1億円未満',
-            quizz_mark: 0.0
-        },
-        {
-            id: 385,
-            sequence: 9,
-            value: '1億円以上',
+            value: '5億円以上',
             quizz_mark: 0.0
         }
     ]
 };
+
 
 export const investmentCorporation = {
     id: 128,
@@ -200,55 +165,43 @@ export const investmentCorporation = {
         {
             id: 386,
             sequence: 1,
-            value: '30万円未満',
+            value: '500万円未満',
             quizz_mark: 0.0
         },
         {
             id: 387,
             sequence: 2,
-            value: '30万円～100万円未満',
+            value: '500万円以上〜1000万未満',
             quizz_mark: 0.0
         },
         {
             id: 388,
             sequence: 3,
-            value: '100万円～250万円未満',
+            value: '1000万円以上〜3000万未満',
             quizz_mark: 0.0
         },
         {
             id: 389,
             sequence: 4,
-            value: '250万円～500万円未満',
+            value: '3000万円以上〜5000万未満',
             quizz_mark: 0.0
         },
         {
             id: 390,
             sequence: 5,
-            value: '500万円～1000万円未満',
+            value: '5000万円以上〜1億円未満',
             quizz_mark: 0.0
         },
         {
             id: 391,
             sequence: 6,
-            value: '1000万円～2500万円未満',
+            value: '1億円以上〜5億円未満',
             quizz_mark: 0.0
         },
         {
             id: 392,
             sequence: 7,
-            value: '2500万円～5000万円未満',
-            quizz_mark: 0.0
-        },
-        {
-            id: 393,
-            sequence: 8,
-            value: '5000万円～1億円未満',
-            quizz_mark: 0.0
-        },
-        {
-            id: 394,
-            sequence: 9,
-            value: '1億円以上',
+            value: '5億円以上',
             quizz_mark: 0.0
         }
     ]
