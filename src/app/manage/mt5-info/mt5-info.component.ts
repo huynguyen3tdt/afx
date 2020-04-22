@@ -28,7 +28,6 @@ export class Mt5InfoComponent implements OnInit {
               private globalService: GlobalService) { }
 
   ngOnInit() {
-    console.log('dcmmmmmmmmm');
     this.timeZone = localStorage.getItem(TIMEZONEAFX);
     this.locale = localStorage.getItem(LOCALE);
     if (this.locale === LANGUAGLE.english) {
@@ -47,7 +46,6 @@ export class Mt5InfoComponent implements OnInit {
   getMt5Infor(accountId) {
     this.spinnerService.show();
     this.withdrawRequestService.getmt5Infor(accountId).subscribe(response => {
-      console.log('responseeeee ', response);
       this.spinnerService.hide();
       if (response.meta.code === 200) {
         this.accountInfor = response.data;

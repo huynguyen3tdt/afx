@@ -29,7 +29,6 @@ export class ResetPasswordComponent implements OnInit {
     this.oldPassword = atob(localStorage.getItem(PASSWORD_LOGIN));
     this.initResetPassForm();
     this.activatedRoute.queryParams.subscribe(res => {
-      console.log('resss ', res);
       if (res.token) {
         this.token = res.token;
       }

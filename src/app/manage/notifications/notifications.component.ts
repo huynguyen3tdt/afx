@@ -317,7 +317,6 @@ export class NotificationsComponent implements OnInit {
   }
 
   changeAccountId() {
-    console.log('11111 ', this.accountID);
   }
 
   showimportant() {

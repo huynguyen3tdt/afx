@@ -725,7 +725,6 @@ export class CorporateInfoComponent implements OnInit {
         sequence: this.purposeInvestForm.controls.investPurposeOther.value === true ? 6 : null
       },
     ];
-    console.log('aksdjalksdjalskjd ', this.purposeInvestForm.controls.financialInstrument.value);
     // this.listPurposeSubmit = this.listPurposeSubmit.filter(item => item.value_text !== null || item.sequence !== null);
   }
 

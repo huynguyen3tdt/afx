@@ -20,6 +20,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { AuthenService } from 'src/app/core/services/authen.service';
 import { AccountType } from 'src/app/core/model/report-response.model';
 import { TranslateService } from '@ngx-translate/core';
+import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 declare const $: any;
 
 @Component({
@@ -40,7 +41,8 @@ export class LoginComponent implements OnInit, AfterViewInit {
     private router: Router,
     private authenService: AuthenService,
     private activatedRoute: ActivatedRoute,
-    private translate: TranslateService) {
+    private translate: TranslateService,
+    private spinnerService: Ng4LoadingSpinnerService) {
   }
 
   ngOnInit() {
@@ -100,7 +102,9 @@ export class LoginComponent implements OnInit, AfterViewInit {
       password: this.loginFormGroup.controls.passWord.value,
       device_type: this.isPc ? 'Pc' : 'Mobile'
     };
+    this.spinnerService.show();
     this.authenService.login(param).subscribe(response => {
+      this.spinnerService.hide();
       if (response.meta.code === 200) {
         localStorage.setItem(USERNAME_LOGIN, btoa(this.loginFormGroup.value.userName));
         localStorage.setItem(PASSWORD_LOGIN, btoa(this.loginFormGroup.value.passWord));
@@ -192,7 +196,6 @@ export class LoginComponent implements OnInit, AfterViewInit {
           value : element.value,
           currency: element.currency
         };
-        console.log('dataObj ', dataObj);
         listData.push(dataObj);
       });
     }

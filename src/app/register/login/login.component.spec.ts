@@ -14,6 +14,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { PaginationModule } from 'ngx-bootstrap';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
+import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -28,7 +29,8 @@ describe('LoginComponent', () => {
         RouterTestingModule,
         HttpClientModule,
         PaginationModule,
-        TranslateModule.forRoot()
+        TranslateModule.forRoot(),
+        Ng4LoadingSpinnerModule
       ],
       providers: [
         AuthenService,

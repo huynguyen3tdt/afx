@@ -104,6 +104,7 @@ export class AccountInformationComponent implements OnInit {
     }
     if (this.TAB.setting === type) {
       this.showTabSetting = true;
+      this.openSetting();
     } else {
       this.showTabSetting = false;
     }
@@ -160,7 +161,9 @@ export class AccountInformationComponent implements OnInit {
 
   openSetting() {
     const fontSizeCurrent = localStorage.getItem(FONTSIZE_AFX);
-    $(`#${fontSizeCurrent}`).addClass('active');
+    setTimeout(() => {
+      $(`#${fontSizeCurrent}`).addClass('active');
+    }, 100);
     this.initSettingForm();
     this.errorPassword = false;
     this.isSubmittedSetting = false;
