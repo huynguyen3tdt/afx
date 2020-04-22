@@ -45,11 +45,13 @@ export class ReportListComponent implements OnInit {
     MONTH: 'month',
     YEAR: 'year'
   };
+  language;
 
   constructor(private reportservice: ReportService,
               private spinnerService: Ng4LoadingSpinnerService) { }
 
   ngOnInit() {
+    this.language = LANGUAGLE;
     this.timeZone = localStorage.getItem(TIMEZONEAFX);
     this.locale = localStorage.getItem(LOCALE);
     if (this.locale === LANGUAGLE.english) {

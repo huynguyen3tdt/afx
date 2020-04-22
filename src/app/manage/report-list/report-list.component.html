@@ -116,7 +116,11 @@
                                             <option *ngFor="let item of listTotalItem" value="{{item}}">{{item}}</option>
                                         </select>
                                     </div>
-                                    <div class="small text-secondary d-inline-block mr-2">{{'Showing' | translate}} {{recordFrom}} {{'to' | translate}} {{recordTo}} {{'of' | translate}} {{totalItem}} {{'entries' | translate}}
+                                    <div *ngIf="locale == language.english" class="small text-secondary d-inline-block mr-2">Showing {{recordFrom}} to
+                                        {{recordTo}} of {{totalItem}} entries
+                                    </div>
+                                    <div *ngIf="locale == language.japan" class="small text-secondary d-inline-block mr-2">{{totalItem}}件中{{recordFrom}} to
+                                        {{recordTo}}の表示
                                     </div>
                                 </div>
                                 <ul class="pagination pagination-sm mb-0">
