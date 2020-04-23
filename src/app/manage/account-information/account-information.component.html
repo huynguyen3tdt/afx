@@ -34,7 +34,7 @@
                                     class="d-none d-md-inline">{{'Corporate Information' | translate}}</strong></a>
                             <a class="nav-item nav-link" id="nav-bank-tab" data-toggle="tab" href="#nav-bank" role="tab" (click)="changeTab(TAB.withDrawal)" aria-controls="nav-bank" aria-selected="false"><i class="icon ion-md-card"></i> <strong
                                     class="d-none d-md-inline">{{'Withdrawal Account' | translate}}</strong></a>
-                            <a class="nav-item nav-link" id="nav-setting-tab" data-toggle="tab" href="#nav-setting" role="tab" (click)="changeTab(TAB.setting)" (click)="openSetting()" aria-controls="nav-setting" aria-selected="false"><i
+                            <a class="nav-item nav-link" id="nav-setting-tab" data-toggle="tab" href="#nav-setting" role="tab" (click)="changeTab(TAB.setting)" aria-controls="nav-setting" aria-selected="false"><i
                                     class="icon ion-md-settings"></i> <strong
                                     class="d-none d-md-inline">{{'Setting' | translate}}</strong></a>
                         </div>
@@ -65,129 +65,7 @@
 
                         <!-- BEGIN SETTING -->
                         <div *ngIf="showTabSetting == true" class="tab-pane fade" id="nav-setting" role="tabpanel" aria-labelledby="nav-setting-tab" >
-                            <form [formGroup]="changePassForm">
-                            <h3 class="border-bottom pb-1 mb-3">{{'Setting' | translate}}</h3>
-                            <h5 class="label mb-0"><strong>{{'Change Passwords' | translate}}</strong></h5>
-                            <p class="small text-secondary">{{'It is a good idea to use a strong password that you are not using elsewhere' | translate}}</p>
-                            <div class="row">
-                                <div class="col-md-4 col-lg-3">
-                                    <label class="label mt-1">{{'Current password' | translate}}</label>
-                                </div>
-                                <div class="col-md-8 col-lg-9">
-                                    <input type="password" class="form-control form-control-sm" formControlName="current_password" style="max-width: 240px" 
-                                    autocomplete="off"
-                                    [ngClass]="{'invalid': isSubmittedSetting && changePassForm.controls.current_password?.errors}">
-                                </div>
-
-                            </div>
-                            <div class="row">
-                                <div class="col-md-4 col-lg-3">
-                                    &nbsp;
-                                </div>
-                                <!-- <div *ngIf="isSubmittedSetting && changePassForm?.controls?.current_password?.errors?.RequiredPass" class="invalid-mess col-md-8 col-lg-9">
-                                    <div>{{'This field is required' | translate}}</div>
-                                </div> -->
-                                <div *ngIf="isSubmittedSetting && changePassForm?.controls?.current_password?.errors?.Required" class="invalid-mess col-md-8 col-lg-9">
-                                        {{'This field is required' | translate}}
-                                    </div>
-                                    <div class="col-md-8 col-lg-9">
-                                            <div *ngIf="isSubmittedSetting && changePassForm?.controls.current_password?.errors?.RequiredPass" class="invalid-mess">
-                                                {{'Password requires 8 characters or more and has at least 1 alphabet letter' | translate}}
-                                            </div>
-                                    </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-4 col-lg-3">
-                                    <label class="label mt-1">{{'New password' | translate}}</label>
-                                </div>
-                                <div class="col-md-8 col-lg-9">
-                                    <input type="password" class="form-control form-control-sm" formControlName="new_password" style="max-width: 240px" 
-                                    autocomplete="off"
-                                    [ngClass]="{'invalid': isSubmittedSetting && (changePassForm?.controls?.new_password?.errors || changePassForm?.controls?.new_password?.errors?.RequiredPass)}">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-4 col-lg-3">
-                                    &nbsp;
-                                </div>
-                                <div *ngIf="isSubmittedSetting && changePassForm?.controls['new_password']?.errors?.Required" class="invalid-mess col-md-8 col-lg-9">
-                                    {{'This field is required' | translate}}
-                                </div>
-                                <div class="col-md-8 col-lg-9">
-                                        <div *ngIf="isSubmittedSetting && changePassForm?.controls['new_password']?.errors?.RequiredPass" class="invalid-mess">
-                                            {{'Password requires 8 characters or more and has at least 1 alphabet letter' | translate}}
-                                        </div>
-                                </div>
-                                
-                            </div>
-                            <div class="row">
-                                <div class="col-md-4 col-lg-3">
-                                    <label class="label mt-1">{{'Confirm password' | translate}}</label>
-                                </div>
-                                <div class="col-md-8 col-lg-9">
-                                    <input type="password" class="form-control form-control-sm" value=""
-                                        formControlName="confirm_password" style="max-width: 240px" autocomplete="off"
-                                        [ngClass]="{'invalid': isSubmittedSetting && (changePassForm.controls['confirm_password'].errors || changePassForm?.controls['confirm_password']?.errors?.RequiredPass)}">
-                                    <div *ngIf="isSubmittedSetting && changePassForm?.controls['confirm_password']?.errors?.Required"
-                                        class="invalid-mess">
-                                        <div>{{'This field is required' | translate}}</div>
-                                    </div>
-                                    <div *ngIf="isSubmittedSetting && (this.changePassForm.controls.new_password.value !== this.changePassForm.controls.confirm_password.value)"
-                                        class="invalid-mess">
-                                        {{'New password and confirm password do not match' | translate}}
-                                    </div>
-                                    <div *ngIf="isSubmittedSetting && (this.changePassForm.controls.current_password.value === this.changePassForm.controls.confirm_password.value
-                                                                && this.changePassForm.controls.new_password.value === this.changePassForm.controls.confirm_password.value)"
-                                        class="invalid-mess">
-                                        {{'Current password and new passwords cannot be the same' | translate}}
-                                    </div>
-                                    <div *ngIf="successPassword == true" class="text-success pt-2">
-                                        {{'You have successfully changed the password' | translate}}
-                                    </div>
-                                    <div *ngIf="errorPassword == true" class="invalid-mess">
-                                        {{'Password incorrect' | translate}}
-                                    </div>
-                                    <div *ngIf="isSubmittedSetting && changePassForm?.controls['confirm_password']?.errors?.RequiredPass"
-                                        class="invalid-mess">
-                                        {{'Password requires 8 characters or more and has at least 1 alphabet letter' | translate}}
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-4 col-lg-3">
-                                    &nbsp;
-                                </div>
-
-                                <div class="col-md-8 col-lg-9 pt-2">
-                                    <button type="button" class="btn btn-save btn-success pl-3 pr-3" (click)="settingSave()">{{'Save' | translate}}</button>
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="row mb-2">
-                                <div class="col-md-4 col-lg-3">
-                                    <label class="label mt-1">{{'Font Size' | translate}}</label>
-                                </div>
-                                <div class="col-md-8 col-lg-9">
-                                    <div class="btn-group">
-                                        <button type="button" class="btn btn-outline-secondary btn-sm btn-size-sm" data-size="sm" id="font-size-sm" (click)="changeFontSize('font-size-sm')">小</button>
-                                        <button type="button" class="btn btn-outline-secondary btn-sm btn-size-md" id="font-size-md" data-size="md" (click)="changeFontSize('font-size-md')">中</button>
-                                        <button type="button" class="btn btn-outline-secondary btn-sm btn-size-lg" id="font-size-lg" data-size="lg" (click)="changeFontSize('font-size-lg')">大</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row mb-2">
-                                <div class="col-md-4 col-lg-3">
-                                    <label class="label mt-1">{{'Language' | translate}}</label>
-                                </div>
-                                <div class="col-md-8 col-lg-9">
-                                    <select formControlName="language" (change)="changeLang($event.target.value)" class="form-control form-control-sm select2" style="max-width: 240px;">
-                                      <option value="en_US">English</option>
-                                      <option value="ja_JP">Japanese</option>
-                                  </select>
-                                </div>
-                            </div>
-                        </form>
+                            <app-setting></app-setting>
                         </div>
                         <!-- END SETTING -->
                     </div>
