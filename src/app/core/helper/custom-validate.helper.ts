@@ -73,6 +73,21 @@ const DEFAULT_INVALID_ANNUALINCOME = {
   message: 'ご年収が150万円未満の場合には口座を開設頂けない場合がございます。'
 };
 
+const FULLSIZE_HIRAGANA_ERR = {
+  ErrorHalfSizeNumber: true,
+  message: '全角ひらがなを入力してください'
+};
+
+const HALFSIZE_NUMER_ERR = {
+  ErrorHalfSizeNumber: true,
+  message: '半角数字を入力してください'
+};
+
+const FULL_WIDTH_ACCOUNT = {
+  ErrFullWidth: true,
+  message: '全角で入力してください'
+};
+
 const DIGITS_PATTERN = '^\\d+$';
 const SALARY_PATTEN = '^[0-9, ]*$';
 const NOT_SPECIAL_CHARACTERS_FOR_EMAIL = '^[a-zA-Z0-9-._ ]*$';
@@ -83,8 +98,9 @@ const EMAIL_PATTERN = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 const HALF_PATTERN = /^[ｦ-ﾟ ､0-9a-zA-Z]*$/;
 const FULL_SIZE_NUMBER = /([０-９])/;
 const HALF_SIZE_NUMBER = /[0-9]/;
-const FULL_WIDTH_PATTERN = /^[ア-ンｦ-ﾟＡ-ｚA-z０-９0-9ーー\-（(）)／/．\.　 ]*$/;
-const HIRAGANA_REQUIRED = /[\u3040-\u309f]/;
+// const FULL_WIDTH_PATTERN = /^[ア-ンｦ-ﾟＡ-ｚA-z０-９0-9ーー\-（(）)／/．\.　 ]*$/;
+const FULL_WIDTH_PATTERN = /^([ァ-ン]|ー)+$/;
+const FULLSIZE_HIRAGANA = /[\u3040-\u309f]/;
 const JP_REQUIRED = /[\u3000-\u303f\u3040-\u309f\u30a0-\u30ff\uff00-\uff9f\u4e00-\u9faf\u3400-\u4dbf]/;
 
 
@@ -205,4 +221,42 @@ export function annualIncomeValidation(control: AbstractControl) {
     return DEFAULT_INVALID_ANNUALINCOME;
   }
   return null;
+}
+
+export function fullSizeHiraganaValidation(control: AbstractControl) {
+  const pattern = new RegExp(FULLSIZE_HIRAGANA);
+  if (!control.value || typeof control.value === 'string' && !control.value.trim()) {
+    return null;
+  }
+  for (let i = 0; i < control.value.toString().length; i++) {
+    if (pattern.test(control.value[i]) === false) {
+      return FULLSIZE_HIRAGANA_ERR;
+    }
+  }
+  return;
+}
+
+export function halfSizeNumberValidation(control: AbstractControl) {
+  const pattern = new RegExp(HALF_SIZE_NUMBER);
+  if (!control.value || typeof control.value === 'string' && !control.value.trim()) {
+    return null;
+  }
+  for (let i = 0; i < control.value.toString().length; i++) {
+    if (pattern.test(control.value[i]) === false) {
+      return HALFSIZE_NUMER_ERR;
+    }
+  }
+  return;
+}
+
+export function fullWidthRequired(control: AbstractControl) {
+  if (!control.value || typeof control.value === 'string' && !control.value.trim()) {
+    return DEFAULT_INVALID_REQUIRED;
+  }
+  if (control.value) {
+      const pattern =  new RegExp(FULL_WIDTH_PATTERN);
+      if (!control.value.match(pattern)) {
+        return FULL_WIDTH_ACCOUNT;
+        }
+  }
 }

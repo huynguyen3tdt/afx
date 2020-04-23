@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
-import { requiredInput } from 'src/app/core/helper/custom-validate.helper';
+import { requiredInput, fullSizeHiraganaValidation, halfSizeNumberValidation } from 'src/app/core/helper/custom-validate.helper';
 import { BankInforModel } from 'src/app/core/model/withdraw-request-response.model';
 import { BankModel, SearchHiraModel, BranchModel } from 'src/app/core/model/bank-response.model';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
@@ -58,15 +58,15 @@ export class BankInfoComponent implements OnInit {
 
   initBankForm() {
     this.bankForm = new FormGroup({
-      bank_name: new FormControl(''),
-      bank_code: new FormControl('')
+      bank_name: new FormControl('', fullSizeHiraganaValidation),
+      bank_code: new FormControl('', halfSizeNumberValidation)
     });
   }
 
   initBranchForm() {
     this.branchForm = new FormGroup({
-      branch_name: new FormControl(''),
-      branch_code: new FormControl('')
+      branch_name: new FormControl('', fullSizeHiraganaValidation),
+      branch_code: new FormControl('', halfSizeNumberValidation)
     });
   }
 
@@ -80,17 +80,19 @@ export class BankInfoComponent implements OnInit {
   }
 
   getBankInfor() {
+    this.spinnerService.show();
     this.withdrawRequestService.getBankInfor().subscribe(response => {
-      this.spinnerService.show();
+      this.spinnerService.hide();
       if (response.meta.code === 200) {
-        this.spinnerService.hide();
         this.bankInfor = response.data;
       }
     });
   }
 
   getAllCharacBank() {
+    this.spinnerService.show();
     this.userService.getAllCharacBank().subscribe(response => {
+      this.spinnerService.hide();
       if (response.meta.code === 200) {
         this.characBank = response.data;
         this.characBank.forEach(item => {
@@ -106,7 +108,9 @@ export class BankInfoComponent implements OnInit {
   }
   getAllCharacBranch(bankId: number) {
     this.initHiraCode();
+    this.spinnerService.show();
     this.userService.getAllCharacBranch(bankId).subscribe(response => {
+      this.spinnerService.hide();
       if (response.meta.code === 200) {
         this.characBranch = response.data;
         this.characBranch.forEach(item => {
@@ -147,6 +151,8 @@ export class BankInfoComponent implements OnInit {
   }
   showBankInfor(type: number, bankName?: string) {
     this.initHiraCode();
+    this.bankSearch = [];
+    this.branchSearch = [];
     if (type === 1) {
       $('#modal-select-bank').modal('show');
       switch (bankName) {
@@ -197,7 +203,9 @@ export class BankInfoComponent implements OnInit {
       bank_id: this.currentBank.id,
       fx_acc_type: this.bankAccountForm.controls.bank_account_type.value.toString(),
     };
+    this.spinnerService.show();
     this.userService.changeBank(param).subscribe(response => {
+      this.spinnerService.hide();
       if (response.meta.code === 200) {
         this.cancelBankAccount();
       }
@@ -254,13 +262,15 @@ export class BankInfoComponent implements OnInit {
       this.searchBank('', '', this.bankForm.controls.bank_code.value);
     }
   }
+
   selectBank(item: BankModel) {
     this.showBank = false;
     this.showBranch = true;
     this.currentBank = item;
     this.getAllCharacBranch(this.currentBank.id);
-    this.branchSearch = null;
+    this.branchSearch = [];
   }
+
   selectBranch(item: BranchModel) {
     $('#modal-select-bank').modal('hide');
     this.currentBranch = item;

@@ -157,7 +157,7 @@
   "Change Password": "Change Password",
   "New Password": "New Password",
   "Confirm Password": "Confirm Password",
-  "Password requires 8 characters or more and has at least 1 alphabet letter": "Password requires 8 characters or more and has at least 1 alphabet letter",
+  "Password requires 8 characters and contain at least two of three types of characters (lower case, upper case and digits)": "Password requires 8 characters and contain at least two of three types of characters (lower case, upper case and digits)",
   "Current password and new passwords cannot be the same": "Current password and new passwords cannot be the same",
   "Password incorrect": "Password incorrect",
   "You have successfully changed the password": "You have successfully changed the password",
@@ -242,5 +242,10 @@
   "Margin Level estimate after depposit": "Margin Level estimate after depposit",
   "Margin Level estimate after withdraw": "Margin Level estimate after withdraw",
   "Entire Deposit History": "Entire Deposit History",
-  "Entire Withdrawl History": "Entire Withdrawl History"
+  "Entire Withdrawl History": "Entire Withdrawl History",
+  "Change Email": "Change Email",
+  "New Email": "New Email",
+  "Please enter full-width Hiragana": "Please enter full-width Hiragana",
+  "Please enter half-width numbers": "Please enter half-width numbers",
+  "Please enter full-width Katakana": "Please enter full-width Hiragana"
 }

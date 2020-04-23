@@ -22,8 +22,7 @@ export class SettingComponent implements OnInit {
   accountID: number;
   isSubmittedSetting: boolean;
   errorMessage: boolean;
-  oldPassword: string;
-  errorPassword: boolean;
+  invalidPassword: boolean;
   successPassword: boolean;
   constructor(private spinnerService: Ng4LoadingSpinnerService,
               private translate: TranslateService,
@@ -58,7 +57,7 @@ export class SettingComponent implements OnInit {
   settingSave() {
     this.isSubmittedSetting = true;
     this.successPassword = false;
-    this.errorPassword = false;
+    this.invalidPassword = false;
     if (this.changePassForm.invalid) {
       this.errorMessage = false;
       return;
@@ -80,7 +79,7 @@ export class SettingComponent implements OnInit {
       if (response.meta.code === 200) {
         this.successPassword = true;
       } else if (response.meta.code === 103) {
-        this.errorPassword = true;
+        this.invalidPassword = true;
       }
     });
   }
@@ -88,8 +87,7 @@ export class SettingComponent implements OnInit {
   openSetting() {
     const fontSizeCurrent = localStorage.getItem(FONTSIZE_AFX);
     $(`#${fontSizeCurrent}`).addClass('active');
-    this.initSettingForm();
-    this.errorPassword = false;
+    this.invalidPassword = false;
     this.isSubmittedSetting = false;
   }
 

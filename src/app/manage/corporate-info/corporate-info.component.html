@@ -21,7 +21,7 @@
                         <div class="editable d-block" *ngIf="editCorAddress == true">
                             <input type="text" name="postcode" formControlName="cor_postcode" maxlength="7" class="form-control form-control-sm mb-1" (change)="changeAddress()" placeholder=""
                             [ngClass]="{'invalid':(corporateForm.controls['cor_postcode'].errors)}">
-                            <div *ngIf="isSubmittedCor && corporateForm?.controls['cor_postcode'].errors?.Required"
+                            <div *ngIf="corporateForm?.controls['cor_postcode'].errors?.Required"
                                 class="invalid-mess">
                                 <div *ngIf="corporateForm?.controls['cor_postcode'].errors?.Required">
                                   {{'Please enter your zip code.' | translate}}
@@ -49,7 +49,7 @@
                                     <select class="form-control form-control-sm mb-1 select2" style="width: 100%" formControlName="cor_prefec"
                                       [ngClass]="{'invalid':corporateForm.controls['cor_prefec'].errors}">
                                       <option *ngFor="let item of listCityJapan" value="{{item}}">{{item}}</option>
-                                      <div *ngIf="isSubmittedCor && corporateForm?.controls['cor_prefec'].errors?.Required" class="invalid-mess">
+                                      <div *ngIf="corporateForm?.controls['cor_prefec'].errors?.Required" class="invalid-mess">
                                         <div>{{'This field is required' | translate}}</div>
                                       </div>
                                   </select>
@@ -57,7 +57,7 @@
                                 <div class="col-sm-6 pl-md-1">
                                   <input type="text" name="cor-address" class="form-control form-control-sm mb-1" formControlName="cor_district" value="" maxlength="100"
                                     [ngClass]="{'invalid':corporateForm?.controls['cor_district'].errors}">
-                                    <div *ngIf="isSubmittedCor && corporateForm?.controls['cor_district'].errors?.Required" class="invalid-mess">
+                                    <div *ngIf="corporateForm?.controls['cor_district'].errors?.Required" class="invalid-mess">
                                       <div>{{'This field is required' | translate}}</div>
                                     </div>
                                 </div>
@@ -66,7 +66,7 @@
                                 <div class="col-sm-6 pr-md-1">
                                     <input type="text" name="cor-address" maxlength="11" class="form-control form-control-sm mb-1" formControlName="cor_house" value="" placeholder="House Number"
                                       [ngClass]="{'invalid':corporateForm?.controls['cor_house'].errors}">
-                                      <div *ngIf="isSubmittedCor && corporateForm?.controls['cor_house'].errors?.Required" class="invalid-mess">
+                                      <div *ngIf="corporateForm?.controls['cor_house'].errors?.Required" class="invalid-mess">
                                         <div>{{'This field is required' | translate}}</div>
                                       </div>
                                 </div>
@@ -95,10 +95,10 @@
                             <input type="tel" name="cor-phone" class="form-control form-control-sm mb-1" maxlength="11" placeholder="" formControlName="cor_phone"
                             [ngClass]="{'invalid':(corporateForm.controls['cor_phone'].errors || corporateForm.controls['cor_phone'].errors?.SalaryLength
                               || corporateForm.controls['cor_phone'].errors?.Salary || corporateForm.controls['cor_phone'].errors?.SalarySpecial)}">
-                            <div *ngIf="isSubmittedCor && corporateForm.controls['cor_phone'].errors?.Required" class="invalid-mess">
+                            <div *ngIf="corporateForm.controls['cor_phone'].errors?.Required" class="invalid-mess">
                               <div>{{'This field is required' | translate}}</div>
                             </div>
-                            <div style="display:block" *ngIf="isSubmittedCor && corporateForm.controls['cor_phone'].errors?.SalaryLength"
+                            <div style="display:block" *ngIf="corporateForm.controls['cor_phone'].errors?.SalaryLength"
                             class="invalid-mess">
                               <div *ngIf="corporateForm.controls['cor_phone'].errors?.phoneLength">{{'Phone number must be at least 10 characters long.' | translate}}</div>
                             </div>
@@ -118,7 +118,7 @@
                         <div class="editable d-block" *ngIf="editCorFax == true">
                             <input type="text" name="cor-fax" class="form-control form-control-sm mb-1" maxlength="11" placeholder="" formControlName="cor_fax"
                               [ngClass]="{'invalid':corporateForm?.controls['cor_fax'].errors}">
-                            <div *ngIf="isSubmittedCor && corporateForm?.controls['cor_fax'].errors?.Required" class="invalid-mess">
+                            <div *ngIf="corporateForm?.controls['cor_fax'].errors?.Required" class="invalid-mess">
                               <div>{{'This field is required' | translate}}</div>
                             </div>
                             <div class="text-right">
@@ -251,7 +251,7 @@
                     <div class="editable d-block" *ngIf="editPersonBod == true">
                         <input type="text" name="department" class="form-control form-control-sm mb-1" maxlength="100" placeholder="" formControlName="person_bod"
                           [ngClass]="{'invalid':picForm?.controls['person_bod'].errors}">
-                        <div *ngIf="isSubmittedCor && picForm?.controls['person_bod'].errors?.Required" class="invalid-mess">
+                        <div *ngIf="picForm?.controls['person_bod'].errors?.Required" class="invalid-mess">
                           <div>{{'This field is required' | translate}}</div>
                         </div>
                         <div class="text-right">
@@ -271,7 +271,7 @@
                     <div class="editable d-block" *ngIf="editPersonPic == true">
                         <input type="text" name="pic-position" class="form-control form-control-sm mb-1" maxlength="100" placeholder="PIC Position" formControlName="person_pic"
                           [ngClass]="{'invalid':picForm?.controls['person_pic'].errors}">
-                        <div *ngIf="isSubmittedCor && picForm?.controls['person_pic'].errors?.Required" class="invalid-mess">
+                        <div *ngIf="picForm?.controls['person_pic'].errors?.Required" class="invalid-mess">
                           <div>{{'This field is required' | translate}}</div>
                         </div>
                         <div class="text-right">
@@ -292,7 +292,7 @@
                     <div class="editable d-block" *ngIf="editPersonPicname == true">
                         <input type="text" name="pic-name" class="form-control form-control-sm mb-1" maxlength="100" placeholder="PIC name" formControlName="per_picname"
                           [ngClass]="{'invalid':picForm?.controls['per_picname'].errors}">
-                        <div *ngIf="isSubmittedCor && picForm?.controls['per_picname'].errors?.Required" class="invalid-mess">
+                        <div *ngIf="picForm?.controls['per_picname'].errors?.Required" class="invalid-mess">
                           <div>{{'This field is required' | translate}}</div>
                         </div>
                     </div>
@@ -309,8 +309,8 @@
                     <div class="editable d-block" *ngIf="editPersonPicname == true">
                         <input type="text" name="pic-name" class="form-control form-control-sm mb-1" maxlength="100" placeholder="PIC name" formControlName="person_picname"
                           [ngClass]="{'invalid': picForm?.controls['person_picname'].errors}">
-                        <div *ngIf="isSubmittedCor && picForm?.controls['person_picname'].errors?.Required" class="invalid-mess">
-                          <div>{{'This field is required' | translate}}</div>
+                        <div *ngIf="picForm?.controls['person_picname'].errors" class="invalid-mess">
+                          <div>{{'Please enter full-width Katakana' | translate}}</div>
                         </div>
                         <div class="text-right">
                             <button type="button" class="btn btn-sm btn-cancel btn-outline-secondary pt-0 pb-0" (click)="cancelEditCor('pic-name', formType.pic)">{{'Cancel' | translate}}</button>
@@ -349,10 +349,10 @@
                     <div class="editable d-block" *ngIf="editPersonPhone == true">
                         <input type="tel" name="p-phone" class="form-control form-control-sm mb-1"  maxlength="11" placeholder="" formControlName="person_phone"
                         [ngClass]="{'invalid':picForm.controls['person_phone'].errors}">
-                        <div *ngIf="isSubmittedCor && picForm.controls['person_phone'].errors?.Required" class="invalid-mess">
+                        <div *ngIf="picForm.controls['person_phone'].errors?.Required" class="invalid-mess">
                           <div>{{'This field is required' | translate}}</div>
                         </div>
-                        <div style="display:block" *ngIf="isSubmittedCor && picForm.controls['person_phone'].errors?.SalaryLength"
+                        <div style="display:block" *ngIf="picForm.controls['person_phone'].errors?.SalaryLength"
                         class="invalid-mess">
                           <div *ngIf="picForm.controls['person_phone'].errors?.phoneLength">{{'Phone number must be at least 10 characters long.' | translate}</div>
                         </div>
@@ -375,11 +375,11 @@
                     </div>
                     <div class="editable d-block" *ngIf="editPersonEmail == true">
                         <input type="text" name="p-email" maxlength="100" placeholder="" formControlName="person_email"
-                          [className]="isSubmittedCor && corporateForm?.controls['person_email'].errors ? 'form-control form-control-sm mb-1 invalid' : 'form-control form-control-sm mb-1'">
-                        <div *ngIf="isSubmittedCor && corporateForm?.controls['person_email'].errors?.Required" class="invalid-mess">
+                          [className]="corporateForm?.controls['person_email'].errors ? 'form-control form-control-sm mb-1 invalid' : 'form-control form-control-sm mb-1'">
+                        <div *ngIf="corporateForm?.controls['person_email'].errors?.Required" class="invalid-mess">
                           <div>{{'This field is required' | translate}}</div>
                         </div>
-                        <div *ngIf="isSubmittedCor && corporateForm?.controls['person_email'].errors" class="invalid-mess">
+                        <div *ngIf="corporateForm?.controls['person_email'].errors" class="invalid-mess">
                           <div *ngIf="corporateForm?.controls['person_email'].errors?.person_email">{{'Invalid email' | translate}}</div>
                         </div>
                         <div class="text-right">
