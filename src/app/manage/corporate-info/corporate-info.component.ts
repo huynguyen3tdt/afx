@@ -186,7 +186,9 @@ export class CorporateInfoComponent implements OnInit {
           this.picForm.controls.person_phone.setValue(this.corporateInfor.pic.mobile);
           this.picForm.controls.person_email.setValue(this.corporateInfor.pic.email.value);
           this.picForm.controls.person_gender.setValue(this.corporateInfor.pic.fx_gender.value);
+          console.log('1111111111111 ',  this.picForm.controls.person_gender.value);
           this.corporateInfor.pic.fx_gender.value = this.globalService.checkGender(this.corporateInfor.pic.fx_gender.value);
+          console.log('2222222222222 ',  this.picForm.controls.person_gender.value);
         }
         if (this.corporateInfor.surveys.length > 0) {
           if (this.corporateInfor.surveys.find(item =>
@@ -540,19 +542,13 @@ export class CorporateInfoComponent implements OnInit {
         this.editPersonEmail = true;
         break;
       case 'p-gender':
-        this.picForm.controls.person_gender.setValue(this.corporateInfor.pic.fx_gender.value);
+        this.picForm.controls.person_gender.setValue(this.globalService.reConvertGender(this.corporateInfor.pic.fx_gender.value));
         this.editGender = true;
         break;
     }
   }
 
   cancelEditCor(field: string, type: string) {
-    if (type === this.formType.pic) {
-      this.showSavePic = false;
-    }
-    if (type === this.formType.corporateInfor) {
-      this.showSaveCorp = false;
-    }
     switch (field) {
       case 'cor-address':
         this.editCorAddress = false;
@@ -582,6 +578,29 @@ export class CorporateInfoComponent implements OnInit {
         this.editGender = false;
         break;
     }
+    if (type === this.formType.corporateInfor
+      && this.editCorAddress === false
+      && this.editCorPhone === false
+      && this.editCorFax === false) {
+      this.showSaveCorp = false;
+    }
+    if (type === this.formType.pic
+      && this.editPersonBod === false
+      && this.editPersonPic === false
+      && this.editPersonPicname === false
+      && this.editPersonPhone === false
+      && this.editPersonEmail === false
+      && this.editGender === false) {
+      this.showSavePic = false;
+    }
+  }
+
+  cancelEditFinan() {
+    this.editFinancial = false;
+  }
+
+  cancelEditPurpose() {
+    this.editPurpose = false;
   }
 
   editPurposeInvest() {

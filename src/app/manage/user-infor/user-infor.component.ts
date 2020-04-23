@@ -364,7 +364,6 @@ export class UserInforComponent implements OnInit {
   }
 
   cancelEdit(field: string) {
-    this.showSave = false;
     switch (field) {
       case 'address':
         this.editAddress = false;
@@ -375,6 +374,9 @@ export class UserInforComponent implements OnInit {
       case 'phone':
         this.editPhone = false;
         break;
+    }
+    if (this.editAddress === false && this.editEmail === false && this.editPhone === false) {
+      this.showSave = false;
     }
 
   }
@@ -485,6 +487,13 @@ export class UserInforComponent implements OnInit {
     this.editEmail = false;
     this.editPhone = false;
     this.showSave = false;
+  }
+
+  canCelSaveOccupation() {
+    this.editFinancial = false;
+  }
+  canCelPurpose() {
+    this.editPurpose = false;
   }
 
   initListFinancialSubmit() {

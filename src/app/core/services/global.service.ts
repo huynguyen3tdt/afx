@@ -84,6 +84,14 @@ export class GlobalService {
     }
   }
 
+  reConvertGender(value: string) {
+    if (value === 'Male' || value === '男性') {
+      return 'M';
+    } else {
+      return 'F';
+    }
+  }
+
   convertGender(value: string) {
     if (value === 'Male' || value === '男性') {
       return 'M';

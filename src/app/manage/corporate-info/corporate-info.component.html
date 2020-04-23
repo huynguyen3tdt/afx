@@ -1,4 +1,4 @@
-<h3 class="border-bottom pb-1 mb-3">Corporate Infomation</h3>
+<h3 class="border-bottom pb-1 mb-3">{{'Corporate Information' | translate}}</h3>
 <div class="table-responsive">
     <table [formGroup]="corporateForm" class="table table-sm table-borderless table-hover table-profile" cellspacing="0" cellpadding="0">
         <tbody>
@@ -232,6 +232,7 @@
         </div>
         <div class="col-md-8 col-lg-6">
             <button (click)="saveCorp(formType.financial)" class="btn btn-success btn-save">Save</button>
+            <button (click)="cancelEditFinan()" class="btn btn-primary btn-save ml-2">{{'Cancel' | translate}}</button>
         </div>
     </div>
 </div>
@@ -258,7 +259,7 @@
                         </div>
                     </div>
                 </td>
-                <td width="15"><a href="javascript:;" class="edit-link" data-toggle="tooltip" data-placement="top" title="Edit Department" *ngIf="editPersonBod == false" (click)="showEditFieldCor('department', formType.corporateInfor)"><i class="icon ion-md-create"></i></a></td>
+                <td width="15"><a href="javascript:;" class="edit-link" data-toggle="tooltip" data-placement="top" title="Edit Department" *ngIf="editPersonBod == false" (click)="showEditFieldCor('department', formType.pic)"><i class="icon ion-md-create"></i></a></td>
             </tr>
            
             <tr class="row-pic-position">
@@ -307,7 +308,7 @@
                     </div>
                     <div class="editable d-block" *ngIf="editPersonPicname == true">
                         <input type="text" name="pic-name" class="form-control form-control-sm mb-1" maxlength="100" placeholder="PIC name" formControlName="person_picname"
-                          [ngClass]="{'invalid':picForm?.controls['person_picname'].errors}">
+                          [ngClass]="{'invalid': picForm?.controls['person_picname'].errors}">
                         <div *ngIf="isSubmittedCor && picForm?.controls['person_picname'].errors?.Required" class="invalid-mess">
                           <div>{{'This field is required' | translate}}</div>
                         </div>
@@ -335,7 +336,7 @@
                     </div>
                   </div>
                 </td>
-                <td width="15"><a href="javascript:;" class="edit-link" data-toggle="tooltip" data-placement="top" title="Edit Phone" (click)="showEditFieldCor('p-gender', formType.pic)"><i class="icon ion-md-create"></i></a></td>
+                <td *ngIf="editGender == false" width="15"><a href="javascript:;" class="edit-link" data-toggle="tooltip" data-placement="top" title="Edit Phone" (click)="showEditFieldCor('p-gender', formType.pic)"><i class="icon ion-md-create"></i></a></td>
             </tr>
 
 
@@ -753,6 +754,7 @@
         </div>
         <div class="col-md-8 col-lg-6">
             <button (click)="saveCorp(formType.purpose)" class="btn btn-success btn-save">Save</button>
+            <button (click)="cancelEditPurpose()" class="btn btn-primary btn-save ml-2">{{'Cancel' | translate}}</button>
         </div>
     </div>
 </div>
