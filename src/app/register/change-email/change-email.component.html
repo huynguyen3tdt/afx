@@ -1,0 +1,28 @@
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-5">
+            <form [formGroup]="changeEmailForm">
+                <div class="card card-reset">
+                    <!-- BEGIN Form forgot -->
+                    <div class="p-4 pr-4 form form-line form-reset">
+                        <h5 class="text-center text-lg-right"><img src="assets/images/logo.svg" class="logo"></h5>
+                        <h2 class="mb-0 text-primary mt-2 mb-4"><strong>{{'Change Email' | translate}}</strong></h2>
+                        <div class="form-group">
+                            <label class="label">{{'New Email' | translate}}</label>
+                            <div class="input-wrapper">
+                                <input type="text" class="form-control" autocomplete="off" formControlName="email"
+                                    [ngClass]="{'invalid': isSubmitted && changeEmailForm?.controls?.email?.errors}">
+                            </div>
+                            <div *ngIf="isSubmitted && changeEmailForm?.controls?.email?.errors" class="invalid-mess">
+                                <div>{{'This field is required' | translate}}</div>
+                            </div>
+                        </div>
+                        <div>
+                            <button class="btn btn-primary btn-block" type="button" (click)="onSubmit()">Save</button>
+                        </div>
+                    </div><!-- END Form Login -->
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

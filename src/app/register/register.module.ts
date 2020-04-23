@@ -9,6 +9,7 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
 import { TranslateModule } from '@ngx-translate/core';
+import { ChangeEmailComponent } from './change-email/change-email.component';
 
 @NgModule({
 
@@ -23,7 +24,12 @@ import { TranslateModule } from '@ngx-translate/core';
     ],
 
     providers: [],
-    declarations: [LoginComponent, ForgotPasswordComponent, ResetPasswordComponent],
+    declarations: [
+        LoginComponent,
+        ForgotPasswordComponent,
+        ResetPasswordComponent,
+        ChangeEmailComponent
+    ],
 })
 
 export class RegisterModule { }
