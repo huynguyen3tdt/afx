@@ -245,6 +245,9 @@
                                     <div class="ml-2"><button class="btn btn-sm btn-primary"
                                             (click)="searchBankSubmit(1)">{{'Search' | translate}}</button></div>
                                 </div>
+                                <div class="invalid-mess mb-2" *ngIf="bankForm?.controls?.bank_name?.errors">
+                                       {{'Please enter full-width Hiragana' | translate}}
+                                    </div>
                                 <h6 class="c-title mb-2">{{'Enter bank code' | translate}}</h6>
                                 <div class="d-flex">
                                     <div class="flex-grow-1"><input type="text" name=""
@@ -253,6 +256,9 @@
                                     <div class="ml-2"><button class="btn btn-sm btn-primary"
                                             (click)="searchBankSubmit(2)">{{'Search' | translate}}</button></div>
                                 </div>
+                                <div class="invalid-mess mb-2" *ngIf="searchBankForm?.controls?.bankCode?.errors">
+                                        {{'Please enter half-width numbers' | translate}}
+                                    </div>
                             </form>
 
                         </div>
@@ -292,6 +298,9 @@
                                     <div class="ml-2"><button class="btn btn-sm btn-primary"
                                             (click)="searchBranchSubmit(1)">{{'Search' | translate}}</button></div>
                                 </div>
+                                <div class="invalid-mess mb-2" *ngIf="branchForm?.controls?.branch_name?.errors">
+                                        {{'Please enter full-width Hiragana' | translate}}
+                                     </div>
                                 <h6 class="c-title mb-2">{{'Enter branch code' | translate}}</h6>
                                 <div class="d-flex">
                                     <div class="flex-grow-1"><input type="text" name=""
@@ -300,6 +309,9 @@
                                     <div class="ml-2"><button class="btn btn-sm btn-primary"
                                             (click)="searchBranchSubmit(2)">{{'Search' | translate}}</button></div>
                                 </div>
+                                <div class="invalid-mess mb-2" *ngIf="branchForm?.controls?.branch_code?.errors">
+                                        {{'Please enter half-width numbers' | translate}}
+                                    </div>
                             </form>
 
                         </div>

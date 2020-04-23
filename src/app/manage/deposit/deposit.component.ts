@@ -191,6 +191,7 @@ export class DepositComponent implements OnInit {
       }
     });
   }
+
   onSubmit() {
     this.isSubmitted = true;
     if (this.depositTransactionForm.invalid) {
@@ -219,6 +220,7 @@ export class DepositComponent implements OnInit {
       }
     });
   }
+
   changeDeposit(event: any) {
     this.depositValue = numeral(this.depositTransactionForm.controls.deposit.value).value();
     if (this.depositValue < Number(this.minDeposit)) {
@@ -229,6 +231,7 @@ export class DepositComponent implements OnInit {
     this.totalAmount = this.depositFee + this.depositValue;
     this.calculateDeposit();
   }
+
   changeDepositCal(event: any) {
     this.depositAmount = numeral(this.depositAmountForm.controls.deposit.value).value();
     if (this.depositAmount < Number(this.minDeposit)) {
@@ -238,6 +241,7 @@ export class DepositComponent implements OnInit {
     this.bankError = false;
     this.calculateDepositAmount();
   }
+
   calculateDeposit() {
     this.errMessageQuickDeposit = false;
     this.equityEstimate = Math.floor(this.equity + numeral(this.depositTransactionForm.controls.deposit.value).value());
@@ -246,6 +250,7 @@ export class DepositComponent implements OnInit {
       this.errMessageQuickDeposit = true;
     }
   }
+
   calculateDepositAmount() {
     this.errMessageBankTran = false;
     this.equityDeposit = Math.floor(this.equity + numeral(this.depositAmountForm.controls.deposit.value).value());
@@ -254,6 +259,7 @@ export class DepositComponent implements OnInit {
       this.errMessageBankTran = true;
     }
   }
+
   onRefesh() {
     this.getMt5Infor(Number(this.accountID.split('-')[1]));
   }

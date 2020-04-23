@@ -8,7 +8,8 @@ import {
   requiredInput,
   validationPhoneNumber,
   emailValidation,
-  experienceValidation
+  experienceValidation,
+  fullWidthRequired
 } from 'src/app/core/helper/custom-validate.helper';
 import { GlobalService } from 'src/app/core/services/global.service';
 import { LISTCITY_JAPAN } from 'src/app/core/constant/japan-constant';
@@ -124,7 +125,7 @@ export class CorporateInfoComponent implements OnInit {
       person_bod: new FormControl('', requiredInput),
       person_pic: new FormControl('', requiredInput),
       per_picname: new FormControl('', requiredInput),
-      person_picname: new FormControl('', requiredInput),
+      person_picname: new FormControl('', fullWidthRequired),
       person_gender: new FormControl('', requiredInput),
       person_phone: new FormControl('', validationPhoneNumber),
       person_email: new FormControl('', emailValidation),
@@ -186,9 +187,7 @@ export class CorporateInfoComponent implements OnInit {
           this.picForm.controls.person_phone.setValue(this.corporateInfor.pic.mobile);
           this.picForm.controls.person_email.setValue(this.corporateInfor.pic.email.value);
           this.picForm.controls.person_gender.setValue(this.corporateInfor.pic.fx_gender.value);
-          console.log('1111111111111 ',  this.picForm.controls.person_gender.value);
           this.corporateInfor.pic.fx_gender.value = this.globalService.checkGender(this.corporateInfor.pic.fx_gender.value);
-          console.log('2222222222222 ',  this.picForm.controls.person_gender.value);
         }
         if (this.corporateInfor.surveys.length > 0) {
           if (this.corporateInfor.surveys.find(item =>
