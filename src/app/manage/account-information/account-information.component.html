@@ -26,16 +26,26 @@
                     </div>
                     <nav class="mb-0">
                         <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                            <a class="nav-item nav-link active" id="nav-account-tab" data-toggle="tab" href="#nav-account" role="tab" (click)="changeTab(TAB.accountInfo)" aria-controls="nav-account" aria-selected="true"><i
-                                    class="icon ion-md-person"></i> <strong class="d-none d-md-inline">{{'Account Information' | translate}}</strong></a>
-                            <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" (click)="changeTab(TAB.userInfo)" *ngIf="isCompany == 'false'" role="tab" aria-controls="nav-profile" aria-selected="true"><i
-                                    class="icon ion-md-contact"></i> <strong class="d-none d-md-inline">{{'User Information' | translate}}</strong></a>
-                            <a class="nav-item nav-link" id="nav-bank-tab" data-toggle="tab" href="#nav-corporate" role="tab" (click)="changeTab(TAB.corpInfo)" *ngIf="isCompany == 'true'" aria-controls="nav-corporate" aria-selected="false"><i class="icon ion-md-briefcase"></i> <strong
+                            <a class="nav-item nav-link active" id="nav-account-tab" data-toggle="tab"
+                                href="#nav-account" role="tab" (click)="changeTab(TAB.accountInfo)"
+                                aria-controls="nav-account" aria-selected="true"><i class="icon ion-md-person"></i>
+                                <strong class="d-none d-md-inline">{{'Account Information' | translate}}</strong></a>
+                            <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile"
+                                (click)="changeTab(TAB.userInfo)" *ngIf="isCompany == 'false'" role="tab"
+                                aria-controls="nav-profile" aria-selected="true"><i class="icon ion-md-contact"></i>
+                                <strong class="d-none d-md-inline">{{'User Information' | translate}}</strong></a>
+                            <a class="nav-item nav-link" id="nav-bank-tab" data-toggle="tab" href="#nav-corporate"
+                                role="tab" (click)="changeTab(TAB.corpInfo)" *ngIf="isCompany == 'true'"
+                                aria-controls="nav-corporate" aria-selected="false"><i
+                                    class="icon ion-md-briefcase"></i> <strong
                                     class="d-none d-md-inline">{{'Corporate Information' | translate}}</strong></a>
-                            <a class="nav-item nav-link" id="nav-bank-tab" data-toggle="tab" href="#nav-bank" role="tab" (click)="changeTab(TAB.withDrawal)" aria-controls="nav-bank" aria-selected="false"><i class="icon ion-md-card"></i> <strong
+                            <a class="nav-item nav-link" id="nav-bank-tab" data-toggle="tab" href="#nav-bank" role="tab"
+                                (click)="changeTab(TAB.withDrawal)" aria-controls="nav-bank" aria-selected="false"><i
+                                    class="icon ion-md-card"></i> <strong
                                     class="d-none d-md-inline">{{'Withdrawal Account' | translate}}</strong></a>
-                            <a class="nav-item nav-link" id="nav-setting-tab" data-toggle="tab" href="#nav-setting" role="tab" (click)="changeTab(TAB.setting)" aria-controls="nav-setting" aria-selected="false"><i
-                                    class="icon ion-md-settings"></i> <strong
+                            <a class="nav-item nav-link" id="nav-setting-tab" data-toggle="tab" href="#nav-setting"
+                                role="tab" (click)="changeTab(TAB.setting)" aria-controls="nav-setting"
+                                aria-selected="false"><i class="icon ion-md-settings"></i> <strong
                                     class="d-none d-md-inline">{{'Setting' | translate}}</strong></a>
                         </div>
                     </nav>
@@ -43,28 +53,33 @@
                 <div class="col-lg-9 col-mypage-content">
                     <div class="tab-content border" id="nav-tabContent">
                         <!-- BEGIN ACCOUNT -->
-                        <div *ngIf="showTabMt5 == true" class="tab-pane fade show active" id="nav-account" role="tabpanel" aria-labelledby="nav-account-tab">
+                        <div *ngIf="showTabMt5 == true" class="tab-pane fade show active" id="nav-account"
+                            role="tabpanel" aria-labelledby="nav-account-tab">
                             <app-mt5-info></app-mt5-info>
                         </div>
                         <!-- END ACCOUNT -->
                         <!-- BEGIN PROFILE -->
-                        <div *ngIf="showTabUserInfo == true" class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                        <div *ngIf="showTabUserInfo == true" class="tab-pane fade" id="nav-profile" role="tabpanel"
+                            aria-labelledby="nav-profile-tab">
                             <app-user-infor></app-user-infor>
                         </div>
                         <!-- END ACCOUNT -->
                         <!-- BEGIN Corporate -->
-                        <div *ngIf="showTabCorpInfo == true" class="tab-pane fade" id="nav-corporate" role="tabpanel" aria-labelledby="nav-corporate-tab">
+                        <div *ngIf="showTabCorpInfo == true" class="tab-pane fade" id="nav-corporate" role="tabpanel"
+                            aria-labelledby="nav-corporate-tab">
                             <app-corporate-info></app-corporate-info>
                         </div>
                         <!-- END Corporate -->
                         <!-- BEGIN BANK ACCOUNT -->
-                        <div *ngIf="showTabWithDrawal == true" class="tab-pane fade" id="nav-bank" role="tabpanel" aria-labelledby="nav-bank-tab">
+                        <div *ngIf="showTabWithDrawal == true" class="tab-pane fade" id="nav-bank" role="tabpanel"
+                            aria-labelledby="nav-bank-tab">
                             <app-bank-info></app-bank-info>
                         </div>
                         <!-- END BANK ACCOUNT -->
 
                         <!-- BEGIN SETTING -->
-                        <div *ngIf="showTabSetting == true" class="tab-pane fade" id="nav-setting" role="tabpanel" aria-labelledby="nav-setting-tab" >
+                        <div *ngIf="showTabSetting == true" class="tab-pane fade" id="nav-setting" role="tabpanel"
+                            aria-labelledby="nav-setting-tab">
                             <app-setting></app-setting>
                         </div>
                         <!-- END SETTING -->
@@ -74,21 +89,5 @@
         </div>
     </div>
 </div>
-
-<!-- Modal save User -->
-<div class="modal fade" id="modal-confirm-bank" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" data-backdrop="static">
-    <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
-        <div class="modal-content">
-            <div class="modal-body text-center">
-                <p>{{'Do you want to save information?' | translate}}</p>
-                <div>
-                    <button type="button" class="btn btn-sm btn-success pl-3 pr-3">Ok</button>
-                    <button type="button" class="btn btn-sm btn-outline-secondary pl-3 pr-3" data-dismiss="modal">{{'Cancel' | translate}}</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
 
 <ng4-loading-spinner></ng4-loading-spinner>

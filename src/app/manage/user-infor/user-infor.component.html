@@ -1,4 +1,4 @@
-<h3 class="border-bottom pb-1 mb-3">Genenal Information</h3>
+<h3 class="border-bottom pb-1 mb-3">{{'User Information' | translate}}</h3>
 <div class="row" [formGroup]="userForm">
     <div class="col-lg-12">
         <div class="table-responsive">
@@ -275,6 +275,7 @@
         </div>
         <div class="col-md-8 col-lg-6">
             <button (click)="saveUser(formType.financial)" class="btn btn-success btn-save">Save</button>
+            <button (click)="canCelSaveOccupation()" class="btn btn-primary btn-save ml-2">{{'Cancel' | translate}}</button>
         </div>
     </div>
 </div>
@@ -625,6 +626,7 @@
         </div>
         <div class="col-md-8 col-lg-6">
             <button (click)="saveUser(formType.purpose)" class="btn btn-success btn-save">Save</button>
+            <button (click)="canCelPurpose()" class="btn btn-primary btn-save ml-2">{{'Cancel' | translate}}</button>
         </div>
     </div>
 </div>
