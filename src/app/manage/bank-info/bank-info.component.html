@@ -256,7 +256,7 @@
                                     <div class="ml-2"><button class="btn btn-sm btn-primary"
                                             (click)="searchBankSubmit(2)">{{'Search' | translate}}</button></div>
                                 </div>
-                                <div class="invalid-mess mb-2" *ngIf="searchBankForm?.controls?.bankCode?.errors">
+                                <div class="invalid-mess mb-2" *ngIf="bankForm?.controls?.bankCode?.errors">
                                         {{'Please enter half-width numbers' | translate}}
                                     </div>
                             </form>
