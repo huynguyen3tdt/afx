@@ -12,6 +12,7 @@ import { ConvertFinancialPipe } from 'src/app/core/pipe/convert-financial.pipe';
 import { ConvertInvestmentPurposePipe } from 'src/app/core/pipe/convert-purposeInvest.pipe';
 import { Mt5InfoComponent } from '../mt5-info/mt5-info.component';
 import { BankInfoComponent } from '../bank-info/bank-info.component';
+import { SettingComponent } from '../setting/setting.component';
 
 describe('AccountInformationComponent', () => {
   let component: AccountInformationComponent;
@@ -25,6 +26,7 @@ describe('AccountInformationComponent', () => {
         CorporateInfoComponent,
         Mt5InfoComponent,
         BankInfoComponent,
+        SettingComponent,
         ConvertFinancialPipe,
         ConvertInvestmentPurposePipe
       ],
