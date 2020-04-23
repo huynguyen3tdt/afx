@@ -11,6 +11,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class ChangeEmailComponent implements OnInit {
   changeEmailForm: FormGroup;
   token: string;
+  isSubmitted: boolean;
   constructor(private router: Router,
               private activatedRoute: ActivatedRoute) { }
 
