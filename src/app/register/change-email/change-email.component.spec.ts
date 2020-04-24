@@ -5,6 +5,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
+import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
 
 describe('ChangeEmailComponent', () => {
   let component: ChangeEmailComponent;
@@ -19,6 +20,7 @@ describe('ChangeEmailComponent', () => {
         HttpClientModule,
         TranslateModule.forRoot(),
         RouterTestingModule,
+        Ng4LoadingSpinnerModule
       ],
     })
     .compileComponents();

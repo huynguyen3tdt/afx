@@ -245,5 +245,7 @@
   "New Email": "新しいメール",
   "Please enter full-width Hiragana": "全角ひらがなを入力してください",
   "Please enter half-width numbers": "半角数字を入力してください",
-  "Please enter full-width Katakana": "全角入力のみ。"
+  "Please enter full-width Katakana": "全角入力のみ。",
+  "Please enter password": "パスワードを入力してください",
+  "This email address is already registered": "このメールアドレスは既に登録されています。"
 }

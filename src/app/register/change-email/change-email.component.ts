@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
-import { emailValidation } from 'src/app/core/helper/custom-validate.helper';
+import { requiredInput } from 'src/app/core/helper/custom-validate.helper';
 import { Router, ActivatedRoute } from '@angular/router';
+import { AuthenService } from 'src/app/core/services/authen.service';
+import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 
 @Component({
   selector: 'app-change-email',
@@ -12,8 +14,12 @@ export class ChangeEmailComponent implements OnInit {
   changeEmailForm: FormGroup;
   token: string;
   isSubmitted: boolean;
+  invalidPassWord: boolean;
+  invalidEmail: boolean;
   constructor(private router: Router,
-              private activatedRoute: ActivatedRoute) { }
+              private activatedRoute: ActivatedRoute,
+              private authenService: AuthenService,
+              private spinnerService: Ng4LoadingSpinnerService) { }
 
   ngOnInit() {
     this.activatedRoute.queryParams.subscribe(res => {
@@ -26,15 +32,26 @@ export class ChangeEmailComponent implements OnInit {
 
   initChangeEmailForm() {
     this.changeEmailForm = new FormGroup({
-      email: new FormControl('', [emailValidation])
+      password: new FormControl('', [requiredInput])
     });
   }
 
   onSubmit() {
     const param = {
-      email: this.changeEmailForm.controls.email.value,
+      password: this.changeEmailForm.controls.password.value,
       token: this.token
     };
+    this.spinnerService.show();
+    this.authenService.changeEmail(param).subscribe(response => {
+      this.spinnerService.hide();
+      if (response.meta.code === 200) {
+        this.router.navigate(['/login']);
+      } else if (response.meta.code === 400) {
+        this.invalidPassWord = true;
+      } else if (response.meta.code === 409) {
+        this.invalidEmail = true;
+      }
+    });
   }
 
 }
