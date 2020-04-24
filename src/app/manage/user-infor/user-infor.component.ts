@@ -296,9 +296,9 @@ export class UserInforComponent implements OnInit {
       zip: this.userForm.controls.postCode.value,
       address: {
         city: this.userForm.controls.searchPrefe.value,
-        street: this.userForm.controls.searchCountry.value,
-        street2: this.userForm.controls.house_numb.value,
-        fx_street3: this.userForm.controls.name_build.value,
+        street: this.userForm.controls.searchCountry.value.trim(),
+        street2: this.userForm.controls.house_numb.value.trim(),
+        fx_street3: this.userForm.controls.name_build.value.trim(),
       },
       email: this.userForm.controls.email.value,
       mobile: this.userForm.controls.phone.value,
@@ -530,12 +530,12 @@ export class UserInforComponent implements OnInit {
       {
         question_cd: 'indi_other_fin_name',
         value_text: this.purposeInvestForm.controls.financialInstrument.value
-        ? this.purposeInvestForm.controls.financialInstrument.value : null,
+        ? this.purposeInvestForm.controls.financialInstrument.value.trim() : null,
         sequence: null
       },
       {
         question_cd: 'indi_other_source',
-        value_text: this.purposeInvestForm.controls.specificName.value ? this.purposeInvestForm.controls.specificName.value : null,
+        value_text: this.purposeInvestForm.controls.specificName.value ? this.purposeInvestForm.controls.specificName.value.trim() : null,
         sequence: null
       },
       {
@@ -545,7 +545,7 @@ export class UserInforComponent implements OnInit {
       },
       {
         question_cd: 'indi_other_purpose',
-        value_text: this.purposeInvestForm.controls.otherPurpose.value ? this.purposeInvestForm.controls.otherPurpose.value : null,
+        value_text: this.purposeInvestForm.controls.otherPurpose.value ? this.purposeInvestForm.controls.otherPurpose.value.trim() : null,
         sequence: null
       },
       {
