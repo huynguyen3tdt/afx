@@ -10,8 +10,10 @@
                         <div class="form-group">
                             <label class="label">{{'Please enter password' | translate}}</label>
                             <div class="input-wrapper">
-                                <input type="text" class="form-control" autocomplete="off" formControlName="password"
+                                <input type="{{passWordType}}" class="form-control" autocomplete="off" formControlName="password"
                                     [ngClass]="{'invalid': isSubmitted && changeEmailForm?.controls?.email?.errors}">
+                                    <button type="button" class="btn btn-none" disabled="disabled"><i class="icon ion-md-lock"
+                                            (click)="showPassWord()"></i></button>
                             </div>
                             <div *ngIf="isSubmitted && changeEmailForm?.controls?.password?.errors" class="invalid-mess">
                                 <div>{{'This field is required' | translate}}</div>
