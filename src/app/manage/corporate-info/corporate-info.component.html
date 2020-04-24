@@ -66,7 +66,7 @@
                             </div>
                             <div class="row no-gutters">
                                 <div class="col-sm-6 pr-md-1">
-                                    <input type="text" name="cor-address" maxlength="11" class="form-control form-control-sm mb-1" formControlName="cor_house" value="" placeholder="House Number"
+                                    <input type="text" name="cor-address" maxlength="100" class="form-control form-control-sm mb-1" formControlName="cor_house" value="" placeholder="House Number"
                                       [ngClass]="{'invalid':corporateForm?.controls['cor_house'].errors}">
                                       <div *ngIf="corporateForm?.controls['cor_house'].errors?.Required" class="invalid-mess">
                                         <div>{{'This field is required' | translate}}</div>

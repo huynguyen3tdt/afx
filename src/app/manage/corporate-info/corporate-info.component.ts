@@ -317,21 +317,21 @@ export class CorporateInfoComponent implements OnInit {
         zip: this.corporateForm.controls.cor_postcode.value,
         address: {
           city: this.corporateForm.controls.cor_prefec.value,
-          street: this.corporateForm.controls.cor_district.value,
-          street2: this.corporateForm.controls.cor_house.value,
-          fx_street3: this.corporateForm.controls.cor_build.value,
+          street: this.corporateForm.controls.cor_district.value.trim(),
+          street2: this.corporateForm.controls.cor_house.value.trim(),
+          fx_street3: this.corporateForm.controls.cor_build.value.trim(),
         },
-        mobile: this.corporateForm.controls.cor_phone.value,
-        fx_fax: this.corporateForm.controls.cor_fax.value,
+        mobile: this.corporateForm.controls.cor_phone.value.trim(),
+        fx_fax: this.corporateForm.controls.cor_fax.value.trim(),
         lang: '',
       },
       pic: {
-        name: this.picForm.controls.per_picname.value,
-        fx_name1: this.picForm.controls.person_picname.value,
+        name: this.picForm.controls.per_picname.value.trim(),
+        fx_name1: this.picForm.controls.person_picname.value.trim(),
         fx_gender: this.picForm.controls.person_gender.value,
-        email: this.picForm.controls.person_email.value,
+        email: this.picForm.controls.person_email.value.trim(),
         mobile: this.picForm.controls.person_phone.value,
-        function: this.picForm.controls.person_pic.value,
+        function: this.picForm.controls.person_pic.value.trim(),
         fx_dept: this.picForm.controls.person_bod.value
       },
       surveys: [],
@@ -664,12 +664,12 @@ export class CorporateInfoComponent implements OnInit {
       {
         question_cd: 'corp_pic_other_name_exp',
         value_text: this.purposeInvestForm.controls.financialInstrument.value
-        ? this.purposeInvestForm.controls.financialInstrument.value : null,
+        ? this.purposeInvestForm.controls.financialInstrument.value.trim() : null,
         sequence: null
       },
       {
         question_cd: 'corp_other_source',
-        value_text: this.purposeInvestForm.controls.specificName.value ? this.purposeInvestForm.controls.specificName.value : null,
+        value_text: this.purposeInvestForm.controls.specificName.value ? this.purposeInvestForm.controls.specificName.value.trim() : null,
         sequence: null
       },
       {
@@ -679,7 +679,7 @@ export class CorporateInfoComponent implements OnInit {
       },
       {
         question_cd: 'corp_other_inv',
-        value_text: this.purposeInvestForm.controls.otherPurpose.value ? this.purposeInvestForm.controls.otherPurpose.value : null,
+        value_text: this.purposeInvestForm.controls.otherPurpose.value ? this.purposeInvestForm.controls.otherPurpose.value.trim() : null,
         sequence: null
       },
       {
