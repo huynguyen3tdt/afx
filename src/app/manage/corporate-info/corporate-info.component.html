@@ -30,7 +30,9 @@
 
                         </div>
                     </td>
-                    <td width="15">&nbsp;</td>
+                    <td width="15">
+                        <a href="javascript:;" class="edit-link" data-toggle="tooltip" data-placement="top" *ngIf="editCorAddress == false && corporateInfor?.corporation?.address?.status == STATUS_INFO.approve" title="Edit Address" (click)="showEditFieldCor('cor-address', formType.corporateInfor)"><i class="icon ion-md-create"></i></a>
+                    </td>
                 </tr>
 
                 <tr class="row-address need-verify">
@@ -79,9 +81,9 @@
                             </div>
                         </div>
                     </td>
-                    <td width="15">
+                    <!-- <td width="15">
                         <a href="javascript:;" class="edit-link" data-toggle="tooltip" data-placement="top" *ngIf="editCorAddress == false && corporateInfor?.corporation?.address?.status == STATUS_INFO.approve" title="Edit Address" (click)="showEditFieldCor('cor-address', formType.corporateInfor)"><i class="icon ion-md-create"></i></a>
-                    </td>
+                    </td> -->
                 </tr>
  
 
@@ -297,7 +299,7 @@
                         </div>
                     </div>
                 </td>
-                <td width="15">&nbsp;</td>
+                <td width="15"><a href="javascript:;" class="edit-link" data-toggle="tooltip" data-placement="top" title="Edit PIC Name" *ngIf="editPersonPicname == false" (click)="showEditFieldCor('pic-name', formType.pic)"><i class="icon ion-md-create"></i></a></td>
             </tr>
 
             <tr class="row-pic-name-furi">
@@ -312,31 +314,31 @@
                         <div *ngIf="picForm?.controls['person_picname'].errors" class="invalid-mess">
                           <div>{{'Please enter full-width Katakana' | translate}}</div>
                         </div>
-                        <div class="text-right">
+                        <!-- <div class="text-right">
                             <button type="button" class="btn btn-sm btn-cancel btn-outline-secondary pt-0 pb-0" (click)="cancelEditCor('pic-name', formType.pic)">{{'Cancel' | translate}}</button>
-                        </div>
+                        </div> -->
                     </div>
                 </td>
-                <td width="15"><a href="javascript:;" class="edit-link" data-toggle="tooltip" data-placement="top" title="Edit PIC Name" *ngIf="editPersonPicname == false" (click)="showEditFieldCor('pic-name', formType.pic)"><i class="icon ion-md-create"></i></a></td>
+                <!-- <td width="15"><a href="javascript:;" class="edit-link" data-toggle="tooltip" data-placement="top" title="Edit PIC Name" *ngIf="editPersonPicname == false" (click)="showEditFieldCor('pic-name', formType.pic)"><i class="icon ion-md-create"></i></a></td> -->
             </tr>
           
             <tr class="row-pic-gender">
                 <td width="200">{{'PIC Gender' | translate}}</td>
                 <td>
-                    <div class="currentvalue" *ngIf="editGender == false">
+                    <div class="currentvalue" *ngIf="editPersonPicname == false">
                         <strong>{{corporateInfor?.pic?.fx_gender?.value}}</strong>
                     </div>
-                    <div class="editable d-block" *ngIf="editGender == true">
+                    <div class="editable d-block" *ngIf="editPersonPicname == true">
                       <select class="form-control form-control-sm mb-1 select2" style="width: 100%" formControlName="person_gender">
                           <option value="M">{{'Male' | translate}}</option>
                           <option value="F">{{'Female' | translate}}</option>
                       </select>
                       <div class="text-right">
-                        <button type="button" class="btn btn-sm btn-cancel btn-outline-secondary pt-0 pb-0" (click)="cancelEditCor('p-gender', formType.pic)">{{'Cancel' | translate}}</button>
+                        <button type="button" class="btn btn-sm btn-cancel btn-outline-secondary pt-0 pb-0" (click)="cancelEditCor('pic-name', formType.pic)">{{'Cancel' | translate}}</button>
                     </div>
                   </div>
                 </td>
-                <td *ngIf="editGender == false" width="15"><a href="javascript:;" class="edit-link" data-toggle="tooltip" data-placement="top" title="Edit Phone" (click)="showEditFieldCor('p-gender', formType.pic)"><i class="icon ion-md-create"></i></a></td>
+                <!-- <td *ngIf="editGender == false" width="15"><a href="javascript:;" class="edit-link" data-toggle="tooltip" data-placement="top" title="Edit Phone" (click)="showEditFieldCor('p-gender', formType.pic)"><i class="icon ion-md-create"></i></a></td> -->
             </tr>
 
 

@@ -530,6 +530,7 @@ export class CorporateInfoComponent implements OnInit {
         break;
       case 'pic-name':
         this.picForm.controls.person_picname.setValue(this.corporateInfor.pic.fx_name1);
+        this.picForm.controls.person_gender.setValue(this.globalService.reConvertGender(this.corporateInfor.pic.fx_gender.value));
         this.editPersonPicname = true;
         break;
       case 'p-phone':
