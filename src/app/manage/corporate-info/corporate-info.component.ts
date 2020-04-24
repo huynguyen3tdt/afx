@@ -79,6 +79,7 @@ export class CorporateInfoComponent implements OnInit {
   editPurpose: boolean;
   listFinancialSubmit: Array<QuestionModel>;
   listPurposeSubmit: Array<QuestionModel>;
+  invalidEmail: boolean;
   constructor(private spinnerService: Ng4LoadingSpinnerService,
               private userService: UserService,
               private globalService: GlobalService) { }
@@ -167,8 +168,8 @@ export class CorporateInfoComponent implements OnInit {
   getCorporateInfor() {
     this.spinnerService.show();
     this.userService.getCorporateInfor().subscribe(response => {
+      this.spinnerService.hide();
       if (response.meta.code === 200) {
-        this.spinnerService.hide();
         this.corporateInfor = response.data;
         if (this.corporateInfor.corporation) {
           this.corporateForm.controls.cor_prefec.setValue(this.corporateInfor.corporation.address.value.city);
@@ -353,7 +354,9 @@ export class CorporateInfoComponent implements OnInit {
       param.corporation = null;
       param.surveys = this.listPurposeSubmit;
     }
+    this.spinnerService.show();
     this.userService.changeCorporation(param).subscribe(response => {
+      this.spinnerService.hide();
       if (response.meta.code === 200) {
         if (this.saveType === this.formType.corporateInfor) {
           this.resetEditCorporateInfor();
@@ -368,6 +371,9 @@ export class CorporateInfoComponent implements OnInit {
           this.editPurpose = false;
         }
         this.getCorporateInfor();
+      } else if (response.meta.code === 409) {
+        this.editPersonEmail = true;
+        this.invalidEmail = true;
       }
     });
   }
@@ -617,6 +623,7 @@ export class CorporateInfoComponent implements OnInit {
     this.editPersonPhone = false;
     this.editPersonEmail = false;
     this.editGender = false;
+    this.invalidEmail = false;
   }
 
   resetEditCorporateInfor() {

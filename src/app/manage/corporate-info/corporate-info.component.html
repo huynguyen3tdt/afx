@@ -377,10 +377,13 @@
                     </div>
                     <div class="editable d-block" *ngIf="editPersonEmail == true">
                         <input type="text" name="p-email" maxlength="100" placeholder="" formControlName="person_email"
-                          [className]="picForm?.controls['person_email'].errors ? 'form-control form-control-sm mb-1 invalid' : 'form-control form-control-sm mb-1'">
+                          [className]="(picForm?.controls['person_email'].errors || invalidEmail == true) ? 'form-control form-control-sm mb-1 invalid' : 'form-control form-control-sm mb-1'">
                         <div *ngIf="picForm?.controls['person_email'].errors?.Required" class="invalid-mess">
                           <div>{{'This field is required' | translate}}</div>
                         </div>
+                        <div *ngIf="invalidEmail == true" class="invalid-mess">
+                            <div>{{'This email address is already registered' | translate}}</div>
+                          </div>
                         <div *ngIf="picForm?.controls['person_email'].errors" class="invalid-mess">
                           <div *ngIf="picForm?.controls['person_email'].errors?.person_email">{{'Invalid email' | translate}}</div>
                         </div>
@@ -776,4 +779,4 @@
     </div>
 </div>
 
-<ng4-loading-spinner> </ng4-loading-spinner>
+<ng4-loading-spinner></ng4-loading-spinner>

@@ -16,12 +16,14 @@ export class ChangeEmailComponent implements OnInit {
   isSubmitted: boolean;
   invalidPassWord: boolean;
   invalidEmail: boolean;
+  passWordType: string;
   constructor(private router: Router,
               private activatedRoute: ActivatedRoute,
               private authenService: AuthenService,
               private spinnerService: Ng4LoadingSpinnerService) { }
 
   ngOnInit() {
+    this.passWordType = 'password';
     this.activatedRoute.queryParams.subscribe(res => {
       if (res.token) {
         this.token = res.token;
@@ -34,6 +36,17 @@ export class ChangeEmailComponent implements OnInit {
     this.changeEmailForm = new FormGroup({
       password: new FormControl('', [requiredInput])
     });
+  }
+
+  showPassWord() {
+    if (this.passWordType === 'password') {
+      this.passWordType = 'text';
+      return;
+    }
+    if (this.passWordType === 'text') {
+      this.passWordType = 'password';
+      return;
+    }
   }
 
   onSubmit() {
