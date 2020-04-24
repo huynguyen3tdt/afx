@@ -8,13 +8,19 @@
                         <h5 class="text-center text-lg-right"><img src="assets/images/logo.svg" class="logo"></h5>
                         <h2 class="mb-0 text-primary mt-2 mb-4"><strong>{{'Change Email' | translate}}</strong></h2>
                         <div class="form-group">
-                            <label class="label">{{'New Email' | translate}}</label>
+                            <label class="label">{{'Please enter password' | translate}}</label>
                             <div class="input-wrapper">
-                                <input type="text" class="form-control" autocomplete="off" formControlName="email"
+                                <input type="text" class="form-control" autocomplete="off" formControlName="password"
                                     [ngClass]="{'invalid': isSubmitted && changeEmailForm?.controls?.email?.errors}">
                             </div>
-                            <div *ngIf="isSubmitted && changeEmailForm?.controls?.email?.errors" class="invalid-mess">
+                            <div *ngIf="isSubmitted && changeEmailForm?.controls?.password?.errors" class="invalid-mess">
                                 <div>{{'This field is required' | translate}}</div>
+                            </div>
+                            <div *ngIf="invalidPassWord == true" class="invalid-mess">
+                                <div> {{'Password incorrect' | translate}}</div>
+                            </div>
+                            <div *ngIf="invalidEmail == true" class="invalid-mess">
+                                <div>{{'This email address is already registered' | translate}}</div>
                             </div>
                         </div>
                         <div>
@@ -26,3 +32,5 @@
         </div>
     </div>
 </div>
+
+<ng4-loading-spinner> </ng4-loading-spinner>

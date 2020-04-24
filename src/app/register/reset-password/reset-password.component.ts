@@ -67,7 +67,7 @@ export class ResetPasswordComponent implements OnInit {
     } else {
       paramSubmit = param;
     }
-    this.authenService.reset(paramSubmit).subscribe(response => {
+    this.authenService.resetPassword(paramSubmit).subscribe(response => {
       if (response.meta.code === 200) {
         this.router.navigate(['/login']);
       } else if (response.meta.code === 103) {

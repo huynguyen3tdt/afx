@@ -22,8 +22,8 @@ export const RegisterRoutes: Routes = [
         component: ForgotPasswordComponent
     },
     {
-      path: 'reset_password',
-      component: ResetPasswordComponent
+        path: 'reset_password',
+        component: ResetPasswordComponent
     },
     {
         path: 'change_email',
