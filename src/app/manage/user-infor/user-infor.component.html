@@ -41,7 +41,12 @@
                             </div>
 
                         </td>
-                        <td width="15">&nbsp;</td>
+                        <td width="15">
+                            <a href="javascript:;" class="edit-link"
+                                *ngIf="editAddress == false && userInfor?.address?.status == STATUS_INFO.approve"
+                                data-toggle="tooltip" data-placement="top" (click)="showEditField('address')"
+                                title="Edit Address"><i class="icon ion-md-create"></i></a>
+                        </td>
                     </tr>
 
                     <tr class="row-address need-verify">
@@ -103,12 +108,12 @@
                                 </div>
                             </div>
                         </td>
-                        <td width="15">
+                        <!-- <td width="15">
                             <a href="javascript:;" class="edit-link"
                                 *ngIf="editAddress == false && userInfor?.address?.status == STATUS_INFO.approve"
                                 data-toggle="tooltip" data-placement="top" (click)="showEditField('address')"
                                 title="Edit Address"><i class="icon ion-md-create"></i></a>
-                        </td>
+                        </td> -->
                     </tr>
 
 
