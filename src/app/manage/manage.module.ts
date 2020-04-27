@@ -26,6 +26,7 @@ import { ConvertInvestmentPurposePipe } from '../core/pipe/convert-purposeInvest
 import { Mt5InfoComponent } from './mt5-info/mt5-info.component';
 import { BankInfoComponent } from './bank-info/bank-info.component';
 import { SettingComponent } from './setting/setting.component';
+import { ConvertAccountTypeBankPipe } from '../core/pipe/convert-account-type-bank.pipe';
 
 @NgModule({
     imports: [
@@ -54,11 +55,12 @@ import { SettingComponent } from './setting/setting.component';
       TransacstionModalComponent,
       UserInforComponent,
       CorporateInfoComponent,
-      ConvertFinancialPipe,
-      ConvertInvestmentPurposePipe,
       Mt5InfoComponent,
       BankInfoComponent,
-      SettingComponent
+      SettingComponent,
+      ConvertFinancialPipe,
+      ConvertInvestmentPurposePipe,
+      ConvertAccountTypeBankPipe
     ],
     schemas: [NO_ERRORS_SCHEMA]
 })

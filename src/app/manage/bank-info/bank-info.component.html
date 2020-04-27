@@ -36,12 +36,15 @@
         <div class="col-md-4 col-lg-3">
             <label class="label">{{'Account type' | translate}}</label>
         </div>
-        <div class="col-md-8 col-lg-6" *ngIf="bankInfor?.fx_acc_type == 'sa'">
+        <div class="col-md-8 col-lg-6">
+            <strong>{{bankInfor?.fx_acc_type | convertAccTypeBank}}</strong>
+        </div>
+        <!-- <div class="col-md-8 col-lg-6" *ngIf="bankInfor?.fx_acc_type == 'sa'">
             <strong>{{'Savings' | translate}}</strong>
         </div>
         <div class="col-md-8 col-lg-6" *ngIf="bankInfor?.fx_acc_type == 'ca'">
             <strong>{{'Checkings' | translate}}</strong>
-        </div>
+        </div> -->
     </div>
     <div class="row mb-1">
         <div class="col-md-4 col-lg-3">
@@ -191,7 +194,7 @@
             <div class="col-md-8 col-lg-6">
                 <button type="button" class="btn btn-save btn-success pl-3 pr-3 btn-sm"
                     (click)="saveBankAccount()">{{'Save' | translate}}</button>
-                <button type="button" class="btn btn-cancel btn-secondary pl-3 pr-3 btn-sm"
+                <button type="button" class="btn btn-cancel btn-secondary pl-3 pr-3 btn-sm ml-2"
                     (click)="cancelBankAccount()">{{'Cancel' | translate}}</button>
             </div>
         </div>

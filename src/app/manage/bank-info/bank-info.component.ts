@@ -85,6 +85,7 @@ export class BankInfoComponent implements OnInit {
       this.spinnerService.hide();
       if (response.meta.code === 200) {
         this.bankInfor = response.data;
+        console.log('bankInfooo ', this.bankInfor);
       }
     });
   }
@@ -198,9 +199,9 @@ export class BankInfoComponent implements OnInit {
       return;
     }
     const param = {
-      branch_id: this.currentBranch.id,
+      branch_id: this.bankInfor.branch_id,
       acc_number: this.bankAccountForm.controls.bank_account_number.value,
-      bank_id: this.currentBank.id,
+      bank_id: this.bankInfor.bank_id,
       fx_acc_type: this.bankAccountForm.controls.bank_account_type.value.toString(),
     };
     this.spinnerService.show();
@@ -274,6 +275,8 @@ export class BankInfoComponent implements OnInit {
   selectBranch(item: BranchModel) {
     $('#modal-select-bank').modal('hide');
     this.currentBranch = item;
+    this.bankInfor.branch_id = this.currentBranch.id;
+    this.bankInfor.bank_id = this.currentBank.id;
     this.bankAccountForm.controls.beneficiary_bank.setValue(this.currentBank.name);
     this.bankAccountForm.controls.bank_branch.setValue(this.currentBranch.branch_name);
   }

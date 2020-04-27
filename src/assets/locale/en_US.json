@@ -249,5 +249,8 @@
   "Please enter half-width numbers": "Please enter half-width numbers",
   "Please enter full-width Katakana": "Please enter full-width Hiragana",
   "Please enter password": "Please enter password",
-  "This email address is already registered": "This email address is already registered"
+  "This email address is already registered": "This email address is already registered",
+  "Financial Information": "Financial Information",
+  "Investment Purpose": "Investment Purpose",
+  "PIC Investment Experience": "PIC Investment Experience",
 }
