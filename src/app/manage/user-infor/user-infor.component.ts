@@ -67,6 +67,7 @@ export class UserInforComponent implements OnInit {
   saveType: string;
   listFinancialSubmit: Array<QuestionModel>;
   listPurposeSubmit: Array<QuestionModel>;
+  invalidEmail: boolean;
 
   constructor(private userService: UserService,
               private globalService: GlobalService,
@@ -336,6 +337,9 @@ export class UserInforComponent implements OnInit {
           this.editPurpose = false;
         }
         this.getUserInfo();
+      } else if (response.meta.code === 409) {
+        this.editEmail = true;
+        this.invalidEmail = true;
       }
     });
 
@@ -487,6 +491,7 @@ export class UserInforComponent implements OnInit {
     this.editEmail = false;
     this.editPhone = false;
     this.showSave = false;
+    this.invalidEmail = false;
   }
 
   canCelSaveOccupation() {

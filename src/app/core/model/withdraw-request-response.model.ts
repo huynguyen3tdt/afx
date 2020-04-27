@@ -59,6 +59,8 @@ export interface BankInforModel {
   fx_acc_type: number;
   bic: string;
   currency: string;
+  branch_id: number;
+  bank_id: number;
 }
 
 export interface TransactionModel {

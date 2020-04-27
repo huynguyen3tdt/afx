@@ -98,7 +98,7 @@
   "PIC Name": "担当者名",
   "PIC Position": "担当者役割",
   "Department": "部署",
-  "Person in charge (PIC) information": "担当者情報",
+  "Person in charge (PIC) information": "担当者（口座管理者）情報",
   "Fax": "ファックス",
   "Verificaion in process": "検証中",
   "Updated": "更新済み",
@@ -107,7 +107,7 @@
   "Corporate Information": "お客様情報",
   "English": "英語",
   "Language": "言語",
-  "Font Size": "フロントサイズ",
+  "Font Size": "フォントサイズ",
   "Save": "保存",
   "Confirm password": "パスワード確認",
   "New password": "新しいパスワード",
@@ -247,5 +247,8 @@
   "Please enter half-width numbers": "半角数字を入力してください",
   "Please enter full-width Katakana": "全角入力のみ。",
   "Please enter password": "パスワードを入力してください",
-  "This email address is already registered": "このメールアドレスは既に登録されています。"
+  "This email address is already registered": "このメールアドレスは既に登録されています。",
+  "Financial Information": "財務情報",
+  "Investment Purpose": "投資目的",
+  "PIC Investment Experience": "担当者（口座管理者）投資経験"
 }
