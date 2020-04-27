@@ -7,7 +7,7 @@ import { LANGUAGLE } from '../constant/language-constant';
 })
 export class ConvertAccountTypeBankPipe implements PipeTransform {
 
-  transform(value: any, args: any): any {
+  transform(value: any, args?: any): any {
     if (value) {
         const locale = localStorage.getItem(LOCALE);
         if (value === 'sa') {
