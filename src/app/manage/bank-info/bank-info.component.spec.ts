@@ -6,6 +6,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
 import { RouterTestingModule } from '@angular/router/testing';
+import { ConvertAccountTypeBankPipe } from 'src/app/core/pipe/convert-account-type-bank.pipe';
 
 describe('BankInfoComponent', () => {
   let component: BankInfoComponent;
@@ -13,7 +14,10 @@ describe('BankInfoComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ BankInfoComponent ],
+      declarations: [
+        BankInfoComponent,
+        ConvertAccountTypeBankPipe
+       ],
       imports: [
         TranslateModule.forRoot(),
         ReactiveFormsModule,
