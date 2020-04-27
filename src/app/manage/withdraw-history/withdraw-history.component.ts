@@ -17,12 +17,15 @@ import { ActivatedRoute } from '@angular/router';
 import moment from 'moment-timezone';
 import { LANGUAGLE } from 'src/app/core/constant/language-constant';
 import { TransacstionModalComponent } from '../transacstion-modal/transacstion-modal.component';
+import { defineLocale, jaLocale } from 'ngx-bootstrap/chronos';
+import { BsLocaleService } from 'ngx-bootstrap';
 declare var $: any;
+defineLocale('ja', jaLocale);
 
 @Component({
   selector: 'app-withdraw-history',
   templateUrl: './withdraw-history.component.html',
-  styleUrls: ['./withdraw-history.component.css']
+  styleUrls: ['./withdraw-history.component.scss']
 })
 export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
   @ViewChild('tranModal', { static: true }) tranModal: TransacstionModalComponent;
@@ -76,7 +79,8 @@ export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
   constructor(private withdrawRequestService: WithdrawRequestService,
               private spinnerService: Ng4LoadingSpinnerService,
               private globalService: GlobalService,
-              private activatedRoute: ActivatedRoute) {
+              private activatedRoute: ActivatedRoute,
+              private localeService: BsLocaleService) {
   }
 
   ngOnInit() {
@@ -90,10 +94,14 @@ export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
       this.formatDateYear = EN_FORMATDATE;
       this.formatDateHour = EN_FORMATDATE_HH_MM;
       this.defaultLabel = 'All';
+      $('body').removeClass('jp');
+      this.localeService.use('en');
     } else if (this.locale === LANGUAGLE.japan) {
       this.formatDateYear = JAPAN_FORMATDATE;
       this.formatDateHour = JAPAN_FORMATDATE_HH_MM;
       this.defaultLabel = 'すべて';
+      this.localeService.use('ja');
+      $('body').addClass('jp');
     }
     this.initStatus();
     this.activatedRoute.queryParams.subscribe(res => {

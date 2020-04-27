@@ -30,7 +30,7 @@ declare var $: any;
 @Component({
   selector: 'app-user-infor',
   templateUrl: './user-infor.component.html',
-  styleUrls: ['./user-infor.component.css']
+  styleUrls: ['./user-infor.component.scss']
 })
 export class UserInforComponent implements OnInit {
   userForm: FormGroup;

@@ -15,7 +15,7 @@ import { TransacstionModalComponent } from '../transacstion-modal/transacstion-m
 @Component({
   selector: 'app-list-transaction',
   templateUrl: './list-transaction.component.html',
-  styleUrls: ['./list-transaction.component.css']
+  styleUrls: ['./list-transaction.component.scss']
 })
 export class ListTransactionComponent implements OnInit, OnChanges {
   @ViewChild('tranModal', { static: true }) tranModal: TransacstionModalComponent;

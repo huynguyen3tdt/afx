@@ -12,7 +12,7 @@ import moment from 'moment-timezone';
 @Component({
   selector: 'app-mt5-info',
   templateUrl: './mt5-info.component.html',
-  styleUrls: ['./mt5-info.component.css']
+  styleUrls: ['./mt5-info.component.scss']
 })
 export class Mt5InfoComponent implements OnInit {
   accountID: number;

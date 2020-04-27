@@ -4,7 +4,7 @@ import { IS_COMPANY } from 'src/app/core/constant/authen-constant';
 @Component({
   selector: 'app-account-information',
   templateUrl: './account-information.component.html',
-  styleUrls: ['./account-information.component.css']
+  styleUrls: ['./account-information.component.scss']
 })
 export class AccountInformationComponent implements OnInit {
   TAB = {

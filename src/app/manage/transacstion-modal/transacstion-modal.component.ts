@@ -6,7 +6,7 @@ import { TYPEOFTRANHISTORY, STATUSTRANHISTORY, PAYMENTMETHOD } from 'src/app/cor
 @Component({
   selector: 'app-transacstion-modal',
   templateUrl: './transacstion-modal.component.html',
-  styleUrls: ['./transacstion-modal.component.css']
+  styleUrls: ['./transacstion-modal.component.scss']
 })
 export class TransacstionModalComponent implements OnInit {
   @ViewChild('tranModal', { static: true }) modal: ModalDirective;

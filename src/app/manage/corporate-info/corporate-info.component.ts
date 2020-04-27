@@ -30,7 +30,7 @@ declare var $: any;
 @Component({
   selector: 'app-corporate-info',
   templateUrl: './corporate-info.component.html',
-  styleUrls: ['./corporate-info.component.css']
+  styleUrls: ['./corporate-info.component.scss']
 })
 export class CorporateInfoComponent implements OnInit {
   corporateInfor: CorporateModel;

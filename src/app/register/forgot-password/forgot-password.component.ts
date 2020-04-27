@@ -13,7 +13,7 @@ import { LANGUAGLE } from 'src/app/core/constant/language-constant';
 @Component({
   selector: 'app-forgot-password',
   templateUrl: './forgot-password.component.html',
-  styleUrls: ['./forgot-password.component.css']
+  styleUrls: ['./forgot-password.component.scss']
 })
 export class ForgotPasswordComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('loginid', { static: true }) loginid: ElementRef;
