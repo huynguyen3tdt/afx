@@ -1,10 +1,10 @@
 <div class="container">
-    <nav aria-label="breadcrumb">
+    <!-- <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item" aria-current="page"><a href="javascript:;">Dashboard</a></li>
             <li class="breadcrumb-item active" aria-current="page">My Account</li>
         </ol>
-    </nav>
+    </nav> -->
     <div class="content-wrapper">
         <div class="content-inner">
             <div class="row row-mypage">
@@ -28,13 +28,13 @@
                     </div>
                     <nav class="mb-0">
                         <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                            <a class="nav-item nav-link active" id="nav-account-tab" data-toggle="tab" href="#nav-account" role="tab" aria-controls="nav-account" aria-selected="true"><i
+                            <a class="nav-item nav-link active" id="nav-account-tab" data-toggle="tab" href="#nav-account" role="tab" (click)="getMt5Infor(this.accountID)" aria-controls="nav-account" aria-selected="true"><i
                                     class="icon ion-md-person"></i> <strong class="d-none d-md-inline">{{'Account Infomation' | translate}}</strong></a>
                             <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" (click)="getUserInfo()" *ngIf="isCompany == 'false'" role="tab" aria-controls="nav-profile" aria-selected="true"><i
                                     class="icon ion-md-contact"></i> <strong class="d-none d-md-inline">{{'User Infomation' | translate}}</strong></a>
                             <a class="nav-item nav-link" id="nav-bank-tab" data-toggle="tab" href="#nav-corporate" role="tab" (click)="getCorporateInfor()" *ngIf="isCompany == 'true'" aria-controls="nav-corporate" aria-selected="false"><i class="icon ion-md-briefcase"></i> <strong
                                     class="d-none d-md-inline">{{'Corporate Infomation' | translate}}</strong></a>
-                            <a class="nav-item nav-link" id="nav-bank-tab" data-toggle="tab" href="#nav-bank" role="tab" aria-controls="nav-bank" aria-selected="false"><i class="icon ion-md-card"></i> <strong
+                            <a class="nav-item nav-link" id="nav-bank-tab" data-toggle="tab" href="#nav-bank" role="tab" (click)="getBankInfor()" aria-controls="nav-bank" aria-selected="false"><i class="icon ion-md-card"></i> <strong
                                     class="d-none d-md-inline">{{'Bank Account' | translate}}</strong></a>
                             <a class="nav-item nav-link" id="nav-setting-tab" data-toggle="tab" href="#nav-setting" role="tab" (click)="openSetting()" aria-controls="nav-setting" aria-selected="false"><i
                                     class="icon ion-md-settings"></i> <strong
@@ -69,13 +69,16 @@
                                                 <tr>
                                                     <td>{{'Withdrawable amount' | translate}}</td>
                                                     <td class="text-right">
-                                                        <strong>{{withdrawAmount?.withdraw_amount | number}}</strong>
+                                                        <strong>{{accountInfor?.free_margin  | number}}</strong>
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td>{{'Withdrawal amount is pending' | translate}}</td>
                                                     <td class="text-right">
                                                         <strong>{{withdrawAmount?.withdraw_amount_pending | number}}</strong>
+                                                    </td>
+                                                    <td colspan="7">
+                                                      <a href="javascript:;" routerLink="/manage/withdrawHistory/" target="_blank" [queryParams]="{tab: 'detailwithdrawal'}"> {{'Detail' | translate}}</a>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -109,8 +112,8 @@
                                                 </tr>
                                             </tbody>
                                         </table>
-                                        <p class="small text-secondary"><i class="icon ion-md-time"></i> <em>{{'Last updated:' | translate}} {{accountInfor?.lastest_time | date:'yyyy/MM/dd'}}
-                                                {{accountInfor?.lastest_time | date:'HH:mm'}}</em><br>{{'The system automatically updates data after 1 minute' | translate}}</p>
+                                        <p class="small text-secondary"><i class="icon ion-md-time"></i> <em>{{'Last updated:' | translate}} {{lastestTime}}
+                                               </em><br>{{'The system automatically updates data after 1 minute' | translate}}</p>
                                     </div>
                                 </div>
                             </div>
@@ -144,13 +147,43 @@
                                                     <td>
                                                         <div *ngIf="editAddress == false" class="currentvalue">
                                                             <strong>{{userInfor?.zip?.value}}</strong>
-                                                            <div *ngIf="userInfor?.zip?.status == 0" class="status small"><span class="text-info"><i
+                                                            <!-- <div *ngIf="userInfor?.zip?.status == 1" class="status small"><span class="text-info"><i
                                                                         class="icon ion-md-hourglass"></i>
-                                                                        {{'Verificaion in process' | translate}}</span></div>
+                                                                        {{'Verificaion in process' | translate}}</span></div> -->
                                                         </div>
-                                                        <div *ngIf="editAddress == true" class="editable">
-                                                            <input type="text" name="postcode" formControlName="postCode" class="form-control form-control-sm mb-1" value="" placeholder="">
+                                                        <div *ngIf="editAddress == true" class="editable d-block">
+                                                            <input type="text" name="postcode" formControlName="postCode" (change)="changeAddress(1)" maxlength="7" class="form-control form-control-sm mb-1" value="" placeholder=""
+                                                            [ngClass]="{'invalid': isSubmittedUser && (userForm?.controls['postCode'].errors
+                                                                          || userForm?.controls['postCode'].errors?.lengthlower7
+                                                                          || userForm?.controls['postCode'].errors?.Salary
+                                                                          || userForm?.controls['postCode'].errors?.SalarySpecial
+                                                                          || userForm?.controls['postCode'].errors?.Error)}">
+                                                            <div *ngIf="isSubmittedUser && userForm?.controls['postCode'].errors?.Required"
+                                                                class="invalid-feedback">
+                                                                <div *ngIf="userForm?.controls['postCode'].errors?.Required">
+                                                                  {{'Please enter your zip code.' | translate}}
+                                                                </div>
+                                                            </div>
+                                                            <div *ngIf="isSubmittedUser && userForm?.controls['postCode'].errors?.lengthlower7"
+                                                                class="invalid-feedback">
+                                                                <div *ngIf="userForm?.controls['postCode'].errors?.lengthlower7"> {{'Postal code is incorrect.' | translate}}</div>
+                                                            </div>
+                                                            <div *ngIf="isSubmittedUser && userForm?.controls['postCode'].errors?.Salary"
+                                                                class="invalid-feedback">
+                                                                <div *ngIf="userForm?.controls['postCode'].errors?.Salary"> {{'Enter the postal code using single-byte numbers.' | translate}}</div>
+                                                            </div>
+                                                            <div *ngIf="isSubmittedUser && userForm?.controls['postCode'].errors?.SalarySpecial"
+                                                                class="invalid-feedback">
+                                                                <div *ngIf="userForm?.controls['postCode'].errors?.SalarySpecial"> {{'Enter the postal code without a hyphen (-).' | translate}}
+                                                                </div>
+                                                            </div>
+                                                            <div *ngIf="isSubmittedUser && userForm?.controls['postCode'].errors?.Error"
+                                                                class="invalid-feedback">
+                                                                <div *ngIf="userForm?.controls['postCode'].errors?.Error"> {{'Enter your zip code using single-byte numbers.' | translate}}
+                                                                </div>
+                                                            </div>
                                                         </div>
+
                                                     </td>
                                                     <td width="15">&nbsp;</td>
                                                 </tr>
@@ -161,30 +194,103 @@
                                                             <div><strong>{{userInfor?.address?.value?.street2}},{{userInfor?.address?.value?.city}}</strong>
                                                             </div>
                                                             <div><strong>{{userInfor?.address?.value?.street}}</strong></div>
-                                                            <div *ngIf="userInfor?.address?.status == 0" class="status small"><span class="text-info"><i
+                                                            <div *ngIf="userInfor?.address?.status == 1" class="status small"><span class="text-info"><i
                                                                         class="icon ion-md-hourglass"></i> {{'Verificaion in process' | translate}}</span></div>
                                                         </div>
-                                                        <div *ngIf="editAddress == true" class="editable">
+                                                        <div *ngIf="editAddress == true" class="editable d-block">
                                                             <div class="row no-gutters">
                                                                 <div class="col-sm-6 pr-md-1">
-                                                                    <select formControlName="searchPrefe" class="form-control form-control-sm mb-1 select2" style="width: 100%">
-                                                                        <option [value]="prefecture">{{prefecture}}</option>
+                                                                    <select formControlName="searchPrefe" class="form-control form-control-sm mb-1 select2" style="width: 100%"
+                                                                    [ngClass]="{'invalid': isSubmittedUser && userForm?.controls['searchPrefe'].errors}">
+                                                                      <option value="北海道">北海道</option>
+                                                                      <option value="青森県">青森県</option>
+                                                                      <option value="岩手県">岩手県</option>
+                                                                      <option value="宮城県">宮城県</option>
+                                                                      <option value="秋田県">秋田県</option>
+                                                                      <option value="山形県">山形県</option>
+                                                                      <option value="福島県">福島県</option>
+                                                                      <option value="茨城県">茨城県</option>
+                                                                      <option value="栃木県">栃木県</option>
+                                                                      <option value="群馬県">群馬県</option>
+                                                                      <option value="埼玉県">埼玉県</option>
+                                                                      <option value="千葉県">千葉県</option>
+                                                                      <option value="東京都">東京都</option>
+                                                                      <option value="神奈川県">神奈川県</option>
+                                                                      <option value="新潟県">新潟県</option>
+                                                                      <option value="富山県">富山県</option>
+                                                                      <option value="石川県">石川県</option>
+                                                                      <option value="福井県">福井県</option>
+                                                                      <option value="山梨県">山梨県</option>
+                                                                      <option value="長野県">長野県</option>
+                                                                      <option value="岐阜県">岐阜県</option>
+                                                                      <option value="静岡県">静岡県</option>
+                                                                      <option value="愛知県">愛知県</option>
+                                                                      <option value="三重県">三重県</option>
+                                                                      <option value="滋賀県">滋賀県</option>
+                                                                      <option value="京都府">京都府</option>
+                                                                      <option value="大阪府">大阪府</option>
+                                                                      <option value="兵庫県">兵庫県</option>
+                                                                      <option value="奈良県">奈良県</option>
+                                                                      <option value="和歌山県">和歌山県</option>
+                                                                      <option value="鳥取県">鳥取県</option>
+                                                                      <option value="島根県">島根県</option>
+                                                                      <option value="岡山県">岡山県</option>
+                                                                      <option value="広島県">広島県</option>
+                                                                      <option value="山口県">山口県</option>
+                                                                      <option value="徳島県">徳島県</option>
+                                                                      <option value="香川県">香川県</option>
+                                                                      <option value="愛媛県">愛媛県</option>
+                                                                      <option value="高知県">高知県</option>
+                                                                      <option value="福岡県">福岡県</option>
+                                                                      <option value="佐賀県">佐賀県</option>
+                                                                      <option value="長崎県">長崎県</option>
+                                                                      <option value="熊本県">熊本県</option>
+                                                                      <option value="大分県">大分県</option>
+                                                                      <option value="宮崎県">宮崎県</option>
+                                                                      <option value="鹿児島県">鹿児島県</option>
+                                                                      <option value="沖縄県">沖縄県</option>
                                                                     </select>
+                                                                    <div *ngIf="isSubmittedUser&& userForm?.controls['searchPrefe'].errors?.Required" class="invalid-feedback">
+                                                                      <div>{{'This field is required' | translate}}</div>
+                                                                    </div>
                                                                 </div>
-                                                                <div class="col-sm-6 pl-md-1">
-                                                                    <select formControlName="searchCountry" class="form-control form-control-sm mb-1 select2" style="width: 100%">
-                                                                        <option [value]="county">{{county}}</option>
+                                                                <!-- <div class="col-sm-6 pl-md-1">
+                                                                    <select  class="form-control form-control-sm mb-1 select2" style="width: 100%">
+                                                                        <option value="{{county}}">{{county}}</option>
                                                                     </select>
+                                                                </div> -->
+                                                                <div class="col-sm-6 pl-md-1">
+                                                                  <input type="text" name="" class="form-control form-control-sm mb-1" formControlName="searchCountry" value="" maxlength="100"
+                                                                    [ngClass]="{'invalid': isSubmittedUser && userForm?.controls['searchCountry'].errors}">
+                                                                    <div *ngIf="isSubmittedUser&& userForm?.controls['searchCountry'].errors?.Required" class="invalid-feedback">
+                                                                      <div>{{'This field is required' | translate}}</div>
+                                                                    </div>
                                                                 </div>
                                                             </div>
-                                                            <input type="text" name="address" formControlName="house_numb" class="form-control form-control-sm mb-1" value="" placeholder="House number/Room number">
+                                                            <div class="row no-gutters">
+                                                                <div class="col-sm-6 pr-md-1">
+                                                                    <input type="text" name="cor-address" class="form-control form-control-sm mb-1" maxlength="11" formControlName="house_numb" value="" placeholder="House Number"
+                                                                    [ngClass]="{'invalid': isSubmittedUser && userForm?.controls['house_numb'].errors}">
+                                                                </div>
+                                                                <div class="col-sm-6 pl-md-1">
+                                                                    <input type="text" name="cor-address" class="form-control form-control-sm mb-1" maxlength="100" formControlName="name_build" value="" placeholder="Building Name">
+                                                                </div>
+                                                            </div>
+                                                            <div class="row no-gutters">
+                                                              <div *ngIf="isSubmittedUser && userForm?.controls['house_numb'].errors?.Required" class="invalid-feedback col-sm-6 pr-md-1">
+                                                                <div>{{'This field is required' | translate}}</div>
+                                                              </div>
+                                                              <!-- <div *ngIf="isSubmittedUser && userForm?.controls['name_build'].errors?.Required" class="invalid-feedback col-sm-6 pl-md-1">
+                                                                <div>{{'This field is required' | translate}}</div>
+                                                              </div> -->
+                                                            </div>
                                                             <div class="text-right">
                                                                 <button type="button" (click)="cancelEdit('address')" class="btn btn-sm btn-cancel btn-outline-secondary pt-0 pb-0">{{'Cancel' | translate}}</button>
                                                             </div>
                                                         </div>
                                                     </td>
                                                     <td width="15">
-                                                        <a href="javascript:;" class="edit-link" *ngIf="editAddress == false && userInfor?.address?.status != 0" data-toggle="tooltip" data-placement="top" (click)="showEditField('address')" title="Edit Address"><i class="icon ion-md-create"></i></a>
+                                                        <a href="javascript:;" class="edit-link" *ngIf="editAddress == false && userInfor?.address?.status == 0" data-toggle="tooltip" data-placement="top" (click)="showEditField('address')" title="Edit Address"><i class="icon ion-md-create"></i></a>
                                                     </td>
                                                 </tr>
                                                 <tr class="row-email need-verify">
@@ -193,18 +299,25 @@
                                                         <div *ngIf="editEmail == false" class="currentvalue">
                                                             <strong><a
                                                                     href="javascript:;">{{userInfor?.email?.value}}</a></strong>
-                                                            <div *ngIf="userInfor?.email?.status == 0" class="status small"><span class="text-info"><i
+                                                            <div *ngIf="userInfor?.email?.status == 1" class="status small"><span class="text-info"><i
                                                                         class="icon ion-md-hourglass"></i> Verificaion in process</span></div>
                                                         </div>
-                                                        <div *ngIf="editEmail == true" class="editable">
-                                                            <input type="text" name="email" formControlName="email" class="form-control form-control-sm mb-1" value="" placeholder="">
+                                                        <div *ngIf="editEmail == true" class="editable d-block">
+                                                            <input type="text" name="email" formControlName="email" maxlength="100" class="form-control form-control-sm mb-1" value="" placeholder=""
+                                                            [ngClass]="{'invalid': isSubmittedUser && userForm?.controls['email'].errors}">
+                                                            <div *ngIf="isSubmittedUser && userForm?.controls['email'].errors?.Required" class="invalid-feedback">
+                                                              <div>{{'This field is required' | translate}}</div>
+                                                            </div>
+                                                            <div *ngIf="isSubmittedUser && userForm?.controls['email'].errors?.Email" class="invalid-feedback">
+                                                              <div *ngIf="userForm?.controls['email'].errors?.Email">{{'E-mail address is incorrect.' | translate}}</div>
+                                                            </div>
                                                             <div class="text-right">
                                                                 <button type="button" (click)="cancelEdit('email')" class="btn btn-sm btn-cancel btn-outline-secondary pt-0 pb-0">{{'Cancel' | translate}}</button>
                                                             </div>
                                                         </div>
                                                     </td>
                                                     <td width="15">
-                                                        <a href="javascript:;" class="edit-link" *ngIf="editEmail == false && userInfor?.email?.status != 0" data-toggle="tooltip" data-placement="top" (click)="showEditField('email')" title="Edit Email"><i class="icon ion-md-create"></i></a>
+                                                        <a href="javascript:;" class="edit-link" *ngIf="editEmail == false && userInfor?.email?.status == 0" data-toggle="tooltip" data-placement="top" (click)="showEditField('email')" title="Edit Email"><i class="icon ion-md-create"></i></a>
                                                     </td>
                                                 </tr>
                                                 <tr class="row-phone">
@@ -212,51 +325,43 @@
                                                     <td>
                                                         <div *ngIf="editPhone == false" class="currentvalue">
                                                             <strong><a href="javascript:;">{{userInfor?.mobile}}</a></strong>
-                                                            <div class="status d-none small"><span class="text-success"><i
+                                                            <!-- <div class="status d-none small"><span class="text-success"><i
                                                                         class="icon ion-md-checkmark"></i> Updated
-                                                                </span></div>
+                                                                </span></div> -->
                                                         </div>
-                                                        <div *ngIf="editPhone == true" class="editable">
-                                                            <input type="text" name="phone" formControlName="phone" class="form-control form-control-sm mb-1" value="+" placeholder="">
+                                                        <div *ngIf="editPhone == true" class="editable d-block">
+                                                            <input type="tel" name="phone" formControlName="phone" maxlength="11" class="form-control form-control-sm mb-1" value="+" placeholder=""
+                                                              [ngClass]="{'invalid': isSubmittedUser && (userForm?.controls['phone'].errors || userForm?.controls['phone'].errors?.SalaryLength
+                                                              || userForm?.controls['phone'].errors?.Salary || userForm?.controls['phone'].errors?.SalarySpecial)}">
+                                                            <div *ngIf="isSubmittedUser && userForm?.controls['phone'].errors?.Required" class="invalid-feedback">
+                                                                <div>{{'This field is required' | translate}}</div>
+                                                            </div>
+                                                            <div style="display:block" *ngIf="isSubmittedUser && userForm?.controls['phone'].errors?.SalaryLength"
+                                                            class="invalid-feedback">
+                                                              <div *ngIf="userForm?.controls['phone'].errors?.SalaryLength">{{'Phone number must be at least 10 characters long.' | translate}}</div>
+                                                            </div>
+                                                            <div style="display:block" *ngIf="isSubmittedUser && userForm?.controls['phone'].errors?.Salary" class="invalid-feedback">
+                                                              <div *ngIf="userForm?.controls['phone'].errors?.Salary">{{'Please enter your phone number in single-byte numbers.' | translate}}</div>
+                                                            </div>
+                                                            <div style="display:block" *ngIf="isSubmittedUser && userForm?.controls['phone'].errors?.SalarySpecial"
+                                                            class="invalid-feedback">
+                                                              <div *ngIf="userForm?.controls['phone'].errors?.SalarySpecial">
+                                                                {{'Enter the phone number without a hyphen (-).' | translate}}</div>
+                                                            </div>
                                                             <div class="text-right">
                                                                 <button type="button" (click)="cancelEdit('phone')" class="btn btn-sm btn-cancel btn-outline-secondary pt-0 pb-0">{{'Cancel' | translate}}</button>
                                                             </div>
                                                         </div>
+
                                                     </td>
                                                     <td width="15"><a href="javascript:;" class="edit-link" *ngIf="editPhone == false" data-toggle="tooltip" data-placement="top" (click)="showEditField('phone')" title="Edit Phone"><i class="icon ion-md-create"></i></a>
                                                     </td>
                                                 </tr>
-                                                <!-- <tr class="row-language">
-                                                    <td>Language</td>
-                                                    <td>
-                                                        <div *ngIf="editLanguage == false" class="currentvalue">
-                                                            <strong>{{userInfor?.lang}}</strong>
-                                                            <div class="status d-none small"><span
-                                                                    class="text-success"><i
-                                                                        class="icon ion-md-checkmark"></i>
-                                                                    Updated</span></div>
-                                                        </div>
-                                                        <div *ngIf="editLanguage == true" class="editable">
-                                                            <select class="form-control form-control-sm mb-1 select2" formControlName="language"
 
-                                                                style="width: 100%">
-                                                                <option [value]="country" *ngFor="let country of countries">{{country}}
-                                                            </select>
-                                                            <div class="text-right">
-                                                                <button type="button" (click)="cancelEdit('lang')"
-                                                                    class="btn btn-sm btn-cancel btn-outline-secondary pt-0 pb-0">Cancel</button>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td width="15"><a href="javascript:;" class="edit-link" *ngIf="editLanguage == false"
-                                                            data-toggle="tooltip" data-placement="top" (click)="showEditField('lang')"
-                                                            title="Edit Language"><i class="icon ion-md-create"></i></a>
-                                                    </td>
-                                                </tr> -->
-                                                <tr class="row-action" *ngIf="showSave == true">
-                                                    <td>&nbsp;</td>
+                                                <tr class="row-action d-block" *ngIf="showSave == true">
+                                                    <td width="150">&nbsp;</td>
                                                     <td>
-                                                        <button type="button" data-toggle="modal" data-target="#modal-confirm" class="btn btn-save btn-success pl-3 pr-3">{{'Save' | translate}}</button>
+                                                        <button type="button" (click)="userSubmit()" class="btn btn-save btn-success pl-3 pr-3">{{'Save' | translate}}</button>
                                                     </td>
                                                     <td width="15">&nbsp;</td>
                                                 </tr>
@@ -290,12 +395,45 @@
                                                     <td>
                                                         <div class="currentvalue" *ngIf="editCorAddress == false">
                                                             <strong>{{corporateInfor?.corporation?.zip?.value}}</strong>
-                                                            <div class="status d-none small" *ngIf="corporateInfor?.corporation?.zip?.status == 0">
+                                                            <!-- <div class="status small" *ngIf="corporateInfor?.corporation?.zip?.status == 1">
                                                                 <span class="text-success"><i class="icon ion-md-checkmark">
-                                                            </i> {{'Updated' | translate}}</span></div>
+                                                            </i> {{'Updated' | translate}}</span></div> -->
                                                         </div>
-                                                        <div class="editable" *ngIf="editCorAddress == true">
-                                                            <input type="text" name="postcode" fromControlName="cor_postcode" class="form-control form-control-sm mb-1" value="0001234" placeholder="">
+                                                        <div class="editable d-block" *ngIf="editCorAddress == true">
+                                                            <input type="text" name="postcode" formControlName="cor_postcode" maxlength="7" class="form-control form-control-sm mb-1" (change)="changeAddress(2)" placeholder=""
+                                                            [ngClass]="{'invalid': isSubmittedCor && (corporateForm.controls['cor_postcode'].errors
+                                                                        || corporateForm?.controls['cor_postcode'].errors?.lengthlower7
+                                                                        || corporateForm?.controls['cor_postcode'].errors?.Salary
+                                                                        || corporateForm?.controls['cor_postcode'].errors?.SalarySpecial
+                                                                        || corporateForm?.controls['cor_postcode'].errors?.Error)}">
+                                                            <!-- <div *ngIf="isSubmittedCor && corporateForm?.controls['cor_postcode'].errors?.Required" class="invalid-feedback">
+                                                              <div>{{'This field is required' | translate}}</div>
+                                                            </div> -->
+                                                            <div *ngIf="isSubmittedCor && corporateForm?.controls['cor_postcode'].errors?.Required"
+                                                                class="invalid-feedback">
+                                                                <div *ngIf="corporateForm?.controls['cor_postcode'].errors?.Required">
+                                                                  {{'Please enter your zip code.' | translate}}
+                                                                </div>
+                                                            </div>
+                                                            <div *ngIf="isSubmittedCor && corporateForm?.controls['cor_postcode'].errors?.lengthlower7"
+                                                                class="invalid-feedback">
+                                                                <div *ngIf="corporateForm?.controls['cor_postcode'].errors?.lengthlower7"> {{'Postal code is incorrect.' | translate}}</div>
+                                                            </div>
+                                                            <div *ngIf="isSubmittedCor && corporateForm?.controls['cor_postcode'].errors?.Salary"
+                                                                class="invalid-feedback">
+                                                                <div *ngIf="corporateForm?.controls['cor_postcode'].errors?.Salary"> {{'Enter the postal code using single-byte numbers.' | translate}}</div>
+                                                            </div>
+                                                            <div *ngIf="isSubmittedCor && corporateForm?.controls['cor_postcode'].errors?.SalarySpecial"
+                                                                class="invalid-feedback">
+                                                                <div *ngIf="corporateForm?.controls['cor_postcode'].errors?.SalarySpecial"> {{'Enter the postal code without a hyphen (-).' | translate}}
+                                                                </div>
+                                                            </div>
+                                                            <div *ngIf="isSubmittedCor && corporateForm?.controls['cor_postcode'].errors?.Error"
+                                                                class="invalid-feedback">
+                                                                <div *ngIf="corporateForm?.controls['cor_postcode'].errors?.Error"> {{'Enter your zip code using single-byte numbers.' | translate}}
+                                                                </div>
+                                                            </div>
+
                                                         </div>
                                                     </td>
                                                     <td width="15">&nbsp;</td>
@@ -306,29 +444,95 @@
                                                         <div class="currentvalue" *ngIf="editCorAddress == false">
                                                             <div><strong>{{corporateInfor?.corporation?.address?.value?.city}} , {{corporateInfor?.corporation?.address?.value?.street}}</strong></div>
                                                             <div><strong>{{corporateInfor?.corporation?.address?.value?.street2}} - {{corporateInfor?.corporation?.address?.value?.fx_street3}}</strong></div>
-                                                            <div class="status d-none small"><span class="text-info">
-                                                            <i class="icon ion-md-hourglass" *ngIf="corporateInfor?.corporation?.address?.status == 0">
+                                                            <div class="status small" *ngIf="corporateInfor?.corporation?.address?.status == 1"><span class="text-info">
+                                                            <i class="icon ion-md-hourglass">
                                                             </i> {{'Verificaion in process' | translate}}</span></div>
                                                         </div>
-                                                        <div class="editable" *ngIf="editCorAddress == true">
+                                                        <div class="editable d-block" *ngIf="editCorAddress == true">
                                                             <div class="row no-gutters">
                                                                 <div class="col-sm-6 pr-md-1">
-                                                                    <select class="form-control form-control-sm mb-1 select2" style="width: 100%" formControlName="cor_prefec">
-                                                                      <option [value]="corPrefecture">{{corPrefecture}}</option>
+                                                                    <select class="form-control form-control-sm mb-1 select2" style="width: 100%" formControlName="cor_prefec"
+                                                                      [ngClass]="{'invalid': isSubmittedCor && corporateForm.controls['cor_prefec'].errors}">
+                                                                      <!-- <option value="{{corPrefecture}}">{{corPrefecture}}</option> -->
+                                                                      <option value="北海道">北海道</option>
+                                                                      <option value="青森県">青森県</option>
+                                                                      <option value="岩手県">岩手県</option>
+                                                                      <option value="宮城県">宮城県</option>
+                                                                      <option value="秋田県">秋田県</option>
+                                                                      <option value="山形県">山形県</option>
+                                                                      <option value="福島県">福島県</option>
+                                                                      <option value="茨城県">茨城県</option>
+                                                                      <option value="栃木県">栃木県</option>
+                                                                      <option value="群馬県">群馬県</option>
+                                                                      <option value="埼玉県">埼玉県</option>
+                                                                      <option value="千葉県">千葉県</option>
+                                                                      <option value="東京都">東京都</option>
+                                                                      <option value="神奈川県">神奈川県</option>
+                                                                      <option value="新潟県">新潟県</option>
+                                                                      <option value="富山県">富山県</option>
+                                                                      <option value="石川県">石川県</option>
+                                                                      <option value="福井県">福井県</option>
+                                                                      <option value="山梨県">山梨県</option>
+                                                                      <option value="長野県">長野県</option>
+                                                                      <option value="岐阜県">岐阜県</option>
+                                                                      <option value="静岡県">静岡県</option>
+                                                                      <option value="愛知県">愛知県</option>
+                                                                      <option value="三重県">三重県</option>
+                                                                      <option value="滋賀県">滋賀県</option>
+                                                                      <option value="京都府">京都府</option>
+                                                                      <option value="大阪府">大阪府</option>
+                                                                      <option value="兵庫県">兵庫県</option>
+                                                                      <option value="奈良県">奈良県</option>
+                                                                      <option value="和歌山県">和歌山県</option>
+                                                                      <option value="鳥取県">鳥取県</option>
+                                                                      <option value="島根県">島根県</option>
+                                                                      <option value="岡山県">岡山県</option>
+                                                                      <option value="広島県">広島県</option>
+                                                                      <option value="山口県">山口県</option>
+                                                                      <option value="徳島県">徳島県</option>
+                                                                      <option value="香川県">香川県</option>
+                                                                      <option value="愛媛県">愛媛県</option>
+                                                                      <option value="高知県">高知県</option>
+                                                                      <option value="福岡県">福岡県</option>
+                                                                      <option value="佐賀県">佐賀県</option>
+                                                                      <option value="長崎県">長崎県</option>
+                                                                      <option value="熊本県">熊本県</option>
+                                                                      <option value="大分県">大分県</option>
+                                                                      <option value="宮崎県">宮崎県</option>
+                                                                      <option value="鹿児島県">鹿児島県</option>
+                                                                      <option value="沖縄県">沖縄県</option>
+                                                                      <div *ngIf="isSubmittedCor && corporateForm?.controls['cor_prefec'].errors?.Required" class="invalid-feedback">
+                                                                        <div>{{'This field is required' | translate}}</div>
+                                                                      </div>
                                                                   </select>
                                                                 </div>
                                                                 <div class="col-sm-6 pl-md-1">
-                                                                    <select class="form-control form-control-sm mb-1 select2" style="width: 100%" formControlName="cor_district">
+                                                                  <input type="text" name="cor-address" class="form-control form-control-sm mb-1" formControlName="cor_district" value="" maxlength="100"
+                                                                    [ngClass]="{'invalid': isSubmittedCor && corporateForm?.controls['cor_district'].errors}">
+                                                                    <div *ngIf="isSubmittedCor && corporateForm?.controls['cor_district'].errors?.Required" class="invalid-feedback">
+                                                                      <div>{{'This field is required' | translate}}</div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <!-- <div class="col-sm-6 pl-md-1">
+                                                                    <select class="form-control form-control-sm mb-1 select2" style="width: 100%" formControlName="">
                                                                       <option [value]="corDistrict">{{corDistrict}}</option>
                                                                   </select>
-                                                                </div>
+                                                                </div> -->
                                                             </div>
                                                             <div class="row no-gutters">
                                                                 <div class="col-sm-6 pr-md-1">
-                                                                    <input type="text" name="cor-address" class="form-control form-control-sm mb-1" formControlName="cor_house" value="" placeholder="House Number">
+                                                                    <input type="text" name="cor-address" maxlength="11" class="form-control form-control-sm mb-1" formControlName="cor_house" value="" placeholder="House Number"
+                                                                      [ngClass]="{'invalid': isSubmittedCor && corporateForm?.controls['cor_house'].errors}">
+                                                                      <div *ngIf="isSubmittedCor && corporateForm?.controls['cor_house'].errors?.Required" class="invalid-feedback">
+                                                                        <div>{{'This field is required' | translate}}</div>
+                                                                      </div>
                                                                 </div>
                                                                 <div class="col-sm-6 pl-md-1">
-                                                                    <input type="text" name="cor-address" class="form-control form-control-sm mb-1" formControlName="cor_build" value="" placeholder="Building Name">
+                                                                    <input type="text" name="cor-address" maxlength="100" class="form-control form-control-sm mb-1" formControlName="cor_build" value="" placeholder="Building Name">
+                                                                      <!-- <div *ngIf="isSubmittedCor && corporateForm?.controls['cor_build'].errors?.Required" class="invalid-feedback">
+                                                                        <div>{{'This field is required' | translate}}</div>
+                                                                      </div> -->
                                                                 </div>
                                                             </div>
                                                             <div class="text-right">
@@ -337,40 +541,61 @@
                                                         </div>
                                                     </td>
                                                     <td width="15">
-                                                        <a href="javascript:;" class="edit-link" data-toggle="tooltip" data-placement="top" *ngIf="editCorAddress == false && corporateInfor?.corporation?.address?.status != 0" title="Edit Address" (click)="showEditFieldCor('cor-address')"><i class="icon ion-md-create"></i></a>
+                                                        <a href="javascript:;" class="edit-link" data-toggle="tooltip" data-placement="top" *ngIf="editCorAddress == false && corporateInfor?.corporation?.address?.status == 0" title="Edit Address" (click)="showEditFieldCor('cor-address')"><i class="icon ion-md-create"></i></a>
                                                     </td>
                                                 </tr>
                                                 <tr class="row-phone">
                                                     <td>{{'Phone' | translate}}</td>
                                                     <td>
                                                         <div class="currentvalue" *ngIf="editCorPhone == false">
-                                                            <strong><a href="javascript:;">+{{corporateInfor?.corporation?.mobile}}</a></strong>
-                                                            <div class="status d-none small"><span class="text-success"><i class="icon ion-md-checkmark"></i>  {{'Updated' | translate}}</span></div>
+                                                            <strong><a href="javascript:;">{{corporateInfor?.corporation?.mobile}}</a></strong>
+                                                            <!-- <div class="status d-none small"><span class="text-success"><i class="icon ion-md-checkmark"></i>  {{'Updated' | translate}}</span></div> -->
                                                         </div>
-                                                        <div class="editable" *ngIf="editCorPhone == true">
-                                                            <input type="text" name="cor-phone" class="form-control form-control-sm mb-1" value="+84389999999" placeholder="" formControlName="cor_phone">
+                                                        <div class="editable d-block" *ngIf="editCorPhone == true">
+                                                            <input type="tel" name="cor-phone" class="form-control form-control-sm mb-1" maxlength="11" value="+84389999999" placeholder="" formControlName="cor_phone"
+                                                            [ngClass]="{'invalid': isSubmittedCor && (corporateForm.controls['cor_phone'].errors || corporateForm.controls['cor_phone'].errors?.SalaryLength
+                                                              || corporateForm.controls['cor_phone'].errors?.Salary || corporateForm.controls['cor_phone'].errors?.SalarySpecial)}">
+                                                            <div *ngIf="isSubmittedCor && corporateForm.controls['cor_phone'].errors?.Required" class="invalid-feedback">
+                                                              <div>{{'This field is required' | translate}}</div>
+                                                            </div>
+                                                            <div style="display:block" *ngIf="isSubmittedCor && corporateForm.controls['cor_phone'].errors?.SalaryLength"
+                                                            class="invalid-feedback">
+                                                              <div *ngIf="corporateForm.controls['cor_phone'].errors?.SalaryLength">{{'Phone number must be at least 10 characters long.' | translate}}</div>
+                                                            </div>
+                                                            <div style="display:block" *ngIf="isSubmittedCor && corporateForm.controls['cor_phone'].errors?.Salary" class="invalid-feedback">
+                                                              <div *ngIf="corporateForm.controls['cor_phone'].errors?.Salary">{{'Please enter your phone number in single-byte numbers.' | translate}}</div>
+                                                            </div>
+                                                            <div style="display:block" *ngIf="isSubmittedCor && corporateForm.controls['cor_phone'].errors?.SalarySpecial"
+                                                            class="invalid-feedback">
+                                                              <div *ngIf="corporateForm.controls['cor_phone'].errors?.SalarySpecial">
+                                                                {{'Enter the phone number without a hyphen (-).' | translate}}</div>
+                                                            </div>
                                                             <div class="text-right">
                                                                 <button type="button" class="btn btn-sm btn-cancel btn-outline-secondary pt-0 pb-0" (click)="cancelEditCor('cor-phone')"> {{'Cancel' | translate}}</button>
                                                             </div>
                                                         </div>
                                                     </td>
-                                                    <td width="15"><a href="javascript:;" class="edit-link" data-toggle="tooltip" data-placement="top" title="Edit Phone" (click)="showEditFieldCor('cor-phone')"><i class="icon ion-md-create"></i></a></td>
+                                                    <td width="15"><a href="javascript:;" class="edit-link" data-toggle="tooltip" data-placement="top" title="Edit Phone" *ngIf="editCorPhone == false" (click)="showEditFieldCor('cor-phone')"><i class="icon ion-md-create"></i></a></td>
                                                 </tr>
                                                 <tr class="row-fax">
                                                     <td>{{'Fax' | translate}}</td>
                                                     <td>
                                                         <div class="currentvalue" *ngIf="editCorFax == false">
-                                                            <strong><a href="javascript:;">+{{corporateInfor?.corporation?.fx_fax?.value}}</a></strong>
-                                                            <div class="status d-none small"><span class="text-success"><i class="icon ion-md-checkmark"></i>  {{'Updated' | translate}} </span></div>
+                                                            <strong><a href="javascript:;">{{corporateInfor?.corporation?.fx_fax?.value}}</a></strong>
+                                                            <!-- <div class="status d-none small"><span class="text-success"><i class="icon ion-md-checkmark"></i>  {{'Updated' | translate}} </span></div> -->
                                                         </div>
-                                                        <div class="editable" *ngIf="editCorFax == true">
-                                                            <input type="text" name="cor-fax" class="form-control form-control-sm mb-1" value="+84389999999" placeholder="" formControlName="cor_fax">
+                                                        <div class="editable d-block" *ngIf="editCorFax == true">
+                                                            <input type="text" name="cor-fax" class="form-control form-control-sm mb-1" value="+84389999999" maxlength="11" placeholder="" formControlName="cor_fax"
+                                                              [ngClass]="{'invalid': isSubmittedCor && corporateForm?.controls['cor_fax'].errors}">
+                                                            <div *ngIf="isSubmittedCor && corporateForm?.controls['cor_fax'].errors?.Required" class="invalid-feedback">
+                                                              <div>{{'This field is required' | translate}}</div>
+                                                            </div>
                                                             <div class="text-right">
                                                                 <button type="button" class="btn btn-sm btn-cancel btn-outline-secondary pt-0 pb-0" (click)="cancelEditCor('cor-fax')"> {{'Cancel' | translate}}</button>
                                                             </div>
                                                         </div>
                                                     </td>
-                                                    <td width="15"><a href="javascript:;" class="edit-link" data-toggle="tooltip" data-placement="top" title="Edit Fax" (click)="showEditFieldCor('cor-fax')"><i class="icon ion-md-create"></i></a></td>
+                                                    <td width="15"><a href="javascript:;" class="edit-link" data-toggle="tooltip" data-placement="top" title="Edit Fax" *ngIf="editCorFax == false" (click)="showEditFieldCor('cor-fax')"><i class="icon ion-md-create"></i></a></td>
                                                 </tr>
                                                 <tr>
                                                     <td colspan="3">&nbsp;</td>
@@ -383,42 +608,54 @@
                                                     <td>
                                                         <div class="currentvalue" *ngIf="editPersonBod == false">
                                                             <strong>{{corporateInfor?.pic?.fx_dept}}</strong>
-                                                            <div class="status d-none small"><span class="text-success"><i class="icon ion-md-checkmark"></i>  {{'Updated' | translate}} </span></div>
+                                                            <!-- <div class="status d-none small"><span class="text-success"><i class="icon ion-md-checkmark"></i>  {{'Updated' | translate}} </span></div> -->
                                                         </div>
-                                                        <div class="editable" *ngIf="editPersonBod == true">
-                                                            <input type="text" name="department" class="form-control form-control-sm mb-1" value="BOD" placeholder="" formControlName="person_bod">
+                                                        <div class="editable d-block" *ngIf="editPersonBod == true">
+                                                            <input type="text" name="department" class="form-control form-control-sm mb-1" maxlength="100" value="BOD" placeholder="" formControlName="person_bod"
+                                                              [ngClass]="{'invalid': isSubmittedCor && corporateForm?.controls['person_bod'].errors}">
+                                                            <div *ngIf="isSubmittedCor && corporateForm?.controls['person_bod'].errors?.Required" class="invalid-feedback">
+                                                              <div>{{'This field is required' | translate}}</div>
+                                                            </div>
                                                             <div class="text-right">
                                                                 <button type="button" class="btn btn-sm btn-cancel btn-outline-secondary pt-0 pb-0" (click)="cancelEditCor('department')"> {{'Cancel' | translate}}</button>
                                                             </div>
                                                         </div>
                                                     </td>
-                                                    <td width="15"><a href="javascript:;" class="edit-link" data-toggle="tooltip" data-placement="top" title="Edit Department" (click)="showEditFieldCor('department')"><i class="icon ion-md-create"></i></a></td>
+                                                    <td width="15"><a href="javascript:;" class="edit-link" data-toggle="tooltip" data-placement="top" title="Edit Department" *ngIf="editPersonBod == false" (click)="showEditFieldCor('department')"><i class="icon ion-md-create"></i></a></td>
                                                 </tr>
                                                 <tr class="row-pic-position">
                                                     <td width="150">{{'PIC Position' | translate}}</td>
                                                     <td>
                                                         <div class="currentvalue" *ngIf="editPersonPic == false">
                                                             <strong>{{corporateInfor?.pic?.function}}</strong>
-                                                            <div class="status d-none small"><span class="text-success"><i class="icon ion-md-checkmark"></i> {{'Updated' | translate}} </span></div>
+                                                            <!-- <div class="status d-none small"><span class="text-success"><i class="icon ion-md-checkmark"></i> {{'Updated' | translate}} </span></div> -->
                                                         </div>
-                                                        <div class="editable" *ngIf="editPersonPic == true">
-                                                            <input type="text" name="pic-position" class="form-control form-control-sm mb-1" value="CEO" placeholder="PIC Position" formControlName="person_pic">
+                                                        <div class="editable d-block" *ngIf="editPersonPic == true">
+                                                            <input type="text" name="pic-position" class="form-control form-control-sm mb-1" maxlength="100" value="CEO" placeholder="PIC Position" formControlName="person_pic"
+                                                              [ngClass]="{'invalid': isSubmittedCor && corporateForm?.controls['person_pic'].errors}">
+                                                            <div *ngIf="isSubmittedCor && corporateForm?.controls['person_pic'].errors?.Required" class="invalid-feedback">
+                                                              <div>{{'This field is required' | translate}}</div>
+                                                            </div>
                                                             <div class="text-right">
                                                                 <button type="button" class="btn btn-sm btn-cancel btn-outline-secondary pt-0 pb-0" (click)="cancelEditCor('pic-position')">{{'Cancel' | translate}}</button>
                                                             </div>
                                                         </div>
                                                     </td>
-                                                    <td width="15"><a href="javascript:;" class="edit-link" data-toggle="tooltip" data-placement="top" title="Edit PIC Position" (click)="showEditFieldCor('pic-position')"><i class="icon ion-md-create"></i></a></td>
+                                                    <td width="15"><a href="javascript:;" class="edit-link" data-toggle="tooltip" data-placement="top" title="Edit PIC Position" *ngIf="editPersonPic == false" (click)="showEditFieldCor('pic-position')"><i class="icon ion-md-create"></i></a></td>
                                                 </tr>
                                                 <tr class="row-pic-name">
                                                     <td width="150">{{'PIC Name' | translate}}</td>
                                                     <td>
                                                         <div class="currentvalue" *ngIf="editPersonPicname == false">
                                                             <strong>{{corporateInfor?.pic?.name}}</strong>
-                                                            <div class="status d-none small"><span class="text-success"><i class="icon ion-md-checkmark"></i> {{'Updated' | translate}} </span></div>
+                                                            <!-- <div class="status d-none small"><span class="text-success"><i class="icon ion-md-checkmark"></i> {{'Updated' | translate}} </span></div> -->
                                                         </div>
-                                                        <div class="editable" *ngIf="editPersonPicname == true">
-                                                            <input type="text" name="pic-name" class="form-control form-control-sm mb-1" value="Nguyễn Tuấn Anh" placeholder="PIC name" formControlName="per_picname">
+                                                        <div class="editable d-block" *ngIf="editPersonPicname == true">
+                                                            <input type="text" name="pic-name" class="form-control form-control-sm mb-1" maxlength="100" value="Nguyễn Tuấn Anh" placeholder="PIC name" formControlName="per_picname"
+                                                              [ngClass]="{'invalid': isSubmittedCor && corporateForm?.controls['per_picname'].errors}">
+                                                            <div *ngIf="isSubmittedCor && corporateForm?.controls['per_picname'].errors?.Required" class="invalid-feedback">
+                                                              <div>{{'This field is required' | translate}}</div>
+                                                            </div>
                                                         </div>
                                                     </td>
                                                     <td width="15">&nbsp;</td>
@@ -428,23 +665,27 @@
                                                     <td>
                                                         <div class="currentvalue" *ngIf="editPersonPicname == false">
                                                             <strong>{{corporateInfor?.pic?.fx_name1}}</strong>
-                                                            <div class="status d-none small"><span class="text-success"><i class="icon ion-md-checkmark"></i> {{'Updated' | translate}} </span></div>
+                                                            <!-- <div class="status d-none small"><span class="text-success"><i class="icon ion-md-checkmark"></i> {{'Updated' | translate}} </span></div> -->
                                                         </div>
-                                                        <div class="editable" *ngIf="editPersonPicname == true">
-                                                            <input type="text" name="pic-name" class="form-control form-control-sm mb-1" value="グエン・トゥアン・アン" placeholder="PIC name" formControlName="person_picname2">
+                                                        <div class="editable d-block" *ngIf="editPersonPicname == true">
+                                                            <input type="text" name="pic-name" class="form-control form-control-sm mb-1" maxlength="100" value="グエン・トゥアン・アン" placeholder="PIC name" formControlName="person_picname"
+                                                              [ngClass]="{'invalid': isSubmittedCor && corporateForm?.controls['person_picname'].errors}">
+                                                            <div *ngIf="isSubmittedCor && corporateForm?.controls['person_picname'].errors?.Required" class="invalid-feedback">
+                                                              <div>{{'This field is required' | translate}}</div>
+                                                            </div>
                                                             <div class="text-right">
                                                                 <button type="button" class="btn btn-sm btn-cancel btn-outline-secondary pt-0 pb-0" (click)="cancelEditCor('pic-name')">{{'Cancel' | translate}}</button>
                                                             </div>
                                                         </div>
                                                     </td>
-                                                    <td width="15"><a href="javascript:;" class="edit-link" data-toggle="tooltip" data-placement="top" title="Edit PIC Name" (click)="showEditFieldCor('pic-name')"><i class="icon ion-md-create"></i></a></td>
+                                                    <td width="15"><a href="javascript:;" class="edit-link" data-toggle="tooltip" data-placement="top" title="Edit PIC Name" *ngIf="editPersonPicname == false" (click)="showEditFieldCor('pic-name')"><i class="icon ion-md-create"></i></a></td>
                                                 </tr>
                                                 <tr class="row-pic-gender">
                                                     <td width="150">{{'PIC Gender' | translate}}</td>
                                                     <td>
                                                         <div class="currentvalue">
                                                             <strong>{{corporateInfor?.pic?.fx_gender?.value}}</strong>
-                                                            <div class="status d-none small"><span class="text-success"><i class="icon ion-md-checkmark"></i> {{'Updated' | translate}} </span></div>
+                                                            <!-- <div class="status d-none small"><span class="text-success"><i class="icon ion-md-checkmark"></i> {{'Updated' | translate}} </span></div> -->
                                                         </div>
                                                         <!-- <div class="editable">
                                                           <select class="form-control form-control-sm mb-1 select2" style="width: 100%" formControlName="person_gender">
@@ -459,41 +700,65 @@
                                                     <td>{{'Phone' | translate}}</td>
                                                     <td>
                                                         <div class="currentvalue" *ngIf="editPersonPhone == false">
-                                                            <strong><a href="javascript:;">+{{corporateInfor?.pic?.mobile}}</a></strong>
-                                                            <div class="status d-none small"><span class="text-success"><i class="icon ion-md-checkmark"></i> {{'Updated' | translate}} </span></div>
+                                                            <strong><a href="javascript:;">{{corporateInfor?.pic?.mobile}}</a></strong>
+                                                            <!-- <div class="status d-none small"><span class="text-success"><i class="icon ion-md-checkmark"></i> {{'Updated' | translate}} </span></div> -->
                                                         </div>
-                                                        <div class="editable" *ngIf="editPersonPhone == true">
-                                                            <input type="text" name="p-phone" class="form-control form-control-sm mb-1" value="+84123456789" placeholder="" formControlName="person_phone">
+                                                        <div class="editable d-block" *ngIf="editPersonPhone == true">
+                                                            <input type="tel" name="p-phone" class="form-control form-control-sm mb-1"  maxlength="11" value="+84123456789" placeholder="" formControlName="person_phone"
+                                                            [ngClass]="{'invalid': isSubmittedCor && (corporateForm.controls['person_phone'].errors || corporateForm.controls['person_phone'].errors?.SalaryLength
+                                                              || corporateForm.controls['person_phone'].errors?.Salary || corporateForm.controls['person_phone'].errors?.SalarySpecial)}">
+                                                            <div *ngIf="isSubmittedCor && corporateForm.controls['person_phone'].errors?.Required" class="invalid-feedback">
+                                                              <div>{{'This field is required' | translate}}</div>
+                                                            </div>
+                                                            <div style="display:block" *ngIf="isSubmittedCor && corporateForm.controls['person_phone'].errors?.SalaryLength"
+                                                            class="invalid-feedback">
+                                                              <div *ngIf="corporateForm.controls['person_phone'].errors?.SalaryLength">{{'Phone number must be at least 10 characters long.' | translate}</div>
+                                                            </div>
+                                                            <div style="display:block" *ngIf="isSubmittedCor && corporateForm.controls['person_phone'].errors?.Salary" class="invalid-feedback">
+                                                              <div *ngIf="corporateForm.controls['person_phone'].errors?.Salary">{{'Please enter your phone number in single-byte numbers.' | translate}}</div>
+                                                            </div>
+                                                            <div style="display:block" *ngIf="isSubmittedCor && corporateForm.controls['person_phone'].errors?.SalarySpecial"
+                                                            class="invalid-feedback">
+                                                              <div *ngIf="corporateForm.controls['person_phone'].errors?.SalarySpecial">
+                                                                {{'Enter the phone number without a hyphen (-).' | translate}}</div>
+                                                            </div>
                                                             <div class="text-right">
                                                                 <button type="button" class="btn btn-sm btn-cancel btn-outline-secondary pt-0 pb-0" (click)="cancelEditCor('p-phone')">{{'Cancel' | translate}}</button>
                                                             </div>
                                                         </div>
                                                     </td>
-                                                    <td width="15"><a href="javascript:;" class="edit-link" data-toggle="tooltip" data-placement="top" title="Edit Phone" (click)="showEditFieldCor('p-phone')"><i class="icon ion-md-create"></i></a></td>
+                                                    <td width="15"><a href="javascript:;" class="edit-link" data-toggle="tooltip" data-placement="top" title="Edit Phone" *ngIf="editPersonPhone == false" (click)="showEditFieldCor('p-phone')"><i class="icon ion-md-create"></i></a></td>
                                                 </tr>
                                                 <tr class="row-email need-verify">
                                                     <td>{{'Email' | translate}}</td>
                                                     <td>
                                                         <div class="currentvalue" *ngIf="editPersonEmail == false">
                                                             <strong><a href="javascript:;">{{corporateInfor?.pic?.email?.value}}</a></strong>
-                                                            <div class="status d-none small" *ngIf="corporateInfor?.pic?.email?.status == 0"><span class="text-info">
+                                                            <div class="status small" *ngIf="corporateInfor?.pic?.email?.status == 1"><span class="text-info">
                                                             <i class="icon ion-md-hourglass"></i> {{'Verificaion in process' | translate}}</span></div>
                                                         </div>
-                                                        <div class="editable" *ngIf="editPersonEmail == true">
-                                                            <input type="text" name="p-email" class="form-control form-control-sm mb-1" value="chauchu@tamdongtam.vn" placeholder="" formControlName="person_email">
+                                                        <div class="editable d-block" *ngIf="editPersonEmail == true">
+                                                            <input type="text" name="p-email" class="form-control form-control-sm mb-1" maxlength="100" value="chauchu@tamdongtam.vn" placeholder="" formControlName="person_email"
+                                                              [ngClass]="{'invalid': isSubmittedCor && corporateForm?.controls['person_email'].errors}">
+                                                            <div *ngIf="isSubmittedCor && corporateForm?.controls['person_email'].errors?.Required" class="invalid-feedback">
+                                                              <div>{{'This field is required' | translate}}</div>
+                                                            </div>
+                                                            <div *ngIf="isSubmittedCor && corporateForm?.controls['person_email'].errors?.Email" class="invalid-feedback">
+                                                              <div *ngIf="corporateForm?.controls['person_email'].errors?.person_email">{{'E-mail address is incorrect.' | translate}}</div>
+                                                            </div>
                                                             <div class="text-right">
                                                                 <button type="button" class="btn btn-sm btn-cancel btn-outline-secondary pt-0 pb-0" (click)="cancelEditCor('p-email')">{{'Cancel' | translate}}</button>
                                                             </div>
                                                         </div>
                                                     </td>
                                                     <td width="15">
-                                                        <a href="javascript:;" class="edit-link" data-toggle="tooltip" data-placement="top" title="Edit Email" (click)="showEditFieldCor('p-email')" *ngIf="editPersonEmail == false && corporateInfor?.pic?.email?.status != 0"><i class="icon ion-md-create"></i></a>
+                                                        <a href="javascript:;" class="edit-link" data-toggle="tooltip" data-placement="top" title="Edit Email" (click)="showEditFieldCor('p-email')" *ngIf="editPersonEmail == false && corporateInfor?.pic?.email?.status == 0"><i class="icon ion-md-create"></i></a>
                                                     </td>
                                                 </tr>
-                                                <tr class="row-action">
+                                                <tr class="row-action d-block" *ngIf="showSaveCor == true">
                                                     <td>&nbsp;</td>
                                                     <td>
-                                                        <button type="button" class="btn btn-save btn-success pl-3 pr-3" *ngIf="showSaveCor == true">{{'Save' | translate}}</button>
+                                                        <button type="button" class="btn btn-save btn-success pl-3 pr-3" (click)="SaveCor()">{{'Save' | translate}}</button>
                                                     </td>
                                                     <td width="15">&nbsp;</td>
                                                 </tr>
@@ -513,7 +778,7 @@
                                         <label class="label">{{'Beneficiary Bank' | translate}}</label>
                                     </div>
                                     <div class="col-md-8 col-lg-6">
-                                        <strong>Bank of Mitsubishi UFJ</strong>
+                                        <strong>{{bankInfor?.name}}</strong>
                                     </div>
                                 </div>
                                 <div class="row mb-1">
@@ -521,7 +786,7 @@
                                         <label class="label">{{'Bank code' | translate}}</label>
                                     </div>
                                     <div class="col-md-8 col-lg-6">
-                                        <strong>0005</strong>
+                                        <strong>{{bankInfor?.bic}}</strong>
                                     </div>
                                 </div>
                                 <div class="row mb-1">
@@ -529,7 +794,7 @@
                                         <label class="label">{{'Bank branch' | translate}}</label>
                                     </div>
                                     <div class="col-md-8 col-lg-6">
-                                        <strong>Edogawabashi</strong>
+                                        <strong>{{bankInfor?.branch_name}}</strong>
                                     </div>
                                 </div>
                                 <div class="row mb-1">
@@ -537,23 +802,26 @@
                                         <label class="label">{{'Branch code' | translate}}</label>
                                     </div>
                                     <div class="col-md-8 col-lg-6">
-                                        <strong>006</strong>
+                                        <strong>{{bankInfor?.branch_code}}</strong>
                                     </div>
                                 </div>
                                 <div class="row mb-1">
                                     <div class="col-md-4 col-lg-3">
                                         <label class="label">{{'Account type' | translate}}</label>
                                     </div>
-                                    <div class="col-md-8 col-lg-6">
-                                        <strong>Saving</strong>
+                                    <div class="col-md-8 col-lg-6" *ngIf="bankInfor?.fx_acc_type == 'sa'">
+                                        <strong>{{'Savings' | translate}}</strong>
                                     </div>
+                                    <div class="col-md-8 col-lg-6" *ngIf="bankInfor?.fx_acc_type == 'ca'">
+                                      <strong>{{'Checkings' | translate}}</strong>
+                                  </div>
                                 </div>
                                 <div class="row mb-1">
                                     <div class="col-md-4 col-lg-3">
                                         <label class="label">{{'Bank Account Number' | translate}}</label>
                                     </div>
                                     <div class="col-md-8 col-lg-6">
-                                        <strong>8847583745</strong>
+                                        <strong>{{bankInfor?.acc_number}}</strong>
                                     </div>
                                 </div>
                                 <div class="row mb-1">
@@ -561,7 +829,7 @@
                                         <label class="label">{{'Account holder name' | translate}}</label>
                                     </div>
                                     <div class="col-md-8 col-lg-6">
-                                        <strong>カワセタロウ</strong>
+                                        <strong>{{bankInfor?.acc_holder_name}}</strong>
                                     </div>
                                 </div>
                                 <div class="row mb-1">
@@ -577,15 +845,17 @@
                                 <div class="list-banks-wrapper">
                                     <ul class="list-banks">
                                         <li class="bank-item">
-                                            <a href="javascript:;" (click)="showBankInfor()">
-                                                <div class="text-center">
-                                                    <div><img src="assets/images/bank_logo/ufj.png" alt="Mizuho Bank" class="bank_logo"></div>
-                                                    <div class="d-none">Mitsubishi UFJ Bank</div>
-                                                </div>
-                                            </a>
+                                          <a href="javascript:;" (click)="showBankInfor(1,'三菱ＵＦＪ')">
+                                              <div class="text-center">
+                                                  <div><img src="assets/images/bank_logo/ufj.png" alt="Mizuho Bank" class="bank_logo"></div>
+                                                  <div class="d-none">Mitsubishi UFJ Bank</div>
+                                              </div>
+                                          </a>
                                         </li>
+
+
                                         <li class="bank-item">
-                                            <a href="javascript:;" (click)="showBankInfor()">
+                                            <a href="javascript:;" (click)="showBankInfor(1,'三井住友')">
                                                 <div class="text-center">
                                                     <div><img src="assets/images/bank_logo/smbc.png" alt="Mizuho Bank" class="bank_logo"></div>
                                                     <div class="d-none">Sumitomo Mitsui Bank</div>
@@ -593,7 +863,7 @@
                                             </a>
                                         </li>
                                         <li class="bank-item">
-                                            <a href="javascript:;" (click)="showBankInfor()">
+                                            <a href="javascript:;" (click)="showBankInfor(1,'みずほ')">
                                                 <div class="text-center">
                                                     <div><img src="assets/images/bank_logo/mizuho.png" alt="Mizuho Bank" class="bank_logo"></div>
                                                     <div class="d-none">Mizuho Bank</div>
@@ -601,7 +871,7 @@
                                             </a>
                                         </li>
                                         <li class="bank-item">
-                                            <a href="javascript:;" (click)="showBankInfor()">
+                                            <a href="javascript:;" (click)="showBankInfor(1,'楽天')">
                                                 <div class="text-center">
                                                     <div><img src="assets/images/bank_logo/rakuten.png" alt="Mizuho Bank" class="bank_logo"></div>
                                                     <div class="d-none">Rakuten Bank</div>
@@ -609,22 +879,14 @@
                                             </a>
                                         </li>
                                         <li class="bank-item">
-                                            <a href="javascript:;" (click)="showBankInfor()">
+                                            <a href="javascript:;" (click)="showBankInfor(1,'ジャパンネット')">
                                                 <div class="text-center">
                                                     <div><img src="assets/images/bank_logo/jnb.png" alt="Mizuho Bank" class="bank_logo"></div>
                                                     <div class="d-none">Japan Net Bank</div>
                                                 </div>
                                             </a>
                                         </li>
-                                        <li class="bank-item">
-                                            <a href="javascript:;" (click)="showBankInfor()">
-                                                <div class="text-center">
-                                                    <div><img src="assets/images/bank_logo/sbi.png" alt="Mizuho Bank" class="bank_logo"></div>
-                                                    <div class="d-none">Sumishin SBI Net Bank</div>
-                                                </div>
-                                            </a>
-                                        </li>
-                                        <li class="bank-item" (click)="showBankInfor()">
+                                        <li class="bank-item" (click)="showBankInfor(1,'ゆうちょ')">
                                             <a href="javascript:;">
                                                 <div class="text-center">
                                                     <div><img src="assets/images/bank_logo/jpb.png" alt="Japan Post Bank" class="bank_logo"></div>
@@ -632,9 +894,9 @@
                                                 </div>
                                             </a>
                                         </li>
-                                        <li class="bank-item" (click)="showBankInfor()">
+                                        <li class="bank-item" (click)="showBankInfor(2)">
                                             <a href="javascript:;">
-                                                <div class="d-flex align-items-center text-center" style="height: 50px"><strong>Other banking facilities</strong></div>
+                                                <div class="d-flex align-items-center text-center" style="height: 50px"><strong>{{'Other banking facilities' | translate}}</strong></div>
                                             </a>
                                         </li>
                                     </ul>
@@ -663,12 +925,12 @@
                                         <div class="col-md-8 col-lg-6">
                                             <label class="container-radio small mb-1 mr-2">
                                           <div><strong>{{'Savings' | translate}}</strong></div>
-                                          <input type="radio" name="bank_account_type" formControlName="bank_account_type" value="0" checked="checked">
+                                          <input type="radio" name="bank_account_type" formControlName="bank_account_type" value="sa" checked="checked">
                                           <span class="checkmark"></span>
                                       </label>
                                             <label class="container-radio small mb-1">
                                           <div><strong>{{'Checkings' | translate}}</strong></div>
-                                          <input type="radio" name="bank_account_type" formControlName="bank_account_type" value="1">
+                                          <input type="radio" name="bank_account_type" formControlName="bank_account_type" value="ca">
                                           <span class="checkmark"></span>
                                       </label>
                                         </div>
@@ -686,7 +948,7 @@
                                             <label class="label">{{'Account holder name' | translate}}</label>
                                         </div>
                                         <div class="col-md-8 col-lg-6">
-                                            カワセタロウ
+                                            {{bankInfor?.acc_holder_name}}
                                         </div>
                                     </div>
                                     <div class="row mb-2">
@@ -722,7 +984,7 @@
                                 <div class="col-md-4 col-lg-3">
                                     &nbsp;
                                 </div>
-                                <div *ngIf="isSubmittedSetting && changePassForm?.controls['current_password']?.errors?.RequiredPass" class="text-danger col-md-8 col-lg-9">
+                                <div *ngIf="isSubmittedSetting && changePassForm?.controls['current_password']?.errors?.RequiredPass" class="invalid-feedback col-md-8 col-lg-9">
                                     <div>{{'This field is required' | translate}}</div>
                                 </div>
                             </div>
@@ -738,7 +1000,7 @@
                                 <div class="col-md-4 col-lg-3">
                                     &nbsp;
                                 </div>
-                                <div *ngIf="isSubmittedSetting && changePassForm?.controls['new_password']?.errors?.RequiredPass" class="text-danger col-md-8 col-lg-9">
+                                <div *ngIf="isSubmittedSetting && changePassForm?.controls['new_password']?.errors?.RequiredPass" class="invalid-feedback col-md-8 col-lg-9">
                                     <div>{{'This field is required' | translate}}</div>
                                 </div>
                             </div>
@@ -747,31 +1009,47 @@
                                     <label class="label mt-1">{{'Confirm password' | translate}}</label>
                                 </div>
                                 <div class="col-md-8 col-lg-9">
-                                    <input type="password" name="confirm-password" class="form-control form-control-sm" value="" formControlName="confirm_password" placeholder="" style="max-width: 240px" [ngClass]="{'invalid': isSubmittedSetting && (changePassForm.controls['confirm_password'].errors || changePassForm?.controls['confirm_password']?.errors?.RequiredPass)}">
+                                    <input type="password" name="confirm-password" class="form-control form-control-sm" value="" formControlName="confirm_password" placeholder="" style="max-width: 240px"
+                                     [ngClass]="{'invalid': isSubmittedSetting && (changePassForm.controls['confirm_password'].errors || changePassForm?.controls['confirm_password']?.errors?.RequiredPass)}">
+                                     <div *ngIf="isSubmittedSetting && changePassForm?.controls['confirm_password']?.errors?.RequiredPass" class="invalid-feedback">
+                                      <div>{{'This field is required' | translate}}</div>
+                                    </div>
+                                    <div *ngIf="isSubmittedSetting == true && errorMessage == true" class="invalid-feedback">
+                                        <div class="small">{{'Current password and new passwords cannot be the same' | translate}}</div>
+                                    </div>
+                                    <div *ngIf="successPassword == true" class="text-success">
+                                        <div class="small">{{'You have successfully changed the password' | translate}}</div>
+                                    </div>
+                                    <div *ngIf="errorPassword == true" class="invalid-feedback">
+                                        <div class="small">{{'Password incorrect' | translate}}</div>
+                                    </div>
+                                    <div *ngIf="isSubmittedSetting && changePassForm?.controls['new_password']?.errors?.RequiredPassLength" class="invalid-feedback">
+                                        <div class="small">
+                                            {{'New password needs to be 8 characters or more and has at least 1 alphabet letter' | translate}}</div>
+                                    </div>
                                 </div>
-
                             </div>
-                            <div class="row">
+                            <!-- <div class="row">
                                 <div class="col-md-4 col-lg-3">
                                     &nbsp;
                                 </div>
-                                <div *ngIf="isSubmittedSetting && changePassForm?.controls['confirm_password']?.errors?.RequiredPass" class="text-danger col-md-8 col-lg-9">
+                                <div *ngIf="isSubmittedSetting && changePassForm?.controls['confirm_password']?.errors?.RequiredPass" class="invalid-feedback col-md-8 col-lg-9">
                                     <div>{{'This field is required' | translate}}</div>
                                 </div>
-                                <div *ngIf="isSubmittedSetting == true && errorMessage == true" class="text-danger col-md-8 col-lg-9">
+                                <div *ngIf="isSubmittedSetting == true && errorMessage == true" class="invalid-feedback col-md-8 col-lg-9">
                                     <div class="small">{{'Current password and new passwords cannot be the same' | translate}}</div>
                                 </div>
                                 <div *ngIf="successPassword == true" class="text-success col-md-8 col-lg-9">
                                     <div class="small">{{'You have successfully changed the password' | translate}}</div>
                                 </div>
-                                <div *ngIf="errorPassword == true" class="text-danger col-md-8 col-lg-9">
+                                <div *ngIf="errorPassword == true" class="invalid-feedback col-md-8 col-lg-9">
                                     <div class="small">{{'Password incorrect' | translate}}</div>
                                 </div>
-                                <div *ngIf="isSubmittedSetting && changePassForm?.controls['new_password']?.errors?.RequiredPassLength" class="text-danger col-md-8 col-lg-9">
+                                <div *ngIf="isSubmittedSetting && changePassForm?.controls['new_password']?.errors?.RequiredPassLength" class="invalid-feedback col-md-8 col-lg-9">
                                     <div class="small">
                                         {{'New password needs to be 8 characters or more and has at least 1 alphabet letter' | translate}}</div>
                                 </div>
-                            </div>
+                            </div> -->
 
                             <div class="row">
                                 <div class="col-md-4 col-lg-3">
@@ -819,9 +1097,9 @@
     <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
         <div class="modal-content">
             <div class="modal-body text-center">
-                <p>Do you want to save information?</p>
+                <p>{{'Do you want to save information?' | translate}}</p>
                 <div>
-                    <button type="button" class="btn btn-sm btn-success pl-3 pr-3" (click)="onSubmit()" data-dismiss="modal">Ok</button>
+                    <button type="button" class="btn btn-sm btn-success pl-3 pr-3" (click)="changeUser()" data-dismiss="modal">Ok</button>
                     <button type="button" class="btn btn-sm btn-outline-secondary pl-3 pr-3" data-dismiss="modal">Cancel</button>
                 </div>
             </div>
@@ -829,15 +1107,29 @@
     </div>
 </div>
 
-<!-- Modal Configm Bank -->
+<div class="modal fade" id="modal-corporation" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <p>{{'Do you want to save information?' | translate}}</p>
+                <div>
+                    <button type="button" class="btn btn-sm btn-success pl-3 pr-3" (click)="updateCorporate()" data-dismiss="modal">Ok</button>
+                    <button type="button" class="btn btn-sm btn-outline-secondary pl-3 pr-3" data-dismiss="modal">{{'Cancel' | translate}}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal save User -->
 <div class="modal fade" id="modal-confirm-bank" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
         <div class="modal-content">
             <div class="modal-body text-center">
-                <p>Do you want to save information?</p>
+                <p>{{'Do you want to save information?' | translate}}</p>
                 <div>
                     <button type="button" class="btn btn-sm btn-success pl-3 pr-3">Ok</button>
-                    <button type="button" class="btn btn-sm btn-outline-secondary pl-3 pr-3" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-sm btn-outline-secondary pl-3 pr-3" data-dismiss="modal">{{'Cancel' | translate}}</button>
                 </div>
             </div>
         </div>
@@ -845,182 +1137,95 @@
 </div>
 <!-- Modal Configm Bank -->
 <div class="modal fade" id="modal-select-bank" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" data-backdrop="static">
-    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header pt-2 pb-2 bg-light">
-                <h5 class="modal-title">Choosing a financial institution</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+      <div class="modal-content">
+          <div class="modal-header pt-2 pb-2 bg-light">
+              <h5 class="modal-title">{{'Choosing a financial institution' | translate}}</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
               </button>
-            </div>
-            <div class="modal-body">
-                <div class="section-selected-bank">
-                    <p class="mb-1">Selected financial institution name:</p>
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div>
-                            <h4 class="mb-0 text-primary"><strong>Mitsubishi UFJ</strong></h4>
-                        </div>
-                        <div><button class="btn btn-sm btn-primary btn-change-bank">Change Bank</button></div>
-                    </div>
-                    <hr>
-                </div>
-                <div class="section-select-bank d-none">
-                    <div class="row">
-                        <div class="col-md-7">
-                            <h6 class="c-title mb-2">Selecting the initial character of bank name</h6>
-                            <div class="mb-3 box-characters">
-                                <button class="btn btn-sm btn-character">あ</button>
-                                <button class="btn btn-sm btn-character">か</button>
-                                <button class="btn btn-sm btn-character">さ</button>
-                                <button class="btn btn-sm btn-character">た</button>
-                                <button class="btn btn-sm btn-character">な</button>
-                                <button class="btn btn-sm btn-character">は</button>
-                                <button class="btn btn-sm btn-character">ま</button>
-                                <button class="btn btn-sm btn-character">や</button>
-                                <button class="btn btn-sm btn-character">ら</button>
-                                <button class="btn btn-sm btn-character">わ</button>
-                                <button class="btn btn-sm btn-character">い</button>
-                                <button class="btn btn-sm btn-character">き</button>
-                                <button class="btn btn-sm btn-character active">し</button>
-                                <button class="btn btn-sm btn-character">ち</button>
-                                <button class="btn btn-sm btn-character">に</button>
-                                <button class="btn btn-sm btn-character">ひ</button>
-                                <button class="btn btn-sm btn-character">み</button>
-                                <button class="btn btn-sm btn-none">&nbsp;</button>
-                                <button class="btn btn-sm btn-character">り</button>
-                                <button class="btn btn-sm btn-none">&nbsp;</button>
-                                <button class="btn btn-sm btn-character">う</button>
-                                <button class="btn btn-sm btn-character">く</button>
-                                <button class="btn btn-sm btn-character">す</button>
-                                <button class="btn btn-sm btn-character">つ</button>
-                                <button class="btn btn-sm btn-character">ぬ</button>
-                                <button class="btn btn-sm btn-character">ふ</button>
-                                <button class="btn btn-sm btn-character">む</button>
-                                <button class="btn btn-sm btn-character">ゆ</button>
-                                <button class="btn btn-sm btn-character">る</button>
-                                <button class="btn btn-sm btn-character">を</button>
-                                <button class="btn btn-sm btn-character">え</button>
-                                <button class="btn btn-sm btn-character">け</button>
-                                <button class="btn btn-sm btn-character">せ</button>
-                                <button class="btn btn-sm btn-character">て</button>
-                                <button class="btn btn-sm btn-character">ね</button>
-                                <button class="btn btn-sm btn-character">へ</button>
-                                <button class="btn btn-sm btn-character">め</button>
-                                <button class="btn btn-sm btn-none">&nbsp;</button>
-                                <button class="btn btn-sm btn-character">れ</button>
-                                <button class="btn btn-sm btn-none">&nbsp;</button>
-                                <button class="btn btn-sm btn-character">お</button>
-                                <button class="btn btn-sm btn-character">こ</button>
-                                <button class="btn btn-sm btn-character">そ</button>
-                                <button class="btn btn-sm btn-character">と</button>
-                                <button class="btn btn-sm btn-character">の</button>
-                                <button class="btn btn-sm btn-character">ほ</button>
-                                <button class="btn btn-sm btn-character">も</button>
-                                <button class="btn btn-sm btn-character">よ</button>
-                                <button class="btn btn-sm btn-character">ろ</button>
-                                <button class="btn btn-sm btn-character">ん</button>
-                            </div>
-                            <h6 class="c-title mb-2">Entering a bank name</h6>
+          </div>
+          <div class="modal-body">
+              <div class="section-selected-bank" *ngIf="showBranch == true">
+                  <p class="mb-1">{{'Selected financial institution name:' | translate}}</p>
+                  <div class="d-flex justify-content-between align-items-center">
+                      <div>
+                          <h4 class="mb-0 text-primary"><strong>{{currentBank?.name}}</strong></h4>
+                      </div>
+                      <div><button class="btn btn-sm btn-primary btn-change-bank" (click)="changeBank()">{{'Change Bank' | translate}}</button></div>
+                  </div>
+                  <hr>
+              </div>
+              <div class="section-select-bank" *ngIf="showBank == true">
+                  <div class="row">
+                      <div class="col-lg-7">
+                          <h6 class="c-title mb-2">{{'Selecting the initial character of bank name' | translate}}</h6>
+                          <div class="box-characters mb-3">
+                            <ng-container *ngFor="let item of listHira">
+                              <button *ngIf="item.key_hira == ' '" class="btn btn-sm btn-none">&nbsp;</button>
+                              <button class="{{item.class}}" *ngIf="item.key_hira != ' ' &&  item.class != 'btn btn-sm btn-character disabled'" (click)="changeHira(item)">{{item.key_hira}}</button>
+                              <button class="btn btn-sm btn-character" *ngIf="item.class == 'btn btn-sm btn-character disabled'" disabled>{{item.key_hira}}</button>
+                            </ng-container>
+                          </div>
+                          <form [formGroup]="bankForm">
+                            <h6 class="c-title mb-2">{{'Entering a bank name' | translate}}</h6>
                             <div class="d-flex mb-3">
-                                <div class="flex-grow-1"><input type="text" name="" class="form-control form-control-sm" placeholder=""></div>
-                                <div class="ml-2"><button class="btn btn-sm btn-primary">Search</button></div>
+                                <div class="flex-grow-1"><input type="text" name="" class="form-control form-control-sm" placeholder="" formControlName="bank_name"></div>
+                                <div class="ml-2"><button class="btn btn-sm btn-primary" (click)="searchBankSubmit(1)">{{'Search' | translate}}</button></div>
                             </div>
-                            <h6 class="c-title mb-2">Enter bank code</h6>
+                            <h6 class="c-title mb-2">{{'Enter bank code' | translate}}</h6>
                             <div class="d-flex">
-                                <div class="flex-grow-1"><input type="text" name="" class="form-control form-control-sm" placeholder=""></div>
-                                <div class="ml-2"><button class="btn btn-sm btn-primary">Search</button></div>
+                                <div class="flex-grow-1"><input type="text" name="" class="form-control form-control-sm" placeholder="" formControlName="bank_code"></div>
+                                <div class="ml-2"><button class="btn btn-sm btn-primary" (click)="searchBankSubmit(2)">{{'Search' | translate}}</button></div>
                             </div>
-                        </div>
-                        <div class="col-md-5">
-                            <h6 class="c-title mb-1">Select Bank</h6>
-                            <div class="list-group list-bank border" style="height: 336px;">
-                                <a href="javascript:;" class="list-group-item list-group-item-action">Shikoku</a>
-                                <a href="javascript:;" class="list-group-item list-group-item-action">Shikoku roukin</a>
+                          </form>
+
+                      </div>
+                      <div class="col-lg-5">
+                          <h6 class="c-title mb-1">{{'Select Bank' | translate}}</h6>
+                          <div class="list-group list-bank border" style="height: 336px;">
+                              <a href="javascript:;" class="list-group-item list-group-item-action"  *ngFor="let item of bankSearch" (click)="selectBank(item)">{{item.name}}</a>
+                              <!-- <a href="javascript:;" class="list-group-item list-group-item-action">Shikoku roukin</a> -->
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="section-select-branch" *ngIf="showBranch == true">
+                  <div class="row">
+                      <div class="col-lg-7">
+                          <h6 class="c-title mb-2">{{'Please select the branch name of the selected financial institution' | translate}}</h6>
+                          <div class="box-characters mb-3">
+                            <ng-container *ngFor="let item of listHiraBranch">
+                              <button *ngIf="item.key_hira == ' '" class="btn btn-sm btn-none">&nbsp;</button>
+                              <button class="{{item.class}}" *ngIf="item.key_hira != ' ' &&  item.class != 'btn btn-sm btn-character disabled'" (click)="changeHiraBranch(item)">{{item.key_hira}}</button>
+                              <button class="btn btn-sm btn-character" *ngIf="item.class == 'btn btn-sm btn-character disabled'" disabled>{{item.key_hira}}</button>
+                            </ng-container>
+                          </div>
+                          <form [formGroup]="branchForm">
+                            <h6 class="c-title mb-2">{{'Entering a branch name' | translate}}</h6>
+                            <div class="d-flex mb-3">
+                                <div class="flex-grow-1"><input type="text" name="" class="form-control form-control-sm" placeholder="" formControlName="branch_name"></div>
+                                <div class="ml-2"><button class="btn btn-sm btn-primary" (click)="searchBranchSubmit(1)">{{'Search' | translate}}</button></div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="section-select-branch">
-                    <div class="row">
-                        <div class="col-md-7">
-                            <h6 class="c-title mb-2">Please select the branch name of the selected financial institution</h6>
-                            <div class="mb-3 box-characters">
-                                <button class="btn btn-sm btn-character">あ</button>
-                                <button class="btn btn-sm btn-character">か</button>
-                                <button class="btn btn-sm btn-character">さ</button>
-                                <button class="btn btn-sm btn-character">た</button>
-                                <button class="btn btn-sm btn-character">な</button>
-                                <button class="btn btn-sm btn-character">は</button>
-                                <button class="btn btn-sm btn-character">ま</button>
-                                <button class="btn btn-sm btn-character">や</button>
-                                <button class="btn btn-sm btn-character">ら</button>
-                                <button class="btn btn-sm btn-character">わ</button>
-                                <button class="btn btn-sm btn-character">い</button>
-                                <button class="btn btn-sm btn-character active">き</button>
-                                <button class="btn btn-sm btn-character">し</button>
-                                <button class="btn btn-sm btn-character">ち</button>
-                                <button class="btn btn-sm btn-character">に</button>
-                                <button class="btn btn-sm btn-character">ひ</button>
-                                <button class="btn btn-sm btn-character">み</button>
-                                <button class="btn btn-sm btn-none">&nbsp;</button>
-                                <button class="btn btn-sm btn-character">り</button>
-                                <button class="btn btn-sm btn-none">&nbsp;</button>
-                                <button class="btn btn-sm btn-character">う</button>
-                                <button class="btn btn-sm btn-character">く</button>
-                                <button class="btn btn-sm btn-character">す</button>
-                                <button class="btn btn-sm btn-character">つ</button>
-                                <button class="btn btn-sm btn-character">ぬ</button>
-                                <button class="btn btn-sm btn-character">ふ</button>
-                                <button class="btn btn-sm btn-character">む</button>
-                                <button class="btn btn-sm btn-character">ゆ</button>
-                                <button class="btn btn-sm btn-character">る</button>
-                                <button class="btn btn-sm btn-character">を</button>
-                                <button class="btn btn-sm btn-character">え</button>
-                                <button class="btn btn-sm btn-character">け</button>
-                                <button class="btn btn-sm btn-character">せ</button>
-                                <button class="btn btn-sm btn-character">て</button>
-                                <button class="btn btn-sm btn-character">ね</button>
-                                <button class="btn btn-sm btn-character">へ</button>
-                                <button class="btn btn-sm btn-character">め</button>
-                                <button class="btn btn-sm btn-none">&nbsp;</button>
-                                <button class="btn btn-sm btn-character">れ</button>
-                                <button class="btn btn-sm btn-none">&nbsp;</button>
-                                <button class="btn btn-sm btn-character">お</button>
-                                <button class="btn btn-sm btn-character">こ</button>
-                                <button class="btn btn-sm btn-character">そ</button>
-                                <button class="btn btn-sm btn-character">と</button>
-                                <button class="btn btn-sm btn-character">の</button>
-                                <button class="btn btn-sm btn-character">ほ</button>
-                                <button class="btn btn-sm btn-character">も</button>
-                                <button class="btn btn-sm btn-character">よ</button>
-                                <button class="btn btn-sm btn-character">ろ</button>
-                                <button class="btn btn-sm btn-character">ん</button>
+                            <h6 class="c-title mb-2">{{'Enter branch code' | translate}}</h6>
+                            <div class="d-flex">
+                                <div class="flex-grow-1"><input type="text" name="" class="form-control form-control-sm" placeholder="" formControlName="branch_code"></div>
+                                <div class="ml-2"><button class="btn btn-sm btn-primary"  (click)="searchBranchSubmit(2)">{{'Search' | translate}}</button></div>
                             </div>
-                            <h6 class="c-title mb-2">Entering a branch name</h6>
-                            <div class="d-flex mb-3" [formGroup]="branchNameForm">
-                                <div class="flex-grow-1"><input type="text" name="" formControlName="branch_name" class="form-control form-control-sm" placeholder=""></div>
-                                <div class="ml-2"><button class="btn btn-sm btn-primary">Search</button></div>
-                            </div>
-                            <h6 class="c-title mb-2">Enter branch code</h6>
-                            <div class="d-flex" [formGroup]="branchCodeForm">
-                                <div class="flex-grow-1"><input type="text" name="" formControlName="branch_code" class="form-control form-control-sm" placeholder=""></div>
-                                <div class="ml-2"><button class="btn btn-sm btn-primary">Search</button></div>
-                            </div>
-                        </div>
-                        <div class="col-md-5">
-                            <h6 class="c-title mb-1">Select Branch</h6>
-                            <div class="list-group list-bank border" style="height: 342px;">
-                                <a href="javascript:;" class="list-group-item list-group-item-action">Ki kyou</a>
-                                <a href="javascript:;" class="list-group-item list-group-item-action">Kisaragi</a>
-                                <a href="javascript:;" class="list-group-item list-group-item-action">Kisarazu</a>
-                                <a href="javascript:;" class="list-group-item list-group-item-action">Kishiwadajou</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+                          </form>
+
+                      </div>
+                      <div class="col-lg-5">
+                          <h6 class="c-title mb-1">{{'Select Branch' | translate}}</h6>
+                          <div class="list-group list-bank border" style="height: 342px;">
+                              <a href="javascript:;" class="list-group-item list-group-item-action" *ngFor="let item of branchSearch" (click)="selectBranch(item)">{{item?.branch_name}}</a>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
 </div>
 
 <ng4-loading-spinner> </ng4-loading-spinner>

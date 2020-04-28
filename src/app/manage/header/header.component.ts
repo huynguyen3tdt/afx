@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
-import { TOKEN_AFX } from 'src/app/core/constant/authen-constant';
+import { TOKEN_AFX, FIRST_LOGIN, LOCALE } from 'src/app/core/constant/authen-constant';
 import { AuthenService } from 'src/app/core/services/authen.service';
+import { NotificationsService } from 'src/app/core/services/notifications.service';
+import { PageNotificationResponse, Notification } from 'src/app/core/model/page-noti.model';
+import * as moment from 'moment';
+import { EN_FORMATDATE, JAPAN_FORMATDATE } from 'src/app/core/constant/format-date-constant';
 declare const $: any;
 declare const TweenMax: any;
 
@@ -11,19 +15,45 @@ declare const TweenMax: any;
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-  constructor(private router: Router, private authenService: AuthenService) {
+
+  listNotification: Array<Notification>;
+  pageNotification: PageNotificationResponse;
+  currentPage;
+  pageSize;
+  unreadAll: boolean;
+  formatDateYear: string;
+  locale: string;
+  TABS = {
+    ALL: { name: 'ALL', value: -1 },
+    IMPORTANT: { name: 'IMPORTANT', value: 0 },
+    NOTIFICATIONS: { name: 'NOTIFICATIONS', value: 1 },
+    CAMPAIGN: { name: 'CAMPAIGN', value: 2 }
+  };
+
+  constructor(private router: Router, private authenService: AuthenService,
+              private notificationsService: NotificationsService, ) {
     this.router.events.subscribe((e: any) => {
       this.activeRouter(this.router.url);
     });
   }
 
   ngOnInit() {
+    this.locale = localStorage.getItem(LOCALE);
+    if (this.locale === 'en') {
+      this.formatDateYear = EN_FORMATDATE;
+    } else if (this.locale === 'jp') {
+      this.formatDateYear = JAPAN_FORMATDATE;
+    }
+    this.unreadAll = true;
     this.layout_setup();
+    this.currentPage = 1;
+    this.pageSize = 3;
+    this.getListNotifications(this.pageSize, this.currentPage, this.unreadAll, this.TABS.ALL.value);
   }
 
   activeRouter(url) {
     url = url.split('/')[2];
-    if (url.indexOf('?') > -1 ) {
+    if (url && url.indexOf('?') > -1 ) {
       url = url.substring(0, url.indexOf('?'));
     }
     const listRouter = ['notifications', 'deposit', 'withdrawRequest', 'withdrawHistory', 'reportList', 'accountInfo'];
@@ -76,6 +106,21 @@ export class HeaderComponent implements OnInit {
 
     $('.btn-offcanvas-close').click(() => {
       close_offcanvas();
+    });
+  }
+  getListNotifications(pageSize: number, pageNumber: number, unread: boolean, type?: number) {
+    this.listNotification = [];
+    if (type !== -1) {
+      localStorage.setItem(FIRST_LOGIN, '0');
+    }
+    this.notificationsService.getListNotifications(pageSize, pageNumber, unread, type).subscribe(response => {
+      if (response.meta.code === 200) {
+        this.pageNotification = response;
+        this.listNotification = this.pageNotification.data.results;
+        this.listNotification.forEach(item => {
+          item.publish_date = moment(item.publish_date).format(this.formatDateYear);
+        });
+      }
     });
   }
 }

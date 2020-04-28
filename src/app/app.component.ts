@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
+import { LOCALE } from './core/constant/authen-constant';
 declare const jqKeyboard: any;
 
 
@@ -12,11 +13,11 @@ export class AppComponent implements OnInit {
   title = 'afx-front';
   constructor(private translate: TranslateService) {
     jqKeyboard.init();
-    if (localStorage.getItem('locale')) {
-      const browserLang = localStorage.getItem('locale');
+    if (localStorage.getItem(LOCALE)) {
+      const browserLang = localStorage.getItem(LOCALE);
       translate.use(browserLang.match(/en|jp/) ? browserLang : 'en');
     } else {
-      localStorage.setItem('locale', 'en');
+      localStorage.setItem(LOCALE, 'en');
       translate.setDefaultLang('en');
     }
   }

@@ -11,6 +11,16 @@ export interface CorporateResponse {
   data: CorporateModel;
 }
 
+export interface BankResponse {
+  meta: MetaResponseModel;
+  data: Array<string>;
+}
+
+export interface AddressResponse {
+  meta: MetaResponseModel;
+  data: AddressModel;
+}
+
 export interface UserModel {
   name: string;
   fx_dob: string;
@@ -76,3 +86,26 @@ export interface CorporateModel {
     fx_dept: string,
   };
 }
+
+export interface AddressModel {
+  id: number;
+  code: string;
+  old_postcode: string;
+  postno: string;
+  prefecture_kana: string;
+  city_kana: string;
+  town_kana: string;
+  prefecture: string;
+  city: string;
+  town: string;
+  prefecture_roman: string;
+  city_roman: string;
+  town_roman: string;
+  over_postno: string;
+  detail_view: string;
+  street: string;
+  over_division: string;
+}
+
+
+

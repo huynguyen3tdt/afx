@@ -9,6 +9,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { RouterModule, Routes, provideRoutes } from '@angular/router';
 import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
+import { MultiSelectModule } from 'primeng/multiselect';
 
 const config: Routes = [
   {
@@ -31,6 +32,7 @@ describe('WithdrawHistoryComponent', () => {
         TranslateModule.forRoot(),
         RouterTestingModule,
         Ng4LoadingSpinnerModule,
+        MultiSelectModule
       ],
       providers: [ provideRoutes(config) ]
     })

@@ -1,10 +1,10 @@
 <div class="container">
-    <nav aria-label="breadcrumb">
+    <!-- <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item" aria-current="page"><a href="javascript:;">Dashboard</a></li>
             <li class="breadcrumb-item active" aria-current="page">Report</li>
         </ol>
-    </nav>
+    </nav> -->
     <div class="content-wrapper">
         <div class="content-inner">
             <div class="row">
@@ -47,7 +47,7 @@
                                                 <div class="form-group">
                                                     <label class="label d-block mb-0">{{'From' | translate}}</label>
                                                     <div class="input-wrapper">
-                                                        <input type="text" name="start-date" class="form-control form-control-sm date" placeholder="YYYY/MM/DD" #dp="bsDatepicker" bsDatepicker formControlName="fromDate" (bsValueChange)="onValueChangeFrom($event)" autocomplete="off" [bsConfig]="{ dateInputFormat: 'YYYY/MM/DD', containerClass: 'theme-blue' }">
+                                                        <input type="text" name="start-date" class="form-control form-control-sm date" placeholder="YYYY/MM/DD" #dp="bsDatepicker" bsDatepicker formControlName="fromDate" (bsValueChange)="onValueChangeFrom($event)" autocomplete="off" [bsConfig]="{ dateInputFormat: formatDateYear, containerClass: 'theme-blue' }">
                                                         <button type="button" class="btn btn-none btn-sm" (click)="dp.toggle()" [attr.aria-expanded]="dp.isOpen"><i
                                                                 class="icon ion-md-calendar"></i></button>
                                                     </div>
@@ -60,7 +60,7 @@
                                                 <div class="form-group">
                                                     <label class="label d-block mb-0">{{'To' | translate}}</label>
                                                     <div class="input-wrapper">
-                                                        <input type="text" name="end-date" class="form-control form-control-sm date" placeholder="YYYY/MM/DD" #dp2="bsDatepicker" bsDatepicker formControlName="toDate" autocomplete="off" (bsValueChange)="onValueChangeTo($event)" [bsConfig]="{ dateInputFormat: 'YYYY/MM/DD', containerClass: 'theme-blue' }">
+                                                        <input type="text" name="end-date" class="form-control form-control-sm date" placeholder="YYYY/MM/DD" #dp2="bsDatepicker" bsDatepicker formControlName="toDate" autocomplete="off" (bsValueChange)="onValueChangeTo($event)" [bsConfig]="{ dateInputFormat: formatDateYear, containerClass: 'theme-blue' }">
                                                         <button type="button" class="btn btn-none btn-sm" (click)="dp2.toggle()" [attr.aria-expanded]="dp2.isOpen"><i
                                                                 class="icon ion-md-calendar"></i></button>
                                                     </div>

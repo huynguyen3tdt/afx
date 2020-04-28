@@ -12,6 +12,7 @@ import {
   MIN_WITHDRAW,
   ACCOUNT_IDS,
   ACCOUNT_TYPE,
+  LOCALE,
 } from './../../core/constant/authen-constant';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthenService } from 'src/app/core/services/authen.service';
@@ -24,8 +25,8 @@ declare const $: any;
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit, AfterViewInit {
-  @ViewChild('username', { static: false }) username: ElementRef;
-  @ViewChild('password', { static: false }) password: ElementRef;
+  @ViewChild('username', { static: true }) username: ElementRef;
+  @ViewChild('password', { static: true }) password: ElementRef;
   loginFormGroup: FormGroup;
   isSubmitted: boolean;
   isPc: boolean;
@@ -107,8 +108,12 @@ export class LoginComponent implements OnInit, AfterViewInit {
         localStorage.setItem(TOKEN_AFX, response.data.access_token);
         localStorage.setItem(ACCOUNT_IDS, JSON.stringify(response.data.account_ids));
         localStorage.setItem(IS_COMPANY, response.data.is_company.toString());
+        if (response.data.module_funding_min_deposit) {
         localStorage.setItem(MIN_DEPOST, response.data.module_funding_min_deposit.toString());
-        localStorage.setItem(MIN_WITHDRAW, response.data.module_funding_min_withdraw.toString());
+        }
+        if (response.data.module_funding_min_withdraw) {
+          localStorage.setItem(MIN_WITHDRAW, response.data.module_funding_min_withdraw.toString());
+        }
         localStorage.setItem(FIRST_LOGIN, '1');
         if (response.data.pwd_change_flg === false) {
           this.router.navigate(['/manage/notifications'], {

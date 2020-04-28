@@ -12,6 +12,7 @@
   "private": true,
   "dependencies": {
     "@angular/animations": "~8.2.4",
+    "@angular/cdk": "~8.2.3",
     "@angular/common": "~8.2.4",
     "@angular/compiler": "~8.2.4",
     "@angular/core": "~8.2.4",
@@ -29,6 +30,8 @@
     "ng4-loading-spinner": "^1.2.3",
     "ngx-bootstrap": "^4.1.1",
     "numeral": "^2.0.6",
+    "primeicons": "^2.0.0",
+    "primeng": "^9.0.0",
     "rxjs": "~6.4.0",
     "tslib": "^1.10.0",
     "zone.js": "~0.9.1"

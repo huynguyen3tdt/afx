@@ -14,6 +14,8 @@ import {
   TransactionModel
 } from '../model/withdraw-request-response.model';
 import { ResponseWihtoutDataModel } from '../model/none-data-response.model';
+import * as moment from 'moment';
+import { LOCALE } from '../constant/authen-constant';
 
 
 @Injectable({
@@ -75,18 +77,28 @@ export class WithdrawRequestService {
   }
 
   getDwHistory(accountNumber: number, pageSize: number, pageNumber: number,
-               type?: number, dateFrom?: string, dateTo?: string): Observable<WithdrawHistory> {
+               type?: string, dateFrom?: string, dateTo?: string, statusSearch?: string): Observable<WithdrawHistory> {
     let URL = '';
-    if (type !== -1) {
+    const locale = localStorage.getItem(LOCALE);
+    if (type) {
       URL = `?account_id=${accountNumber}&type=${type}&page_size=${pageSize}&page=${pageNumber}`;
     } else {
       URL = `?account_id=${accountNumber}&page_size=${pageSize}&page=${pageNumber}`;
     }
     if (dateFrom && dateFrom !== 'Invalid date') {
+      if (locale === 'en') {
+        dateFrom = moment(new Date(dateFrom)).format('DD-MM-YYYY');
+      }
       URL += `&date_from=${dateFrom}`;
     }
     if (dateTo && dateTo !== 'Invalid date') {
+      if (locale === 'en') {
+        dateTo = moment(new Date(dateTo)).format('DD-MM-YYYY');
+      }
       URL += `&date_to=${dateTo}`;
+    }
+    if (statusSearch) {
+      URL += `&status=${statusSearch}`;
     }
     return this.httpClient
       .get(`${this.envConfigService.getConfig()}/${AppSettings.API_WD_HISTORY}` + URL)

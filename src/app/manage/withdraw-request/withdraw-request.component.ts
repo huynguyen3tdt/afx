@@ -3,15 +3,17 @@ import { WithdrawRequestService } from 'src/app/core/services/withdraw-request.s
 // import { ACCOUNT_TYPE } from 'src/app/core/constant/authen-constant';
 import { FormGroup, FormControl } from '@angular/forms';
 import { requiredInput } from 'src/app/core/helper/custom-validate.helper';
-import { BankInforModel,
-         Mt5Model,
-         TransactionModel,
-         WithdrawAmountModel,
-         postWithdrawModel} from 'src/app/core/model/withdraw-request-response.model';
-import { MIN_WITHDRAW, ACCOUNT_IDS } from './../../core/constant/authen-constant';
+import {
+  BankInforModel,
+  Mt5Model,
+  TransactionModel,
+  WithdrawAmountModel,
+  postWithdrawModel
+} from 'src/app/core/model/withdraw-request-response.model';
+import { MIN_WITHDRAW, ACCOUNT_IDS, LOCALE } from './../../core/constant/authen-constant';
 import { GlobalService } from 'src/app/core/services/global.service';
 import { AccountType } from 'src/app/core/model/report-response.model';
-import { JAPAN_FORMATDATE_HH_MM } from 'src/app/core/constant/format-date-constant';
+import { JAPAN_FORMATDATE_HH_MM, EN_FORMATDATE, EN_FORMATDATE_HH_MM, JAPAN_FORMATDATE } from 'src/app/core/constant/format-date-constant';
 import { PaymentMethod, TYPEOFTRANHISTORY } from 'src/app/core/constant/payment-method-constant';
 import { Router } from '@angular/router';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
@@ -21,6 +23,8 @@ import { ListTransactionComponent } from '../list-transaction/list-transaction.c
 declare var $: any;
 import * as moment from 'moment';
 
+const numeral = require('numeral');
+
 @Component({
   selector: 'app-withdraw-request',
   templateUrl: './withdraw-request.component.html',
@@ -28,6 +32,7 @@ import * as moment from 'moment';
 })
 export class WithdrawRequestComponent implements OnInit {
   @ViewChild('listTran', { static: false }) listTran: ListTransactionComponent;
+
   mt5Infor: Mt5Model;
   accountType;
   bankInfor: BankInforModel;
@@ -50,10 +55,18 @@ export class WithdrawRequestComponent implements OnInit {
   listWithdraw: Array<TransactionModel>;
   listWithdrawRequest: postWithdrawModel;
   withdrawTranDetail: TransactionModel;
-  newDate: Date;
+  newDate: string;
   listBankTranfer: Array<DepositModel>;
-  transactionType: number;
-
+  transactionType: string;
+  statusSearch: string;
+  formatDateYear: string;
+  formatDateHour: string;
+  locale: string;
+  lastestTime: string;
+  withdrawAmountError: boolean;
+  withdrawFee: number;
+  totalAmount: number;
+  // withdrawAmount
   constructor(private withdrawRequestService: WithdrawRequestService,
               private spinnerService: Ng4LoadingSpinnerService,
               private router: Router,
@@ -61,7 +74,16 @@ export class WithdrawRequestComponent implements OnInit {
               private depositService: DepositService) { }
 
   ngOnInit() {
-    this.transactionType = Number(TYPEOFTRANHISTORY.WITHDRAWAL.key);
+    this.withdrawFee = 0;
+    this.locale = localStorage.getItem(LOCALE);
+    if (this.locale === 'en') {
+      this.formatDateYear = EN_FORMATDATE;
+      this.formatDateHour = EN_FORMATDATE_HH_MM;
+    } else if (this.locale === 'jp') {
+      this.formatDateYear = JAPAN_FORMATDATE;
+      this.formatDateHour = JAPAN_FORMATDATE_HH_MM;
+    }
+    this.transactionType = TYPEOFTRANHISTORY.WITHDRAWAL.key;
     this.listTradingAccount = JSON.parse(localStorage.getItem(ACCOUNT_IDS));
     if (this.listTradingAccount) {
       this.accountID = this.listTradingAccount[0].value;
@@ -77,11 +99,11 @@ export class WithdrawRequestComponent implements OnInit {
   }
 
   initWithdrawForm() {
-    const numeral = require('numeral');
     this.withdrawForm = new FormGroup({
       amount: new FormControl(numeral(10000).format('0,0'), requiredInput),
       wholeMoney: new FormControl(false),
     });
+    this.totalAmount = numeral(this.withdrawForm.controls.amount.value).value() - this.withdrawFee;
   }
 
 
@@ -93,8 +115,9 @@ export class WithdrawRequestComponent implements OnInit {
         this.mt5Infor = response.data;
         this.equity = this.mt5Infor.equity;
         this.usedMargin = this.mt5Infor.used_margin;
+        this.lastestTime = moment(this.mt5Infor.lastest_time).format(this.formatDateHour);
       }
-      this.countWithdraw();
+      this.calculateWithdraw();
     });
   }
   getBankInfor() {
@@ -130,17 +153,25 @@ export class WithdrawRequestComponent implements OnInit {
   }
 
   changeWithdtaw(event: any) {
-    const numeral = require('numeral');
     this.depositValue = numeral(this.withdrawForm.controls.amount.value).value();
-    if (this.depositValue < 10000) {
+    if (this.depositValue < numeral(this.minWithdraw).value()) {
       this.withdrawError = true;
+    } else {
+      this.withdrawError = false;
+    }
+    if (this.mt5Infor.free_margin < this.depositValue) {
+      this.withdrawAmountError = true;
+    } else {
+      this.withdrawAmountError = false;
+    }
+    if (this.withdrawError === true || this.withdrawAmountError === true) {
       return;
     }
-    this.withdrawError = false;
-    this.countWithdraw();
+    this.totalAmount = numeral(this.withdrawForm.controls.amount.value).value() - this.withdrawFee;
+    this.calculateWithdraw();
   }
-  countWithdraw() {
-    const numeral = require('numeral');
+
+  calculateWithdraw() {
     this.errMessage = false;
     this.equityEstimate = Math.floor(this.equity - numeral(this.withdrawForm.controls.amount.value).value());
     this.marginLevelEstimate = this.globalService.calculateMarginLevel(this.equityEstimate, this.usedMargin);
@@ -158,21 +189,36 @@ export class WithdrawRequestComponent implements OnInit {
   }
 
   showConfirm() {
+    if (this.withdrawError === true || this.withdrawAmountError === true) {
+      return;
+    }
     $('#modal-withdraw-confirm').modal('show');
-    this.newDate = new Date();
+    this.newDate = moment(new Date()).format(this.formatDateHour);
     this.getDepositBank();
   }
+
+  changeAmount() {
+    if (this.withdrawForm.controls.wholeMoney.value === true) {
+      $('#amount').attr('disabled', true);
+      this.withdrawAmountError = false;
+      this.withdrawForm.controls.amount.setValue(numeral(this.mt5Infor.free_margin).format('0,0'));
+    } else {
+      $('#amount').attr('disabled', false);
+    }
+  }
+
   sendConfirm() {
-    $('#modal_withdraw').modal('show');
     $('#modal-withdraw-confirm').modal('hide');
-    const numeral = require('numeral');
+    $('#modal-withdraw-confirm').on('hidden.bs.modal', () => {
+      $('#modal_withdraw').modal('show');
+    });
     this.depositValue = numeral(this.withdrawForm.controls.amount.value).value();
     const param = {
       amount: this.depositValue,
       account_id: this.account,
       currency: 'JPY'
     };
-    this.withdrawRequestService.postWithdraw(param).subscribe( response => {
+    this.withdrawRequestService.postWithdraw(param).subscribe(response => {
       if (response.meta.code === 200) {
         this.listWithdrawRequest = response.data;
         this.listTran.ngOnChanges();

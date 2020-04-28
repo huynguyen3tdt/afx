@@ -27,6 +27,31 @@ const INVALID_PASSWORD_LENGTH = {
     message: 'New password needs to be 8 characters or more and has at least 1 alphabet letter'
   };
 
+const DEFAULT_REQUIRED_SPECIAL = {
+    SalarySpecial: true,
+    message: 'Not Special'
+};
+
+const DEFAULT_LENGTH_REQUIRED = {
+  Salary: true,
+  message: 'Length must bigger than 3500000'
+};
+
+const DEFAULT_LENGTH_BIGER10 = {
+  SalaryLength: true,
+  message: 'Length > 10'
+};
+
+const DEFAULT_LENGTH_LOWER7 = {
+  lengthlower7: true,
+  message: 'Length < 7'
+};
+
+const JP_ERROR = {
+  Error: true,
+  message: 'が正しくありません。'
+};
+
 const DIGITS_PATTERN = '^\\d+$';
 const SALARY_PATTEN = '^[0-9, ]*$';
 const NOT_SPECIAL_CHARACTERS_FOR_EMAIL = '^[a-zA-Z0-9-._ ]*$';
@@ -79,6 +104,51 @@ export function passwordValidation(control: AbstractControl) {
     return INVALID_PASSWORD_LENGTH;
   } else if (control.value.length < 8) {
     return INVALID_PASSWORD_LENGTH;
+  }
+  return null;
+}
+
+export function validationPhoneNumber(control: AbstractControl) {
+  if (control.value === '' || control.value === undefined) {
+      return null;
+  }
+  if (control.value) {
+      // tslint:disable-next-line: variable-name
+      const string = control.value.toString().split('');
+      if (string.length > 0 &&  string.indexOf('-') > -1) {
+          return DEFAULT_REQUIRED_SPECIAL;
+      }
+      if (string.length > 0 &&  string.indexOf(' ') > -1) {
+          return DEFAULT_LENGTH_REQUIRED;
+      }
+      if (isNaN(control.value) === true && control.value !== '') {
+          return DEFAULT_LENGTH_REQUIRED;
+      }
+      if (control.value && (control.value.length < 10)) {
+          return DEFAULT_LENGTH_BIGER10;
+      }
+  }
+  return null;
+}
+
+export function salaryInput(control: AbstractControl) {
+  const pattern = new RegExp(DIGITS_PATTERN);
+  const patternNumber = new RegExp(FULL_SIZE_NUMBER);
+  if (!control.value || typeof control.value === 'string' && !control.value.trim()) {
+      return DEFAULT_INVALID_REQUIRED;
+  }
+  if (control.value) {
+      // tslint:disable-next-line: variable-name
+      const string = control.value.toString().split('');
+      if (string.length > 0 && string.indexOf('-') > -1) {
+          return DEFAULT_REQUIRED_SPECIAL;
+      } else if (patternNumber.test(control.value)) {
+          return JP_ERROR;
+      } else if (pattern.test(control.value) === false && control.value !== '') {
+          return DEFAULT_LENGTH_REQUIRED;
+      } else if (control.value && (control.value.length < 7)) {
+          return DEFAULT_LENGTH_LOWER7;
+      }
   }
   return null;
 }
