@@ -21,3 +21,44 @@
     background-color: #0D688F !important;
     color: aliceblue !important;
   }
+
+  ::ng-deep {
+    .oi-caret-right{
+        color: #777777;
+    }
+    .oi-caret-left{
+        color: #777777;
+    }
+    .page-item {
+        cursor: pointer;
+        .page-link:hover {
+            background: #0056B0 !important;
+            color: white;
+            
+        }
+    }
+    .jp {
+      bs-datepicker-navigation-view {
+        display: flex;
+        justify-content: space-between;
+       
+        button:nth-last-child(1) {
+            order: 3
+        }
+        button:nth-last-child(3) {
+            order: 1;
+            span {
+                margin-left: -96px
+            }
+        }
+        button:nth-last-child(4) {
+            order: 0
+        }
+        button:nth-last-child(2):after {
+            content: "年";
+        }
+    }
+    }
+    
+  }
+  

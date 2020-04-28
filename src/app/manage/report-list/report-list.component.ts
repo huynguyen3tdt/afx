@@ -8,7 +8,9 @@ import { GlobalService } from 'src/app/core/services/global.service';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import moment from 'moment-timezone';
 import { LANGUAGLE } from 'src/app/core/constant/language-constant';
+import { BsLocaleService, defineLocale, jaLocale } from 'ngx-bootstrap';
 declare var $: any;
+defineLocale('ja', jaLocale);
 
 @Component({
   selector: 'app-report-list',
@@ -48,7 +50,8 @@ export class ReportListComponent implements OnInit {
   language;
 
   constructor(private reportservice: ReportService,
-              private spinnerService: Ng4LoadingSpinnerService) { }
+              private spinnerService: Ng4LoadingSpinnerService,
+              private localeService: BsLocaleService) { }
 
   ngOnInit() {
     this.language = LANGUAGLE;
@@ -57,9 +60,13 @@ export class ReportListComponent implements OnInit {
     if (this.locale === LANGUAGLE.english) {
       this.formatDateYear = EN_FORMATDATE;
       this.formatDateHour = EN_FORMATDATE_HH_MM;
+      $('body').removeClass('jp');
+      this.localeService.use('en');
     } else if (this.locale === LANGUAGLE.japan) {
       this.formatDateYear = JAPAN_FORMATDATE;
       this.formatDateHour = JAPAN_FORMATDATE_HH_MM;
+      this.localeService.use('ja');
+      $('body').addClass('jp');
     }
     this.currentPage = 1;
     this.pageSize = 10;

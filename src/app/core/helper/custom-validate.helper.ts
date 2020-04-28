@@ -34,7 +34,7 @@ const DEFAULT_LENGTH_REQUIRED = {
 };
 
 const DEFAULT_LENGTH_BIGER10 = {
-  SalaryLength: true,
+  phoneLength: true,
   message: 'Length > 10'
 };
 

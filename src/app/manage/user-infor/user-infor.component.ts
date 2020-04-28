@@ -143,7 +143,7 @@ export class UserInforComponent implements OnInit {
       this.spinnerService.hide();
       if (response.meta.code === 200) {
         this.userInfor = response.data;
-        this.userForm.controls.postCode.setValue(this.userInfor.zip.value);
+        this.userForm.controls.postCode.setValue(this.userInfor.address.value.zip);
         this.userForm.controls.searchPrefe.setValue(this.userInfor.address.value.city);
         this.userForm.controls.searchCountry.setValue(this.userInfor.address.value.street);
         this.userForm.controls.house_numb.setValue(this.userInfor.address.value.street2);
@@ -349,7 +349,7 @@ export class UserInforComponent implements OnInit {
     this.showSave = true;
     switch (field) {
       case 'address':
-        this.userForm.controls.postCode.setValue(this.userInfor.zip.value);
+        this.userForm.controls.postCode.setValue(this.userInfor.address.value.zip);
         this.userForm.controls.searchPrefe.setValue(this.userInfor.address.value.city);
         this.userForm.controls.searchCountry.setValue(this.userInfor.address.value.street);
         this.userForm.controls.house_numb.setValue(this.userInfor.address.value.street2);

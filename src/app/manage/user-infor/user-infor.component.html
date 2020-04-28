@@ -23,7 +23,7 @@
                         <td>{{'Postcode' | translate}}</td>
                         <td>
                             <div *ngIf="editAddress == false" class="currentvalue">
-                                <strong>{{userInfor?.zip?.value}}</strong>
+                                <strong>{{userInfor?.address?.value?.zip}}</strong>
                             </div>
                             <div *ngIf="editAddress == true" class="editable d-block">
                                 <input type="text" formControlName="postCode" (change)="changeAddress()" maxlength="7"
@@ -165,7 +165,7 @@
                                 <div *ngIf="userForm?.controls?.phone?.errors?.Required" class="invalid-mess">
                                     <div>{{'This field is required' | translate}}</div>
                                 </div>
-                                <div style="display:block" *ngIf="userForm?.controls?.phone?.errors?.SalaryLength"
+                                <div style="display:block" *ngIf="userForm?.controls?.phone?.errors?.phoneLength"
                                     class="invalid-mess">
                                     <div *ngIf="userForm?.controls?.phone?.errors?.phoneLength">
                                         {{'Phone number must be at least 10 characters long.' | translate}}</div>
