@@ -67,7 +67,7 @@ export class AuthenService {
 
   resetPassword(param): Observable<ResponseWihtoutDataModel> {
     return this.httpClient
-      .put(`${this.envConfigService.getConfig()}/${AppSettings.API_RESET_PASSWORD}`, param)
+      .post(`${this.envConfigService.getConfig()}/${AppSettings.API_RESET_PASSWORD}`, param)
       .pipe(
       catchError((error: HttpErrorResponse) => {
         return new Observable((observer: InnerSubscriber<any, any>) => {

@@ -11,6 +11,7 @@ import {EnvConfigService} from '../../core/services/env-config.service';
 import {Router, RouterModule} from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { BsLocaleService } from 'ngx-bootstrap';
 
 describe('ResetPasswordComponent', () => {
   let component: ResetPasswordComponent;
@@ -29,6 +30,7 @@ describe('ResetPasswordComponent', () => {
       providers: [
         AuthenService,
         EnvConfigService,
+        BsLocaleService
       ],
       schemas: [ NO_ERRORS_SCHEMA ]
     })

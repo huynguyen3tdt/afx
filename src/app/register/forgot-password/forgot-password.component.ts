@@ -87,7 +87,7 @@ export class ForgotPasswordComponent implements OnInit, AfterViewInit, OnDestroy
             });
           }
         }, 1000);
-      } else if (response.meta.code === 102) {
+      } else if (response.meta.code === 104) {
         this.errSubmit = true;
       }
     });

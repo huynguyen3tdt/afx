@@ -2,8 +2,13 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import {FormControl, FormGroup, AbstractControl} from '@angular/forms';
 import {AuthenService} from '../../core/services/authen.service';
 import {Router, ActivatedRoute} from '@angular/router';
-import { PASSWORD_LOGIN } from 'src/app/core/constant/authen-constant';
+import { PASSWORD_LOGIN, LOCALE } from 'src/app/core/constant/authen-constant';
 import { passwordValidation, requiredInput } from 'src/app/core/helper/custom-validate.helper';
+import { LANGUAGLE } from 'src/app/core/constant/language-constant';
+import { defineLocale, jaLocale } from 'ngx-bootstrap/chronos';
+import { BsLocaleService } from 'ngx-bootstrap';
+declare var $: any;
+defineLocale('ja', jaLocale);
 
 @Component({
   selector: 'app-reset-password',
@@ -21,11 +26,21 @@ export class ResetPasswordComponent implements OnInit {
   errorMess = '';
   oldPassword: string;
   token: string;
+  locale: string;
   constructor(private authenService: AuthenService,
               private router: Router,
-              private activatedRoute: ActivatedRoute) { }
+              private activatedRoute: ActivatedRoute,
+              private localeService: BsLocaleService) { }
 
   ngOnInit() {
+    this.locale = localStorage.getItem(LOCALE);
+    if (this.locale === LANGUAGLE.english) {
+      $('body').removeClass('jp');
+      this.localeService.use('en');
+    } else if (this.locale === LANGUAGLE.japan) {
+      this.localeService.use('ja');
+      $('body').addClass('jp');
+    }
     this.oldPassword = atob(localStorage.getItem(PASSWORD_LOGIN));
     this.initResetPassForm();
     this.activatedRoute.queryParams.subscribe(res => {
@@ -40,6 +55,16 @@ export class ResetPasswordComponent implements OnInit {
       confirm_password: new FormControl('', [passwordValidation])
     });
   }
+
+  changeConfirmPassWord() {
+    if (this.resetPassForm.controls.new_password.value === this.resetPassForm.controls.confirm_password.value) {
+      this.erroMessage = false;
+    } else {
+      this.erroMessage = true;
+      return;
+    }
+  }
+
   onSubmit() {
     this.isSubmitted = true;
     this.erroMessage = false;
@@ -60,21 +85,29 @@ export class ResetPasswordComponent implements OnInit {
     };
     const paramToken = {
       new_password: this.resetPassForm.controls.confirm_password.value,
-      old_password: this.oldPassword
+      token: this.token
     };
     if (this.token) {
       paramSubmit = paramToken;
+      this.authenService.resetPassword(paramSubmit).subscribe(response => {
+        if (response.meta.code === 200) {
+          this.router.navigate(['/login']);
+        } else if (response.meta.code === 103) {
+          this.errorMess = response.meta.message;
+        }
+      });
     } else {
       paramSubmit = param;
+      this.authenService.changePassword(paramSubmit).subscribe(response => {
+        if (response.meta.code === 200) {
+          this.router.navigate(['/login']);
+        } else if (response.meta.code === 103) {
+          this.errorMess = response.meta.message;
+        }
+      });
     }
-    this.authenService.resetPassword(paramSubmit).subscribe(response => {
-      if (response.meta.code === 200) {
-        this.router.navigate(['/login']);
-      } else if (response.meta.code === 103) {
-        this.errorMess = response.meta.message;
-      }
-    });
   }
+
   showPass() {
     if (this.showTypePass === 'password') {
       this.showTypePass = 'text';
@@ -86,6 +119,7 @@ export class ResetPasswordComponent implements OnInit {
     }
 
   }
+
   showConfirmPass() {
     if (this.showTypeConfirmPass === 'password') {
       this.showTypeConfirmPass = 'text';
