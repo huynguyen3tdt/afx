@@ -162,6 +162,7 @@ export class WithdrawRequestComponent implements OnInit {
   }
 
   changeWithdraw(event: any) {
+   this.errMessage = false;
    if (this.checkValidateWithDrawal() === false) {
      return;
    }
