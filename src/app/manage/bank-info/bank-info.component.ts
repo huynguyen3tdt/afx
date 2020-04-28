@@ -85,7 +85,6 @@ export class BankInfoComponent implements OnInit {
       this.spinnerService.hide();
       if (response.meta.code === 200) {
         this.bankInfor = response.data;
-        console.log('bankInfooo ', this.bankInfor);
       }
     });
   }
