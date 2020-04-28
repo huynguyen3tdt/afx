@@ -19,6 +19,8 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { LoginGuard } from './core/guard/login.guard';
 import { AuthGuard } from './core/guard/auth.guard';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
+import { ModalModule } from 'ngx-bootstrap';
 
 const appEnvInitializerFn = (envConfig: EnvConfigService) => {
   return () => {
@@ -40,7 +42,7 @@ const Routing: ModuleWithProviders = RouterModule.forRoot(AppRoutes, {
     RegisterLayoutComponent,
     ManageLayoutComponent,
     HeaderComponent,
-    FooterComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
@@ -55,7 +57,9 @@ const Routing: ModuleWithProviders = RouterModule.forRoot(AppRoutes, {
         deps: [HttpClient]
       }
     }),
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    ToastrModule.forRoot(),
+    ModalModule.forRoot()
   ],
   providers: [
     EnvConfigService,

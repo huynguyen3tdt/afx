@@ -1,11 +1,11 @@
 <div class="card card-login">
-    <div class="row align-items-end">
-        <div class="col-lg-6 d-none d-lg-block">
-            <div class="p-4">
+    <div class="row align-items-start">
+        <div class="col-lg-6 d-none d-lg-block mt-5">
+            <div class="p-4 mt-4">
                 <div class="row justify-content-center">
                     <div class="col-lg-10 text-white">
                         <h3>{{'Welcome to Phillip MT5' | translate}}</h3>
-                        <p> {{"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since." | translate}}</p>
+                        <!-- <p> {{"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since." | translate}}</p> -->
                         <p class="d-none d-lg-block">&nbsp;</p>
                     </div>
                 </div>
@@ -19,10 +19,10 @@
 
                     <div class="col-lg-10">
                         <form [formGroup]="loginFormGroup" (ngSubmit)="onSubmit()">
-                            <h3 class="mb-3 text-primary">{{'Sign In' | translate}}</h3>
+                            <h3 class="mb-3 text-primary">{{'Login' | translate}}</h3>
 
                             <div class="form-group">
-                                <label class="label">{{'Email / LoginID' | translate}}</label>
+                                <label class="label">{{'Login ID / Email' | translate}}</label>
                                 <div class="input-wrapper">
                                     <input tabindex="1" type="text" #username class="form-control"
                                         placeholder="Email or Login ID" formControlName="userName"
@@ -49,6 +49,9 @@
                             <div *ngIf="invalidAccount == true" class="invalid-mess mb-2">
                                     <div>{{'Invalid email or password' |translate}}</div>
                             </div>
+                            <div *ngIf="passWordExpired == true" class="invalid-mess mb-2">
+                                <div>{{'Password expired' |translate}}</div>
+                            </div>
                             <div class="form-group">
                                 <label class="container-checkbox small">{{'Remember me' | translate}}
                                     <input type="checkbox" name="save_" formControlName="remember">
@@ -61,7 +64,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <button class="btn btn-primary btn-block" id="btnlogin" type="submit">{{'Sign In' | translate}}</button>
+                                <button class="btn btn-primary btn-block" id="btnlogin" type="submit">{{'Login' | translate}}</button>
                             </div>
                             <a (click)="changeToForgotPassWord()" class="forgot-link">{{'Forgot Password?' | translate}}</a>
                             <p class="mb-4">{{'Don’t have an account?' | translate}} <a href="https://afx-regis.ecomedic.vn/">{{'Create Now' | translate}}</a></p>
@@ -73,3 +76,4 @@
         </div>
     </div>
 </div>
+<ng4-loading-spinner></ng4-loading-spinner>

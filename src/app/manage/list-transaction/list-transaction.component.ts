@@ -1,20 +1,24 @@
-import { Component, OnInit, OnChanges, Input } from '@angular/core';
+import { Component, OnInit, OnChanges, Input, ViewChild } from '@angular/core';
 import { WithdrawRequestService } from 'src/app/core/services/withdraw-request.service';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { Router, ActivatedRoute } from '@angular/router';
 import { TransactionModel } from 'src/app/core/model/withdraw-request-response.model';
 import { JAPAN_FORMATDATE_HH_MM, EN_FORMATDATE, EN_FORMATDATE_HH_MM, JAPAN_FORMATDATE } from 'src/app/core/constant/format-date-constant';
-import { PaymentMethod, TYPEOFTRANHISTORY } from 'src/app/core/constant/payment-method-constant';
+import { PAYMENTMETHOD, TYPEOFTRANHISTORY, STATUSTRANHISTORY } from 'src/app/core/constant/payment-method-constant';
 declare var $: any;
-import * as moment from 'moment';
-import { LOCALE } from 'src/app/core/constant/authen-constant';
+import moment from 'moment-timezone';
+import { LOCALE, TIMEZONEAFX, TIMEZONESERVER } from 'src/app/core/constant/authen-constant';
+import { GlobalService } from 'src/app/core/services/global.service';
+import { LANGUAGLE } from 'src/app/core/constant/language-constant';
+import { TransacstionModalComponent } from '../transacstion-modal/transacstion-modal.component';
 
 @Component({
   selector: 'app-list-transaction',
   templateUrl: './list-transaction.component.html',
-  styleUrls: ['./list-transaction.component.css']
+  styleUrls: ['./list-transaction.component.scss']
 })
 export class ListTransactionComponent implements OnInit, OnChanges {
+  @ViewChild('tranModal', { static: true }) tranModal: TransacstionModalComponent;
   @Input() accountID: string;
   @Input() tranType: string;
 
@@ -22,22 +26,28 @@ export class ListTransactionComponent implements OnInit, OnChanges {
   listTransaction: Array<TransactionModel>;
   transactionDetail: TransactionModel;
   locale: string;
-  formatDateYear: string;
   formatDateHour: string;
+  timeZone: string;
+  transactionStatus;
+  typeTranHistory;
+  paymentMethod;
 
   constructor(private withdrawRequestService: WithdrawRequestService,
               private spinnerService: Ng4LoadingSpinnerService,
+              private globalService: GlobalService,
               private router: Router) { }
 
   ngOnInit() {
+    this.typeTranHistory = TYPEOFTRANHISTORY;
+    this.transactionStatus = STATUSTRANHISTORY;
+    this.paymentMethod = PAYMENTMETHOD;
     this.locale = localStorage.getItem(LOCALE);
-    if (this.locale === 'en') {
-      this.formatDateYear = EN_FORMATDATE;
+    if (this.locale === LANGUAGLE.english) {
       this.formatDateHour = EN_FORMATDATE_HH_MM;
-    } else if (this.locale === 'jp') {
-      this.formatDateYear = JAPAN_FORMATDATE;
+    } else if (this.locale === LANGUAGLE.japan) {
       this.formatDateHour = JAPAN_FORMATDATE_HH_MM;
     }
+    this.timeZone = localStorage.getItem(TIMEZONEAFX);
   }
 
   ngOnChanges(): void {
@@ -53,9 +63,12 @@ export class ListTransactionComponent implements OnInit, OnChanges {
         this.spinnerService.hide();
         this.listTransaction = response.data.results;
         this.listTransaction.forEach(item => {
-          item.create_date = moment(item.create_date).format(this.formatDateHour);
-          item.funding_type = this.checkType(item.funding_type);
-          item.method = this.checkPaymentMedthod(item.method);
+          item.create_date += TIMEZONESERVER;
+          item.create_date =
+          // moment(new Date(item.create_date).toLocaleString('ja-JP', { timeZone: 'Asia/Tokyo' })).format(this.formatDateHour);
+          moment(item.create_date).tz(this.timeZone).format(this.formatDateHour);
+          item.funding_type = this.globalService.checkType(item.funding_type);
+          item.method = this.globalService.checkPaymentMedthod(item.method);
         });
       }
     });
@@ -65,35 +78,13 @@ export class ListTransactionComponent implements OnInit, OnChanges {
     this.withdrawRequestService.getDetailTranHistory(tranId).subscribe(response => {
       if (response.meta.code === 200) {
         this.transactionDetail = response.data;
-        this.transactionDetail.create_date = moment(this.transactionDetail.create_date).format(this.formatDateHour);
-        this.transactionDetail.method = this.checkPaymentMedthod(this.transactionDetail.method);
-        this.transactionDetail.funding_type = this.checkType(this.transactionDetail.funding_type);
-        $('#tran_detail').modal('show');
+        this.transactionDetail.create_date += TIMEZONESERVER;
+        this.transactionDetail.create_date = moment(this.transactionDetail.create_date).tz(this.timeZone).format(this.formatDateHour);
+        this.transactionDetail.method = this.globalService.checkPaymentMedthod(this.transactionDetail.method);
+        this.transactionDetail.funding_type = this.globalService.checkType(this.transactionDetail.funding_type);
+        this.tranModal.open(this.transactionDetail, this.accountID);
+        // $('#tran_detail').modal('show');
       }
     });
   }
-
-  checkPaymentMedthod(type: string) {
-    if (type === PaymentMethod.QUICKDEPOSIT.key) {
-      return PaymentMethod.QUICKDEPOSIT.name;
-    }
-    if (type === PaymentMethod.BANKTRANSFER.key) {
-      return PaymentMethod.BANKTRANSFER.name;
-    }
-    return '';
-  }
-  checkType(type: string) {
-    if (type === TYPEOFTRANHISTORY.DEPOSIT.key) {
-      return TYPEOFTRANHISTORY.DEPOSIT.name;
-    }
-    if (type === TYPEOFTRANHISTORY.WITHDRAWAL.key) {
-      return TYPEOFTRANHISTORY.WITHDRAWAL.name;
-    }
-    return '';
-  }
-
-  // goToHistory() {
-  //   this.router.navigate(['/manage/withdrawHistory']);
-  // }
-
 }

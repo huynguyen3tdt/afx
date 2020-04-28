@@ -25,13 +25,10 @@ export interface UserModel {
   name: string;
   fx_dob: string;
   fx_gender: string;
-  zip: {
-    status: number,
-    value: string
-  };
   address: {
     status: 0,
     value: {
+      zip: string;
       city: string,
       street: string,
       street2: string,
@@ -44,19 +41,17 @@ export interface UserModel {
   };
   mobile: string;
   lang: string;
+  surveys: Array<QuestionModel>;
 }
 
 export interface CorporateModel {
   corporation: {
     name: string,
     fx_name1: string,
-    zip: {
-      status: number,
-      value: number,
-    }
     address: {
-      status: number,
+      status: string,
       value: {
+        zip: string,
         city: string,
         street: string,
         street2: string,
@@ -64,27 +59,30 @@ export interface CorporateModel {
       }
     },
     fx_fax: {
-      status: number,
+      status: string,
       value: string,
     },
     mobile: string,
     lang: string,
   };
   pic: {
-    name: string,
-    fx_name1: string,
-    fx_gender: {
-      status: number,
-      value: string,
-    },
+    info: {
+      status: string,
+      value: {
+        name: string,
+        fx_name1: string,
+        fx_gender: string
+      }
+    }
     email: {
-      status: number,
+      status: string,
       value: string,
     },
     mobile: string,
     function: string,
     fx_dept: string,
   };
+  surveys: Array<QuestionModel>;
 }
 
 export interface AddressModel {
@@ -106,6 +104,17 @@ export interface AddressModel {
   street: string;
   over_division: string;
 }
+export interface LabelModel {
+  id: number;
+  sequence: number;
+  value: string;
+  quizz_mark: number;
+}
 
+export interface QuestionModel {
+  question_cd: string;
+  value_text: string;
+  sequence: number;
+}
 
 

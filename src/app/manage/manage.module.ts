@@ -17,7 +17,16 @@ import { TranslateModule } from '@ngx-translate/core';
 import { PdfJsViewerModule } from 'ng2-pdfjs-viewer';
 import { ListTransactionComponent } from './list-transaction/list-transaction.component';
 import {MultiSelectModule} from 'primeng/multiselect';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { TransacstionModalComponent } from './transacstion-modal/transacstion-modal.component';
+import { ModalModule } from 'ngx-bootstrap';
+import { UserInforComponent } from './user-infor/user-infor.component';
+import { CorporateInfoComponent } from './corporate-info/corporate-info.component';
+import { ConvertFinancialPipe } from '../core/pipe/convert-financial.pipe';
+import { ConvertInvestmentPurposePipe } from '../core/pipe/convert-purposeInvest.pipe';
+import { Mt5InfoComponent } from './mt5-info/mt5-info.component';
+import { BankInfoComponent } from './bank-info/bank-info.component';
+import { SettingComponent } from './setting/setting.component';
+import { ConvertAccountTypeBankPipe } from '../core/pipe/convert-account-type-bank.pipe';
 
 @NgModule({
     imports: [
@@ -31,6 +40,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
         TranslateModule,
         PdfJsViewerModule,
         MultiSelectModule,
+        ModalModule
     ],
     providers: [],
     declarations: [
@@ -41,7 +51,16 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
       ReportListComponent,
       DepositComponent,
       CurrencyDirective,
-      ListTransactionComponent
+      ListTransactionComponent,
+      TransacstionModalComponent,
+      UserInforComponent,
+      CorporateInfoComponent,
+      Mt5InfoComponent,
+      BankInfoComponent,
+      SettingComponent,
+      ConvertFinancialPipe,
+      ConvertInvestmentPurposePipe,
+      ConvertAccountTypeBankPipe
     ],
     schemas: [NO_ERRORS_SCHEMA]
 })

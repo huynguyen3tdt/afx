@@ -30,4 +30,9 @@ export class AppSettings {
     public static API_BRANCH_SEARCH             = `api/${versionAPI}/common/jp/branch/search/`;
     public static API_CHANGE_BANK               = `api/${versionAPI}/withdraws/bank_infor/`;
     public static API_ADDRESS                   = `api/${versionAPI}/common/jp/address/`;
+    public static API_LANGUAGE                  = `api/${versionAPI}/language/`;
+    public static API_BANK_COMPANY              = `api/${versionAPI}/deposits/bank_company/`;
+    public static API_RESET_PASSWORD            = `api/${versionAPI}/users/reset_pass/`;
+    public static API_EXPORT_CSV                = `api/${versionAPI}/funding/tran_history/download/`;
+    public static API_CHANGE_EMAIL              = `api/${versionAPI}/users/mail_confirm/`;
 }

@@ -1,0 +1,336 @@
+<h3 class="border-bottom pb-1 mb-3">{{'Withdrawal Account' | translate}}</h3>
+<div class="bank_info" *ngIf="bankAccount">
+    <div class="row mb-1">
+        <div class="col-md-4 col-lg-3">
+            <label class="label">{{'Beneficiary Bank' | translate}}</label>
+        </div>
+        <div class="col-md-8 col-lg-6">
+            <strong>{{bankInfor?.name}}</strong>
+        </div>
+    </div>
+    <div class="row mb-1">
+        <div class="col-md-4 col-lg-3">
+            <label class="label">{{'Bank code' | translate}}</label>
+        </div>
+        <div class="col-md-8 col-lg-6">
+            <strong>{{bankInfor?.bic}}</strong>
+        </div>
+    </div>
+    <div class="row mb-1">
+        <div class="col-md-4 col-lg-3">
+            <label class="label">{{'Bank branch' | translate}}</label>
+        </div>
+        <div class="col-md-8 col-lg-6">
+            <strong>{{bankInfor?.branch_name}}</strong>
+        </div>
+    </div>
+    <div class="row mb-1">
+        <div class="col-md-4 col-lg-3">
+            <label class="label">{{'Branch code' | translate}}</label>
+        </div>
+        <div class="col-md-8 col-lg-6">
+            <strong>{{bankInfor?.branch_code}}</strong>
+        </div>
+    </div>
+    <div class="row mb-1">
+        <div class="col-md-4 col-lg-3">
+            <label class="label">{{'Account type' | translate}}</label>
+        </div>
+        <div class="col-md-8 col-lg-6">
+            <strong>{{bankInfor?.fx_acc_type | convertAccTypeBank}}</strong>
+        </div>
+        <!-- <div class="col-md-8 col-lg-6" *ngIf="bankInfor?.fx_acc_type == 'sa'">
+            <strong>{{'Savings' | translate}}</strong>
+        </div>
+        <div class="col-md-8 col-lg-6" *ngIf="bankInfor?.fx_acc_type == 'ca'">
+            <strong>{{'Checkings' | translate}}</strong>
+        </div> -->
+    </div>
+    <div class="row mb-1">
+        <div class="col-md-4 col-lg-3">
+            <label class="label">{{'Bank Account Number' | translate}}</label>
+        </div>
+        <div class="col-md-8 col-lg-6">
+            <strong>{{bankInfor?.acc_number}}</strong>
+        </div>
+    </div>
+    <div class="row mb-1">
+        <div class="col-md-4 col-lg-3">
+            <label class="label">{{'Account holder name' | translate}}</label>
+        </div>
+        <div class="col-md-8 col-lg-6">
+            <strong>{{bankInfor?.acc_holder_name}}</strong>
+        </div>
+    </div>
+    <div class="row mb-1">
+        <div class="col-md-4 col-lg-3">
+            &nbsp;
+        </div>
+        <div class="col-md-8 col-lg-6">
+            <button type="button" class="btn btn-edit btn-success btn-sm pl-3 pr-3"
+                (click)="editBankAccount()">{{'Edit' | translate}}</button>
+        </div>
+    </div>
+</div>
+<div class="bank_form" *ngIf="editBank">
+    <div class="list-banks-wrapper">
+        <ul class="list-banks">
+            <li class="bank-item">
+                <a href="javascript:;" (click)="showBankInfor(1,'三菱ＵＦＪ')">
+                    <div class="text-center">
+                        <div><img src="assets/images/bank_logo/ufj.png" alt="Mizuho Bank" class="bank_logo"></div>
+                        <div class="d-none">Mitsubishi UFJ Bank</div>
+                    </div>
+                </a>
+            </li>
+
+
+            <li class="bank-item">
+                <a href="javascript:;" (click)="showBankInfor(1,'三井住友')">
+                    <div class="text-center">
+                        <div><img src="assets/images/bank_logo/smbc.png" alt="Mizuho Bank" class="bank_logo"></div>
+                        <div class="d-none">Sumitomo Mitsui Bank</div>
+                    </div>
+                </a>
+            </li>
+            <li class="bank-item">
+                <a href="javascript:;" (click)="showBankInfor(1,'みずほ')">
+                    <div class="text-center">
+                        <div><img src="assets/images/bank_logo/mizuho.png" alt="Mizuho Bank" class="bank_logo"></div>
+                        <div class="d-none">Mizuho Bank</div>
+                    </div>
+                </a>
+            </li>
+            <li class="bank-item">
+                <a href="javascript:;" (click)="showBankInfor(1,'楽天')">
+                    <div class="text-center">
+                        <div><img src="assets/images/bank_logo/rakuten.png" alt="Mizuho Bank" class="bank_logo"></div>
+                        <div class="d-none">Rakuten Bank</div>
+                    </div>
+                </a>
+            </li>
+            <li class="bank-item">
+                <a href="javascript:;" (click)="showBankInfor(1,'ジャパンネット')">
+                    <div class="text-center">
+                        <div><img src="assets/images/bank_logo/jnb.png" alt="Mizuho Bank" class="bank_logo"></div>
+                        <div class="d-none">Japan Net Bank</div>
+                    </div>
+                </a>
+            </li>
+            <li class="bank-item" (click)="showBankInfor(1,'ゆうちょ')">
+                <a href="javascript:;">
+                    <div class="text-center">
+                        <div><img src="assets/images/bank_logo/jpb.png" alt="Japan Post Bank" class="bank_logo"></div>
+                        <div class="d-none">Japan Post Bank</div>
+                    </div>
+                </a>
+            </li>
+            <li class="bank-item" (click)="showBankInfor(2)">
+                <a href="javascript:;">
+                    <div class="d-flex align-items-center text-center" style="height: 50px">
+                        <strong>{{'Other banking facilities' | translate}}</strong></div>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <form [formGroup]="bankAccountForm">
+        <div class="row mb-2">
+            <div class="col-md-4 col-lg-3">
+                <label class="label mt-1">{{'Beneficiary Bank' | translate}}</label>
+            </div>
+            <div class="col-md-8 col-lg-6">
+                <input type="text" name="beneficiary_bank" formControlName="beneficiary_bank" disabled="disabled"
+                    [className]="bankAccountForm.controls.beneficiary_bank.errors ? 'form-control form-control-sm invalid' : 'form-control form-control-sm'">
+            </div>
+        </div>
+        <div class="row mb-2">
+            <div class="col-md-4 col-lg-3">
+                <label class="label mt-1">{{'Bank branch' | translate}}</label>
+            </div>
+            <div class="col-md-8 col-lg-6">
+                <input type="text" name="bank_branch" formControlName="bank_branch" disabled="disabled"
+                    [className]="bankAccountForm.controls.bank_branch.errors ? 'form-control form-control-sm invalid' : 'form-control form-control-sm'">
+            </div>
+        </div>
+        <div class="row mb-2 pt-1">
+            <div class="col-md-4 col-lg-3">
+                <label class="label">{{'Account Type' | translate}}</label>
+            </div>
+            <div class="col-md-8 col-lg-6">
+                <label class="container-radio small mb-1 mr-2">
+                    <div><strong>{{'Savings' | translate}}</strong></div>
+                    <input type="radio" name="bank_account_type" formControlName="bank_account_type" value="sa"
+                        checked="checked">
+                    <span class="checkmark"></span>
+                </label>
+                <label class="container-radio small mb-1">
+                    <div><strong>{{'Checkings' | translate}}</strong></div>
+                    <input type="radio" name="bank_account_type" formControlName="bank_account_type" value="ca">
+                    <span class="checkmark"></span>
+                </label>
+            </div>
+        </div>
+        <div class="row mb-2">
+            <div class="col-md-4 col-lg-3">
+                <label class="label mt-1">{{'Bank Account Number' | translate}}</label>
+            </div>
+            <div class="col-md-8 col-lg-6">
+                <input type="text" name="bank_account_number" formControlName="bank_account_number"
+                    [className]="bankAccountForm.controls.bank_account_number.errors ? 'form-control form-control-sm invalid' : 'form-control form-control-sm'">
+            </div>
+        </div>
+        <div class="row mb-2">
+            <div class="col-md-4 col-lg-3">
+                <label class="label">{{'Account holder name' | translate}}</label>
+            </div>
+            <div class="col-md-8 col-lg-6">
+                {{bankInfor?.acc_holder_name}}
+            </div>
+        </div>
+        <div class="row mb-2">
+            <div class="col-md-4 col-lg-3">
+                &nbsp;
+            </div>
+            <div class="col-md-8 col-lg-6">
+                <button type="button" class="btn btn-save btn-success pl-3 pr-3 btn-sm"
+                    (click)="saveBankAccount()">{{'Save' | translate}}</button>
+                <button type="button" class="btn btn-cancel btn-secondary pl-3 pr-3 btn-sm ml-2"
+                    (click)="cancelBankAccount()">{{'Cancel' | translate}}</button>
+            </div>
+        </div>
+    </form>
+
+</div>
+
+<div class="modal fade" id="modal-select-bank" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true"
+    data-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header pt-2 pb-2 bg-light">
+                <h5 class="modal-title">{{'Choosing a financial institution' | translate}}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="section-selected-bank" *ngIf="showBranch == true">
+                    <p class="mb-1">{{'Selected financial institution name:' | translate}}</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h4 class="mb-0 text-primary"><strong>{{currentBank?.name}}</strong></h4>
+                        </div>
+                        <div><button class="btn btn-sm btn-primary btn-change-bank"
+                                (click)="changeBank()">{{'Change Bank' | translate}}</button></div>
+                    </div>
+                    <hr>
+                </div>
+                <div class="section-select-bank" *ngIf="showBank == true">
+                    <div class="row">
+                        <div class="col-lg-7">
+                            <h6 class="c-title mb-2">{{'Selecting the initial character of bank name' | translate}}</h6>
+                            <div class="box-characters mb-3">
+                                <ng-container *ngFor="let item of listHira">
+                                    <button *ngIf="item.key_hira == ' '" class="btn btn-sm btn-none">&nbsp;</button>
+                                    <button class="{{item.class}}"
+                                        *ngIf="item.key_hira != ' ' &&  item.class != 'btn btn-sm btn-character disabled'"
+                                        (click)="changeHira(item)">{{item.key_hira}}</button>
+                                    <button class="btn btn-sm btn-character"
+                                        *ngIf="item.class == 'btn btn-sm btn-character disabled'"
+                                        disabled>{{item.key_hira}}</button>
+                                </ng-container>
+                            </div>
+                            <form [formGroup]="bankForm">
+                                <h6 class="c-title mb-2">{{'Entering a bank name' | translate}}</h6>
+                                <div class="d-flex mb-3">
+                                    <div class="flex-grow-1"><input type="text" name=""
+                                            class="form-control form-control-sm" placeholder=""
+                                            formControlName="bank_name"></div>
+                                    <div class="ml-2"><button class="btn btn-sm btn-primary"
+                                            (click)="searchBankSubmit(1)">{{'Search' | translate}}</button></div>
+                                </div>
+                                <div class="invalid-mess mb-2" *ngIf="bankForm?.controls?.bank_name?.errors">
+                                       {{'Please enter full-width Hiragana' | translate}}
+                                    </div>
+                                <h6 class="c-title mb-2">{{'Enter bank code' | translate}}</h6>
+                                <div class="d-flex">
+                                    <div class="flex-grow-1"><input type="text" name=""
+                                            class="form-control form-control-sm" placeholder=""
+                                            formControlName="bank_code"></div>
+                                    <div class="ml-2"><button class="btn btn-sm btn-primary"
+                                            (click)="searchBankSubmit(2)">{{'Search' | translate}}</button></div>
+                                </div>
+                                <div class="invalid-mess mb-2" *ngIf="bankForm?.controls?.bankCode?.errors">
+                                        {{'Please enter half-width numbers' | translate}}
+                                    </div>
+                            </form>
+
+                        </div>
+                        <div class="col-lg-5">
+                            <h6 class="c-title mb-1">{{'Select Bank' | translate}}</h6>
+                            <div class="list-group list-bank border" style="height: 336px;">
+                                <a href="javascript:;" class="list-group-item list-group-item-action"
+                                    *ngFor="let item of bankSearch" (click)="selectBank(item)">{{item.name}}</a>
+                                <!-- <a href="javascript:;" class="list-group-item list-group-item-action">Shikoku roukin</a> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="section-select-branch" *ngIf="showBranch == true">
+                    <div class="row">
+                        <div class="col-lg-7">
+                            <h6 class="c-title mb-2">
+                                {{'Please select the branch name of the selected financial institution' | translate}}
+                            </h6>
+                            <div class="box-characters mb-3">
+                                <ng-container *ngFor="let item of listHiraBranch">
+                                    <button *ngIf="item.key_hira == ' '" class="btn btn-sm btn-none">&nbsp;</button>
+                                    <button class="{{item.class}}"
+                                        *ngIf="item.key_hira != ' ' &&  item.class != 'btn btn-sm btn-character disabled'"
+                                        (click)="changeHiraBranch(item)">{{item.key_hira}}</button>
+                                    <button class="btn btn-sm btn-character"
+                                        *ngIf="item.class == 'btn btn-sm btn-character disabled'"
+                                        disabled>{{item.key_hira}}</button>
+                                </ng-container>
+                            </div>
+                            <form [formGroup]="branchForm">
+                                <h6 class="c-title mb-2">{{'Entering a branch name' | translate}}</h6>
+                                <div class="d-flex mb-3">
+                                    <div class="flex-grow-1"><input type="text" name=""
+                                            class="form-control form-control-sm" placeholder=""
+                                            formControlName="branch_name"></div>
+                                    <div class="ml-2"><button class="btn btn-sm btn-primary"
+                                            (click)="searchBranchSubmit(1)">{{'Search' | translate}}</button></div>
+                                </div>
+                                <div class="invalid-mess mb-2" *ngIf="branchForm?.controls?.branch_name?.errors">
+                                        {{'Please enter full-width Hiragana' | translate}}
+                                     </div>
+                                <h6 class="c-title mb-2">{{'Enter branch code' | translate}}</h6>
+                                <div class="d-flex">
+                                    <div class="flex-grow-1"><input type="text" name=""
+                                            class="form-control form-control-sm" placeholder=""
+                                            formControlName="branch_code"></div>
+                                    <div class="ml-2"><button class="btn btn-sm btn-primary"
+                                            (click)="searchBranchSubmit(2)">{{'Search' | translate}}</button></div>
+                                </div>
+                                <div class="invalid-mess mb-2" *ngIf="branchForm?.controls?.branch_code?.errors">
+                                        {{'Please enter half-width numbers' | translate}}
+                                    </div>
+                            </form>
+
+                        </div>
+                        <div class="col-lg-5">
+                            <h6 class="c-title mb-1">{{'Select Branch' | translate}}</h6>
+                            <div class="list-group list-bank border" style="height: 342px;">
+                                <a href="javascript:;" class="list-group-item list-group-item-action"
+                                    *ngFor="let item of branchSearch"
+                                    (click)="selectBranch(item)">{{item?.branch_name}}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng4-loading-spinner></ng4-loading-spinner>

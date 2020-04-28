@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { WithdrawRequestService } from 'src/app/core/services/withdraw-request.service';
-// import { ACCOUNT_TYPE } from 'src/app/core/constant/authen-constant';
+// import { ACCOUNT_TYPE, TIMEZONEAFX } from 'src/app/core/constant/authen-constant';
 import { FormGroup, FormControl } from '@angular/forms';
 import { requiredInput } from 'src/app/core/helper/custom-validate.helper';
 import {
@@ -10,25 +10,25 @@ import {
   WithdrawAmountModel,
   postWithdrawModel
 } from 'src/app/core/model/withdraw-request-response.model';
-import { MIN_WITHDRAW, ACCOUNT_IDS, LOCALE } from './../../core/constant/authen-constant';
+import { MIN_WITHDRAW, ACCOUNT_IDS, LOCALE, TIMEZONEAFX } from './../../core/constant/authen-constant';
 import { GlobalService } from 'src/app/core/services/global.service';
 import { AccountType } from 'src/app/core/model/report-response.model';
 import { JAPAN_FORMATDATE_HH_MM, EN_FORMATDATE, EN_FORMATDATE_HH_MM, JAPAN_FORMATDATE } from 'src/app/core/constant/format-date-constant';
-import { PaymentMethod, TYPEOFTRANHISTORY } from 'src/app/core/constant/payment-method-constant';
+import { TYPEOFTRANHISTORY } from 'src/app/core/constant/payment-method-constant';
 import { Router } from '@angular/router';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { DepositService } from 'src/app/core/services/deposit.service';
 import { DepositModel } from 'src/app/core/model/deposit-response.model';
 import { ListTransactionComponent } from '../list-transaction/list-transaction.component';
+import moment from 'moment-timezone';
+import { LANGUAGLE } from 'src/app/core/constant/language-constant';
 declare var $: any;
-import * as moment from 'moment';
-
 const numeral = require('numeral');
 
 @Component({
   selector: 'app-withdraw-request',
   templateUrl: './withdraw-request.component.html',
-  styleUrls: ['./withdraw-request.component.css']
+  styleUrls: ['./withdraw-request.component.scss']
 })
 export class WithdrawRequestComponent implements OnInit {
   @ViewChild('listTran', { static: false }) listTran: ListTransactionComponent;
@@ -66,6 +66,10 @@ export class WithdrawRequestComponent implements OnInit {
   withdrawAmountError: boolean;
   withdrawFee: number;
   totalAmount: number;
+  timeZone: string;
+  language;
+  traddingAccount: AccountType;
+  checkWithDrawal: boolean;
   // withdrawAmount
   constructor(private withdrawRequestService: WithdrawRequestService,
               private spinnerService: Ng4LoadingSpinnerService,
@@ -74,20 +78,22 @@ export class WithdrawRequestComponent implements OnInit {
               private depositService: DepositService) { }
 
   ngOnInit() {
+    this.language = LANGUAGLE;
     this.withdrawFee = 0;
+    this.timeZone = localStorage.getItem(TIMEZONEAFX);
     this.locale = localStorage.getItem(LOCALE);
-    if (this.locale === 'en') {
+    if (this.locale === LANGUAGLE.english) {
       this.formatDateYear = EN_FORMATDATE;
       this.formatDateHour = EN_FORMATDATE_HH_MM;
-    } else if (this.locale === 'jp') {
+    } else if (this.locale === LANGUAGLE.japan) {
       this.formatDateYear = JAPAN_FORMATDATE;
       this.formatDateHour = JAPAN_FORMATDATE_HH_MM;
     }
     this.transactionType = TYPEOFTRANHISTORY.WITHDRAWAL.key;
     this.listTradingAccount = JSON.parse(localStorage.getItem(ACCOUNT_IDS));
     if (this.listTradingAccount) {
-      this.accountID = this.listTradingAccount[0].value;
-      this.account = this.listTradingAccount[0].account_id;
+      this.traddingAccount = this.listTradingAccount[0];
+      this.accountID = this.traddingAccount.value;
     }
     this.minWithdraw = localStorage.getItem(MIN_WITHDRAW);
     this.initWithdrawForm();
@@ -110,12 +116,15 @@ export class WithdrawRequestComponent implements OnInit {
   getMt5Infor(accountId) {
     this.spinnerService.show();
     this.withdrawRequestService.getmt5Infor(accountId).subscribe(response => {
+      this.spinnerService.hide();
       if (response.meta.code === 200) {
-        this.spinnerService.hide();
         this.mt5Infor = response.data;
         this.equity = this.mt5Infor.equity;
         this.usedMargin = this.mt5Infor.used_margin;
-        this.lastestTime = moment(this.mt5Infor.lastest_time).format(this.formatDateHour);
+        if (this.mt5Infor.free_margin < Number(this.minWithdraw)) {
+          this.mt5Infor.free_margin = 0;
+        }
+        this.lastestTime = moment(this.mt5Infor.lastest_time).tz(this.timeZone).format(this.formatDateHour);
       }
       this.calculateWithdraw();
     });
@@ -123,8 +132,8 @@ export class WithdrawRequestComponent implements OnInit {
   getBankInfor() {
     this.spinnerService.show();
     this.withdrawRequestService.getBankInfor().subscribe(response => {
+      this.spinnerService.hide();
       if (response.meta.code === 200) {
-        this.spinnerService.hide();
         this.bankInfor = response.data;
 
       }
@@ -133,8 +142,8 @@ export class WithdrawRequestComponent implements OnInit {
   getDwAmount(accountId) {
     this.spinnerService.show();
     this.withdrawRequestService.getDwAmount(accountId).subscribe(response => {
+      this.spinnerService.hide();
       if (response.meta.code === 200) {
-        this.spinnerService.hide();
         this.listDwAmount = response.data;
       }
     });
@@ -142,8 +151,8 @@ export class WithdrawRequestComponent implements OnInit {
   getDepositBank() {
     this.spinnerService.show();
     this.depositService.getDepositBank().subscribe(response => {
+      this.spinnerService.hide();
       if (response.meta.code === 200) {
-        this.spinnerService.hide();
         this.listBankTranfer = response.data;
         this.listBankTranfer.forEach(item => {
           item.branch_code = item.branch_code;
@@ -152,30 +161,20 @@ export class WithdrawRequestComponent implements OnInit {
     });
   }
 
-  changeWithdtaw(event: any) {
-    this.depositValue = numeral(this.withdrawForm.controls.amount.value).value();
-    if (this.depositValue < numeral(this.minWithdraw).value()) {
-      this.withdrawError = true;
-    } else {
-      this.withdrawError = false;
-    }
-    if (this.mt5Infor.free_margin < this.depositValue) {
-      this.withdrawAmountError = true;
-    } else {
-      this.withdrawAmountError = false;
-    }
-    if (this.withdrawError === true || this.withdrawAmountError === true) {
-      return;
-    }
-    this.totalAmount = numeral(this.withdrawForm.controls.amount.value).value() - this.withdrawFee;
-    this.calculateWithdraw();
+  changeWithdraw(event: any) {
+   this.errMessage = false;
+   if (this.checkValidateWithDrawal() === false) {
+     return;
+   }
+   this.totalAmount = numeral(this.withdrawForm.controls.amount.value).value() - this.withdrawFee;
+   this.calculateWithdraw();
   }
 
   calculateWithdraw() {
     this.errMessage = false;
     this.equityEstimate = Math.floor(this.equity - numeral(this.withdrawForm.controls.amount.value).value());
     this.marginLevelEstimate = this.globalService.calculateMarginLevel(this.equityEstimate, this.usedMargin);
-    if (this.marginLevelEstimate <= 100) {
+    if (this.marginLevelEstimate <= 120 && this.marginLevelEstimate > 0) {
       this.errMessage = true;
     }
   }
@@ -189,7 +188,7 @@ export class WithdrawRequestComponent implements OnInit {
   }
 
   showConfirm() {
-    if (this.withdrawError === true || this.withdrawAmountError === true) {
+    if (this.checkValidateWithDrawal() === false) {
       return;
     }
     $('#modal-withdraw-confirm').modal('show');
@@ -202,27 +201,58 @@ export class WithdrawRequestComponent implements OnInit {
       $('#amount').attr('disabled', true);
       this.withdrawAmountError = false;
       this.withdrawForm.controls.amount.setValue(numeral(this.mt5Infor.free_margin).format('0,0'));
+      this.checkValidateWithDrawal();
     } else {
       $('#amount').attr('disabled', false);
     }
+    this.calculateWithdraw();
+  }
+
+  changeAccount() {
+    this.traddingAccount = this.listTradingAccount.find((account: AccountType) => this.accountID === account.value);
+    this.accountID = this.traddingAccount.value;
+    this.getMt5Infor(Number(this.accountID.split('-')[1]));
+    this.getDwAmount(Number(this.accountID.split('-')[1]));
   }
 
   sendConfirm() {
+    this.checkWithDrawal = true;
     $('#modal-withdraw-confirm').modal('hide');
-    $('#modal-withdraw-confirm').on('hidden.bs.modal', () => {
-      $('#modal_withdraw').modal('show');
-    });
     this.depositValue = numeral(this.withdrawForm.controls.amount.value).value();
     const param = {
       amount: this.depositValue,
-      account_id: this.account,
-      currency: 'JPY'
+      account_id: this.accountID.split('-')[1],
+      currency: this.traddingAccount.currency
     };
+    this.spinnerService.show();
     this.withdrawRequestService.postWithdraw(param).subscribe(response => {
+      this.spinnerService.hide();
       if (response.meta.code === 200) {
         this.listWithdrawRequest = response.data;
         this.listTran.ngOnChanges();
+      } else if (response.meta.code === 409) {
+        this.checkWithDrawal = false;
       }
+      $('#modal_withdraw').modal('show');
     });
+  }
+
+  checkValidateWithDrawal() {
+    this.depositValue = numeral(this.withdrawForm.controls.amount.value).value();
+    if (this.depositValue < Number(this.minWithdraw)) {
+      this.withdrawError = true;
+    } else {
+      this.withdrawError = false;
+    }
+    if (this.mt5Infor.free_margin < this.depositValue) {
+      this.withdrawAmountError = true;
+    } else {
+      this.withdrawAmountError = false;
+    }
+    if (this.withdrawError === true || this.withdrawAmountError === true) {
+      return false;
+    } else {
+      return true;
+    }
   }
 }

@@ -16,6 +16,8 @@ import {
 import { ResponseWihtoutDataModel } from '../model/none-data-response.model';
 import * as moment from 'moment';
 import { LOCALE } from '../constant/authen-constant';
+import { LANGUAGLE } from '../constant/language-constant';
+import { DATE_CLIENT_ENG, DATE_CLIENT_ENG_SUBMIT } from '../constant/format-date-constant';
 
 
 @Injectable({
@@ -66,7 +68,7 @@ export class WithdrawRequestService {
 
   postWithdraw(param): Observable<ResponseWihtoutDataModel> {
     return this.httpClient
-      .post(`${this.envConfigService.getConfig()}/${AppSettings.API_POST_WITHDRAW }`, param)
+      .post(`${this.envConfigService.getConfig()}/${AppSettings.API_POST_WITHDRAW}`, param)
       .pipe(
         catchError((error: HttpErrorResponse) => {
           return new Observable((observer: InnerSubscriber<any, any>) => {
@@ -86,14 +88,14 @@ export class WithdrawRequestService {
       URL = `?account_id=${accountNumber}&page_size=${pageSize}&page=${pageNumber}`;
     }
     if (dateFrom && dateFrom !== 'Invalid date') {
-      if (locale === 'en') {
-        dateFrom = moment(new Date(dateFrom)).format('DD-MM-YYYY');
+      if (locale === LANGUAGLE.english) {
+        dateFrom = moment(dateFrom, DATE_CLIENT_ENG).format(DATE_CLIENT_ENG_SUBMIT);
       }
       URL += `&date_from=${dateFrom}`;
     }
     if (dateTo && dateTo !== 'Invalid date') {
-      if (locale === 'en') {
-        dateTo = moment(new Date(dateTo)).format('DD-MM-YYYY');
+      if (locale === LANGUAGLE.english) {
+        dateTo = moment(dateTo, DATE_CLIENT_ENG).format(DATE_CLIENT_ENG_SUBMIT);
       }
       URL += `&date_to=${dateTo}`;
     }
@@ -114,6 +116,41 @@ export class WithdrawRequestService {
   getDetailTranHistory(tranId: number): Observable<TransactionResponse> {
     return this.httpClient
       .get(`${this.envConfigService.getConfig()}/${AppSettings.API_WD_HISTORY}${tranId}/`)
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          return new Observable((observer: InnerSubscriber<any, any>) => {
+            observer.next(error);
+          });
+        })
+      );
+  }
+
+  exportHistoryToCsv(accountNumber: number, type?: string,
+                     dateFrom?: string, dateTo?: string, statusSearch?: string): Observable<ArrayBuffer> {
+    let URL = '';
+    const locale = localStorage.getItem(LOCALE);
+    if (type) {
+      URL = `?account_id=${accountNumber}&type=${type}`;
+    } else {
+      URL = `?account_id=${accountNumber}`;
+    }
+    if (dateFrom && dateFrom !== 'Invalid date') {
+      if (locale === LANGUAGLE.english) {
+        dateFrom = moment(dateFrom, DATE_CLIENT_ENG).format(DATE_CLIENT_ENG_SUBMIT);
+      }
+      URL += `&date_from=${dateFrom}`;
+    }
+    if (dateTo && dateTo !== 'Invalid date') {
+      if (locale === LANGUAGLE.english) {
+        dateTo = moment(dateTo, DATE_CLIENT_ENG).format(DATE_CLIENT_ENG_SUBMIT);
+      }
+      URL += `&date_to=${dateTo}`;
+    }
+    if (statusSearch) {
+      URL += `&status=${statusSearch}`;
+    }
+    return this.httpClient
+      .get(`${this.envConfigService.getConfig()}/${AppSettings.API_EXPORT_CSV}` + URL, { responseType: 'arraybuffer' })
       .pipe(
         catchError((error: HttpErrorResponse) => {
           return new Observable((observer: InnerSubscriber<any, any>) => {

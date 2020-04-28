@@ -2,17 +2,20 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ReportService } from 'src/app/core/services/report.service';
 import { ReportIDS, AccountType } from 'src/app/core/model/report-response.model';
 import { FormGroup, FormControl } from '@angular/forms';
-import { ACCOUNT_IDS, LOCALE } from 'src/app/core/constant/authen-constant';
+import { ACCOUNT_IDS, LOCALE, TIMEZONEAFX, TIMEZONESERVER } from 'src/app/core/constant/authen-constant';
 import { JAPAN_FORMATDATE, EN_FORMATDATE, EN_FORMATDATE_HH_MM, JAPAN_FORMATDATE_HH_MM } from 'src/app/core/constant/format-date-constant';
-import * as moment from 'moment';
 import { GlobalService } from 'src/app/core/services/global.service';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
+import moment from 'moment-timezone';
+import { LANGUAGLE } from 'src/app/core/constant/language-constant';
+import { BsLocaleService, defineLocale, jaLocale } from 'ngx-bootstrap';
 declare var $: any;
+defineLocale('ja', jaLocale);
 
 @Component({
   selector: 'app-report-list',
   templateUrl: './report-list.component.html',
-  styleUrls: ['./report-list.component.css']
+  styleUrls: ['./report-list.component.scss']
 })
 export class ReportListComponent implements OnInit {
   @ViewChild('pdfViewer', { static: true }) public pdfViewer;
@@ -32,6 +35,7 @@ export class ReportListComponent implements OnInit {
   locale: string;
   formatDateYear: string;
   formatDateHour: string;
+  timeZone: string;
   TABS = {
     ALL: { name: 'ALL', value: '' },
     DAILY: { name: 'DAILY', value: 'd' },
@@ -43,18 +47,26 @@ export class ReportListComponent implements OnInit {
     MONTH: 'month',
     YEAR: 'year'
   };
+  language;
 
   constructor(private reportservice: ReportService,
-              private spinnerService: Ng4LoadingSpinnerService, ) { }
+              private spinnerService: Ng4LoadingSpinnerService,
+              private localeService: BsLocaleService) { }
 
   ngOnInit() {
+    this.language = LANGUAGLE;
+    this.timeZone = localStorage.getItem(TIMEZONEAFX);
     this.locale = localStorage.getItem(LOCALE);
-    if (this.locale === 'en') {
+    if (this.locale === LANGUAGLE.english) {
       this.formatDateYear = EN_FORMATDATE;
       this.formatDateHour = EN_FORMATDATE_HH_MM;
-    } else if (this.locale === 'jp') {
+      $('body').removeClass('jp');
+      this.localeService.use('en');
+    } else if (this.locale === LANGUAGLE.japan) {
       this.formatDateYear = JAPAN_FORMATDATE;
       this.formatDateHour = JAPAN_FORMATDATE_HH_MM;
+      this.localeService.use('ja');
+      $('body').addClass('jp');
     }
     this.currentPage = 1;
     this.pageSize = 10;
@@ -83,7 +95,8 @@ export class ReportListComponent implements OnInit {
         this.totalItem = response.data.count;
         this.totalPage = (this.totalItem / pageSize) * 10;
         this.listReport.forEach(item => {
-          item.create_date = moment(item.create_date).format(this.formatDateYear);
+          item.create_date += TIMEZONESERVER;
+          item.create_date = moment(item.create_date).tz(this.timeZone).format(this.formatDateYear);
         });
         this.recordFrom = this.pageSize * (this.currentPage - 1) + 1;
         this.recordTo = this.recordFrom + (this.listReport.length - 1);
@@ -184,9 +197,9 @@ export class ReportListComponent implements OnInit {
 
   formatDate(date: string) {
     if (date) {
-      if (this.locale === 'jp') {
+      if (this.locale === LANGUAGLE.japan) {
         return date.split('/')[2] + '-' + date.split('/')[1] + '-' + date.split('/')[0];
-      } else if (this.locale === 'en') {
+      } else if (this.locale === LANGUAGLE.english) {
         return date.split('/')[0] + '-' + date.split('/')[1] + '-' + date.split('/')[2];
       }
     }
@@ -197,7 +210,9 @@ export class ReportListComponent implements OnInit {
     const param = {
       report_id : id
     };
+    this.spinnerService.show();
     this.reportservice.changeReadStatus(param).subscribe(response => {
+      this.spinnerService.hide();
       if (response.meta.code === 200) {
         this.searchReport();
       }
@@ -206,7 +221,9 @@ export class ReportListComponent implements OnInit {
 
   openPDF(item: ReportIDS) {
     if (item.file_type === 'pdf') {
+      this.spinnerService.show();
       this.reportservice.downLoadReportFile(item.id).subscribe(response => {
+        this.spinnerService.hide();
         const file = new Blob([response], {
           type: 'application/pdf',
         });
@@ -218,7 +235,9 @@ export class ReportListComponent implements OnInit {
     }
   }
   downLoadFile(item: ReportIDS) {
+    this.spinnerService.show();
     this.reportservice.downLoadReportFile(item.id).subscribe(response => {
+      this.spinnerService.hide();
       let file;
       if (item.file_type === 'pdf') {
         file = new Blob([response], {

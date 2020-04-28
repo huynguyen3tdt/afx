@@ -64,4 +64,28 @@ export class AuthenService {
       })
     );
   }
+
+  resetPassword(param): Observable<ResponseWihtoutDataModel> {
+    return this.httpClient
+      .post(`${this.envConfigService.getConfig()}/${AppSettings.API_RESET_PASSWORD}`, param)
+      .pipe(
+      catchError((error: HttpErrorResponse) => {
+        return new Observable((observer: InnerSubscriber<any, any>) => {
+          observer.next(error);
+        });
+      })
+    );
+  }
+
+  changeEmail(param): Observable<ResponseWihtoutDataModel> {
+    return this.httpClient
+      .post(`${this.envConfigService.getConfig()}/${AppSettings.API_CHANGE_EMAIL}`, param)
+      .pipe(
+      catchError((error: HttpErrorResponse) => {
+        return new Observable((observer: InnerSubscriber<any, any>) => {
+          observer.next(error);
+        });
+      })
+    );
+  }
 }

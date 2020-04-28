@@ -20,12 +20,12 @@
                                     <div class="d-flex align-items-center">
                                         <label class="label mb-0 mr-2 pt-1">{{'Trading account' | translate}}</label>
                                         <div class="d-inline-block">
-                                            <select class="form-control form-control-sm mb-0 bg-none" [(ngModel)]="accountID" disabled style="min-width: 160px;">
+                                            <select class="form-control form-control-sm mb-0 bg-none" (change)="changeAccount()" [(ngModel)]="accountID" disabled style="min-width: 160px;">
                                             <option *ngFor="let item of listTradingAccount" value="{{item?.value}}">{{item?.value}}</option>
                                           </select>
                                         </div>
                                     </div>
-                                    <div class="pt-1"><label class="label mb-0 mr-2 d-inline">{{'Currency' | translate}}</label>: <strong>JPY</strong></div>
+                                    <div class="pt-1"><label class="label mb-0 mr-2 d-inline">{{'Currency' | translate}}:</label> <strong>{{traddingAccount?.currency}}</strong></div>
                                 </div>
 
                                 <div class="mb-1 d-flex justify-content-between">
@@ -73,9 +73,15 @@
                             </h4>
                             <div class="form form-line">
                                 <div class="mb-1 d-flex justify-content-between">
+                                    <label class="label">{{'Withdrawal Account' | translate}}</label>
+                                    <div>
+                                        <strong>{{bankInfor?.name}} {{bankInfor?.branch_name}}</strong>
+                                    </div>
+                                </div>
+                                <div class="mb-1 d-flex justify-content-between">
                                     <label class="label">{{'Bank Account Number' | translate}}</label>
                                     <div>
-                                        <strong>{{bankInfor?.zip}}</strong>
+                                        <strong>{{bankInfor?.fx_acc_type}}{{bankInfor?.acc_number}}</strong>
                                     </div>
                                 </div>
                                 <div class="mb-1 d-flex justify-content-between">
@@ -87,12 +93,12 @@
                                 <div class="mb-3">
                                     <label class="label"><strong>{{'Withdrawal Amount' | translate}}</strong></label>
                                     <input type="text" name="amount" id="amount" class="form-control form-control-lg text-right font-weight-bold text-success" placeholder="" formControlName="amount" currency
-                                      (change)="changeWithdtaw($event.target.value)" autocomplete="off" [ngClass]="{'invalid': isSubmitted && withdrawForm.controls['amount'].errors}">
+                                      (change)="changeWithdraw($event.target.value)" autocomplete="off" [ngClass]="{'invalid': isSubmitted && withdrawForm.controls['amount'].errors}">
                                     <div *ngIf="withdrawError == true" class="invalid-mess">
-                                        <div>Minimum amount is not below {{minWithdraw | number}}</div>
+                                        <div>{{'Minimum amount is not below' | translate}} {{minWithdraw | number}}</div>
                                     </div>
                                     <div *ngIf="withdrawAmountError == true" class="invalid-mess">
-                                      <div>Withdrawal amount is not above the withdrawable amount</div>
+                                      <div>{{'Withdrawal amount is not above the withdrawable amount' | translate}}</div>
                                     </div>
                                     <div class="mt-2">
                                       <label class="container-checkbox small">{{'Whole of money' | translate}}
@@ -115,18 +121,20 @@
                                     </div>
                                 </div>
                                 <div class="mb-1 d-flex justify-content-between">
-                                    <label class="label">{{'Margin Level estimate' | translate}}</label>
+                                    <label class="label">{{'Margin Level estimate after withdraw' | translate}}</label>
                                     <div>
-                                        <strong>{{marginLevelEstimate}}%</strong>
+                                        <strong>{{marginLevelEstimate | number: '1.2-2'}}%</strong>
                                     </div>
                                 </div>
                             </div>
-                            <p class="small text-secondary p-2 bg-light">{{'Notice: Minimum single withdrawal amount is' | translate}} {{minWithdraw}}
+                            <p class="small text-secondary p-2 bg-light" *ngIf="locale == language.english">Notice: Minimum single withdrawal amount is {{minWithdraw | number}}
                             </p>
+                            <p class="small text-secondary p-2 bg-light" *ngIf="locale == language.japan">※全額出金以外の最低出金額は{{minWithdraw | number}}円となります。 
+                                </p>
                             <div *ngIf="errMessage == true" class="invalid-mess">
                                 <div>{{'Your Margin Level is nearly the Margin Call Level' | translate}}</div>
                             </div>
-                            <button class="btn btn-success btn-block text-uppercase btn-lg mb-3" (click)="showConfirm()"><strong>{{'Withdrawal'| translate}}</strong></button>
+                            <button class="btn btn-success btn-block text-uppercase btn-lg mb-3" (click)="showConfirm()"><strong>{{'Withdrawal Request'| translate}}</strong></button>
                             <p class="text-center" style="line-height: 1.2"><a href="javascript:;" data-toggle="modal" data-target="#modal-rule"><i class="icon ion-md-information-circle"></i>
                             {{'General rules for depositing and withdrawing funds' | translate}}</a></p>
                         </div>
@@ -174,7 +182,7 @@
                     <td>{{bankInfor?.name}}</td>
                 </tr>
                 <tr>
-                    <td width="180">{{'Bank Branch' | translate}}</td>
+                    <td width="180">{{'Bank branch' | translate}}</td>
                     <td>{{bankInfor?.branch_name}}</td>
                 </tr>
                 <tr *ngFor="let item of listBankTranfer">
@@ -187,11 +195,11 @@
                 </tr>
                 <tr>
                     <td width="180">{{'Currency' | translate}}</td>
-                    <td>JPY</td>
+                    <td>{{traddingAccount?.currency}}</td>
                 </tr>
                 <tr>
-                    <td width="180">{{'Margin level estimate' | translate}}</td>
-                    <td>{{marginLevelEstimate}}%</td>
+                    <td width="180">{{'Margin Level estimate' | translate}}</td>
+                    <td>{{marginLevelEstimate | number: '1.2-2'}}%</td>
                 </tr>
             </tbody>
         </table>
@@ -215,11 +223,13 @@
         </div>
       </div>
       <div class="modal-body">
+          <p *ngIf="checkWithDrawal == true">{{'Your withdrawal request has been received:' | translate }}</p>
+          <p *ngIf="checkWithDrawal == false">{{'Your withdrawal request has been rejected:' | translate }}</p>
         <table class="table table-hover table-sm small" cellspacing="0" cellpadding="0">
             <tbody>
                 <tr>
                     <td width="180" class="border-top-0">{{'Withdrawal amount' | translate}}</td>
-                    <td class="border-top-0">-{{listWithdrawRequest?.amount | number}} JPY</td>
+                    <td class="border-top-0">{{listWithdrawRequest?.amount | number}} JPY</td>
                 </tr>
                 <tr>
                     <td width="180">{{'Transaction ID' | translate}}</td>
@@ -231,7 +241,8 @@
                 </tr>
             </tbody>
         </table>
-        <p>{{'Your withdrawal request has been received and is being processed within 3-4 business days' | translate}}?</p>
+        <p *ngIf="checkWithDrawal == true">{{'Your withdrawal request has been received and is being processed within 3-4 business days' | translate}}?</p>
+        <p *ngIf="checkWithDrawal == false">{{'Reason: MT5 account balance is not enough money to withdraw' | translate}}</p>
         <hr>
         <div class="text-center">
           <button type="button" class="btn btn-success" id="got_it" data-dismiss="modal">{{'Got it!' | translate}}</button>
@@ -239,5 +250,48 @@
       </div>
     </div>
   </div>
+</div>
+
+<div class="modal fade" id="modal-rule" tabindex="-1" role="dialog" aria-labelledby="ruleTitle" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header pt-2 pb-2">
+                <h5 class="modal-title text-uppercase text-primary" id="ruleTitle"><i class="icon ion-md-list-box"></i> <strong>General rules for depositing and withdrawing funds</strong></h5>
+            </div>
+            <div class="modal-body">
+                <h4 class="text-primary">I. Deposit.</h4>
+                <ul class="list-default">
+                  <li>Deposits may be made 24 hours a day, 7 days a week. </li>
+                  <li>
+                    Customers can deposit via the following forms:
+                    <ul>
+                      <li>Billing system</li>
+                      <li>Bank transfer</li>
+                    </ul>                        
+                  </li>
+                  <li>The minimum deposit amount is 10,000 JPY for one time.</li>
+                </ul>
+                <h4 class="text-primary">II. Withdraw al.</h4>
+                <ul>
+                  <li>Funds may only be withdrawn to owner accounts in order to ensure financial security and prevent money laundering.</li>
+                  <li>Phillip will withdraw on your trading account and transfer to your bank account at the bank's working hours from 8:30 AM- 16:00 PM Monday to Friday.</li>
+                  <li>Withdrawal order make over 16:00PM  will be forwarded the next day.</li>
+                  <li>Minimum withdrawal amount of  10,000 JPY  for each withdrawal.</li>
+                  <li>The maximum amount is  the total amount in your trading account.</li>
+                  <li>The first withdrawal order must be enough 48 hours from the first deposit order.</li>
+                </ul>
+                <p>The company shall not be liable for delays in processing deposits and withdrawals if such delays are caused by the payment system or bank system.</p>
+                <ul>
+                  <li>The company retains the right to change the processing time for deposits and withdrawals without notifying clients in advance.</li>
+                  <li>The company may place limits on the payment systems available to clients from certain countries.</li>
+                  <li>The Company has the right to investigate, cancel, and/ or impose fees/ charges (dependant on payment method) on any withdrawal request originating from a trading account with no trading activity.</li>
+                </ul>
+                <div class="small text-secondary"><i class="icon ion-md-time"></i>  <em>Last updated: 2020/01/10 11:29</em></div>
+            </div>
+            <div class="modal-footer pt-1 pb-1 text-right bg-light">                    
+                <button type="button" class="btn btn-primary pl-4 pr-4 btn-confirm" data-dismiss="modal">I got it</button>
+            </div>
+        </div>
+    </div>
 </div>
 <ng4-loading-spinner> </ng4-loading-spinner>

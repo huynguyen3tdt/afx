@@ -1,0 +1,659 @@
+<h3 class="border-bottom pb-1 mb-3">{{'User Information' | translate}}</h3>
+<div class="row" [formGroup]="userForm">
+    <div class="col-lg-12">
+        <div class="table-responsive">
+            <table class="table table-sm table-borderless table-hover table-profile" cellspacing="0" cellpadding="0">
+                <tbody>
+                    <tr>
+                        <td width="200">{{'Full name' | translate}}</td>
+                        <td><strong>{{userInfor?.name}}</strong></td>
+                        <td width="15">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>{{'Date of birth' | translate}}</td>
+                        <td><strong>{{userInfor?.fx_dob | date: 'yyyy/MM/dd'}}</strong></td>
+                        <td width="15">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>{{'Gender' | translate}}</td>
+                        <td><strong>{{userInfor?.fx_gender}}</strong></td>
+                        <td width="15">&nbsp;</td>
+                    </tr>
+                    <tr class="row-postcode">
+                        <td>{{'Postcode' | translate}}</td>
+                        <td>
+                            <div *ngIf="editAddress == false" class="currentvalue">
+                                <strong>{{userInfor?.address?.value?.zip}}</strong>
+                            </div>
+                            <div *ngIf="editAddress == true" class="editable d-block">
+                                <input type="text" formControlName="postCode" (change)="changeAddress()" maxlength="7"
+                                    [ngClass]="{'invalid': userForm?.controls?.postCode?.errors}"
+                                    [className]="userForm?.controls?.postCode?.errors ? 'form-control form-control-sm mb-1 invalid' : 'form-control form-control-sm mb-1'">
+                                <div *ngIf="userForm?.controls['postCode'].errors?.Required" class="invalid-mess">
+                                    <div *ngIf="userForm?.controls['postCode'].errors?.Required">
+                                        {{'Please enter your zip code.' | translate}}
+                                    </div>
+                                </div>
+                                <div *ngIf="userForm?.controls['postCode'].errors?.lengthlower7" class="invalid-mess">
+                                    <div *ngIf="userForm?.controls['postCode'].errors?.lengthlower7">
+                                        {{'Postal code is incorrect.' | translate}}</div>
+                                </div>
+                            </div>
+
+                        </td>
+                        <td width="15">
+                            <a href="javascript:;" class="edit-link"
+                                *ngIf="editAddress == false && userInfor?.address?.status == STATUS_INFO.approve"
+                                data-toggle="tooltip" data-placement="top" (click)="showEditField('address')"
+                                title="Edit Address"><i class="icon ion-md-create"></i></a>
+                        </td>
+                    </tr>
+
+                    <tr class="row-address need-verify">
+                        <td>{{'Address' | translate}}</td>
+                        <td>
+                            <div *ngIf="editAddress == false" class="currentvalue">
+                                <div><strong>{{userInfor?.address?.value?.city}},
+                                        {{userInfor?.address?.value?.street}}</strong>
+                                </div>
+                                <div><strong>{{userInfor?.address?.value?.street2}},
+                                        {{userInfor?.address?.value?.fx_street3}}</strong></div>
+                                <div *ngIf="userInfor?.address?.status == STATUS_INFO.inProgress" class="status small">
+                                    <span class="text-info"><i class="icon ion-md-hourglass"></i>
+                                        {{'Verificaion in process' | translate}}</span></div>
+                            </div>
+                            <div *ngIf="editAddress == true" class="editable d-block">
+                                <div class="row no-gutters">
+                                    <div class="col-sm-6 pr-md-1">
+                                        <select formControlName="searchPrefe" style="width: 100%"
+                                            [className]="userForm?.controls?.searchPrefe?.errors ? 'form-control form-control-sm mb-1 select2 invalid' : 'form-control form-control-sm mb-1 select2'">
+                                            <option *ngFor="let item of listCityJapan" value="{{item}}">{{item}}
+                                            </option>
+
+                                        </select>
+                                        <div *ngIf="userForm?.controls?.searchPrefe?.errors?.Required"
+                                            class="invalid-mess">
+                                            <div>{{'This field is required' | translate}}</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 pl-md-1">
+                                        <input type="text" formControlName="searchCountry" maxlength="100"
+                                            [className]="userForm?.controls?.searchCountry?.errors ? 'form-control form-control-sm mb-1 invalid' : 'form-control form-control-sm mb-1'">
+                                        <div *ngIf="userForm?.controls?.searchCountry?.errors?.Required"
+                                            class="invalid-mess">
+                                            <div>{{'This field is required' | translate}}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row no-gutters">
+                                    <div class="col-sm-6 pr-md-1">
+                                        <input type="text" maxlength="11" formControlName="house_numb"
+                                            [className]="userForm?.controls?.house_numb?.errors ? 'form-control form-control-sm mb-1 invalid' : 'form-control form-control-sm mb-1'">
+                                    </div>
+                                    <div class="col-sm-6 pl-md-1">
+                                        <input type="text" name="cor-address" class="form-control form-control-sm mb-1"
+                                            maxlength="100" formControlName="name_build" value=""
+                                            placeholder="Building Name">
+                                    </div>
+                                </div>
+                                <div class="row no-gutters">
+                                    <div *ngIf="userForm?.controls?.house_numb?.errors?.Required"
+                                        class="invalid-mess col-sm-6 pr-md-1">
+                                        <div>{{'This field is required' | translate}}</div>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <button type="button" (click)="cancelEdit('address')"
+                                        class="btn btn-sm btn-cancel btn-outline-secondary pt-0 pb-0">{{'Cancel' | translate}}</button>
+                                </div>
+                            </div>
+                        </td>
+                        <!-- <td width="15">
+                            <a href="javascript:;" class="edit-link"
+                                *ngIf="editAddress == false && userInfor?.address?.status == STATUS_INFO.approve"
+                                data-toggle="tooltip" data-placement="top" (click)="showEditField('address')"
+                                title="Edit Address"><i class="icon ion-md-create"></i></a>
+                        </td> -->
+                    </tr>
+
+
+                    <tr class="row-email need-verify">
+                        <td>{{'Email' | translate}}</td>
+                        <td>
+                            <div *ngIf="editEmail == false" class="currentvalue">
+                                <strong><a href="javascript:;">{{userInfor?.email?.value}}</a></strong>
+                                <div *ngIf="userInfor?.email?.status == STATUS_INFO.inProgress" class="status small">
+                                    <span class="text-info"><i class="icon ion-md-hourglass"></i>
+                                        {{'Verificaion in process' | translate}}</span></div>
+                            </div>
+                            <div *ngIf="editEmail == true" class="editable d-block">
+                                <input type="text" name="email" formControlName="email" maxlength="100"
+                                    [className]="invalidEmail == true || userForm?.controls?.email?.errors ? 'form-control form-control-sm mb-1 invalid' : 'form-control form-control-sm mb-1'">
+                                <div *ngIf="userForm?.controls?.email?.errors?.Required" class="invalid-mess">
+                                    <div>{{'This field is required' | translate}}</div>
+                                </div>
+                                <div *ngIf="userForm?.controls?.email?.errors?.Email" class="invalid-mess">
+                                    <div *ngIf="userForm?.controls['email'].errors">{{'Invalid email' | translate}}
+                                    </div>
+                                </div>
+                                <div *ngIf="invalidEmail == true" class="invalid-mess">
+                                    <div>{{'This email address is already registered' | translate}}</div>
+                                  </div>
+                                <div class="text-right">
+                                    <button type="button" (click)="cancelEdit('email')"
+                                        class="btn btn-sm btn-cancel btn-outline-secondary pt-0 pb-0">{{'Cancel' | translate}}</button>
+                                </div>
+                            </div>
+                        </td>
+                        <td width="15">
+                            <a href="javascript:;" class="edit-link"
+                                *ngIf="editEmail == false && userInfor?.email?.status == STATUS_INFO.approve"
+                                data-toggle="tooltip" data-placement="top" (click)="showEditField('email')"
+                                title="Edit Email"><i class="icon ion-md-create"></i></a>
+                        </td>
+                    </tr>
+
+                    <tr class="row-phone">
+                        <td>{{'Phone' | translate}}</td>
+                        <td>
+                            <div *ngIf="editPhone == false" class="currentvalue">
+                                <strong><a href="javascript:;">{{userInfor?.mobile}}</a></strong>
+                            </div>
+                            <div *ngIf="editPhone == true" class="editable d-block">
+                                <input type="tel" name="phone" formControlName="phone" maxlength="11"
+                                    [className]="userForm?.controls?.phone?.errors ? 'form-control form-control-sm mb-1 invalid' : 'form-control form-control-sm mb-1'">
+                                <div *ngIf="userForm?.controls?.phone?.errors?.Required" class="invalid-mess">
+                                    <div>{{'This field is required' | translate}}</div>
+                                </div>
+                                <div style="display:block" *ngIf="userForm?.controls?.phone?.errors?.phoneLength"
+                                    class="invalid-mess">
+                                    <div *ngIf="userForm?.controls?.phone?.errors?.phoneLength">
+                                        {{'Phone number must be at least 10 characters long.' | translate}}</div>
+                                </div>
+                                <div class="text-right">
+                                    <button type="button" (click)="cancelEdit('phone')"
+                                        class="btn btn-sm btn-cancel btn-outline-secondary pt-0 pb-0">{{'Cancel' | translate}}</button>
+                                </div>
+                            </div>
+
+                        </td>
+                        <td width="15"><a href="javascript:;" class="edit-link" *ngIf="editPhone == false"
+                                data-toggle="tooltip" data-placement="top" (click)="showEditField('phone')"
+                                title="Edit Phone"><i class="icon ion-md-create"></i></a>
+                        </td>
+                    </tr>
+
+                    <tr class="row-action" *ngIf="showSave == true">
+                        <td>&nbsp;</td>
+                        <td>
+                            <button type="button" (click)="saveUser(formType.userInfor)"
+                                class="btn btn-save btn-success pl-3 pr-3">Save</button>
+                        </td>
+                        <td width="15">&nbsp;</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div>&nbsp;</div>
+<div class="d-flex justify-content-between align-items-center mb-3 bg-light p-2">
+    <h5 class="mb-0"><strong>{{'Financial Information' | translate}}</strong></h5>
+    <a href="javascript:;" class="edit-link edit-link-financial" data-toggle="tooltip" data-placement="top"
+        (click)="editFinancial = true" title="Edit Financial Information"><i class="icon ion-md-create"></i></a>
+</div>
+<div class="financial_info" *ngIf="editFinancial == false">
+    <div class="row mb-1">
+        <div class="col-md-4 col-lg-3">
+            <label class="label">年収</label>
+        </div>
+        <div class="col-md-8 col-lg-6">
+            <strong>{{occupationSurveyForm?.controls?.annualIncome?.value | convertFinancial: 'userAnnual'}}</strong>
+        </div>
+    </div>
+    <div class="row mb-1">
+        <div class="col-md-4 col-lg-3">
+            <label class="label">金融資産・自己資産</label>
+        </div>
+        <div class="col-md-8 col-lg-6">
+            <strong>{{occupationSurveyForm?.controls?.financialAsset?.value | convertFinancial: 'user'}}</strong>
+        </div>
+    </div>
+    <div class="row mb-1">
+        <div class="col-md-4 col-lg-3">
+            <label class="label">上記自己資産のうち投資に利用可能な額</label>
+        </div>
+        <div class="col-md-8 col-lg-6">
+            <strong>{{occupationSurveyForm?.controls?.amountAvaiable?.value | convertFinancial: 'user'}}</strong>
+        </div>
+    </div>
+</div>
+<div [formGroup]="occupationSurveyForm" class="financial_edit p-3 bg-light" *ngIf="editFinancial == true">
+    <div class="row mb-1">
+        <div class="col-md-4 col-lg-3">
+            <label class="label">年収</label>
+        </div>
+        <div class="col-md-8 col-lg-6">
+            <select class="form-control" formControlName="annualIncome"
+                [className]="occupationSurveyForm.controls.annualIncome.errors ? 'form-control invalid' : 'form-control'">
+                <option value="" disabled>選択してください</option>
+                <option *ngFor="let item of listAnnualIncomeInvidual" value="{{item?.sequence}}">{{item?.value}}
+                </option>
+            </select>
+            <div *ngIf="occupationSurveyForm.controls.annualIncome.errors" class="invalid-mess">
+                <div>ご年収が150万円未満の場合には口座を開設頂けない場合がございます。</div>
+            </div>
+        </div>
+    </div>
+    <div class="row mb-1">
+        <div class="col-md-4 col-lg-3">
+            <label class="label">金融資産・自己資産</label>
+        </div>
+        <div class="col-md-8 col-lg-6">
+            <select formControlName="financialAsset" (change)="changeFinanAssetInvidual()"
+                [className]="occupationSurveyForm.controls.financialAsset.errors ? 'form-control invalid' : 'form-control'">
+                <option value="" disabled>選択してください</option>
+                <option *ngFor="let item of listFinancialAssetInvidual" value="{{item?.sequence}}">{{item?.value}}
+                </option>
+            </select>
+            <div *ngIf="occupationSurveyForm.controls.financialAsset.errors" class="invalid-mess">
+                <div>この項目は必須項目です。</div>
+            </div>
+        </div>
+    </div>
+    <div class="row mb-1">
+        <div class="col-md-4 col-lg-3">
+            <label class="label">上記自己資産のうち投資に利用可能な額</label>
+        </div>
+        <div class="col-md-8 col-lg-6">
+            <select formControlName="amountAvaiable"
+                [className]="occupationSurveyForm.controls.amountAvaiable.errors ? 'form-control invalid' : 'form-control'">
+                <option value="" disabled>選択してください</option>
+                <option *ngFor="let item of listAmountAvaiableInvidual" value="{{item?.sequence}}">{{item?.value}}
+                </option>
+            </select>
+            <div *ngIf="occupationSurveyForm.controls.amountAvaiable.errors" class="invalid-mess">
+                <div>この項目は必須項目です。</div>
+            </div>
+        </div>
+    </div>
+    <div class="row mb-1">
+        <div class="col-md-4 col-lg-3">
+            &nbsp;
+        </div>
+        <div class="col-md-8 col-lg-6">
+            <button (click)="saveUser(formType.financial)" class="btn btn-success btn-save">Save</button>
+            <button (click)="canCelSaveOccupation()" class="btn btn-primary btn-save ml-2">{{'Cancel' | translate}}</button>
+        </div>
+    </div>
+</div>
+<div>&nbsp;</div>
+<div class="d-flex justify-content-between align-items-center mb-3 bg-light p-2">
+    <h5 class="mb-0"><strong>{{'Investment Purpose' | translate}}</strong></h5>
+    <a href="javascript:;" class="edit-link edit-link-investment" data-toggle="tooltip" data-placement="top"
+        (click)="editPurposeInvest()" title="Edit Investment Purpose"><i class="icon ion-md-create"></i></a>
+</div>
+<div class="investment_purpose" *ngIf="editPurpose == false">
+    <div class="row mb-1">
+        <div class="col-md-4 col-lg-3">
+            <label class="label">投資目的</label>
+        </div>
+        <div class="col-md-8 col-lg-6">
+            <strong>{{purposeInvestForm?.controls?.investPurposeSortTerm?.value == true ? '短期売買 ' : ''}}
+                {{purposeInvestForm?.controls?.investPurposeMedium?.value == true ? '中長期運用 ' : ''}}
+                {{purposeInvestForm?.controls?.investPurposeExchange?.value == true ? '為替差益重視 ' : ''}}
+                {{purposeInvestForm?.controls?.investPurposeInterestRate?.value == true ? '金利・配当重視 ' : ''}}
+                {{purposeInvestForm?.controls?.investPurposeForeignCurrency?.value == true ? '外貨資産ヘッジ ' : ''}}
+                {{purposeInvestForm?.controls?.investPurposeOther?.value == true ? 'その他 ' : ''}}</strong>
+        </div>
+    </div>
+    <div class="row mb-1">
+        <div class="col-md-4 col-lg-3">
+            <label class="label">その他をご選択の場合</label>
+        </div>
+        <div class="col-md-8 col-lg-6">
+            <strong>{{purposeInvestForm?.controls?.otherPurpose?.value}}</strong>
+        </div>
+    </div>
+    <div class="row mb-1">
+        <div class="col-md-4 col-lg-3">
+            <label class="label">申込の経緯（取引の動機）</label>
+        </div>
+        <div class="col-md-8 col-lg-6">
+            <strong>{{purposeInvestForm?.controls?.backgroundApplication?.value | convertInvestmentPurpose : 'background'}}</strong>
+        </div>
+    </div>
+    <div class="row mb-1">
+        <div class="col-md-4 col-lg-3">
+            <label class="label">具体名をご記入ください </label>
+        </div>
+        <div class="col-md-8 col-lg-6">
+            <strong>{{purposeInvestForm?.controls?.specificName?.value}}</strong>
+        </div>
+    </div>
+    <div class="row mb-1">
+        <div class="col-md-4 col-lg-3">
+            <label class="label">投資経験：FX取引</label>
+        </div>
+        <div class="col-md-8 col-lg-6">
+            <strong>{{purposeInvestForm?.controls?.investExFx?.value | convertInvestmentPurpose: 'experience'}}</strong>
+        </div>
+    </div>
+    <div class="row mb-1">
+        <div class="col-md-4 col-lg-3">
+            <label class="label">投資経験：CFD取引</label>
+        </div>
+        <div class="col-md-8 col-lg-6">
+            <strong>{{purposeInvestForm?.controls?.inversExCfd?.value | convertInvestmentPurpose: 'experience'}}</strong>
+        </div>
+    </div>
+    <div class="row mb-1">
+        <div class="col-md-4 col-lg-3">
+            <label class="label">投資経験：株式取引</label>
+        </div>
+        <div class="col-md-8 col-lg-6">
+            <strong>{{purposeInvestForm?.controls?.investStockTrading?.value | convertInvestmentPurpose: 'experience'}}</strong>
+        </div>
+    </div>
+    <div class="row mb-1">
+        <div class="col-md-4 col-lg-3">
+            <label class="label">投資経験：信用取引</label>
+        </div>
+        <div class="col-md-8 col-lg-6">
+            <strong>{{purposeInvestForm?.controls?.investMarginTrading?.value | convertInvestmentPurpose: 'experience'}}</strong>
+        </div>
+    </div>
+    <div class="row mb-1">
+        <div class="col-md-4 col-lg-3">
+            <label class="label">投資経験：商品先物</label>
+        </div>
+        <div class="col-md-8 col-lg-6">
+            <strong>{{purposeInvestForm?.controls?.investCommodities?.value | convertInvestmentPurpose: 'experience'}}</strong>
+        </div>
+    </div>
+    <div class="row mb-1">
+        <div class="col-md-4 col-lg-3">
+            <label class="label">投資経験：その他</label>
+        </div>
+        <div class="col-md-8 col-lg-6">
+            <strong>{{purposeInvestForm?.controls?.other?.value == '1' ? '特になし' : '上記以外の投資経験がある'}}</strong>
+        </div>
+    </div>
+    <div class="row mb-1">
+        <div class="col-md-4 col-lg-3">
+            <label class="label mr-lg-2">投資経験がある金融商品名</label>
+        </div>
+        <div class="col-md-8 col-lg-6">
+            <strong>{{purposeInvestForm?.controls?.financialInstrument?.value}}</strong>
+        </div>
+    </div>
+    <div class="row mb-1">
+        <div class="col-md-4 col-lg-3">
+            <label class="label mr-lg-2">取引経験</label>
+        </div>
+        <div class="col-md-8 col-lg-6">
+            <strong>
+                {{purposeInvestForm?.controls?.tradingExperience?.value | convertInvestmentPurpose: 'experience'}}</strong>
+        </div>
+    </div>
+</div>
+<div [formGroup]="purposeInvestForm" class="investment_purpose_edit p-3 bg-light" *ngIf="editPurpose == true">
+    <label class="label mb-1">投資目的</label>
+    <div *ngIf="purposeInvestForm.controls.investPurpose.errors" class="text-danger small mt-1">1つ以上の選択が必要です</div>
+    <div class="row small-gutters">
+        <div class="col-md-6 col-lg-4">
+            <label class="container-checkbox small box-item-checkbox mb-2">
+                <div class="text-center"><strong>短期売買</strong></div>
+                <input type="checkbox" formControlName="investPurposeSortTerm" (change)="changePurpose()" value="1">
+                <span class="checkmark"></span>
+            </label>
+        </div>
+        <div class="col-md-6 col-lg-4">
+            <label class="container-checkbox small  box-item-checkbox mb-2">
+                <div class="text-center"><strong>中長期運用</strong></div>
+                <input type="checkbox" (change)="changePurpose()" formControlName="investPurposeMedium" value="2">
+                <span class="checkmark"></span>
+            </label>
+        </div>
+        <div class="col-md-6 col-lg-4">
+            <label class="container-checkbox small  box-item-checkbox mb-2">
+                <div class="text-center"><strong>為替差益重視</strong></div>
+                <input type="checkbox" (change)="changePurpose()" formControlName="investPurposeExchange" value="3">
+                <span class="checkmark"></span>
+            </label>
+        </div>
+        <div class="col-md-6 col-lg-4">
+            <label class="container-checkbox small  box-item-checkbox mb-2">
+                <div class="text-center"><strong>金利・配当重視</strong></div>
+                <input type="checkbox" (change)="changePurpose()" formControlName="investPurposeInterestRate" value="4">
+                <span class="checkmark"></span>
+            </label>
+        </div>
+        <div class="col-md-6 col-lg-4">
+            <label class="container-checkbox small  box-item-checkbox mb-2">
+                <div class="text-center"><strong>外貨資産ヘッジ</strong></div>
+                <input type="checkbox" (change)="changePurpose()" formControlName="investPurposeForeignCurrency"
+                    value="5">
+                <span class="checkmark"></span>
+            </label>
+        </div>
+        <div class="col-md-6 col-lg-4">
+            <label class="container-checkbox small  box-item-checkbox mb-2">
+                <div class="text-center"><strong>その他</strong></div>
+                <input type="checkbox" (change)="changePurpose()" formControlName="investPurposeOther" value="6">
+                <span class="checkmark"></span>
+            </label>
+        </div>
+    </div>
+    <div>&nbsp;</div>
+    <div class="row mb-1" *ngIf="purposeInvestForm.controls.investPurposeOther.value == true">
+        <div class="col-md-4 col-lg-3">
+            <label class="label mr-lg-2">その他をご選択の場合</label>
+        </div>
+        <div class="col-md-8 col-lg-6">
+            <input formControlName="otherPurpose" type="text" name="exx" value=""
+                [className]="purposeInvestForm.controls.otherPurpose.errors ? 'form-control invalid' : 'form-control'">
+            <div *ngIf="purposeInvestForm.controls.otherPurpose.errors" class="invalid-mess">
+                <div>この項目は必須項目です。</div>
+            </div>
+        </div>
+    </div>
+    <div class="row mb-1">
+        <div class="col-md-4 col-lg-3">
+            <label class="label">申込の経緯（取引の動機）</label>
+        </div>
+        <div class="col-md-8 col-lg-6">
+            <select formControlName="backgroundApplication" (change)="changeBackGroundApplication()"
+                [className]="purposeInvestForm.controls.backgroundApplication.errors ? 'form-control invalid' : 'form-control'">
+                <option value="" disabled>選択してください</option>
+                <option *ngFor="let item of listBackgroundApplicationInvidual" value="{{item?.sequence}}">
+                    {{item?.value}}</option>
+            </select>
+            <div *ngIf="purposeInvestForm.controls.backgroundApplication.errors" class="invalid-mess">
+                <div>この項目は必須項目です。</div>
+            </div>
+        </div>
+    </div>
+    <div class="row mb-1" *ngIf="purposeInvestForm.controls.backgroundApplication.value == 7">
+        <div class="col-md-4 col-lg-3">
+            <label class="label mr-lg-2">具体名をご記入ください</label>
+        </div>
+        <div class="col-md-8 col-lg-6">
+            <input formControlName="specificName" type="text" placeholder="例)先物・オプション・仮想通貨"
+                [className]="purposeInvestForm.controls.specificName.errors ? 'form-control invalid' : 'form-control'">
+            <div *ngIf="purposeInvestForm.controls.specificName.errors" class="invalid-mess">
+                <div>この項目は必須項目です。</div>
+            </div>
+        </div>
+    </div>
+    <div class="row mb-1">
+        <div class="col-md-4 col-lg-3">
+            <label class="label">投資経験：FX取引</label>
+        </div>
+        <div class="col-md-8 col-lg-6">
+            <select formControlName="investExFx" (change)="changeExPurPose()"
+                [className]="purposeInvestForm.controls.investExFx.errors ? 'form-control invalid' : 'form-control'">
+                <option value="" disabled>選択してください</option>
+                <option *ngFor="let item of listInvestExFxInvidual" value="{{item?.sequence}}">{{item?.value}}</option>
+            </select>
+            <div *ngIf="purposeInvestForm.controls.investExFx.errors" class="invalid-mess">
+                <div *ngIf="purposeInvestForm?.controls?.investExFx?.errors?.ErrorEXP">デリバティブの経験が6か月未満の場合には口座を開設いただけません。
+                </div>
+                <div *ngIf="purposeInvestForm?.controls?.investExFx?.errors?.Required">この項目は必須項目です。</div>
+            </div>
+        </div>
+    </div>
+    <div class="row mb-1">
+        <div class="col-md-4 col-lg-3">
+            <label class="label">投資経験：CFD取引</label>
+        </div>
+        <div class="col-md-8 col-lg-6">
+            <select formControlName="inversExCfd" (change)="changeExPurPose()"
+                [className]="purposeInvestForm.controls.inversExCfd.errors ? 'form-control invalid' : 'form-control'">
+                <option value="" disabled>選択してください</option>
+                <option *ngFor="let item of listInvesExCfdInvidual" value="{{item?.sequence}}">{{item?.value}}</option>
+            </select>
+            <div *ngIf="purposeInvestForm.controls.inversExCfd.errors" class="invalid-mess">
+                <div *ngIf="purposeInvestForm?.controls?.inversExCfd?.errors?.ErrorEXP">
+                    デリバティブの経験が6か月未満の場合には口座を開設いただけません。</div>
+                <div *ngIf="purposeInvestForm?.controls?.inversExCfd?.errors?.Required">この項目は必須項目です。</div>
+            </div>
+        </div>
+    </div>
+    <div>&nbsp;</div>
+    <div class="row mb-1">
+        <div class="col-md-4 col-lg-3">
+            <label class="label">投資経験：株式取引</label>
+        </div>
+        <div class="col-md-8 col-lg-6">
+            <select formControlName="investStockTrading"
+                [className]="purposeInvestForm.controls.investStockTrading.errors ? 'form-control invalid' : 'form-control'">
+                <option value="" disabled>選択してください</option>
+                <option *ngFor="let item of listInvestStockTradingInvidual" value="{{item?.sequence}}">{{item?.value}}
+                </option>
+            </select>
+            <div *ngIf="purposeInvestForm.controls.investStockTrading.errors" class="invalid-mess">
+                <div>この項目は必須項目です。</div>
+            </div>
+        </div>
+    </div>
+    <div class="row mb-1">
+        <div class="col-md-4 col-lg-3">
+            <label class="label">投資経験：信用取引</label>
+        </div>
+        <div class="col-md-8 col-lg-6">
+            <select formControlName="investMarginTrading"
+                [className]="purposeInvestForm.controls.investMarginTrading.errors ? 'form-control invalid' : 'form-control'">
+                <option value="" disabled>選択してください</option>
+                <option *ngFor="let item of listInvestMarginTradingInvidual" value="{{item?.sequence}}">{{item?.value}}
+                </option>
+            </select>
+            <div *ngIf="purposeInvestForm.controls.investMarginTrading.errors" class="invalid-mess">
+                <div>この項目は必須項目です。</div>
+            </div>
+        </div>
+    </div>
+    <div class="row mb-1">
+        <div class="col-md-4 col-lg-3">
+            <label class="label">投資経験：商品先物</label>
+        </div>
+        <div class="col-md-8 col-lg-6">
+            <select formControlName="investCommodities" (change)="changeExPurPose()"
+                [className]="purposeInvestForm.controls.investCommodities.errors ? 'form-control invalid' : 'form-control'">
+                <option value="" disabled>選択してください</option>
+                <option *ngFor="let item of listInvestCommoditiesInvidual" value="{{item?.sequence}}">{{item?.value}}
+                </option>
+            </select>
+            <div *ngIf="purposeInvestForm.controls.investCommodities.errors" class="invalid-mess">
+                <div *ngIf="purposeInvestForm?.controls?.investCommodities?.errors?.ErrorEXP">
+                    デリバティブの経験が6か月未満の場合には口座を開設いただけません。
+                </div>
+                <div *ngIf="purposeInvestForm?.controls?.investCommodities?.errors?.Required">この項目は必須項目です。</div>
+            </div>
+        </div>
+    </div>
+    <div class="row mb-1">
+        <div class="col-md-4 col-lg-3">
+            <label class="label">投資経験：その他</label>
+        </div>
+        <div class="col-md-8 col-lg-6">
+            <div class="container-radios-wrapper">
+                <label
+                    [className]="purposeInvestForm.controls.other.value == 1 ? 'container-radio small  box-item-radio mb-2 active' : 'container-radio small  box-item-radio mb-2'">
+                    <div class="text-center"><strong>特になし</strong></div>
+                    <input type="radio" formControlName="other" value="1" (change)="changeOtherEx()">
+                    <span class="checkmark"></span>
+                </label>
+                <label class="container-radio small box-item-radio mb-2"
+                    [className]="purposeInvestForm.controls.other.value == 2 ? 'container-radio small  box-item-radio mb-2 active' : 'container-radio small  box-item-radio mb-2'">
+                    <div class="text-center"><strong>上記以外の投資経験がある</strong></div>
+                    <input type="radio" formControlName="other" value="2" (change)="changeOtherEx()">
+                    <span class="checkmark"></span>
+                </label>
+            </div>
+        </div>
+    </div>
+    <ng-container *ngIf="purposeInvestForm.controls.other.value == '2'">
+        <div class="row mb-1">
+            <div class="col-md-4 col-lg-3">
+                <label class="label mr-lg-2">投資経験がある金融商品名</label>
+            </div>
+            <div class="col-md-8 col-lg-6">
+                <input type="text" formControlName="financialInstrument"
+                    [className]="purposeInvestForm.controls.financialInstrument.errors ? 'form-control invalid' : 'form-control'">
+                <div *ngIf="purposeInvestForm.controls.financialInstrument.errors" class="invalid-mess">
+                    <div>この項目は必須項目です。</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-1">
+            <div class="col-md-4 col-lg-3">
+                <label class="label mr-lg-2">取引経験</label>
+            </div>
+            <div class="col-md-8 col-lg-6">
+                <select formControlName="tradingExperience" (change)="changeExPurPose()"
+                    [className]="purposeInvestForm.controls.tradingExperience.errors ? 'form-control invalid' : 'form-control'">
+                    <option value="" disabled>選択してください</option>
+                    <option *ngFor="let item of listTradingExperienceInvidual" value="{{item?.sequence}}">
+                        {{item?.value}}
+                    </option>
+                    <div *ngIf="purposeInvestForm.controls.tradingExperience.errors" class="invalid-mess">
+                        <!-- <div>この項目は必須項目です。</div> -->
+                        <div *ngIf="purposeInvestForm?.controls?.tradingExperience?.errors?.ErrorEXP">
+                            デリバティブの経験が6か月未満の場合には口座を開設いただけません。</div>
+                        <div *ngIf="purposeInvestForm?.controls?.tradingExperience?.errors?.Required">この項目は必須項目です。</div>
+                    </div>
+                </select>
+            </div>
+        </div>
+    </ng-container>
+    <div class="row mb-1">
+        <div class="col-md-4 col-lg-3">
+            &nbsp;
+        </div>
+        <div class="col-md-8 col-lg-6">
+            <button (click)="saveUser(formType.purpose)" class="btn btn-success btn-save">Save</button>
+            <button (click)="canCelPurpose()" class="btn btn-primary btn-save ml-2">{{'Cancel' | translate}}</button>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal-confirm" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true"
+    data-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <p>{{'Do you want to save information?' | translate}}</p>
+                <div>
+                    <button type="button" class="btn btn-sm btn-success pl-3 pr-3" (click)="updateUser()"
+                        data-dismiss="modal">Ok</button>
+                    <button type="button" class="btn btn-sm btn-outline-secondary pl-3 pr-3"
+                        data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng4-loading-spinner> </ng4-loading-spinner>

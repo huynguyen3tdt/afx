@@ -159,4 +159,16 @@ export class UserService {
         })
       );
   }
+
+  changeLanguage(param): Observable<ResponseWihtoutDataModel> {
+    return this.httpClient
+      .put(`${this.envConfigService.getConfig()}/${AppSettings.API_LANGUAGE}`, param)
+      .pipe(
+      catchError((error: HttpErrorResponse) => {
+        return new Observable((observer: InnerSubscriber<any, any>) => {
+          observer.next(error);
+        });
+      })
+    );
+  }
 }

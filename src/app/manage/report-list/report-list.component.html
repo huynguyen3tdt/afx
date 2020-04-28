@@ -10,7 +10,7 @@
             <div class="row">
                 <div class="col-md-3 col-lg-2">
                     <div class="nav flex-md-column nav-pills mb-3 filter-nav" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                        <a class="nav-link active" id="v-pills-all-tab" data-toggle="pill" href="#v-pills-all" (click)="checkTab(TABS.ALL.value, 'call')" role="tab" aria-controls="v-pills-all" aria-selected="true">{{'All' | translate}}</a>
+                        <a class="nav-link active" id="v-pills-all-tab" data-toggle="pill" href="#v-pills-all" (click)="checkTab(TABS.ALL.value, 'call')" role="tab" aria-controls="v-pills-all" aria-selected="true">{{'All Customer Statement' | translate}}</a>
                         <a class="nav-link" id="v-pills-transaction-tab" data-toggle="pill" href="#v-pills-all" (click)="checkTab(TABS.DAILY.value, 'call')" role="tab" aria-controls="v-pills-transaction" aria-selected="false">{{'Daily Customer Statement' | translate}}</a>
                         <a class="nav-link" id="v-pills-annual-tab" data-toggle="pill" href="#v-pills-all" role="tab" (click)="checkTab(TABS.YEARLY.value, 'call')" aria-controls="v-pills-annual" aria-selected="false">{{'Yearly Customer Statement' | translate}}</a>
                     </div>
@@ -19,8 +19,8 @@
                     <div class="tab-content" id="v-pills-tabContent">
                         <div class="tab-pane fade show active" id="v-pills-all" role="tabpanel" aria-labelledby="v-pills-all-tab">
                             <h3 *ngIf="tab == 'ALL'" class="mb-3">{{'All Customer Statement' | translate}}</h3>
-                            <h3 *ngIf="tab == 'DAILY'" class="mb-3">{{'Transaction Report' | translate}}</h3>
-                            <h3 *ngIf="tab == 'YEARLY'" class="mb-3">{{'System Notifications' | translate}}</h3>
+                            <h3 *ngIf="tab == 'DAILY'" class="mb-3">{{'Daily Customer Statement' | translate}}</h3>
+                            <h3 *ngIf="tab == 'YEARLY'" class="mb-3">{{'Yearly Customer Statement' | translate}}</h3>
                             <div [formGroup]="searchForm" class="form mb-3 form-search-box">
                                 <div class="row">
                                     <div class="col-4 col-lg-3">
@@ -37,9 +37,9 @@
                                                 <div class="form-group">
                                                     <label class="label d-none d-lg-block mb-0">&nbsp;</label>
                                                     <div class="btn-group d-flex">
-                                                        <button type="button" (click)="setDate(DURATION.DAY)" class="btn btn-sm btn-outline-secondary">{{'D' | translate}}</button>
-                                                        <button type="button" (click)="setDate(DURATION.MONTH)" class="btn btn-sm btn-outline-secondary">{{'M' | translate}}</button>
                                                         <button type="button" (click)="setDate(DURATION.YEAR)" class="btn btn-sm btn-outline-secondary">{{'Y' | translate}}</button>
+                                                        <button type="button" (click)="setDate(DURATION.MONTH)" class="btn btn-sm btn-outline-secondary">{{'M' | translate}}</button>
+                                                        <button type="button" (click)="setDate(DURATION.DAY)" class="btn btn-sm btn-outline-secondary">{{'D' | translate}}</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -102,7 +102,7 @@
                                             <td *ngIf="item?.read_flg == true" class="text-right align-middle"><span class="text-success">{{'Done' | translate}}</span></td>
                                             <td *ngIf="item?.read_flg == false" class="text-right align-middle"><span class="text-danger">{{'Not yet' | translate}}</span></td>
                                             <td class="text-right align-middle">
-                                                <button (click)="downLoadFile(item)" class="btn btn-sm btn-outline-secondary pt-0 pb-0"><i
+                                                <button (click)="downLoadFile(item)" class="btn btn-sm btn-success btn-outline-secondary pt-0 pb-0"><i
                                                         class="icon ion-md-download"></i></button>
                                             </td>
                                         </tr>
@@ -116,7 +116,11 @@
                                             <option *ngFor="let item of listTotalItem" value="{{item}}">{{item}}</option>
                                         </select>
                                     </div>
-                                    <div class="small text-secondary d-inline-block mr-2">{{'Showing' | translate}} {{recordFrom}} {{'to' | translate}} {{recordTo}} {{'of' | translate}} {{totalItem}} {{'entries' | translate}}
+                                    <div *ngIf="locale == language.english" class="small text-secondary d-inline-block mr-2">Showing {{recordFrom}} to
+                                        {{recordTo}} of {{totalItem}} entries
+                                    </div>
+                                    <div *ngIf="locale == language.japan" class="small text-secondary d-inline-block mr-2">{{totalItem}}件中{{recordFrom}} to
+                                        {{recordTo}}の表示
                                     </div>
                                 </div>
                                 <ul class="pagination pagination-sm mb-0">

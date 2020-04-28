@@ -14,12 +14,12 @@ import { AppSettings } from './api.setting';
   providedIn: 'root'
 })
 export class NotificationsService {
-
   constructor(
     private httpClient: HttpClient,
     private envConfigService: EnvConfigService) { }
 
-  getListNotifications(pageSize: number, pageNumber: number, unread: boolean, type?: number): Observable<PageNotificationResponse> {
+  getListNotifications(accountNumber: string, pageSize: number,
+                       pageNumber: number, unread: boolean, type?: number): Observable<PageNotificationResponse> {
     let URL = '';
     let checkUnread = 0;
     if (unread === false) {
@@ -28,9 +28,9 @@ export class NotificationsService {
       checkUnread = 1;
     }
     if (type !== -1) {
-      URL = `?noti_type=${type}&not_read=${checkUnread}&page_size=${pageSize}&page=${pageNumber}`;
+      URL = `?trading_account_id=${accountNumber}&noti_type=${type}&not_read=${checkUnread}&page_size=${pageSize}&page=${pageNumber}`;
     } else {
-      URL = `?not_read=${checkUnread}&page_size=${pageSize}&page=${pageNumber}`;
+      URL = `?trading_account_id=${accountNumber}&not_read=${checkUnread}&page_size=${pageSize}&page=${pageNumber}`;
     }
     return this.httpClient.get(`${this.envConfigService.getConfig()}/${AppSettings.API_GET_LIST_NOTIFICATIONS}` + URL)
       .pipe(
@@ -42,8 +42,8 @@ export class NotificationsService {
       );
   }
 
-  getTotalNotification(): Observable<TotalNotificationResponse> {
-    return this.httpClient.get(`${this.envConfigService.getConfig()}/${AppSettings.API_TOTAL_NOTI}`)
+  getTotalNotification(accountNumber: string): Observable<TotalNotificationResponse> {
+    return this.httpClient.get(`${this.envConfigService.getConfig()}/${AppSettings.API_TOTAL_NOTI}?trading_account_id=` + accountNumber)
       .pipe(
         catchError((error: HttpErrorResponse) => {
           return new Observable((observer: InnerSubscriber<any, any>) => {

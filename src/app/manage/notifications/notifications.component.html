@@ -10,13 +10,23 @@
             <div class="row">
                 <div class="col-md-3 col-lg-2">
                     <div class="nav flex-md-column nav-pills mb-3 filter-nav" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                        <a class="nav-link active" id="v-pills-all-tab" data-toggle="pill" href="#v-pills-all" (click)="changeTab(-1)" role="tab" aria-controls="v-pills-all" aria-selected="true">{{'All' | translate}}<span *ngIf="totalAll > 0" class="badge">{{totalAll}}</span></a>
-                        <a class="nav-link" id="v-pills-important-tab" data-toggle="pill" href="#v-pills-important" #importantTab (click)="changeTab(0)" role="tab" aria-controls="v-pills-important" aria-selected="false">{{'Important' | translate}}<span *ngIf="totalImportant > 0" class="badge">{{totalImportant}}</span></a>
-                        <a class="nav-link" id="v-pills-notifications-tab" data-toggle="pill" (click)="changeTab(1)" href="#v-pills-notifications" role="tab" aria-controls="v-pills-notifications" aria-selected="false">{{'Notifications' | translate}}<span *ngIf="totalNotification > 0" class="badge">{{totalNotification}}</span></a>
-                        <a class="nav-link" id="v-pills-campaign-tab" data-toggle="pill" href="#v-pills-campaign" (click)="changeTab(2)" role="tab" aria-controls="v-pills-campaign" aria-selected="false">{{'Campaign' | translate}}<span *ngIf="totalCampagn > 0" class="badge">{{totalCampagn}}</span></a>
+                        <a class="nav-link active" id="v-pills-all-tab" data-toggle="pill" href="#v-pills-all" (click)="changeTab(TABS.ALL.value)" role="tab" aria-controls="v-pills-all" aria-selected="true">{{'All' | translate}}<span *ngIf="totalAll > 0" class="badge">{{totalAll}}</span></a>
+                        <a class="nav-link" id="v-pills-important-tab" data-toggle="pill" href="#v-pills-important" #importantTab (click)="changeTab(TABS.IMPORTANT.value)" role="tab" aria-controls="v-pills-important" aria-selected="false">{{'Important' | translate}}<span *ngIf="totalImportant > 0" class="badge">{{totalImportant}}</span></a>
+                        <a class="nav-link" id="v-pills-notifications-tab" data-toggle="pill" (click)="changeTab(TABS.NOTIFICATIONS.value)" href="#v-pills-notifications" role="tab" aria-controls="v-pills-notifications" aria-selected="false">{{'Notifications' | translate}}<span *ngIf="totalNotification > 0" class="badge">{{totalNotification}}</span></a>
+                        <a class="nav-link" id="v-pills-campaign-tab" data-toggle="pill" href="#v-pills-campaign" (click)="changeTab(TABS.CAMPAIGN.value)" role="tab" aria-controls="v-pills-campaign" aria-selected="false">{{'Campaign' | translate}}<span *ngIf="totalCampagn > 0" class="badge">{{totalCampagn}}</span></a>
                     </div>
                 </div>
                 <div class="col-md-9 col-lg-10">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                        <div class="d-flex align-items-center">
+                            <label class="label mb-0 mr-2 pt-1">{{'Trading account' | translate}}</label>
+                            <div class="d-inline-block">
+                                <select disabled class="form-control form-control-sm mb-0 bg-none" (change)="changeAccountId()" [(ngModel)]="accountID" style="min-width: 160px;">
+                                <option *ngFor="let item of listTradingAccount" value="{{item?.value}}">{{item?.value}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
                     <div class="tab-content" id="v-pills-tabContent">
                         <div class="tab-pane fade show active" id="v-pills-all" role="tabpanel" aria-labelledby="v-pills-all-tab">
                             <h4><strong>{{'All Notifications' | translate}}</strong></h4>
@@ -33,9 +43,9 @@
                                 <ng-container *ngFor="let item of listNotification; let i = index">
                                     <div (click)="showDetail(i, item)" id="noti_{{i}}" [ngClass]="{'unread': item.read_flg == false}" class="notification-item">
                                         <div class="badge-wrap">
-                                            <span *ngIf="item?.news_type == 0" class="badge badge-danger d-lg-block mb-lg-1">  {{'Important' | translate}}</span>
-                                            <span *ngIf="item?.news_type == 1" class="badge badge-warning d-lg-block mb-lg-1"> {{'System' | translate}}</span>
-                                            <span *ngIf="item?.news_type == 2" class="badge badge-success d-lg-block mb-lg-1"> {{'Campaign' | translate}}</span>
+                                            <span *ngIf="item?.news_type == TABS.IMPORTANT.value || item?.news_type == TABS.SYSTEM_IMPORTANT.value" class="badge badge-danger d-lg-block mb-lg-1">  {{'Important' | translate}}</span>
+                                            <span *ngIf="item?.news_type == TABS.NOTIFICATIONS.value || item?.news_type == TABS.SYSTEM_IMPORTANT.value" class="badge badge-warning d-lg-block mb-lg-1"> {{'System' | translate}}</span>
+                                            <span *ngIf="item?.news_type == TABS.CAMPAIGN.value" class="badge badge-success d-lg-block mb-lg-1"> {{'Campaign' | translate}}</span>
                                         </div>
                                         <div class="item-header">
                                             <h5 class="item-title"><a href="javascript:;">{{item?.news_title}}</a></h5>
@@ -45,19 +55,23 @@
                                         </div>
                                         <div *ngIf="item?.agreement_flg == 1" class="item-content">
                                             <div [innerHTML]="item?.news_content"></div>
-                                            <button (click)="confirmAgreement()" [disabled]="item.agree_flg == true ? true : false" type="button" class="btn btn-primary f-right">Confirm</button>
+                                            <button (click)="confirmAgreement()" [disabled]="item.agree_flg == true ? true : false" type="button" class="btn btn-primary f-right">{{'Confirm' | translate}}</button>
                                         </div>
                                     </div>
                                 </ng-container>
                             </div>
-                            <div class="d-flex align-items-center justify-content-between mb-2">
+                            <div class="d-flex align-items-center justify-content-between mb-2 mt-3">
                                 <div>
                                     <div class="d-inline-block mr-2">
                                         <select (change)="changeTotalItem($event)" [(ngModel)]="pageSize" class="form-control form-control-sm">
                                             <option *ngFor="let item of listTotalItem" value="{{item}}">{{item}}</option>
                                         </select>
                                     </div>
-                                    <div class="small text-secondary d-inline-block mr-2">{{'Showing' | translate}} {{recordFrom}} {{'to' | translate}} {{recordTo}} {{'of' | translate}} {{totalItem}} {{'entries' | translate}}
+                                    <div *ngIf="locale == language.english" class="small text-secondary d-inline-block mr-2">Showing {{recordFrom}} to
+                                        {{recordTo}} of {{totalItem}} entries
+                                    </div>
+                                    <div *ngIf="locale == language.japan" class="small text-secondary d-inline-block mr-2">{{totalItem}}件中{{recordFrom}} to
+                                        {{recordTo}}の表示
                                     </div>
                                 </div>
                                 <ul class="pagination pagination-sm mb-0">
@@ -96,12 +110,14 @@
                                     <div (click)="showDetail(i, item)" id="important_{{i}}" [ngClass]="{'unread': item.read_flg == false}" class="notification-item item-agreement">
                                         <div class="badge-wrap">
                                             <span class="badge badge-danger d-lg-block mb-lg-1">{{'Important' | translate}}</span>
+                                            <span *ngIf="item?.news_type == TABS.SYSTEM_IMPORTANT.value" class="badge badge-warning d-lg-block mb-lg-1"> {{'System' | translate}}</span>
                                         </div>
                                         <div class="item-header">
                                             <h5 class="item-title"><a href="javascript:;">{{item?.news_title}}</a></h5>
                                             <div class="item-meta">{{item?.publish_date}}</div>
                                         </div>
-                                        <div class="item-content">
+                                        <div *ngIf="item?.agreement_flg != 1" class="item-content" [innerHTML]="item?.news_content"></div>
+                                        <div *ngIf="item?.agreement_flg == 1" class="item-content">
                                             <div [innerHTML]="item?.news_content"></div>
                                             <button (click)="confirmAgreement()" [disabled]="item.agree_flg == true ? true : false" type="button" class="btn btn-primary f-right">Confirm</button>
                                         </div>
@@ -109,14 +125,18 @@
                                     </div>
                                 </ng-container>
                             </div>
-                            <div class="d-flex align-items-center justify-content-between mb-2">
+                            <div class="d-flex align-items-center justify-content-between mb-2 mt-3">
                                 <div>
                                     <div class="d-inline-block mr-2">
                                         <select (change)="changeTotalItem($event)" [(ngModel)]="pageSize" class="form-control form-control-sm">
                                             <option *ngFor="let item of listTotalItem" value="{{item}}">{{item}}</option>
                                         </select>
                                     </div>
-                                    <div class="small text-secondary d-inline-block mr-2">{{'Showing' | translate}} {{recordFrom}} {{'to' | translate}} {{recordTo}} {{'of' | translate}} {{totalItem}} {{'entries' | translate}}
+                                    <div *ngIf="locale == language.english" class="small text-secondary d-inline-block mr-2">Showing {{recordFrom}} to
+                                        {{recordTo}} of {{totalItem}} entries
+                                    </div>
+                                    <div *ngIf="locale == language.japan" class="small text-secondary d-inline-block mr-2">{{totalItem}}件中{{recordFrom}} to
+                                        {{recordTo}}の表示
                                     </div>
                                 </div>
                                 <ul class="pagination pagination-sm mb-0">
@@ -142,25 +162,35 @@
                                 <ng-container *ngFor="let item of listNotification; let i = index">
                                     <div (click)="showDetail(i, item)" id="system_{{i}}" [ngClass]="{'unread': item.read_flg == false}" class="notification-item">
                                         <div class="badge-wrap">
-                                            <span *ngIf="item?.news_type == 1" class="badge badge-warning d-lg-block mb-lg-1">{{'System' | translate}}</span>
+                                            <span *ngIf="item?.news_type == TABS.SYSTEM_IMPORTANT.value" class="badge badge-danger d-lg-block mb-lg-1">{{'Important' | translate}}</span>
+                                            <span class="badge badge-warning d-lg-block mb-lg-1">{{'System' | translate}}</span>
                                         </div>
                                         <div class="item-header">
                                             <h5 class="item-title"><a href="javascript:;">{{item?.news_title}}</a></h5>
                                             <div class="item-meta">{{item?.publish_date}}</div>
                                         </div>
-                                        <div class="item-content" [innerHTML]="item?.news_content">
+                                        <!-- <div class="item-content" [innerHTML]="item?.news_content">
+                                        </div> -->
+                                        <div *ngIf="item?.agreement_flg != 1" class="item-content" [innerHTML]="item?.news_content"></div>
+                                        <div *ngIf="item?.agreement_flg == 1" class="item-content">
+                                            <div [innerHTML]="item?.news_content"></div>
+                                            <button (click)="confirmAgreement()" [disabled]="item.agree_flg == true ? true : false" type="button" class="btn btn-primary f-right">Confirm</button>
                                         </div>
                                     </div>
                                 </ng-container>
                             </div>
-                            <div class="d-flex align-items-center justify-content-between mb-2">
+                            <div class="d-flex align-items-center justify-content-between mb-2 mt-3">
                                 <div>
                                     <div class="d-inline-block mr-2">
                                         <select (change)="changeTotalItem($event)" [(ngModel)]="pageSize" class="form-control form-control-sm">
                                             <option *ngFor="let item of listTotalItem" value="{{item}}">{{item}}</option>
                                         </select>
                                     </div>
-                                    <div class="small text-secondary d-inline-block mr-2">{{'Showing' | translate}} {{recordFrom}} {{'to' | translate}} {{recordTo}} {{'of' | translate}} {{totalItem}} {{'entries' | translate}}
+                                    <div *ngIf="locale == language.english" class="small text-secondary d-inline-block mr-2">Showing {{recordFrom}} to
+                                        {{recordTo}} of {{totalItem}} entries
+                                    </div>
+                                    <div *ngIf="locale == language.japan" class="small text-secondary d-inline-block mr-2">{{totalItem}}件中{{recordFrom}} to
+                                        {{recordTo}}の表示
                                     </div>
                                 </div>
                                 <ul class="pagination pagination-sm mb-0">
@@ -186,7 +216,7 @@
                                 <ng-container *ngFor="let item of listNotification; let i = index">
                                     <div (click)="showDetail(i, item)" id="campain_{{i}}" [ngClass]="{'unread': item.read_flg == false}" class="notification-item">
                                         <div class="badge-wrap">
-                                            <span *ngIf="item?.news_type == 2" class="badge badge-success d-lg-block mb-lg-1">{{'Campaign' | translate}}</span>
+                                            <span class="badge badge-success d-lg-block mb-lg-1">{{'Campaign' | translate}}</span>
                                         </div>
                                         <div class="item-header">
                                             <h5 class="item-title"><a href="javascript:;">{{item?.news_title}}</a></h5>
@@ -197,14 +227,18 @@
                                     </div>
                                 </ng-container>
                             </div>
-                            <div class="d-flex align-items-center justify-content-between mb-2">
+                            <div class="d-flex align-items-center justify-content-between mb-2 mt-3">
                                 <div>
                                     <div class="d-inline-block mr-2">
                                         <select (change)="changeTotalItem($event)" [(ngModel)]="pageSize" class="form-control form-control-sm">
                                             <option *ngFor="let item of listTotalItem" value="{{item}}">{{item}}</option>
                                         </select>
                                     </div>
-                                    <div class="small text-secondary d-inline-block mr-2">{{'Showing' | translate}} {{recordFrom}} {{'to' | translate}} {{recordTo}} {{'of' | translate}} {{totalItem}} {{'entries' | translate}}
+                                    <div *ngIf="locale == language.english" class="small text-secondary d-inline-block mr-2">Showing {{recordFrom}} to
+                                        {{recordTo}} of {{totalItem}} entries
+                                    </div>
+                                    <div *ngIf="locale == language.japan" class="small text-secondary d-inline-block mr-2">{{totalItem}}件中{{recordFrom}} to
+                                        {{recordTo}}の表示
                                     </div>
                                 </div>
                                 <ul class="pagination pagination-sm mb-0">
@@ -259,8 +293,9 @@
         <div class="modal-content">
             <div class="modal-body text-center">
                 <p class="mb-0"><i class="icon ion-md-alert text-danger" style="font-size: 48px;line-height: 1"></i></p>
-                <p> {{'You are having ' | translate}}<strong>{{totalNoti?.important}}</strong> {{'important notification' | translate}}</p>
-                <button type="button" class="btn btn-sm btn-primary pl-4 pr-4" data-dismiss="modal">Ok{{'Ok' | translate}}</button>
+                <p *ngIf="locale == language.english">You are having <strong>{{totalNoti?.important}}</strong> Important Notifications</p>
+                <p *ngIf="locale == language.japan">重要なお知らせが <strong>{{totalNoti?.important}}</strong> 件あります。</p>
+                <button type="button" class="btn btn-sm btn-primary pl-4 pr-4" data-dismiss="modal">{{'Ok' | translate}}</button>
             </div>
         </div>
     </div>

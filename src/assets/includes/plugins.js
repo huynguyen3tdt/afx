@@ -6,4 +6,7 @@ document.write( '    <script src=\"assets/js/TweenMax.min.js\"></script>\n' );
 document.write( '    <script src=\"assets/js/select2.min.js\"></script>\n' );
 document.write( '    <script src=\"assets/js/jquery.idTabs.min.js\"></script>\n' );
 document.write( '    <script src=\"assets/js/jquery.matchHeight-min.js\"></script>\n' );
+document.write( '    <script src=\"assets/js/jquery.inputmask.min.js\"></script>\n' );
+document.write( '    <script src=\"assets/js/smooth-scroll.min.js\"></script>\n' );
+document.write( '    <script src=\"assets/js/js.cookie.min.js\"></script>\n' );
 document.write( '    <!-- END Include Js Libs -->' );

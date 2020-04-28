@@ -32,7 +32,7 @@ export interface Notification {
     news_title: string;
     create_date: string;
     read_flg: string;
-    agree_flg: number;
+    agree_flg: boolean;
     agreement_flg: number;
     publish_date: string;
     news_content: number;
@@ -43,6 +43,7 @@ export interface TotalNotification {
     important: number;
     notification: number;
     campaign: number;
+    total: number;
 }
 
 

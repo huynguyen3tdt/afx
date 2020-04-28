@@ -8,6 +8,8 @@ import { catchError } from 'rxjs/operators';
 import { ReportResponseModel, ReportChangeResponseModel } from '../model/report-response.model';
 import { LOCALE } from '../constant/authen-constant';
 import * as moment from 'moment';
+import { LANGUAGLE } from '../constant/language-constant';
+import { DATE_CLIENT_ENG_SUBMIT, DATE_CLIENT_ENG } from '../constant/format-date-constant';
 
 
 @Injectable({
@@ -28,14 +30,14 @@ export class ReportService {
       URL = `?account_numb=${accountNumber}&page_size=${pageSize}&page=${pageNumber}`;
     }
     if (dateFrom && dateFrom !== 'Invalid date') {
-      if (locale === 'en') {
-        dateFrom = moment(new Date(dateFrom)).format('DD-MM-YYYY');
+      if (locale === LANGUAGLE.english) {
+        dateFrom = moment(dateFrom, DATE_CLIENT_ENG).format(DATE_CLIENT_ENG_SUBMIT);
       }
       URL += `&date_from=${dateFrom}`;
     }
     if (dateTo && dateTo !== 'Invalid date') {
-      if (locale === 'en') {
-        dateTo = moment(new Date(dateTo)).format('DD-MM-YYYY');
+      if (locale === LANGUAGLE.english) {
+        dateTo = moment(dateTo, DATE_CLIENT_ENG).format(DATE_CLIENT_ENG_SUBMIT);
       }
       URL += `&date_to=${dateTo}`;
     }
@@ -49,7 +51,7 @@ export class ReportService {
         })
       );
   }
-  downLoadReportFile(reportId: number): Observable<any> {
+  downLoadReportFile(reportId: number): Observable<ArrayBuffer> {
     return this.httpClient
       .get(
         `${this.envConfigService.getConfig()}/${AppSettings.API_DOWNLOAD_REPORT_FILE}?report_id=${reportId}`,

@@ -3,6 +3,7 @@ import { LoginComponent } from './login/login.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { LoginGuard } from '../core/guard/login.guard';
 import {ResetPasswordComponent} from './reset-password/reset-password.component';
+import { ChangeEmailComponent } from './change-email/change-email.component';
 
 export const RegisterRoutes: Routes = [
     {
@@ -21,7 +22,11 @@ export const RegisterRoutes: Routes = [
         component: ForgotPasswordComponent
     },
     {
-      path: 'reset_password',
-      component: ResetPasswordComponent
+        path: 'reset_password',
+        component: ResetPasswordComponent
+    },
+    {
+        path: 'change_email',
+        component: ChangeEmailComponent
     },
 ];
