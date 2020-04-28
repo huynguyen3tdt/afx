@@ -30,7 +30,7 @@ declare var $: any;
 @Component({
   selector: 'app-corporate-info',
   templateUrl: './corporate-info.component.html',
-  styleUrls: ['./corporate-info.component.css']
+  styleUrls: ['./corporate-info.component.scss']
 })
 export class CorporateInfoComponent implements OnInit {
   corporateInfor: CorporateModel;
@@ -174,7 +174,7 @@ export class CorporateInfoComponent implements OnInit {
         if (this.corporateInfor.corporation) {
           this.corporateForm.controls.cor_prefec.setValue(this.corporateInfor.corporation.address.value.city);
           this.corporateForm.controls.cor_district.setValue(this.corporateInfor.corporation.address.value.street);
-          this.corporateForm.controls.cor_postcode.setValue(this.corporateInfor.corporation.zip.value);
+          this.corporateForm.controls.cor_postcode.setValue(this.corporateInfor.corporation.address.value.zip);
           this.corporateForm.controls.cor_house.setValue(this.corporateInfor.corporation.address.value.street2);
           this.corporateForm.controls.cor_build.setValue(this.corporateInfor.corporation.address.value.fx_street3);
           this.corporateForm.controls.cor_phone.setValue(this.corporateInfor.corporation.mobile);
@@ -183,12 +183,12 @@ export class CorporateInfoComponent implements OnInit {
         if (this.corporateInfor.pic) {
           this.picForm.controls.person_bod.setValue(this.corporateInfor.pic.fx_dept);
           this.picForm.controls.person_pic.setValue(this.corporateInfor.pic.function);
-          this.picForm.controls.per_picname.setValue(this.corporateInfor.pic.name);
-          this.picForm.controls.person_picname.setValue(this.corporateInfor.pic.fx_name1);
+          this.picForm.controls.per_picname.setValue(this.corporateInfor.pic.info.value.name);
+          this.picForm.controls.person_picname.setValue(this.corporateInfor.pic.info.value.fx_name1);
           this.picForm.controls.person_phone.setValue(this.corporateInfor.pic.mobile);
           this.picForm.controls.person_email.setValue(this.corporateInfor.pic.email.value);
-          this.picForm.controls.person_gender.setValue(this.corporateInfor.pic.fx_gender.value);
-          this.corporateInfor.pic.fx_gender.value = this.globalService.checkGender(this.corporateInfor.pic.fx_gender.value);
+          this.picForm.controls.person_gender.setValue(this.corporateInfor.pic.info.value.fx_gender);
+          this.corporateInfor.pic.info.value.fx_gender = this.globalService.checkGender(this.corporateInfor.pic.info.value.fx_gender);
         }
         if (this.corporateInfor.surveys.length > 0) {
           if (this.corporateInfor.surveys.find(item =>
@@ -513,7 +513,7 @@ export class CorporateInfoComponent implements OnInit {
       case 'cor-address':
         this.corporateForm.controls.cor_prefec.setValue(this.corporateInfor.corporation.address.value.city);
         this.corporateForm.controls.cor_district.setValue(this.corporateInfor.corporation.address.value.street);
-        this.corporateForm.controls.cor_postcode.setValue(this.corporateInfor.corporation.zip.value);
+        this.corporateForm.controls.cor_postcode.setValue(this.corporateInfor.corporation.address.value.zip);
         this.corporateForm.controls.cor_house.setValue(this.corporateInfor.corporation.address.value.street2);
         this.corporateForm.controls.cor_build.setValue(this.corporateInfor.corporation.address.value.fx_street3);
         this.editCorAddress = true;
@@ -535,8 +535,8 @@ export class CorporateInfoComponent implements OnInit {
         this.editPersonPic = true;
         break;
       case 'pic-name':
-        this.picForm.controls.person_picname.setValue(this.corporateInfor.pic.fx_name1);
-        this.picForm.controls.person_gender.setValue(this.globalService.reConvertGender(this.corporateInfor.pic.fx_gender.value));
+        this.picForm.controls.person_picname.setValue(this.corporateInfor.pic.info.value.fx_name1);
+        this.picForm.controls.person_gender.setValue(this.globalService.reConvertGender(this.corporateInfor.pic.info.value.fx_gender));
         this.editPersonPicname = true;
         break;
       case 'p-phone':
@@ -548,7 +548,7 @@ export class CorporateInfoComponent implements OnInit {
         this.editPersonEmail = true;
         break;
       case 'p-gender':
-        this.picForm.controls.person_gender.setValue(this.globalService.reConvertGender(this.corporateInfor.pic.fx_gender.value));
+        this.picForm.controls.person_gender.setValue(this.globalService.reConvertGender(this.corporateInfor.pic.info.value.fx_gender));
         this.editGender = true;
         break;
     }

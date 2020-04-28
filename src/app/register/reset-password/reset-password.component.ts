@@ -8,7 +8,7 @@ import { passwordValidation, requiredInput } from 'src/app/core/helper/custom-va
 @Component({
   selector: 'app-reset-password',
   templateUrl: './reset-password.component.html',
-  styleUrls: ['./reset-password.component.css']
+  styleUrls: ['./reset-password.component.scss']
 })
 export class ResetPasswordComponent implements OnInit {
 

@@ -22,7 +22,7 @@ declare var $: any;
 @Component({
   selector: 'app-deposit',
   templateUrl: './deposit.component.html',
-  styleUrls: ['./deposit.component.css']
+  styleUrls: ['./deposit.component.scss']
 })
 export class DepositComponent implements OnInit {
   @ViewChild('listTran', { static: false }) listTran: ListTransactionComponent;

@@ -28,7 +28,7 @@ const numeral = require('numeral');
 @Component({
   selector: 'app-withdraw-request',
   templateUrl: './withdraw-request.component.html',
-  styleUrls: ['./withdraw-request.component.css']
+  styleUrls: ['./withdraw-request.component.scss']
 })
 export class WithdrawRequestComponent implements OnInit {
   @ViewChild('listTran', { static: false }) listTran: ListTransactionComponent;

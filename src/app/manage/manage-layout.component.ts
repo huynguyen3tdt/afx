@@ -4,7 +4,7 @@ declare var $: any;
 @Component({
     selector: 'app-manage',
     templateUrl: './manage-layout.component.html',
-    styleUrls: ['./manage-layout.component.css']
+    styleUrls: ['./manage-layout.component.scss']
 })
 
 export class ManageLayoutComponent implements OnInit {

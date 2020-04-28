@@ -15,7 +15,7 @@ import { LANGUAGLE } from 'src/app/core/constant/language-constant';
 @Component({
   selector: 'app-notifications',
   templateUrl: './notifications.component.html',
-  styleUrls: ['./notifications.component.css']
+  styleUrls: ['./notifications.component.scss']
 })
 export class NotificationsComponent implements OnInit {
   @ViewChild('importantTab', { static: true }) importantTab: ElementRef;
