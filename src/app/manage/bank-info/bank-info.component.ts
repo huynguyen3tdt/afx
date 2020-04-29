@@ -125,14 +125,18 @@ export class BankInfoComponent implements OnInit {
     });
   }
   searchBank(firstChar: string, name: string, bic: string) {
+    this.spinnerService.show();
     this.userService.getSearchBank(firstChar, name, bic).subscribe(response => {
+      this.spinnerService.hide();
       if (response.meta.code === 200) {
         this.bankSearch = response.data;
       }
     });
   }
   searchBranch(bankId: number, firstChar: string, branName: string, branchCode: string) {
+    this.spinnerService.show();
     this.userService.getSearchBranch(bankId, firstChar, branName, branchCode).subscribe(response => {
+      this.spinnerService.hide();
       if (response.meta.code === 200) {
         this.branchSearch = response.data;
       }
@@ -247,7 +251,7 @@ export class BankInfoComponent implements OnInit {
 
   searchBranchSubmit(type: number) {
     if (type === 1) {
-      this.searchBranch(this.currentBank.id, '', this.branchForm.controls.branch_name.value, '');
+      this.searchBranch(this.currentBank.id, '', this.upperCaseHira(this.branchForm.controls.branch_name.value), '');
     }
     if (type === 2) {
       this.searchBranch(this.currentBank.id, '', '', this.branchForm.controls.branch_code.value);
@@ -256,7 +260,7 @@ export class BankInfoComponent implements OnInit {
 
   searchBankSubmit(type: number) {
     if (type === 1) {
-      this.searchBank('', this.bankForm.controls.bank_name.value, '');
+      this.searchBank('', this.upperCaseHira(this.bankForm.controls.bank_name.value), '');
     }
     if (type === 2) {
       this.searchBank('', '', this.bankForm.controls.bank_code.value);
@@ -387,4 +391,13 @@ export class BankInfoComponent implements OnInit {
     ];
   }
 
+  upperCaseHira(searchHira: string) {
+    const listUpperHira = [{key: 'ゃ', value: 'や'}, {key: 'ゅ', value: 'ゆ'}, {key: 'ょ', value: 'よ'}, {key: 'っ', value: 'つ'}];
+    listUpperHira.forEach(item => {
+      if (searchHira.indexOf(item.key) > -1) {
+        searchHira = searchHira.replace(item.key, item.value);
+      }
+    });
+    return searchHira;
+  }
 }
