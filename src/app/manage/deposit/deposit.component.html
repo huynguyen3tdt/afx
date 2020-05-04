@@ -78,7 +78,7 @@
                                         <div class="form form-line">
                                             <div class="mb-3">
                                                 <label class="label">{{'Deposit Amount' | translate}}</label>
-                                                <input type="text" name="amount" formControlName="deposit" (change)="changeDeposit($event.target.value)" currency 
+                                                <input type="text" name="amount" formControlName="deposit" (change)="changeDeposit($event.target.value)" currency
                                                 [ngClass]="{'invalid': isSubmitted && depositTransactionForm.controls['deposit'].errors}" class="form-control form-control-lg text-right font-weight-bold text-warning deposit"
                                                     autocomplete="off" value="10,000" placeholder="">
                                             </div>
@@ -89,9 +89,9 @@
                                                 <label class="label">{{'Bank' | translate}}</label>
                                                 <div>
                                                     <div class="d-inline-block">
-                                                        <select 
-                                                        class="form-control form-control-sm mb-0 bg-none" 
-                                                        formControlName="bankCode" 
+                                                        <select
+                                                        class="form-control form-control-sm mb-0 bg-none"
+                                                        formControlName="bankCode"
                                                         (change)="changeBankDeposit()" style="min-width: 160px;">
                                                         <option value="0008">{{'Mitsubishi UFJ' | translate}}</option>
                                                         <!-- <option value="0008">{{'UFJ bank' | translate}}</option> -->
@@ -207,9 +207,9 @@
                                                         </div>
                                                     </a>
                                                 </li>
-                                            </ng-container> 
+                                            </ng-container>
                                         </ul>
-                                    </div>       
+                                    </div>
                                     <p class="mb-1"><strong>{{'Please transfer to the following account.' | translate}}</strong></p>
                                     <p class="mb-1"><strong>{{'As soon as we confirm the payment, we will notify you of the payment.' | translate}}</strong></p>
                                     <p class="mb-1"><strong>{{'Please note that the name of the transfer person cannot be accepted unless it is the same as the name of the registered account of the Company.' | translate}}</strong></p>
@@ -249,7 +249,7 @@
                                             </table>
                                         </div>
                                     </ng-container> -->
-                                    
+
                                     <div id="ufj_bank" class="mb-2">
                                         <ng-container *ngFor="let item of listBankTranfer">
                                             <table *ngIf="item?.name == '三菱ＵＦＪ'" class="table border table-sm" cellpadding="0" cellspacing="0">
@@ -268,7 +268,7 @@
                                                     </tr>
                                                     <tr>
                                                         <td>口座種類</td>
-                                                        <td><strong>{{item?.fx_acc_type}}</strong></td>
+                                                        <td><strong>{{item?.fx_acc_type | convertAccTypeBank}}</strong></td>
                                                     </tr>
                                                     <tr>
                                                         <td>口座番号</td>
@@ -284,7 +284,7 @@
                                                     </tr>
                                                 </tbody>
                                             </table>
-                                        </ng-container>                                           
+                                        </ng-container>
                                     </div>
                                     <div id="mizuho_bank" class="mb-2">
                                         <ng-container *ngFor="let item of listBankTranfer">
@@ -304,7 +304,7 @@
                                                     </tr>
                                                     <tr>
                                                         <td>口座種類</td>
-                                                        <td><strong>{{item?.fx_acc_type}}</strong></td>
+                                                        <td><strong>{{item?.fx_acc_type | convertAccTypeBank}}</strong></td>
                                                     </tr>
                                                     <tr>
                                                         <td>口座番号</td>
@@ -320,7 +320,7 @@
                                                     </tr>
                                                 </tbody>
                                             </table>
-                                        </ng-container> 
+                                        </ng-container>
                                     </div>
                                     <div id="sm_bank" class="mb-2">
                                         <ng-container *ngFor="let item of listBankTranfer">
@@ -340,7 +340,7 @@
                                                     </tr>
                                                     <tr>
                                                         <td>口座種類</td>
-                                                        <td><strong>{{item?.fx_acc_type}}</strong></td>
+                                                        <td><strong>{{item?.fx_acc_type | convertAccTypeBank}}</strong></td>
                                                     </tr>
                                                     <tr>
                                                         <td>口座番号</td>
@@ -356,7 +356,7 @@
                                                     </tr>
                                                 </tbody>
                                             </table>
-                                        </ng-container> 
+                                        </ng-container>
                                     </div>
                                     <div id="jpb_bank" class="mb-2">
                                         <ng-container *ngFor="let item of listBankTranfer">
@@ -376,7 +376,7 @@
                                                     </tr>
                                                     <tr>
                                                         <td>口座種類</td>
-                                                        <td><strong>{{item?.fx_acc_type}}</strong></td>
+                                                        <td><strong>{{item?.fx_acc_type | convertAccTypeBank}}</strong></td>
                                                     </tr>
                                                     <tr>
                                                         <td>口座番号</td>
@@ -392,13 +392,14 @@
                                                     </tr>
                                                 </tbody>
                                             </table>
-                                        </ng-container> 
+                                        </ng-container>
                                     </div>
                                     <div id="jn_bank" class="mb-2">
                                         <ng-container *ngFor="let item of listBankTranfer">
                                             <table *ngIf="item?.name == 'ジャパンネット'" class="table border table-sm" cellpadding="0" cellspacing="0">
                                                 <tbody>
                                                     <tr>
+
                                                         <td width="120">銀行名</td>
                                                         <td><strong>{{item?.name}}</strong></td>
                                                     </tr>
@@ -412,7 +413,7 @@
                                                     </tr>
                                                     <tr>
                                                         <td>口座種類</td>
-                                                        <td><strong>{{item?.fx_acc_type}}</strong></td>
+                                                        <td><strong>{{item?.fx_acc_type | convertAccTypeBank}}</strong></td>
                                                     </tr>
                                                     <tr>
                                                         <td>口座番号</td>
@@ -428,7 +429,7 @@
                                                     </tr>
                                                 </tbody>
                                             </table>
-                                        </ng-container> 
+                                        </ng-container>
                                     </div>
                                     <div id="rakuten_bank" class="mb-2">
                                         <ng-container *ngFor="let item of listBankTranfer">
@@ -448,7 +449,7 @@
                                                     </tr>
                                                     <tr>
                                                         <td>口座種類</td>
-                                                        <td><strong>{{item?.fx_acc_type}}</strong></td>
+                                                        <td><strong>{{item?.fx_acc_type | convertAccTypeBank}}</strong></td>
                                                     </tr>
                                                     <tr>
                                                         <td>口座番号</td>
@@ -464,7 +465,7 @@
                                                     </tr>
                                                 </tbody>
                                             </table>
-                                        </ng-container> 
+                                        </ng-container>
                                     </div>
                                 </div>
                                 <div class="col-lg-5">
@@ -554,13 +555,13 @@
                                                 </div>
 
 
-                                               
+
                                             </div>
                                         </div>
                                     </div>
                                     <p class="small text-secondary p-2 bg-light" *ngIf="locale == language.english">Notice: Minimum single deposit amount is {{minDeposit | number}}</p>
                                     <p class="small text-secondary p-2 bg-light" *ngIf="locale == language.japan">※最低入金額は{{minDeposit | number}}円となります。</p>
-                                    
+
                                     <p class="text-center" style="line-height: 1.2"><a href="javascript:;" data-toggle="modal" data-target="#modal-rule"><i
                                                 class="icon ion-md-information-circle"></i> {{'General rules for depositing and withdrawing funds' | translate}}</a></p>
                                 </div>
