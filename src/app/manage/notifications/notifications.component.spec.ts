@@ -1,17 +1,14 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { NotificationsComponent } from './notifications.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { Ng4LoadingSpinnerService, Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
 import { NotificationsService } from 'src/app/core/services/notifications.service';
 import { PaginationModule } from 'ngx-bootstrap';
-import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { EnvConfigService } from 'src/app/core/services/env-config.service';
 import { TranslateModule } from '@ngx-translate/core';
+import { SafePipe } from 'src/app/core/pipe/safePipe.pipe';
+import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
 
 describe('NotificationsComponent', () => {
   let component: NotificationsComponent;
@@ -19,7 +16,7 @@ describe('NotificationsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ NotificationsComponent],
+      declarations: [ NotificationsComponent, SafePipe],
       imports: [
         ReactiveFormsModule,
         FormsModule,

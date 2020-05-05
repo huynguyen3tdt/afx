@@ -51,10 +51,10 @@
                                             <h5 class="item-title"><a href="javascript:;">{{item?.news_title}}</a></h5>
                                             <div class="item-meta">{{item?.publish_date}}</div>
                                         </div>
-                                        <div *ngIf="item?.agreement_flg != 1" class="item-content" [innerHTML]="item?.news_content">
+                                        <div *ngIf="item?.agreement_flg != 1" class="item-content" [innerHTML]="item?.news_content | safe: 'html'">
                                         </div>
                                         <div *ngIf="item?.agreement_flg == 1" class="item-content">
-                                            <div [innerHTML]="item?.news_content"></div>
+                                            <div [innerHTML]="item?.news_content | safe: 'html'"></div>
                                             <button (click)="confirmAgreement()" [disabled]="item.agree_flg == true ? true : false" type="button" class="btn btn-primary f-right">{{'Confirm' | translate}}</button>
                                         </div>
                                     </div>
@@ -116,9 +116,9 @@
                                             <h5 class="item-title"><a href="javascript:;">{{item?.news_title}}</a></h5>
                                             <div class="item-meta">{{item?.publish_date}}</div>
                                         </div>
-                                        <div *ngIf="item?.agreement_flg != 1" class="item-content" [innerHTML]="item?.news_content"></div>
+                                        <div *ngIf="item?.agreement_flg != 1" class="item-content" [innerHTML]="item?.news_content | safe: 'html'"></div>
                                         <div *ngIf="item?.agreement_flg == 1" class="item-content">
-                                            <div [innerHTML]="item?.news_content"></div>
+                                            <div [innerHTML]="item?.news_content | safe: 'html'"></div>
                                             <button (click)="confirmAgreement()" [disabled]="item.agree_flg == true ? true : false" type="button" class="btn btn-primary f-right">Confirm</button>
                                         </div>
 
@@ -171,9 +171,9 @@
                                         </div>
                                         <!-- <div class="item-content" [innerHTML]="item?.news_content">
                                         </div> -->
-                                        <div *ngIf="item?.agreement_flg != 1" class="item-content" [innerHTML]="item?.news_content"></div>
+                                        <div *ngIf="item?.agreement_flg != 1" class="item-content" [innerHTML]="item?.news_content | safe: 'html'"></div>
                                         <div *ngIf="item?.agreement_flg == 1" class="item-content">
-                                            <div [innerHTML]="item?.news_content"></div>
+                                            <div [innerHTML]="item?.news_content | safe: 'html'"></div>
                                             <button (click)="confirmAgreement()" [disabled]="item.agree_flg == true ? true : false" type="button" class="btn btn-primary f-right">Confirm</button>
                                         </div>
                                     </div>
@@ -222,7 +222,7 @@
                                             <h5 class="item-title"><a href="javascript:;">{{item?.news_title}}</a></h5>
                                             <div class="item-meta">{{item?.publish_date}}</div>
                                         </div>
-                                        <div class="item-content" [innerHTML]="item?.news_content">
+                                        <div class="item-content" [innerHTML]="item?.news_content | safe: 'html'">
                                         </div>
                                     </div>
                                 </ng-container>
