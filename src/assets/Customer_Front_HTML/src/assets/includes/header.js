@@ -13,7 +13,7 @@ document.write( '                </div> <!-- END SITE BRAND -->\n' );
 document.write( '                <!-- BEGIN HEADER TOP NAV -->\n' );
 document.write( '                <ul class=\"header-top-nav nav\">\n' );
 document.write( '                  <li class=\"nav-item nav-item-dmt5 d-none d-md-inline-block\">\n' );
-document.write( '                    <a href=\"javascript:;\" class=\"nav-link\">MT5</a>\n' );
+document.write( '                    <a href=\"javascript:;\" class=\"nav-link pl-2 pr-2\"><img src=\"assets/images/metatrader-5.png\"></a>\n' );
 document.write( '                  </li>\n' );
 document.write( '                  <li class=\"nav-item nav-item-notification dropdown has-notification\">\n' );
 document.write( '                    <a href=\"javascript:;\" class=\"nav-link dropdown-toggle\" role=\"button\"  data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\"><i class=\"icon ion-md-notifications\"></i></a>\n' );

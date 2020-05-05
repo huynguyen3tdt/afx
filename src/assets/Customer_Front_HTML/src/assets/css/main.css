@@ -1,6 +1,6 @@
 /* Import Font */
-@import url('https://fonts.googleapis.com/css?family=M+PLUS+1p:400,700&display=swap&subset=japanese,latin-ext');
-@import url('https://fonts.googleapis.com/css?family=Noto+Sans+JP:400,700&display=swap&subset=japanese');
+/*@import url('https://fonts.googleapis.com/css?family=M+PLUS+1p:400,700&display=swap&subset=japanese,latin-ext');
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans+JP:400,700&display=swap&subset=japanese');*/
 /*--- Overwrite Boostrap ---*/
 a{
 	color: #0d75a2;
@@ -291,7 +291,7 @@ body{
 	padding-right: 20px;
 }
 .header-top-nav.nav .nav-item.nav-item-mt5 img {
-	max-height: 36px;
+	max-height: 32px;
 }
 @media screen and (max-width: 992px){
 	.header-top-nav.nav .nav-item .nav-link {
@@ -453,11 +453,18 @@ body{
 .form-line .form-control {
 	border: 0;
 	border-radius: 0;
-	border-bottom: 1px solid rgba(0,0,0,0.2);
 	padding-left: 0;
 	padding-right: 0;
+	border-bottom: 1px solid rgba(0,0,0,0.2);
 }
-
+.form-line .form-control:disabled,
+.form-line .form-control:disabled:hover{
+	padding-left: 10px;
+	padding-right: 10px;
+	background: rgba(0,0,0,0.05);
+	color: #666;
+	cursor: not-allowed;
+}
 .form-line .form-control:focus{
 	box-shadow: none;
 	border-bottom-color: #0D688F;
@@ -619,6 +626,9 @@ body{
     text-align: left;
     display: inline-block;
 }
+.nav.offcanvas-nav > .nav-item.nav-item-mt5 .nav-link.has-icon .icon {
+	margin-left: -4px;
+}
 .nav.offcanvas-nav > .nav-item.has-child > .nav-link {
     padding-right: 40px;
 }
@@ -775,7 +785,7 @@ body{
 	padding-right: 15px;
 }
 .list-notifications .notification-item.opened .item-content {
-	max-height: 320px;
+	max-height: 10000em;
 	padding: 10px 15px 5px;
 	transition: max-height 0.25s ease-in;
 	overflow-y: auto;
@@ -1121,6 +1131,17 @@ ul.reset li {
 	right: 10px;
 	bottom: 10px;
 	background: rgba(255,255,255,0.5);
+}
+
+.col-mypage-content .box-item-checkbox, 
+.col-mypage-content .box-item-radio {
+	padding: 10px 10px 10px 30px;
+	background-color: #fff;
+}
+.col-mypage-content .container-checkbox .checkmark,
+.col-mypage-content .container-radio .checkmark {
+	left: 10px;
+	top: 10px;
 }
 @media screen and (min-width: 992px){
 	.card-profile{
@@ -1750,3 +1771,16 @@ h1{
 	background-color: #0D688F;
 }
 
+/* Row small-gutters*/
+.row.small-gutters {
+	margin-left: -6px;
+	margin-right: -6px;
+}
+.small-gutters>.col, .small-gutters>[class*=col-] {
+	padding-left: 6px;
+	padding-right: 6px;
+}
+
+@media screen and (max-width: 540px){
+	
+}

@@ -36,52 +36,54 @@
                                     <div class="tab-pane fade show active" id="v-pills-all" role="tabpanel" aria-labelledby="v-pills-all-tab">
                                         <h3 class="mb-3"><i class="icon ion-md-time text-secondary"></i> Deposit &amp; Withdrawal History</h3>
                                         <div class="form mb-3 form-search-box">
-                                            <div class="row">
-                                                <div class="col-4 col-lg-3">
-                                                    <div class="form-group">
+                                            <div class="d-lg-flex justify-content-between">
+                                                <div class="d-md-flex flex-grow-1 mr-lg-2">
+                                                    <div class="form-group mr-md-1 flex-grow-1">
                                                         <label class="label d-block mb-0">Trading account</label>
                                                         <select class="form-control form-control-sm">
                                                             <option>FX - 10000001</option>
                                                             <option>CFD - 20000001</option>
                                                         </select>    
                                                     </div>
-                                                </div>        
-                                                <div class="col-lg-9">
-                                                    <div class="row">
-                                                        <div class="col-md-9 col-lg-4">
-                                                            <div class="form-group">
-                                                                <label class="label d-none d-lg-block mb-0">&nbsp;</label>
-                                                                <div class="btn-group d-flex">
-                                                                    <button type="button" class="btn btn-sm btn-outline-secondary">Day</button>
-                                                                    <button type="button" class="btn btn-sm btn-outline-secondary">Month</button>
-                                                                    <button type="button" class="btn btn-sm btn-outline-secondary">Year</button>
-                                                                </div>
+                                                    <div class="form-group ml-md-1 flex-grow-1">
+                                                        <label class="label d-block mb-0">Status</label>
+                                                        <select class="form-control form-control-sm">
+                                                            <option>Complated</option>
+                                                            <option>Pending</option>
+                                                        </select>    
+                                                    </div>
+                                                </div>                                                
+                                                <div class="d-lg-flex">
+                                                    <div class="d-md-flex">
+                                                        <div class="form-group flex-grow-1 mr-md-2">
+                                                            <label class="label d-none d-md-block mb-0">&nbsp;</label>
+                                                            <div class="btn-group d-flex">
+                                                                <button type="button" class="btn btn-sm btn-outline-secondary">Day</button>
+                                                                <button type="button" class="btn btn-sm btn-outline-secondary">Month</button>
+                                                                <button type="button" class="btn btn-sm btn-outline-secondary">Year</button>
                                                             </div>
                                                         </div>
-                                                        <div class="col-md-6 col-lg-3">
-                                                            <div class="form-group">
+                                                        <div class="d-flex">
+                                                            <div class="form-group mr-1 flex-grow-1">
                                                                 <label class="label d-block mb-0">From</label>
                                                                 <div class="input-wrapper">
-                                                                    <input type="text" name="start-date" class="form-control form-control-sm date" placeholder="DD/MM/YYYY" value="">
+                                                                    <input type="text" name="start-date" class="form-control form-control-sm date pr-4" placeholder="DD/MM/YYYY" value="">
                                                                     <button type="button" class="btn btn-none btn-sm" disabled="disabled"><i class="icon ion-md-calendar"></i></button>
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                        <div class="col-md-6 col-lg-3">
-                                                            <div class="form-group">
+                                                            <div class="form-group ml-1 flex-grow-1">
                                                                 <label class="label d-block mb-0">To</label>
                                                                 <div class="input-wrapper">
-                                                                    <input type="text" name="end-date" class="form-control form-control-sm date" placeholder="DD/MM/YYYY" value="">
+                                                                    <input type="text" name="end-date" class="form-control form-control-sm date pr-4" placeholder="DD/MM/YYYY" value="">
                                                                     <button type="button" class="btn btn-none btn-sm" disabled="disabled"><i class="icon ion-md-calendar"></i></button>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="col-md-3 col-lg-2">
-                                                            <div class="form-group">
-                                                                <label class="label d-none d-lg-block mb-0">&nbsp;</label>
-                                                                <button class="btn btn-success btn-search btn-block btn-sm">Apply</button>
-                                                            </div>
-                                                        </div>
+                                                    </div>
+                                                    <div class="form-group ml-lg-2">
+                                                        <label class="label d-none d-lg-block mb-0">&nbsp;</label>
+                                                        <button class="btn btn-success btn-search btn-block btn-sm pl-4 pr-4">Apply</button>
+                                                        <div class="d-block d-lg-none">&nbsp;</div>
                                                     </div>
                                                 </div>
                                             </div>
