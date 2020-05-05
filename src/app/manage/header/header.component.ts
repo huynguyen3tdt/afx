@@ -57,8 +57,7 @@ export class HeaderComponent implements OnInit {
     this.currentPage = 1;
     this.pageSize = 3;
     if (this.listTradingAccount) {
-      this.accountID = this.listTradingAccount[0].value;
-      this.getListNotifications(this.accountID, this.pageSize, this.currentPage, this.unreadAll, this.TABS.ALL.value);
+      this.getListNotifications(this.pageSize, this.currentPage, this.unreadAll, this.TABS.ALL.value);
     }
   }
 
@@ -119,9 +118,9 @@ export class HeaderComponent implements OnInit {
       close_offcanvas();
     });
   }
-  getListNotifications(accountNumber: string, pageSize: number, pageNumber: number, unread: boolean, type?: number) {
+  getListNotifications(pageSize: number, pageNumber: number, unread: boolean, type?: number) {
     this.listNotification = [];
-    this.notificationsService.getListNotifications(accountNumber, pageSize, pageNumber, unread, type).subscribe(response => {
+    this.notificationsService.getListNotifications(pageSize, pageNumber, unread, type).subscribe(response => {
       if (response.meta.code === 200) {
         this.pageNotification = response;
         this.listNotification = this.pageNotification.data.results;

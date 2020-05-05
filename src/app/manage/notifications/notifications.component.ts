@@ -87,19 +87,19 @@ export class NotificationsComponent implements OnInit {
       this.accountID = this.listTradingAccount[0].value;
     }
     if (this.accountID) {
-      this.getListNotifications(this.accountID.split('-')[1], this.pageSize, this.currentPage, this.unreadAll, this.TABS.ALL.value);
+      this.getListNotifications(this.pageSize, this.currentPage, this.unreadAll, this.TABS.ALL.value);
       this.getTotalNotification();
     }
   }
 
-  getListNotifications(accountNumber: string, pageSize: number, pageNumber: number, unread: boolean, type?: number) {
+  getListNotifications(pageSize: number, pageNumber: number, unread: boolean, type?: number) {
     this.checkTab(type);
     this.listNotification = [];
     if (type !== -1) {
       localStorage.setItem(FIRST_LOGIN, '0');
     }
     this.spinnerService.show();
-    this.notificationsService.getListNotifications(accountNumber, pageSize, pageNumber, unread, type).subscribe(response => {
+    this.notificationsService.getListNotifications(pageSize, pageNumber, unread, type).subscribe(response => {
       if (response.meta.code === 200) {
         this.pageNotification = response;
         this.listNotification = this.pageNotification.data.results;
@@ -144,29 +144,27 @@ export class NotificationsComponent implements OnInit {
   }
 
   filterUnreadNoti() {
-    const accountNumber = this.accountID.split('-')[1];
     switch (this.tab) {
       case this.TABS.ALL.name:
         this.unreadAll = !this.unreadAll;
-        this.getListNotifications(accountNumber, this.pageSize, this.currentPage, this.unreadAll, this.TABS.ALL.value);
+        this.getListNotifications(this.pageSize, this.currentPage, this.unreadAll, this.TABS.ALL.value);
         break;
       case this.TABS.IMPORTANT.name:
         this.unreadImportant = !this.unreadImportant;
-        this.getListNotifications(accountNumber, this.pageSize, this.currentPage, this.unreadImportant, this.TABS.IMPORTANT.value);
+        this.getListNotifications(this.pageSize, this.currentPage, this.unreadImportant, this.TABS.IMPORTANT.value);
         break;
       case this.TABS.NOTIFICATIONS.name:
         this.unreadNotification = !this.unreadNotification;
-        this.getListNotifications(accountNumber, this.pageSize, this.currentPage, this.unreadNotification, this.TABS.NOTIFICATIONS.value);
+        this.getListNotifications(this.pageSize, this.currentPage, this.unreadNotification, this.TABS.NOTIFICATIONS.value);
         break;
       case this.TABS.CAMPAIGN.name:
         this.unreadCampagn = !this.unreadCampagn;
-        this.getListNotifications(accountNumber, this.pageSize, this.currentPage, this.unreadCampagn, this.TABS.CAMPAIGN.value);
+        this.getListNotifications(this.pageSize, this.currentPage, this.unreadCampagn, this.TABS.CAMPAIGN.value);
         break;
     }
   }
 
   confirmAgreement() {
-    const accountNumber = this.accountID.split('-')[1];
     const param = {
       noti_id: this.agreementID
     };
@@ -174,9 +172,9 @@ export class NotificationsComponent implements OnInit {
       if (response.meta.code === 200) {
         this.changeReadStatus(this.agreementID);
         if (this.tab === this.TABS.ALL.name) {
-          this.getListNotifications(accountNumber, this.pageSize, this.currentPage, this.unreadAll, this.TABS.ALL.value);
+          this.getListNotifications(this.pageSize, this.currentPage, this.unreadAll, this.TABS.ALL.value);
         } else {
-          this.getListNotifications(accountNumber, this.pageSize, this.currentPage, this.unreadImportant, this.TABS.IMPORTANT.value);
+          this.getListNotifications(this.pageSize, this.currentPage, this.unreadImportant, this.TABS.IMPORTANT.value);
         }
       }
     });
@@ -184,20 +182,19 @@ export class NotificationsComponent implements OnInit {
   }
 
   pageChanged(event) {
-    const accountNumber = this.accountID.split('-')[1];
     this.currentPage = event.page;
     switch (this.tab) {
       case this.TABS.ALL.name:
-        this.getListNotifications(accountNumber, this.pageSize, this.currentPage, this.unreadAll, this.TABS.ALL.value);
+        this.getListNotifications(this.pageSize, this.currentPage, this.unreadAll, this.TABS.ALL.value);
         break;
       case this.TABS.IMPORTANT.name:
-        this.getListNotifications(accountNumber, this.pageSize, this.currentPage, this.unreadImportant, this.TABS.IMPORTANT.value);
+        this.getListNotifications(this.pageSize, this.currentPage, this.unreadImportant, this.TABS.IMPORTANT.value);
         break;
       case this.TABS.NOTIFICATIONS.name:
-        this.getListNotifications(accountNumber, this.pageSize, this.currentPage, this.unreadNotification, this.TABS.NOTIFICATIONS.value);
+        this.getListNotifications(this.pageSize, this.currentPage, this.unreadNotification, this.TABS.NOTIFICATIONS.value);
         break;
       case this.TABS.CAMPAIGN.name:
-        this.getListNotifications(accountNumber, this.pageSize, this.currentPage, this.unreadCampagn, this.TABS.CAMPAIGN.value);
+        this.getListNotifications(this.pageSize, this.currentPage, this.unreadCampagn, this.TABS.CAMPAIGN.value);
         break;
     }
   }
@@ -220,45 +217,43 @@ export class NotificationsComponent implements OnInit {
   }
 
   changeTab(type: number) {
-    const accountNumber = this.accountID.split('-')[1];
     this.pageSize = 10;
     this.initFilterRead();
     switch (type) {
       case this.TABS.ALL.value:
         this.tab = this.TABS.ALL.name;
-        this.getListNotifications(accountNumber, this.pageSize, this.currentPage, this.unreadAll, this.TABS.ALL.value);
+        this.getListNotifications(this.pageSize, this.currentPage, this.unreadAll, this.TABS.ALL.value);
         break;
       case this.TABS.IMPORTANT.value:
         this.tab = this.TABS.IMPORTANT.name;
-        this.getListNotifications(accountNumber, this.pageSize, this.currentPage, this.unreadImportant, this.TABS.IMPORTANT.value);
+        this.getListNotifications(this.pageSize, this.currentPage, this.unreadImportant, this.TABS.IMPORTANT.value);
         break;
       case this.TABS.NOTIFICATIONS.value:
         this.tab = this.TABS.NOTIFICATIONS.name;
-        this.getListNotifications(accountNumber, this.pageSize, this.currentPage, this.unreadNotification, this.TABS.NOTIFICATIONS.value);
+        this.getListNotifications(this.pageSize, this.currentPage, this.unreadNotification, this.TABS.NOTIFICATIONS.value);
         break;
       case this.TABS.CAMPAIGN.value:
         this.tab = this.TABS.CAMPAIGN.name;
-        this.getListNotifications(accountNumber, this.pageSize, this.currentPage, this.unreadCampagn, this.TABS.CAMPAIGN.value);
+        this.getListNotifications(this.pageSize, this.currentPage, this.unreadCampagn, this.TABS.CAMPAIGN.value);
         break;
     }
   }
 
   changeTotalItem(event) {
-    const accountNumber = this.accountID.split('-')[1];
     this.pageSize = event.target.value;
     this.currentPage = 1;
     switch (this.tab) {
       case this.TABS.ALL.name:
-        this.getListNotifications(accountNumber, this.pageSize, this.currentPage, this.unreadAll, this.TABS.ALL.value);
+        this.getListNotifications(this.pageSize, this.currentPage, this.unreadAll, this.TABS.ALL.value);
         break;
       case this.TABS.IMPORTANT.name:
-        this.getListNotifications(accountNumber, this.pageSize, this.currentPage, this.unreadImportant, this.TABS.IMPORTANT.value);
+        this.getListNotifications(this.pageSize, this.currentPage, this.unreadImportant, this.TABS.IMPORTANT.value);
         break;
       case this.TABS.NOTIFICATIONS.name:
-        this.getListNotifications(accountNumber, this.pageSize, this.currentPage, this.unreadNotification, this.TABS.NOTIFICATIONS.value);
+        this.getListNotifications(this.pageSize, this.currentPage, this.unreadNotification, this.TABS.NOTIFICATIONS.value);
         break;
       case this.TABS.CAMPAIGN.name:
-        this.getListNotifications(accountNumber, this.pageSize, this.currentPage, this.unreadCampagn, this.TABS.CAMPAIGN.value);
+        this.getListNotifications(this.pageSize, this.currentPage, this.unreadCampagn, this.TABS.CAMPAIGN.value);
         break;
     }
   }
