@@ -15,6 +15,7 @@ import { PaginationModule } from 'ngx-bootstrap';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
+import { SafePipe } from 'src/app/core/pipe/safePipe.pipe';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -22,7 +23,7 @@ describe('LoginComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [LoginComponent, NotificationsComponent],
+      declarations: [LoginComponent, NotificationsComponent, SafePipe],
       imports: [
         ReactiveFormsModule,
         FormsModule,

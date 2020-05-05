@@ -27,6 +27,7 @@ import { Mt5InfoComponent } from './mt5-info/mt5-info.component';
 import { BankInfoComponent } from './bank-info/bank-info.component';
 import { SettingComponent } from './setting/setting.component';
 import { ConvertAccountTypeBankPipe } from '../core/pipe/convert-account-type-bank.pipe';
+import { SafePipe } from '../core/pipe/safePipe.pipe';
 
 @NgModule({
     imports: [
@@ -60,7 +61,8 @@ import { ConvertAccountTypeBankPipe } from '../core/pipe/convert-account-type-ba
       SettingComponent,
       ConvertFinancialPipe,
       ConvertInvestmentPurposePipe,
-      ConvertAccountTypeBankPipe
+      ConvertAccountTypeBankPipe,
+      SafePipe
     ],
     schemas: [NO_ERRORS_SCHEMA]
 })
