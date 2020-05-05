@@ -42,6 +42,9 @@ a {
 .keep-all {
   word-break:keep-all
 }
+.form-group.mr-md-1.flex-grow-1 {
+  min-width: 200px;
+}
 
 ::ng-deep {
   .oi-caret-right{
