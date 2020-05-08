@@ -288,14 +288,14 @@
     </div>
 </div> -->
 
-<div class="modal fade" id="notice_important" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" data-backdrop="static">
+<div bsModal #notiModal="bs-modal" class="modal fade" id="notice_important" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
         <div class="modal-content">
             <div class="modal-body text-center">
                 <p class="mb-0"><i class="icon ion-md-alert text-danger" style="font-size: 48px;line-height: 1"></i></p>
                 <p *ngIf="locale == language.english">You are having <strong>{{totalNoti?.important}}</strong> Important Notifications</p>
                 <p *ngIf="locale == language.japan">重要なお知らせが <strong>{{totalNoti?.important}}</strong> 件あります。</p>
-                <button type="button" class="btn btn-sm btn-primary pl-4 pr-4" data-dismiss="modal">{{'Ok' | translate}}</button>
+                <button type="button" class="btn btn-sm btn-primary pl-4 pr-4" data-dismiss="modal" (click)="notiModal.hide()">{{'Ok' | translate}}</button>
             </div>
         </div>
     </div>

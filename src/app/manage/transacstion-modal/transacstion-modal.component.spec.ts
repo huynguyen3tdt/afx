@@ -12,7 +12,7 @@ describe('TransacstionModalComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ TransacstionModalComponent ],
       imports: [
-        ModalModule.forRoot() ,
+        ModalModule.forRoot(),
         TranslateModule.forRoot()
     ],
     })
