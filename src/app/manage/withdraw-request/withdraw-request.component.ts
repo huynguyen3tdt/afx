@@ -22,6 +22,7 @@ import { DepositModel } from 'src/app/core/model/deposit-response.model';
 import { ListTransactionComponent } from '../list-transaction/list-transaction.component';
 import moment from 'moment-timezone';
 import { LANGUAGLE } from 'src/app/core/constant/language-constant';
+import { ModalDirective } from 'ngx-bootstrap';
 declare var $: any;
 const numeral = require('numeral');
 
@@ -32,7 +33,8 @@ const numeral = require('numeral');
 })
 export class WithdrawRequestComponent implements OnInit {
   @ViewChild('listTran', { static: false }) listTran: ListTransactionComponent;
-
+  @ViewChild('modalWithdrawConfirm', { static: true }) modalWithdrawConfirm: ModalDirective;
+  @ViewChild('modalWithdrawResult', { static: true }) modalWithdrawResult: ModalDirective;
   mt5Infor: Mt5Model;
   accountType;
   bankInfor: BankInforModel;
@@ -182,16 +184,11 @@ export class WithdrawRequestComponent implements OnInit {
     this.getMt5Infor(Number(this.accountID.split('-')[1]));
   }
 
-  openDetailTransaction(item) {
-    this.transactionDetail = item;
-    $('#detai_transaction').modal('show');
-  }
-
   showConfirm() {
     if (this.checkValidateWithDrawal() === false) {
       return;
     }
-    $('#modal-withdraw-confirm').modal('show');
+    this.modalWithdrawConfirm.show();
     this.newDate = moment(new Date()).format(this.formatDateHour);
     this.getDepositBank();
   }
@@ -217,7 +214,7 @@ export class WithdrawRequestComponent implements OnInit {
 
   sendConfirm() {
     this.checkWithDrawal = true;
-    $('#modal-withdraw-confirm').modal('hide');
+    this.modalWithdrawConfirm.hide();
     this.depositValue = numeral(this.withdrawForm.controls.amount.value).value();
     const param = {
       amount: this.depositValue,
@@ -233,7 +230,7 @@ export class WithdrawRequestComponent implements OnInit {
       } else if (response.meta.code === 409) {
         this.checkWithDrawal = false;
       }
-      $('#modal_withdraw').modal('show');
+      this.modalWithdrawResult.hide();
     });
   }
 

@@ -11,7 +11,7 @@ import { Router, RouterModule } from '@angular/router';
 import { By } from '@angular/platform-browser';
 import { EnvConfigService } from 'src/app/core/services/env-config.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { PaginationModule } from 'ngx-bootstrap';
+import { PaginationModule, ModalModule } from 'ngx-bootstrap';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
@@ -31,7 +31,8 @@ describe('LoginComponent', () => {
         HttpClientModule,
         PaginationModule,
         TranslateModule.forRoot(),
-        Ng4LoadingSpinnerModule
+        Ng4LoadingSpinnerModule,
+        ModalModule
       ],
       providers: [
         AuthenService,

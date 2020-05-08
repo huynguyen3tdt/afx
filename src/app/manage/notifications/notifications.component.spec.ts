@@ -3,7 +3,7 @@ import { NotificationsComponent } from './notifications.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { NotificationsService } from 'src/app/core/services/notifications.service';
-import { PaginationModule } from 'ngx-bootstrap';
+import { PaginationModule, ModalModule } from 'ngx-bootstrap';
 import { RouterTestingModule } from '@angular/router/testing';
 import { EnvConfigService } from 'src/app/core/services/env-config.service';
 import { TranslateModule } from '@ngx-translate/core';
@@ -24,7 +24,8 @@ describe('NotificationsComponent', () => {
         PaginationModule.forRoot(),
         Ng4LoadingSpinnerModule,
         RouterTestingModule,
-        TranslateModule.forRoot()
+        TranslateModule.forRoot(),
+        ModalModule.forRoot()
       ],
       providers: [NotificationsService, EnvConfigService]
     })

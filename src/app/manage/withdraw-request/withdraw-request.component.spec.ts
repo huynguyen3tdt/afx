@@ -10,6 +10,7 @@ import { Router, RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { ModalModule } from 'ngx-bootstrap';
 
 describe('WithdrawRequestComponent', () => {
   let component: WithdrawRequestComponent;
@@ -25,6 +26,7 @@ describe('WithdrawRequestComponent', () => {
         FormsModule,
         TranslateModule.forRoot(),
         Ng4LoadingSpinnerModule,
+        ModalModule.forRoot(),
       ],
       providers: [
         WithdrawRequestService,

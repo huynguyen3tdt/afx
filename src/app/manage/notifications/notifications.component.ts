@@ -2,15 +2,15 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { NotificationsService } from 'src/app/core/services/notifications.service';
 import { PageNotificationResponse, Notification, TotalNotification } from 'src/app/core/model/page-noti.model';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
-import { FormGroup, FormControl } from '@angular/forms';
-import { requiredInput } from 'src/app/core/helper/custom-validate.helper';
+import { FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { FIRST_LOGIN, LOCALE, TIMEZONEAFX, TIMEZONESERVER, ACCOUNT_IDS } from 'src/app/core/constant/authen-constant';
 import { EN_FORMATDATE_HH_MM, JAPAN_FORMATDATE_HH_MM } from 'src/app/core/constant/format-date-constant';
-declare var $: any;
 import moment from 'moment-timezone';
 import { AccountType } from 'src/app/core/model/report-response.model';
 import { LANGUAGLE } from 'src/app/core/constant/language-constant';
+import { ModalDirective } from 'ngx-bootstrap';
+declare var $: any;
 
 @Component({
   selector: 'app-notifications',
@@ -19,6 +19,7 @@ import { LANGUAGLE } from 'src/app/core/constant/language-constant';
 })
 export class NotificationsComponent implements OnInit {
   @ViewChild('importantTab', { static: true }) importantTab: ElementRef;
+  @ViewChild('notiModal', { static: true }) notiModal: ModalDirective;
   currentPage: number;
   pageSize: number;
   listNotification: Array<Notification>;
@@ -128,7 +129,8 @@ export class NotificationsComponent implements OnInit {
         if (this.showNoti === true && this.tab === 'ALL'
           && (localStorage.getItem(FIRST_LOGIN) === '1')
           && this.totalImportant > 0) {
-          $('#notice_important').modal('show');
+          // $('#notice_important').modal('show');
+          this.notiModal.show();
           this.importantTab.nativeElement.click();
         }
       }
