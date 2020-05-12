@@ -21,6 +21,7 @@ import { AuthenService } from 'src/app/core/services/authen.service';
 import { AccountType } from 'src/app/core/model/report-response.model';
 import { TranslateService } from '@ngx-translate/core';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
+import { EnvConfigService } from 'src/app/core/services/env-config.service';
 declare const $: any;
 
 @Component({
@@ -36,13 +37,15 @@ export class LoginComponent implements OnInit, AfterViewInit {
   isPc: boolean;
   invalidAccount: boolean;
   passWordExpired: boolean;
+  hostNameRegis: string;
 
   constructor(
     private router: Router,
     private authenService: AuthenService,
     private activatedRoute: ActivatedRoute,
     private translate: TranslateService,
-    private spinnerService: Ng4LoadingSpinnerService) {
+    private spinnerService: Ng4LoadingSpinnerService,
+    private envConfigService: EnvConfigService) {
   }
 
   ngOnInit() {
@@ -54,6 +57,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
     this.checkDevice();
     this.initKeyboard();
     this.initLoginForm();
+    this.hostNameRegis = this.envConfigService.getHostNameRegis();
   }
 
   ngAfterViewInit() {
