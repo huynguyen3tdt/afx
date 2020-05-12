@@ -29,4 +29,10 @@ export class EnvConfigService {
     }
     return 'https://afx-api.ecomedic.vn';
   }
+
+  getHostNameRegis() {
+    if (this.envConfig) {
+      return this.envConfig.hostNameRegis;
+    }
+  }
 }
