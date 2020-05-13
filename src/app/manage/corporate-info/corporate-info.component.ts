@@ -25,6 +25,7 @@ import {
   investCommoditiesInvidual,
   tradingExperienceInvidual
 } from 'src/app/core/constant/question-constant';
+import { take } from 'rxjs/operators';
 declare var $: any;
 
 @Component({
@@ -167,7 +168,7 @@ export class CorporateInfoComponent implements OnInit {
 
   getCorporateInfor() {
     this.spinnerService.show();
-    this.userService.getCorporateInfor().subscribe(response => {
+    this.userService.getCorporateInfor().pipe(take(1)).subscribe(response => {
       this.spinnerService.hide();
       if (response.meta.code === 200) {
         this.corporateInfor = response.data;
@@ -300,7 +301,7 @@ export class CorporateInfoComponent implements OnInit {
 
   changeAddress() {
     const postNo = this.corporateForm.controls.cor_postcode.value;
-    this.userService.getAddress(postNo).subscribe(response => {
+    this.userService.getAddress(postNo).pipe(take(1)).subscribe(response => {
       if (response.meta.code === 200) {
         this.corpAddress = response.data;
         this.corporateForm.controls.cor_postcode.setValue(this.corpAddress.postno);
@@ -355,7 +356,7 @@ export class CorporateInfoComponent implements OnInit {
       param.surveys = this.listPurposeSubmit;
     }
     this.spinnerService.show();
-    this.userService.changeCorporation(param).subscribe(response => {
+    this.userService.changeCorporation(param).pipe(take(1)).subscribe(response => {
       this.spinnerService.hide();
       if (response.meta.code === 200) {
         if (this.saveType === this.formType.corporateInfor) {

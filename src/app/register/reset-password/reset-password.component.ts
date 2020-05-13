@@ -7,6 +7,7 @@ import { passwordValidation, requiredInput } from 'src/app/core/helper/custom-va
 import { LANGUAGLE } from 'src/app/core/constant/language-constant';
 import { defineLocale, jaLocale } from 'ngx-bootstrap/chronos';
 import { BsLocaleService } from 'ngx-bootstrap';
+import { take } from 'rxjs/operators';
 declare var $: any;
 defineLocale('ja', jaLocale);
 
@@ -43,7 +44,7 @@ export class ResetPasswordComponent implements OnInit {
     }
     this.oldPassword = atob(localStorage.getItem(PASSWORD_LOGIN));
     this.initResetPassForm();
-    this.activatedRoute.queryParams.subscribe(res => {
+    this.activatedRoute.queryParams.pipe(take(1)).subscribe(res => {
       if (res.token) {
         this.token = res.token;
       }
@@ -89,7 +90,7 @@ export class ResetPasswordComponent implements OnInit {
     };
     if (this.token) {
       paramSubmit = paramToken;
-      this.authenService.resetPassword(paramSubmit).subscribe(response => {
+      this.authenService.resetPassword(paramSubmit).pipe(take(1)).subscribe(response => {
         if (response.meta.code === 200) {
           this.router.navigate(['/login']);
         } else if (response.meta.code === 103) {
@@ -98,7 +99,7 @@ export class ResetPasswordComponent implements OnInit {
       });
     } else {
       paramSubmit = param;
-      this.authenService.changePassword(paramSubmit).subscribe(response => {
+      this.authenService.changePassword(paramSubmit).pipe(take(1)).subscribe(response => {
         if (response.meta.code === 200) {
           this.router.navigate(['/login']);
         } else if (response.meta.code === 103) {

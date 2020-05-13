@@ -8,6 +8,7 @@ import * as moment from 'moment';
 import { EN_FORMATDATE, JAPAN_FORMATDATE } from 'src/app/core/constant/format-date-constant';
 import { AccountType } from 'src/app/core/model/report-response.model';
 import { LANGUAGLE } from 'src/app/core/constant/language-constant';
+import { take } from 'rxjs/operators';
 declare const $: any;
 declare const TweenMax: any;
 
@@ -39,7 +40,7 @@ export class HeaderComponent implements OnInit {
 
   constructor(private router: Router, private authenService: AuthenService,
               private notificationsService: NotificationsService, ) {
-    this.router.events.subscribe((e: any) => {
+    this.router.events.pipe(take(1)).subscribe((e: any) => {
       this.activeRouter(this.router.url);
     });
   }
@@ -77,7 +78,7 @@ export class HeaderComponent implements OnInit {
   }
 
   logout() {
-    this.authenService.logout().subscribe(response => {
+    this.authenService.logout().pipe(take(1)).subscribe(response => {
       if (response.meta.code === 200) {
         localStorage.removeItem(TOKEN_AFX);
         this.router.navigate(['/login']);
@@ -120,7 +121,7 @@ export class HeaderComponent implements OnInit {
   }
   getListNotifications(pageSize: number, pageNumber: number, unread: boolean, type?: number) {
     this.listNotification = [];
-    this.notificationsService.getListNotifications(pageSize, pageNumber, unread, type).subscribe(response => {
+    this.notificationsService.getListNotifications(pageSize, pageNumber, unread, type).pipe(take(1)).subscribe(response => {
       if (response.meta.code === 200) {
         this.pageNotification = response;
         this.listNotification = this.pageNotification.data.results;

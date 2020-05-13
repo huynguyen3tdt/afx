@@ -30,30 +30,10 @@ export class AccountInformationComponent implements OnInit {
   }
 
   changeTab(type: string) {
-    if (this.TAB.accountInfo === type) {
-      this.showTabMt5 = true;
-    } else {
-      this.showTabMt5 = false;
-    }
-    if (this.TAB.userInfo === type) {
-      this.showTabUserInfo = true;
-    } else {
-      this.showTabUserInfo = false;
-    }
-    if (this.TAB.corpInfo === type) {
-      this.showTabCorpInfo = true;
-    } else {
-      this.showTabCorpInfo = false;
-    }
-    if (this.TAB.withDrawal === type) {
-      this.showTabWithDrawal = true;
-    } else {
-      this.showTabWithDrawal = false;
-    }
-    if (this.TAB.setting === type) {
-      this.showTabSetting = true;
-    } else {
-      this.showTabSetting = false;
-    }
+    this.showTabMt5 = this.TAB.accountInfo === type;
+    this.showTabUserInfo = this.TAB.userInfo === type;
+    this.showTabCorpInfo = this.TAB.corpInfo === type;
+    this.showTabWithDrawal = this.TAB.withDrawal === type;
+    this.showTabSetting = this.TAB.setting === type;
   }
 }

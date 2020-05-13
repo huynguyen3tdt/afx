@@ -25,6 +25,7 @@ import {
   financialAssetInvidual
 } from 'src/app/core/constant/question-constant';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
+import { take } from 'rxjs/operators';
 declare var $: any;
 
 @Component({
@@ -139,7 +140,7 @@ export class UserInforComponent implements OnInit {
 
   getUserInfo() {
     this.spinnerService.show();
-    this.userService.getUserInfor().subscribe(response => {
+    this.userService.getUserInfor().pipe(take(1)).subscribe(response => {
       this.spinnerService.hide();
       if (response.meta.code === 200) {
         this.userInfor = response.data;
@@ -256,7 +257,7 @@ export class UserInforComponent implements OnInit {
   changeAddress() {
     const postNo = this.userForm.controls.postCode.value;
     this.spinnerService.show();
-    this.userService.getAddress(postNo).subscribe(response => {
+    this.userService.getAddress(postNo).pipe(take(1)).subscribe(response => {
       this.spinnerService.hide();
       if (response.meta.code === 200) {
         this.userAddress = response.data;
@@ -324,7 +325,7 @@ export class UserInforComponent implements OnInit {
       param.lang = null;
     }
     this.spinnerService.show();
-    this.userService.updateUser(param).subscribe(response => {
+    this.userService.updateUser(param).pipe(take(1)).subscribe(response => {
       this.spinnerService.hide();
       if (response.meta.code === 200) {
         if (this.saveType === this.formType.userInfor) {

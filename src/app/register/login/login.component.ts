@@ -22,6 +22,7 @@ import { AccountType } from 'src/app/core/model/report-response.model';
 import { TranslateService } from '@ngx-translate/core';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { EnvConfigService } from 'src/app/core/services/env-config.service';
+import { take } from 'rxjs/operators';
 declare const $: any;
 
 @Component({
@@ -74,7 +75,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
       this.loginFormGroup.controls.remember.setValue(false);
       this.loginFormGroup.controls.userName.setValue('');
       this.loginFormGroup.controls.passWord.setValue('');
-      this.activatedRoute.queryParams.subscribe(param => {
+      this.activatedRoute.queryParams.pipe(take(1)).subscribe(param => {
         if (param.loginId) {
           this.loginFormGroup.controls.userName.setValue(param.loginId);
         }
@@ -107,7 +108,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
       device_type: this.isPc ? 'Pc' : 'Mobile'
     };
     this.spinnerService.show();
-    this.authenService.login(param).subscribe(response => {
+    this.authenService.login(param).pipe(take(1)).subscribe(response => {
       this.spinnerService.hide();
       if (response.meta.code === 200) {
         localStorage.setItem(USERNAME_LOGIN, btoa(this.loginFormGroup.value.userName));

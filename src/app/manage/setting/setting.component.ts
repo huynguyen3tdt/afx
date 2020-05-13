@@ -7,6 +7,7 @@ import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { TranslateService } from '@ngx-translate/core';
 import { AuthenService } from 'src/app/core/services/authen.service';
 import { UserService } from 'src/app/core/services/user.service';
+import { take } from 'rxjs/operators';
 declare var $: any;
 
 @Component({
@@ -50,8 +51,7 @@ export class SettingComponent implements OnInit {
     const param = {
       lang: language
     };
-    this.userService.changeLanguage(param).subscribe(response => {
-    });
+    this.userService.changeLanguage(param).pipe(take(1)).subscribe();
   }
 
   settingSave() {
@@ -74,7 +74,7 @@ export class SettingComponent implements OnInit {
       old_password: this.changePassForm.controls.current_password.value,
     };
     this.spinnerService.show();
-    this.authenService.changePassword(param).subscribe(response => {
+    this.authenService.changePassword(param).pipe(take(1)).subscribe(response => {
       this.spinnerService.hide();
       if (response.meta.code === 200) {
         this.successPassword = true;

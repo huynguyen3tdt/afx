@@ -15,6 +15,7 @@ import {
   JapanNetBank,
   JapanPostBank
 } from 'src/app/core/constant/japan-constant';
+import { take } from 'rxjs/operators';
 declare var $: any;
 
 @Component({
@@ -81,7 +82,7 @@ export class BankInfoComponent implements OnInit {
 
   getBankInfor() {
     this.spinnerService.show();
-    this.withdrawRequestService.getBankInfor().subscribe(response => {
+    this.withdrawRequestService.getBankInfor().pipe(take(1)).subscribe(response => {
       this.spinnerService.hide();
       if (response.meta.code === 200) {
         this.bankInfor = response.data;
@@ -91,7 +92,7 @@ export class BankInfoComponent implements OnInit {
 
   getAllCharacBank() {
     this.spinnerService.show();
-    this.userService.getAllCharacBank().subscribe(response => {
+    this.userService.getAllCharacBank().pipe(take(1)).subscribe(response => {
       this.spinnerService.hide();
       if (response.meta.code === 200) {
         this.characBank = response.data;
@@ -109,7 +110,7 @@ export class BankInfoComponent implements OnInit {
   getAllCharacBranch(bankId: number) {
     this.initHiraCode();
     this.spinnerService.show();
-    this.userService.getAllCharacBranch(bankId).subscribe(response => {
+    this.userService.getAllCharacBranch(bankId).pipe(take(1)).subscribe(response => {
       this.spinnerService.hide();
       if (response.meta.code === 200) {
         this.characBranch = response.data;
@@ -126,7 +127,7 @@ export class BankInfoComponent implements OnInit {
   }
   searchBank(firstChar: string, name: string, bic: string) {
     this.spinnerService.show();
-    this.userService.getSearchBank(firstChar, name, bic).subscribe(response => {
+    this.userService.getSearchBank(firstChar, name, bic).pipe(take(1)).subscribe(response => {
       this.spinnerService.hide();
       if (response.meta.code === 200) {
         this.bankSearch = response.data;
@@ -135,7 +136,7 @@ export class BankInfoComponent implements OnInit {
   }
   searchBranch(bankId: number, firstChar: string, branName: string, branchCode: string) {
     this.spinnerService.show();
-    this.userService.getSearchBranch(bankId, firstChar, branName, branchCode).subscribe(response => {
+    this.userService.getSearchBranch(bankId, firstChar, branName, branchCode).pipe(take(1)).subscribe(response => {
       this.spinnerService.hide();
       if (response.meta.code === 200) {
         this.branchSearch = response.data;
@@ -208,7 +209,7 @@ export class BankInfoComponent implements OnInit {
       fx_acc_type: this.bankAccountForm.controls.bank_account_type.value.toString(),
     };
     this.spinnerService.show();
-    this.userService.changeBank(param).subscribe(response => {
+    this.userService.changeBank(param).pipe(take(1)).subscribe(response => {
       this.spinnerService.hide();
       if (response.meta.code === 200) {
         this.cancelBankAccount();

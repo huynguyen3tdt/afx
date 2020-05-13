@@ -16,6 +16,7 @@ import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { ListTransactionComponent } from '../list-transaction/list-transaction.component';
 import { LANGUAGLE } from 'src/app/core/constant/language-constant';
 import moment from 'moment-timezone';
+import { take } from 'rxjs/operators';
 const numeral = require('numeral');
 declare var $: any;
 
@@ -119,7 +120,7 @@ export class DepositComponent implements OnInit {
 
   getBankCompany() {
     this.spinnerService.show();
-    this.depositService.getBankCompany().subscribe(response => {
+    this.depositService.getBankCompany().pipe(take(1)).subscribe(response => {
       this.spinnerService.hide();
       if (response.meta.code === 200) {
         this.listBankTranfer = response.data;
@@ -132,7 +133,7 @@ export class DepositComponent implements OnInit {
 
   getMt5Infor(accountId) {
     this.spinnerService.show();
-    this.withdrawRequestService.getmt5Infor(accountId).subscribe(response => {
+    this.withdrawRequestService.getmt5Infor(accountId).pipe(take(1)).subscribe(response => {
       this.spinnerService.hide();
       if (response.meta.code === 200) {
         this.mt5Infor = response.data;
@@ -150,7 +151,7 @@ export class DepositComponent implements OnInit {
 
   getDwAmount(accountId) {
     this.spinnerService.show();
-    this.withdrawRequestService.getDwAmount(accountId).subscribe(response => {
+    this.withdrawRequestService.getDwAmount(accountId).pipe(take(1)).subscribe(response => {
       this.spinnerService.hide();
       if (response.meta.code === 200) {
         this.listDwAmount = response.data;
@@ -208,7 +209,7 @@ export class DepositComponent implements OnInit {
       account_id: Number(this.accountID.split('-')[1])
     };
     this.spinnerService.show();
-    this.depositService.billingSystem(param).subscribe(response => {
+    this.depositService.billingSystem(param).pipe(take(1)).subscribe(response => {
       this.spinnerService.hide();
       if (response.meta.code === 200) {
         this.controlNo = response.data.id.toString();
