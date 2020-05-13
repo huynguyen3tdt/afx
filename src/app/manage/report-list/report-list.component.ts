@@ -9,6 +9,7 @@ import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import moment from 'moment-timezone';
 import { LANGUAGLE } from 'src/app/core/constant/language-constant';
 import { BsLocaleService, defineLocale, jaLocale } from 'ngx-bootstrap';
+import { take } from 'rxjs/operators';
 declare var $: any;
 defineLocale('ja', jaLocale);
 
@@ -88,7 +89,7 @@ export class ReportListComponent implements OnInit {
   getReport(accountNumber: number, pageNumber: number, pageSize: number, type?: string, dateFrom?: string, dateTo?: string) {
     this.spinnerService.show();
     this.checkTab(type);
-    this.reportservice.getReport(accountNumber, pageSize, pageNumber, type, dateFrom, dateTo).subscribe(response => {
+    this.reportservice.getReport(accountNumber, pageSize, pageNumber, type, dateFrom, dateTo).pipe(take(1)).subscribe(response => {
       if (response.meta.code === 200) {
         this.spinnerService.hide();
         this.listReport = response.data.results;
@@ -211,7 +212,7 @@ export class ReportListComponent implements OnInit {
       report_id : id
     };
     this.spinnerService.show();
-    this.reportservice.changeReadStatus(param).subscribe(response => {
+    this.reportservice.changeReadStatus(param).pipe(take(1)).subscribe(response => {
       this.spinnerService.hide();
       if (response.meta.code === 200) {
         this.searchReport();
@@ -222,7 +223,7 @@ export class ReportListComponent implements OnInit {
   openPDF(item: ReportIDS) {
     if (item.file_type === 'pdf') {
       this.spinnerService.show();
-      this.reportservice.downLoadReportFile(item.id).subscribe(response => {
+      this.reportservice.downLoadReportFile(item.id).pipe(take(1)).subscribe(response => {
         this.spinnerService.hide();
         const file = new Blob([response], {
           type: 'application/pdf',
@@ -236,7 +237,7 @@ export class ReportListComponent implements OnInit {
   }
   downLoadFile(item: ReportIDS) {
     this.spinnerService.show();
-    this.reportservice.downLoadReportFile(item.id).subscribe(response => {
+    this.reportservice.downLoadReportFile(item.id).pipe(take(1)).subscribe(response => {
       this.spinnerService.hide();
       let file;
       if (item.file_type === 'pdf') {

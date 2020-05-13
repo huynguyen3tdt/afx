@@ -11,6 +11,7 @@ import { LOCALE, TIMEZONEAFX, TIMEZONESERVER } from 'src/app/core/constant/authe
 import { GlobalService } from 'src/app/core/services/global.service';
 import { LANGUAGLE } from 'src/app/core/constant/language-constant';
 import { TransacstionModalComponent } from '../transacstion-modal/transacstion-modal.component';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-list-transaction',
@@ -75,7 +76,7 @@ export class ListTransactionComponent implements OnInit, OnChanges {
   }
 
   openDetail(tranId: number) {
-    this.withdrawRequestService.getDetailTranHistory(tranId).subscribe(response => {
+    this.withdrawRequestService.getDetailTranHistory(tranId).pipe(take(1)).subscribe(response => {
       if (response.meta.code === 200) {
         this.transactionDetail = response.data;
         this.transactionDetail.create_date += TIMEZONESERVER;

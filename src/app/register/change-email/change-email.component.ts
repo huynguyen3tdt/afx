@@ -4,6 +4,7 @@ import { requiredInput } from 'src/app/core/helper/custom-validate.helper';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthenService } from 'src/app/core/services/authen.service';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-change-email',
@@ -24,7 +25,7 @@ export class ChangeEmailComponent implements OnInit {
 
   ngOnInit() {
     this.passWordType = 'password';
-    this.activatedRoute.queryParams.subscribe(res => {
+    this.activatedRoute.queryParams.pipe(take(1)).subscribe(res => {
       if (res.token) {
         this.token = res.token;
       }
@@ -55,7 +56,7 @@ export class ChangeEmailComponent implements OnInit {
       token: this.token
     };
     this.spinnerService.show();
-    this.authenService.changeEmail(param).subscribe(response => {
+    this.authenService.changeEmail(param).pipe(take(1)).subscribe(response => {
       this.spinnerService.hide();
       if (response.meta.code === 200) {
         this.router.navigate(['/login']);

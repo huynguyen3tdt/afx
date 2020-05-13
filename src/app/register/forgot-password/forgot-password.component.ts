@@ -9,6 +9,7 @@ import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { LOCALE } from 'src/app/core/constant/authen-constant';
 import { EN_FORMATDATE, JAPAN_FORMATDATE} from 'src/app/core/constant/format-date-constant';
 import { LANGUAGLE } from 'src/app/core/constant/language-constant';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-forgot-password',
@@ -43,7 +44,7 @@ export class ForgotPasswordComponent implements OnInit, AfterViewInit, OnDestroy
     }
     this.showInterval = false;
     this.initForgotPasswordForm();
-    this.activatedRoute.queryParams.subscribe(param => {
+    this.activatedRoute.queryParams.pipe(take(1)).subscribe(param => {
       if (param.loginId) {
         this.forgotPasswordForm.controls.email.setValue(param.loginId);
       }
@@ -72,7 +73,7 @@ export class ForgotPasswordComponent implements OnInit, AfterViewInit, OnDestroy
 
     this.time = 5;
     this.spinnerService.show();
-    this.authenService.forgotPassWord(param).subscribe(response => {
+    this.authenService.forgotPassWord(param).pipe(take(1)).subscribe(response => {
       this.spinnerService.hide();
       if (response.meta.code === 200) {
         this.showInterval = true;

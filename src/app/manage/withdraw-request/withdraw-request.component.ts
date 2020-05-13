@@ -23,6 +23,7 @@ import { ListTransactionComponent } from '../list-transaction/list-transaction.c
 import moment from 'moment-timezone';
 import { LANGUAGLE } from 'src/app/core/constant/language-constant';
 import { ModalDirective } from 'ngx-bootstrap';
+import { take } from 'rxjs/operators';
 declare var $: any;
 const numeral = require('numeral');
 
@@ -117,7 +118,7 @@ export class WithdrawRequestComponent implements OnInit {
 
   getMt5Infor(accountId) {
     this.spinnerService.show();
-    this.withdrawRequestService.getmt5Infor(accountId).subscribe(response => {
+    this.withdrawRequestService.getmt5Infor(accountId).pipe(take(1)).subscribe(response => {
       this.spinnerService.hide();
       if (response.meta.code === 200) {
         this.mt5Infor = response.data;
@@ -133,7 +134,7 @@ export class WithdrawRequestComponent implements OnInit {
   }
   getBankInfor() {
     this.spinnerService.show();
-    this.withdrawRequestService.getBankInfor().subscribe(response => {
+    this.withdrawRequestService.getBankInfor().pipe(take(1)).subscribe(response => {
       this.spinnerService.hide();
       if (response.meta.code === 200) {
         this.bankInfor = response.data;
@@ -143,7 +144,7 @@ export class WithdrawRequestComponent implements OnInit {
   }
   getDwAmount(accountId) {
     this.spinnerService.show();
-    this.withdrawRequestService.getDwAmount(accountId).subscribe(response => {
+    this.withdrawRequestService.getDwAmount(accountId).pipe(take(1)).subscribe(response => {
       this.spinnerService.hide();
       if (response.meta.code === 200) {
         this.listDwAmount = response.data;
@@ -152,7 +153,7 @@ export class WithdrawRequestComponent implements OnInit {
   }
   getDepositBank() {
     this.spinnerService.show();
-    this.depositService.getDepositBank().subscribe(response => {
+    this.depositService.getDepositBank().pipe(take(1)).subscribe(response => {
       this.spinnerService.hide();
       if (response.meta.code === 200) {
         this.listBankTranfer = response.data;
@@ -222,7 +223,7 @@ export class WithdrawRequestComponent implements OnInit {
       currency: this.traddingAccount.currency
     };
     this.spinnerService.show();
-    this.withdrawRequestService.postWithdraw(param).subscribe(response => {
+    this.withdrawRequestService.postWithdraw(param).pipe(take(1)).subscribe(response => {
       this.spinnerService.hide();
       if (response.meta.code === 200) {
         this.listWithdrawRequest = response.data;

@@ -10,6 +10,7 @@ import moment from 'moment-timezone';
 import { AccountType } from 'src/app/core/model/report-response.model';
 import { LANGUAGLE } from 'src/app/core/constant/language-constant';
 import { ModalDirective } from 'ngx-bootstrap';
+import { take } from 'rxjs/operators';
 declare var $: any;
 
 @Component({
@@ -76,7 +77,7 @@ export class NotificationsComponent implements OnInit {
     this.initFilterRead();
     this.currentPage = 1;
     this.pageSize = 10;
-    this.activatedRoute.queryParams.subscribe(param => {
+    this.activatedRoute.queryParams.pipe(take(1)).subscribe(param => {
       if (param.fisrtLogin) {
         this.showNoti = true;
       } else {
@@ -100,7 +101,7 @@ export class NotificationsComponent implements OnInit {
       localStorage.setItem(FIRST_LOGIN, '0');
     }
     this.spinnerService.show();
-    this.notificationsService.getListNotifications(pageSize, pageNumber, unread, type).subscribe(response => {
+    this.notificationsService.getListNotifications(pageSize, pageNumber, unread, type).pipe(take(1)).subscribe(response => {
       if (response.meta.code === 200) {
         this.pageNotification = response;
         this.listNotification = this.pageNotification.data.results;
@@ -119,7 +120,7 @@ export class NotificationsComponent implements OnInit {
   }
   getTotalNotification() {
     const accountNumber = this.accountID.split('-')[1];
-    this.notificationsService.getTotalNotification(accountNumber).subscribe(response => {
+    this.notificationsService.getTotalNotification(accountNumber).pipe(take(1)).subscribe(response => {
       if (response.meta.code === 200) {
         this.totalNoti = response.data;
         this.totalCampagn = this.totalNoti.campaign;
@@ -140,7 +141,7 @@ export class NotificationsComponent implements OnInit {
     const param = {
       noti_id: id
     };
-    this.notificationsService.changeReadStatus(param).subscribe(response => {
+    this.notificationsService.changeReadStatus(param).pipe(take(1)).subscribe(response => {
     });
     this.getTotalNotification();
   }
@@ -170,7 +171,7 @@ export class NotificationsComponent implements OnInit {
     const param = {
       noti_id: this.agreementID
     };
-    this.notificationsService.changeAgreementStatus(param).subscribe(response => {
+    this.notificationsService.changeAgreementStatus(param).pipe(take(1)).subscribe(response => {
       if (response.meta.code === 200) {
         this.changeReadStatus(this.agreementID);
         if (this.tab === this.TABS.ALL.name) {

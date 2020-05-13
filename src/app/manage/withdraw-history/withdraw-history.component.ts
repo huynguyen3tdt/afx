@@ -19,6 +19,7 @@ import { LANGUAGLE } from 'src/app/core/constant/language-constant';
 import { TransacstionModalComponent } from '../transacstion-modal/transacstion-modal.component';
 import { defineLocale, jaLocale } from 'ngx-bootstrap/chronos';
 import { BsLocaleService } from 'ngx-bootstrap';
+import { take } from 'rxjs/operators';
 declare var $: any;
 defineLocale('ja', jaLocale);
 
@@ -104,7 +105,7 @@ export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
       $('body').addClass('jp');
     }
     this.initStatus();
-    this.activatedRoute.queryParams.subscribe(res => {
+    this.activatedRoute.queryParams.pipe(take(1)).subscribe(res => {
       this.querytab = res.tab;
     });
     this.currentPage = 1;
@@ -169,7 +170,7 @@ export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
     this.spinnerService.show();
     this.checkTab(type);
     this.withdrawRequestService.getDwHistory(accountNumber, pageSize, pageNumber, type, dateFrom,
-      dateTo, statusSearch).subscribe(response => {
+      dateTo, statusSearch).pipe(take(1)).subscribe(response => {
         this.spinnerService.hide();
         if (response.meta.code === 200) {
           this.listReport = response.data.results;
@@ -303,7 +304,7 @@ export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
 
   openDetail(tranId: number) {
     this.spinnerService.show();
-    this.withdrawRequestService.getDetailTranHistory(tranId).subscribe(response => {
+    this.withdrawRequestService.getDetailTranHistory(tranId).pipe(take(1)).subscribe(response => {
       this.spinnerService.hide();
       if (response.meta.code === 200) {
         this.tranHistoryDetail = response.data;
@@ -354,7 +355,7 @@ export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
     this.spinnerService.show();
     this.withdrawRequestService.exportHistoryToCsv(accounID, tabValue,
       this.formatDate(this.searchForm.controls.fromDate.value),
-      this.formatDate(this.searchForm.controls.toDate.value), this.statusSearch).subscribe(response => {
+      this.formatDate(this.searchForm.controls.toDate.value), this.statusSearch).pipe(take(1)).subscribe(response => {
         this.spinnerService.hide();
         const file = new Blob([response], {
           type: 'text/csv',

@@ -8,6 +8,7 @@ import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { WithdrawRequestService } from 'src/app/core/services/withdraw-request.service';
 import { GlobalService } from 'src/app/core/services/global.service';
 import moment from 'moment-timezone';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-mt5-info',
@@ -45,7 +46,7 @@ export class Mt5InfoComponent implements OnInit {
 
   getMt5Infor(accountId) {
     this.spinnerService.show();
-    this.withdrawRequestService.getmt5Infor(accountId).subscribe(response => {
+    this.withdrawRequestService.getmt5Infor(accountId).pipe(take(1)).subscribe(response => {
       this.spinnerService.hide();
       if (response.meta.code === 200) {
         this.accountInfor = response.data;
@@ -56,7 +57,7 @@ export class Mt5InfoComponent implements OnInit {
 
   getWithDrawAmount(accountId) {
     this.spinnerService.show();
-    this.withdrawRequestService.getDwAmount(accountId).subscribe(response => {
+    this.withdrawRequestService.getDwAmount(accountId).pipe(take(1)).subscribe(response => {
       this.spinnerService.hide();
       if (response.meta.code === 200) {
         this.withdrawAmount = response.data;
