@@ -176,8 +176,10 @@ export class NotificationsComponent implements OnInit {
         this.changeReadStatus(this.agreementID);
         if (this.tab === this.TABS.ALL.name) {
           this.getListNotifications(this.pageSize, this.currentPage, this.unreadAll, this.TABS.ALL.value);
-        } else {
+        } else if (this.tab === this.TABS.IMPORTANT.name) {
           this.getListNotifications(this.pageSize, this.currentPage, this.unreadImportant, this.TABS.IMPORTANT.value);
+        } else if (this.tab === this.TABS.NOTIFICATIONS.name) {
+          this.getListNotifications(this.pageSize, this.currentPage, this.unreadNotification, this.TABS.NOTIFICATIONS.value);
         }
       }
     });
