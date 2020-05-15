@@ -138,7 +138,6 @@ export class WithdrawRequestComponent implements OnInit {
       this.spinnerService.hide();
       if (response.meta.code === 200) {
         this.bankInfor = response.data;
-
       }
     });
   }
@@ -227,11 +226,12 @@ export class WithdrawRequestComponent implements OnInit {
       this.spinnerService.hide();
       if (response.meta.code === 200) {
         this.listWithdrawRequest = response.data;
+        this.getMt5Infor(Number(this.accountID.split('-')[1]));
         this.listTran.ngOnChanges();
       } else if (response.meta.code === 409) {
         this.checkWithDrawal = false;
       }
-      this.modalWithdrawResult.hide();
+      this.modalWithdrawResult.show();
     });
   }
 
