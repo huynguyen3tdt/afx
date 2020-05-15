@@ -23,6 +23,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { EnvConfigService } from 'src/app/core/services/env-config.service';
 import { take } from 'rxjs/operators';
+import { LoginParam } from 'src/app/core/model/user.model';
 declare const $: any;
 
 @Component({
@@ -102,7 +103,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
     if (this.loginFormGroup.invalid) {
       return;
     }
-    const param = {
+    const param: LoginParam = {
       login_id: this.loginFormGroup.controls.userName.value,
       password: this.loginFormGroup.controls.passWord.value,
       device_type: this.isPc ? 'Pc' : 'Mobile'

@@ -21,6 +21,73 @@ export interface AddressResponse {
   data: AddressModel;
 }
 
+export interface LoginParam {
+  login_id: string;
+  password: string;
+  device_type: string;
+}
+
+export interface ForgotPasswordParam {
+  login_id: string;
+  dob: string;
+}
+
+export interface ResetPasswordParam {
+  new_password: string;
+  old_password: string;
+}
+
+export interface ResetPasswordWithTokenParam {
+  new_password: string;
+  token: string;
+}
+
+export interface ChangeEmail {
+  password: string;
+  token: string;
+}
+
+export interface UpdateUserParam {
+  zip: string;
+  address: {
+    city: string;
+    street: string;
+    street2: string;
+    fx_street3: string;
+  };
+  email: string;
+  mobile: string;
+  lang: string;
+  surveys: Array<QuestionModel>;
+  survey_cd: string;
+}
+
+export interface UpdateCorporateParam {
+  corporation: {
+    zip: string;
+    address: {
+      city: string;
+      street: string;
+      street2: string;
+      fx_street3: string;
+    };
+    mobile: string;
+    fx_fax: string;
+    lang: string;
+  };
+  pic: {
+    name: string;
+    fx_name1: string;
+    fx_gender: string;
+    email: string;
+    mobile: string;
+    function: string;
+    fx_dept: string;
+  };
+  surveys: Array<QuestionModel>;
+  survey_cd: string;
+}
+
 export interface UserModel {
   name: string;
   fx_dob: string;

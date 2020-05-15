@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CorporateModel, AddressModel, LabelModel, QuestionModel } from 'src/app/core/model/user.model';
+import { CorporateModel, AddressModel, LabelModel, QuestionModel, UpdateCorporateParam } from 'src/app/core/model/user.model';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { UserService } from 'src/app/core/services/user.service';
 import { FormGroup, FormControl } from '@angular/forms';
@@ -314,7 +314,7 @@ export class CorporateInfoComponent implements OnInit {
   }
 
   updateCorporate() {
-    const param = {
+    const param: UpdateCorporateParam = {
       corporation: {
         zip: this.corporateForm.controls.cor_postcode.value,
         address: {

@@ -8,7 +8,7 @@ import {
   annualIncomeValidation,
   experienceValidation
 } from 'src/app/core/helper/custom-validate.helper';
-import { UserModel, AddressModel, LabelModel, QuestionModel } from 'src/app/core/model/user.model';
+import { UserModel, AddressModel, LabelModel, QuestionModel, UpdateUserParam } from 'src/app/core/model/user.model';
 import { UserService } from 'src/app/core/services/user.service';
 import { GlobalService } from 'src/app/core/services/global.service';
 import { LISTCITY_JAPAN } from 'src/app/core/constant/japan-constant';
@@ -294,7 +294,7 @@ export class UserInforComponent implements OnInit {
   }
 
   updateUser() {
-    const param = {
+    const param: UpdateUserParam = {
       zip: this.userForm.controls.postCode.value,
       address: {
         city: this.userForm.controls.searchPrefe.value,

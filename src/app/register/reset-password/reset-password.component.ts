@@ -8,6 +8,7 @@ import { LANGUAGLE } from 'src/app/core/constant/language-constant';
 import { defineLocale, jaLocale } from 'ngx-bootstrap/chronos';
 import { BsLocaleService } from 'ngx-bootstrap';
 import { take } from 'rxjs/operators';
+import { ResetPasswordParam, ResetPasswordWithTokenParam } from 'src/app/core/model/user.model';
 declare var $: any;
 defineLocale('ja', jaLocale);
 
@@ -17,7 +18,6 @@ defineLocale('ja', jaLocale);
   styleUrls: ['./reset-password.component.scss']
 })
 export class ResetPasswordComponent implements OnInit {
-
   resetPassForm: FormGroup;
   isSubmitted: boolean;
   erroMessage: boolean;
@@ -30,18 +30,9 @@ export class ResetPasswordComponent implements OnInit {
   locale: string;
   constructor(private authenService: AuthenService,
               private router: Router,
-              private activatedRoute: ActivatedRoute,
-              private localeService: BsLocaleService) { }
+              private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
-    this.locale = localStorage.getItem(LOCALE);
-    if (this.locale === LANGUAGLE.english) {
-      $('body').removeClass('jp');
-      this.localeService.use('en');
-    } else if (this.locale === LANGUAGLE.japan) {
-      this.localeService.use('ja');
-      $('body').addClass('jp');
-    }
     this.oldPassword = atob(localStorage.getItem(PASSWORD_LOGIN));
     this.initResetPassForm();
     this.activatedRoute.queryParams.pipe(take(1)).subscribe(res => {
@@ -80,11 +71,11 @@ export class ResetPasswordComponent implements OnInit {
       return;
     }
     let paramSubmit;
-    const param = {
+    const param: ResetPasswordParam = {
       new_password: this.resetPassForm.controls.confirm_password.value,
       old_password: this.oldPassword
     };
-    const paramToken = {
+    const paramToken: ResetPasswordWithTokenParam = {
       new_password: this.resetPassForm.controls.confirm_password.value,
       token: this.token
     };
