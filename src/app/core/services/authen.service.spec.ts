@@ -43,8 +43,8 @@ describe('AuthenService', () => {
   it('login() should return value from observable',
     () => {
     const param = {
-      login_id: 1001,
-      password: 12345678,
+      login_id: '1001',
+      password: '12345678',
       device_type: 'android'
     };
     service.login(param).subscribe((response: LoginResponseModel) => {
