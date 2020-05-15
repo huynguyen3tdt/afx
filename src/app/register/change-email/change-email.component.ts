@@ -5,6 +5,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { AuthenService } from 'src/app/core/services/authen.service';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { take } from 'rxjs/operators';
+import { ChangeEmail } from 'src/app/core/model/user.model';
 
 @Component({
   selector: 'app-change-email',
@@ -51,7 +52,7 @@ export class ChangeEmailComponent implements OnInit {
   }
 
   onSubmit() {
-    const param = {
+    const param: ChangeEmail = {
       password: this.changeEmailForm.controls.password.value,
       token: this.token
     };

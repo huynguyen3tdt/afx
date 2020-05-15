@@ -8,6 +8,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { AuthenService } from 'src/app/core/services/authen.service';
 import { UserService } from 'src/app/core/services/user.service';
 import { take } from 'rxjs/operators';
+import { ResetPasswordParam } from 'src/app/core/model/user.model';
 declare var $: any;
 
 @Component({
@@ -69,7 +70,7 @@ export class SettingComponent implements OnInit {
       && this.changePassForm.controls.new_password.value === this.changePassForm.controls.confirm_password.value) {
       return;
     }
-    const param = {
+    const param: ResetPasswordParam = {
       new_password: this.changePassForm.controls.confirm_password.value,
       old_password: this.changePassForm.controls.current_password.value,
     };

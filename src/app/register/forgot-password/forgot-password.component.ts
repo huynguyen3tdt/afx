@@ -1,15 +1,19 @@
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, OnDestroy } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl } from '@angular/forms';
 import { requiredInput } from 'src/app/core/helper/custom-validate.helper';
 import * as moment from 'moment';
 import { AuthenService } from 'src/app/core/services/authen.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { element } from 'protractor';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { LOCALE } from 'src/app/core/constant/authen-constant';
 import { EN_FORMATDATE, JAPAN_FORMATDATE} from 'src/app/core/constant/format-date-constant';
 import { LANGUAGLE } from 'src/app/core/constant/language-constant';
+import { defineLocale, jaLocale } from 'ngx-bootstrap/chronos';
 import { take } from 'rxjs/operators';
+import { BsLocaleService } from 'ngx-bootstrap';
+import { ForgotPasswordParam } from 'src/app/core/model/user.model';
+declare var $: any;
+defineLocale('ja', jaLocale);
 
 @Component({
   selector: 'app-forgot-password',
@@ -18,7 +22,6 @@ import { take } from 'rxjs/operators';
 })
 export class ForgotPasswordComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('loginid', { static: true }) loginid: ElementRef;
-
   forgotPasswordForm: FormGroup;
   isSubmitted: boolean;
   successMess = '';
@@ -33,9 +36,18 @@ export class ForgotPasswordComponent implements OnInit, AfterViewInit, OnDestroy
     private authenService: AuthenService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private spinnerService: Ng4LoadingSpinnerService) { }
+    private spinnerService: Ng4LoadingSpinnerService,
+    private localeService: BsLocaleService) { }
 
   ngOnInit() {
+    this.locale = localStorage.getItem(LOCALE);
+    if (this.locale === LANGUAGLE.english) {
+      $('body').removeClass('jp');
+      this.localeService.use('en');
+    } else if (this.locale === LANGUAGLE.japan) {
+      this.localeService.use('ja');
+      $('body').addClass('jp');
+    }
     this.locale = localStorage.getItem(LOCALE);
     if (this.locale === LANGUAGLE.english) {
       this.formatDateYear = EN_FORMATDATE;
@@ -66,7 +78,7 @@ export class ForgotPasswordComponent implements OnInit, AfterViewInit, OnDestroy
     if (this.forgotPasswordForm.invalid) {
       return;
     }
-    const param = {
+    const param: ForgotPasswordParam = {
       login_id: this.forgotPasswordForm.controls.email.value,
       dob: moment(this.forgotPasswordForm.controls.dateInput.value).format('YYYY-MM-DD')
     };

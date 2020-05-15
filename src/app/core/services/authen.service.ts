@@ -7,6 +7,7 @@ import { EnvConfigService } from './env-config.service';
 import { catchError } from 'rxjs/operators';
 import { LoginResponseModel } from '../model/login-response.model';
 import { ResponseWihtoutDataModel } from '../model/none-data-response.model';
+import { ForgotPasswordParam, LoginParam, ResetPasswordParam, ResetPasswordWithTokenParam, ChangeEmail } from '../model/user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,7 @@ export class AuthenService {
     private httpClient: HttpClient,
     private envConfigService: EnvConfigService) {}
 
-  login(param): Observable<LoginResponseModel> {
+  login(param: LoginParam): Observable<LoginResponseModel> {
     return this.httpClient
       .post(`${this.envConfigService.getConfig()}/${AppSettings.API_LOGIN}`,
         param)
@@ -41,7 +42,7 @@ export class AuthenService {
       );
   }
 
-  forgotPassWord(param): Observable<ResponseWihtoutDataModel> {
+  forgotPassWord(param: ForgotPasswordParam): Observable<ResponseWihtoutDataModel> {
     return this.httpClient
       .post(`${this.envConfigService.getConfig()}/${AppSettings.API_FORGOT_PASSWORD}`, param)
       .pipe(
@@ -53,7 +54,7 @@ export class AuthenService {
       );
   }
 
-  changePassword(param): Observable<ResponseWihtoutDataModel> {
+  changePassword(param: ResetPasswordParam): Observable<ResponseWihtoutDataModel> {
     return this.httpClient
       .put(`${this.envConfigService.getConfig()}/${AppSettings.API_CHANGE_PASSWORD}`, param)
       .pipe(
@@ -65,7 +66,7 @@ export class AuthenService {
     );
   }
 
-  resetPassword(param): Observable<ResponseWihtoutDataModel> {
+  resetPassword(param: ResetPasswordWithTokenParam): Observable<ResponseWihtoutDataModel> {
     return this.httpClient
       .post(`${this.envConfigService.getConfig()}/${AppSettings.API_RESET_PASSWORD}`, param)
       .pipe(
@@ -77,7 +78,7 @@ export class AuthenService {
     );
   }
 
-  changeEmail(param): Observable<ResponseWihtoutDataModel> {
+  changeEmail(param: ChangeEmail): Observable<ResponseWihtoutDataModel> {
     return this.httpClient
       .post(`${this.envConfigService.getConfig()}/${AppSettings.API_CHANGE_EMAIL}`, param)
       .pipe(

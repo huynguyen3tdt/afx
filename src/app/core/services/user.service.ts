@@ -5,7 +5,7 @@ import { Observable } from 'rxjs/internal/Observable';
 import { InnerSubscriber } from 'rxjs/internal/InnerSubscriber';
 import { EnvConfigService } from './env-config.service';
 import { catchError } from 'rxjs/operators';
-import { UserResponse, CorporateResponse, BankResponse, AddressResponse } from '../model/user.model';
+import { UserResponse, CorporateResponse, BankResponse, AddressResponse, UpdateUserParam, UpdateCorporateParam } from '../model/user.model';
 import { ResponseWihtoutDataModel } from '../model/none-data-response.model';
 import { SearchBankResponseModel, SearchBranchResponseModel } from '../model/bank-response.model';
 import { WithdrawHistoryModel } from '../model/withdraw-request-response.model';
@@ -43,7 +43,7 @@ export class UserService {
       );
   }
 
-  updateUser(parram: any): Observable<ResponseWihtoutDataModel> {
+  updateUser(parram: UpdateUserParam): Observable<ResponseWihtoutDataModel> {
     return this.httpClient
       .put(`${this.envConfigService.getConfig()}/${AppSettings.API_PUT_INDIVIDUAL}`,
             parram)
@@ -56,7 +56,7 @@ export class UserService {
     );
   }
 
-  changeCorporation(param): Observable<ResponseWihtoutDataModel> {
+  changeCorporation(param: UpdateCorporateParam): Observable<ResponseWihtoutDataModel> {
     return this.httpClient
       .put(`${this.envConfigService.getConfig()}/${AppSettings.API_CHANGE_CORPORATION}`, param)
       .pipe(
