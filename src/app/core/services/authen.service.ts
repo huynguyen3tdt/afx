@@ -7,7 +7,14 @@ import { EnvConfigService } from './env-config.service';
 import { catchError } from 'rxjs/operators';
 import { LoginResponseModel } from '../model/login-response.model';
 import { ResponseWihtoutDataModel } from '../model/none-data-response.model';
-import { ForgotPasswordParam, LoginParam, ResetPasswordParam, ResetPasswordWithTokenParam, ChangeEmail, CheckTokenParam } from '../model/user.model';
+import {
+  ForgotPasswordParam,
+  LoginParam,
+  ResetPasswordParam,
+  ResetPasswordWithTokenParam,
+  ChangeEmail,
+  CheckTokenParam
+} from '../model/user.model';
 
 @Injectable({
   providedIn: 'root'
