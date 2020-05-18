@@ -3,7 +3,14 @@ import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor } from '@angular/c
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { TOKEN_AFX, TIMEOUT_TOAST } from '../constant/authen-constant';
+import { TOKEN_AFX,
+  TIMEOUT_TOAST,
+  TYPE_ERROR_TOAST_EN,
+  TYPE_ERROR_TOAST_JP,
+  TOKEN_EXPIRED_EN,
+  TOKEN_EXPIRED_JP,
+  INTERNAL_SERVER_EN,
+  INTERNAL_SERVER_JP } from '../constant/authen-constant';
 import { ToastrService } from 'ngx-toastr';
 import { LOCALE } from './../constant/authen-constant';
 import { LANGUAGLE } from '../constant/language-constant';
@@ -21,20 +28,20 @@ export class ErrorInterceptor implements HttpInterceptor {
             localStorage.removeItem(TOKEN_AFX);
             this.router.navigate(['/login']);
             if (locale === LANGUAGLE.english) {
-              messageErr = 'Token expired';
-              typeErr = 'ERROR';
+              messageErr = TOKEN_EXPIRED_EN;
+              typeErr = TYPE_ERROR_TOAST_EN;
             } else {
-              messageErr = 'トークンの有効期限が切れました。';
-              typeErr = 'エラー';
+              messageErr = TOKEN_EXPIRED_JP;
+              typeErr = TYPE_ERROR_TOAST_JP;
             }
           }
           if (err.status === 500) {
             if (locale === LANGUAGLE.english) {
-              messageErr = 'Internal server error';
-              typeErr = 'ERROR';
+              messageErr = INTERNAL_SERVER_EN;
+              typeErr = TYPE_ERROR_TOAST_EN;
             } else {
-              messageErr = '内部サーバーエラー';
-              typeErr = 'エラー';
+              messageErr = INTERNAL_SERVER_JP;
+              typeErr = TYPE_ERROR_TOAST_EN;
             }
             this.toastr.error(messageErr, typeErr, {
               timeOut: TIMEOUT_TOAST

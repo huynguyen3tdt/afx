@@ -14,6 +14,13 @@ export const FXNAME1        = 'fxname1AFX';
 export const TIMEZONEAFX    = 'timezoneAFX';
 export const TIMEZONESERVER = '+00:00';
 export const TIMEOUT_TOAST  = 3000;
+export const TYPE_ERROR_TOAST_EN    = 'ERROR';
+export const TYPE_ERROR_TOAST_JP    = 'エラー';
+export const TOKEN_EXPIRED_EN  = 'Token has been expired or revoked';
+export const TOKEN_EXPIRED_JP  = 'トークンの有効期限が切れました。';
+export const INTERNAL_SERVER_EN = 'Internal server error';
+export const INTERNAL_SERVER_JP = '内部サーバーエラー';
+
 export const ACCOUNT_TYPE = {
     ACCOUNT_FX: {account_type: 1, name: 'FX'},
     ACCOUNT_CFDIndex: {account_type: 2, name: 'CFD Index'},

@@ -42,6 +42,10 @@ export interface ResetPasswordWithTokenParam {
   token: string;
 }
 
+export interface CheckTokenParam {
+  token: string;
+}
+
 export interface ChangeEmail {
   password: string;
   token: string;

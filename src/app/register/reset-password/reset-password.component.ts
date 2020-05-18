@@ -2,15 +2,19 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import {FormControl, FormGroup, AbstractControl} from '@angular/forms';
 import {AuthenService} from '../../core/services/authen.service';
 import {Router, ActivatedRoute} from '@angular/router';
-import { PASSWORD_LOGIN, LOCALE } from 'src/app/core/constant/authen-constant';
-import { passwordValidation, requiredInput } from 'src/app/core/helper/custom-validate.helper';
+import { PASSWORD_LOGIN,
+   LOCALE,
+   TIMEOUT_TOAST,
+   TOKEN_EXPIRED_EN,
+   TYPE_ERROR_TOAST_EN,
+   TOKEN_EXPIRED_JP,
+   TYPE_ERROR_TOAST_JP } from 'src/app/core/constant/authen-constant';
+import { passwordValidation } from 'src/app/core/helper/custom-validate.helper';
 import { LANGUAGLE } from 'src/app/core/constant/language-constant';
-import { defineLocale, jaLocale } from 'ngx-bootstrap/chronos';
-import { BsLocaleService } from 'ngx-bootstrap';
 import { take } from 'rxjs/operators';
-import { ResetPasswordParam, ResetPasswordWithTokenParam } from 'src/app/core/model/user.model';
-declare var $: any;
-defineLocale('ja', jaLocale);
+import { ResetPasswordParam, ResetPasswordWithTokenParam, CheckTokenParam } from 'src/app/core/model/user.model';
+import { ToastrService } from 'ngx-toastr';
+import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 
 @Component({
   selector: 'app-reset-password',
@@ -28,16 +32,23 @@ export class ResetPasswordComponent implements OnInit {
   oldPassword: string;
   token: string;
   locale: string;
+  showScreen: boolean;
   constructor(private authenService: AuthenService,
               private router: Router,
-              private activatedRoute: ActivatedRoute) { }
+              private activatedRoute: ActivatedRoute,
+              private toastr: ToastrService,
+              private spinnerService: Ng4LoadingSpinnerService) { }
 
   ngOnInit() {
     this.oldPassword = atob(localStorage.getItem(PASSWORD_LOGIN));
     this.initResetPassForm();
     this.activatedRoute.queryParams.pipe(take(1)).subscribe(res => {
       if (res.token) {
+        this.showScreen = false;
         this.token = res.token;
+        this.checkToken();
+      } else {
+        this.showScreen = true;
       }
     });
   }
@@ -55,6 +66,34 @@ export class ResetPasswordComponent implements OnInit {
       this.erroMessage = true;
       return;
     }
+  }
+
+  checkToken() {
+    const locale = localStorage.getItem(LOCALE);
+    let messageErr;
+    let typeErr;
+    const param: CheckTokenParam = {
+      token: this.token
+    };
+    this.spinnerService.show();
+    this.authenService.checkTokenPassWord(param).subscribe(response => {
+      this.spinnerService.hide();
+      if (response.meta.code === 200) {
+        this.showScreen = true;
+      } else {
+        if (locale === LANGUAGLE.english) {
+          messageErr = TOKEN_EXPIRED_EN;
+          typeErr = TYPE_ERROR_TOAST_EN;
+        } else {
+          messageErr = TOKEN_EXPIRED_JP;
+          typeErr = TYPE_ERROR_TOAST_JP;
+        }
+        this.toastr.error(messageErr, typeErr, {
+          timeOut: TIMEOUT_TOAST
+        });
+        this.router.navigate(['/forgot_password']);
+      }
+    });
   }
 
   onSubmit() {
@@ -81,7 +120,9 @@ export class ResetPasswordComponent implements OnInit {
     };
     if (this.token) {
       paramSubmit = paramToken;
+      this.spinnerService.show();
       this.authenService.resetPassword(paramSubmit).pipe(take(1)).subscribe(response => {
+        this.spinnerService.hide();
         if (response.meta.code === 200) {
           this.router.navigate(['/login']);
         } else if (response.meta.code === 103) {
@@ -90,7 +131,9 @@ export class ResetPasswordComponent implements OnInit {
       });
     } else {
       paramSubmit = param;
+      this.spinnerService.show();
       this.authenService.changePassword(paramSubmit).pipe(take(1)).subscribe(response => {
+        this.spinnerService.hide();
         if (response.meta.code === 200) {
           this.router.navigate(['/login']);
         } else if (response.meta.code === 103) {

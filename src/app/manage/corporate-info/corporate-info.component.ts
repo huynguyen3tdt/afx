@@ -464,7 +464,7 @@ export class CorporateInfoComponent implements OnInit {
   }
 
   changePurpose() {
-    // 1 of 6 reason investment purpose need to be checked (investPurposeSortTerm,
+    // 1 of 6 reasons investment purpose need to be checked (investPurposeSortTerm,
     // investPurposeMedium, investPurposeExchange, investPurposeInterestRate, investPurposeForeignCurrency, investPurposeOther)
     if (this.purposeInvestForm.controls.investPurposeSortTerm.value === false
       && this.purposeInvestForm.controls.investPurposeMedium.value === false
