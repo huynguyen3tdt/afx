@@ -77,7 +77,6 @@ export class ResetPasswordComponent implements OnInit {
     };
     this.spinnerService.show();
     this.authenService.checkTokenPassWord(param).subscribe(response => {
-      console.log('responseee ', response);
       this.spinnerService.hide();
       if (response.meta.code === 200) {
         this.showScreen = true;
