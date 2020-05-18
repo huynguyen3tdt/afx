@@ -264,8 +264,6 @@ export class UserInforComponent implements OnInit {
         this.userForm.controls.postCode.setValue(this.userAddress.postno);
         this.userForm.controls.searchPrefe.setValue(this.userAddress.prefecture);
         this.userForm.controls.searchCountry.setValue(this.userAddress.city + this.userAddress.town);
-        this.userForm.controls.house_numb.setValue(this.userAddress.old_postcode);
-        this.userForm.controls.name_build.setValue(this.userAddress.city);
       }
     });
   }
@@ -387,20 +385,26 @@ export class UserInforComponent implements OnInit {
   }
 
   changeExPurPose() {
+      // 1 in 4 fields (investExFx, inversExCfd, investCommodities, tradingExperience) need experience bigger than 6 months
+    // check if investExFx || inversExCfd || investCommodities <= 2 (lower than 6 months)
     if (Number(this.purposeInvestForm.controls.investExFx.value) <= 2
       && Number(this.purposeInvestForm.controls.inversExCfd.value) <= 2
       && Number(this.purposeInvestForm.controls.investCommodities.value) <= 2) {
+        // setValidator experienceValidation for investExFx, inversExCfd, investCommodities
       this.purposeInvestForm.controls.investExFx.setValidators([experienceValidation]);
       this.purposeInvestForm.controls.investExFx.updateValueAndValidity();
       this.purposeInvestForm.controls.inversExCfd.setValidators([experienceValidation]);
       this.purposeInvestForm.controls.inversExCfd.updateValueAndValidity();
       this.purposeInvestForm.controls.investCommodities.setValidators([experienceValidation]);
       this.purposeInvestForm.controls.investCommodities.updateValueAndValidity();
+      // if other === 2 and tradingExperience <= 2 (lower than 6 months) setValidator experienceValidation for tradingExperience
       if (Number(this.purposeInvestForm.controls.other.value) === 2
         && Number(this.purposeInvestForm.controls.tradingExperience.value) <= 2) {
           this.purposeInvestForm.controls.tradingExperience.setValidators([experienceValidation]);
           this.purposeInvestForm.controls.tradingExperience.updateValueAndValidity();
       }
+       //  if other === 2 and tradingExperience > 2 (bigger than 6 months)
+      // setValidator requiredInput for investExFx, inversExCfd, investCommodities
       if (Number(this.purposeInvestForm.controls.other.value) === 2
         && Number(this.purposeInvestForm.controls.tradingExperience.value) > 2) {
         this.purposeInvestForm.controls.investExFx.setValidators([requiredInput]);
@@ -411,13 +415,16 @@ export class UserInforComponent implements OnInit {
         this.purposeInvestForm.controls.investCommodities.updateValueAndValidity();
       }
     }
+     // check if investExFx || inversExCfd || investCommodities > 2 (bigger than 6 months)
     if (Number(this.purposeInvestForm.controls.investExFx.value) > 2
       || Number(this.purposeInvestForm.controls.inversExCfd.value) > 2
       || Number(this.purposeInvestForm.controls.investCommodities.value) > 2) {
+        // if other === 2 setValidator requiredInput for tradingExperience
       if (Number(this.purposeInvestForm.controls.other.value) === 2) {
           this.purposeInvestForm.controls.tradingExperience.setValidators([requiredInput]);
           this.purposeInvestForm.controls.tradingExperience.updateValueAndValidity();
       }
+      // setValidator requiredInput for investExFx, inversExCfd, investCommodities
       this.purposeInvestForm.controls.investExFx.setValidators([requiredInput]);
       this.purposeInvestForm.controls.investExFx.updateValueAndValidity();
       this.purposeInvestForm.controls.inversExCfd.setValidators([requiredInput]);
@@ -436,6 +443,8 @@ export class UserInforComponent implements OnInit {
   }
 
   changePurpose() {
+    // 1 of 6 reason investment purpose need to be checked (investPurposeSortTerm,
+    // investPurposeMedium, investPurposeExchange, investPurposeInterestRate, investPurposeForeignCurrency, investPurposeOther)
     if (this.purposeInvestForm.controls.investPurposeSortTerm.value === false
       && this.purposeInvestForm.controls.investPurposeMedium.value === false
       && this.purposeInvestForm.controls.investPurposeExchange.value === false
@@ -446,6 +455,7 @@ export class UserInforComponent implements OnInit {
       this.purposeInvestForm.controls.investPurpose.setValidators([requiredInput]);
       this.purposeInvestForm.controls.investPurpose.updateValueAndValidity();
     } else {
+      // if choose 1 of 6 reasons => change value and remove validate for investPurpose
       this.purposeInvestForm.controls.investPurpose.setValue(true);
       this.purposeInvestForm.controls.investPurpose.setValidators([]);
       this.purposeInvestForm.controls.investPurpose.updateValueAndValidity();
