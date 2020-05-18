@@ -74,7 +74,6 @@ export class DepositComponent implements OnInit {
   traddingAccount: AccountType;
 
   ngOnInit() {
-    this.showInforBank('ufj_bank');
     this.language = LANGUAGLE;
     this.locale = localStorage.getItem(LOCALE);
     this.customerName = localStorage.getItem(FXNAME1);
@@ -124,9 +123,9 @@ export class DepositComponent implements OnInit {
       this.spinnerService.hide();
       if (response.meta.code === 200) {
         this.listBankTranfer = response.data;
-        // if (this.listBankTranfer.length > 0) {
-        //   this.showInforBank(`bank_${this.listBankTranfer[0].id}`);
-        // }
+        setTimeout(() => {
+          this.showInforBank('ufj_bank');
+        }, 50);
       }
     });
   }
@@ -159,26 +158,6 @@ export class DepositComponent implements OnInit {
     });
   }
 
-  // showInforBank(index) {
-  //   setTimeout(() => {
-  //     const listTab = [];
-  //     // tslint:disable-next-line: no-shadowed-variable
-  //     this.listBankTranfer.forEach(element => {
-  //       listTab.push(`bank_${element.id}`);
-  //     });
-  //     // tslint:disable-next-line: no-shadowed-variable
-  //     listTab.forEach(element => {
-  //       if (index === element) {
-  //         $(`a#${element}`).addClass('selected');
-  //         $(`div#${element}`).show();
-  //       } else {
-  //         $(`a#${element}`).removeClass('selected');
-  //         $(`div#${element}`).hide();
-  //       }
-  //     });
-  //   }, 50);
-
-  // }
   showInforBank(bank: string) {
     const listTab = ['ufj_bank', 'mizuho_bank', 'sm_bank', 'jpb_bank', 'jn_bank', 'rakuten_bank'];
     // tslint:disable-next-line:no-shadowed-variable
