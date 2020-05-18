@@ -56,7 +56,7 @@ export class WithdrawRequestComponent implements OnInit {
   usedMargin: number;
   listTradingAccount: Array<AccountType>;
   listWithdraw: Array<TransactionModel>;
-  listWithdrawRequest: postWithdrawModel;
+  transactionWithdraw: postWithdrawModel;
   withdrawTranDetail: TransactionModel;
   newDate: string;
   listBankTranfer: Array<DepositModel>;
@@ -227,7 +227,7 @@ export class WithdrawRequestComponent implements OnInit {
     this.withdrawRequestService.postWithdraw(param).pipe(take(1)).subscribe(response => {
       this.spinnerService.hide();
       if (response.meta.code === 200) {
-        this.listWithdrawRequest = response.data;
+        this.transactionWithdraw = response.data;
         this.getMt5Infor(Number(this.accountID.split('-')[1]));
         this.listTran.ngOnChanges();
       } else if (response.meta.code === 409) {

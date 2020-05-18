@@ -60,7 +60,7 @@
                                         {{userInfor?.address?.value?.fx_street3}}</strong></div>
                                 <div *ngIf="userInfor?.address?.status == STATUS_INFO.inProgress" class="status small">
                                     <span class="text-info"><i class="icon ion-md-hourglass"></i>
-                                        {{'Verificaion in process' | translate}}</span></div>
+                                        {{'Verification in progress' | translate}}</span></div>
                             </div>
                             <div *ngIf="editAddress == true" class="editable d-block">
                                 <div class="row no-gutters">
@@ -124,7 +124,7 @@
                                 <strong><a href="javascript:;">{{userInfor?.email?.value}}</a></strong>
                                 <div *ngIf="userInfor?.email?.status == STATUS_INFO.inProgress" class="status small">
                                     <span class="text-info"><i class="icon ion-md-hourglass"></i>
-                                        {{'Verificaion in process' | translate}}</span></div>
+                                        {{'Verification in progress' | translate}}</span></div>
                             </div>
                             <div *ngIf="editEmail == true" class="editable d-block">
                                 <input type="text" name="email" formControlName="email" maxlength="100"
