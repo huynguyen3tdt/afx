@@ -10,7 +10,7 @@ import {
   WithdrawAmountModel,
   postWithdrawModel
 } from 'src/app/core/model/withdraw-request-response.model';
-import { MIN_WITHDRAW, ACCOUNT_IDS, LOCALE, TIMEZONEAFX } from './../../core/constant/authen-constant';
+import { MIN_WITHDRAW, ACCOUNT_IDS, LOCALE, TIMEZONEAFX, MIN_DEPOST } from './../../core/constant/authen-constant';
 import { GlobalService } from 'src/app/core/services/global.service';
 import { AccountType } from 'src/app/core/model/report-response.model';
 import { JAPAN_FORMATDATE_HH_MM, EN_FORMATDATE, EN_FORMATDATE_HH_MM, JAPAN_FORMATDATE } from 'src/app/core/constant/format-date-constant';
@@ -73,6 +73,7 @@ export class WithdrawRequestComponent implements OnInit {
   language;
   traddingAccount: AccountType;
   checkWithDrawal: boolean;
+  minDeposit: string;
   // withdrawAmount
   constructor(private withdrawRequestService: WithdrawRequestService,
               private spinnerService: Ng4LoadingSpinnerService,
@@ -84,6 +85,7 @@ export class WithdrawRequestComponent implements OnInit {
     this.language = LANGUAGLE;
     this.withdrawFee = 0;
     this.timeZone = localStorage.getItem(TIMEZONEAFX);
+    this.minDeposit = localStorage.getItem(MIN_DEPOST);
     this.locale = localStorage.getItem(LOCALE);
     if (this.locale === LANGUAGLE.english) {
       this.formatDateYear = EN_FORMATDATE;

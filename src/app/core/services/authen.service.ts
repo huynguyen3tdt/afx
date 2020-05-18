@@ -7,7 +7,7 @@ import { EnvConfigService } from './env-config.service';
 import { catchError } from 'rxjs/operators';
 import { LoginResponseModel } from '../model/login-response.model';
 import { ResponseWihtoutDataModel } from '../model/none-data-response.model';
-import { ForgotPasswordParam, LoginParam, ResetPasswordParam, ResetPasswordWithTokenParam, ChangeEmail } from '../model/user.model';
+import { ForgotPasswordParam, LoginParam, ResetPasswordParam, ResetPasswordWithTokenParam, ChangeEmail, CheckTokenParam } from '../model/user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -69,6 +69,18 @@ export class AuthenService {
   resetPassword(param: ResetPasswordWithTokenParam): Observable<ResponseWihtoutDataModel> {
     return this.httpClient
       .post(`${this.envConfigService.getConfig()}/${AppSettings.API_RESET_PASSWORD}`, param)
+      .pipe(
+      catchError((error: HttpErrorResponse) => {
+        return new Observable((observer: InnerSubscriber<any, any>) => {
+          observer.next(error);
+        });
+      })
+    );
+  }
+
+  checkTokenPassWord(param: CheckTokenParam): Observable<ResponseWihtoutDataModel> {
+    return this.httpClient
+      .post(`${this.envConfigService.getConfig()}/${AppSettings.API_CHECK_TOKEN_PASSWORD}`, param)
       .pipe(
       catchError((error: HttpErrorResponse) => {
         return new Observable((observer: InnerSubscriber<any, any>) => {

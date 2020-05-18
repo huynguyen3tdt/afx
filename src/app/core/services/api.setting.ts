@@ -35,4 +35,5 @@ export class AppSettings {
     public static API_RESET_PASSWORD            = `api/${versionAPI}/users/reset_pass/`;
     public static API_EXPORT_CSV                = `api/${versionAPI}/funding/tran_history/download/`;
     public static API_CHANGE_EMAIL              = `api/${versionAPI}/users/mail_confirm/`;
+    public static API_CHECK_TOKEN_PASSWORD      = `api/${versionAPI}/users/check_token/`;
 }
