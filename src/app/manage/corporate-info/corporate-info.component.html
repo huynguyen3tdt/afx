@@ -43,7 +43,7 @@
                             <div><strong>{{corporateInfor?.corporation?.address?.value?.street2}} - {{corporateInfor?.corporation?.address?.value?.fx_street3}}</strong></div>
                             <div class="status small" *ngIf="corporateInfor?.corporation?.address?.status == STATUS_INFO.inProgress"><span class="text-info">
                             <i class="icon ion-md-hourglass">
-                            </i> {{'Verificaion in process' | translate}}</span></div>
+                            </i> {{'Verification in progress' | translate}}</span></div>
                         </div>
                         <div class="editable d-block" *ngIf="editCorAddress == true">
                             <div class="row no-gutters">
@@ -329,7 +329,7 @@
                         <strong>{{corporateInfor?.pic?.info?.value?.fx_gender}}</strong>
                         <div class="status small" *ngIf="corporateInfor?.pic?.info?.status == STATUS_INFO.inProgress"><span class="text-info">
                             <i class="icon ion-md-hourglass">
-                            </i> {{'Verificaion in process' | translate}}</span></div>
+                            </i> {{'Verification in progress' | translate}}</span></div>
                     </div>
                     <div class="editable d-block" *ngIf="editPersonPicname == true">
                       <select class="form-control form-control-sm mb-1 select2" style="width: 100%" formControlName="person_gender">
@@ -376,7 +376,7 @@
                     <div class="currentvalue" *ngIf="editPersonEmail == false">
                         <strong><a href="javascript:;">{{corporateInfor?.pic?.email?.value}}</a></strong>
                         <div class="status small" *ngIf="corporateInfor?.pic?.email?.status == STATUS_INFO.inProgress"><span class="text-info">
-                        <i class="icon ion-md-hourglass"></i> {{'Verificaion in process' | translate}}</span></div>
+                        <i class="icon ion-md-hourglass"></i> {{'Verification in progress' | translate}}</span></div>
                     </div>
                     <div class="editable d-block" *ngIf="editPersonEmail == true">
                         <input type="text" name="p-email" maxlength="100" placeholder="" formControlName="person_email"

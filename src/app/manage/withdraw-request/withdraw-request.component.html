@@ -219,7 +219,7 @@
     <div class="modal-content">
       <div class="modal-header bg-light pt-2 pb-2">
         <div>
-          <h5 class="modal-title text-primary"><strong>{{'Early Withdrawal' | translate}}</strong></h5>
+          <h5 class="modal-title text-primary"><strong>{{'Transaction ID' | translate}} : {{transactionWithdraw?.id}}</strong></h5>
         </div>
       </div>
       <div class="modal-body">
@@ -229,15 +229,15 @@
             <tbody>
                 <tr>
                     <td width="180" class="border-top-0">{{'Withdrawal amount' | translate}}</td>
-                    <td class="border-top-0">{{listWithdrawRequest?.amount | number}} JPY</td>
+                    <td class="border-top-0">{{transactionWithdraw?.amount | number}} JPY</td>
                 </tr>
-                <tr>
+                <!-- <tr>
                     <td width="180">{{'Transaction ID' | translate}}</td>
-                    <td>{{listWithdrawRequest?.id}}</td>
-                </tr>
+                    <td>{{transactionWithdraw?.id}}</td>
+                </tr> -->
                 <tr>
                     <td width="180">{{'Createdate time' | translate}}</td>
-                    <td>{{listWithdrawRequest?.create_date | date: 'yyyy/MM/dd H:mm'}}</td>
+                    <td>{{transactionWithdraw?.create_date | date: 'yyyy/MM/dd H:mm'}}</td>
                 </tr>
             </tbody>
         </table>
