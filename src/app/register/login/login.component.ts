@@ -15,6 +15,8 @@ import {
   LOCALE,
   FXNAME1,
   TIMEZONEAFX,
+  MAX_DEPOSIT,
+  MAX_WITHDRAW,
 } from './../../core/constant/authen-constant';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthenService } from 'src/app/core/services/authen.service';
@@ -126,8 +128,14 @@ export class LoginComponent implements OnInit, AfterViewInit {
         if (response.data.module_funding_min_deposit) {
         localStorage.setItem(MIN_DEPOST, response.data.module_funding_min_deposit.toString());
         }
+        if (response.data.module_funding_max_deposit) {
+          localStorage.setItem(MAX_DEPOSIT, response.data.module_funding_max_deposit.toString());
+        }
         if (response.data.module_funding_min_withdraw) {
           localStorage.setItem(MIN_WITHDRAW, response.data.module_funding_min_withdraw.toString());
+        }
+        if (response.data.module_funding_max_withdraw) {
+          localStorage.setItem(MAX_WITHDRAW, response.data.module_funding_max_withdraw.toString());
         }
         if (response.data.fx_name1) {
           localStorage.setItem(FXNAME1, response.data.fx_name1);

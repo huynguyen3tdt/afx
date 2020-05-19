@@ -10,7 +10,7 @@ import {
   WithdrawAmountModel,
   postWithdrawModel
 } from 'src/app/core/model/withdraw-request-response.model';
-import { MIN_WITHDRAW, ACCOUNT_IDS, LOCALE, TIMEZONEAFX, MIN_DEPOST } from './../../core/constant/authen-constant';
+import { MIN_WITHDRAW, ACCOUNT_IDS, LOCALE, TIMEZONEAFX, MIN_DEPOST, MAX_WITHDRAW } from './../../core/constant/authen-constant';
 import { GlobalService } from 'src/app/core/services/global.service';
 import { AccountType } from 'src/app/core/model/report-response.model';
 import { JAPAN_FORMATDATE_HH_MM, EN_FORMATDATE, EN_FORMATDATE_HH_MM, JAPAN_FORMATDATE } from 'src/app/core/constant/format-date-constant';
@@ -46,7 +46,8 @@ export class WithdrawRequestComponent implements OnInit {
   transactionDetail: TransactionModel;
   minWithdraw: string;
   depositValue: number;
-  withdrawError: boolean;
+  minWithdrawError: boolean;
+  maxWithdrawError: boolean;
   equityEstimate: number;
   marginLevelEstimate: number;
   errMessage: boolean;
@@ -73,7 +74,8 @@ export class WithdrawRequestComponent implements OnInit {
   language;
   traddingAccount: AccountType;
   checkWithDrawal: boolean;
-  minDeposit: string;
+  minWithDraw: string;
+  maxWithDraw: string;
   // withdrawAmount
   constructor(private withdrawRequestService: WithdrawRequestService,
               private spinnerService: Ng4LoadingSpinnerService,
@@ -85,7 +87,8 @@ export class WithdrawRequestComponent implements OnInit {
     this.language = LANGUAGLE;
     this.withdrawFee = 0;
     this.timeZone = localStorage.getItem(TIMEZONEAFX);
-    this.minDeposit = localStorage.getItem(MIN_DEPOST);
+    this.minWithDraw = localStorage.getItem(MIN_DEPOST);
+    this.maxWithDraw = localStorage.getItem(MAX_WITHDRAW);
     this.locale = localStorage.getItem(LOCALE);
     if (this.locale === LANGUAGLE.english) {
       this.formatDateYear = EN_FORMATDATE;
@@ -167,7 +170,7 @@ export class WithdrawRequestComponent implements OnInit {
 
   changeWithdraw(event: any) {
    this.errMessage = false;
-   if (this.checkValidateWithDrawal() === false) {
+   if (!this.checkValidateWithDrawal()) {
      return;
    }
    this.totalAmount = numeral(this.withdrawForm.controls.amount.value).value() - this.withdrawFee;
@@ -187,7 +190,7 @@ export class WithdrawRequestComponent implements OnInit {
   }
 
   showConfirm() {
-    if (this.checkValidateWithDrawal() === false) {
+    if (!this.checkValidateWithDrawal()) {
       return;
     }
     this.modalWithdrawConfirm.show();
@@ -239,17 +242,11 @@ export class WithdrawRequestComponent implements OnInit {
 
   checkValidateWithDrawal() {
     this.depositValue = numeral(this.withdrawForm.controls.amount.value).value();
-    if (this.depositValue < Number(this.minWithdraw)) {
-      this.withdrawError = true;
-    } else {
-      this.withdrawError = false;
-    }
-    if (this.mt5Infor.free_margin < this.depositValue) {
-      this.withdrawAmountError = true;
-    } else {
-      this.withdrawAmountError = false;
-    }
-    if (this.withdrawError === true || this.withdrawAmountError === true) {
+    this.minWithdrawError = this.depositValue < Number(this.minWithdraw);
+    this.maxWithdrawError = this.depositValue > Number(this.maxWithDraw);
+    this.withdrawAmountError = this.mt5Infor.free_margin < this.depositValue;
+
+    if (this.minWithdrawError || this.withdrawAmountError || this.maxWithdrawError) {
       return false;
     } else {
       return true;
