@@ -412,12 +412,9 @@ export class CorporateInfoComponent implements OnInit {
       && Number(this.purposeInvestForm.controls.inversExCfd.value) <= 2
       && Number(this.purposeInvestForm.controls.investCommodities.value) <= 2) {
         // setValidator experienceValidation for investExFx, inversExCfd, investCommodities
-      this.purposeInvestForm.controls.investExFx.setValidators([experienceValidation]);
-      this.purposeInvestForm.controls.investExFx.updateValueAndValidity();
-      this.purposeInvestForm.controls.inversExCfd.setValidators([experienceValidation]);
-      this.purposeInvestForm.controls.inversExCfd.updateValueAndValidity();
-      this.purposeInvestForm.controls.investCommodities.setValidators([experienceValidation]);
-      this.purposeInvestForm.controls.investCommodities.updateValueAndValidity();
+      this.globalService.resetValidator(this.purposeInvestForm.controls.investExFx, experienceValidation);
+      this.globalService.resetValidator(this.purposeInvestForm.controls.inversExCfd, experienceValidation);
+      this.globalService.resetValidator(this.purposeInvestForm.controls.investCommodities, experienceValidation);
       // if other === 2 and tradingExperience <= 2 (lower than 6 months) setValidator experienceValidation for tradingExperience
       if (Number(this.purposeInvestForm.controls.other.value) === 2
         && Number(this.purposeInvestForm.controls.tradingExperience.value) <= 2) {
@@ -428,12 +425,9 @@ export class CorporateInfoComponent implements OnInit {
       // setValidator requiredInput for investExFx, inversExCfd, investCommodities
       if (Number(this.purposeInvestForm.controls.other.value) === 2
         && Number(this.purposeInvestForm.controls.tradingExperience.value) > 2) {
-        this.purposeInvestForm.controls.investExFx.setValidators([requiredInput]);
-        this.purposeInvestForm.controls.investExFx.updateValueAndValidity();
-        this.purposeInvestForm.controls.inversExCfd.setValidators([requiredInput]);
-        this.purposeInvestForm.controls.inversExCfd.updateValueAndValidity();
-        this.purposeInvestForm.controls.investCommodities.setValidators([requiredInput]);
-        this.purposeInvestForm.controls.investCommodities.updateValueAndValidity();
+        this.globalService.resetValidator(this.purposeInvestForm.controls.investExFx, requiredInput);
+        this.globalService.resetValidator(this.purposeInvestForm.controls.inversExCfd, requiredInput);
+        this.globalService.resetValidator(this.purposeInvestForm.controls.investCommodities, requiredInput);
       }
     }
      // check if investExFx || inversExCfd || investCommodities > 2 (bigger than 6 months)
@@ -442,16 +436,12 @@ export class CorporateInfoComponent implements OnInit {
       || Number(this.purposeInvestForm.controls.investCommodities.value) > 2) {
         // if other === 2 setValidator requiredInput for tradingExperience
       if (Number(this.purposeInvestForm.controls.other.value) === 2) {
-          this.purposeInvestForm.controls.tradingExperience.setValidators([requiredInput]);
-          this.purposeInvestForm.controls.tradingExperience.updateValueAndValidity();
+          this.globalService.resetValidator(this.purposeInvestForm.controls.tradingExperience, requiredInput);
       }
         // setValidator requiredInput for investExFx, inversExCfd, investCommodities
-      this.purposeInvestForm.controls.investExFx.setValidators([requiredInput]);
-      this.purposeInvestForm.controls.investExFx.updateValueAndValidity();
-      this.purposeInvestForm.controls.inversExCfd.setValidators([requiredInput]);
-      this.purposeInvestForm.controls.inversExCfd.updateValueAndValidity();
-      this.purposeInvestForm.controls.investCommodities.setValidators([requiredInput]);
-      this.purposeInvestForm.controls.investCommodities.updateValueAndValidity();
+      this.globalService.resetValidator(this.purposeInvestForm.controls.investExFx, requiredInput);
+      this.globalService.resetValidator(this.purposeInvestForm.controls.inversExCfd, requiredInput);
+      this.globalService.resetValidator(this.purposeInvestForm.controls.investCommodities, requiredInput);
     }
   }
 
@@ -473,21 +463,17 @@ export class CorporateInfoComponent implements OnInit {
       && this.purposeInvestForm.controls.investPurposeForeignCurrency.value === false
       && this.purposeInvestForm.controls.investPurposeOther.value === false) {
       this.purposeInvestForm.controls.investPurpose.setValue(false);
-      this.purposeInvestForm.controls.investPurpose.setValidators([requiredInput]);
-      this.purposeInvestForm.controls.investPurpose.updateValueAndValidity();
+      this.globalService.resetValidator(this.purposeInvestForm.controls.investPurpose, requiredInput);
     } else {
       // if choose 1 of 6 reasons => change value and remove validate for investPurpose
       this.purposeInvestForm.controls.investPurpose.setValue(true);
-      this.purposeInvestForm.controls.investPurpose.setValidators([]);
-      this.purposeInvestForm.controls.investPurpose.updateValueAndValidity();
+      this.globalService.resetValidator(this.purposeInvestForm.controls.investPurpose);
     }
 
     if (this.purposeInvestForm.controls.investPurposeOther.value === true) {
-      this.purposeInvestForm.controls.otherPurpose.setValidators([requiredInput]);
-      this.purposeInvestForm.controls.otherPurpose.updateValueAndValidity();
+      this.globalService.resetValidator(this.purposeInvestForm.controls.otherPurpose, requiredInput);
     } else {
-      this.purposeInvestForm.controls.otherPurpose.setValidators([]);
-      this.purposeInvestForm.controls.otherPurpose.updateValueAndValidity();
+      this.globalService.resetValidator(this.purposeInvestForm.controls.otherPurpose);
     }
   }
 
@@ -595,28 +581,30 @@ export class CorporateInfoComponent implements OnInit {
         break;
     }
     if (type === this.formType.corporateInfor
-      && this.editCorAddress === false
-      && this.editCorPhone === false
-      && this.editCorFax === false) {
+      && !this.editCorAddress
+      && !this.editCorPhone
+      && !this.editCorFax) {
       this.showSaveCorp = false;
     }
     if (type === this.formType.pic
-      && this.editPersonBod === false
-      && this.editPersonPic === false
-      && this.editPersonPicname === false
-      && this.editPersonPhone === false
-      && this.editPersonEmail === false
-      && this.editGender === false) {
+      && !this.editPersonBod
+      && !this.editPersonPic
+      && !this.editPersonPicname
+      && !this.editPersonPhone
+      && !this.editPersonEmail
+      && !this.editGender) {
       this.showSavePic = false;
     }
   }
 
   cancelEditFinan() {
     this.editFinancial = false;
+    this.getCorporateInfor();
   }
 
   cancelEditPurpose() {
     this.editPurpose = false;
+    this.getCorporateInfor();
   }
 
   editPurposeInvest() {

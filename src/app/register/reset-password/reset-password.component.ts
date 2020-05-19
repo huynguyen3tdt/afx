@@ -8,7 +8,9 @@ import { PASSWORD_LOGIN,
    TOKEN_EXPIRED_EN,
    TYPE_ERROR_TOAST_EN,
    TOKEN_EXPIRED_JP,
-   TYPE_ERROR_TOAST_JP } from 'src/app/core/constant/authen-constant';
+   TYPE_ERROR_TOAST_JP,
+   TYPE_SUCCESS_TOAST_EN,
+   TYPE_SUCCESS_TOAST_JP} from 'src/app/core/constant/authen-constant';
 import { passwordValidation } from 'src/app/core/helper/custom-validate.helper';
 import { LANGUAGLE } from 'src/app/core/constant/language-constant';
 import { take } from 'rxjs/operators';
@@ -72,6 +74,19 @@ export class ResetPasswordComponent implements OnInit {
     const locale = localStorage.getItem(LOCALE);
     let messageErr;
     let typeErr;
+    let messageSuccess;
+    let typeSuccess;
+    if (locale === LANGUAGLE.english) {
+      messageErr = TOKEN_EXPIRED_EN;
+      typeErr = TYPE_ERROR_TOAST_EN;
+      messageSuccess = 'You have successfully changed the password';
+      typeSuccess = TYPE_SUCCESS_TOAST_EN;
+    } else {
+      messageErr = TOKEN_EXPIRED_JP;
+      typeErr = TYPE_ERROR_TOAST_JP;
+      messageSuccess = 'パスワードを変更しました';
+      typeSuccess = TYPE_SUCCESS_TOAST_JP;
+    }
     const param: CheckTokenParam = {
       token: this.token
     };
@@ -80,14 +95,11 @@ export class ResetPasswordComponent implements OnInit {
       this.spinnerService.hide();
       if (response.meta.code === 200) {
         this.showScreen = true;
+        this.router.navigate(['/login']);
+        this.toastr.success(messageSuccess, typeSuccess, {
+          timeOut: TIMEOUT_TOAST
+        });
       } else {
-        if (locale === LANGUAGLE.english) {
-          messageErr = TOKEN_EXPIRED_EN;
-          typeErr = TYPE_ERROR_TOAST_EN;
-        } else {
-          messageErr = TOKEN_EXPIRED_JP;
-          typeErr = TYPE_ERROR_TOAST_JP;
-        }
         this.toastr.error(messageErr, typeErr, {
           timeOut: TIMEOUT_TOAST
         });
