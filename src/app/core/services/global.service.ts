@@ -112,4 +112,14 @@ export class GlobalService {
       formControl.updateValueAndValidity();
     }
   }
+
+  resetValidator(formControl: AbstractControl, validator?: ValidatorFn) {
+    if (validator) {
+      formControl.setValidators([validator]);
+      formControl.updateValueAndValidity();
+    } else {
+      formControl.setValidators([]);
+      formControl.updateValueAndValidity();
+    }
+  }
 }
