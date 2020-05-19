@@ -8,7 +8,7 @@ import { PASSWORD_LOGIN,
    TOKEN_EXPIRED_EN,
    TYPE_ERROR_TOAST_EN,
    TOKEN_EXPIRED_JP,
-   TYPE_ERROR_TOAST_JP, 
+   TYPE_ERROR_TOAST_JP,
    TYPE_SUCCESS_TOAST_EN,
    TYPE_SUCCESS_TOAST_JP} from 'src/app/core/constant/authen-constant';
 import { passwordValidation } from 'src/app/core/helper/custom-validate.helper';
