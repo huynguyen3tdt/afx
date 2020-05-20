@@ -74,18 +74,12 @@ export class ResetPasswordComponent implements OnInit {
     const locale = localStorage.getItem(LOCALE);
     let messageErr;
     let typeErr;
-    let messageSuccess;
-    let typeSuccess;
     if (locale === LANGUAGLE.english) {
       messageErr = TOKEN_EXPIRED_EN;
       typeErr = TYPE_ERROR_TOAST_EN;
-      messageSuccess = 'You have successfully changed the password';
-      typeSuccess = TYPE_SUCCESS_TOAST_EN;
     } else {
       messageErr = TOKEN_EXPIRED_JP;
       typeErr = TYPE_ERROR_TOAST_JP;
-      messageSuccess = 'パスワードを変更しました';
-      typeSuccess = TYPE_SUCCESS_TOAST_JP;
     }
     const param: CheckTokenParam = {
       token: this.token
@@ -95,10 +89,6 @@ export class ResetPasswordComponent implements OnInit {
       this.spinnerService.hide();
       if (response.meta.code === 200) {
         this.showScreen = true;
-        this.router.navigate(['/login']);
-        this.toastr.success(messageSuccess, typeSuccess, {
-          timeOut: TIMEOUT_TOAST
-        });
       } else {
         this.toastr.error(messageErr, typeErr, {
           timeOut: TIMEOUT_TOAST
@@ -121,7 +111,10 @@ export class ResetPasswordComponent implements OnInit {
       this.erroMessage = true;
       return;
     }
+    const locale = localStorage.getItem(LOCALE);
     let paramSubmit;
+    let messageSuccess;
+    let typeSuccess;
     const param: ResetPasswordParam = {
       new_password: this.resetPassForm.controls.confirm_password.value,
       old_password: this.oldPassword
@@ -131,12 +124,22 @@ export class ResetPasswordComponent implements OnInit {
       token: this.token
     };
     if (this.token) {
+      if (locale === LANGUAGLE.english) {
+        messageSuccess = 'You have successfully changed the password';
+        typeSuccess = TYPE_SUCCESS_TOAST_EN;
+      } else {
+        messageSuccess = 'パスワードを変更しました';
+        typeSuccess = TYPE_SUCCESS_TOAST_JP;
+      }
       paramSubmit = paramToken;
       this.spinnerService.show();
       this.authenService.resetPassword(paramSubmit).pipe(take(1)).subscribe(response => {
         this.spinnerService.hide();
         if (response.meta.code === 200) {
           this.router.navigate(['/login']);
+          this.toastr.success(messageSuccess, typeSuccess, {
+            timeOut: TIMEOUT_TOAST
+          });
         } else if (response.meta.code === 103) {
           this.errorMess = response.meta.message;
         }
