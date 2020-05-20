@@ -240,11 +240,11 @@
                 </tr> -->
                 <tr>
                     <td width="180">{{'Createdate time' | translate}}</td>
-                    <td>{{transactionWithdraw?.create_date | date: 'yyyy/MM/dd H:mm'}}</td>
+                    <td>{{transactionWithdraw?.create_date}}</td>
                 </tr>
             </tbody>
         </table>
-        <p *ngIf="checkWithDrawal == true">{{'Your withdrawal request has been received and is being processed within 3-4 business days' | translate}}?</p>
+        <p *ngIf="checkWithDrawal == true">{{'It is being processed within 3-5 business day.' | translate}}?</p>
         <p *ngIf="checkWithDrawal == false">{{'Reason: MT5 account balance is not enough money to withdraw' | translate}}</p>
         <hr>
         <div class="text-center">
