@@ -52,7 +52,6 @@ export class HeaderComponent implements OnInit {
     this.locale = localStorage.getItem(LOCALE);
     this.listTradingAccount = JSON.parse(localStorage.getItem(ACCOUNT_IDS));
     this.globalService.recallUnread.subscribe(response => {
-      console.log('in in in');
       if (response === 'recall') {
         this.getListNotifications(this.pageSize, this.currentPage, this.unreadAll, this.TABS.ALL.value);
       }
@@ -134,7 +133,6 @@ export class HeaderComponent implements OnInit {
       if (response.meta.code === 200) {
         this.pageNotification = response;
         this.listNotification = this.pageNotification.data.results;
-        console.log('listNotification ', this.listNotification);
         this.listNotification.forEach(item => {
           item.publish_date = moment(item.publish_date).format(this.formatDateYear);
         });
