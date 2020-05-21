@@ -11,6 +11,7 @@ import { AccountType } from 'src/app/core/model/report-response.model';
 import { LANGUAGLE } from 'src/app/core/constant/language-constant';
 import { ModalDirective } from 'ngx-bootstrap';
 import { take } from 'rxjs/operators';
+import { GlobalService } from 'src/app/core/services/global.service';
 declare var $: any;
 
 @Component({
@@ -63,7 +64,8 @@ export class NotificationsComponent implements OnInit {
   constructor(
     private notificationsService: NotificationsService,
     private spinnerService: Ng4LoadingSpinnerService,
-    private activatedRoute: ActivatedRoute) { }
+    private activatedRoute: ActivatedRoute,
+    private globalService: GlobalService) { }
 
   ngOnInit() {
     this.language = LANGUAGLE;
@@ -144,6 +146,7 @@ export class NotificationsComponent implements OnInit {
     this.notificationsService.changeReadStatus(param).pipe(take(1)).subscribe(response => {
     });
     this.getTotalNotification();
+    this.globalService.changeStatusNoti('recall');
   }
 
   filterUnreadNoti() {

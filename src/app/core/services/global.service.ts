@@ -4,6 +4,7 @@ import { TYPEOFTRANHISTORY, PAYMENTMETHOD } from '../constant/payment-method-con
 import { LOCALE } from '../constant/authen-constant';
 import { LANGUAGLE } from '../constant/language-constant';
 import { AbstractControl, ValidatorFn } from '@angular/forms';
+import { BehaviorSubject } from 'rxjs';
 
 export const ACCOUNT_TYPE = {
   ACCOUNT_FX: {account_type: 1, name: 'FX'},
@@ -17,6 +18,13 @@ const numeral = require('numeral');
 })
 export class GlobalService {
   constructor() { }
+
+  totalNoti = new BehaviorSubject('');
+  recallUnread = this.totalNoti.asObservable();
+
+  changeStatusNoti(status: string) {
+    this.totalNoti.next(status);
+  }
 
   calculateMarginLevel(equityDeposit: number, usedMargin: number) {
     let marginLevel: number;
