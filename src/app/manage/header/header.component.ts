@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
-import { TOKEN_AFX, FIRST_LOGIN, LOCALE } from 'src/app/core/constant/authen-constant';
+import { TOKEN_AFX, FIRST_LOGIN, LOCALE, ACCOUNT_IDS } from 'src/app/core/constant/authen-constant';
 import { AuthenService } from 'src/app/core/services/authen.service';
 import { NotificationsService } from 'src/app/core/services/notifications.service';
 import { PageNotificationResponse, Notification } from 'src/app/core/model/page-noti.model';
@@ -9,6 +9,7 @@ import { EN_FORMATDATE, JAPAN_FORMATDATE } from 'src/app/core/constant/format-da
 import { AccountType } from 'src/app/core/model/report-response.model';
 import { LANGUAGLE } from 'src/app/core/constant/language-constant';
 import { take } from 'rxjs/operators';
+import { GlobalService } from 'src/app/core/services/global.service';
 declare const $: any;
 declare const TweenMax: any;
 
@@ -39,7 +40,8 @@ export class HeaderComponent implements OnInit {
   isIos: boolean;
 
   constructor(private router: Router, private authenService: AuthenService,
-              private notificationsService: NotificationsService, ) {
+              private notificationsService: NotificationsService,
+              private globalService: GlobalService) {
     this.router.events.subscribe((e: any) => {
       this.activeRouter(this.router.url);
     });
@@ -48,6 +50,12 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
     this.checkDevice();
     this.locale = localStorage.getItem(LOCALE);
+    this.listTradingAccount = JSON.parse(localStorage.getItem(ACCOUNT_IDS));
+    this.globalService.recallUnread.subscribe(response => {
+      if (response === 'recall') {
+        this.getListNotifications(this.pageSize, this.currentPage, this.unreadAll, this.TABS.ALL.value);
+      }
+    });
     if (this.locale === LANGUAGLE.english) {
       this.formatDateYear = EN_FORMATDATE;
     } else if (this.locale === LANGUAGLE.japan) {
