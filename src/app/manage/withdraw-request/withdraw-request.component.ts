@@ -145,6 +145,7 @@ export class WithdrawRequestComponent implements OnInit {
       this.calculateWithdraw();
     });
   }
+
   getBankInfor() {
     this.spinnerService.show();
     this.withdrawRequestService.getBankInfor().pipe(take(1)).subscribe(response => {
@@ -154,6 +155,7 @@ export class WithdrawRequestComponent implements OnInit {
       }
     });
   }
+
   getDwAmount(accountId) {
     this.spinnerService.show();
     this.withdrawRequestService.getDwAmount(accountId).pipe(take(1)).subscribe(response => {
@@ -163,6 +165,7 @@ export class WithdrawRequestComponent implements OnInit {
       }
     });
   }
+
   getDepositBank() {
     this.spinnerService.show();
     this.depositService.getDepositBank().pipe(take(1)).subscribe(response => {
@@ -176,7 +179,7 @@ export class WithdrawRequestComponent implements OnInit {
     });
   }
 
-  changeWithdraw(event: any) {
+  changeWithdraw() {
    this.errMessage = false;
    if (!this.checkValidateWithDrawal()) {
      return;
@@ -193,6 +196,7 @@ export class WithdrawRequestComponent implements OnInit {
       this.errMessage = true;
     }
   }
+
   onRefesh() {
     this.getMt5Infor(Number(this.accountID.split('-')[1]));
   }
@@ -206,7 +210,7 @@ export class WithdrawRequestComponent implements OnInit {
     this.getDepositBank();
   }
 
-  changeAmount() {
+  getAllFreeMargin() {
     if (this.withdrawForm.controls.wholeMoney.value === true) {
       $('#amount').attr('disabled', true);
       this.withdrawAmountError = false;
@@ -243,6 +247,12 @@ export class WithdrawRequestComponent implements OnInit {
         moment(this.transactionWithdraw.create_date + TIMEZONESERVER).tz(this.timeZone).format(this.formatDateHour);
         this.getMt5Infor(Number(this.accountID.split('-')[1]));
         this.listTran.ngOnChanges();
+        this.withdrawForm.controls.amount.setValue(numeral(this.minWithDraw).format('0,0'));
+        this.changeWithdraw();
+        if (this.withdrawForm.controls.wholeMoney.value === true) {
+          this.withdrawForm.controls.wholeMoney.setValue(false);
+          this.getAllFreeMargin();
+        }
       } else if (response.meta.code === 409) {
         this.checkWithDrawal = false;
       }

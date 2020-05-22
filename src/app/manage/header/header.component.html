@@ -20,7 +20,7 @@
                         <a target="_blank" *ngIf="isIos == true" href="https://download.mql5.com/cdn/mobile/mt5/ios?hl=en&utm_source=www.metatrader5.com&utm_campaign=download" class="nav-link">
                             <img src="./../../../assets/images/metatrader-5.png"></a>
                     </li>
-                    <li class="nav-item nav-item-notification dropdown has-notification">
+                    <li [className]="listNotification && listNotification.length > 0 ? 'nav-item nav-item-notification dropdown has-notification' : 'nav-item nav-item-notification dropdown'">
                         <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icon ion-md-notifications"></i></a>
                         <div class="dropdown-menu dropdown-menu-notification dropdown-menu-right">
                             <h6 class="mb-1 text-primary text-uppercase title"><strong>Unread Notifications</strong>
