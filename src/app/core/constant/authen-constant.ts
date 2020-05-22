@@ -12,6 +12,7 @@ export const MIN_WITHDRAW   = 'minWithdrawAFX';
 export const MAX_WITHDRAW   = 'maxWithdrawAFX';
 export const FONTSIZE_AFX   = 'fontsizeAFX';
 export const LOCALE         = 'locale';
+export const CHANGE_PASS_FLG = 'pwd_change_flg_AFX';
 export const FXNAME1        = 'fxname1AFX';
 export const TIMEZONEAFX    = 'timezoneAFX';
 export const TIMEZONESERVER = '+00:00';

@@ -17,6 +17,7 @@ import {
   TIMEZONEAFX,
   MAX_DEPOSIT,
   MAX_WITHDRAW,
+  CHANGE_PASS_FLG,
 } from './../../core/constant/authen-constant';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthenService } from 'src/app/core/services/authen.service';
@@ -150,6 +151,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
           this.translate.use(response.data.lang);
         }
         localStorage.setItem(FIRST_LOGIN, '1');
+        localStorage.setItem(CHANGE_PASS_FLG, response.data.pwd_change_flg.toString());
         if (response.data.pwd_change_flg === false) {
           this.router.navigate(['/manage/notifications'], {
             queryParams: {
