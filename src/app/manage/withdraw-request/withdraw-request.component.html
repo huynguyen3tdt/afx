@@ -55,7 +55,7 @@
                                 <div class="mb-1 d-flex justify-content-between">
                                     <label class="label">{{'Margin Level' | translate}}</label>
                                     <div>
-                                        <strong>{{mt5Infor?.margin_level | number}}%</strong>
+                                        <strong>{{mt5Infor?.margin_level | number: '1.2-2'}}%</strong>
                                     </div>
                                 </div>
 
@@ -81,7 +81,7 @@
                                 <div class="mb-1 d-flex justify-content-between">
                                     <label class="label">{{'Bank Account Number' | translate}}</label>
                                     <div>
-                                        <strong>{{bankInfor?.fx_acc_type}}{{bankInfor?.acc_number}}</strong>
+                                        <strong>{{bankInfor?.fx_acc_type | convertAccTypeBank}} {{bankInfor?.acc_number}}</strong>
                                     </div>
                                 </div>
                                 <div class="mb-1 d-flex justify-content-between">

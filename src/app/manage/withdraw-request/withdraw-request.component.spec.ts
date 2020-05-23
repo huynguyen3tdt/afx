@@ -11,6 +11,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ModalModule } from 'ngx-bootstrap';
+import { ConvertAccountTypeBankPipe } from 'src/app/core/pipe/convert-account-type-bank.pipe';
 
 describe('WithdrawRequestComponent', () => {
   let component: WithdrawRequestComponent;
@@ -19,7 +20,7 @@ describe('WithdrawRequestComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ WithdrawRequestComponent ],
+      declarations: [ WithdrawRequestComponent, ConvertAccountTypeBankPipe ],
       imports: [
         ReactiveFormsModule,
         HttpClientTestingModule,
