@@ -10,7 +10,8 @@ import { PASSWORD_LOGIN,
    TOKEN_EXPIRED_JP,
    TYPE_ERROR_TOAST_JP,
    TYPE_SUCCESS_TOAST_EN,
-   TYPE_SUCCESS_TOAST_JP} from 'src/app/core/constant/authen-constant';
+   TYPE_SUCCESS_TOAST_JP,
+   CHANGE_PASS_FLG} from 'src/app/core/constant/authen-constant';
 import { passwordValidation } from 'src/app/core/helper/custom-validate.helper';
 import { LANGUAGLE } from 'src/app/core/constant/language-constant';
 import { take } from 'rxjs/operators';
@@ -150,6 +151,7 @@ export class ResetPasswordComponent implements OnInit {
       this.authenService.changePassword(paramSubmit).pipe(take(1)).subscribe(response => {
         this.spinnerService.hide();
         if (response.meta.code === 200) {
+          localStorage.setItem(CHANGE_PASS_FLG, 'false');
           this.router.navigate(['/login']);
         } else if (response.meta.code === 103) {
           this.errorMess = response.meta.message;
