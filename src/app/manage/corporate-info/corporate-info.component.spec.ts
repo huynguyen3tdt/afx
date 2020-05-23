@@ -7,6 +7,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
 import { ConvertFinancialPipe } from 'src/app/core/pipe/convert-financial.pipe';
 import { ConvertInvestmentPurposePipe } from 'src/app/core/pipe/convert-purposeInvest.pipe';
+import { ToastrModule } from 'ngx-toastr';
 
 describe('CorporateInfoComponent', () => {
   let component: CorporateInfoComponent;
@@ -22,7 +23,8 @@ describe('CorporateInfoComponent', () => {
         FormsModule,
         HttpClientModule,
         TranslateModule.forRoot(),
-        Ng4LoadingSpinnerModule.forRoot()
+        Ng4LoadingSpinnerModule.forRoot(),
+        ToastrModule.forRoot(),
       ],
     })
     .compileComponents();

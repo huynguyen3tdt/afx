@@ -7,6 +7,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ConvertFinancialPipe } from 'src/app/core/pipe/convert-financial.pipe';
 import { ConvertInvestmentPurposePipe } from 'src/app/core/pipe/convert-purposeInvest.pipe';
 import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
+import { ToastrModule } from 'ngx-toastr';
 
 describe('UserInforComponent', () => {
   let component: UserInforComponent;
@@ -22,7 +23,8 @@ describe('UserInforComponent', () => {
         FormsModule,
         HttpClientModule,
         TranslateModule.forRoot(),
-        Ng4LoadingSpinnerModule
+        Ng4LoadingSpinnerModule,
+        ToastrModule.forRoot(),
       ],
     })
     .compileComponents();

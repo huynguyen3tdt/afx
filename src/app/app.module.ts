@@ -21,6 +21,7 @@ import { AuthGuard } from './core/guard/auth.guard';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { ModalModule } from 'ngx-bootstrap';
+import { NotFoundComponent } from './404/not-found/not-found.component';
 
 const appEnvInitializerFn = (envConfig: EnvConfigService) => {
   return () => {
@@ -42,7 +43,8 @@ const Routing: ModuleWithProviders = RouterModule.forRoot(AppRoutes, {
     RegisterLayoutComponent,
     ManageLayoutComponent,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,
