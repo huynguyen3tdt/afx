@@ -178,7 +178,7 @@ export class DepositComponent implements OnInit {
       return;
     }
     this.depositValue = numeral(this.depositTransactionForm.controls.deposit.value).value();
-    if (this.depositValue < 1000) {
+    if (this.depositValue < Number(this.minDeposit)) {
       this.depositError = true;
       return;
     }

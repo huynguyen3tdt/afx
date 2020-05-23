@@ -26,6 +26,8 @@ import {
   tradingExperienceInvidual
 } from 'src/app/core/constant/question-constant';
 import { take } from 'rxjs/operators';
+import { ToastrService } from 'ngx-toastr';
+import { TYPE_ERROR_TOAST_JP, TIMEOUT_TOAST } from 'src/app/core/constant/authen-constant';
 declare var $: any;
 
 @Component({
@@ -83,7 +85,8 @@ export class CorporateInfoComponent implements OnInit {
   invalidEmail: boolean;
   constructor(private spinnerService: Ng4LoadingSpinnerService,
               private userService: UserService,
-              private globalService: GlobalService) { }
+              private globalService: GlobalService,
+              private toastr: ToastrService) { }
 
   ngOnInit() {
     this.listCityJapan = LISTCITY_JAPAN;
@@ -305,7 +308,12 @@ export class CorporateInfoComponent implements OnInit {
       if (response.meta.code === 200) {
         this.corpAddress = response.data;
         this.corporateForm.controls.cor_postcode.setValue(this.corpAddress.postno);
+        this.corporateForm.controls.cor_prefec.setValue(this.corpAddress.prefecture);
         this.corporateForm.controls.cor_district.setValue(this.corpAddress.city + this.corpAddress.town);
+      } else if (response.meta.code === 404) {
+        this.toastr.error('郵便番号から住所が見つかりませんでした。', TYPE_ERROR_TOAST_JP, {
+          timeOut: TIMEOUT_TOAST
+        });
       }
     });
   }

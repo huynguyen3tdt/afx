@@ -2,13 +2,9 @@ import { Routes } from '@angular/router';
 import { RegisterLayoutComponent } from './register/register-layout.component';
 import { ManageLayoutComponent } from './manage/manage-layout.component';
 import { AuthGuard } from './core/guard/auth.guard';
+import { NotFoundComponent } from './404/not-found/not-found.component';
 
 export const AppRoutes: Routes = [
-    // {
-    //     path: '',
-    //     redirectTo: 'login',
-    //     pathMatch: 'full',
-    // },
     {
         path: '',
         component: RegisterLayoutComponent,
@@ -28,6 +24,8 @@ export const AppRoutes: Routes = [
         },
         ]
     },
-
-
+    {
+        path: '**',
+        component: NotFoundComponent
+    },
 ];
