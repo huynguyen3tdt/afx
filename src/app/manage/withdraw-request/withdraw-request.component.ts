@@ -259,7 +259,6 @@ export class WithdrawRequestComponent implements OnInit {
         this.transactionWithdraw.create_date =
         moment(this.transactionWithdraw.create_date + TIMEZONESERVER).tz(this.timeZone).format(this.formatDateHour);
         this.getMt5Infor(Number(this.accountID.split('-')[1]));
-        this.listTran.ngOnChanges();
         this.withdrawForm.controls.amount.setValue(numeral(this.minWithDraw).format('0,0'));
         this.changeWithdraw();
         if (this.withdrawForm.controls.wholeMoney.value === true) {
@@ -279,6 +278,7 @@ export class WithdrawRequestComponent implements OnInit {
           timeOut: TIMEOUT_TOAST
         });
       }
+      this.listTran.ngOnChanges();
     });
   }
 
