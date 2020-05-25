@@ -1,11 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
-import { requiredInput, fullSizeHiraganaValidation, halfSizeNumberValidation } from 'src/app/core/helper/custom-validate.helper';
+import {
+  requiredInput,
+  fullSizeHiraganaValidation,
+  halfSizeNumberValidation,
+  fullWidthRequired
+} from 'src/app/core/helper/custom-validate.helper';
 import { BankInforModel } from 'src/app/core/model/withdraw-request-response.model';
 import { BankModel, SearchHiraModel, BranchModel } from 'src/app/core/model/bank-response.model';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { WithdrawRequestService } from 'src/app/core/services/withdraw-request.service';
-import { TranslateService } from '@ngx-translate/core';
 import { UserService } from 'src/app/core/services/user.service';
 import {
   MizuhoBank,
@@ -16,6 +20,7 @@ import {
   JapanPostBank
 } from 'src/app/core/constant/japan-constant';
 import { take } from 'rxjs/operators';
+import { IS_COMPANY } from 'src/app/core/constant/authen-constant';
 declare var $: any;
 
 @Component({
@@ -42,6 +47,7 @@ export class BankInfoComponent implements OnInit {
   branchSearch: Array<BranchModel>;
   currentBank: BankModel;
   currentBranch: BranchModel;
+  isCompany: string;
 
   constructor(private spinnerService: Ng4LoadingSpinnerService,
               private withdrawRequestService: WithdrawRequestService,
@@ -55,6 +61,7 @@ export class BankInfoComponent implements OnInit {
     this.getBankInfor();
     this.bankAccount = true;
     this.editBank = false;
+    this.isCompany = localStorage.getItem(IS_COMPANY);
   }
 
   initBankForm() {
@@ -77,6 +84,7 @@ export class BankInfoComponent implements OnInit {
       bank_branch: new FormControl('', requiredInput),
       bank_account_type: new FormControl('sa'),
       bank_account_number: new FormControl('', requiredInput),
+      account_holder: new FormControl('', fullWidthRequired)
     });
   }
 
@@ -152,6 +160,7 @@ export class BankInfoComponent implements OnInit {
       this.bankAccountForm.controls.bank_branch.setValue(this.bankInfor.branch_name);
       this.bankAccountForm.controls.bank_account_type.setValue(this.bankInfor.fx_acc_type.toString());
       this.bankAccountForm.controls.bank_account_number.setValue(this.bankInfor.acc_number);
+      this.bankAccountForm.controls.account_holder.setValue(this.bankInfor.acc_holder_name);
     }
   }
   showBankInfor(type: number, bankName?: string) {
@@ -207,6 +216,7 @@ export class BankInfoComponent implements OnInit {
       acc_number: this.bankAccountForm.controls.bank_account_number.value,
       bank_id: this.bankInfor.bank_id,
       fx_acc_type: this.bankAccountForm.controls.bank_account_type.value.toString(),
+      acc_holder_name: this.bankAccountForm.controls.account_holder.value.trim()
     };
     this.spinnerService.show();
     this.userService.changeBank(param).pipe(take(1)).subscribe(response => {

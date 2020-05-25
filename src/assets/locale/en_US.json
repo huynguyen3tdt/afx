@@ -239,7 +239,7 @@
   "The temporary password will be sent to the registered email address.": "The temporary password will be sent to the registered email address.",
   "Your withdrawal request has been received:": "Your withdrawal request has been received:",
   "Reason: MT5 account balance is not enough money to withdraw": "Reason: MT5 account balance is not enough money to withdraw",
-  "Margin Level estimate after depposit": "Margin Level estimate after depposit",
+  "Margin Level estimate after deposit": "Margin Level estimate after deposit",
   "Margin Level estimate after withdraw": "Margin Level estimate after withdraw",
   "Entire Deposit History": "Entire Deposit History",
   "Entire Withdrawl History": "Entire Withdrawl History",
@@ -252,5 +252,8 @@
   "This email address is already registered": "This email address is already registered",
   "Financial Information": "Financial Information",
   "Investment Purpose": "Investment Purpose",
-  "PIC Investment Experience": "PIC Investment Experience"
+  "PIC Investment Experience": "PIC Investment Experience",
+  "The page can not be found.": "The page can not be found.",
+  "The page you are looking for may be temporarily inaccessible, moved, or deleted.": "The page you are looking for may be temporarily inaccessible, moved, or deleted.",
+  "Back to AFX page": "Back to AFX page"
 }
