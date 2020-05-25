@@ -183,8 +183,15 @@
             <div class="col-md-4 col-lg-3">
                 <label class="label">{{'Account holder name' | translate}}</label>
             </div>
-            <div class="col-md-8 col-lg-6">
+            <div *ngIf="isCompany == 'false'" class="col-md-8 col-lg-6">
                 {{bankInfor?.acc_holder_name}}
+            </div>
+            <div *ngIf="isCompany == 'true'" class="col-md-8 col-lg-6">
+                <input type="text" name="account_holder" formControlName="account_holder"
+                    [className]="bankAccountForm.controls.account_holder.errors ? 'form-control form-control-sm invalid' : 'form-control form-control-sm'">
+                    <div *ngIf="bankAccountForm.controls.account_holder.errors" class="invalid-mess">
+                        <div>{{'Please enter full-width Katakana' | translate}}</div>
+                    </div>
             </div>
         </div>
         <div class="row mb-2">

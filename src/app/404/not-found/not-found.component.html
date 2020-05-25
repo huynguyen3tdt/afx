@@ -6,9 +6,9 @@
               <div class="card card-404">
                 <div class="card-body text-center">
                   <div class="mb-2"><img src="assets/images/404/char404_0.svg" id="img-404" class="img-404"></div>
-                  <h2 class="text-primary">Route not found</h2>
-                  <p>The is not route found, please check your desination again</p>
-                  <div><a [routerLink]="['/login']" class="btn btn-outline-primary"><i class="icon ion-md-home"></i> Back to Dashboard</a></div>
+                  <h2 class="text-primary">{{'The page can not be found.'| translate}}</h2>
+                  <p>{{'The page you are looking for may be temporarily inaccessible, moved, or deleted.'| translate}}</p>
+                  <div><a [routerLink]="['/login']" class="btn btn-outline-primary"><i class="icon ion-md-home"></i> {{'Back to AFX page'| translate}}</a></div>
                 </div>  
               </div>
                 

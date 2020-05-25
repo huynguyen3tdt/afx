@@ -12,6 +12,7 @@ import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ModalModule } from 'ngx-bootstrap';
 import { ConvertAccountTypeBankPipe } from 'src/app/core/pipe/convert-account-type-bank.pipe';
+import { ToastrModule } from 'ngx-toastr';
 
 describe('WithdrawRequestComponent', () => {
   let component: WithdrawRequestComponent;
@@ -28,6 +29,7 @@ describe('WithdrawRequestComponent', () => {
         TranslateModule.forRoot(),
         Ng4LoadingSpinnerModule,
         ModalModule.forRoot(),
+        ToastrModule.forRoot()
       ],
       providers: [
         WithdrawRequestService,

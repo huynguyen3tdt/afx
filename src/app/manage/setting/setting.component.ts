@@ -79,6 +79,9 @@ export class SettingComponent implements OnInit {
       this.spinnerService.hide();
       if (response.meta.code === 200) {
         this.successPassword = true;
+        this.initSettingForm();
+        this.isSubmittedSetting = false;
+        this.invalidPassword = false;
       } else if (response.meta.code === 103) {
         this.invalidPassword = true;
       }

@@ -17,7 +17,9 @@ import {
   TIMEZONEAFX,
   MIN_DEPOST,
   MAX_WITHDRAW,
-  TIMEZONESERVER
+  TIMEZONESERVER,
+  TIMEOUT_TOAST,
+  TYPE_ERROR_TOAST_EN
 } from './../../core/constant/authen-constant';
 import { GlobalService } from 'src/app/core/services/global.service';
 import { AccountType } from 'src/app/core/model/report-response.model';
@@ -32,6 +34,7 @@ import moment from 'moment-timezone';
 import { LANGUAGLE } from 'src/app/core/constant/language-constant';
 import { ModalDirective } from 'ngx-bootstrap';
 import { take } from 'rxjs/operators';
+import { ToastrService } from 'ngx-toastr';
 declare var $: any;
 const numeral = require('numeral');
 
@@ -89,7 +92,8 @@ export class WithdrawRequestComponent implements OnInit {
               private spinnerService: Ng4LoadingSpinnerService,
               private router: Router,
               private globalService: GlobalService,
-              private depositService: DepositService) { }
+              private depositService: DepositService,
+              private toastr: ToastrService) { }
 
   ngOnInit() {
     this.language = LANGUAGLE;
@@ -230,6 +234,8 @@ export class WithdrawRequestComponent implements OnInit {
   }
 
   sendConfirm() {
+    let messageErr;
+    let typeErr;
     this.checkWithDrawal = true;
     this.modalWithdrawConfirm.hide();
     this.depositValue = numeral(this.withdrawForm.controls.amount.value).value();
@@ -238,6 +244,13 @@ export class WithdrawRequestComponent implements OnInit {
       account_id: this.accountID.split('-')[1],
       currency: this.traddingAccount.currency
     };
+    if (this.locale === LANGUAGLE.english) {
+      messageErr = 'There are some problems so we cannot send you email. Please contact us for more details.';
+      typeErr = TYPE_ERROR_TOAST_EN;
+    } else {
+      messageErr = '問題があるため、メールを送信できません。 詳しくはお問い合わせください。';
+      typeErr = TYPE_ERROR_TOAST_EN;
+    }
     this.spinnerService.show();
     this.withdrawRequestService.postWithdraw(param).pipe(take(1)).subscribe(response => {
       this.spinnerService.hide();
@@ -253,10 +266,19 @@ export class WithdrawRequestComponent implements OnInit {
           this.withdrawForm.controls.wholeMoney.setValue(false);
           this.getAllFreeMargin();
         }
+        this.modalWithdrawResult.show();
       } else if (response.meta.code === 409) {
+        this.transactionWithdraw = response.data;
+        this.transactionWithdraw.create_date =
+        moment(this.transactionWithdraw.create_date + TIMEZONESERVER).tz(this.timeZone).format(this.formatDateHour);
+        this.getMt5Infor(Number(this.accountID.split('-')[1]));
         this.checkWithDrawal = false;
+        this.modalWithdrawResult.show();
+      } else if (response.meta.code === 403) {
+        this.toastr.error(messageErr, typeErr, {
+          timeOut: TIMEOUT_TOAST
+        });
       }
-      this.modalWithdrawResult.show();
     });
   }
 

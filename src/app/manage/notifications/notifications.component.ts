@@ -183,6 +183,8 @@ export class NotificationsComponent implements OnInit {
           this.getListNotifications(this.pageSize, this.currentPage, this.unreadImportant, this.TABS.IMPORTANT.value);
         } else if (this.tab === this.TABS.NOTIFICATIONS.name) {
           this.getListNotifications(this.pageSize, this.currentPage, this.unreadNotification, this.TABS.NOTIFICATIONS.value);
+        } else if (this.tab === this.TABS.CAMPAIGN.name) {
+          this.getListNotifications(this.pageSize, this.currentPage, this.unreadCampagn, this.TABS.CAMPAIGN.value);
         }
       }
     });
@@ -288,7 +290,9 @@ export class NotificationsComponent implements OnInit {
         break;
       case this.TABS.CAMPAIGN.name:
         $(`#campain_${index}`).toggleClass('opened');
-        $(`#campain_${index}`).removeClass('unread');
+        if (this.checkAgreementIsRead(item) === true) {
+          $(`#campain_${index}`).removeClass('unread');
+        }
         break;
     }
     // if (item.agreement_flg === 1) {

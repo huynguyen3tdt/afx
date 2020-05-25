@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { NotFoundComponent } from './not-found.component';
 import { RouterTestingModule } from '@angular/router/testing';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('NotFoundComponent', () => {
   let component: NotFoundComponent;
@@ -11,7 +12,8 @@ describe('NotFoundComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ NotFoundComponent ],
       imports: [
-        RouterTestingModule
+        RouterTestingModule,
+        TranslateModule.forRoot()
       ]
     })
     .compileComponents();
