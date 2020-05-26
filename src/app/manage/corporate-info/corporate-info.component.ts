@@ -175,7 +175,6 @@ export class CorporateInfoComponent implements OnInit {
       this.spinnerService.hide();
       if (response.meta.code === 200) {
         this.corporateInfor = response.data;
-        console.log('this.corporateInfor ', this.corporateInfor);
         if (this.corporateInfor.corporation) {
           this.corporateForm.controls.cor_prefec.setValue(this.corporateInfor.corporation.address.value.city);
           this.corporateForm.controls.cor_district.setValue(this.corporateInfor.corporation.address.value.street);
@@ -329,7 +328,7 @@ export class CorporateInfoComponent implements OnInit {
           street2: this.corporateForm.controls.cor_house.value.trim(),
           fx_street3: this.corporateForm.controls.cor_build.value.trim(),
         },
-        mobile: this.corporateForm.controls.cor_phone.value.trim(),
+        phone: this.corporateForm.controls.cor_phone.value.trim(),
         fx_fax: this.corporateForm.controls.cor_fax.value.trim(),
         lang: '',
       },

@@ -75,7 +75,7 @@ export interface UpdateCorporateParam {
       street2: string;
       fx_street3: string;
     };
-    mobile: string;
+    phone: string;
     fx_fax: string;
     lang: string;
   };
@@ -133,7 +133,6 @@ export interface CorporateModel {
       status: string,
       value: string,
     },
-    mobile: string,
     lang: string,
     phone: string
   };
