@@ -259,14 +259,6 @@ export class WithdrawRequestComponent implements OnInit {
         this.transactionWithdraw.create_date =
         moment(this.transactionWithdraw.create_date + TIMEZONESERVER).tz(this.timeZone).format(this.formatDateHour);
         this.getMt5Infor(Number(this.accountID.split('-')[1]));
-        this.listTran.ngOnChanges();
-        this.withdrawForm.controls.amount.setValue(numeral(this.minWithDraw).format('0,0'));
-        this.changeWithdraw();
-        if (this.withdrawForm.controls.wholeMoney.value === true) {
-          this.withdrawForm.controls.wholeMoney.setValue(false);
-          this.getAllFreeMargin();
-        }
-        this.modalWithdrawResult.show();
       } else if (response.meta.code === 409) {
         this.transactionWithdraw = response.data;
         this.transactionWithdraw.create_date =
@@ -279,7 +271,19 @@ export class WithdrawRequestComponent implements OnInit {
           timeOut: TIMEOUT_TOAST
         });
       }
+      this.resetAmountwithDraw();
     });
+  }
+
+  resetAmountwithDraw() {
+    this.withdrawForm.controls.amount.setValue(numeral(this.minWithDraw).format('0,0'));
+    this.changeWithdraw();
+    if (this.withdrawForm.controls.wholeMoney.value === true) {
+      this.withdrawForm.controls.wholeMoney.setValue(false);
+      this.getAllFreeMargin();
+    }
+    this.modalWithdrawResult.show();
+    this.listTran.ngOnChanges();
   }
 
   checkValidateWithDrawal() {
