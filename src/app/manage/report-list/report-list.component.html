@@ -87,7 +87,7 @@
                                         <tr>
                                             <!-- <th class="border-top-0" width="20">&nbsp;</th> -->
                                             <th class="border-top-0">{{'Name' | translate}}</th>
-                                            <th width="120" class="border-top-0 text-right">{{'Created date' | translate}}</th>
+                                            <th width="120" class="border-top-0 text-right">{{'Report date' | translate}}</th>
                                             <th width="120" class="border-top-0 text-right">{{'File type' | translate}}</th>
                                             <th width="120" class="border-top-0 text-right">{{'Status' | translate}}</th>
                                             <th class="border-top-0 text-right">&nbsp;</th>
@@ -99,7 +99,7 @@
                                             <!-- <td class="text-center align-middle"><span class="small text-secondary">{{item?.file_type}}</span></td> -->
                                             <td class="align-middle"><strong><a (click)="openPDF(item)"
                                                         href="javascript:;">{{item?.file_name}}</a></strong></td>
-                                            <td class="text-right align-middle"><span class="text-secondary">{{item?.create_date}}</span>
+                                            <td class="text-right align-middle"><span class="text-secondary">{{item?.report_date}}</span>
                                             </td>
                                             <td *ngIf="item.file_type == 'pdf'" class="text-center align-middle"><img src="assets/images/icons/pdf.svg" width="20" height="20"></td>
                                             <td *ngIf="item.file_type == 'csv'" class="text-center align-middle"><img src="assets/images/icons/csv.svg" width="20" height="20"></td>

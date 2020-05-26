@@ -305,8 +305,10 @@ export class NotificationsComponent implements OnInit {
     if (this.checkAgreementIsRead(item) === false) {
       return;
     }
-    this.changeReadStatus(item.id);
-    this.getTotalNotification();
+    if (!item.read_flg) {
+      this.changeReadStatus(item.id);
+      this.getTotalNotification();
+    }
   }
 
   checkAgreementIsRead(item: Notification) {

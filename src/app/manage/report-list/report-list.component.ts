@@ -37,6 +37,7 @@ export class ReportListComponent implements OnInit {
   formatDateYear: string;
   formatDateHour: string;
   timeZone: string;
+  isOpenPdf: boolean;
   TABS = {
     ALL: { name: 'ALL', value: '' },
     DAILY: { name: 'DAILY', value: 'd' },
@@ -55,6 +56,7 @@ export class ReportListComponent implements OnInit {
               private localeService: BsLocaleService) { }
 
   ngOnInit() {
+    this.isOpenPdf = false;
     this.language = LANGUAGLE;
     this.timeZone = localStorage.getItem(TIMEZONEAFX);
     this.locale = localStorage.getItem(LOCALE);
@@ -98,8 +100,9 @@ export class ReportListComponent implements OnInit {
         this.listReport.forEach(item => {
           item.create_date += TIMEZONESERVER;
           item.create_date = moment(item.create_date).tz(this.timeZone).format(this.formatDateYear);
-          item.file_name =
-          item.file_name.split(']_')[1].substring(0, item.file_name.split(']_')[1].length - 4);
+          item.file_name =  item.file_name.split(']_')[1].substring(0, item.file_name.split(']_')[1].length - 4);
+          item.report_date = moment((new Date(item.report_date)).toDateString()).format(this.formatDateYear);
+          // (new Date(item.report_date)).toDateString().format(this.formatDateYear)
         });
         this.recordFrom = this.pageSize * (this.currentPage - 1) + 1;
         this.recordTo = this.recordFrom + (this.listReport.length - 1);
@@ -223,18 +226,29 @@ export class ReportListComponent implements OnInit {
   }
 
   openPDF(item: ReportIDS) {
+    if (this.isOpenPdf === true) {
+      return;
+    }
+    this.isOpenPdf = true;
     if (item.file_type === 'pdf') {
       this.spinnerService.show();
       this.reportservice.downLoadReportFile(item.id).pipe(take(1)).subscribe(response => {
-        this.spinnerService.hide();
         const file = new Blob([response], {
           type: 'application/pdf',
         });
         this.pdfViewer.pdfSrc = file; // pdfSrc can be Blob or Uint8Array
         this.pdfViewer.refresh();
         $('#modal-2').modal('show');
+        this.spinnerService.hide();
+        this.isOpenPdf = false;
+      },
+      () => {
+        this.spinnerService.hide();
+        this.isOpenPdf = false;
       });
-      this.changeReadStatus(item.id);
+      if (!item.read_flg) {
+        this.changeReadStatus(item.id);
+      }
     }
   }
   downLoadFile(item: ReportIDS) {
