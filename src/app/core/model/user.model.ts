@@ -135,6 +135,7 @@ export interface CorporateModel {
     },
     mobile: string,
     lang: string,
+    phone: string
   };
   pic: {
     info: {
