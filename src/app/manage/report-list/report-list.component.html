@@ -98,7 +98,7 @@
 
                                             <!-- <td class="text-center align-middle"><span class="small text-secondary">{{item?.file_type}}</span></td> -->
                                             <td class="align-middle"><strong><a (click)="openPDF(item)"
-                                                        href="javascript:;">{{item?.report_title}}</a></strong></td>
+                                                        href="javascript:;">{{item?.file_name}}</a></strong></td>
                                             <td class="text-right align-middle"><span class="text-secondary">{{item?.create_date}}</span>
                                             </td>
                                             <td *ngIf="item.file_type == 'pdf'" class="text-center align-middle"><img src="assets/images/icons/pdf.svg" width="20" height="20"></td>

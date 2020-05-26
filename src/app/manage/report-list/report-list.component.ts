@@ -98,6 +98,8 @@ export class ReportListComponent implements OnInit {
         this.listReport.forEach(item => {
           item.create_date += TIMEZONESERVER;
           item.create_date = moment(item.create_date).tz(this.timeZone).format(this.formatDateYear);
+          item.file_name =
+          item.file_name.split(']_')[1].substring(0, item.file_name.split(']_')[1].length - 4);
         });
         this.recordFrom = this.pageSize * (this.currentPage - 1) + 1;
         this.recordTo = this.recordFrom + (this.listReport.length - 1);
