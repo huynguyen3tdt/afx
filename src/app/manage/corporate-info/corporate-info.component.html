@@ -91,7 +91,7 @@
                     <td>{{'Phone' | translate}}</td>
                     <td>
                         <div class="currentvalue" *ngIf="editCorPhone == false">
-                            <strong><a href="javascript:;">{{corporateInfor?.corporation?.mobile}}</a></strong>
+                            <strong><a href="javascript:;">{{corporateInfor?.corporation?.phone}}</a></strong>
                         </div>
                         <div class="editable d-block" *ngIf="editCorPhone == true">
                             <input type="tel" name="cor-phone" maxlength="11" placeholder="" formControlName="cor_phone"

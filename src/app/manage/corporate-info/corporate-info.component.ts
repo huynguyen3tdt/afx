@@ -175,13 +175,14 @@ export class CorporateInfoComponent implements OnInit {
       this.spinnerService.hide();
       if (response.meta.code === 200) {
         this.corporateInfor = response.data;
+        console.log('this.corporateInfor ', this.corporateInfor);
         if (this.corporateInfor.corporation) {
           this.corporateForm.controls.cor_prefec.setValue(this.corporateInfor.corporation.address.value.city);
           this.corporateForm.controls.cor_district.setValue(this.corporateInfor.corporation.address.value.street);
           this.corporateForm.controls.cor_postcode.setValue(this.corporateInfor.corporation.address.value.zip);
           this.corporateForm.controls.cor_house.setValue(this.corporateInfor.corporation.address.value.street2);
           this.corporateForm.controls.cor_build.setValue(this.corporateInfor.corporation.address.value.fx_street3);
-          this.corporateForm.controls.cor_phone.setValue(this.corporateInfor.corporation.mobile);
+          this.corporateForm.controls.cor_phone.setValue(this.corporateInfor.corporation.phone);
           this.corporateForm.controls.cor_fax.setValue(this.corporateInfor.corporation.fx_fax.value);
         }
         if (this.corporateInfor.pic) {
@@ -523,7 +524,7 @@ export class CorporateInfoComponent implements OnInit {
         this.editCorAddress = true;
         break;
       case 'cor-phone':
-        this.corporateForm.controls.cor_phone.setValue(this.corporateInfor.corporation.mobile);
+        this.corporateForm.controls.cor_phone.setValue(this.corporateInfor.corporation.phone);
         this.editCorPhone = true;
         break;
       case 'cor-fax':
