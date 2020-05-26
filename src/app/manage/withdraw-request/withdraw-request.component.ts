@@ -265,7 +265,6 @@ export class WithdrawRequestComponent implements OnInit {
         moment(this.transactionWithdraw.create_date + TIMEZONESERVER).tz(this.timeZone).format(this.formatDateHour);
         this.getMt5Infor(Number(this.accountID.split('-')[1]));
         this.checkWithDrawal = false;
-        this.modalWithdrawResult.show();
       } else if (response.meta.code === 403) {
         this.toastr.error(messageErr, typeErr, {
           timeOut: TIMEOUT_TOAST
