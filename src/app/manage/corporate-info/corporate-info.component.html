@@ -21,13 +21,17 @@
                         <div class="editable d-block" *ngIf="editCorAddress == true">
                             <input type="text" name="postcode" formControlName="cor_postcode" maxlength="7" (change)="changeAddress()" placeholder=""
                             [className]="corporateForm.controls?.cor_postcode?.errors ? 'form-control form-control-sm mb-1 invalid' : 'form-control form-control-sm mb-1'">
-                            <div *ngIf="corporateForm?.controls?.cor_postcode?.errors?.Required"
-                                class="invalid-mess">
-                                <div *ngIf="corporateForm?.controls?.cor_postcode?.errors?.Required">
-                                  {{'Please enter your zip code.' | translate}}
+                                <div *ngIf="corporateForm?.controls?.cor_postcode?.errors?.Required" class="invalid-mess">
+                                  {{'Please enter your zip code' | translate}}
                                 </div>
-                            </div>
-
+                                <div *ngIf="corporateForm?.controls?.cor_postcode?.errors?.lengthlower7" class="invalid-mess">
+                                    <div>
+                                        {{'Postal code is incorrect' | translate}}</div>
+                                </div>
+                                <div *ngIf="notFoundPostCode" class="invalid-mess">
+                                    <div>
+                                        {{'The address could not be found from the zip code' | translate}}</div>
+                                </div>
                         </div>
                     </td>
                     <td width="15">
@@ -775,7 +779,7 @@
                 <p>{{'Do you want to save information?' | translate}}</p>
                 <div>
                     <button type="button" class="btn btn-sm btn-success pl-3 pr-3" (click)="updateCorporate()" data-dismiss="modal">Ok</button>
-                    <button type="button" class="btn btn-sm btn-outline-secondary pl-3 pr-3" data-dismiss="modal">{{'Cancel' | translate}}</button>
+                    <button type="button" class="btn btn-sm btn-outline-secondary pl-3 pr-3 ml-2" data-dismiss="modal">{{'Cancel' | translate}}</button>
                 </div>
             </div>
         </div>

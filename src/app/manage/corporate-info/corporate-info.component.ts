@@ -83,6 +83,8 @@ export class CorporateInfoComponent implements OnInit {
   listFinancialSubmit: Array<QuestionModel>;
   listPurposeSubmit: Array<QuestionModel>;
   invalidEmail: boolean;
+  notFoundPostCode: boolean;
+
   constructor(private spinnerService: Ng4LoadingSpinnerService,
               private userService: UserService,
               private globalService: GlobalService,
@@ -310,10 +312,9 @@ export class CorporateInfoComponent implements OnInit {
         this.corporateForm.controls.cor_postcode.setValue(this.corpAddress.postno);
         this.corporateForm.controls.cor_prefec.setValue(this.corpAddress.prefecture);
         this.corporateForm.controls.cor_district.setValue(this.corpAddress.city + this.corpAddress.town);
+        this.notFoundPostCode = false;
       } else if (response.meta.code === 404) {
-        this.toastr.error('郵便番号から住所が見つかりませんでした。', TYPE_ERROR_TOAST_JP, {
-          timeOut: TIMEOUT_TOAST
-        });
+        this.notFoundPostCode = true;
       }
     });
   }

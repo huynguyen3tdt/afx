@@ -209,8 +209,8 @@
   "Please enter your phone number in single-byte numbers.": "電話番号は、半角数字で入力してください。",
   "Enter the phone number without a hyphen (-).": "電話番号は、ハイフン(-)なしで入力してください。",
   "Invalid email": "無効なメール",
-  "Please enter your zip code.": " 郵便番号を入力してください。",
-  "Postal code is incorrect.": "郵便番号が正しくありません。",
+  "Please enter your zip code": " 郵便番号を入力してください。",
+  "Postal code is incorrect": "郵便番号が正しくありません。",
   "Enter the postal code using single-byte numbers.": "郵便番号は、半角数字で入力してください。",
   "Enter the postal code without a hyphen (-).": "郵便番号は、ハイフン(-)なしで入力してください。",
   "Enter your zip code using single-byte numbers.": "郵便番号は半角数字で入力してください。 ",
@@ -255,5 +255,6 @@
   "The page you are looking for may be temporarily inaccessible, moved, or deleted.": "お探しのページは一時的にアクセス出来ない状況にあるか、移動または削除された可能性があります。",
   "Back to AFX page": "AFXページへ戻る",
   "Your withdrawal request has been rejected:": "出金依頼はリジェクトされました:",
-  "Report date": "対象日"
+  "Report date": "対象日",
+  "The address could not be found from the zip code": "郵便番号から住所が見つかりませんでした。"
 }

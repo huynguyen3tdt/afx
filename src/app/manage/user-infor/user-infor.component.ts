@@ -71,6 +71,7 @@ export class UserInforComponent implements OnInit {
   listFinancialSubmit: Array<QuestionModel>;
   listPurposeSubmit: Array<QuestionModel>;
   invalidEmail: boolean;
+  notFoundPostCode: boolean;
 
   constructor(private userService: UserService,
               private globalService: GlobalService,
@@ -267,10 +268,9 @@ export class UserInforComponent implements OnInit {
         this.userForm.controls.postCode.setValue(this.userAddress.postno);
         this.userForm.controls.searchPrefe.setValue(this.userAddress.prefecture);
         this.userForm.controls.searchCountry.setValue(this.userAddress.city + this.userAddress.town);
+        this.notFoundPostCode = false;
       } else if (response.meta.code === 404) {
-        this.toastr.error('郵便番号から住所が見つかりませんでした。', TYPE_ERROR_TOAST_JP, {
-          timeOut: TIMEOUT_TOAST
-        });
+        this.notFoundPostCode = true;
       }
     });
   }
