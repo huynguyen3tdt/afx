@@ -254,6 +254,7 @@ export class UserInforComponent implements OnInit {
               this.userInfor.surveys.find(item => item.question_cd === 'indi_capital').sequence);
           }
         }
+        this.changeFinanAssetInvidual();
       }
     });
   }
