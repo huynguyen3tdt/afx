@@ -300,6 +300,7 @@ export class CorporateInfoComponent implements OnInit {
           setValue(this.corporateInfor.surveys.find(item => item.question_cd === 'corp_investable').sequence);
           }
         }
+        this.changeBusinessCapital();
       }
     });
   }

@@ -191,7 +191,7 @@
                         <td>&nbsp;</td>
                         <td>
                             <button type="button" (click)="saveUser(formType.userInfor)"
-                                class="btn btn-save btn-success pl-3 pr-3">Save</button>
+                                class="btn btn-save btn-success pl-3 pr-3">{{'Save' | translate}}</button>
                         </td>
                         <td width="15">&nbsp;</td>
                     </tr>
@@ -286,7 +286,7 @@
             &nbsp;
         </div>
         <div class="col-md-8 col-lg-6">
-            <button (click)="saveUser(formType.financial)" class="btn btn-success btn-save">Save</button>
+            <button (click)="saveUser(formType.financial)" class="btn btn-success btn-save">{{'Save' | translate}}</button>
             <button (click)="canCelSaveOccupation()" class="btn btn-primary btn-save ml-2">{{'Cancel' | translate}}</button>
         </div>
     </div>
@@ -622,13 +622,13 @@
                     <option *ngFor="let item of listTradingExperienceInvidual" value="{{item?.sequence}}">
                         {{item?.value}}
                     </option>
-                    <div *ngIf="purposeInvestForm.controls.tradingExperience.errors" class="invalid-mess">
-                        <!-- <div>この項目は必須項目です。</div> -->
-                        <div *ngIf="purposeInvestForm?.controls?.tradingExperience?.errors?.ErrorEXP">
-                            デリバティブの経験が6か月未満の場合には口座を開設いただけません。</div>
-                        <div *ngIf="purposeInvestForm?.controls?.tradingExperience?.errors?.Required">この項目は必須項目です。</div>
-                    </div>
                 </select>
+                <div *ngIf="purposeInvestForm.controls.tradingExperience.errors" class="invalid-mess">
+                    <!-- <div>この項目は必須項目です。</div> -->
+                    <div *ngIf="purposeInvestForm?.controls?.tradingExperience?.errors?.ErrorEXP">
+                        デリバティブの経験が6か月未満の場合には口座を開設いただけません。</div>
+                    <div *ngIf="purposeInvestForm?.controls?.tradingExperience?.errors?.Required">この項目は必須項目です。</div>
+                </div>
             </div>
         </div>
     </ng-container>
@@ -637,7 +637,7 @@
             &nbsp;
         </div>
         <div class="col-md-8 col-lg-6">
-            <button (click)="saveUser(formType.purpose)" class="btn btn-success btn-save">Save</button>
+            <button (click)="saveUser(formType.purpose)" class="btn btn-success btn-save">{{'Save' | translate}}</button>
             <button (click)="canCelPurpose()" class="btn btn-primary btn-save ml-2">{{'Cancel' | translate}}</button>
         </div>
     </div>
