@@ -457,9 +457,11 @@ export class UserInforComponent implements OnInit {
     }
 
     if (this.purposeInvestForm.controls.investPurposeOther.value === true) {
-      this.globalService.resetFormControl(this.purposeInvestForm.controls.otherPurpose, requiredInput);
+      // this.globalService.resetFormControl(this.purposeInvestForm.controls.otherPurpose, requiredInput);
+      this.globalService.resetValidator(this.purposeInvestForm.controls.otherPurpose, requiredInput);
     } else {
-      this.globalService.resetFormControl(this.purposeInvestForm.controls.otherPurpose);
+      this.globalService.resetValidator(this.purposeInvestForm.controls.otherPurpose);
+      // this.globalService.resetFormControl(this.purposeInvestForm.controls.otherPurpose);
     }
   }
 
