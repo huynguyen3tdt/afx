@@ -46,7 +46,7 @@ deploy:
     - npm ci --cache .npm --prefer-offline
     - npm run ng version
   script:
-    - npm run build
+    - npm run build-prod
     - zip -r front-$(date +%Y%m%d-%H%M%S).zip dist/afx-front
     - ls -lh *.zip
     - scp *.zip root@$STAGING_SERVER_IP:/root/afx-front
