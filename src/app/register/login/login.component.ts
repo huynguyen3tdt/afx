@@ -257,6 +257,15 @@ export class LoginComponent implements OnInit, AfterViewInit {
         $('#password-focus-btn').addClass('active');
         $('#user-focus-btn').removeClass('active');
       });
+
+      $('.jqk-btn').click(() => {
+        this.loginFormGroup.controls.userName.setValue($('#userName').val());
+        this.loginFormGroup.controls.passWord.setValue($('#password').val());
+      });
+      // jqk-btn special enter
+      $('.jqk-btn.special.enter').click(() => {
+        this.onSubmit();
+      });
     }, 100);
   }
 }
