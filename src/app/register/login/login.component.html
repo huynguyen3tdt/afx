@@ -24,7 +24,6 @@
                             <div class="form-group">
                                 <label class="label">{{'Login ID / Email' | translate}}</label>
                                 <div class="input-wrapper">
-                                    {{loginFormGroup.controls.userName.value}}
                                     <input tabindex="1" type="text" #username class="form-control" maxlength="50" id="userName"
                                         placeholder="Email or Login ID" formControlName="userName"
                                         [ngClass]="{'invalid': isSubmitted && loginFormGroup.controls['userName'].errors}">
