@@ -310,7 +310,6 @@ export class UserInforComponent implements OnInit {
       },
       email: this.userForm.controls.email.value,
       mobile: this.userForm.controls.phone.value,
-      lang: '',
       surveys: [],
       survey_cd: 'phillip_individual'
     };

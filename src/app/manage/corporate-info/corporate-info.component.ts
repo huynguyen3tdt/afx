@@ -332,7 +332,6 @@ export class CorporateInfoComponent implements OnInit {
         },
         phone: this.corporateForm.controls.cor_phone.value.trim(),
         fx_fax: this.corporateForm.controls.cor_fax.value.trim(),
-        lang: '',
       },
       pic: {
         name: this.picForm.controls.per_picname.value.trim(),

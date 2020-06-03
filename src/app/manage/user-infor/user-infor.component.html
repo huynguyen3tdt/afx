@@ -81,7 +81,7 @@
                                         </div>
                                     </div>
                                     <div class="col-sm-6 pl-md-1">
-                                        <input type="text" formControlName="searchCountry" maxlength="100"
+                                        <input type="text" formControlName="searchCountry" maxlength="255"
                                             [className]="userForm?.controls?.searchCountry?.errors ? 'form-control form-control-sm mb-1 invalid' : 'form-control form-control-sm mb-1'">
                                         <div *ngIf="userForm?.controls?.searchCountry?.errors?.Required"
                                             class="invalid-mess">
@@ -91,12 +91,12 @@
                                 </div>
                                 <div class="row no-gutters">
                                     <div class="col-sm-6 pr-md-1">
-                                        <input type="text" maxlength="11" formControlName="house_numb"
+                                        <input type="text" maxlength="50" formControlName="house_numb"
                                             [className]="userForm?.controls?.house_numb?.errors ? 'form-control form-control-sm mb-1 invalid' : 'form-control form-control-sm mb-1'">
                                     </div>
                                     <div class="col-sm-6 pl-md-1">
                                         <input type="text" name="cor-address" class="form-control form-control-sm mb-1"
-                                            maxlength="100" formControlName="name_build" value=""
+                                            maxlength="255" formControlName="name_build" value=""
                                             placeholder="Building Name">
                                     </div>
                                 </div>
@@ -164,7 +164,7 @@
                                 <strong><a href="javascript:;">{{userInfor?.mobile}}</a></strong>
                             </div>
                             <div *ngIf="editPhone == true" class="editable d-block">
-                                <input type="tel" name="phone" formControlName="phone" maxlength="11"
+                                <input type="tel" name="phone" formControlName="phone" maxlength="15"
                                     [className]="userForm?.controls?.phone?.errors ? 'form-control form-control-sm mb-1 invalid' : 'form-control form-control-sm mb-1'">
                                 <div *ngIf="userForm?.controls?.phone?.errors?.Required" class="invalid-mess">
                                     <div>{{'This field is required' | translate}}</div>
@@ -455,7 +455,7 @@
             <label class="label mr-lg-2">その他をご選択の場合</label>
         </div>
         <div class="col-md-8 col-lg-6">
-            <input formControlName="otherPurpose" type="text" name="exx" value=""
+            <input formControlName="otherPurpose" type="text" name="exx" value="" maxlength="255"
                 [className]="purposeInvestForm.controls.otherPurpose.errors ? 'form-control invalid' : 'form-control'">
             <div *ngIf="purposeInvestForm.controls.otherPurpose.errors" class="invalid-mess">
                 <div>この項目は必須項目です。</div>
@@ -483,7 +483,7 @@
             <label class="label mr-lg-2">具体名をご記入ください</label>
         </div>
         <div class="col-md-8 col-lg-6">
-            <input formControlName="specificName" type="text" placeholder="例)先物・オプション・仮想通貨"
+            <input formControlName="specificName" type="text" placeholder="例)先物・オプション・仮想通貨" maxlength="255"
                 [className]="purposeInvestForm.controls.specificName.errors ? 'form-control invalid' : 'form-control'">
             <div *ngIf="purposeInvestForm.controls.specificName.errors" class="invalid-mess">
                 <div>この項目は必須項目です。</div>
@@ -603,7 +603,7 @@
                 <label class="label mr-lg-2">投資経験がある金融商品名</label>
             </div>
             <div class="col-md-8 col-lg-6">
-                <input type="text" formControlName="financialInstrument"
+                <input type="text" formControlName="financialInstrument" maxlength="255"
                     [className]="purposeInvestForm.controls.financialInstrument.errors ? 'form-control invalid' : 'form-control'">
                 <div *ngIf="purposeInvestForm.controls.financialInstrument.errors" class="invalid-mess">
                     <div>この項目は必須項目です。</div>

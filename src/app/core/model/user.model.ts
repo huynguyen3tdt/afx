@@ -61,7 +61,7 @@ export interface UpdateUserParam {
   };
   email: string;
   mobile: string;
-  lang: string;
+  lang?: string;
   surveys: Array<QuestionModel>;
   survey_cd: string;
 }
@@ -77,7 +77,7 @@ export interface UpdateCorporateParam {
     };
     phone: string;
     fx_fax: string;
-    lang: string;
+    lang?: string;
   };
   pic: {
     name: string;
