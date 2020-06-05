@@ -256,5 +256,6 @@
   "Back to AFX page": "AFXページへ戻る",
   "Your withdrawal request has been rejected:": "出金依頼はリジェクトされました:",
   "Report date": "対象日",
-  "The address could not be found from the zip code": "郵便番号から住所が見つかりませんでした。"
+  "The address could not be found from the zip code": "郵便番号から住所が見つかりませんでした。",
+  "Menu": "メニュー"
 }
