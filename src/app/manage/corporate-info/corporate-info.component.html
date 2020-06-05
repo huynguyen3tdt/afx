@@ -363,7 +363,7 @@
                         </div>
                         <div style="display:block" *ngIf="picForm.controls?.person_phone?.errors?.phoneLength"
                         class="invalid-mess">
-                          <div *ngIf="picForm.controls?.person_phone?.errors?.phoneLength">{{'Phone number must be at least 10 characters long.' | translate}</div>
+                          <div *ngIf="picForm.controls?.person_phone?.errors?.phoneLength">{{'Phone number must be at least 10 characters long.' | translate}}</div>
                         </div>
                         <div class="text-right">
                             <button type="button" class="btn btn-sm btn-cancel btn-outline-secondary pt-0 pb-0" (click)="cancelEditCor('p-phone', formType.pic)">{{'Cancel' | translate}}</button>
@@ -391,8 +391,8 @@
                         <div *ngIf="invalidEmail == true" class="invalid-mess">
                             <div>{{'This email address is already registered' | translate}}</div>
                           </div>
-                        <div *ngIf="picForm?.controls?.person_email?.errors" class="invalid-mess">
-                          <div *ngIf="picForm?.controls?.person_email?.errors?.person_email">{{'Invalid email' | translate}}</div>
+                        <div *ngIf="picForm?.controls?.person_email?.errors?.Email" class="invalid-mess">
+                          <div *ngIf="picForm?.controls?.person_email?.errors">{{'Invalid email' | translate}}</div>
                         </div>
                         <div class="text-right">
                             <button type="button" class="btn btn-sm btn-cancel btn-outline-secondary pt-0 pb-0" (click)="cancelEditCor('p-email', formType.pic)">{{'Cancel' | translate}}</button>

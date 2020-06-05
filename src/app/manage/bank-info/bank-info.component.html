@@ -175,7 +175,7 @@
                 <label class="label mt-1">{{'Bank Account Number' | translate}}</label>
             </div>
             <div class="col-md-8 col-lg-6">
-                <input type="text" name="bank_account_number" formControlName="bank_account_number"
+                <input type="text" name="bank_account_number" formControlName="bank_account_number" maxlength="50"
                     [className]="bankAccountForm.controls.bank_account_number.errors ? 'form-control form-control-sm invalid' : 'form-control form-control-sm'">
             </div>
         </div>
@@ -187,7 +187,7 @@
                 {{bankInfor?.acc_holder_name}}
             </div>
             <div *ngIf="isCompany == 'true'" class="col-md-8 col-lg-6">
-                <input type="text" name="account_holder" formControlName="account_holder"
+                <input type="text" name="account_holder" formControlName="account_holder" maxlength="50"
                     [className]="bankAccountForm.controls.account_holder.errors ? 'form-control form-control-sm invalid' : 'form-control form-control-sm'">
                     <div *ngIf="bankAccountForm.controls.account_holder.errors" class="invalid-mess">
                         <div>{{'Please enter full-width Katakana' | translate}}</div>

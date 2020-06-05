@@ -101,7 +101,7 @@
     <div class="offcanvas-wrapper">
         <div class="offcanvas-inner">
             <div class="offcanvas-header">
-                <h3 class="offcanvas-title">Menu</h3>
+                <h3 class="offcanvas-title">{{'Menu' | translate}}</h3>
                 <div class="header-action">
                     <a class="btn btn-offcanvas-close"><i class="icon ion-md-close"></i></a>
                 </div>
@@ -113,8 +113,8 @@
                 <li class="nav-item nav-item-deposit">
                     <a [routerLink]="['/manage/deposit']" id="deposit" class="nav-link has-icon btn-offcanvas-close"><i class="icon ion-md-add"></i> {{'Deposit' | translate}}</a>
                 </li>
-                <li class="nav-item nav-item-withdraw">
-                    <a [routerLink]="['/manage/withdrawRequest']" id="withdrawRequest" class="nav-link has-icon btn-offcanvas-close"><i class="icon ion-md-remove"></i> {{'Withdraw' | translate}}</a>
+                <li class="nav-item nav-item-withdraw">                                                                                                                
+                    <a [routerLink]="['/manage/withdrawRequest']" id="withdrawRequest" class="nav-link has-icon btn-offcanvas-close"><i class="icon ion-md-remove"></i> {{'Withdrawal' | translate}}</a>
                 </li>
                 <li class="nav-item nav-item-history">
                     <a [routerLink]="['/manage/withdrawHistory']" id="withdrawHistory" class="nav-link has-icon btn-offcanvas-close"><i class="icon ion-md-time"></i> {{'History' | translate}}</a>
