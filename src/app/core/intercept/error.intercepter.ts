@@ -10,7 +10,7 @@ import { TOKEN_AFX,
   TOKEN_EXPIRED_EN,
   TOKEN_EXPIRED_JP,
   INTERNAL_SERVER_EN,
-  INTERNAL_SERVER_JP, 
+  INTERNAL_SERVER_JP,
   CHANGE_PASS_FLG} from '../constant/authen-constant';
 import { ToastrService } from 'ngx-toastr';
 import { LOCALE } from './../constant/authen-constant';
