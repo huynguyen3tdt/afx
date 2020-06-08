@@ -538,10 +538,16 @@
                                             <div class="form form-line">
                                                 <div class="mb-3">
                                                     <label class="label">{{'Deposit Amount' | translate}}</label>
-                                                    <input maxlength="15" type="text" name="amount" formControlName="deposit" currency autocomplete="off" class="form-control form-control-lg text-right font-weight-bold text-warning" (change)="changeDepositCal($event.target.value)" value="10,000" placeholder="">
+                                                    <input maxlength="15" type="text" name="amount" 
+                                                    formControlName="deposit" currency autocomplete="off" 
+                                                    class="form-control form-control-lg text-right font-weight-bold text-warning" 
+                                                    (change)="changeDepositCal($event.target.value)" value="10,000" placeholder="">
                                                 </div>
                                                 <div *ngIf="bankError == true" class="invalid-mess">
                                                     <div>{{'Minimum amount is not below' | translate}} {{minDeposit | number}}</div>
+                                                </div>
+                                                <div *ngIf="errMessageBankTran == true" class="invalid-mess">
+                                                    <div>{{'Your Margin Level is nearly the Margin Call Levels' | translate}}</div>
                                                 </div>
                                                 <div class="mb-1 d-flex justify-content-between">
                                                     <label class="label">{{'Currency' | translate}}</label>

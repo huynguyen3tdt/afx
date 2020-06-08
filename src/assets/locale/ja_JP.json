@@ -257,5 +257,6 @@
   "Your withdrawal request has been rejected:": "出金依頼はリジェクトされました:",
   "Report date": "対象日",
   "The address could not be found from the zip code": "郵便番号から住所が見つかりませんでした。",
-  "Menu": "メニュー"
+  "Menu": "メニュー",
+  "Invalid email or password": "無効なメールアドレスまたはパスワードです"
 }

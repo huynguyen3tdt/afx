@@ -17,6 +17,7 @@ export class AuthGuard implements CanActivate {
       return true;
     } else {
       localStorage.removeItem(TOKEN_AFX);
+      localStorage.removeItem(CHANGE_PASS_FLG);
       this.router.navigate(['login']);
       return false;
     }

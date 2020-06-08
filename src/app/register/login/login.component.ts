@@ -138,9 +138,6 @@ export class LoginComponent implements OnInit, AfterViewInit {
         if (response.data.module_funding_max_withdraw) {
           localStorage.setItem(MAX_WITHDRAW, response.data.module_funding_max_withdraw.toString());
         }
-        if (response.data.fx_name1) {
-          localStorage.setItem(FXNAME1, response.data.fx_name1);
-        }
         if (response.data.tz) {
           localStorage.setItem(TIMEZONEAFX, response.data.tz);
         } else {
