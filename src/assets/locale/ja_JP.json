@@ -258,5 +258,6 @@
   "Report date": "対象日",
   "The address could not be found from the zip code": "郵便番号から住所が見つかりませんでした。",
   "Menu": "メニュー",
-  "Invalid email or password": "無効なメールアドレスまたはパスワードです"
+  "Invalid email or password": "無効なメールアドレスまたはパスワードです",
+  "Period is incorrect, the to date must be greater than the from date": "期間を指定することが正しくありません。終了日は開始日より後の日付を指定しなければなりません。"
 }
