@@ -19,7 +19,8 @@ import {
   MAX_WITHDRAW,
   TIMEZONESERVER,
   TIMEOUT_TOAST,
-  TYPE_ERROR_TOAST_EN
+  TYPE_ERROR_TOAST_EN,
+  MARGIN_CALL
 } from './../../core/constant/authen-constant';
 import { GlobalService } from 'src/app/core/services/global.service';
 import { AccountType } from 'src/app/core/model/report-response.model';
@@ -88,6 +89,8 @@ export class WithdrawRequestComponent implements OnInit {
   minWithDraw: string;
   maxWithDraw: string;
   // withdrawAmount
+  marginCall: number;
+
   constructor(private withdrawRequestService: WithdrawRequestService,
               private spinnerService: Ng4LoadingSpinnerService,
               private router: Router,
@@ -102,6 +105,7 @@ export class WithdrawRequestComponent implements OnInit {
     this.minWithDraw = localStorage.getItem(MIN_DEPOST);
     this.maxWithDraw = localStorage.getItem(MAX_WITHDRAW);
     this.locale = localStorage.getItem(LOCALE);
+    this.marginCall = Number(localStorage.getItem(MARGIN_CALL));
     if (this.locale === LANGUAGLE.english) {
       this.formatDateYear = EN_FORMATDATE;
       this.formatDateHour = EN_FORMATDATE_HH_MM;
@@ -196,7 +200,7 @@ export class WithdrawRequestComponent implements OnInit {
     this.errMessage = false;
     this.equityEstimate = Math.floor(this.equity - numeral(this.withdrawForm.controls.amount.value).value());
     this.marginLevelEstimate = this.globalService.calculateMarginLevel(this.equityEstimate, this.usedMargin);
-    if (this.marginLevelEstimate <= 120 && this.marginLevelEstimate > 0) {
+    if (this.marginLevelEstimate <= this.marginCall && this.marginLevelEstimate > 0) {
       this.errMessage = true;
     }
   }

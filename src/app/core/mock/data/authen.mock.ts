@@ -21,6 +21,8 @@ export const MOCK_LOGIN_RESPONSE = {
     fee: 20,
     lang: 'English',
     fx_name1: '23',
-    tz: 'Asia/Tokyo'
+    tz: 'Asia/Tokyo',
+    margin_call: 120,
+    margin_stop_out: 100
   }
 };

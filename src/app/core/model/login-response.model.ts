@@ -15,6 +15,8 @@ export interface LoginResponseModel {
         lang: string;
         fx_name1: string;
         tz: string;
+        margin_call: number;
+        margin_stop_out: number;
     };
 }
 

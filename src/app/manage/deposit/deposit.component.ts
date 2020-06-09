@@ -4,7 +4,7 @@ import { requiredInput } from 'src/app/core/helper/custom-validate.helper';
 import { DepositModel } from 'src/app/core/model/deposit-response.model';
 import { DepositService } from 'src/app/core/services/deposit.service';
 import { element } from 'protractor';
-import { MIN_DEPOST, ACCOUNT_IDS, LOCALE, FXNAME1, TIMEZONEAFX, TIMEZONESERVER } from 'src/app/core/constant/authen-constant';
+import { MIN_DEPOST, ACCOUNT_IDS, LOCALE, FXNAME1, TIMEZONEAFX, TIMEZONESERVER, MARGIN_CALL } from 'src/app/core/constant/authen-constant';
 import { WithdrawRequestService } from './../../core/services/withdraw-request.service';
 import { Mt5Model, TransactionModel, WithdrawAmountModel } from 'src/app/core/model/withdraw-request-response.model';
 import { AccountType } from 'src/app/core/model/report-response.model';
@@ -71,11 +71,13 @@ export class DepositComponent implements OnInit {
   bankCode: string;
   language;
   traddingAccount: AccountType;
+  marginCall: number;
 
   ngOnInit() {
     this.language = LANGUAGLE;
     this.locale = localStorage.getItem(LOCALE);
     this.timeZone = localStorage.getItem(TIMEZONEAFX);
+    this.marginCall = Number(localStorage.getItem(MARGIN_CALL));
     this.depositFee = 0;
     if (this.locale === LANGUAGLE.english) {
       this.formatDateYear = EN_FORMATDATE;
@@ -224,7 +226,7 @@ export class DepositComponent implements OnInit {
     this.errMessageQuickDeposit = false;
     this.equityEstimate = Math.floor(this.equity + numeral(this.depositTransactionForm.controls.deposit.value).value());
     this.marginLevelEstimate = this.globalService.calculateMarginLevel(this.equityEstimate, this.usedMargin);
-    if (this.marginLevelEstimate <= 120 && this.marginLevelEstimate > 0) {
+    if (this.marginLevelEstimate <= this.marginCall && this.marginLevelEstimate > 0) {
       this.errMessageQuickDeposit = true;
     }
   }
@@ -233,7 +235,7 @@ export class DepositComponent implements OnInit {
     this.errMessageBankTran = false;
     this.equityDeposit = Math.floor(this.equity + numeral(this.depositAmountForm.controls.deposit.value).value());
     this.marginLevelEstimateBank = this.globalService.calculateMarginLevel(this.equityDeposit, this.usedMargin);
-    if (this.marginLevelEstimateBank <= 120 && this.marginLevelEstimateBank > 0) {
+    if (this.marginLevelEstimateBank <= this.marginCall && this.marginLevelEstimateBank > 0) {
       this.errMessageBankTran = true;
     }
   }

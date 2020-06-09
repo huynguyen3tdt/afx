@@ -18,6 +18,8 @@ import {
   MAX_DEPOSIT,
   MAX_WITHDRAW,
   CHANGE_PASS_FLG,
+  MARGIN_CALL,
+  MARGIN_STOP_OUT,
 } from './../../core/constant/authen-constant';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthenService } from 'src/app/core/services/authen.service';
@@ -146,6 +148,12 @@ export class LoginComponent implements OnInit, AfterViewInit {
         if (response.data.lang) {
           localStorage.setItem(LOCALE, response.data.lang);
           this.translate.use(response.data.lang);
+        }
+        if (response.data.margin_call) {
+          localStorage.setItem(MARGIN_CALL, response.data.margin_call.toString());
+        }
+        if (response.data.margin_stop_out) {
+          localStorage.setItem(MARGIN_STOP_OUT, response.data.margin_stop_out.toString());
         }
         localStorage.setItem(FIRST_LOGIN, '1');
         localStorage.setItem(CHANGE_PASS_FLG, response.data.pwd_change_flg.toString());
