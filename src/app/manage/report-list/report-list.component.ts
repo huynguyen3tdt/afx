@@ -97,15 +97,18 @@ export class ReportListComponent implements OnInit {
         this.listReport = response.data.results;
         this.totalItem = response.data.count;
         this.totalPage = (this.totalItem / pageSize) * 10;
+        this.recordFrom = this.pageSize * (this.currentPage - 1) + 1;
+        this.recordTo = this.recordFrom + (this.listReport.length - 1);
         this.listReport.forEach(item => {
           item.create_date += TIMEZONESERVER;
           item.create_date = moment(item.create_date).tz(this.timeZone).format(this.formatDateYear);
-          item.file_name =  item.file_name.split(']_')[1].substring(0, item.file_name.split(']_')[1].length - 4);
+          if (item.file_name.includes(']_')) {
+            item.file_name = item.file_name.split('.')[0].split('_')[2] + '_' + item.file_name.split('.')[0].split('_')[3];
+          } else {
+            item.file_name = item.file_name.split('.')[0].split('_')[1] + '_' + item.file_name.split('.')[0].split('_')[2];
+          }
           item.report_date = moment((new Date(item.report_date)).toDateString()).format(this.formatDateYear);
-          // (new Date(item.report_date)).toDateString().format(this.formatDateYear)
         });
-        this.recordFrom = this.pageSize * (this.currentPage - 1) + 1;
-        this.recordTo = this.recordFrom + (this.listReport.length - 1);
       }
     });
   }
