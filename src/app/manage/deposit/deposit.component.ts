@@ -72,12 +72,14 @@ export class DepositComponent implements OnInit {
   language;
   traddingAccount: AccountType;
   marginCall: number;
+  isSending: boolean;
 
   ngOnInit() {
     this.language = LANGUAGLE;
     this.locale = localStorage.getItem(LOCALE);
     this.timeZone = localStorage.getItem(TIMEZONEAFX);
     this.marginCall = Number(localStorage.getItem(MARGIN_CALL));
+    this.isSending = false;
     this.depositFee = 0;
     if (this.locale === LANGUAGLE.english) {
       this.formatDateYear = EN_FORMATDATE;
@@ -174,9 +176,10 @@ export class DepositComponent implements OnInit {
 
   onSubmit() {
     this.isSubmitted = true;
-    if (this.depositTransactionForm.invalid) {
+    if (this.depositTransactionForm.invalid || this.isSending) {
       return;
     }
+    this.isSending = true;
     this.depositValue = numeral(this.depositTransactionForm.controls.deposit.value).value();
     if (this.depositValue < Number(this.minDeposit)) {
       this.depositError = true;
@@ -189,7 +192,6 @@ export class DepositComponent implements OnInit {
     };
     this.spinnerService.show();
     this.depositService.billingSystem(param).pipe(take(1)).subscribe(response => {
-      this.spinnerService.hide();
       if (response.meta.code === 200) {
         this.controlNo = response.data.id.toString();
         this.remark = this.accountID.split('-')[1];
@@ -197,6 +199,9 @@ export class DepositComponent implements OnInit {
         setTimeout(() => {
           this.BJPSystem.nativeElement.click();
         }, 100);
+      } else {
+        this.isSending = false;
+        this.spinnerService.hide();
       }
     });
   }
