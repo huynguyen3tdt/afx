@@ -261,5 +261,6 @@
   "The address could not be found from the zip code": "The address could not be found from the zip code",
   "Menu": "Menu",
   "Invalid email or password": "Invalid email or password",
-  "Period is incorrect, the to date must be greater than the from date": "Period is incorrect, the to date must be greater than the from date"
+  "Period is incorrect, the to date must be greater than the from date": "Period is incorrect, the to date must be greater than the from date",
+  "I got it": "I got it"
 }

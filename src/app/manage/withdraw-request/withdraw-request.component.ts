@@ -214,7 +214,7 @@ export class WithdrawRequestComponent implements OnInit {
       return;
     }
     this.modalWithdrawConfirm.show();
-    this.newDate = moment(new Date()).format(this.formatDateHour);
+    this.newDate = moment(new Date()).tz(this.timeZone).format(this.formatDateHour);
     this.getDepositBank();
   }
 
