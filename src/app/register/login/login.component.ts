@@ -109,7 +109,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
       return;
     }
     const param: LoginParam = {
-      login_id: this.loginFormGroup.controls.userName.value,
+      login_id: this.loginFormGroup.controls.userName.value.trim(),
       password: this.loginFormGroup.controls.passWord.value,
       device_type: this.isPc ? 'Pc' : 'Mobile'
     };
@@ -117,7 +117,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
     this.authenService.login(param).pipe(take(1)).subscribe(response => {
       this.spinnerService.hide();
       if (response.meta.code === 200) {
-        localStorage.setItem(USERNAME_LOGIN, btoa(this.loginFormGroup.value.userName));
+        localStorage.setItem(USERNAME_LOGIN, btoa(this.loginFormGroup.value.userName.trim()));
         localStorage.setItem(PASSWORD_LOGIN, btoa(this.loginFormGroup.value.passWord));
         if (this.loginFormGroup.value.remember === true) {
           localStorage.setItem(REMEMBER_LOGIN, 'true');
