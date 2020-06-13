@@ -173,7 +173,7 @@
   "Withdrawal amount": "出金額",
   "Createdate time": "作成日時",
   "It is being processed within 3-5 business day.": "出金リクエストを受け取り、3〜5営業日以内に処理中です",
-  "Got it!": "とった！",
+  "Got it!": "確認",
   "Your Margin Level is nearly the Margin Call Level": "あなたのマージンレベルは、ほぼマージンコールレベルです",
   "Bank code": "金融機関コード",
   "Bank branch": "支店名",
@@ -221,6 +221,7 @@
   "Rakuten": "楽天",
   "Japan Net": "ジャパンネット",
   "Withdrawal amount is not above the withdrawable amount": "引き出し金額は引き出せる金額を超えてはいけません",
+  "Withdrawal amount is not above the maximum amount": "引き出し金額が限度額を超えてはいけません",
   "Withdrawal Account": "出金口座",
   "Withdrawal Account Info": "メニューと一致させる",
   "Bank Name": "金融機関名選択",
@@ -235,7 +236,7 @@
   "Password expired": "パスワードの有効期限が切れています。",
   "Login ID or DOB incorrect": "ログインIDまたは生年月日が一致しません。",
   "The temporary password will be sent to the registered email address.": "仮パスワードを登録メールアドレスにメール致しますので、ご確認ください。",
-  "Your withdrawal request has been received:": "出金リクエストを受け取りました：",
+  "Your withdrawal request has been received:": "出金依頼を受け付けました：",
   "Reason: MT5 account balance is not enough money to withdraw": "理由：MT5アカウントの残高では引き出しに十分な金額がありません",
   "Margin Level estimate after deposit": "入金後の予定証拠金率",
   "Margin Level estimate after withdraw": "出金後の予定証拠金率",
@@ -260,5 +261,7 @@
   "Menu": "メニュー",
   "Invalid email or password": "無効なメールアドレスまたはパスワードです",
   "Period is incorrect, the to date must be greater than the from date": "期間を指定することが正しくありません。終了日は開始日より後の日付を指定しなければなりません。",
-  "I got it": "了解"
+  "I got it": "了解",
+  "Requests made by 15:00 will be withdrawn on the next business day.": "15:00までのご依頼は翌々営業日に出金となります。",
+  "Requests received after 15:00 will be handled the next business day.": "15:00以降に受け付けたご依頼については翌営業日での取扱いとさせていただきます。"
 }
