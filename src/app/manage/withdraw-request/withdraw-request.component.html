@@ -245,8 +245,8 @@
             </tbody>
         </table>
         <!-- <p *ngIf="checkWithDrawal == true">{{'It is being processed within 3-5 business day.' | translate}}</p> -->
-        <div>
-            <div *ngIf="checkWithDrawal == true">{{'Requests made by 15:00 will be withdrawn on the next business day.' | translate}}</div>
+        <div *ngIf="checkWithDrawal == true">
+            <div>{{'Requests made by 15:00 will be withdrawn on the next business day.' | translate}}</div>
             <div>{{'Requests received after 15:00 will be handled the next business day.' | translate}}</div>
         </div>
 
