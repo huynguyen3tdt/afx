@@ -228,6 +228,7 @@ export class NotificationsComponent implements OnInit {
 
   changeTab(type: number) {
     this.pageSize = 10;
+    this.currentPage = 1;
     this.initFilterRead();
     switch (type) {
       case this.TABS.ALL.value:
