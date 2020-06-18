@@ -150,6 +150,7 @@ export class NotificationsComponent implements OnInit {
   }
 
   filterUnreadNoti() {
+    this.currentPage = 1;
     switch (this.tab) {
       case this.TABS.ALL.name:
         this.unreadAll = !this.unreadAll;
