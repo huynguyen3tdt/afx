@@ -56,7 +56,7 @@ export class WithdrawRequestComponent implements OnInit {
   isSubmitted: boolean;
   listDwHistory;
   transactionDetail: TransactionModel;
-  minWithdraw: string;
+  minWithdraw: number;
   depositValue: number;
   minWithdrawError: boolean;
   maxWithdrawError: boolean;
@@ -86,8 +86,8 @@ export class WithdrawRequestComponent implements OnInit {
   language;
   tradingAccount: AccountType;
   checkWithDrawal: boolean;
-  minWithDraw: string;
-  maxWithDraw: string;
+  minWithDraw: number;
+  maxWithDraw: number;
   // withdrawAmount
   marginCall: number;
 
@@ -102,8 +102,8 @@ export class WithdrawRequestComponent implements OnInit {
     this.language = LANGUAGLE;
     this.withdrawFee = 0;
     this.timeZone = localStorage.getItem(TIMEZONEAFX);
-    this.minWithDraw = localStorage.getItem(MIN_DEPOST);
-    this.maxWithDraw = localStorage.getItem(MAX_WITHDRAW);
+    this.minWithDraw = Number(localStorage.getItem(MIN_DEPOST));
+    this.maxWithDraw = Number(localStorage.getItem(MAX_WITHDRAW));
     this.locale = localStorage.getItem(LOCALE);
     this.marginCall = Number(localStorage.getItem(MARGIN_CALL));
     if (this.locale === LANGUAGLE.english) {
@@ -119,7 +119,7 @@ export class WithdrawRequestComponent implements OnInit {
       this.tradingAccount = this.listTradingAccount[0];
       this.accountID = this.tradingAccount.account_id;
     }
-    this.minWithdraw = localStorage.getItem(MIN_WITHDRAW);
+    this.minWithdraw = Number(localStorage.getItem(MIN_WITHDRAW));
     this.initWithdrawForm();
     if (this.accountID) {
       this.getMt5Infor(Number(this.accountID));
@@ -145,7 +145,7 @@ export class WithdrawRequestComponent implements OnInit {
         this.mt5Infor = response.data;
         this.equity = this.mt5Infor.equity;
         this.usedMargin = this.mt5Infor.used_margin;
-        if (this.mt5Infor.free_margin < Number(this.minWithdraw)) {
+        if (this.mt5Infor.free_margin < this.minWithdraw) {
           this.mt5Infor.free_margin = 0;
         }
         this.lastestTime = moment(this.mt5Infor.lastest_time).tz(this.timeZone).format(this.formatDateHour);
@@ -291,8 +291,8 @@ export class WithdrawRequestComponent implements OnInit {
 
   checkValidateWithDrawal() {
     this.depositValue = numeral(this.withdrawForm.controls.amount.value).value();
-    this.minWithdrawError = this.depositValue < Number(this.minWithdraw);
-    this.maxWithdrawError = this.depositValue > Number(this.maxWithDraw);
+    this.minWithdrawError = this.depositValue < this.minWithdraw;
+    this.maxWithdrawError = this.depositValue > this.maxWithDraw;
     this.withdrawAmountError = this.mt5Infor.free_margin < this.depositValue;
 
     if (this.minWithdrawError || this.withdrawAmountError || this.maxWithdrawError) {

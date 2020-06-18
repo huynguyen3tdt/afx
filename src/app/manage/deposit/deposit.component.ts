@@ -41,7 +41,7 @@ export class DepositComponent implements OnInit {
   depositAmountForm: FormGroup;
   depositTransactionForm: FormGroup;
   listBankTranfer: Array<DepositModel>;
-  minDeposit: string;
+  minDeposit: number;
   mt5Infor: Mt5Model;
   equity: number;
   usedMargin: number;
@@ -103,7 +103,7 @@ export class DepositComponent implements OnInit {
       this.tradingAccount = this.listTradingAccount[0];
       this.accountID = this.tradingAccount.account_id;
     }
-    this.minDeposit = localStorage.getItem(MIN_DEPOST);
+    this.minDeposit = Number(localStorage.getItem(MIN_DEPOST));
     if (this.accountID) {
       this.getMt5Infor(Number(this.accountID));
       this.getDwAmount(Number(this.accountID));
@@ -158,7 +158,7 @@ export class DepositComponent implements OnInit {
         this.equity = this.mt5Infor.equity;
         this.usedMargin = this.mt5Infor.used_margin;
         this.lastestTime = moment(this.mt5Infor.lastest_time).tz(this.timeZone).format(this.formatDateHour);
-        if (this.mt5Infor.free_margin < Number(this.minDeposit)) {
+        if (this.mt5Infor.free_margin < this.minDeposit) {
           this.mt5Infor.free_margin = 0;
         }
       }
@@ -198,7 +198,7 @@ export class DepositComponent implements OnInit {
     }
     this.isSending = true;
     this.depositValue = numeral(this.depositTransactionForm.controls.deposit.value).value();
-    if (this.depositValue < Number(this.minDeposit)) {
+    if (this.depositValue < this.minDeposit) {
       this.depositError = true;
       return;
     }
@@ -225,7 +225,7 @@ export class DepositComponent implements OnInit {
 
   changeDeposit(event: any) {
     this.depositValue = numeral(this.depositTransactionForm.controls.deposit.value).value();
-    if (this.depositValue < Number(this.minDeposit)) {
+    if (this.depositValue < this.minDeposit) {
       this.depositError = true;
       return;
     }
@@ -236,7 +236,7 @@ export class DepositComponent implements OnInit {
 
   changeDepositCal(event: any) {
     this.depositAmount = numeral(this.depositAmountForm.controls.deposit.value).value();
-    if (this.depositAmount < Number(this.minDeposit)) {
+    if (this.depositAmount < this.minDeposit) {
       this.bankError = true;
       return;
     }
