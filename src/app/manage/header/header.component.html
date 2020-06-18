@@ -23,7 +23,7 @@
                     <li [className]="listNotification && listNotification.length > 0 ? 'nav-item nav-item-notification dropdown has-notification' : 'nav-item nav-item-notification dropdown'">
                         <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icon ion-md-notifications"></i></a>
                         <div class="dropdown-menu dropdown-menu-notification dropdown-menu-right">
-                            <h6 class="mb-1 text-primary text-uppercase title"><strong>Unread Notifications</strong>
+                            <h6 class="mb-1 text-primary text-uppercase title"><strong>{{'Unread Notifications' | translate}}</strong>
                             </h6>
                             <ng-container *ngFor="let item of listNotification; let i = index">
                                 <a class="dropdown-item notification-item important" [routerLink]="['/manage/notifications']" *ngIf="item?.news_type == 0">
@@ -40,7 +40,7 @@
                                 </a>
                             </ng-container>
 
-                            <div class="text-center small"><a [routerLink]="['/manage/notifications']" class="text-secondary">View more</a></div>
+                            <div class="text-center small"><a [routerLink]="['/manage/notifications']" class="text-secondary">{{'View more' | translate}}</a></div>
                         </div>
                     </li>
                     <!-- <li class="nav-item nav-item-user-panel">

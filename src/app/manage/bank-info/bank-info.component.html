@@ -1,42 +1,42 @@
 <h3 class="border-bottom pb-1 mb-3">{{'Withdrawal Account' | translate}}</h3>
 <div class="bank_info" *ngIf="bankAccount">
     <div class="row mb-1">
-        <div class="col-md-4 col-lg-3">
+        <div class="col-4 col-md-4 col-lg-3">
             <label class="label">{{'Beneficiary Bank' | translate}}</label>
         </div>
-        <div class="col-md-8 col-lg-6">
+        <div class="col-8 col-md-8 col-lg-6">
             <strong>{{bankInfor?.name}}</strong>
         </div>
     </div>
     <div class="row mb-1">
-        <div class="col-md-4 col-lg-3">
+        <div class="col-4 col-md-4 col-lg-3">
             <label class="label">{{'Bank code' | translate}}</label>
         </div>
-        <div class="col-md-8 col-lg-6">
+        <div class="col-8 col-md-8 col-lg-6">
             <strong>{{bankInfor?.bic}}</strong>
         </div>
     </div>
     <div class="row mb-1">
-        <div class="col-md-4 col-lg-3">
+        <div class="col-4 col-md-4 col-lg-3">
             <label class="label">{{'Bank branch' | translate}}</label>
         </div>
-        <div class="col-md-8 col-lg-6">
+        <div class="col-8 col-md-8 col-lg-6">
             <strong>{{bankInfor?.branch_name}}</strong>
         </div>
     </div>
     <div class="row mb-1">
-        <div class="col-md-4 col-lg-3">
+        <div class="col-4 col-md-4 col-lg-3">
             <label class="label">{{'Branch code' | translate}}</label>
         </div>
-        <div class="col-md-8 col-lg-6">
+        <div class="col-8 col-md-8 col-lg-6">
             <strong>{{bankInfor?.branch_code}}</strong>
         </div>
     </div>
     <div class="row mb-1">
-        <div class="col-md-4 col-lg-3">
+        <div class="col-4 col-md-4 col-lg-3">
             <label class="label">{{'Account type' | translate}}</label>
         </div>
-        <div class="col-md-8 col-lg-6">
+        <div class="col-8 col-md-8 col-lg-6">
             <strong>{{bankInfor?.fx_acc_type | convertAccTypeBank}}</strong>
         </div>
         <!-- <div class="col-md-8 col-lg-6" *ngIf="bankInfor?.fx_acc_type == 'sa'">
@@ -47,26 +47,26 @@
         </div> -->
     </div>
     <div class="row mb-1">
-        <div class="col-md-4 col-lg-3">
+        <div class="col-4 col-md-4 col-lg-3">
             <label class="label">{{'Bank Account Number' | translate}}</label>
         </div>
-        <div class="col-md-8 col-lg-6">
+        <div class="col-8 col-md-8 col-lg-6">
             <strong>{{bankInfor?.acc_number}}</strong>
         </div>
     </div>
     <div class="row mb-1">
-        <div class="col-md-4 col-lg-3">
+        <div class="col-4 col-md-4 col-lg-3">
             <label class="label">{{'Account holder name' | translate}}</label>
         </div>
-        <div class="col-md-8 col-lg-6">
+        <div class="col-8 col-md-8 col-lg-6">
             <strong>{{bankInfor?.acc_holder_name}}</strong>
         </div>
     </div>
     <div class="row mb-1">
-        <div class="col-md-4 col-lg-3">
+        <div class="col-4 col-md-4 col-lg-3">
             &nbsp;
         </div>
-        <div class="col-md-8 col-lg-6">
+        <div class="col-8 col-md-8 col-lg-6">
             <button type="button" class="btn btn-edit btn-success btn-sm pl-3 pr-3"
                 (click)="editBankAccount()">{{'Edit' | translate}}</button>
         </div>

@@ -35,8 +35,8 @@
                                             <label class="label d-block mb-0 mr-2">{{'Trading account' | translate}}</label>
                                             <select disabled formControlName="tradingAccount" (change)="changeTradingAccount()" class="form-control form-control-sm">
                                                 <option *ngFor="let item of listTradingAccount"
-                                                    value="{{item.value}}">
-                                                    {{item.value}}</option>
+                                                    value="{{item?.account_id}}">
+                                                    {{item?.value}}</option>
                                             </select>
                                         </div>
                                         <div class="form-group ml-md-1 flex-grow-1">
@@ -99,7 +99,7 @@
                             </div>
                             <!-- END Filter Banr -->
                             <div class="text-right small text-secondary">{{'Currency:' | translate}}
-                                <strong>JPY</strong></div>
+                                <strong>{{tradingAccount?.currency}}</strong></div>
                             <div class="table-responsive">
                                 <table class="table table-sm table-hover mb-3" cellspacing="0" cellpadding="0">
                                     <thead>

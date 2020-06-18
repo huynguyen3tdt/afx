@@ -17,6 +17,9 @@ import { ListTransactionComponent } from '../list-transaction/list-transaction.c
 import { LANGUAGLE } from 'src/app/core/constant/language-constant';
 import moment from 'moment-timezone';
 import { take } from 'rxjs/operators';
+import { EnvConfigService } from 'src/app/core/services/env-config.service';
+import { AppSettings } from 'src/app/core/services/api.setting';
+import { PORTAL_CODE, SHOP_CODE } from 'src/app/core/constant/bjp-constant';
 const numeral = require('numeral');
 declare var $: any;
 
@@ -32,7 +35,8 @@ export class DepositComponent implements OnInit {
               private withdrawRequestService: WithdrawRequestService,
               private spinnerService: Ng4LoadingSpinnerService,
               private router: Router,
-              private globalService: GlobalService) { }
+              private globalService: GlobalService,
+              private envConfigService: EnvConfigService) { }
 
   depositAmountForm: FormGroup;
   depositTransactionForm: FormGroup;
@@ -70,11 +74,16 @@ export class DepositComponent implements OnInit {
   timeZone: string;
   bankCode: string;
   language;
-  traddingAccount: AccountType;
+  tradingAccount: AccountType;
   marginCall: number;
   isSending: boolean;
+  bjpSystem: string;
+  apiPostBack: string;
+  portalCode: string;
+  shopCode: string;
 
   ngOnInit() {
+    this.initBjpSystem();
     this.language = LANGUAGLE;
     this.locale = localStorage.getItem(LOCALE);
     this.timeZone = localStorage.getItem(TIMEZONEAFX);
@@ -91,18 +100,26 @@ export class DepositComponent implements OnInit {
     this.transactionType = TYPEOFTRANHISTORY.DEPOSIT.key;
     this.listTradingAccount = JSON.parse(localStorage.getItem(ACCOUNT_IDS));
     if (this.listTradingAccount) {
-      this.traddingAccount = this.listTradingAccount[0];
-      this.accountID = this.traddingAccount.value;
+      this.tradingAccount = this.listTradingAccount[0];
+      this.accountID = this.tradingAccount.account_id;
     }
     this.minDeposit = localStorage.getItem(MIN_DEPOST);
     if (this.accountID) {
-      this.getMt5Infor(Number(this.accountID.split('-')[1]));
-      this.getDwAmount(Number(this.accountID.split('-')[1]));
-      this.remark = this.accountID.split('-')[1];
+      this.getMt5Infor(Number(this.accountID));
+      this.getDwAmount(Number(this.accountID));
+      this.remark = this.accountID;
     }
     this.initDepositAmountForm();
     this.initDepositTransactionForm();
   }
+
+  initBjpSystem() {
+    this.bjpSystem = this.envConfigService.getBJPSystem();
+    this.apiPostBack = this.envConfigService.getConfig() + '/' + AppSettings.API_POST_BACK_BJP;
+    this.portalCode = PORTAL_CODE;
+    this.shopCode = SHOP_CODE;
+  }
+
   initDepositAmountForm() {
     this.depositAmountForm = new FormGroup({
       deposit: new FormControl(numeral(10000).format('0,0'), requiredInput)
@@ -186,15 +203,15 @@ export class DepositComponent implements OnInit {
       return;
     }
     const param = {
-      currency: this.traddingAccount.currency,
+      currency: this.tradingAccount.currency,
       amount: numeral(this.depositTransactionForm.controls.deposit.value).value(),
-      account_id: Number(this.accountID.split('-')[1])
+      account_id: Number(this.accountID)
     };
     this.spinnerService.show();
     this.depositService.billingSystem(param).pipe(take(1)).subscribe(response => {
       if (response.meta.code === 200) {
         this.controlNo = response.data.id.toString();
-        this.remark = this.accountID.split('-')[1];
+        this.remark = this.accountID;
         this.listTran.ngOnChanges();
         setTimeout(() => {
           this.BJPSystem.nativeElement.click();
@@ -246,15 +263,15 @@ export class DepositComponent implements OnInit {
   }
 
   onRefesh() {
-    this.getMt5Infor(Number(this.accountID.split('-')[1]));
+    this.getMt5Infor(Number(this.accountID));
   }
 
-  changeAccountId() {
-    this.traddingAccount = this.listTradingAccount.find((account: AccountType) => this.accountID === account.value);
-    this.accountID = this.traddingAccount.value;
-    this.getMt5Infor(Number(this.accountID.split('-')[1]));
-    this.getDwAmount(Number(this.accountID.split('-')[1]));
-    this.remark = this.accountID.split('-')[1];
+  changeTradingAccount() {
+    this.tradingAccount = this.listTradingAccount.find((account: AccountType) => this.accountID === account.value);
+    this.accountID = this.tradingAccount.value;
+    this.getMt5Infor(Number(this.accountID));
+    this.getDwAmount(Number(this.accountID));
+    this.remark = this.accountID;
   }
 
   changeBankDeposit() {

@@ -37,4 +37,5 @@ export class AppSettings {
     public static API_CHANGE_EMAIL              = `api/${versionAPI}/users/mail_confirm/`;
     public static API_CHECK_TOKEN_PASSWORD      = `api/${versionAPI}/users/check_token/`;
     public static API_CHECK_TOKEN_EMAIL         = `api/${versionAPI}/users/check_token_email/`;
+    public static API_POST_BACK_BJP             = `api/${versionAPI}/deposits/post_back/`;
 }

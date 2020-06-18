@@ -265,5 +265,7 @@
   "Period is incorrect, the to date must be greater than the from date": "Period is incorrect, the to date must be greater than the from date",
   "I got it": "I got it",
   "Requests made by 15:00 will be withdrawn on the next business day.": "Requests made by 15:00 will be withdrawn on the next business day.",
-  "Requests received after 15:00 will be handled the next business day.": "Requests received after 15:00 will be handled the next business day."
+  "Requests received after 15:00 will be handled the next business day.": "Requests received after 15:00 will be handled the next business day.",
+  "View more": "View more",
+  "Unread Notifications": "Unread Notifications"
 }
