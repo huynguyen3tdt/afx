@@ -84,7 +84,7 @@ export class WithdrawRequestComponent implements OnInit {
   totalAmount: number;
   timeZone: string;
   language;
-  traddingAccount: AccountType;
+  tradingAccount: AccountType;
   checkWithDrawal: boolean;
   minWithDraw: string;
   maxWithDraw: string;
@@ -116,14 +116,14 @@ export class WithdrawRequestComponent implements OnInit {
     this.transactionType = TYPEOFTRANHISTORY.WITHDRAWAL.key;
     this.listTradingAccount = JSON.parse(localStorage.getItem(ACCOUNT_IDS));
     if (this.listTradingAccount) {
-      this.traddingAccount = this.listTradingAccount[0];
-      this.accountID = this.traddingAccount.value;
+      this.tradingAccount = this.listTradingAccount[0];
+      this.accountID = this.tradingAccount.account_id;
     }
     this.minWithdraw = localStorage.getItem(MIN_WITHDRAW);
     this.initWithdrawForm();
     if (this.accountID) {
-      this.getMt5Infor(Number(this.accountID.split('-')[1]));
-      this.getDwAmount(Number(this.accountID.split('-')[1]));
+      this.getMt5Infor(Number(this.accountID));
+      this.getDwAmount(Number(this.accountID));
     }
     this.getBankInfor();
   }
@@ -206,7 +206,7 @@ export class WithdrawRequestComponent implements OnInit {
   }
 
   onRefesh() {
-    this.getMt5Infor(Number(this.accountID.split('-')[1]));
+    this.getMt5Infor(Number(this.accountID));
   }
 
   showConfirm() {
@@ -230,11 +230,11 @@ export class WithdrawRequestComponent implements OnInit {
     this.calculateWithdraw();
   }
 
-  changeAccount() {
-    this.traddingAccount = this.listTradingAccount.find((account: AccountType) => this.accountID === account.value);
-    this.accountID = this.traddingAccount.value;
-    this.getMt5Infor(Number(this.accountID.split('-')[1]));
-    this.getDwAmount(Number(this.accountID.split('-')[1]));
+  changeTradingAccount() {
+    this.tradingAccount = this.listTradingAccount.find((account: AccountType) => this.accountID === account.value);
+    this.accountID = this.tradingAccount.value;
+    this.getMt5Infor(Number(this.accountID));
+    this.getDwAmount(Number(this.accountID));
   }
 
   sendConfirm() {
@@ -245,8 +245,8 @@ export class WithdrawRequestComponent implements OnInit {
     this.depositValue = numeral(this.withdrawForm.controls.amount.value).value();
     const param = {
       amount: this.depositValue,
-      account_id: this.accountID.split('-')[1],
-      currency: this.traddingAccount.currency
+      account_id: this.accountID,
+      currency: this.tradingAccount.currency
     };
     if (this.locale === LANGUAGLE.english) {
       messageErr = 'There are some problems so we cannot send you email. Please contact us for more details.';
@@ -262,12 +262,12 @@ export class WithdrawRequestComponent implements OnInit {
         this.transactionWithdraw = response.data;
         this.transactionWithdraw.create_date =
         moment(this.transactionWithdraw.create_date + TIMEZONESERVER).tz(this.timeZone).format(this.formatDateHour);
-        this.getMt5Infor(Number(this.accountID.split('-')[1]));
+        this.getMt5Infor(Number(this.accountID));
       } else if (response.meta.code === 409) {
         this.transactionWithdraw = response.data;
         this.transactionWithdraw.create_date =
         moment(this.transactionWithdraw.create_date + TIMEZONESERVER).tz(this.timeZone).format(this.formatDateHour);
-        this.getMt5Infor(Number(this.accountID.split('-')[1]));
+        this.getMt5Infor(Number(this.accountID));
         this.checkWithDrawal = false;
       } else if (response.meta.code === 403) {
         this.toastr.error(messageErr, typeErr, {

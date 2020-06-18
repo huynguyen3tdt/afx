@@ -16,7 +16,7 @@ import { take } from 'rxjs/operators';
   styleUrls: ['./mt5-info.component.scss']
 })
 export class Mt5InfoComponent implements OnInit {
-  accountID: number;
+  accountID: string;
   timeZone: string;
   locale: string;
   formatDateHour: string;
@@ -24,6 +24,7 @@ export class Mt5InfoComponent implements OnInit {
   accountInfor: Mt5Model;
   lastestTime: string;
   withdrawAmount: WithdrawAmountModel;
+  tradingAccount: AccountType;
   constructor(private spinnerService: Ng4LoadingSpinnerService,
               private withdrawRequestService: WithdrawRequestService,
               private globalService: GlobalService) { }
@@ -38,7 +39,8 @@ export class Mt5InfoComponent implements OnInit {
     }
     this.listTradingAccount = JSON.parse(localStorage.getItem(ACCOUNT_IDS));
     if (this.listTradingAccount) {
-      this.accountID = Number(this.listTradingAccount[0].account_id);
+      this.tradingAccount = this.listTradingAccount[0];
+      this.accountID = this.tradingAccount.account_id;
     }
     this.getMt5Infor(this.accountID);
     this.getWithDrawAmount(this.accountID);
@@ -68,4 +70,8 @@ export class Mt5InfoComponent implements OnInit {
     });
   }
 
+  changeTradingAccount() {
+    this.tradingAccount = this.listTradingAccount.find((account: AccountType) =>
+    this.accountID === account.account_id);
+  }
 }

@@ -40,6 +40,7 @@ export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
   fromDate: Date = new Date();
   toDate: Date = new Date();
   listTradingAccount: Array<AccountType>;
+  tradingAccount: AccountType;
   showErrorDate: boolean;
   recordFrom: number;
   recordTo: number;
@@ -111,9 +112,12 @@ export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
     this.currentPage = 1;
     this.pageSize = 10;
     this.listTradingAccount = JSON.parse(localStorage.getItem(ACCOUNT_IDS));
+    if (this.listTradingAccount) {
+      this.tradingAccount = this.listTradingAccount[0];
+    }
     this.initSearchForm();
     if (!this.querytab && this.searchForm.controls.tradingAccount.value) {
-      this.getTranHistory(this.searchForm.controls.tradingAccount.value.split('-')[1], this.currentPage, this.pageSize, this.TABS.ALL.value,
+      this.getTranHistory(this.searchForm.controls.tradingAccount.value, this.currentPage, this.pageSize, this.TABS.ALL.value,
         this.formatDate(this.searchForm.controls.fromDate.value), this.formatDate(this.searchForm.controls.toDate.value));
     }
   }
@@ -157,7 +161,7 @@ export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
 
   initSearchForm() {
     this.searchForm = new FormGroup({
-      tradingAccount: new FormControl(this.listTradingAccount ? this.listTradingAccount[0].value : null),
+      tradingAccount: new FormControl(this.listTradingAccount ? this.listTradingAccount[0].account_id : null),
       fromDate: new FormControl(null),
       toDate: new FormControl(null),
       status: new FormControl([])
@@ -204,8 +208,8 @@ export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
     // if (this.showErrorDate === true) {
     //   return;
     // }
-    if (this.searchForm.controls.tradingAccount.value && this.searchForm.controls.tradingAccount.value.toString().indexOf('-') !== -1) {
-      accounID = this.searchForm.controls.tradingAccount.value.split('-')[1];
+    if (this.searchForm.controls.tradingAccount.value) {
+      accounID = this.searchForm.controls.tradingAccount.value;
     }
     switch (this.tab) {
       case this.TABS.ALL.name:
@@ -312,7 +316,7 @@ export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
         this.tranHistoryDetail.create_date = moment(this.tranHistoryDetail.create_date).tz(this.timeZone).format(this.formatDateHour);
         this.tranHistoryDetail.method = this.globalService.checkPaymentMedthod(this.tranHistoryDetail.method);
         this.tranHistoryDetail.funding_type = this.globalService.checkType(this.tranHistoryDetail.funding_type);
-        this.tranModal.open(this.tranHistoryDetail, this.searchForm.controls.tradingAccount.value);
+        this.tranModal.open(this.tranHistoryDetail, this.tradingAccount.value);
         // $('#tran_detail').modal('show');
       }
     });
@@ -339,7 +343,7 @@ export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
   }
 
   exportToCSV() {
-    const accounID = this.searchForm.controls.tradingAccount.value.split('-')[1];
+    const accounID = this.searchForm.controls.tradingAccount.value;
     let tabValue;
     switch (this.tab) {
       case this.TABS.ALL.name:
@@ -376,6 +380,8 @@ export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
   }
 
   changeTradingAccount() {
+    this.tradingAccount = this.listTradingAccount.find((account: AccountType) =>
+    this.searchForm.controls.tradingAccount.value === account.account_id);
     this.searchTranHistory();
   }
 

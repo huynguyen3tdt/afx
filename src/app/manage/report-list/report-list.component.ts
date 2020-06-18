@@ -26,8 +26,8 @@ export class ReportListComponent implements OnInit {
   tab: string;
   listReport: Array<ReportIDS>;
   searchForm: FormGroup;
-  tradingAccount: number;
   listTradingAccount: Array<AccountType>;
+  tradingAccount: AccountType;
   listTotalItem: Array<number> = [10, 20, 30];
   recordFrom: number;
   recordTo: number;
@@ -74,6 +74,9 @@ export class ReportListComponent implements OnInit {
     this.currentPage = 1;
     this.pageSize = 10;
     this.listTradingAccount = JSON.parse(localStorage.getItem(ACCOUNT_IDS));
+    if (this.listTradingAccount) {
+      this.tradingAccount = this.listTradingAccount[0];
+    }
     this.initSearchForm();
     this.getReport(this.searchForm.controls.tradingAccount.value, this.currentPage, this.pageSize, this.TABS.ALL.value,
       this.formatDate(this.searchForm.controls.fromDate.value), this.formatDate(this.searchForm.controls.toDate.value));
@@ -81,7 +84,7 @@ export class ReportListComponent implements OnInit {
 
   initSearchForm() {
     this.searchForm = new FormGroup({
-      tradingAccount: new FormControl(this.listTradingAccount ? this.listTradingAccount[0].account_id : null),
+      tradingAccount: new FormControl(this.listTradingAccount ? this.tradingAccount.account_id : null),
       fromDate: new FormControl(null),
       toDate: new FormControl(null)
     });
@@ -282,5 +285,11 @@ export class ReportListComponent implements OnInit {
       a.click();
       this.changeReadStatus(item.id);
     });
+  }
+
+  changeTradingAccount() {
+    this.tradingAccount = this.listTradingAccount.find((account: AccountType) =>
+    this.searchForm.controls.tradingAccount.value === account.account_id);
+    this.searchReport();
   }
 }

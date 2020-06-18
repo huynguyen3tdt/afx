@@ -7,14 +7,14 @@
                     {{'Trading Accounts' | translate}}
                 </div>
                 <div class="d-inline-block">
-                    <select [(ngModel)]="accountID" disabled class="form-control form-control-sm mb-0"
+                    <select [(ngModel)]="accountID" disabled class="form-control form-control-sm mb-0" (change)="changeTradingAccount()"
                         style="min-width: 160px;">
                         <option *ngFor="let item of listTradingAccount" value="{{item?.account_id}}">{{item?.value}}
                         </option>
                     </select>
                 </div>
             </div>
-            <div>{{'Currency:' | translate}}<strong> JPY</strong></div>
+            <div>{{'Currency:' | translate}}<strong> {{tradingAccount?.currency}}</strong></div>
         </div>
         <hr>
         <div class="table-responsive">
