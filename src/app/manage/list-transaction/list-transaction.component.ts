@@ -93,4 +93,8 @@ export class ListTransactionComponent implements OnInit, OnChanges {
       }
     });
   }
+
+  closeModal() {
+    this.tranModal.close();
+  }
 }

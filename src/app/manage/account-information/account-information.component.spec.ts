@@ -14,6 +14,7 @@ import { Mt5InfoComponent } from '../mt5-info/mt5-info.component';
 import { BankInfoComponent } from '../bank-info/bank-info.component';
 import { SettingComponent } from '../setting/setting.component';
 import { ConvertAccountTypeBankPipe } from 'src/app/core/pipe/convert-account-type-bank.pipe';
+import { ModalModule } from 'ngx-bootstrap';
 
 describe('AccountInformationComponent', () => {
   let component: AccountInformationComponent;
@@ -30,7 +31,7 @@ describe('AccountInformationComponent', () => {
         SettingComponent,
         ConvertFinancialPipe,
         ConvertInvestmentPurposePipe,
-        ConvertAccountTypeBankPipe
+        ConvertAccountTypeBankPipe,
       ],
       imports: [
         TranslateModule.forRoot(),
@@ -39,6 +40,7 @@ describe('AccountInformationComponent', () => {
         Ng4LoadingSpinnerModule,
         FormsModule,
         RouterTestingModule,
+        ModalModule.forRoot()
       ]
 
     })

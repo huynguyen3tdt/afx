@@ -7,6 +7,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ConvertAccountTypeBankPipe } from 'src/app/core/pipe/convert-account-type-bank.pipe';
+import { ModalModule } from 'ngx-bootstrap';
 
 describe('BankInfoComponent', () => {
   let component: BankInfoComponent;
@@ -24,7 +25,8 @@ describe('BankInfoComponent', () => {
         HttpClientTestingModule,
         Ng4LoadingSpinnerModule,
         FormsModule,
-        RouterTestingModule,
+        ModalModule.forRoot(),
+        RouterTestingModule
       ]
     })
     .compileComponents();
