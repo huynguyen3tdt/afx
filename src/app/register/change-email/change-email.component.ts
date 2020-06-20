@@ -33,6 +33,8 @@ export class ChangeEmailComponent implements OnInit {
   passWordType: string;
   showScreen: boolean;
   locale: string;
+  isSending: boolean;
+
   constructor(private router: Router,
               private activatedRoute: ActivatedRoute,
               private authenService: AuthenService,
@@ -40,6 +42,7 @@ export class ChangeEmailComponent implements OnInit {
               private toastr: ToastrService) { }
 
   ngOnInit() {
+    this.isSending = false;
     this.passWordType = 'password';
     this.locale = localStorage.getItem(LOCALE);
     this.activatedRoute.queryParams.pipe(take(1)).subscribe(res => {
@@ -108,6 +111,10 @@ export class ChangeEmailComponent implements OnInit {
       messageSuccess = 'メールアドレスの更新が完了しました。';
       typeSuccess = TYPE_SUCCESS_TOAST_JP;
     }
+    if (this.isSending === true) {
+      return;
+    }
+    this.isSending = true;
     const param: ChangeEmail = {
       password: this.changeEmailForm.controls.password.value,
       token: this.token
@@ -121,8 +128,10 @@ export class ChangeEmailComponent implements OnInit {
           timeOut: TIMEOUT_TOAST
         });
       } else if (response.meta.code === 400) {
+        this.isSending = false;
         this.invalidPassWord = true;
       } else if (response.meta.code === 409) {
+        this.isSending = false;
         this.invalidEmail = true;
       }
     });

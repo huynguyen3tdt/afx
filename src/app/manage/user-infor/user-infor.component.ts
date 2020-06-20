@@ -306,7 +306,8 @@ export class UserInforComponent implements OnInit {
         city: this.userForm.controls.searchPrefe.value,
         street: this.userForm.controls.searchCountry.value.trim(),
         street2: this.userForm.controls.house_numb.value.trim(),
-        fx_street3: this.userForm.controls.name_build.value.trim(),
+        fx_street3: this.userForm.controls.name_build.value
+        ? this.userForm.controls.name_build.value.trim() : '',
       },
       email: this.userForm.controls.email.value,
       mobile: this.userForm.controls.phone.value,

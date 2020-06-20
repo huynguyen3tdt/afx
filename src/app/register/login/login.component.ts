@@ -45,6 +45,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
   invalidAccount: boolean;
   passWordExpired: boolean;
   hostNameRegis: string;
+  isSending: boolean;
 
   constructor(
     private router: Router,
@@ -56,6 +57,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    this.isSending = false;
     this.login_layout();
     $(window).resize(() => {
       this.login_layout();
@@ -108,6 +110,10 @@ export class LoginComponent implements OnInit, AfterViewInit {
     if (this.loginFormGroup.invalid) {
       return;
     }
+    if (this.isSending === true) {
+      return;
+    }
+    this.isSending = true;
     const param: LoginParam = {
       login_id: this.loginFormGroup.controls.userName.value.trim(),
       password: this.loginFormGroup.controls.passWord.value,
@@ -168,11 +174,12 @@ export class LoginComponent implements OnInit, AfterViewInit {
           });
         }
       } else if (response.meta.code === 102) {
+        this.isSending = false;
         this.invalidAccount = true;
       } else if (response.meta.code === 101) {
+        this.isSending = false;
         this.passWordExpired = true;
       }
-
     });
     $('.minimize-btn').click();
   }
