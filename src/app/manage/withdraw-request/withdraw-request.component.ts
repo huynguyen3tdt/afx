@@ -48,6 +48,7 @@ export class WithdrawRequestComponent implements OnInit {
   @ViewChild('listTran', { static: false }) listTran: ListTransactionComponent;
   @ViewChild('modalWithdrawConfirm', { static: true }) modalWithdrawConfirm: ModalDirective;
   @ViewChild('modalWithdrawResult', { static: true }) modalWithdrawResult: ModalDirective;
+  @ViewChild('ruleModal', { static: false }) ruleModal: ModalDirective;
   mt5Infor: Mt5Model;
   accountType;
   bankInfor: BankInforModel;

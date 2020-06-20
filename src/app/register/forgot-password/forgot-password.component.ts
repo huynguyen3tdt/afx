@@ -31,6 +31,7 @@ export class ForgotPasswordComponent implements OnInit, AfterViewInit, OnDestroy
   showInterval: boolean;
   locale: string;
   formatDateYear: string;
+  isSending: boolean;
 
   constructor(
     private authenService: AuthenService,
@@ -40,6 +41,7 @@ export class ForgotPasswordComponent implements OnInit, AfterViewInit, OnDestroy
     private localeService: BsLocaleService) { }
 
   ngOnInit() {
+    this.isSending = false;
     this.locale = localStorage.getItem(LOCALE);
     if (this.locale === LANGUAGLE.english) {
       $('body').removeClass('jp');
@@ -78,6 +80,10 @@ export class ForgotPasswordComponent implements OnInit, AfterViewInit, OnDestroy
     if (this.forgotPasswordForm.invalid) {
       return;
     }
+    if (this.isSending === true) {
+      return;
+    }
+    this.isSending = true;
     const param: ForgotPasswordParam = {
       login_id: this.forgotPasswordForm.controls.email.value,
       dob: moment(this.forgotPasswordForm.controls.dateInput.value).format('YYYY-MM-DD')
@@ -101,6 +107,7 @@ export class ForgotPasswordComponent implements OnInit, AfterViewInit, OnDestroy
           }
         }, 1000);
       } else if (response.meta.code === 104) {
+        this.isSending = false;
         this.errSubmit = true;
       }
     });

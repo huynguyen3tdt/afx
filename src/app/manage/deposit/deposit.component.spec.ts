@@ -8,6 +8,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ConvertAccountTypeBankPipe } from 'src/app/core/pipe/convert-account-type-bank.pipe';
+import { ModalModule } from 'ngx-bootstrap';
 
 describe('DepositComponent', () => {
   let component: DepositComponent;
@@ -25,6 +26,7 @@ describe('DepositComponent', () => {
         TranslateModule.forRoot(),
         RouterTestingModule,
         Ng4LoadingSpinnerModule,
+        ModalModule.forRoot(),
       ],
       providers: [DepositComponent, EnvConfigService],
       schemas: [NO_ERRORS_SCHEMA]

@@ -36,6 +36,7 @@ export class ResetPasswordComponent implements OnInit {
   token: string;
   locale: string;
   showScreen: boolean;
+  isSending: boolean;
   constructor(private authenService: AuthenService,
               private router: Router,
               private activatedRoute: ActivatedRoute,
@@ -43,6 +44,7 @@ export class ResetPasswordComponent implements OnInit {
               private spinnerService: Ng4LoadingSpinnerService) { }
 
   ngOnInit() {
+    this.isSending = false;
     this.oldPassword = atob(localStorage.getItem(PASSWORD_LOGIN));
     this.initResetPassForm();
     this.activatedRoute.queryParams.pipe(take(1)).subscribe(res => {
@@ -112,6 +114,10 @@ export class ResetPasswordComponent implements OnInit {
       this.erroMessage = true;
       return;
     }
+    if (this.isSending === true) {
+      return;
+    }
+    this.isSending = true;
     const locale = localStorage.getItem(LOCALE);
     let paramSubmit;
     let messageSuccess;
@@ -142,6 +148,7 @@ export class ResetPasswordComponent implements OnInit {
             timeOut: TIMEOUT_TOAST
           });
         } else if (response.meta.code === 103) {
+          this.isSending = false;
           this.errorMess = response.meta.message;
         }
       });
@@ -157,6 +164,7 @@ export class ResetPasswordComponent implements OnInit {
             timeOut: TIMEOUT_TOAST
           });
         } else if (response.meta.code === 103) {
+          this.isSending = false;
           this.errorMess = response.meta.message;
         }
       });

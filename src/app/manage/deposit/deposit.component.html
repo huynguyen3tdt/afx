@@ -128,8 +128,8 @@
                                     <div *ngIf="errMessageQuickDeposit == true" class="invalid-mess">
                                         <div>{{'Your Margin Level is nearly the Margin Call Levels' | translate}}</div>
                                     </div>
-                                    <button [disabled]="isSending == true ? true : false" class="btn btn-warning btn-block text-uppercase btn-lg mb-3" (click)="onSubmit()"><strong>{{'Deposit' | translate}}</strong></button>
-                                    <p class="text-center" style="line-height: 1.2"><a href="javascript:;" data-toggle="modal" data-target="#modal-rule"><i
+                                    <button class="btn btn-warning btn-block text-uppercase btn-lg mb-3" (click)="onSubmit()"><strong>{{'Deposit' | translate}}</strong></button>
+                                    <p class="text-center" style="line-height: 1.2"><a href="javascript:;" (click)="ruleModal.show()"><i
                                                 class="icon ion-md-information-circle"></i> {{'General rules for depositing and withdrawing funds' | translate}}</a></p>
                                 </div>
                             </div>
@@ -568,7 +568,7 @@
                                     <p class="small text-secondary p-2 bg-light" *ngIf="locale == language.english">Notice: Minimum single deposit amount is {{minDeposit | number}}</p>
                                     <p class="small text-secondary p-2 bg-light" *ngIf="locale == language.japan">※最低入金額は{{minDeposit | number}}円となります。</p>
 
-                                    <p class="text-center" style="line-height: 1.2"><a href="javascript:;" data-toggle="modal" data-target="#modal-rule"><i
+                                    <p class="text-center" style="line-height: 1.2"><a href="javascript:;" (click)="ruleModal.show()"><i
                                                 class="icon ion-md-information-circle"></i> {{'General rules for depositing and withdrawing funds' | translate}}</a></p>
                                 </div>
                             </div>
@@ -584,7 +584,7 @@
                 </div>
             </div>
             <ng-container *ngIf="accountID">
-                <app-list-transaction *ngIf="accountID" #listTran [accountID]="accountID" [tranType]="transactionType"></app-list-transaction>
+                <app-list-transaction #listTran *ngIf="accountID" #listTran [accountID]="accountID" [tranType]="transactionType"></app-list-transaction>
             </ng-container>
 
         </div>
@@ -603,7 +603,7 @@
     <input #BJPSystem type="submit" value="Pay">
 </FORM>
 
-<div class="modal fade" id="modal-rule" tabindex="-1" role="dialog" aria-labelledby="ruleTitle" aria-hidden="true" data-backdrop="static">
+<div bsModal #ruleModal="bs-modal" class="modal fade" id="modal-rule" tabindex="-1" role="dialog" aria-labelledby="ruleTitle" aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header pt-2 pb-2">
@@ -678,7 +678,7 @@
                 <div class="small text-secondary"><i class="icon ion-md-time"></i> <em>{{'Last updated:' | translate}} 2020/01/10 11:29</em></div>
             </div>
             <div class="modal-footer pt-1 pb-1 text-right bg-light">
-                <button type="button" class="btn btn-primary pl-4 pr-4 btn-confirm" data-dismiss="modal">{{'I got it' | translate}}</button>
+                <button type="button" class="btn btn-primary pl-4 pr-4 btn-confirm" (click)="ruleModal.hide()" data-dismiss="modal">{{'I got it' | translate}}</button>
             </div>
         </div>
     </div>

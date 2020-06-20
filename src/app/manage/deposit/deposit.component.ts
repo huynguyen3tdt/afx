@@ -1,10 +1,9 @@
-import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { requiredInput } from 'src/app/core/helper/custom-validate.helper';
 import { DepositModel } from 'src/app/core/model/deposit-response.model';
 import { DepositService } from 'src/app/core/services/deposit.service';
-import { element } from 'protractor';
-import { MIN_DEPOST, ACCOUNT_IDS, LOCALE, FXNAME1, TIMEZONEAFX, TIMEZONESERVER, MARGIN_CALL } from 'src/app/core/constant/authen-constant';
+import { MIN_DEPOST, ACCOUNT_IDS, LOCALE, TIMEZONEAFX, TIMEZONESERVER, MARGIN_CALL } from 'src/app/core/constant/authen-constant';
 import { WithdrawRequestService } from './../../core/services/withdraw-request.service';
 import { Mt5Model, TransactionModel, WithdrawAmountModel } from 'src/app/core/model/withdraw-request-response.model';
 import { AccountType } from 'src/app/core/model/report-response.model';
@@ -20,6 +19,7 @@ import { take } from 'rxjs/operators';
 import { EnvConfigService } from 'src/app/core/services/env-config.service';
 import { AppSettings } from 'src/app/core/services/api.setting';
 import { PORTAL_CODE, SHOP_CODE } from 'src/app/core/constant/bjp-constant';
+import { ModalDirective } from 'ngx-bootstrap';
 const numeral = require('numeral');
 declare var $: any;
 
@@ -31,6 +31,7 @@ declare var $: any;
 export class DepositComponent implements OnInit {
   @ViewChild('listTran', { static: false }) listTran: ListTransactionComponent;
   @ViewChild('BJPSystem', { static: true }) BJPSystem: ElementRef;
+  @ViewChild('ruleModal', { static: true }) ruleModal: ModalDirective;
   constructor(private depositService: DepositService,
               private withdrawRequestService: WithdrawRequestService,
               private spinnerService: Ng4LoadingSpinnerService,
@@ -196,12 +197,12 @@ export class DepositComponent implements OnInit {
     if (this.depositTransactionForm.invalid || this.isSending) {
       return;
     }
-    this.isSending = true;
     this.depositValue = numeral(this.depositTransactionForm.controls.deposit.value).value();
     if (this.depositValue < this.minDeposit) {
       this.depositError = true;
       return;
     }
+    this.isSending = true;
     const param = {
       currency: this.tradingAccount.currency,
       amount: numeral(this.depositTransactionForm.controls.deposit.value).value(),

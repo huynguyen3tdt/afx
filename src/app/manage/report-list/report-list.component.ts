@@ -8,7 +8,7 @@ import { GlobalService } from 'src/app/core/services/global.service';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import moment from 'moment-timezone';
 import { LANGUAGLE } from 'src/app/core/constant/language-constant';
-import { BsLocaleService, defineLocale, jaLocale } from 'ngx-bootstrap';
+import { BsLocaleService, defineLocale, jaLocale, ModalDirective } from 'ngx-bootstrap';
 import { take } from 'rxjs/operators';
 declare var $: any;
 defineLocale('ja', jaLocale);
@@ -20,6 +20,7 @@ defineLocale('ja', jaLocale);
 })
 export class ReportListComponent implements OnInit {
   @ViewChild('pdfViewer', { static: true }) public pdfViewer;
+  @ViewChild('pdfModal', { static: true }) pdfModal: ModalDirective;
   currentPage: number;
   pageSize: number;
   totalItem: number;
@@ -244,7 +245,8 @@ export class ReportListComponent implements OnInit {
         });
         this.pdfViewer.pdfSrc = file; // pdfSrc can be Blob or Uint8Array
         this.pdfViewer.refresh();
-        $('#modal-2').modal('show');
+        // $('#modal-2').modal('show');
+        this.pdfModal.show();
         this.spinnerService.hide();
         this.isOpenPdf = false;
       },

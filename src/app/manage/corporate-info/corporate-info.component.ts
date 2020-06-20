@@ -328,7 +328,8 @@ export class CorporateInfoComponent implements OnInit {
           city: this.corporateForm.controls.cor_prefec.value,
           street: this.corporateForm.controls.cor_district.value.trim(),
           street2: this.corporateForm.controls.cor_house.value.trim(),
-          fx_street3: this.corporateForm.controls.cor_build.value.trim(),
+          fx_street3: this.corporateForm.controls.cor_build.value
+          ? this.corporateForm.controls.cor_build.value.trim() : '',
         },
         phone: this.corporateForm.controls.cor_phone.value.trim(),
         fx_fax: this.corporateForm.controls.cor_fax.value.trim(),
