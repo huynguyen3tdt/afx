@@ -61,7 +61,6 @@ export class NotificationsComponent implements OnInit {
     SYSTEM_IMPORTANT: {name: 'SYS_IMPORTATNT', value: '01'}
   };
   language;
-
   constructor(
     private notificationsService: NotificationsService,
     private spinnerService: Ng4LoadingSpinnerService,
