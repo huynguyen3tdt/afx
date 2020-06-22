@@ -12,6 +12,7 @@ import { defineLocale, jaLocale } from 'ngx-bootstrap/chronos';
 import { take } from 'rxjs/operators';
 import { BsLocaleService } from 'ngx-bootstrap';
 import { ForgotPasswordParam } from 'src/app/core/model/user.model';
+import { Title } from '@angular/platform-browser';
 declare var $: any;
 defineLocale('ja', jaLocale);
 
@@ -38,9 +39,11 @@ export class ForgotPasswordComponent implements OnInit, AfterViewInit, OnDestroy
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private spinnerService: Ng4LoadingSpinnerService,
-    private localeService: BsLocaleService) { }
+    private localeService: BsLocaleService,
+    private titleService: Title) { }
 
   ngOnInit() {
+    this.titleService.setTitle('フィリップMT5 Mypage');
     this.isSending = false;
     this.locale = localStorage.getItem(LOCALE);
     if (this.locale === LANGUAGLE.english) {
@@ -106,9 +109,11 @@ export class ForgotPasswordComponent implements OnInit, AfterViewInit, OnDestroy
             });
           }
         }, 1000);
-      } else if (response.meta.code === 104) {
+      } else {
         this.isSending = false;
-        this.errSubmit = true;
+        if (response.meta.code === 104) {
+          this.errSubmit = true;
+        }
       }
     });
   }

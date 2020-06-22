@@ -18,6 +18,7 @@ import {
 } from 'src/app/core/constant/authen-constant';
 import { LANGUAGLE } from 'src/app/core/constant/language-constant';
 import { ToastrService } from 'ngx-toastr';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-change-email',
@@ -39,9 +40,11 @@ export class ChangeEmailComponent implements OnInit {
               private activatedRoute: ActivatedRoute,
               private authenService: AuthenService,
               private spinnerService: Ng4LoadingSpinnerService,
-              private toastr: ToastrService) { }
+              private toastr: ToastrService,
+              private titleService: Title) { }
 
   ngOnInit() {
+    this.titleService.setTitle('フィリップMT5 Mypage');
     this.isSending = false;
     this.passWordType = 'password';
     this.locale = localStorage.getItem(LOCALE);
@@ -127,12 +130,13 @@ export class ChangeEmailComponent implements OnInit {
         this.toastr.success(messageSuccess, typeSuccess, {
           timeOut: TIMEOUT_TOAST
         });
-      } else if (response.meta.code === 400) {
+      } else {
         this.isSending = false;
-        this.invalidPassWord = true;
-      } else if (response.meta.code === 409) {
-        this.isSending = false;
-        this.invalidEmail = true;
+        if (response.meta.code === 400) {
+          this.invalidPassWord = true;
+        } else if (response.meta.code === 409) {
+          this.invalidEmail = true;
+        }
       }
     });
   }
