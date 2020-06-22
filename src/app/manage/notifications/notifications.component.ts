@@ -12,6 +12,7 @@ import { LANGUAGLE } from 'src/app/core/constant/language-constant';
 import { ModalDirective } from 'ngx-bootstrap';
 import { take } from 'rxjs/operators';
 import { GlobalService } from 'src/app/core/services/global.service';
+import { Title } from '@angular/platform-browser';
 declare var $: any;
 
 @Component({
@@ -65,9 +66,11 @@ export class NotificationsComponent implements OnInit {
     private notificationsService: NotificationsService,
     private spinnerService: Ng4LoadingSpinnerService,
     private activatedRoute: ActivatedRoute,
-    private globalService: GlobalService) { }
+    private globalService: GlobalService,
+    private titleService: Title) { }
 
   ngOnInit() {
+    this.titleService.setTitle('フィリップMT5 Mypage');
     this.language = LANGUAGLE;
     this.timeZone = localStorage.getItem(TIMEZONEAFX);
     this.locale = localStorage.getItem(LOCALE);

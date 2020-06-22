@@ -36,6 +36,7 @@ import { LANGUAGLE } from 'src/app/core/constant/language-constant';
 import { ModalDirective } from 'ngx-bootstrap';
 import { take } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
+import { Title } from '@angular/platform-browser';
 declare var $: any;
 const numeral = require('numeral');
 
@@ -97,9 +98,11 @@ export class WithdrawRequestComponent implements OnInit {
               private router: Router,
               private globalService: GlobalService,
               private depositService: DepositService,
-              private toastr: ToastrService) { }
+              private toastr: ToastrService,
+              private titleService: Title) { }
 
   ngOnInit() {
+    this.titleService.setTitle('フィリップMT5 Mypage');
     this.language = LANGUAGLE;
     this.withdrawFee = 0;
     this.timeZone = localStorage.getItem(TIMEZONEAFX);

@@ -20,6 +20,7 @@ import { EnvConfigService } from 'src/app/core/services/env-config.service';
 import { AppSettings } from 'src/app/core/services/api.setting';
 import { PORTAL_CODE, SHOP_CODE } from 'src/app/core/constant/bjp-constant';
 import { ModalDirective } from 'ngx-bootstrap';
+import { Title } from '@angular/platform-browser';
 const numeral = require('numeral');
 declare var $: any;
 
@@ -32,13 +33,6 @@ export class DepositComponent implements OnInit {
   @ViewChild('listTran', { static: false }) listTran: ListTransactionComponent;
   @ViewChild('BJPSystem', { static: true }) BJPSystem: ElementRef;
   @ViewChild('ruleModal', { static: true }) ruleModal: ModalDirective;
-  constructor(private depositService: DepositService,
-              private withdrawRequestService: WithdrawRequestService,
-              private spinnerService: Ng4LoadingSpinnerService,
-              private router: Router,
-              private globalService: GlobalService,
-              private envConfigService: EnvConfigService) { }
-
   depositAmountForm: FormGroup;
   depositTransactionForm: FormGroup;
   listBankTranfer: Array<DepositModel>;
@@ -82,8 +76,16 @@ export class DepositComponent implements OnInit {
   apiPostBack: string;
   portalCode: string;
   shopCode: string;
+  constructor(private depositService: DepositService,
+              private withdrawRequestService: WithdrawRequestService,
+              private spinnerService: Ng4LoadingSpinnerService,
+              private router: Router,
+              private globalService: GlobalService,
+              private envConfigService: EnvConfigService,
+              private titleService: Title) { }
 
   ngOnInit() {
+    this.titleService.setTitle('フィリップMT5 Mypage');
     this.initBjpSystem();
     this.language = LANGUAGLE;
     this.locale = localStorage.getItem(LOCALE);

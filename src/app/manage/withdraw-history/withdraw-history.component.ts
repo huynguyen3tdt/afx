@@ -20,6 +20,7 @@ import { TransacstionModalComponent } from '../transacstion-modal/transacstion-m
 import { defineLocale, jaLocale } from 'ngx-bootstrap/chronos';
 import { BsLocaleService } from 'ngx-bootstrap';
 import { take } from 'rxjs/operators';
+import { Title } from '@angular/platform-browser';
 declare var $: any;
 defineLocale('ja', jaLocale);
 
@@ -82,10 +83,12 @@ export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
               private spinnerService: Ng4LoadingSpinnerService,
               private globalService: GlobalService,
               private activatedRoute: ActivatedRoute,
-              private localeService: BsLocaleService) {
+              private localeService: BsLocaleService,
+              private titleService: Title) {
   }
 
   ngOnInit() {
+    this.titleService.setTitle('フィリップMT5 Mypage');
     this.language = LANGUAGLE;
     this.typeTranHistory = TYPEOFTRANHISTORY;
     this.transactionStatus = STATUSTRANHISTORY;

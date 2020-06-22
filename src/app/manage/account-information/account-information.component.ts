@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { IS_COMPANY } from 'src/app/core/constant/authen-constant';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-account-information',
@@ -21,10 +22,11 @@ export class AccountInformationComponent implements OnInit {
   showTabSetting: boolean;
   showTabWithDrawal: boolean;
 
-  constructor() { }
+  constructor(private titleService: Title) { }
 
 
   ngOnInit() {
+    this.titleService.setTitle('フィリップMT5 Mypage');
     this.showTabMt5 = true;
     this.isCompany = localStorage.getItem(IS_COMPANY);
   }

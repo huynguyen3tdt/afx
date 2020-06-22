@@ -29,6 +29,7 @@ import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { EnvConfigService } from 'src/app/core/services/env-config.service';
 import { take } from 'rxjs/operators';
 import { LoginParam } from 'src/app/core/model/user.model';
+import { Title } from '@angular/platform-browser';
 declare const $: any;
 
 @Component({
@@ -53,10 +54,12 @@ export class LoginComponent implements OnInit, AfterViewInit {
     private activatedRoute: ActivatedRoute,
     private translate: TranslateService,
     private spinnerService: Ng4LoadingSpinnerService,
-    private envConfigService: EnvConfigService) {
+    private envConfigService: EnvConfigService,
+    private titleService: Title) {
   }
 
   ngOnInit() {
+    this.titleService.setTitle('フィリップMT5 口座ログイン');
     this.isSending = false;
     this.login_layout();
     $(window).resize(() => {
@@ -173,12 +176,13 @@ export class LoginComponent implements OnInit, AfterViewInit {
           this.router.navigate(['/reset_password'], {
           });
         }
-      } else if (response.meta.code === 102) {
+      } else {
         this.isSending = false;
-        this.invalidAccount = true;
-      } else if (response.meta.code === 101) {
-        this.isSending = false;
-        this.passWordExpired = true;
+        if (response.meta.code === 102) {
+          this.invalidAccount = true;
+        } else if (response.meta.code === 101) {
+          this.passWordExpired = true;
+        }
       }
     });
     $('.minimize-btn').click();

@@ -10,6 +10,7 @@ import moment from 'moment-timezone';
 import { LANGUAGLE } from 'src/app/core/constant/language-constant';
 import { BsLocaleService, defineLocale, jaLocale, ModalDirective } from 'ngx-bootstrap';
 import { take } from 'rxjs/operators';
+import { Title } from '@angular/platform-browser';
 declare var $: any;
 defineLocale('ja', jaLocale);
 
@@ -54,9 +55,11 @@ export class ReportListComponent implements OnInit {
 
   constructor(private reportservice: ReportService,
               private spinnerService: Ng4LoadingSpinnerService,
-              private localeService: BsLocaleService) { }
+              private localeService: BsLocaleService,
+              private titleService: Title) { }
 
   ngOnInit() {
+    this.titleService.setTitle('フィリップMT5 Mypage');
     this.isOpenPdf = false;
     this.language = LANGUAGLE;
     this.timeZone = localStorage.getItem(TIMEZONEAFX);

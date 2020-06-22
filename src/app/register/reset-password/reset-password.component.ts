@@ -18,6 +18,7 @@ import { take } from 'rxjs/operators';
 import { ResetPasswordParam, ResetPasswordWithTokenParam, CheckTokenParam } from 'src/app/core/model/user.model';
 import { ToastrService } from 'ngx-toastr';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-reset-password',
@@ -41,9 +42,11 @@ export class ResetPasswordComponent implements OnInit {
               private router: Router,
               private activatedRoute: ActivatedRoute,
               private toastr: ToastrService,
-              private spinnerService: Ng4LoadingSpinnerService) { }
+              private spinnerService: Ng4LoadingSpinnerService,
+              private titleService: Title) { }
 
   ngOnInit() {
+    this.titleService.setTitle('フィリップMT5 Mypage');
     this.isSending = false;
     this.oldPassword = atob(localStorage.getItem(PASSWORD_LOGIN));
     this.initResetPassForm();
@@ -147,9 +150,11 @@ export class ResetPasswordComponent implements OnInit {
           this.toastr.success(messageSuccess, typeSuccess, {
             timeOut: TIMEOUT_TOAST
           });
-        } else if (response.meta.code === 103) {
+        } else {
           this.isSending = false;
-          this.errorMess = response.meta.message;
+          if (response.meta.code === 103) {
+            this.errorMess = response.meta.message;
+          }
         }
       });
     } else {
@@ -163,9 +168,11 @@ export class ResetPasswordComponent implements OnInit {
           this.toastr.success(messageSuccess, typeSuccess, {
             timeOut: TIMEOUT_TOAST
           });
-        } else if (response.meta.code === 103) {
+        } else {
           this.isSending = false;
-          this.errorMess = response.meta.message;
+          if (response.meta.code === 103) {
+            this.errorMess = response.meta.message;
+          }
         }
       });
     }
