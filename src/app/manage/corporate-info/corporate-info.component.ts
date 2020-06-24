@@ -584,6 +584,7 @@ export class CorporateInfoComponent implements OnInit {
         this.editPersonPhone = false;
         break;
       case 'p-email':
+        this.picForm.controls.person_email.setValue(this.corporateInfor.pic.email.value);
         this.editPersonEmail = false;
         break;
       case 'p-gender':

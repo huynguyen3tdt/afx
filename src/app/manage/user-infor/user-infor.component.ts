@@ -377,12 +377,19 @@ export class UserInforComponent implements OnInit {
   cancelEdit(field: string) {
     switch (field) {
       case 'address':
+        this.userForm.controls.postCode.setValue(this.userInfor.address.value.zip);
+        this.userForm.controls.searchPrefe.setValue(this.userInfor.address.value.city);
+        this.userForm.controls.searchCountry.setValue(this.userInfor.address.value.street);
+        this.userForm.controls.house_numb.setValue(this.userInfor.address.value.street2);
+        this.userForm.controls.name_build.setValue(this.userInfor.address.value.fx_street3);
         this.editAddress = false;
         break;
       case 'email':
+        this.userForm.controls.email.setValue(this.userInfor.email.value);
         this.editEmail = false;
         break;
       case 'phone':
+        this.userForm.controls.phone.setValue(this.userInfor.mobile);
         this.editPhone = false;
         break;
     }
