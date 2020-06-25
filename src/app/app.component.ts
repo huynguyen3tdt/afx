@@ -16,10 +16,10 @@ export class AppComponent implements OnInit {
     jqKeyboard.init();
     if (localStorage.getItem(LOCALE)) {
       const browserLang = localStorage.getItem(LOCALE);
-      translate.use(browserLang.match(/en_US|ja_JP/) ? browserLang : 'en_US');
+      translate.use(browserLang.match(/en_US|ja_JP/) ? browserLang : 'ja_JP');
     } else {
-      localStorage.setItem(LOCALE, LANGUAGLE.english);
-      translate.setDefaultLang(LANGUAGLE.english);
+      localStorage.setItem(LOCALE, LANGUAGLE.japan);
+      translate.setDefaultLang(LANGUAGLE.japan);
     }
   }
 
