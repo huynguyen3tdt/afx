@@ -211,6 +211,7 @@ export class WithdrawRequestComponent implements OnInit {
 
   onRefesh() {
     this.getMt5Infor(Number(this.accountID));
+    this.listTran.ngOnChanges();
   }
 
   showConfirm() {
