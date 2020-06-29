@@ -122,7 +122,7 @@ export class CorporateInfoComponent implements OnInit {
       cor_district: new FormControl('', requiredInput),
       cor_house: new FormControl('', requiredInput),
       cor_build: new FormControl(''),
-      cor_phone: new FormControl('', validationPhoneNumber),
+      cor_phone: new FormControl('', requiredInput),
       cor_fax: new FormControl(''),
     });
   }
@@ -134,7 +134,7 @@ export class CorporateInfoComponent implements OnInit {
       per_picname: new FormControl('', requiredInput),
       person_picname: new FormControl('', fullWidthRequired),
       person_gender: new FormControl('', requiredInput),
-      person_phone: new FormControl('', validationPhoneNumber),
+      person_phone: new FormControl('', requiredInput),
       person_email: new FormControl('', emailValidation),
     });
   }

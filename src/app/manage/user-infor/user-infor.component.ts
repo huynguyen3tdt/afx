@@ -107,7 +107,7 @@ export class UserInforComponent implements OnInit {
       house_numb: new FormControl('', requiredInput),
       name_build: new FormControl(''),
       email: new FormControl('', emailValidation),
-      phone: new FormControl('', validationPhoneNumber),
+      phone: new FormControl('', requiredInput),
     });
   }
 

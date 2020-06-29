@@ -98,7 +98,7 @@
                             <strong><a href="javascript:;">{{corporateInfor?.corporation?.phone}}</a></strong>
                         </div>
                         <div class="editable d-block" *ngIf="editCorPhone == true">
-                            <input type="tel" name="cor-phone" maxlength="15" placeholder="" formControlName="cor_phone"
+                            <input type="tel" name="cor-phone" maxlength="32" placeholder="" formControlName="cor_phone"
                               [className]="corporateForm.controls?.cor_phone?.errors ? 'form-control form-control-sm mb-1 invalid' : 'form-control form-control-sm mb-1'">
                             <div *ngIf="corporateForm.controls?.cor_phone?.errors?.Required" class="invalid-mess">
                               <div>{{'This field is required' | translate}}</div>
@@ -121,7 +121,7 @@
                             <strong><a href="javascript:;">{{corporateInfor?.corporation?.fx_fax?.value}}</a></strong>
                         </div>
                         <div class="editable d-block" *ngIf="editCorFax == true">
-                            <input type="text" name="cor-fax" class="form-control form-control-sm mb-1" maxlength="15" placeholder="" formControlName="cor_fax"
+                            <input type="text" name="cor-fax" class="form-control form-control-sm mb-1" maxlength="32" placeholder="" formControlName="cor_fax"
                               [className]="corporateForm.controls?.cor_fax?.errors ? 'form-control form-control-sm mb-1 invalid' : 'form-control form-control-sm mb-1'">
                             <div *ngIf="corporateForm?.controls?.cor_fax?.errors?.Required" class="invalid-mess">
                               <div>{{'This field is required' | translate}}</div>
@@ -356,7 +356,7 @@
                         <strong><a href="javascript:;">{{corporateInfor?.pic?.mobile}}</a></strong>
                     </div>
                     <div class="editable d-block" *ngIf="editPersonPhone == true">
-                        <input type="tel" name="p-phone"  maxlength="15" placeholder="" formControlName="person_phone"
+                        <input type="tel" name="p-phone"  maxlength="32" placeholder="" formControlName="person_phone"
                         [className]="picForm?.controls?.person_phone?.errors ? 'form-control form-control-sm mb-1 invalid' : 'form-control form-control-sm mb-1'">
                         <div *ngIf="picForm.controls?.person_phone?.errors?.Required" class="invalid-mess">
                           <div>{{'This field is required' | translate}}</div>
