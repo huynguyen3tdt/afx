@@ -76,6 +76,8 @@ export class DepositComponent implements OnInit {
   apiPostBack: string;
   portalCode: string;
   shopCode: string;
+  showUFJBank: boolean;
+
   constructor(private depositService: DepositService,
               private withdrawRequestService: WithdrawRequestService,
               private spinnerService: Ng4LoadingSpinnerService,
@@ -85,6 +87,7 @@ export class DepositComponent implements OnInit {
               private titleService: Title) { }
 
   ngOnInit() {
+    this.showUFJBank = this.envConfigService.getUFJ() === '1';
     this.titleService.setTitle('フィリップMT5 Mypage');
     this.initBjpSystem();
     this.language = LANGUAGLE;
@@ -132,7 +135,7 @@ export class DepositComponent implements OnInit {
   initDepositTransactionForm() {
     this.depositTransactionForm = new FormGroup({
       deposit: new FormControl(numeral(10000).format('0,0'), requiredInput),
-      bankCode: new FormControl('0008', requiredInput)
+      bankCode: new FormControl('0033', requiredInput)
     });
     this.depositValue = numeral(this.depositTransactionForm.controls.deposit.value).value();
     this.totalAmount = this.depositFee + this.depositValue;

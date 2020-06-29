@@ -164,7 +164,7 @@
                                 <strong><a href="javascript:;">{{userInfor?.mobile}}</a></strong>
                             </div>
                             <div *ngIf="editPhone == true" class="editable d-block">
-                                <input type="tel" name="phone" formControlName="phone" maxlength="15"
+                                <input type="tel" name="phone" formControlName="phone" maxlength="32"
                                     [className]="userForm?.controls?.phone?.errors ? 'form-control form-control-sm mb-1 invalid' : 'form-control form-control-sm mb-1'">
                                 <div *ngIf="userForm?.controls?.phone?.errors?.Required" class="invalid-mess">
                                     <div>{{'This field is required' | translate}}</div>
