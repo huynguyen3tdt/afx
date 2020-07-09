@@ -20,7 +20,9 @@ import {
   TIMEZONESERVER,
   TIMEOUT_TOAST,
   TYPE_ERROR_TOAST_EN,
-  MARGIN_CALL
+  MARGIN_CALL,
+  ERROR_TIME_CLOSING_EN,
+  ERROR_TIME_CLOSING_JP
 } from './../../core/constant/authen-constant';
 import { GlobalService } from 'src/app/core/services/global.service';
 import { AccountType } from 'src/app/core/model/report-response.model';
@@ -244,6 +246,7 @@ export class WithdrawRequestComponent implements OnInit {
 
   sendConfirm() {
     let messageErr;
+    let messageErrTimeClosing;
     let typeErr;
     this.checkWithDrawal = true;
     this.modalWithdrawConfirm.hide();
@@ -255,9 +258,11 @@ export class WithdrawRequestComponent implements OnInit {
     };
     if (this.locale === LANGUAGLE.english) {
       messageErr = 'There are some problems so we cannot send you email. Please contact us for more details.';
+      messageErrTimeClosing = ERROR_TIME_CLOSING_EN;
       typeErr = TYPE_ERROR_TOAST_EN;
     } else {
       messageErr = '問題があるため、メールを送信できません。 詳しくはお問い合わせください。';
+      messageErrTimeClosing = ERROR_TIME_CLOSING_JP;
       typeErr = TYPE_ERROR_TOAST_EN;
     }
     this.spinnerService.show();
@@ -268,18 +273,23 @@ export class WithdrawRequestComponent implements OnInit {
         this.transactionWithdraw.create_date =
         moment(this.transactionWithdraw.create_date + TIMEZONESERVER).tz(this.timeZone).format(this.formatDateHour);
         this.getMt5Infor(Number(this.accountID));
+        this.resetAmountwithDraw();
       } else if (response.meta.code === 409) {
         this.transactionWithdraw = response.data;
         this.transactionWithdraw.create_date =
         moment(this.transactionWithdraw.create_date + TIMEZONESERVER).tz(this.timeZone).format(this.formatDateHour);
         this.getMt5Infor(Number(this.accountID));
         this.checkWithDrawal = false;
+        this.resetAmountwithDraw();
       } else if (response.meta.code === 403) {
         this.toastr.error(messageErr, typeErr, {
           timeOut: TIMEOUT_TOAST
         });
+      } else if (response.meta.code === 500) {
+        this.toastr.error(messageErrTimeClosing, typeErr, {
+          timeOut: TIMEOUT_TOAST
+        });
       }
-      this.resetAmountwithDraw();
     });
   }
 
