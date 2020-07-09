@@ -3,7 +3,18 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { requiredInput } from 'src/app/core/helper/custom-validate.helper';
 import { DepositModel } from 'src/app/core/model/deposit-response.model';
 import { DepositService } from 'src/app/core/services/deposit.service';
-import { MIN_DEPOST, ACCOUNT_IDS, LOCALE, TIMEZONEAFX, TIMEZONESERVER, MARGIN_CALL } from 'src/app/core/constant/authen-constant';
+import {
+  MIN_DEPOST,
+  ACCOUNT_IDS,
+  LOCALE,
+  TIMEZONEAFX,
+  TIMEZONESERVER,
+  MARGIN_CALL,
+  TYPE_ERROR_TOAST_EN,
+  TYPE_ERROR_TOAST_JP,
+  TIMEOUT_TOAST,
+  ERROR_TIME_CLOSING_EN,
+  ERROR_TIME_CLOSING_JP } from 'src/app/core/constant/authen-constant';
 import { WithdrawRequestService } from './../../core/services/withdraw-request.service';
 import { Mt5Model, TransactionModel, WithdrawAmountModel } from 'src/app/core/model/withdraw-request-response.model';
 import { AccountType } from 'src/app/core/model/report-response.model';
@@ -21,6 +32,7 @@ import { AppSettings } from 'src/app/core/services/api.setting';
 import { PORTAL_CODE, SHOP_CODE } from 'src/app/core/constant/bjp-constant';
 import { ModalDirective } from 'ngx-bootstrap';
 import { Title } from '@angular/platform-browser';
+import { ToastrService } from 'ngx-toastr';
 const numeral = require('numeral');
 declare var $: any;
 
@@ -85,7 +97,8 @@ export class DepositComponent implements OnInit {
               private router: Router,
               private globalService: GlobalService,
               private envConfigService: EnvConfigService,
-              private titleService: Title) { }
+              private titleService: Title,
+              private toastr: ToastrService) { }
 
   ngOnInit() {
     this.showUFJBank = this.envConfigService.getUFJ() === '1';
@@ -209,6 +222,15 @@ export class DepositComponent implements OnInit {
       this.depositError = true;
       return;
     }
+    let messageErr;
+    let typeErr;
+    if (this.locale === LANGUAGLE.english) {
+      messageErr = ERROR_TIME_CLOSING_EN;
+      typeErr = TYPE_ERROR_TOAST_EN;
+    } else {
+      messageErr = ERROR_TIME_CLOSING_JP;
+      typeErr = TYPE_ERROR_TOAST_JP;
+    }
     this.isSending = true;
     const param = {
       currency: this.tradingAccount.currency,
@@ -225,6 +247,11 @@ export class DepositComponent implements OnInit {
           this.BJPSystem.nativeElement.click();
         }, 100);
       } else {
+        if (response.meta.code === 500) {
+          this.toastr.error(messageErr, typeErr, {
+            timeOut: TIMEOUT_TOAST
+          });
+        }
         this.isSending = false;
         this.spinnerService.hide();
       }
