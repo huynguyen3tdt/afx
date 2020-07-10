@@ -6,7 +6,7 @@ import { NgControl } from '@angular/forms';
   selector: '[formControlName][currency]',
   // tslint:disable-next-line:no-host-metadata-property
   host: {
-    '(change)': 'onInputChange($event.target.value)'
+    '(ngModelChange)': 'onInputChange($event)'
   }
 })
 export class CurrencyDirective {
@@ -15,18 +15,11 @@ export class CurrencyDirective {
 
   onInputChange(event: any) {
     if (event) {
-      event = event.replace(',', '');
-      if (event.substr(event.length - 1) === '.') {
-        event = (event + '00');
-        console.log('222222222 ', event);
-      }
       const numeral = require('numeral');
-      const newVal = numeral(event).format('0,0[.]00');
+      const newVal = numeral(event).format('0,0');
       const rawValue = newVal;
-      console.log('aaaaaa ', rawValue);
       this.model.valueAccessor.writeValue(rawValue);
       this.rawChange.emit(rawValue);
     }
-
   }
 }
