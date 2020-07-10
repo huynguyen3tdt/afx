@@ -235,7 +235,8 @@ export class DepositComponent implements OnInit {
     const param = {
       currency: this.tradingAccount.currency,
       amount: numeral(this.depositTransactionForm.controls.deposit.value).value(),
-      account_id: Number(this.accountID)
+      account_id: Number(this.accountID),
+      bank_code: this.bankCode
     };
     this.spinnerService.show();
     this.depositService.billingSystem(param).pipe(take(1)).subscribe(response => {
