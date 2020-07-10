@@ -14,7 +14,11 @@ import {
   TYPE_ERROR_TOAST_JP,
   TIMEOUT_TOAST,
   ERROR_TIME_CLOSING_EN,
-  ERROR_TIME_CLOSING_JP } from 'src/app/core/constant/authen-constant';
+  ERROR_TIME_CLOSING_JP,
+  ERROR_MIN_DEPOSIT_EN,
+  ERROR_MAX_DEPOSIT_EN,
+  ERROR_MIN_DEPOSIT_JP,
+  ERROR_MAX_DEPOSIT_JP} from 'src/app/core/constant/authen-constant';
 import { WithdrawRequestService } from './../../core/services/withdraw-request.service';
 import { Mt5Model, TransactionModel, WithdrawAmountModel } from 'src/app/core/model/withdraw-request-response.model';
 import { AccountType } from 'src/app/core/model/report-response.model';
@@ -33,6 +37,7 @@ import { PORTAL_CODE, SHOP_CODE } from 'src/app/core/constant/bjp-constant';
 import { ModalDirective } from 'ngx-bootstrap';
 import { Title } from '@angular/platform-browser';
 import { ToastrService } from 'ngx-toastr';
+import { MAX_DEPOSIT } from './../../core/constant/authen-constant';
 const numeral = require('numeral');
 declare var $: any;
 
@@ -90,6 +95,7 @@ export class DepositComponent implements OnInit {
   shopCode: string;
   showUFJBank: boolean;
   kessaiFlag: string;
+  maxDeposit: number;
 
   constructor(private depositService: DepositService,
               private withdrawRequestService: WithdrawRequestService,
@@ -125,6 +131,7 @@ export class DepositComponent implements OnInit {
       this.accountID = this.tradingAccount.account_id;
     }
     this.minDeposit = Number(localStorage.getItem(MIN_DEPOST));
+    this.maxDeposit = Number(localStorage.getItem(MAX_DEPOSIT));
     if (this.accountID) {
       this.getMt5Infor(Number(this.accountID));
       this.getDwAmount(Number(this.accountID));
@@ -223,13 +230,19 @@ export class DepositComponent implements OnInit {
       return;
     }
     let messageErr;
+    let messageErrMinDeposit;
+    let messageErrMaxDeposit;
     let typeErr;
     if (this.locale === LANGUAGLE.english) {
       messageErr = ERROR_TIME_CLOSING_EN;
       typeErr = TYPE_ERROR_TOAST_EN;
+      messageErrMinDeposit = ERROR_MIN_DEPOSIT_EN;
+      messageErrMaxDeposit = ERROR_MAX_DEPOSIT_EN;
     } else {
       messageErr = ERROR_TIME_CLOSING_JP;
       typeErr = TYPE_ERROR_TOAST_JP;
+      messageErrMinDeposit = ERROR_MIN_DEPOSIT_JP;
+      messageErrMaxDeposit = ERROR_MAX_DEPOSIT_JP;
     }
     this.isSending = true;
     const param = {
@@ -250,6 +263,16 @@ export class DepositComponent implements OnInit {
       } else {
         if (response.meta.code === 500) {
           this.toastr.error(messageErr, typeErr, {
+            timeOut: TIMEOUT_TOAST
+          });
+        }
+        if (response.meta.code === 600) {
+          this.toastr.error(messageErrMinDeposit + this.minDeposit.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,'), typeErr, {
+            timeOut: TIMEOUT_TOAST
+          });
+        }
+        if (response.meta.code === 601) {
+          this.toastr.error(messageErrMaxDeposit + this.maxDeposit.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,'), typeErr, {
             timeOut: TIMEOUT_TOAST
           });
         }
