@@ -95,7 +95,8 @@
                                     <input maxlength="15" type="text" name="amount" id="amount" class="form-control form-control-lg text-right font-weight-bold text-success" placeholder="" formControlName="amount" currency
                                       (change)="changeWithdraw()" autocomplete="off" [ngClass]="{'invalid': isSubmitted && withdrawForm.controls['amount'].errors}">
                                     <div *ngIf="minWithdrawError == true" class="invalid-mess">
-                                        <div>{{'Minimum amount is not below' | translate}} {{minWithdraw | number}}</div>
+                                        <div *ngIf="locale == 'en_US'">Minimum amount is not below {{minDeposit | number}}</div>
+                                        <div *ngIf="locale == 'ja_JP'">ご入金額は{{minDeposit | number}}円以上から承ります</div>
                                     </div>
                                     <div *ngIf="maxWithdrawError == true" class="invalid-mess">
                                         <div>{{'Withdrawal amount is not above the maximum amount' | translate}} {{maxWithDraw | number}}</div>
