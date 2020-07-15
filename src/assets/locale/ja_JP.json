@@ -168,7 +168,7 @@
   "Are you sure you want to make the withdrawal request?": "出金リクエストをしてもよろしいですか？",
   "Account Holders Name": "アカウント所有者名",
   "Branch Number": "支店番号",
-  "Confirm": "確認しました",
+  "Confirm": "確認",
   "Early Withdrawal": "早期撤退",
   "Withdrawal amount": "出金額",
   "Createdate time": "作成日時",
@@ -265,5 +265,7 @@
   "Requests made by 15:00 will be withdrawn on the next business day.": "15:00までのご依頼は翌々営業日に出金となります。",
   "Requests received after 15:00 will be handled the next business day.": "15:00以降に受け付けたご依頼については翌営業日での取扱いとさせていただきます。",
   "View more": "もっと見る",
-  "Unread Notifications": "未読のお知らせ"
+  "Unread Notifications": "未読のお知らせ",
+  "Request": "依頼",
+  "Finish": "完了"
 }
