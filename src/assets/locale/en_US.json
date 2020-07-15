@@ -267,5 +267,7 @@
   "Requests made by 15:00 will be withdrawn on the next business day.": "Requests made by 15:00 will be withdrawn on the next business day.",
   "Requests received after 15:00 will be handled the next business day.": "Requests received after 15:00 will be handled the next business day.",
   "View more": "View more",
-  "Unread Notifications": "Unread Notifications"
+  "Unread Notifications": "Unread Notifications",
+  "Request": "Request",
+  "Finish": "Finish"
 }
