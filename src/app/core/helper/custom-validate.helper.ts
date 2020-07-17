@@ -88,6 +88,11 @@ const FULL_WIDTH_ACCOUNT = {
   message: '全角で入力してください'
 };
 
+const BANK_ACCOUNT_ERR = {
+  ErrorBankInfo: true,
+  message: '7桁未満の場合は、頭に「０」をつけてください。例）0123456'
+};
+
 const DIGITS_PATTERN = '^\\d+$';
 const SALARY_PATTEN = '^[0-9, ]*$';
 const NOT_SPECIAL_CHARACTERS_FOR_EMAIL = '^[a-zA-Z0-9-._ ]*$';
@@ -268,4 +273,17 @@ export function fullWidthRequired(control: AbstractControl) {
         return FULL_WIDTH_ACCOUNT;
         }
   }
+}
+
+export function bankAccountValidation(control: AbstractControl) {
+  if (!control.value || typeof control.value === 'string' && !control.value.trim()) {
+      return DEFAULT_INVALID_REQUIRED;
+  }
+  if (control.value) {
+      const value = control.value.toString().split('');
+      if (value.length < 7) {
+          return BANK_ACCOUNT_ERR;
+      }
+  }
+  return null;
 }

@@ -269,5 +269,6 @@
   "View more": "View more",
   "Unread Notifications": "Unread Notifications",
   "Request": "Request",
-  "Finish": "Finish"
+  "Finish": "Finish",
+  "If the number is less than 7 digits, add '0' to the head. Example) 0123456": "If the number is less than 7 digits, add '0' to the head. Example) 0123456"
 }

@@ -177,6 +177,12 @@
             <div class="col-md-8 col-lg-6">
                 <input type="text" name="bank_account_number" formControlName="bank_account_number" maxlength="50"
                     [className]="bankAccountForm.controls.bank_account_number.errors ? 'form-control form-control-sm invalid' : 'form-control form-control-sm'">
+                <div *ngIf="bankAccountForm.controls?.bank_account_number?.errors?.Required" class="invalid-mess">
+                    <div>{{'This field is required' | translate}}</div>
+                </div>
+                <div *ngIf="bankAccountForm?.controls?.bank_account_number?.errors?.ErrorBankInfo" class="invalid-mess">
+                    <div>{{'If the number is less than 7 digits, add "0" to the head. Example) 0123456' | translate}}</div>
+                </div>
             </div>
         </div>
         <div class="row mb-2">
@@ -189,7 +195,7 @@
             <div *ngIf="isCompany == 'true'" class="col-md-8 col-lg-6">
                 <input type="text" name="account_holder" formControlName="account_holder" maxlength="50"
                     [className]="bankAccountForm.controls.account_holder.errors ? 'form-control form-control-sm invalid' : 'form-control form-control-sm'">
-                    <div *ngIf="bankAccountForm.controls.account_holder.errors" class="invalid-mess">
+                    <div *ngIf="bankAccountForm?.controls?.account_holder?.errors" class="invalid-mess">
                         <div>{{'Please enter full-width Katakana' | translate}}</div>
                     </div>
             </div>
