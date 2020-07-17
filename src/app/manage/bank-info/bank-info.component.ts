@@ -4,7 +4,8 @@ import {
   requiredInput,
   fullSizeHiraganaValidation,
   halfSizeNumberValidation,
-  fullWidthRequired
+  fullWidthRequired,
+  bankAccountValidation
 } from 'src/app/core/helper/custom-validate.helper';
 import { BankInforModel } from 'src/app/core/model/withdraw-request-response.model';
 import { BankModel, SearchHiraModel, BranchModel } from 'src/app/core/model/bank-response.model';
@@ -85,7 +86,7 @@ export class BankInfoComponent implements OnInit {
       beneficiary_bank: new FormControl('', requiredInput),
       bank_branch: new FormControl('', requiredInput),
       bank_account_type: new FormControl('sa'),
-      bank_account_number: new FormControl('', requiredInput),
+      bank_account_number: new FormControl('', bankAccountValidation),
       account_holder: new FormControl('', fullWidthRequired)
     });
   }
