@@ -140,6 +140,9 @@ export class WithdrawRequestComponent implements OnInit {
       wholeMoney: new FormControl(false),
     });
     this.totalAmount = numeral(this.withdrawForm.controls.amount.value).value() - this.withdrawFee;
+    this.withdrawForm.controls.amount.valueChanges.subscribe((val) => {
+      this.changeWithdraw();
+    });
   }
 
 

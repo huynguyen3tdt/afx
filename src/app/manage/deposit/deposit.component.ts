@@ -152,6 +152,9 @@ export class DepositComponent implements OnInit {
     this.depositAmountForm = new FormGroup({
       deposit: new FormControl(numeral(10000).format('0,0'), requiredInput)
     });
+    this.depositAmountForm.controls.deposit.valueChanges.subscribe((value) => {
+      this.changeDepositCal();
+    });
   }
 
   initDepositTransactionForm() {
@@ -162,6 +165,9 @@ export class DepositComponent implements OnInit {
     this.depositValue = numeral(this.depositTransactionForm.controls.deposit.value).value();
     this.totalAmount = this.depositFee + this.depositValue;
     this.bankCode = this.depositTransactionForm.controls.bankCode.value;
+    this.depositTransactionForm.controls.deposit.valueChanges.subscribe((value) => {
+      this.changeDeposit();
+    });
   }
 
   getBankCompany() {
@@ -282,7 +288,7 @@ export class DepositComponent implements OnInit {
     });
   }
 
-  changeDeposit(event: any) {
+  changeDeposit() {
     this.depositValue = numeral(this.depositTransactionForm.controls.deposit.value).value();
     if (this.depositValue < this.minDeposit) {
       this.depositError = true;
@@ -293,7 +299,7 @@ export class DepositComponent implements OnInit {
     this.calculateDeposit();
   }
 
-  changeDepositCal(event: any) {
+  changeDepositCal() {
     this.depositAmount = numeral(this.depositAmountForm.controls.deposit.value).value();
     if (this.depositAmount < this.minDeposit) {
       this.bankError = true;

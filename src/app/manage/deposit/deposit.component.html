@@ -78,7 +78,8 @@
                                         <div class="form form-line">
                                             <div class="mb-3">
                                                 <label class="label">{{'Deposit Amount' | translate}}</label>
-                                                <input maxlength="15" type="text" name="amount" formControlName="deposit" (change)="changeDeposit($event.target.value)" currency
+                                                <input maxlength="15" type="text" name="amount" 
+                                                formControlName="deposit" currency
                                                 [ngClass]="{'invalid': isSubmitted && depositTransactionForm.controls['deposit'].errors}" class="form-control form-control-lg text-right font-weight-bold text-warning deposit"
                                                     autocomplete="off" value="10,000" placeholder="">
                                             </div>
@@ -542,7 +543,7 @@
                                                     <input maxlength="15" type="text" name="amount" 
                                                     formControlName="deposit" currency autocomplete="off" 
                                                     class="form-control form-control-lg text-right font-weight-bold text-warning" 
-                                                    (change)="changeDepositCal($event.target.value)" value="10,000" placeholder="">
+                                                    placeholder="">
                                                 </div>
                                                 <div *ngIf="bankError == true" class="invalid-mess">
                                                     <div *ngIf="locale == 'en_US'">Minimum amount is not below {{minDeposit | number}}</div>
