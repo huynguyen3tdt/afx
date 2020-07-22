@@ -167,7 +167,7 @@ export class DepositComponent implements OnInit {
     this.bankCode = this.depositTransactionForm.controls.bankCode.value;
     this.depositTransactionForm.controls.deposit.valueChanges.subscribe((value) => {
       this.changeDeposit();
-    })
+    });
   }
 
   getBankCompany() {
