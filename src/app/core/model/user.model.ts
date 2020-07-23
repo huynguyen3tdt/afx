@@ -31,6 +31,7 @@ export interface LoginParam {
 export interface ForgotPasswordParam {
   login_id: string;
   dob: string;
+  wl_code: string;
 }
 
 export interface ResetPasswordParam {

@@ -89,7 +89,8 @@ export class ForgotPasswordComponent implements OnInit, AfterViewInit, OnDestroy
     this.isSending = true;
     const param: ForgotPasswordParam = {
       login_id: this.forgotPasswordForm.controls.email.value,
-      dob: moment(this.forgotPasswordForm.controls.dateInput.value).format('YYYY-MM-DD')
+      dob: moment(this.forgotPasswordForm.controls.dateInput.value).format('YYYY-MM-DD'),
+      wl_code: '10'
     };
 
     this.time = 5;
