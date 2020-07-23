@@ -25,6 +25,7 @@ export interface LoginParam {
   login_id: string;
   password: string;
   device_type: string;
+  wl_code: string;
 }
 
 export interface ForgotPasswordParam {
