@@ -120,7 +120,8 @@ export class LoginComponent implements OnInit, AfterViewInit {
     const param: LoginParam = {
       login_id: this.loginFormGroup.controls.userName.value.trim(),
       password: this.loginFormGroup.controls.passWord.value,
-      device_type: 'FrontWeb'
+      device_type: 'FrontWeb',
+      wl_code: '10'
     };
     this.spinnerService.show();
     this.authenService.login(param).pipe(take(1)).subscribe(response => {
