@@ -174,7 +174,7 @@
   "Createdate time": "作成日時",
   "It is being processed within 3-5 business day.": "出金リクエストを受け取り、3〜5営業日以内に処理中です",
   "Got it!": "確認",
-  "Your Margin Level is nearly the Margin Call Level": "あなたのマージンレベルは、ほぼマージンコールレベルです",
+  "Your Margin Level is nearly the Margin Call Level": "出金確定後すぐにロスカットされる可能性があります。ご注意ください。",
   "Bank code": "金融機関コード",
   "Bank branch": "支店名",
   "Branch code": "支店コード",
