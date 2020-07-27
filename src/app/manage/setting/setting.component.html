@@ -7,7 +7,7 @@
             <label class="label mt-1">{{'Current password' | translate}}</label>
         </div>
         <div class="col-md-8 col-lg-9">
-            <input type="password" class="form-control form-control-sm" formControlName="current_password" style="max-width: 240px" 
+            <input maxlength="50" type="password" class="form-control form-control-sm" formControlName="current_password" style="max-width: 240px" 
             autocomplete="off"
             [ngClass]="{'invalid': isSubmittedSetting && changePassForm.controls.current_password?.errors}">
         </div>
@@ -34,7 +34,7 @@
             <label class="label mt-1">{{'New password' | translate}}</label>
         </div>
         <div class="col-md-8 col-lg-9">
-            <input type="password" class="form-control form-control-sm" formControlName="new_password" style="max-width: 240px" 
+            <input maxlength="50" type="password" class="form-control form-control-sm" formControlName="new_password" style="max-width: 240px" 
             autocomplete="off"
             [ngClass]="{'invalid': isSubmittedSetting && (changePassForm?.controls?.new_password?.errors || changePassForm?.controls?.new_password?.errors?.RequiredPass)}">
         </div>
@@ -58,7 +58,7 @@
             <label class="label mt-1">{{'Confirm password' | translate}}</label>
         </div>
         <div class="col-md-8 col-lg-9">
-            <input type="password" class="form-control form-control-sm" value=""
+            <input type="password" class="form-control form-control-sm" value="" maxlength="50"
                 formControlName="confirm_password" style="max-width: 240px" autocomplete="off"
                 [ngClass]="{'invalid': isSubmittedSetting && (changePassForm.controls['confirm_password'].errors || changePassForm?.controls['confirm_password']?.errors?.RequiredPass)}">
             <div *ngIf="isSubmittedSetting && changePassForm?.controls['confirm_password']?.errors?.Required"

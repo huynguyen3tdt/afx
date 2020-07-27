@@ -71,6 +71,7 @@ export class UserInforComponent implements OnInit {
   listFinancialSubmit: Array<QuestionModel>;
   listPurposeSubmit: Array<QuestionModel>;
   invalidEmail: boolean;
+  notFoundPostCode: boolean;
 
   constructor(private userService: UserService,
               private globalService: GlobalService,
@@ -106,7 +107,7 @@ export class UserInforComponent implements OnInit {
       house_numb: new FormControl('', requiredInput),
       name_build: new FormControl(''),
       email: new FormControl('', emailValidation),
-      phone: new FormControl('', validationPhoneNumber),
+      phone: new FormControl('', requiredInput),
     });
   }
 
@@ -253,6 +254,7 @@ export class UserInforComponent implements OnInit {
               this.userInfor.surveys.find(item => item.question_cd === 'indi_capital').sequence);
           }
         }
+        this.changeFinanAssetInvidual();
       }
     });
   }
@@ -267,10 +269,9 @@ export class UserInforComponent implements OnInit {
         this.userForm.controls.postCode.setValue(this.userAddress.postno);
         this.userForm.controls.searchPrefe.setValue(this.userAddress.prefecture);
         this.userForm.controls.searchCountry.setValue(this.userAddress.city + this.userAddress.town);
+        this.notFoundPostCode = false;
       } else if (response.meta.code === 404) {
-        this.toastr.error('郵便番号から住所が見つかりませんでした。', TYPE_ERROR_TOAST_JP, {
-          timeOut: TIMEOUT_TOAST
-        });
+        this.notFoundPostCode = true;
       }
     });
   }
@@ -305,11 +306,11 @@ export class UserInforComponent implements OnInit {
         city: this.userForm.controls.searchPrefe.value,
         street: this.userForm.controls.searchCountry.value.trim(),
         street2: this.userForm.controls.house_numb.value.trim(),
-        fx_street3: this.userForm.controls.name_build.value.trim(),
+        fx_street3: this.userForm.controls.name_build.value
+        ? this.userForm.controls.name_build.value.trim() : '',
       },
       email: this.userForm.controls.email.value,
       mobile: this.userForm.controls.phone.value,
-      lang: '',
       surveys: [],
       survey_cd: 'phillip_individual'
     };
@@ -376,12 +377,19 @@ export class UserInforComponent implements OnInit {
   cancelEdit(field: string) {
     switch (field) {
       case 'address':
+        this.userForm.controls.postCode.setValue(this.userInfor.address.value.zip);
+        this.userForm.controls.searchPrefe.setValue(this.userInfor.address.value.city);
+        this.userForm.controls.searchCountry.setValue(this.userInfor.address.value.street);
+        this.userForm.controls.house_numb.setValue(this.userInfor.address.value.street2);
+        this.userForm.controls.name_build.setValue(this.userInfor.address.value.fx_street3);
         this.editAddress = false;
         break;
       case 'email':
+        this.userForm.controls.email.setValue(this.userInfor.email.value);
         this.editEmail = false;
         break;
       case 'phone':
+        this.userForm.controls.phone.setValue(this.userInfor.mobile);
         this.editPhone = false;
         break;
     }
@@ -456,9 +464,11 @@ export class UserInforComponent implements OnInit {
     }
 
     if (this.purposeInvestForm.controls.investPurposeOther.value === true) {
-      this.globalService.resetFormControl(this.purposeInvestForm.controls.otherPurpose, requiredInput);
+      // this.globalService.resetFormControl(this.purposeInvestForm.controls.otherPurpose, requiredInput);
+      this.globalService.resetValidator(this.purposeInvestForm.controls.otherPurpose, requiredInput);
     } else {
-      this.globalService.resetFormControl(this.purposeInvestForm.controls.otherPurpose);
+      this.globalService.resetValidator(this.purposeInvestForm.controls.otherPurpose);
+      // this.globalService.resetFormControl(this.purposeInvestForm.controls.otherPurpose);
     }
   }
 

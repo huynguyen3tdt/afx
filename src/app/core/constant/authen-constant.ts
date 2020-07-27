@@ -12,11 +12,13 @@ export const MIN_WITHDRAW   = 'minWithdrawAFX';
 export const MAX_WITHDRAW   = 'maxWithdrawAFX';
 export const FONTSIZE_AFX   = 'fontsizeAFX';
 export const LOCALE         = 'locale';
+export const MARGIN_CALL    = 'marginCallAFX';
+export const MARGIN_STOP_OUT = 'marginStopOutAFX';
 export const CHANGE_PASS_FLG = 'pwd_change_flg_AFX';
 export const FXNAME1        = 'fxname1AFX';
 export const TIMEZONEAFX    = 'timezoneAFX';
 export const TIMEZONESERVER = '+00:00';
-export const TIMEOUT_TOAST  = 3000;
+export const TIMEOUT_TOAST  = 4000;
 export const TYPE_ERROR_TOAST_EN    = 'ERROR';
 export const TYPE_ERROR_TOAST_JP    = 'エラー';
 export const TYPE_SUCCESS_TOAST_EN  = 'SUCCESS';
@@ -25,6 +27,13 @@ export const TOKEN_EXPIRED_EN  = 'Token has been expired or revoked';
 export const TOKEN_EXPIRED_JP  = 'トークンの有効期限が切れました。';
 export const INTERNAL_SERVER_EN = 'Internal server error';
 export const INTERNAL_SERVER_JP = '内部サーバーエラー';
+export const ERROR_TIME_CLOSING_EN = 'Trading time is closing now. Please come back in 6:00 AM';
+export const ERROR_TIME_CLOSING_JP = '取引時間は現在終了しています。 午前6時に戻ってください';
+
+export const ERROR_MAX_DEPOSIT_EN = 'Max deposit is ';
+export const ERROR_MAX_DEPOSIT_JP = '最大預金は ';
+export const ERROR_MIN_DEPOSIT_EN = 'Min deposit is ';
+export const ERROR_MIN_DEPOSIT_JP = '最小預金は';
 
 export const ACCOUNT_TYPE = {
     ACCOUNT_FX: {account_type: 1, name: 'FX'},

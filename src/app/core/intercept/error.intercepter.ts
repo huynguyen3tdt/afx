@@ -10,7 +10,8 @@ import { TOKEN_AFX,
   TOKEN_EXPIRED_EN,
   TOKEN_EXPIRED_JP,
   INTERNAL_SERVER_EN,
-  INTERNAL_SERVER_JP } from '../constant/authen-constant';
+  INTERNAL_SERVER_JP,
+  CHANGE_PASS_FLG} from '../constant/authen-constant';
 import { ToastrService } from 'ngx-toastr';
 import { LOCALE } from './../constant/authen-constant';
 import { LANGUAGLE } from '../constant/language-constant';
@@ -26,6 +27,7 @@ export class ErrorInterceptor implements HttpInterceptor {
       return next.handle(request).pipe(catchError(err => {
           if (err.status === 401) {
             localStorage.removeItem(TOKEN_AFX);
+            localStorage.removeItem(CHANGE_PASS_FLG);
             this.router.navigate(['/login']);
             if (locale === LANGUAGLE.english) {
               messageErr = TOKEN_EXPIRED_EN;

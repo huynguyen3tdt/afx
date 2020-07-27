@@ -18,6 +18,8 @@ import {
   MAX_DEPOSIT,
   MAX_WITHDRAW,
   CHANGE_PASS_FLG,
+  MARGIN_CALL,
+  MARGIN_STOP_OUT,
 } from './../../core/constant/authen-constant';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthenService } from 'src/app/core/services/authen.service';
@@ -27,6 +29,7 @@ import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { EnvConfigService } from 'src/app/core/services/env-config.service';
 import { take } from 'rxjs/operators';
 import { LoginParam } from 'src/app/core/model/user.model';
+import { Title } from '@angular/platform-browser';
 declare const $: any;
 
 @Component({
@@ -43,6 +46,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
   invalidAccount: boolean;
   passWordExpired: boolean;
   hostNameRegis: string;
+  isSending: boolean;
 
   constructor(
     private router: Router,
@@ -50,10 +54,13 @@ export class LoginComponent implements OnInit, AfterViewInit {
     private activatedRoute: ActivatedRoute,
     private translate: TranslateService,
     private spinnerService: Ng4LoadingSpinnerService,
-    private envConfigService: EnvConfigService) {
+    private envConfigService: EnvConfigService,
+    private titleService: Title) {
   }
 
   ngOnInit() {
+    this.titleService.setTitle('フィリップMT5 口座ログイン');
+    this.isSending = false;
     this.login_layout();
     $(window).resize(() => {
       this.login_layout();
@@ -106,16 +113,21 @@ export class LoginComponent implements OnInit, AfterViewInit {
     if (this.loginFormGroup.invalid) {
       return;
     }
+    if (this.isSending === true) {
+      return;
+    }
+    this.isSending = true;
     const param: LoginParam = {
-      login_id: this.loginFormGroup.controls.userName.value,
+      login_id: this.loginFormGroup.controls.userName.value.trim(),
       password: this.loginFormGroup.controls.passWord.value,
-      device_type: this.isPc ? 'Pc' : 'Mobile'
+      device_type: 'FrontWeb',
+      wl_code: '10'
     };
     this.spinnerService.show();
     this.authenService.login(param).pipe(take(1)).subscribe(response => {
       this.spinnerService.hide();
       if (response.meta.code === 200) {
-        localStorage.setItem(USERNAME_LOGIN, btoa(this.loginFormGroup.value.userName));
+        localStorage.setItem(USERNAME_LOGIN, btoa(this.loginFormGroup.value.userName.trim()));
         localStorage.setItem(PASSWORD_LOGIN, btoa(this.loginFormGroup.value.passWord));
         if (this.loginFormGroup.value.remember === true) {
           localStorage.setItem(REMEMBER_LOGIN, 'true');
@@ -138,9 +150,6 @@ export class LoginComponent implements OnInit, AfterViewInit {
         if (response.data.module_funding_max_withdraw) {
           localStorage.setItem(MAX_WITHDRAW, response.data.module_funding_max_withdraw.toString());
         }
-        if (response.data.fx_name1) {
-          localStorage.setItem(FXNAME1, response.data.fx_name1);
-        }
         if (response.data.tz) {
           localStorage.setItem(TIMEZONEAFX, response.data.tz);
         } else {
@@ -149,6 +158,12 @@ export class LoginComponent implements OnInit, AfterViewInit {
         if (response.data.lang) {
           localStorage.setItem(LOCALE, response.data.lang);
           this.translate.use(response.data.lang);
+        }
+        if (response.data.margin_call) {
+          localStorage.setItem(MARGIN_CALL, response.data.margin_call.toString());
+        }
+        if (response.data.margin_stop_out) {
+          localStorage.setItem(MARGIN_STOP_OUT, response.data.margin_stop_out.toString());
         }
         localStorage.setItem(FIRST_LOGIN, '1');
         localStorage.setItem(CHANGE_PASS_FLG, response.data.pwd_change_flg.toString());
@@ -162,12 +177,14 @@ export class LoginComponent implements OnInit, AfterViewInit {
           this.router.navigate(['/reset_password'], {
           });
         }
-      } else if (response.meta.code === 102) {
-        this.invalidAccount = true;
-      } else if (response.meta.code === 101) {
-        this.passWordExpired = true;
+      } else {
+        this.isSending = false;
+        if (response.meta.code === 102) {
+          this.invalidAccount = true;
+        } else if (response.meta.code === 101) {
+          this.passWordExpired = true;
+        }
       }
-
     });
     $('.minimize-btn').click();
   }
@@ -256,6 +273,15 @@ export class LoginComponent implements OnInit, AfterViewInit {
         this.password.nativeElement.focus();
         $('#password-focus-btn').addClass('active');
         $('#user-focus-btn').removeClass('active');
+      });
+
+      $('.jqk-btn').click(() => {
+        this.loginFormGroup.controls.userName.setValue($('#userName').val());
+        this.loginFormGroup.controls.passWord.setValue($('#password').val());
+      });
+      // jqk-btn special enter
+      $('.jqk-btn.special.enter').click(() => {
+        this.onSubmit();
       });
     }, 100);
   }

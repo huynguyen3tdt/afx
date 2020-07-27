@@ -3,7 +3,7 @@
         <div class="d-flex justify-content-between align-items-center border-bottom mb-3 pb-2">
             <h6 *ngIf="tranType == typeTranHistory.DEPOSIT.key" class="mb-0 text-uppercase text-primary"><i class="icon ion-md-time"></i> <strong> {{'Entire Deposit History' | translate}}</strong></h6>
             <h6 *ngIf="tranType == typeTranHistory.WITHDRAWAL.key" class="mb-0 text-uppercase text-primary"><i class="icon ion-md-time"></i> <strong> {{'Entire Withdrawl History' | translate}}</strong></h6>
-            <div class="text-right small text-secondary">{{'Currency:' | translate}} <strong>JPY</strong></div>
+            <div class="text-right small text-secondary">{{'Currency:' | translate}} <strong>{{tradingAccount?.currency}}</strong></div>
         </div>
         <div class="table-responsive">
             <table class="table table-sm table-hover" cellspacing="0" cellpadding="0">

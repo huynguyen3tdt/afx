@@ -27,12 +27,12 @@
                                             <div class="d-flex align-items-center">
                                                 <label class="label mb-0 mr-2 pt-1">{{'Trading account' | translate}}</label>
                                                 <div class="d-inline-block">
-                                                    <select class="form-control form-control-sm mb-0 bg-none" (change)="changeAccountId()" [(ngModel)]="accountID" disabled style="min-width: 160px;">
-                                                    <option *ngFor="let item of listTradingAccount" value="{{item?.value}}">{{item?.value}}</option>
+                                                    <select class="form-control form-control-sm mb-0 bg-none" (change)="changeTradingAccount()" [(ngModel)]="accountID" disabled style="min-width: 160px;">
+                                                    <option *ngFor="let item of listTradingAccount" value="{{item?.account_id}}">{{item?.value}}</option>
                                                   </select>
                                                 </div>
                                             </div>
-                                            <div class="pt-1"><label class="label mb-0 mr-2 d-inline">{{'Currency' | translate}}:</label> <strong>{{traddingAccount?.currency}}</strong></div>
+                                            <div class="pt-1"><label class="label mb-0 mr-2 d-inline">{{'Currency' | translate}}:</label> <strong>{{tradingAccount?.currency}}</strong></div>
                                         </div>
                                         <div class="mb-1 d-flex justify-content-between">
                                             <label class="label">{{'Balance' | translate}}</label>
@@ -78,12 +78,14 @@
                                         <div class="form form-line">
                                             <div class="mb-3">
                                                 <label class="label">{{'Deposit Amount' | translate}}</label>
-                                                <input type="text" name="amount" formControlName="deposit" (change)="changeDeposit($event.target.value)" currency
+                                                <input maxlength="15" type="text" name="amount" 
+                                                formControlName="deposit" currency
                                                 [ngClass]="{'invalid': isSubmitted && depositTransactionForm.controls['deposit'].errors}" class="form-control form-control-lg text-right font-weight-bold text-warning deposit"
                                                     autocomplete="off" value="10,000" placeholder="">
                                             </div>
                                             <div *ngIf="depositError == true" class="invalid-mess">
-                                                <div>{{'Minimum amount is not below' | translate}} {{minDeposit}}</div>
+                                                <div *ngIf="locale == 'en_US'">Minimum amount is not below {{minDeposit | number}}</div>
+                                                <div *ngIf="locale == 'ja_JP'">ご入金額は{{minDeposit | number}}円以上から承ります</div>
                                             </div>
                                             <div class="mb-1 d-flex justify-content-between align-items-center">
                                                 <label class="label">{{'Bank' | translate}}</label>
@@ -93,7 +95,7 @@
                                                         class="form-control form-control-sm mb-0 bg-none"
                                                         formControlName="bankCode"
                                                         (change)="changeBankDeposit()" style="min-width: 160px;">
-                                                        <option value="0008">{{'Mitsubishi UFJ' | translate}}</option>
+                                                        <option *ngIf="showUFJBank == true" value="0008">{{'Mitsubishi UFJ' | translate}}</option>
                                                         <!-- <option value="0008">{{'UFJ bank' | translate}}</option> -->
                                                         <option value="0009">{{'Sumitomo Mitsui' | translate}}</option>
                                                         <option value="0003">{{'Mizuho' | translate}}</option>
@@ -106,7 +108,7 @@
                                             <div class="mb-1 d-flex justify-content-between">
                                                 <label class="label">{{'Currency' | translate}}</label>
                                                 <div>
-                                                    <strong>{{traddingAccount?.currency}}</strong>
+                                                    <strong>{{tradingAccount?.currency}}</strong>
                                                 </div>
                                             </div>
                                             <div class="mb-1 d-flex justify-content-between align-items-center">
@@ -129,7 +131,7 @@
                                         <div>{{'Your Margin Level is nearly the Margin Call Levels' | translate}}</div>
                                     </div>
                                     <button class="btn btn-warning btn-block text-uppercase btn-lg mb-3" (click)="onSubmit()"><strong>{{'Deposit' | translate}}</strong></button>
-                                    <p class="text-center" style="line-height: 1.2"><a href="javascript:;" data-toggle="modal" data-target="#modal-rule"><i
+                                    <p class="text-center" style="line-height: 1.2"><a href="javascript:;" (click)="ruleModal.show()"><i
                                                 class="icon ion-md-information-circle"></i> {{'General rules for depositing and withdrawing funds' | translate}}</a></p>
                                 </div>
                             </div>
@@ -474,8 +476,8 @@
                                         <div class="mb-1 d-flex justify-content-between">
                                             <label class="label">{{'Trading account' | translate}}</label>
                                             <div>
-                                                <select [(ngModel)]="accountID" (change)="changeAccountId()" disabled class="form-control form-control-sm" style="min-width: 80px;background: none;">
-                                                <option *ngFor="let item of listTradingAccount" value="{{item?.value}}">{{item?.value}}</option>
+                                                <select [(ngModel)]="accountID" (change)="changeTradingAccount()" disabled class="form-control form-control-sm" style="min-width: 80px;background: none;">
+                                                <option *ngFor="let item of listTradingAccount" value="{{item?.account_id}}">{{item?.value}}</option>
                                               </select>
                                             </div>
                                         </div>
@@ -538,15 +540,22 @@
                                             <div class="form form-line">
                                                 <div class="mb-3">
                                                     <label class="label">{{'Deposit Amount' | translate}}</label>
-                                                    <input type="text" name="amount" formControlName="deposit" currency autocomplete="off" class="form-control form-control-lg text-right font-weight-bold text-warning" (change)="changeDepositCal($event.target.value)" value="10,000" placeholder="">
+                                                    <input maxlength="15" type="text" name="amount" 
+                                                    formControlName="deposit" currency autocomplete="off" 
+                                                    class="form-control form-control-lg text-right font-weight-bold text-warning" 
+                                                    placeholder="">
                                                 </div>
                                                 <div *ngIf="bankError == true" class="invalid-mess">
-                                                    <div>{{'Minimum amount is not below' | translate}} {{minDeposit | number}}</div>
+                                                    <div *ngIf="locale == 'en_US'">Minimum amount is not below {{minDeposit | number}}</div>
+                                                    <div *ngIf="locale == 'ja_JP'">ご入金額は{{minDeposit | number}}円以上から承ります</div>
+                                                </div>
+                                                <div *ngIf="errMessageBankTran == true" class="invalid-mess">
+                                                    <div>{{'Your Margin Level is nearly the Margin Call Levels' | translate}}</div>
                                                 </div>
                                                 <div class="mb-1 d-flex justify-content-between">
                                                     <label class="label">{{'Currency' | translate}}</label>
                                                     <div>
-                                                        <strong>{{traddingAccount?.currency}}</strong>
+                                                        <strong>{{tradingAccount?.currency}}</strong>
                                                     </div>
                                                 </div>
                                                 <div class="mb-1 d-flex justify-content-between align-items-center">
@@ -562,7 +571,7 @@
                                     <p class="small text-secondary p-2 bg-light" *ngIf="locale == language.english">Notice: Minimum single deposit amount is {{minDeposit | number}}</p>
                                     <p class="small text-secondary p-2 bg-light" *ngIf="locale == language.japan">※最低入金額は{{minDeposit | number}}円となります。</p>
 
-                                    <p class="text-center" style="line-height: 1.2"><a href="javascript:;" data-toggle="modal" data-target="#modal-rule"><i
+                                    <p class="text-center" style="line-height: 1.2"><a href="javascript:;" (click)="ruleModal.show()"><i
                                                 class="icon ion-md-information-circle"></i> {{'General rules for depositing and withdrawing funds' | translate}}</a></p>
                                 </div>
                             </div>
@@ -578,26 +587,27 @@
                 </div>
             </div>
             <ng-container *ngIf="accountID">
-                <app-list-transaction *ngIf="accountID" #listTran [accountID]="accountID" [tranType]="transactionType"></app-list-transaction>
+                <app-list-transaction #listTran *ngIf="accountID" #listTran [accountID]="accountID" [tranType]="transactionType"></app-list-transaction>
             </ng-container>
 
         </div>
     </div>
 </div>
 
-<FORM  NAME="frm" hidden method="post"  action="https://www.e5.billingjapan.co.jp/NASApp/bjp/PB71SelectBankServlet">
-    <input type="hidden" name="PORTAL_CODE" value="000101">
-    <input type="hidden" name="SHOP_CODE" value="0155200563">
+<FORM  NAME="frm" hidden method="post"  action="{{bjpSystem}}">
+    <input type="hidden" name="PORTAL_CODE" value="{{portalCode}}">
+    <input type="hidden" name="SHOP_CODE" value="{{shopCode}}">
     <input type="hidden" name="BANK_CODE" value="{{bankCode}}">
     <input type="hidden" name="REMARKS_1" value="{{remark}}">
     <input type="hidden" name="CTRL_NO" value="{{controlNo}}">
+    <input type="hidden" name="KESSAI_FLAG" value="{{kessaiFlag}}">
     <input type="hidden" name="TRAN_AMOUNT" value="{{depositValue}}">
-    <input type="hidden" name="VALID_RETURN_URL" value="https://afx-api.ecomedic.vn/api/v1/deposits/post_back/">
-    <input type="hidden" name="INVALID_RETURN_URL" value="https://afx-api.ecomedic.vn/api/v1/deposits/post_back/">
+    <input type="hidden" name="VALID_RETURN_URL" value="{{apiPostBack}}">
+    <input type="hidden" name="INVALID_RETURN_URL" value="{{apiPostBack}}">
     <input #BJPSystem type="submit" value="Pay">
 </FORM>
 
-<div class="modal fade" id="modal-rule" tabindex="-1" role="dialog" aria-labelledby="ruleTitle" aria-hidden="true" data-backdrop="static">
+<div bsModal #ruleModal="bs-modal" class="modal fade" id="modal-rule" tabindex="-1" role="dialog" aria-labelledby="ruleTitle" aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header pt-2 pb-2">
@@ -614,14 +624,14 @@
                             <li>Bank transfer</li>
                         </ul>
                     </li>
-                    <li>The minimum deposit amount is {{minDeposit}} JPY for one time.</li>
+                    <li>The minimum deposit amount is {{minDeposit}} {{tradingAccount?.currency}} for one time.</li>
                 </ul>
                 <h4 class="text-primary">II. Withdraw al.</h4>
                 <ul>
                     <li>Funds may only be withdrawn to owner accounts in order to ensure financial security and prevent money laundering.</li>
                     <li>Phillip will withdraw on your trading account and transfer to your bank account at the bank's working hours from 8:30 AM- 16:00 PM Monday to Friday.</li>
                     <li>Withdrawal order make over 16:00PM  will be forwarded the next day.</li>
-                    <li>Minimum withdrawal amount of  {{minDeposit | number}} JPY  for each withdrawal.</li>
+                    <li>Minimum withdrawal amount of  {{minDeposit | number}} {{tradingAccount?.currency}}  for each withdrawal.</li>
                     <li>The maximum amount is  the total amount in your trading account.</li>
                     <li>The first withdrawal order must be enough 48 hours from the first deposit order.</li>
                 </ul>
@@ -672,56 +682,12 @@
                 <div class="small text-secondary"><i class="icon ion-md-time"></i> <em>{{'Last updated:' | translate}} 2020/01/10 11:29</em></div>
             </div>
             <div class="modal-footer pt-1 pb-1 text-right bg-light">
-                <button type="button" class="btn btn-primary pl-4 pr-4 btn-confirm" data-dismiss="modal">I got it</button>
+                <button type="button" class="btn btn-primary pl-4 pr-4 btn-confirm" (click)="ruleModal.hide()" data-dismiss="modal">{{'I got it' | translate}}</button>
             </div>
         </div>
     </div>
 </div>
 
-<div class="modal fade" id="modal-deposit-confirm" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header pt-2 pb-2">
-                <div>
-                    <h5 class="modal-title text-primary"><strong>Deposit infomation</strong></h5>
-                </div>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <table class="table table-hover table-sm" cellspacing="0" cellpadding="0">
-                    <tbody>
-                        <tr>
-                            <td width="180" class="border-top-0">Trading account</td>
-                            <td class="border-top-0"><strong>FX - 10000001</strong></td>
-                        </tr>
-                        <tr>
-                            <td width="180">Type</td>
-                            <td><strong>Deposit</strong></td>
-                        </tr>
-                        <tr>
-                            <td width="180">Payment method</td>
-                            <td><strong>Quick deposit</strong></td>
-                        </tr>
-                        <tr>
-                            <td width="180">Remitter bank</td>
-                            <td><strong>Mizuho Bank</strong></td>
-                        </tr>
-                        <tr>
-                            <td width="180">Deposit amount</td>
-                            <td><strong>20000</strong> <span class="small text-secondary">JPY</span></td>
-                        </tr>
-                    </tbody>
-                </table>
-                <div class="mt-1 text-right">
-                    <button type="button" class="btn btn-primary pl-4 pr-4 btn-confirm" data-dismiss="modal">Confirm</button>
-                </div>
-            </div>
-
-        </div>
-    </div>
-</div>
 <ng4-loading-spinner [timeout]="30000"> </ng4-loading-spinner>
 
 <!-- depositTransactionForm.controls.deposit.value -->

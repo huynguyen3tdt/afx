@@ -108,4 +108,16 @@ export class AuthenService {
       })
     );
   }
+
+  checkTokenEmail(param: CheckTokenParam): Observable<ResponseWihtoutDataModel>  {
+    return this.httpClient
+      .post(`${this.envConfigService.getConfig()}/${AppSettings.API_CHECK_TOKEN_EMAIL}`, param)
+      .pipe(
+      catchError((error: HttpErrorResponse) => {
+        return new Observable((observer: InnerSubscriber<any, any>) => {
+          observer.next(error);
+        });
+      })
+    );
+  }
 }

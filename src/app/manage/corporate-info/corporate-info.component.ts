@@ -83,6 +83,8 @@ export class CorporateInfoComponent implements OnInit {
   listFinancialSubmit: Array<QuestionModel>;
   listPurposeSubmit: Array<QuestionModel>;
   invalidEmail: boolean;
+  notFoundPostCode: boolean;
+
   constructor(private spinnerService: Ng4LoadingSpinnerService,
               private userService: UserService,
               private globalService: GlobalService,
@@ -120,7 +122,7 @@ export class CorporateInfoComponent implements OnInit {
       cor_district: new FormControl('', requiredInput),
       cor_house: new FormControl('', requiredInput),
       cor_build: new FormControl(''),
-      cor_phone: new FormControl('', validationPhoneNumber),
+      cor_phone: new FormControl('', requiredInput),
       cor_fax: new FormControl(''),
     });
   }
@@ -132,7 +134,7 @@ export class CorporateInfoComponent implements OnInit {
       per_picname: new FormControl('', requiredInput),
       person_picname: new FormControl('', fullWidthRequired),
       person_gender: new FormControl('', requiredInput),
-      person_phone: new FormControl('', validationPhoneNumber),
+      person_phone: new FormControl('', requiredInput),
       person_email: new FormControl('', emailValidation),
     });
   }
@@ -181,7 +183,7 @@ export class CorporateInfoComponent implements OnInit {
           this.corporateForm.controls.cor_postcode.setValue(this.corporateInfor.corporation.address.value.zip);
           this.corporateForm.controls.cor_house.setValue(this.corporateInfor.corporation.address.value.street2);
           this.corporateForm.controls.cor_build.setValue(this.corporateInfor.corporation.address.value.fx_street3);
-          this.corporateForm.controls.cor_phone.setValue(this.corporateInfor.corporation.mobile);
+          this.corporateForm.controls.cor_phone.setValue(this.corporateInfor.corporation.phone);
           this.corporateForm.controls.cor_fax.setValue(this.corporateInfor.corporation.fx_fax.value);
         }
         if (this.corporateInfor.pic) {
@@ -298,6 +300,7 @@ export class CorporateInfoComponent implements OnInit {
           setValue(this.corporateInfor.surveys.find(item => item.question_cd === 'corp_investable').sequence);
           }
         }
+        this.changeBusinessCapital();
       }
     });
   }
@@ -310,10 +313,9 @@ export class CorporateInfoComponent implements OnInit {
         this.corporateForm.controls.cor_postcode.setValue(this.corpAddress.postno);
         this.corporateForm.controls.cor_prefec.setValue(this.corpAddress.prefecture);
         this.corporateForm.controls.cor_district.setValue(this.corpAddress.city + this.corpAddress.town);
+        this.notFoundPostCode = false;
       } else if (response.meta.code === 404) {
-        this.toastr.error('郵便番号から住所が見つかりませんでした。', TYPE_ERROR_TOAST_JP, {
-          timeOut: TIMEOUT_TOAST
-        });
+        this.notFoundPostCode = true;
       }
     });
   }
@@ -326,11 +328,11 @@ export class CorporateInfoComponent implements OnInit {
           city: this.corporateForm.controls.cor_prefec.value,
           street: this.corporateForm.controls.cor_district.value.trim(),
           street2: this.corporateForm.controls.cor_house.value.trim(),
-          fx_street3: this.corporateForm.controls.cor_build.value.trim(),
+          fx_street3: this.corporateForm.controls.cor_build.value
+          ? this.corporateForm.controls.cor_build.value.trim() : '',
         },
-        mobile: this.corporateForm.controls.cor_phone.value.trim(),
+        phone: this.corporateForm.controls.cor_phone.value.trim(),
         fx_fax: this.corporateForm.controls.cor_fax.value.trim(),
-        lang: '',
       },
       pic: {
         name: this.picForm.controls.per_picname.value.trim(),
@@ -523,7 +525,7 @@ export class CorporateInfoComponent implements OnInit {
         this.editCorAddress = true;
         break;
       case 'cor-phone':
-        this.corporateForm.controls.cor_phone.setValue(this.corporateInfor.corporation.mobile);
+        this.corporateForm.controls.cor_phone.setValue(this.corporateInfor.corporation.phone);
         this.editCorPhone = true;
         break;
       case 'cor-fax':
@@ -582,6 +584,7 @@ export class CorporateInfoComponent implements OnInit {
         this.editPersonPhone = false;
         break;
       case 'p-email':
+        this.picForm.controls.person_email.setValue(this.corporateInfor.pic.email.value);
         this.editPersonEmail = false;
         break;
       case 'p-gender':

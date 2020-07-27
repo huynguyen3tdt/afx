@@ -26,7 +26,7 @@
                                     <div class="col-4 col-lg-3">
                                         <div class="form-group">
                                             <label class="label d-block mb-0">{{'Trading account' | translate}}</label>
-                                            <select disabled formControlName="tradingAccount" class="form-control form-control-sm">
+                                            <select disabled formControlName="tradingAccount" class="form-control form-control-sm" (change)="changeTradingAccount()">
                                                 <option *ngFor="let item of listTradingAccount" value="{{item?.account_id}}">{{item?.value}}</option>
                                             </select>
                                         </div>
@@ -47,12 +47,14 @@
                                                 <div class="form-group">
                                                     <label class="label d-block mb-0">{{'From' | translate}}</label>
                                                     <div class="input-wrapper">
-                                                        <input type="text" name="start-date" class="form-control form-control-sm date" placeholder="YYYY/MM/DD" #dp="bsDatepicker" bsDatepicker formControlName="fromDate" (bsValueChange)="onValueChangeFrom($event)" autocomplete="off" [bsConfig]="{ dateInputFormat: formatDateYear, containerClass: 'theme-blue' }">
+                                                        <input type="text" name="start-date" class="form-control form-control-sm date" placeholder="YYYY/MM/DD" #dp="bsDatepicker" 
+                                                        bsDatepicker formControlName="fromDate" (bsValueChange)="onValueChangeFrom($event)" autocomplete="off" 
+                                                        [bsConfig]="{showWeekNumbers:false, dateInputFormat: formatDateYear, containerClass: 'theme-blue' }">
                                                         <button type="button" class="btn btn-none btn-sm" (click)="dp.toggle()" [attr.aria-expanded]="dp.isOpen"><i
                                                                 class="icon ion-md-calendar"></i></button>
                                                     </div>
                                                     <div *ngIf="showErrorDate == true" class="invalid-mess">
-                                                        Period is incorrect, the to date must be greater than the from date
+                                                        {{'Period is incorrect, the to date must be greater than the from date' | translate}}
                                                     </div>
                                                 </div>
                                             </div>
@@ -60,7 +62,9 @@
                                                 <div class="form-group">
                                                     <label class="label d-block mb-0">{{'To' | translate}}</label>
                                                     <div class="input-wrapper">
-                                                        <input type="text" name="end-date" class="form-control form-control-sm date" placeholder="YYYY/MM/DD" #dp2="bsDatepicker" bsDatepicker formControlName="toDate" autocomplete="off" (bsValueChange)="onValueChangeTo($event)" [bsConfig]="{ dateInputFormat: formatDateYear, containerClass: 'theme-blue' }">
+                                                        <input type="text" name="end-date" class="form-control form-control-sm date" placeholder="YYYY/MM/DD" #dp2="bsDatepicker" 
+                                                        bsDatepicker formControlName="toDate" autocomplete="off" (bsValueChange)="onValueChangeTo($event)" 
+                                                        [bsConfig]="{showWeekNumbers:false, dateInputFormat: formatDateYear, containerClass: 'theme-blue' }">
                                                         <button type="button" class="btn btn-none btn-sm" (click)="dp2.toggle()" [attr.aria-expanded]="dp2.isOpen"><i
                                                                 class="icon ion-md-calendar"></i></button>
                                                     </div>
@@ -83,7 +87,7 @@
                                         <tr>
                                             <!-- <th class="border-top-0" width="20">&nbsp;</th> -->
                                             <th class="border-top-0">{{'Name' | translate}}</th>
-                                            <th width="120" class="border-top-0 text-right">{{'Created date' | translate}}</th>
+                                            <th width="120" class="border-top-0 text-right">{{'Report date' | translate}}</th>
                                             <th width="120" class="border-top-0 text-right">{{'File type' | translate}}</th>
                                             <th width="120" class="border-top-0 text-right">{{'Status' | translate}}</th>
                                             <th class="border-top-0 text-right">&nbsp;</th>
@@ -94,8 +98,8 @@
 
                                             <!-- <td class="text-center align-middle"><span class="small text-secondary">{{item?.file_type}}</span></td> -->
                                             <td class="align-middle"><strong><a (click)="openPDF(item)"
-                                                        href="javascript:;">{{item?.report_title}}</a></strong></td>
-                                            <td class="text-right align-middle"><span class="text-secondary">{{item?.create_date}}</span>
+                                                        href="javascript:;">{{item?.file_name}}</a></strong></td>
+                                            <td class="text-right align-middle"><span class="text-secondary">{{item?.report_date}}</span>
                                             </td>
                                             <td *ngIf="item.file_type == 'pdf'" class="text-center align-middle"><img src="assets/images/icons/pdf.svg" width="20" height="20"></td>
                                             <td *ngIf="item.file_type == 'csv'" class="text-center align-middle"><img src="assets/images/icons/csv.svg" width="20" height="20"></td>
@@ -144,7 +148,7 @@
 </div>
 
 
-<div id="modal-2" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+<div bsModal #pdfModal="bs-modal" id="modal-2" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <ng2-pdfjs-viewer style="height: 900px" #pdfViewer></ng2-pdfjs-viewer>

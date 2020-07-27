@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import {
   requiredInput,
   fullSizeHiraganaValidation,
   halfSizeNumberValidation,
-  fullWidthRequired
+  fullWidthRequired,
+  bankAccountValidation
 } from 'src/app/core/helper/custom-validate.helper';
 import { BankInforModel } from 'src/app/core/model/withdraw-request-response.model';
 import { BankModel, SearchHiraModel, BranchModel } from 'src/app/core/model/bank-response.model';
@@ -21,6 +22,7 @@ import {
 } from 'src/app/core/constant/japan-constant';
 import { take } from 'rxjs/operators';
 import { IS_COMPANY } from 'src/app/core/constant/authen-constant';
+import { ModalDirective } from 'ngx-bootstrap';
 declare var $: any;
 
 @Component({
@@ -29,6 +31,7 @@ declare var $: any;
   styleUrls: ['./bank-info.component.scss']
 })
 export class BankInfoComponent implements OnInit {
+  @ViewChild('bankModal', { static: false }) bankModal: ModalDirective;
   branchForm: FormGroup;
   bankAccountForm: FormGroup;
   bankForm: FormGroup;
@@ -83,7 +86,7 @@ export class BankInfoComponent implements OnInit {
       beneficiary_bank: new FormControl('', requiredInput),
       bank_branch: new FormControl('', requiredInput),
       bank_account_type: new FormControl('sa'),
-      bank_account_number: new FormControl('', requiredInput),
+      bank_account_number: new FormControl('', bankAccountValidation),
       account_holder: new FormControl('', fullWidthRequired)
     });
   }
@@ -168,7 +171,8 @@ export class BankInfoComponent implements OnInit {
     this.bankSearch = [];
     this.branchSearch = [];
     if (type === 1) {
-      $('#modal-select-bank').modal('show');
+      // $('#modal-select-bank').modal('show');
+      this.bankModal.show();
       switch (bankName) {
         case MizuhoBank.name:
           this.currentBank = MizuhoBank;
@@ -193,7 +197,8 @@ export class BankInfoComponent implements OnInit {
       this.showBranch = true;
       this.getAllCharacBranch(this.currentBank.id);
     } else if (type === 2) {
-      $('#modal-select-bank').modal('show');
+      // $('#modal-select-bank').modal('show');
+      this.bankModal.show();
       this.showBank = true;
       this.showBranch = false;
       this.getAllCharacBank();
@@ -287,7 +292,8 @@ export class BankInfoComponent implements OnInit {
   }
 
   selectBranch(item: BranchModel) {
-    $('#modal-select-bank').modal('hide');
+    // $('#modal-select-bank').modal('hide');
+    this.bankModal.hide();
     this.currentBranch = item;
     this.bankInfor.branch_id = this.currentBranch.id;
     this.bankInfor.bank_id = this.currentBank.id;

@@ -119,7 +119,7 @@
                                         <div *ngIf="item?.agreement_flg != 1" class="item-content" [innerHTML]="item?.news_content | safe: 'html'"></div>
                                         <div *ngIf="item?.agreement_flg == 1" class="item-content">
                                             <div [innerHTML]="item?.news_content | safe: 'html'"></div>
-                                            <button (click)="confirmAgreement()" [disabled]="item.agree_flg == true ? true : false" type="button" class="btn btn-primary f-right">Confirm</button>
+                                            <button (click)="confirmAgreement()" [disabled]="item.agree_flg == true ? true : false" type="button" class="btn btn-primary f-right">{{'Confirm' | translate}}</button>
                                         </div>
 
                                     </div>
@@ -174,7 +174,7 @@
                                         <div *ngIf="item?.agreement_flg != 1" class="item-content" [innerHTML]="item?.news_content | safe: 'html'"></div>
                                         <div *ngIf="item?.agreement_flg == 1" class="item-content">
                                             <div [innerHTML]="item?.news_content | safe: 'html'"></div>
-                                            <button (click)="confirmAgreement()" [disabled]="item.agree_flg == true ? true : false" type="button" class="btn btn-primary f-right">Confirm</button>
+                                            <button (click)="confirmAgreement()" [disabled]="item.agree_flg == true ? true : false" type="button" class="btn btn-primary f-right">{{'Confirm' | translate}}</button>
                                         </div>
                                     </div>
                                 </ng-container>
@@ -227,7 +227,7 @@
                                         <div *ngIf="item?.agreement_flg != 1" class="item-content" [innerHTML]="item?.news_content | safe: 'html'"></div>
                                         <div *ngIf="item?.agreement_flg == 1" class="item-content">
                                             <div [innerHTML]="item?.news_content | safe: 'html'"></div>
-                                            <button (click)="confirmAgreement()" [disabled]="item.agree_flg == true ? true : false" type="button" class="btn btn-primary f-right">Confirm</button>
+                                            <button (click)="confirmAgreement()" [disabled]="item.agree_flg == true ? true : false" type="button" class="btn btn-primary f-right">{{'Confirm' | translate}}</button>
                                         </div>
                                     </div>
                                 </ng-container>

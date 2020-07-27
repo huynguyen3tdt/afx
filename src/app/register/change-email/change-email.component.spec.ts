@@ -6,6 +6,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
 import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
+import { ToastrModule } from 'ngx-toastr';
 
 describe('ChangeEmailComponent', () => {
   let component: ChangeEmailComponent;
@@ -20,7 +21,8 @@ describe('ChangeEmailComponent', () => {
         HttpClientModule,
         TranslateModule.forRoot(),
         RouterTestingModule,
-        Ng4LoadingSpinnerModule
+        Ng4LoadingSpinnerModule,
+        ToastrModule.forRoot()
       ],
     })
     .compileComponents();

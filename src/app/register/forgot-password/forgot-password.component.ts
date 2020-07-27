@@ -12,6 +12,7 @@ import { defineLocale, jaLocale } from 'ngx-bootstrap/chronos';
 import { take } from 'rxjs/operators';
 import { BsLocaleService } from 'ngx-bootstrap';
 import { ForgotPasswordParam } from 'src/app/core/model/user.model';
+import { Title } from '@angular/platform-browser';
 declare var $: any;
 defineLocale('ja', jaLocale);
 
@@ -31,15 +32,19 @@ export class ForgotPasswordComponent implements OnInit, AfterViewInit, OnDestroy
   showInterval: boolean;
   locale: string;
   formatDateYear: string;
+  isSending: boolean;
 
   constructor(
     private authenService: AuthenService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private spinnerService: Ng4LoadingSpinnerService,
-    private localeService: BsLocaleService) { }
+    private localeService: BsLocaleService,
+    private titleService: Title) { }
 
   ngOnInit() {
+    this.titleService.setTitle('フィリップMT5 Mypage');
+    this.isSending = false;
     this.locale = localStorage.getItem(LOCALE);
     if (this.locale === LANGUAGLE.english) {
       $('body').removeClass('jp');
@@ -78,9 +83,14 @@ export class ForgotPasswordComponent implements OnInit, AfterViewInit, OnDestroy
     if (this.forgotPasswordForm.invalid) {
       return;
     }
+    if (this.isSending === true) {
+      return;
+    }
+    this.isSending = true;
     const param: ForgotPasswordParam = {
       login_id: this.forgotPasswordForm.controls.email.value,
-      dob: moment(this.forgotPasswordForm.controls.dateInput.value).format('YYYY-MM-DD')
+      dob: moment(this.forgotPasswordForm.controls.dateInput.value).format('YYYY-MM-DD'),
+      wl_code: '10'
     };
 
     this.time = 5;
@@ -100,8 +110,11 @@ export class ForgotPasswordComponent implements OnInit, AfterViewInit, OnDestroy
             });
           }
         }, 1000);
-      } else if (response.meta.code === 104) {
-        this.errSubmit = true;
+      } else {
+        this.isSending = false;
+        if (response.meta.code === 104) {
+          this.errSubmit = true;
+        }
       }
     });
   }

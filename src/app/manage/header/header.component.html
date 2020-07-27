@@ -14,16 +14,16 @@
                 <!-- BEGIN HEADER TOP NAV -->
                 <ul class="header-top-nav nav">
                     <li class="nav-item nav-item-dmt5">
-                        <a target="_blank" *ngIf="isPc == true" href="https://www.metatrader5.com/en/download" class="nav-link"><img src="./../../../assets/images/metatrader-5.png"></a>
-                        <a target="_blank" *ngIf="isAndroid == true" href="https://download.mql5.com/cdn/mobile/mt5/android?hl=en&utm_source=www.metatrader5.com&utm_campaign=download" class="nav-link">
+                        <a target="_blank" *ngIf="isPc == true" href="https://download.mql5.com/cdn/web/16266/mt5/phillipsecuritiesjp5setup.exe" class="nav-link"><img src="./../../../assets/images/metatrader-5.png"></a>
+                        <a target="_blank" *ngIf="isAndroid == true" href="https://download.mql5.com/cdn/mobile/mt5/android?server=PhillipSecuritiesJP-PROD" class="nav-link">
                         <img src="./../../../assets/images/metatrader-5.png"></a>
-                        <a target="_blank" *ngIf="isIos == true" href="https://download.mql5.com/cdn/mobile/mt5/ios?hl=en&utm_source=www.metatrader5.com&utm_campaign=download" class="nav-link">
+                        <a target="_blank" *ngIf="isIos == true" href="https://download.mql5.com/cdn/mobile/mt5/ios?server=PhillipSecuritiesJP-PROD" class="nav-link">
                             <img src="./../../../assets/images/metatrader-5.png"></a>
                     </li>
                     <li [className]="listNotification && listNotification.length > 0 ? 'nav-item nav-item-notification dropdown has-notification' : 'nav-item nav-item-notification dropdown'">
                         <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icon ion-md-notifications"></i></a>
                         <div class="dropdown-menu dropdown-menu-notification dropdown-menu-right">
-                            <h6 class="mb-1 text-primary text-uppercase title"><strong>Unread Notifications</strong>
+                            <h6 class="mb-1 text-primary text-uppercase title"><strong>{{'Unread Notifications' | translate}}</strong>
                             </h6>
                             <ng-container *ngFor="let item of listNotification; let i = index">
                                 <a class="dropdown-item notification-item important" [routerLink]="['/manage/notifications']" *ngIf="item?.news_type == 0">
@@ -40,7 +40,7 @@
                                 </a>
                             </ng-container>
 
-                            <div class="text-center small"><a [routerLink]="['/manage/notifications']" class="text-secondary">View more</a></div>
+                            <div class="text-center small"><a [routerLink]="['/manage/notifications']" class="text-secondary">{{'View more' | translate}}</a></div>
                         </div>
                     </li>
                     <!-- <li class="nav-item nav-item-user-panel">
@@ -101,7 +101,7 @@
     <div class="offcanvas-wrapper">
         <div class="offcanvas-inner">
             <div class="offcanvas-header">
-                <h3 class="offcanvas-title">Menu</h3>
+                <h3 class="offcanvas-title">{{'Menu' | translate}}</h3>
                 <div class="header-action">
                     <a class="btn btn-offcanvas-close"><i class="icon ion-md-close"></i></a>
                 </div>
@@ -113,8 +113,8 @@
                 <li class="nav-item nav-item-deposit">
                     <a [routerLink]="['/manage/deposit']" id="deposit" class="nav-link has-icon btn-offcanvas-close"><i class="icon ion-md-add"></i> {{'Deposit' | translate}}</a>
                 </li>
-                <li class="nav-item nav-item-withdraw">
-                    <a [routerLink]="['/manage/withdrawRequest']" id="withdrawRequest" class="nav-link has-icon btn-offcanvas-close"><i class="icon ion-md-remove"></i> {{'Withdraw' | translate}}</a>
+                <li class="nav-item nav-item-withdraw">                                                                                                                
+                    <a [routerLink]="['/manage/withdrawRequest']" id="withdrawRequest" class="nav-link has-icon btn-offcanvas-close"><i class="icon ion-md-remove"></i> {{'Withdrawal' | translate}}</a>
                 </li>
                 <li class="nav-item nav-item-history">
                     <a [routerLink]="['/manage/withdrawHistory']" id="withdrawHistory" class="nav-link has-icon btn-offcanvas-close"><i class="icon ion-md-time"></i> {{'History' | translate}}</a>

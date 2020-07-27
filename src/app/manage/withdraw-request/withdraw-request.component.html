@@ -20,12 +20,12 @@
                                     <div class="d-flex align-items-center">
                                         <label class="label mb-0 mr-2 pt-1">{{'Trading account' | translate}}</label>
                                         <div class="d-inline-block">
-                                            <select class="form-control form-control-sm mb-0 bg-none" (change)="changeAccount()" [(ngModel)]="accountID" disabled style="min-width: 160px;">
-                                            <option *ngFor="let item of listTradingAccount" value="{{item?.value}}">{{item?.value}}</option>
+                                            <select class="form-control form-control-sm mb-0 bg-none" (change)="changeTradingAccount()" [(ngModel)]="accountID" disabled style="min-width: 160px;">
+                                            <option *ngFor="let item of listTradingAccount" value="{{item?.account_id}}">{{item?.value}}</option>
                                           </select>
                                         </div>
                                     </div>
-                                    <div class="pt-1"><label class="label mb-0 mr-2 d-inline">{{'Currency' | translate}}:</label> <strong>{{traddingAccount?.currency}}</strong></div>
+                                    <div class="pt-1"><label class="label mb-0 mr-2 d-inline">{{'Currency' | translate}}:</label> <strong>{{tradingAccount?.currency}}</strong></div>
                                 </div>
 
                                 <div class="mb-1 d-flex justify-content-between">
@@ -87,15 +87,16 @@
                                 <div class="mb-1 d-flex justify-content-between">
                                     <label class="label">{{'Currency of bank account' | translate}}</label>
                                     <div>
-                                        <strong>{{traddingAccount?.currency}}</strong>
+                                        <strong>{{tradingAccount?.currency}}</strong>
                                     </div>
                                 </div>
                                 <div class="mb-3">
                                     <label class="label"><strong>{{'Withdrawal Amount' | translate}}</strong></label>
-                                    <input type="text" name="amount" id="amount" class="form-control form-control-lg text-right font-weight-bold text-success" placeholder="" formControlName="amount" currency
-                                      (change)="changeWithdraw()" autocomplete="off" [ngClass]="{'invalid': isSubmitted && withdrawForm.controls['amount'].errors}">
+                                    <input maxlength="15" type="text" name="amount" id="amount" class="form-control form-control-lg text-right font-weight-bold text-success" placeholder="" formControlName="amount" currency
+                                     autocomplete="off" [ngClass]="{'invalid': isSubmitted && withdrawForm.controls['amount'].errors}">
                                     <div *ngIf="minWithdrawError == true" class="invalid-mess">
-                                        <div>{{'Minimum amount is not below' | translate}} {{minWithdraw | number}}</div>
+                                        <div *ngIf="locale == 'en_US'">Minimum amount is not below {{minWithDraw | number}}</div>
+                                        <div *ngIf="locale == 'ja_JP'">ご入金額は{{minWithDraw | number}}円以上から承ります</div>
                                     </div>
                                     <div *ngIf="maxWithdrawError == true" class="invalid-mess">
                                         <div>{{'Withdrawal amount is not above the maximum amount' | translate}} {{maxWithDraw | number}}</div>
@@ -138,7 +139,7 @@
                                 <div>{{'Your Margin Level is nearly the Margin Call Level' | translate}}</div>
                             </div>
                             <button class="btn btn-success btn-block text-uppercase btn-lg mb-3" (click)="showConfirm()"><strong>{{'Withdrawal Request'| translate}}</strong></button>
-                            <p class="text-center" style="line-height: 1.2"><a href="javascript:;" data-toggle="modal" data-target="#modal-rule"><i class="icon ion-md-information-circle"></i>
+                            <p class="text-center" style="line-height: 1.2"><a href="javascript:;" (click)="ruleModal.show()"><i class="icon ion-md-information-circle"></i>
                             {{'General rules for depositing and withdrawing funds' | translate}}</a></p>
                         </div>
                     </div>
@@ -166,7 +167,7 @@
             <tbody>
                 <tr>
                     <td width="180" class="border-top-0">{{'Trading account' | translate}}</td>
-                    <td class="border-top-0">{{accountID}}</td>
+                    <td class="border-top-0">{{tradingAccount?.value}}</td>
                 </tr>
                 <tr>
                     <td width="180">{{'Transfer date time' | translate}}</td>
@@ -198,7 +199,7 @@
                 </tr>
                 <tr>
                     <td width="180">{{'Currency' | translate}}</td>
-                    <td>{{traddingAccount?.currency}}</td>
+                    <td>{{tradingAccount?.currency}}</td>
                 </tr>
                 <tr>
                     <td width="180">{{'Margin Level estimate' | translate}}</td>
@@ -207,10 +208,12 @@
             </tbody>
         </table>
         <p>{{'Are you sure you want to make the withdrawal request?' | translate}}</p>
+        <div>{{'Requests made by 15:00 will be withdrawn on the next business day.' | translate}}</div>
+        <div>{{'Requests received after 15:00 will be handled the next business day.' | translate}}</div>
         <hr>
         <div class="text-right">
           <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="modalWithdrawConfirm.hide()">{{'Cancel' | translate}}</button>
-          <button type="button" class="btn btn-primary" (click)="sendConfirm()">{{'Confirm' | translate}}</button>
+          <button type="button" class="btn btn-primary ml-2" (click)="sendConfirm()">{{'Request' | translate}}</button>
         </div>
       </div>
     </div>
@@ -232,7 +235,7 @@
             <tbody>
                 <tr>
                     <td width="180" class="border-top-0">{{'Withdrawal amount' | translate}}</td>
-                    <td class="border-top-0">{{transactionWithdraw?.amount | number}} JPY</td>
+                    <td class="border-top-0">{{transactionWithdraw?.amount | number}} {{tradingAccount?.currency}}</td>
                 </tr>
                 <!-- <tr>
                     <td width="180">{{'Transaction ID' | translate}}</td>
@@ -244,18 +247,23 @@
                 </tr>
             </tbody>
         </table>
-        <p *ngIf="checkWithDrawal == true">{{'It is being processed within 3-5 business day.' | translate}}</p>
+        <!-- <p *ngIf="checkWithDrawal == true">{{'It is being processed within 3-5 business day.' | translate}}</p> -->
+        <div *ngIf="checkWithDrawal == true">
+            <div>{{'Requests made by 15:00 will be withdrawn on the next business day.' | translate}}</div>
+            <div>{{'Requests received after 15:00 will be handled the next business day.' | translate}}</div>
+        </div>
+
         <p *ngIf="checkWithDrawal == false">{{'Reason: MT5 account balance is not enough money to withdraw' | translate}}</p>
         <hr>
         <div class="text-center">
-          <button type="button" class="btn btn-success" id="got_it" data-dismiss="modal" (click)="modalWithdrawResult.hide()">{{'Got it!' | translate}}</button>
+          <button type="button" class="btn btn-success" id="got_it" data-dismiss="modal" (click)="modalWithdrawResult.hide()">{{'Finish' | translate}}</button>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<div class="modal fade" id="modal-rule" tabindex="-1" role="dialog" aria-labelledby="ruleTitle" aria-hidden="true" data-backdrop="static">
+<div bsModal #ruleModal="bs-modal" class="modal fade" id="modal-rule" tabindex="-1" role="dialog" aria-labelledby="ruleTitle" aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header pt-2 pb-2">
@@ -272,14 +280,14 @@
                             <li>Bank transfer</li>
                         </ul>
                     </li>
-                    <li>The minimum deposit amount is {{minWithDraw}} JPY for one time.</li>
+                    <li>The minimum deposit amount is {{minWithDraw}} {{tradingAccount?.currency}} for one time.</li>
                 </ul>
                 <h4 class="text-primary">II. Withdraw al.</h4>
                 <ul>
                     <li>Funds may only be withdrawn to owner accounts in order to ensure financial security and prevent money laundering.</li>
                     <li>Phillip will withdraw on your trading account and transfer to your bank account at the bank's working hours from 8:30 AM- 16:00 PM Monday to Friday.</li>
                     <li>Withdrawal order make over 16:00PM  will be forwarded the next day.</li>
-                    <li>Minimum withdrawal amount of  {{minWithDraw | number}} JPY  for each withdrawal.</li>
+                    <li>Minimum withdrawal amount of  {{minWithDraw | number}} {{tradingAccount?.currency}}  for each withdrawal.</li>
                     <li>The maximum amount is  the total amount in your trading account.</li>
                     <li>The first withdrawal order must be enough 48 hours from the first deposit order.</li>
                 </ul>
@@ -330,7 +338,7 @@
                 <div class="small text-secondary"><i class="icon ion-md-time"></i> <em>{{'Last updated:' | translate}} 2020/01/10 11:29</em></div>
             </div>
             <div class="modal-footer pt-1 pb-1 text-right bg-light">
-                <button type="button" class="btn btn-primary pl-4 pr-4 btn-confirm" data-dismiss="modal">I got it</button>
+                <button type="button" class="btn btn-primary pl-4 pr-4 btn-confirm" (click)="ruleModal.hide()" data-dismiss="modal">{{'I got it' | translate}}</button>
             </div>
         </div>
     </div>

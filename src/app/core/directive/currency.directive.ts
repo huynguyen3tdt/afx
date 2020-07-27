@@ -18,9 +18,8 @@ export class CurrencyDirective {
       const numeral = require('numeral');
       const newVal = numeral(event).format('0,0');
       const rawValue = newVal;
-      this.model.valueAccessor.writeValue(newVal);
+      this.model.valueAccessor.writeValue(rawValue);
       this.rawChange.emit(rawValue);
     }
-
   }
 }

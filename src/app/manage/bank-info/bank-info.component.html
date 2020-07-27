@@ -1,42 +1,42 @@
 <h3 class="border-bottom pb-1 mb-3">{{'Withdrawal Account' | translate}}</h3>
 <div class="bank_info" *ngIf="bankAccount">
     <div class="row mb-1">
-        <div class="col-md-4 col-lg-3">
+        <div class="col-4 col-md-4 col-lg-3">
             <label class="label">{{'Beneficiary Bank' | translate}}</label>
         </div>
-        <div class="col-md-8 col-lg-6">
+        <div class="col-8 col-md-8 col-lg-6">
             <strong>{{bankInfor?.name}}</strong>
         </div>
     </div>
     <div class="row mb-1">
-        <div class="col-md-4 col-lg-3">
+        <div class="col-4 col-md-4 col-lg-3">
             <label class="label">{{'Bank code' | translate}}</label>
         </div>
-        <div class="col-md-8 col-lg-6">
+        <div class="col-8 col-md-8 col-lg-6">
             <strong>{{bankInfor?.bic}}</strong>
         </div>
     </div>
     <div class="row mb-1">
-        <div class="col-md-4 col-lg-3">
+        <div class="col-4 col-md-4 col-lg-3">
             <label class="label">{{'Bank branch' | translate}}</label>
         </div>
-        <div class="col-md-8 col-lg-6">
+        <div class="col-8 col-md-8 col-lg-6">
             <strong>{{bankInfor?.branch_name}}</strong>
         </div>
     </div>
     <div class="row mb-1">
-        <div class="col-md-4 col-lg-3">
+        <div class="col-4 col-md-4 col-lg-3">
             <label class="label">{{'Branch code' | translate}}</label>
         </div>
-        <div class="col-md-8 col-lg-6">
+        <div class="col-8 col-md-8 col-lg-6">
             <strong>{{bankInfor?.branch_code}}</strong>
         </div>
     </div>
     <div class="row mb-1">
-        <div class="col-md-4 col-lg-3">
+        <div class="col-4 col-md-4 col-lg-3">
             <label class="label">{{'Account type' | translate}}</label>
         </div>
-        <div class="col-md-8 col-lg-6">
+        <div class="col-8 col-md-8 col-lg-6">
             <strong>{{bankInfor?.fx_acc_type | convertAccTypeBank}}</strong>
         </div>
         <!-- <div class="col-md-8 col-lg-6" *ngIf="bankInfor?.fx_acc_type == 'sa'">
@@ -47,26 +47,26 @@
         </div> -->
     </div>
     <div class="row mb-1">
-        <div class="col-md-4 col-lg-3">
+        <div class="col-4 col-md-4 col-lg-3">
             <label class="label">{{'Bank Account Number' | translate}}</label>
         </div>
-        <div class="col-md-8 col-lg-6">
+        <div class="col-8 col-md-8 col-lg-6">
             <strong>{{bankInfor?.acc_number}}</strong>
         </div>
     </div>
     <div class="row mb-1">
-        <div class="col-md-4 col-lg-3">
+        <div class="col-4 col-md-4 col-lg-3">
             <label class="label">{{'Account holder name' | translate}}</label>
         </div>
-        <div class="col-md-8 col-lg-6">
+        <div class="col-8 col-md-8 col-lg-6">
             <strong>{{bankInfor?.acc_holder_name}}</strong>
         </div>
     </div>
     <div class="row mb-1">
-        <div class="col-md-4 col-lg-3">
+        <div class="col-4 col-md-4 col-lg-3">
             &nbsp;
         </div>
-        <div class="col-md-8 col-lg-6">
+        <div class="col-8 col-md-8 col-lg-6">
             <button type="button" class="btn btn-edit btn-success btn-sm pl-3 pr-3"
                 (click)="editBankAccount()">{{'Edit' | translate}}</button>
         </div>
@@ -78,7 +78,7 @@
             <li class="bank-item">
                 <a href="javascript:;" (click)="showBankInfor(1,'三菱ＵＦＪ')">
                     <div class="text-center">
-                        <div><img src="assets/images/bank_logo/ufj.png" alt="Mizuho Bank" class="bank_logo"></div>
+                        <div><img src="assets/images/bank_logo/ufj.png" alt="Mizuho Bank" class="bank_logo scale_img"></div>
                         <div class="d-none">Mitsubishi UFJ Bank</div>
                     </div>
                 </a>
@@ -175,8 +175,14 @@
                 <label class="label mt-1">{{'Bank Account Number' | translate}}</label>
             </div>
             <div class="col-md-8 col-lg-6">
-                <input type="text" name="bank_account_number" formControlName="bank_account_number"
+                <input type="text" name="bank_account_number" formControlName="bank_account_number" maxlength="50"
                     [className]="bankAccountForm.controls.bank_account_number.errors ? 'form-control form-control-sm invalid' : 'form-control form-control-sm'">
+                <div *ngIf="bankAccountForm.controls?.bank_account_number?.errors?.Required" class="invalid-mess">
+                    <div>{{'This field is required' | translate}}</div>
+                </div>
+                <div *ngIf="bankAccountForm?.controls?.bank_account_number?.errors?.ErrorBankInfo" class="invalid-mess">
+                    <div>{{'If the number is less than 7 digits, add 0 to the head. Example) 0123456' | translate}}</div>
+                </div>
             </div>
         </div>
         <div class="row mb-2">
@@ -187,9 +193,9 @@
                 {{bankInfor?.acc_holder_name}}
             </div>
             <div *ngIf="isCompany == 'true'" class="col-md-8 col-lg-6">
-                <input type="text" name="account_holder" formControlName="account_holder"
+                <input type="text" name="account_holder" formControlName="account_holder" maxlength="50"
                     [className]="bankAccountForm.controls.account_holder.errors ? 'form-control form-control-sm invalid' : 'form-control form-control-sm'">
-                    <div *ngIf="bankAccountForm.controls.account_holder.errors" class="invalid-mess">
+                    <div *ngIf="bankAccountForm?.controls?.account_holder?.errors" class="invalid-mess">
                         <div>{{'Please enter full-width Katakana' | translate}}</div>
                     </div>
             </div>
@@ -206,16 +212,15 @@
             </div>
         </div>
     </form>
-
 </div>
 
-<div class="modal fade" id="modal-select-bank" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true"
+<div bsModal #bankModal="bs-modal" class="modal fade" id="modal-select-bank" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true"
     data-backdrop="static">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header pt-2 pb-2 bg-light">
                 <h5 class="modal-title">{{'Choosing a financial institution' | translate}}</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="bankModal.hide()">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>

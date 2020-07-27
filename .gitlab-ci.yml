@@ -1,8 +1,10 @@
 # This folder is cached between builds
 # http://docs.gitlab.com/ce/ci/yaml/README.html#cache
+# Use the same key to share cached across branchs and jobs
 cache:
+  key: one-key-to-rule-them-all
   paths:
-  - node_modules/
+  - .npm/
 
 stages:
   - build
@@ -13,20 +15,19 @@ check_coding_style:
   stage: test
   image: node:latest
   before_script:
-    - npm install
-    - npm install -g @angular/cli
-    - ng --version
+    - npm ci --cache .npm --prefer-offline
+    - npm run ng version
   script:
-    - ng lint
+    - npm run lint
 
-check_unit_tests:
-  stage: test
-  image: trion/ng-cli-karma
-  before_script:
-    - npm install
-    - ng --version
-  script:
-    - ng test --no-watch --no-progress --browsers=ChromeHeadlessCI
+#check_unit_tests:
+  #stage: test
+  #image: trion/ng-cli-karma
+  #before_script:
+    #- npm ci --cache .npm --prefer-offline
+    #- ng --version
+  #script:
+    #- ng test --no-watch --no-progress --browsers=ChromeHeadlessCI
 
 deploy:
   stage: deploy
@@ -42,11 +43,10 @@ deploy:
     - eval "$(ssh-agent -s)"
     - ssh-add ~/.ssh/id_rsa
     - ssh-keyscan -H $STAGING_SERVER_IP >> ~/.ssh/known_hosts
-    - npm install
-    - npm install -g @angular/cli
-    - ng --version
+    - npm ci --cache .npm --prefer-offline
+    - npm run ng version
   script:
-    - ng build --prod
+    - npm run build-prod
     - zip -r front-$(date +%Y%m%d-%H%M%S).zip dist/afx-front
     - ls -lh *.zip
     - scp *.zip root@$STAGING_SERVER_IP:/root/afx-front

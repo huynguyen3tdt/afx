@@ -1,10 +1,24 @@
-import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { requiredInput } from 'src/app/core/helper/custom-validate.helper';
 import { DepositModel } from 'src/app/core/model/deposit-response.model';
 import { DepositService } from 'src/app/core/services/deposit.service';
-import { element } from 'protractor';
-import { MIN_DEPOST, ACCOUNT_IDS, LOCALE, FXNAME1, TIMEZONEAFX, TIMEZONESERVER } from 'src/app/core/constant/authen-constant';
+import {
+  MIN_DEPOST,
+  ACCOUNT_IDS,
+  LOCALE,
+  TIMEZONEAFX,
+  TIMEZONESERVER,
+  MARGIN_CALL,
+  TYPE_ERROR_TOAST_EN,
+  TYPE_ERROR_TOAST_JP,
+  TIMEOUT_TOAST,
+  ERROR_TIME_CLOSING_EN,
+  ERROR_TIME_CLOSING_JP,
+  ERROR_MIN_DEPOSIT_EN,
+  ERROR_MAX_DEPOSIT_EN,
+  ERROR_MIN_DEPOSIT_JP,
+  ERROR_MAX_DEPOSIT_JP} from 'src/app/core/constant/authen-constant';
 import { WithdrawRequestService } from './../../core/services/withdraw-request.service';
 import { Mt5Model, TransactionModel, WithdrawAmountModel } from 'src/app/core/model/withdraw-request-response.model';
 import { AccountType } from 'src/app/core/model/report-response.model';
@@ -17,6 +31,13 @@ import { ListTransactionComponent } from '../list-transaction/list-transaction.c
 import { LANGUAGLE } from 'src/app/core/constant/language-constant';
 import moment from 'moment-timezone';
 import { take } from 'rxjs/operators';
+import { EnvConfigService } from 'src/app/core/services/env-config.service';
+import { AppSettings } from 'src/app/core/services/api.setting';
+import { PORTAL_CODE, SHOP_CODE } from 'src/app/core/constant/bjp-constant';
+import { ModalDirective } from 'ngx-bootstrap';
+import { Title } from '@angular/platform-browser';
+import { ToastrService } from 'ngx-toastr';
+import { MAX_DEPOSIT } from './../../core/constant/authen-constant';
 const numeral = require('numeral');
 declare var $: any;
 
@@ -28,16 +49,11 @@ declare var $: any;
 export class DepositComponent implements OnInit {
   @ViewChild('listTran', { static: false }) listTran: ListTransactionComponent;
   @ViewChild('BJPSystem', { static: true }) BJPSystem: ElementRef;
-  constructor(private depositService: DepositService,
-              private withdrawRequestService: WithdrawRequestService,
-              private spinnerService: Ng4LoadingSpinnerService,
-              private router: Router,
-              private globalService: GlobalService) { }
-
+  @ViewChild('ruleModal', { static: true }) ruleModal: ModalDirective;
   depositAmountForm: FormGroup;
   depositTransactionForm: FormGroup;
   listBankTranfer: Array<DepositModel>;
-  minDeposit: string;
+  minDeposit: number;
   mt5Infor: Mt5Model;
   equity: number;
   usedMargin: number;
@@ -67,17 +83,39 @@ export class DepositComponent implements OnInit {
   totalAmount: number;
   depositFee: number;
   remark: string;
-  customerName: string;
   timeZone: string;
   bankCode: string;
   language;
-  traddingAccount: AccountType;
+  tradingAccount: AccountType;
+  marginCall: number;
+  isSending: boolean;
+  bjpSystem: string;
+  apiPostBack: string;
+  portalCode: string;
+  shopCode: string;
+  showUFJBank: boolean;
+  kessaiFlag: string;
+  maxDeposit: number;
+
+  constructor(private depositService: DepositService,
+              private withdrawRequestService: WithdrawRequestService,
+              private spinnerService: Ng4LoadingSpinnerService,
+              private router: Router,
+              private globalService: GlobalService,
+              private envConfigService: EnvConfigService,
+              private titleService: Title,
+              private toastr: ToastrService) { }
 
   ngOnInit() {
+    this.showUFJBank = this.envConfigService.getUFJ() === '1';
+    this.kessaiFlag = 'OB';
+    this.titleService.setTitle('フィリップMT5 Mypage');
+    this.initBjpSystem();
     this.language = LANGUAGLE;
     this.locale = localStorage.getItem(LOCALE);
-    this.customerName = localStorage.getItem(FXNAME1);
     this.timeZone = localStorage.getItem(TIMEZONEAFX);
+    this.marginCall = Number(localStorage.getItem(MARGIN_CALL));
+    this.isSending = false;
     this.depositFee = 0;
     if (this.locale === LANGUAGLE.english) {
       this.formatDateYear = EN_FORMATDATE;
@@ -89,32 +127,47 @@ export class DepositComponent implements OnInit {
     this.transactionType = TYPEOFTRANHISTORY.DEPOSIT.key;
     this.listTradingAccount = JSON.parse(localStorage.getItem(ACCOUNT_IDS));
     if (this.listTradingAccount) {
-      this.traddingAccount = this.listTradingAccount[0];
-      this.accountID = this.traddingAccount.value;
+      this.tradingAccount = this.listTradingAccount[0];
+      this.accountID = this.tradingAccount.account_id;
     }
-    this.minDeposit = localStorage.getItem(MIN_DEPOST);
+    this.minDeposit = Number(localStorage.getItem(MIN_DEPOST));
+    this.maxDeposit = Number(localStorage.getItem(MAX_DEPOSIT));
     if (this.accountID) {
-      this.getMt5Infor(Number(this.accountID.split('-')[1]));
-      this.getDwAmount(Number(this.accountID.split('-')[1]));
-      this.remark = this.accountID.split('-')[1];
+      this.getMt5Infor(Number(this.accountID));
+      this.getDwAmount(Number(this.accountID));
+      this.remark = this.accountID;
     }
     this.initDepositAmountForm();
     this.initDepositTransactionForm();
   }
+
+  initBjpSystem() {
+    this.bjpSystem = this.envConfigService.getBJPSystem();
+    this.apiPostBack = this.envConfigService.getConfig() + '/' + AppSettings.API_POST_BACK_BJP;
+    this.portalCode = PORTAL_CODE;
+    this.shopCode = SHOP_CODE;
+  }
+
   initDepositAmountForm() {
     this.depositAmountForm = new FormGroup({
       deposit: new FormControl(numeral(10000).format('0,0'), requiredInput)
+    });
+    this.depositAmountForm.controls.deposit.valueChanges.subscribe((value) => {
+      this.changeDepositCal();
     });
   }
 
   initDepositTransactionForm() {
     this.depositTransactionForm = new FormGroup({
       deposit: new FormControl(numeral(10000).format('0,0'), requiredInput),
-      bankCode: new FormControl('0008', requiredInput)
+      bankCode: new FormControl('0033', requiredInput)
     });
     this.depositValue = numeral(this.depositTransactionForm.controls.deposit.value).value();
     this.totalAmount = this.depositFee + this.depositValue;
-
+    this.bankCode = this.depositTransactionForm.controls.bankCode.value;
+    this.depositTransactionForm.controls.deposit.valueChanges.subscribe((value) => {
+      this.changeDeposit();
+    });
   }
 
   getBankCompany() {
@@ -139,7 +192,7 @@ export class DepositComponent implements OnInit {
         this.equity = this.mt5Infor.equity;
         this.usedMargin = this.mt5Infor.used_margin;
         this.lastestTime = moment(this.mt5Infor.lastest_time).tz(this.timeZone).format(this.formatDateHour);
-        if (this.mt5Infor.free_margin < Number(this.minDeposit)) {
+        if (this.mt5Infor.free_margin < this.minDeposit) {
           this.mt5Infor.free_margin = 0;
         }
       }
@@ -174,36 +227,70 @@ export class DepositComponent implements OnInit {
 
   onSubmit() {
     this.isSubmitted = true;
-    if (this.depositTransactionForm.invalid) {
+    if (this.depositTransactionForm.invalid || this.isSending) {
       return;
     }
     this.depositValue = numeral(this.depositTransactionForm.controls.deposit.value).value();
-    if (this.depositValue < Number(this.minDeposit)) {
+    if (this.depositValue < this.minDeposit) {
       this.depositError = true;
       return;
     }
+    let messageErr;
+    let messageErrMinDeposit;
+    let messageErrMaxDeposit;
+    let typeErr;
+    if (this.locale === LANGUAGLE.english) {
+      messageErr = ERROR_TIME_CLOSING_EN;
+      typeErr = TYPE_ERROR_TOAST_EN;
+      messageErrMinDeposit = ERROR_MIN_DEPOSIT_EN;
+      messageErrMaxDeposit = ERROR_MAX_DEPOSIT_EN;
+    } else {
+      messageErr = ERROR_TIME_CLOSING_JP;
+      typeErr = TYPE_ERROR_TOAST_JP;
+      messageErrMinDeposit = ERROR_MIN_DEPOSIT_JP;
+      messageErrMaxDeposit = ERROR_MAX_DEPOSIT_JP;
+    }
+    this.isSending = true;
     const param = {
-      currency: this.traddingAccount.currency,
+      currency: this.tradingAccount.currency,
       amount: numeral(this.depositTransactionForm.controls.deposit.value).value(),
-      account_id: Number(this.accountID.split('-')[1])
+      account_id: Number(this.accountID),
+      bank_code: this.bankCode
     };
     this.spinnerService.show();
     this.depositService.billingSystem(param).pipe(take(1)).subscribe(response => {
-      this.spinnerService.hide();
       if (response.meta.code === 200) {
         this.controlNo = response.data.id.toString();
-        this.remark = this.accountID.split('-')[1];
+        this.remark = this.accountID;
         this.listTran.ngOnChanges();
         setTimeout(() => {
           this.BJPSystem.nativeElement.click();
         }, 100);
+      } else {
+        if (response.meta.code === 500) {
+          this.toastr.error(messageErr, typeErr, {
+            timeOut: TIMEOUT_TOAST
+          });
+        }
+        if (response.meta.code === 600) {
+          this.toastr.error(messageErrMinDeposit + this.minDeposit.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,'), typeErr, {
+            timeOut: TIMEOUT_TOAST
+          });
+        }
+        if (response.meta.code === 601) {
+          this.toastr.error(messageErrMaxDeposit + this.maxDeposit.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,'), typeErr, {
+            timeOut: TIMEOUT_TOAST
+          });
+        }
+        this.isSending = false;
+        this.spinnerService.hide();
       }
     });
   }
 
-  changeDeposit(event: any) {
+  changeDeposit() {
     this.depositValue = numeral(this.depositTransactionForm.controls.deposit.value).value();
-    if (this.depositValue < Number(this.minDeposit)) {
+    if (this.depositValue < this.minDeposit) {
       this.depositError = true;
       return;
     }
@@ -212,9 +299,9 @@ export class DepositComponent implements OnInit {
     this.calculateDeposit();
   }
 
-  changeDepositCal(event: any) {
+  changeDepositCal() {
     this.depositAmount = numeral(this.depositAmountForm.controls.deposit.value).value();
-    if (this.depositAmount < Number(this.minDeposit)) {
+    if (this.depositAmount < this.minDeposit) {
       this.bankError = true;
       return;
     }
@@ -226,7 +313,7 @@ export class DepositComponent implements OnInit {
     this.errMessageQuickDeposit = false;
     this.equityEstimate = Math.floor(this.equity + numeral(this.depositTransactionForm.controls.deposit.value).value());
     this.marginLevelEstimate = this.globalService.calculateMarginLevel(this.equityEstimate, this.usedMargin);
-    if (this.marginLevelEstimate <= 120 && this.marginLevelEstimate > 0) {
+    if (this.marginLevelEstimate <= this.marginCall && this.marginLevelEstimate > 0) {
       this.errMessageQuickDeposit = true;
     }
   }
@@ -235,21 +322,21 @@ export class DepositComponent implements OnInit {
     this.errMessageBankTran = false;
     this.equityDeposit = Math.floor(this.equity + numeral(this.depositAmountForm.controls.deposit.value).value());
     this.marginLevelEstimateBank = this.globalService.calculateMarginLevel(this.equityDeposit, this.usedMargin);
-    if (this.marginLevelEstimateBank <= 120 && this.marginLevelEstimateBank > 0) {
+    if (this.marginLevelEstimateBank <= this.marginCall && this.marginLevelEstimateBank > 0) {
       this.errMessageBankTran = true;
     }
   }
 
   onRefesh() {
-    this.getMt5Infor(Number(this.accountID.split('-')[1]));
+    this.getMt5Infor(Number(this.accountID));
   }
 
-  changeAccountId() {
-    this.traddingAccount = this.listTradingAccount.find((account: AccountType) => this.accountID === account.value);
-    this.accountID = this.traddingAccount.value;
-    this.getMt5Infor(Number(this.accountID.split('-')[1]));
-    this.getDwAmount(Number(this.accountID.split('-')[1]));
-    this.remark = this.accountID.split('-')[1];
+  changeTradingAccount() {
+    this.tradingAccount = this.listTradingAccount.find((account: AccountType) => this.accountID === account.value);
+    this.accountID = this.tradingAccount.value;
+    this.getMt5Infor(Number(this.accountID));
+    this.getDwAmount(Number(this.accountID));
+    this.remark = this.accountID;
   }
 
   changeBankDeposit() {

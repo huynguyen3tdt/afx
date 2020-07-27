@@ -29,4 +29,8 @@ export class TransacstionModalComponent implements OnInit {
     this.modal.show();
   }
 
+  close() {
+    this.modal.hide();
+  }
+
 }

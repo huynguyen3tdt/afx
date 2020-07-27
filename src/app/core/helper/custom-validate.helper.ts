@@ -88,41 +88,55 @@ const FULL_WIDTH_ACCOUNT = {
   message: '全角で入力してください'
 };
 
+const BANK_ACCOUNT_ERR = {
+  ErrorBankInfo: true,
+  message: '7桁未満の場合は、頭に「０」をつけてください。例）0123456'
+};
+
 const DIGITS_PATTERN = '^\\d+$';
 const SALARY_PATTEN = '^[0-9, ]*$';
 const NOT_SPECIAL_CHARACTERS_FOR_EMAIL = '^[a-zA-Z0-9-._ ]*$';
 const NOT_SPECIAL_CHARACTERS = '^[a-zA-Z0-9 ]*$';
 // /[a-z0-9\._%+!$&*=^|~#%'`?{}/\-]+@([a-z0-9\-]+\.){1,}([a-z]{2,16})/ /^[0-9,.]*$/
 const NOT_SPECIAL_CHARACTERS_CONTAIN_DOT = '^[a-zA-Z0-9,./_ ]*$';
-const EMAIL_PATTERN = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+const EMAIL_PATTERN = '^[A-Za-z0-9._-]+@[a-z0-9.-]+\.[a-z]{2,4}$';
 const HALF_PATTERN = /^[ｦ-ﾟ ､0-9a-zA-Z]*$/;
 const FULL_SIZE_NUMBER = /([０-９])/;
 const HALF_SIZE_NUMBER = /[0-9]/;
 // const FULL_WIDTH_PATTERN = /^[ア-ンｦ-ﾟＡ-ｚA-z０-９0-9ーー\-（(）)／/．\.　 ]*$/;
-const FULL_WIDTH_PATTERN = /^([ァ-ン]|ー)+$/;
-const FULLSIZE_HIRAGANA = /[\u3040-\u309f]/;
+const FULL_WIDTH_PATTERN = /^([ァ-ン()?＆,.'・]|ー|　)+$/;
+const FULLSIZE_HIRAGANA = /[\u3040-\u309fa-zA-Z]/;
 const JP_REQUIRED = /[\u3000-\u303f\u3040-\u309f\u30a0-\u30ff\uff00-\uff9f\u4e00-\u9faf\u3400-\u4dbf]/;
 
 
+// export function emailValidation(control: AbstractControl) {
+//     if (!control.value || typeof control.value === 'string' && !control.value.trim()) {
+//       return DEFAULT_INVALID_REQUIRED;
+//     }
+//     const str1 = control.value.split('@')[0];
+//     const pattern = new RegExp(EMAIL_PATTERN);
+//     const pattern2 = new RegExp(NOT_SPECIAL_CHARACTERS_FOR_EMAIL);
+//     if (!control.value || typeof control.value === 'string' && !control.value.trim()) {
+//       return DEFAULT_INVALID_REQUIRED;
+//     }
+//     if (pattern2.test(str1) === false) {
+//       return DEFAULT_INVALID_EMAIL;
+//     }
+//     if (pattern.test(control.value.trim()) === false) {
+//       return DEFAULT_INVALID_EMAIL;
+//     }
+//     return;
+// }
 export function emailValidation(control: AbstractControl) {
-  if (!control.value || typeof control.value === 'string' && !control.value.trim()) {
-    return DEFAULT_INVALID_REQUIRED;
-  }
-  const str1 = control.value.split('@')[0];
   const pattern = new RegExp(EMAIL_PATTERN);
-  const pattern2 = new RegExp(NOT_SPECIAL_CHARACTERS_FOR_EMAIL);
   if (!control.value || typeof control.value === 'string' && !control.value.trim()) {
     return DEFAULT_INVALID_REQUIRED;
-  }
-  if (pattern2.test(str1) === false) {
-    return DEFAULT_INVALID_EMAIL;
   }
   if (pattern.test(control.value.trim()) === false) {
     return DEFAULT_INVALID_EMAIL;
   }
   return;
 }
-
 
 export function requiredInput(control: AbstractControl) {
   if (!control.value || typeof control.value === 'string' && !control.value.trim()) {
@@ -259,4 +273,17 @@ export function fullWidthRequired(control: AbstractControl) {
         return FULL_WIDTH_ACCOUNT;
         }
   }
+}
+
+export function bankAccountValidation(control: AbstractControl) {
+  if (!control.value || typeof control.value === 'string' && !control.value.trim()) {
+      return DEFAULT_INVALID_REQUIRED;
+  }
+  if (control.value) {
+      const value = control.value.toString().split('');
+      if (value.length < 7) {
+          return BANK_ACCOUNT_ERR;
+      }
+  }
+  return null;
 }

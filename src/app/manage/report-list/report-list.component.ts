@@ -8,8 +8,9 @@ import { GlobalService } from 'src/app/core/services/global.service';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import moment from 'moment-timezone';
 import { LANGUAGLE } from 'src/app/core/constant/language-constant';
-import { BsLocaleService, defineLocale, jaLocale } from 'ngx-bootstrap';
+import { BsLocaleService, defineLocale, jaLocale, ModalDirective } from 'ngx-bootstrap';
 import { take } from 'rxjs/operators';
+import { Title } from '@angular/platform-browser';
 declare var $: any;
 defineLocale('ja', jaLocale);
 
@@ -20,14 +21,15 @@ defineLocale('ja', jaLocale);
 })
 export class ReportListComponent implements OnInit {
   @ViewChild('pdfViewer', { static: true }) public pdfViewer;
+  @ViewChild('pdfModal', { static: true }) pdfModal: ModalDirective;
   currentPage: number;
   pageSize: number;
   totalItem: number;
   tab: string;
   listReport: Array<ReportIDS>;
   searchForm: FormGroup;
-  tradingAccount: number;
   listTradingAccount: Array<AccountType>;
+  tradingAccount: AccountType;
   listTotalItem: Array<number> = [10, 20, 30];
   recordFrom: number;
   recordTo: number;
@@ -37,6 +39,7 @@ export class ReportListComponent implements OnInit {
   formatDateYear: string;
   formatDateHour: string;
   timeZone: string;
+  isOpenPdf: boolean;
   TABS = {
     ALL: { name: 'ALL', value: '' },
     DAILY: { name: 'DAILY', value: 'd' },
@@ -52,9 +55,12 @@ export class ReportListComponent implements OnInit {
 
   constructor(private reportservice: ReportService,
               private spinnerService: Ng4LoadingSpinnerService,
-              private localeService: BsLocaleService) { }
+              private localeService: BsLocaleService,
+              private titleService: Title) { }
 
   ngOnInit() {
+    this.titleService.setTitle('フィリップMT5 Mypage');
+    this.isOpenPdf = false;
     this.language = LANGUAGLE;
     this.timeZone = localStorage.getItem(TIMEZONEAFX);
     this.locale = localStorage.getItem(LOCALE);
@@ -72,6 +78,9 @@ export class ReportListComponent implements OnInit {
     this.currentPage = 1;
     this.pageSize = 10;
     this.listTradingAccount = JSON.parse(localStorage.getItem(ACCOUNT_IDS));
+    if (this.listTradingAccount) {
+      this.tradingAccount = this.listTradingAccount[0];
+    }
     this.initSearchForm();
     this.getReport(this.searchForm.controls.tradingAccount.value, this.currentPage, this.pageSize, this.TABS.ALL.value,
       this.formatDate(this.searchForm.controls.fromDate.value), this.formatDate(this.searchForm.controls.toDate.value));
@@ -79,7 +88,7 @@ export class ReportListComponent implements OnInit {
 
   initSearchForm() {
     this.searchForm = new FormGroup({
-      tradingAccount: new FormControl(this.listTradingAccount ? this.listTradingAccount[0].account_id : null),
+      tradingAccount: new FormControl(this.listTradingAccount ? this.tradingAccount.account_id : null),
       fromDate: new FormControl(null),
       toDate: new FormControl(null)
     });
@@ -95,12 +104,18 @@ export class ReportListComponent implements OnInit {
         this.listReport = response.data.results;
         this.totalItem = response.data.count;
         this.totalPage = (this.totalItem / pageSize) * 10;
+        this.recordFrom = this.pageSize * (this.currentPage - 1) + 1;
+        this.recordTo = this.recordFrom + (this.listReport.length - 1);
         this.listReport.forEach(item => {
           item.create_date += TIMEZONESERVER;
           item.create_date = moment(item.create_date).tz(this.timeZone).format(this.formatDateYear);
+          if (item.file_name.includes(']_')) {
+            item.file_name = item.file_name.split('.')[0].split('_')[2] + '_' + item.file_name.split('.')[0].split('_')[3];
+          } else {
+            item.file_name = item.file_name.split('.')[0].split('_')[1] + '_' + item.file_name.split('.')[0].split('_')[2];
+          }
+          item.report_date = moment((new Date(item.report_date)).toDateString()).format(this.formatDateYear);
         });
-        this.recordFrom = this.pageSize * (this.currentPage - 1) + 1;
-        this.recordTo = this.recordFrom + (this.listReport.length - 1);
       }
     });
   }
@@ -221,18 +236,30 @@ export class ReportListComponent implements OnInit {
   }
 
   openPDF(item: ReportIDS) {
+    if (this.isOpenPdf === true) {
+      return;
+    }
+    this.isOpenPdf = true;
     if (item.file_type === 'pdf') {
       this.spinnerService.show();
       this.reportservice.downLoadReportFile(item.id).pipe(take(1)).subscribe(response => {
-        this.spinnerService.hide();
         const file = new Blob([response], {
           type: 'application/pdf',
         });
         this.pdfViewer.pdfSrc = file; // pdfSrc can be Blob or Uint8Array
         this.pdfViewer.refresh();
-        $('#modal-2').modal('show');
+        // $('#modal-2').modal('show');
+        this.pdfModal.show();
+        this.spinnerService.hide();
+        this.isOpenPdf = false;
+      },
+      () => {
+        this.spinnerService.hide();
+        this.isOpenPdf = false;
       });
-      this.changeReadStatus(item.id);
+      if (!item.read_flg) {
+        this.changeReadStatus(item.id);
+      }
     }
   }
   downLoadFile(item: ReportIDS) {
@@ -263,5 +290,11 @@ export class ReportListComponent implements OnInit {
       a.click();
       this.changeReadStatus(item.id);
     });
+  }
+
+  changeTradingAccount() {
+    this.tradingAccount = this.listTradingAccount.find((account: AccountType) =>
+    this.searchForm.controls.tradingAccount.value === account.account_id);
+    this.searchReport();
   }
 }

@@ -13,13 +13,13 @@
                         aria-orientation="vertical">
                         <a class="nav-link active" #allTab id="v-pills-all-tab" data-toggle="pill" href="#v-pills-all"
                             (click)="checkTab(TABS.ALL.value, 'call')" role="tab" aria-controls="v-pills-all"
-                            aria-selected="true">{{'All' | translate}}</a>
+                            aria-selected="true">{{'Deposit and Withdrawal History' | translate}}</a>
                         <a class="nav-link" #depositTab id="v-pills-deposit-tab" data-toggle="pill" href="#v-pills-all"
                             (click)="checkTab(TABS.DEPOSIT.value, 'call')" role="tab" aria-controls="v-pills-deposit"
-                            aria-selected="false">{{'Deposit' | translate}}</a>
+                            aria-selected="false">{{'Deposit History' | translate}}</a>
                         <a class="nav-link" #withdrawTab id="v-pills-withdrawal-tab" data-toggle="pill"
                             href="#v-pills-all" (click)="checkTab(TABS.WITHDRAWAL.value, 'call')" role="tab"
-                            aria-controls="v-pills-withdrawal" aria-selected="false">{{'Withdrawal' | translate}}</a>
+                            aria-controls="v-pills-withdrawal" aria-selected="false">{{'Withdrawal History' | translate}}</a>
                     </div>
                 </div>
                 <div class="col-md-9 col-lg-10">
@@ -35,8 +35,8 @@
                                             <label class="label d-block mb-0 mr-2">{{'Trading account' | translate}}</label>
                                             <select disabled formControlName="tradingAccount" (change)="changeTradingAccount()" class="form-control form-control-sm">
                                                 <option *ngFor="let item of listTradingAccount"
-                                                    value="{{item.value}}">
-                                                    {{item.value}}</option>
+                                                    value="{{item?.account_id}}">
+                                                    {{item?.value}}</option>
                                             </select>
                                         </div>
                                         <div class="form-group ml-md-1 flex-grow-1">
@@ -62,12 +62,12 @@
                                                     <label class="label d-block mb-0">{{'From' | translate}} </label>
                                                     <div class="input-wrapper">
                                                         <input type="text" name="start-date" class="form-control form-control-sm date" placeholder="YYYY/MM/DD" #dp="bsDatepicker" bsDatepicker formControlName="fromDate"
-                                                         (bsValueChange)="onValueChangeFrom($event)" autocomplete="off" [bsConfig]="{ dateInputFormat: formatDateYear, containerClass: 'theme-blue' }">
+                                                         (bsValueChange)="onValueChangeFrom($event)" autocomplete="off" [bsConfig]="{ showWeekNumbers:false, dateInputFormat: formatDateYear, containerClass: 'theme-blue' }">
                                                         <button type="button" class="btn btn-none btn-sm" (click)="dp.toggle()" [attr.aria-expanded]="dp.isOpen"><i
                                                                 class="icon ion-md-calendar"></i></button>
                                                     </div>
                                                     <div *ngIf="showErrorDate == true" class="invalid-mess">
-                                                        Period is incorrect, the to date must be greater than the from date
+                                                        {{'Period is incorrect, the to date must be greater than the from date' | translate}}
                                                     </div>
                                                 </div>
                                             </div>
@@ -75,7 +75,7 @@
                                                     <label class="label d-block mb-0">{{'To' | translate}} </label>
                                                     <div class="input-wrapper">
                                                         <input type="text" name="end-date" class="form-control form-control-sm date" placeholder="YYYY/MM/DD" #dp2="bsDatepicker" bsDatepicker formControlName="toDate"
-                                                         autocomplete="off" (bsValueChange)="onValueChangeTo($event)" [bsConfig]="{ dateInputFormat: formatDateYear, containerClass: 'theme-blue' }">
+                                                         autocomplete="off" (bsValueChange)="onValueChangeTo($event)" [bsConfig]="{ showWeekNumbers:false, dateInputFormat: formatDateYear, containerClass: 'theme-blue' }">
                                                         <button type="button" class="btn btn-none btn-sm" (click)="dp2.toggle()" [attr.aria-expanded]="dp2.isOpen"><i
                                                                 class="icon ion-md-calendar"></i></button>
                                                     </div>
@@ -99,7 +99,7 @@
                             </div>
                             <!-- END Filter Banr -->
                             <div class="text-right small text-secondary">{{'Currency:' | translate}}
-                                <strong>JPY</strong></div>
+                                <strong>{{tradingAccount?.currency}}</strong></div>
                             <div class="table-responsive">
                                 <table class="table table-sm table-hover mb-3" cellspacing="0" cellpadding="0">
                                     <thead>

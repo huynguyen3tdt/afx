@@ -18,6 +18,7 @@ import { take } from 'rxjs/operators';
 import { ResetPasswordParam, ResetPasswordWithTokenParam, CheckTokenParam } from 'src/app/core/model/user.model';
 import { ToastrService } from 'ngx-toastr';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-reset-password',
@@ -36,13 +37,17 @@ export class ResetPasswordComponent implements OnInit {
   token: string;
   locale: string;
   showScreen: boolean;
+  isSending: boolean;
   constructor(private authenService: AuthenService,
               private router: Router,
               private activatedRoute: ActivatedRoute,
               private toastr: ToastrService,
-              private spinnerService: Ng4LoadingSpinnerService) { }
+              private spinnerService: Ng4LoadingSpinnerService,
+              private titleService: Title) { }
 
   ngOnInit() {
+    this.titleService.setTitle('フィリップMT5 Mypage');
+    this.isSending = false;
     this.oldPassword = atob(localStorage.getItem(PASSWORD_LOGIN));
     this.initResetPassForm();
     this.activatedRoute.queryParams.pipe(take(1)).subscribe(res => {
@@ -112,6 +117,10 @@ export class ResetPasswordComponent implements OnInit {
       this.erroMessage = true;
       return;
     }
+    if (this.isSending === true) {
+      return;
+    }
+    this.isSending = true;
     const locale = localStorage.getItem(LOCALE);
     let paramSubmit;
     let messageSuccess;
@@ -124,14 +133,14 @@ export class ResetPasswordComponent implements OnInit {
       new_password: this.resetPassForm.controls.confirm_password.value,
       token: this.token
     };
+    if (locale === LANGUAGLE.english) {
+      messageSuccess = 'You have successfully changed the password';
+      typeSuccess = TYPE_SUCCESS_TOAST_EN;
+    } else {
+      messageSuccess = 'パスワードを変更しました';
+      typeSuccess = TYPE_SUCCESS_TOAST_JP;
+    }
     if (this.token) {
-      if (locale === LANGUAGLE.english) {
-        messageSuccess = 'You have successfully changed the password';
-        typeSuccess = TYPE_SUCCESS_TOAST_EN;
-      } else {
-        messageSuccess = 'パスワードを変更しました';
-        typeSuccess = TYPE_SUCCESS_TOAST_JP;
-      }
       paramSubmit = paramToken;
       this.spinnerService.show();
       this.authenService.resetPassword(paramSubmit).pipe(take(1)).subscribe(response => {
@@ -141,8 +150,11 @@ export class ResetPasswordComponent implements OnInit {
           this.toastr.success(messageSuccess, typeSuccess, {
             timeOut: TIMEOUT_TOAST
           });
-        } else if (response.meta.code === 103) {
-          this.errorMess = response.meta.message;
+        } else {
+          this.isSending = false;
+          if (response.meta.code === 103) {
+            this.errorMess = response.meta.message;
+          }
         }
       });
     } else {
@@ -153,8 +165,14 @@ export class ResetPasswordComponent implements OnInit {
         if (response.meta.code === 200) {
           localStorage.setItem(CHANGE_PASS_FLG, 'false');
           this.router.navigate(['/login']);
-        } else if (response.meta.code === 103) {
-          this.errorMess = response.meta.message;
+          this.toastr.success(messageSuccess, typeSuccess, {
+            timeOut: TIMEOUT_TOAST
+          });
+        } else {
+          this.isSending = false;
+          if (response.meta.code === 103) {
+            this.errorMess = response.meta.message;
+          }
         }
       });
     }

@@ -25,11 +25,13 @@ export interface LoginParam {
   login_id: string;
   password: string;
   device_type: string;
+  wl_code: string;
 }
 
 export interface ForgotPasswordParam {
   login_id: string;
   dob: string;
+  wl_code: string;
 }
 
 export interface ResetPasswordParam {
@@ -61,7 +63,7 @@ export interface UpdateUserParam {
   };
   email: string;
   mobile: string;
-  lang: string;
+  lang?: string;
   surveys: Array<QuestionModel>;
   survey_cd: string;
 }
@@ -75,9 +77,9 @@ export interface UpdateCorporateParam {
       street2: string;
       fx_street3: string;
     };
-    mobile: string;
+    phone: string;
     fx_fax: string;
-    lang: string;
+    lang?: string;
   };
   pic: {
     name: string;
@@ -133,8 +135,8 @@ export interface CorporateModel {
       status: string,
       value: string,
     },
-    mobile: string,
     lang: string,
+    phone: string
   };
   pic: {
     info: {

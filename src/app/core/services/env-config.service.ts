@@ -35,4 +35,16 @@ export class EnvConfigService {
       return this.envConfig.hostNameRegis;
     }
   }
+
+  getBJPSystem() {
+    if (this.envConfig) {
+      return this.envConfig.bjpSystem;
+    }
+  }
+
+  getUFJ() {
+    if (this.envConfig) {
+      return this.envConfig.UFJBank;
+    }
+  }
 }
