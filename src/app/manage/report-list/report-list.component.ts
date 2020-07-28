@@ -52,6 +52,7 @@ export class ReportListComponent implements OnInit {
     YEAR: 'year'
   };
   language;
+  reportName: string;
 
   constructor(private reportservice: ReportService,
               private spinnerService: Ng4LoadingSpinnerService,
@@ -240,6 +241,7 @@ export class ReportListComponent implements OnInit {
       return;
     }
     this.isOpenPdf = true;
+    this.reportName = item.file_name;
     if (item.file_type === 'pdf') {
       this.spinnerService.show();
       this.reportservice.downLoadReportFile(item.id).pipe(take(1)).subscribe(response => {
