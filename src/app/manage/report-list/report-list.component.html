@@ -148,11 +148,19 @@
 </div>
 
 
-<div bsModal #pdfModal="bs-modal" id="modal-2" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+<div bsModal #pdfModal="bs-modal" id="modal-2" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog"
+    aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <ng2-pdfjs-viewer style="height: 900px" #pdfViewer></ng2-pdfjs-viewer>
+            <div class="modal-header">
+                <h5 class="modal-title"><strong>{{reportName}}</strong></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="pdfModal.hide()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <ng2-pdfjs-viewer style="height: 650px" #pdfViewer></ng2-pdfjs-viewer>
         </div>
     </div>
 </div>
+
 <ng4-loading-spinner [timeout]="30000"> </ng4-loading-spinner>
