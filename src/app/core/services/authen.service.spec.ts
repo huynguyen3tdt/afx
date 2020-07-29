@@ -45,7 +45,8 @@ describe('AuthenService', () => {
     const param = {
       login_id: '1001',
       password: '12345678',
-      device_type: 'android'
+      device_type: 'android',
+      wl_code: '20'
     };
     service.login(param).subscribe((response: LoginResponseModel) => {
       expect(response).toEqual(MOCK_LOGIN_RESPONSE);
@@ -64,7 +65,8 @@ describe('AuthenService', () => {
     () => {
     const param = {
       login_id: 'minhchau@tamdongtam.vn',
-      dob: '2020-02-11T06:28:35.975Z'
+      dob: '2020-02-11T06:28:35.975Z',
+      wl_code: '20'
     };
     service.forgotPassWord(param).subscribe((response: LoginResponseModel) => {
       expect(response).toEqual(MOCK_RESPONSE_WITHOUT_DATA);
