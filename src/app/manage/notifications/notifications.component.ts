@@ -87,6 +87,9 @@ export class NotificationsComponent implements OnInit {
       } else {
         this.showNoti = false;
       }
+      if (param.unread) {
+        this.changeFilterRead();
+      }
     });
     this.listTradingAccount = JSON.parse(localStorage.getItem(ACCOUNT_IDS));
     if (this.listTradingAccount) {
@@ -337,6 +340,13 @@ export class NotificationsComponent implements OnInit {
   }
 
   initFilterRead() {
+    this.unreadAll = false;
+    this.unreadCampagn = false;
+    this.unreadImportant = false;
+    this.unreadNotification = false;
+  }
+
+  changeFilterRead() {
     this.unreadAll = true;
     this.unreadCampagn = true;
     this.unreadImportant = true;
