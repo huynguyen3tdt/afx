@@ -337,10 +337,10 @@ export class NotificationsComponent implements OnInit {
   }
 
   initFilterRead() {
-    this.unreadAll = false;
-    this.unreadCampagn = false;
-    this.unreadImportant = false;
-    this.unreadNotification = false;
+    this.unreadAll = true;
+    this.unreadCampagn = true;
+    this.unreadImportant = true;
+    this.unreadNotification = true;
   }
 
 }
