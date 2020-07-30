@@ -262,7 +262,7 @@
   "The address could not be found from the zip code": "郵便番号から住所が見つかりませんでした。",
   "Menu": "メニュー",
   "Invalid email or password": "無効なメールアドレスまたはパスワードです",
-  "Period is incorrect, the to date must be greater than the from date": "期間を指定することが正しくありません。終了日は開始日より後の日付を指定しなければなりません。",
+  "Period is incorrect, the to date must be greater than the from date": "日付指定に誤りがあります。",
   "I got it": "了解",
   "Requests made by 15:00 will be withdrawn on the next business day.": "15:00までのご依頼は翌々営業日に出金となります。",
   "Requests received after 15:00 will be handled the next business day.": "15:00以降に受け付けたご依頼については翌営業日での取扱いとさせていただきます。",
