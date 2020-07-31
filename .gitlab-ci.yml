@@ -54,3 +54,34 @@ deploy:
     - ssh root@$STAGING_SERVER_IP "unzip -o /root/afx-front/latest.zip -d /var/www/ && rm -rf /var/www/afx && mv /var/www/dist/afx-front /var/www/afx && echo `TZ=Asia/Ho_Chi_Minh date` >> /root/afx-front/ci-staging.log"
   only:
     - master
+
+
+build:
+  stage: build
+  image: node:14.7
+  variables:
+    FILE_SERVER_IP: "$FILE_SERVER_IP"
+    FILE_SERVER_PRIVATE_SSH_KEY: "$FILE_SERVER_PRIVATE_SSH_KEY"
+    FILE_SERVER_BUILD_DIR: "$FILE_SERVER_BUILD_DIR"
+  script:
+    - apt-get update && apt-get install -y zip unzip
+    - mkdir -p ~/.ssh
+    - echo "$FILE_SERVER_PRIVATE_SSH_KEY" | tr -d '\r' > ~/.ssh/id_rsa
+    - chmod 600 ~/.ssh/id_rsa
+    - eval "$(ssh-agent -s)"
+    - ssh-add ~/.ssh/id_rsa
+    - ssh-keyscan -H $FILE_SERVER_IP >> ~/.ssh/known_hosts
+    - npm ci --cache .npm --prefer-offline
+    - npm run ng version
+
+    - npm run build-prod
+    - cd dist
+    - zip -r -q afx-front.zip afx-front
+    - ls -lh afx-front.zip
+    - scp afx-front.zip root@$FILE_SERVER_IP:$FILE_SERVER_BUILD_DIR
+    - SUCCESS_MSG="$(TZ=Asia/Ho_Chi_Minh date +'%F %T %Z') - Build Success, commit $(git rev-parse HEAD)"
+    - ssh root@$FILE_SERVER_IP "echo $SUCCESS_MSG >> $FILE_SERVER_BUILD_DIR/build.log"
+
+  only:
+    - master
+
