@@ -40,7 +40,7 @@
                                 </a>
                             </ng-container>
 
-                            <div class="text-center small"><a [routerLink]="['/manage/notifications']" class="text-secondary">{{'View more' | translate}}</a></div>
+                            <div class="text-center small"><a [routerLink]="['/manage/notifications']" [queryParams]="{unread: 'true'}" class="text-secondary">{{'View more' | translate}}</a></div>
                         </div>
                     </li>
                     <!-- <li class="nav-item nav-item-user-panel">
