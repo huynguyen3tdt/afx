@@ -39,6 +39,7 @@ import { ModalDirective } from 'ngx-bootstrap';
 import { take } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
 import { Title } from '@angular/platform-browser';
+import { ModalDepositWithdrawComponent } from '../modal-deposit-withdraw/modal-deposit-withdraw.component';
 declare var $: any;
 const numeral = require('numeral');
 
@@ -51,7 +52,7 @@ export class WithdrawRequestComponent implements OnInit {
   @ViewChild('listTran', { static: false }) listTran: ListTransactionComponent;
   @ViewChild('modalWithdrawConfirm', { static: true }) modalWithdrawConfirm: ModalDirective;
   @ViewChild('modalWithdrawResult', { static: true }) modalWithdrawResult: ModalDirective;
-  @ViewChild('ruleModal', { static: false }) ruleModal: ModalDirective;
+  @ViewChild('modalRuleWithdraw', { static: false }) modalRuleWithdraw: ModalDepositWithdrawComponent;
   mt5Infor: Mt5Model;
   accountType;
   bankInfor: BankInforModel;
@@ -318,5 +319,9 @@ export class WithdrawRequestComponent implements OnInit {
     } else {
       return true;
     }
+  }
+
+  openModal() {
+    this.modalRuleWithdraw.open();
   }
 }

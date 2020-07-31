@@ -39,6 +39,7 @@ import { Title } from '@angular/platform-browser';
 import { ToastrService } from 'ngx-toastr';
 import { MAX_DEPOSIT } from './../../core/constant/authen-constant';
 const numeral = require('numeral');
+import { ModalDepositWithdrawComponent } from '../modal-deposit-withdraw/modal-deposit-withdraw.component';
 declare var $: any;
 
 @Component({
@@ -49,7 +50,7 @@ declare var $: any;
 export class DepositComponent implements OnInit {
   @ViewChild('listTran', { static: false }) listTran: ListTransactionComponent;
   @ViewChild('BJPSystem', { static: true }) BJPSystem: ElementRef;
-  @ViewChild('ruleModal', { static: true }) ruleModal: ModalDirective;
+  @ViewChild('modalRuleDeposit', { static: false }) modalRuleDeposit: ModalDepositWithdrawComponent;
   depositAmountForm: FormGroup;
   depositTransactionForm: FormGroup;
   listBankTranfer: Array<DepositModel>;
@@ -341,5 +342,9 @@ export class DepositComponent implements OnInit {
 
   changeBankDeposit() {
     this.bankCode = this.depositTransactionForm.controls.bankCode.value;
+  }
+
+  openModal() {
+    this.modalRuleDeposit.open();
   }
 }
