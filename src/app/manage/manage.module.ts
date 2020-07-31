@@ -28,6 +28,7 @@ import { BankInfoComponent } from './bank-info/bank-info.component';
 import { SettingComponent } from './setting/setting.component';
 import { ConvertAccountTypeBankPipe } from '../core/pipe/convert-account-type-bank.pipe';
 import { SafePipe } from '../core/pipe/safePipe.pipe';
+import { ModalDepositWithdrawComponent } from './modal-deposit-withdraw/modal-deposit-withdraw.component';
 
 @NgModule({
     imports: [
@@ -62,7 +63,8 @@ import { SafePipe } from '../core/pipe/safePipe.pipe';
       ConvertFinancialPipe,
       ConvertInvestmentPurposePipe,
       ConvertAccountTypeBankPipe,
-      SafePipe
+      SafePipe,
+      ModalDepositWithdrawComponent
     ],
     schemas: [NO_ERRORS_SCHEMA]
 })
