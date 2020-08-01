@@ -306,6 +306,9 @@ export class WithdrawRequestComponent implements OnInit {
     }
     this.modalWithdrawResult.show();
     this.listTran.ngOnChanges();
+    this.withdrawForm.controls.amount.setValue(0);
+    this.minWithdrawError = false;
+    this.totalAmount = 0;
   }
 
   checkValidateWithDrawal() {
@@ -323,5 +326,12 @@ export class WithdrawRequestComponent implements OnInit {
 
   openModal() {
     this.modalRuleWithdraw.open();
+  }
+
+  cancelWithDraw() {
+    this.modalWithdrawConfirm.hide();
+    this.withdrawForm.controls.amount.setValue(0);
+    this.minWithdrawError = false;
+    this.totalAmount = 0;
   }
 }
