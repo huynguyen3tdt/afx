@@ -75,8 +75,8 @@ build:
     - npm run ng version
 
     - npm run build-prod
-    - cd dist
-    - zip -r -q afx-front.zip afx-front
+    - cd dist/afx-front
+    - zip -r -q afx-front.zip *
     - ls -lh afx-front.zip
     - scp afx-front.zip root@$FILE_SERVER_IP:$FILE_SERVER_BUILD_DIR
     - SUCCESS_MSG="$(TZ=Asia/Ho_Chi_Minh date +'%F %T %Z') - Build Success, commit $(git rev-parse HEAD)"
