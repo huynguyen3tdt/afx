@@ -238,7 +238,7 @@
   "The temporary password will be sent to the registered email address.": "ご登録メールアドレスへ30分有効なパスワード変更用URLを送りました。ご確認ください。",
   "Your withdrawal request has been received:": "出金依頼を受け付けました：",
   "Reason: MT5 account balance is not enough money to withdraw": "理由：MT5アカウントの残高では引き出しに十分な金額がありません",
-  "Margin Level estimate after deposit": "入金後の予定証拠金率",
+  "Margin Level estimate after deposit": "入金後の証拠金維持率",
   "Margin Level estimate after withdraw": "出金後の予定証拠金率",
   "Entire Deposit History": "入金履歴",
   "Entire Withdrawl History": "出金履歴",
