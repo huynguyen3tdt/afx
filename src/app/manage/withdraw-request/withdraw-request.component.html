@@ -263,6 +263,6 @@
   </div>
 </div>
 
-<app-modal-deposit-withdraw #modalRuleWithdraw></app-modal-deposit-withdraw>
+<app-modal-deposit-withdraw #modalRuleWithdraw [minDeposit]="minDeposit" [minWithDraw]="minWithDraw" [tradingAccount]="tradingAccount" ></app-modal-deposit-withdraw>
 
 <ng4-loading-spinner [timeout]="30000"> </ng4-loading-spinner>

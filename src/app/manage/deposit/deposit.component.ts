@@ -18,7 +18,8 @@ import {
   ERROR_MIN_DEPOSIT_EN,
   ERROR_MAX_DEPOSIT_EN,
   ERROR_MIN_DEPOSIT_JP,
-  ERROR_MAX_DEPOSIT_JP} from 'src/app/core/constant/authen-constant';
+  ERROR_MAX_DEPOSIT_JP,
+  MIN_WITHDRAW} from 'src/app/core/constant/authen-constant';
 import { WithdrawRequestService } from './../../core/services/withdraw-request.service';
 import { Mt5Model, TransactionModel, WithdrawAmountModel } from 'src/app/core/model/withdraw-request-response.model';
 import { AccountType } from 'src/app/core/model/report-response.model';
@@ -97,6 +98,7 @@ export class DepositComponent implements OnInit {
   showUFJBank: boolean;
   kessaiFlag: string;
   maxDeposit: number;
+  minWithDraw: number;
 
   constructor(private depositService: DepositService,
               private withdrawRequestService: WithdrawRequestService,
@@ -132,6 +134,7 @@ export class DepositComponent implements OnInit {
       this.accountID = this.tradingAccount.account_id;
     }
     this.minDeposit = Number(localStorage.getItem(MIN_DEPOST));
+    this.minWithDraw = Number(localStorage.getItem(MIN_WITHDRAW));
     this.maxDeposit = Number(localStorage.getItem(MAX_DEPOSIT));
     if (this.accountID) {
       this.getMt5Infor(Number(this.accountID));

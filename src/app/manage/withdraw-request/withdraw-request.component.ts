@@ -95,6 +95,7 @@ export class WithdrawRequestComponent implements OnInit {
   maxWithDraw: number;
   // withdrawAmount
   marginCall: number;
+  minDeposit: number;
 
   constructor(private withdrawRequestService: WithdrawRequestService,
               private spinnerService: Ng4LoadingSpinnerService,
@@ -109,7 +110,8 @@ export class WithdrawRequestComponent implements OnInit {
     this.language = LANGUAGLE;
     this.withdrawFee = 0;
     this.timeZone = localStorage.getItem(TIMEZONEAFX);
-    this.minWithDraw = Number(localStorage.getItem(MIN_DEPOST));
+    this.minWithDraw = Number(localStorage.getItem(MIN_WITHDRAW));
+    this.minDeposit = Number(localStorage.getItem(MIN_DEPOST));
     this.maxWithDraw = Number(localStorage.getItem(MAX_WITHDRAW));
     this.locale = localStorage.getItem(LOCALE);
     this.marginCall = Number(localStorage.getItem(MARGIN_CALL));

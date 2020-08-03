@@ -15,14 +15,14 @@
                               <li>Bank transfer</li>
                           </ul>
                       </li>
-                      <li>The minimum deposit amount is {{minDeposit}} {{tradingAccount?.currency}} for one time.</li>
+                      <li>The minimum deposit amount is {{minDeposit | number}} {{tradingAccount?.currency}} for one time.</li>
                   </ul>
                   <h4 class="text-primary">II. Withdraw al.</h4>
                   <ul>
                       <li>Funds may only be withdrawn to owner accounts in order to ensure financial security and prevent money laundering.</li>
                       <li>Phillip will withdraw on your trading account and transfer to your bank account at the bank's working hours from 8:30 AM- 16:00 PM Monday to Friday.</li>
                       <li>Withdrawal order make over 16:00PM  will be forwarded the next day.</li>
-                      <li>Minimum withdrawal amount of  {{minDeposit | number}} {{tradingAccount?.currency}}  for each withdrawal.</li>
+                      <li>Minimum withdrawal amount of  {{minWithDraw | number}} {{tradingAccount?.currency}}  for each withdrawal.</li>
                       <li>The maximum amount is  the total amount in your trading account.</li>
                       <li>The first withdrawal order must be enough 48 hours from the first deposit order.</li>
                   </ul>
@@ -48,7 +48,7 @@
                               こちらは当社財務部が銀行入金を当日9時～15時まで確認し反映するためお時間がかかります。
                           </ul>
                       </li>
-                      <li>是非クイック入金をご利用ください。なお最低入金額は1回{{minDeposit | number}}円です。</li>
+                      <li>是非クイック入金をご利用ください。なお最低入金額は1回{{minDeposit| number}}円です。</li>
                   </ul>
                   <h4 class="text-primary">II.出金。</h4>
                   <ul>
@@ -57,7 +57,7 @@
                       <li>15時を過ぎるご出金依頼は翌日扱いとさせていただきます。
                           尚、出金のご依頼を頂くと取引口座からその資金は使えなくなります。</li>
                       <li>お客様の銀行口座への着金までには時間がございますので、リスク管理にはご留意いただけますようお願いいたします。</li>
-                      <li>また、原則、１回の最低出金額は、全額出金する場合を除いて{{minDeposit | number}}円とさせていただきます。</li>
+                      <li>また、原則、１回の最低出金額は、全額出金する場合を除いて{{minWithDraw| number}}円とさせていただきます。</li>
                       <li>逆に１回の最高出金額は1億円未満とさせていただきます。
                           最大出金可能金額は以下の計算式から算出できます。</li>
                           残高（預り金）－評価損（評価益は加算となりません）－必要証拠金＜1億円
