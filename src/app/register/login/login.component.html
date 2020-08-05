@@ -47,11 +47,18 @@
                                     </div>
                             </div>
                             <div *ngIf="invalidAccount == true" class="invalid-mess mb-2">
-                                    <div>{{'Invalid email or password' |translate}}</div>
+                              <div>{{'Login ID and Password is NOT matching' |translate}}</div>
+                              <div>{{'Attempts remaining' |translate}}:{{numFailLogin}}</div>
                             </div>
                             <div *ngIf="passWordExpired == true" class="invalid-mess mb-2">
                                 <div>{{'Password expired' |translate}}</div>
                             </div>
+                            <div *ngIf="isLockAccount == true" class="invalid-mess mb-2">
+                              <div>{{'Your account has been locked because you entered the wrong password more than' |translate}}
+                                {{numFailLogin}}
+                                {{'times consecutively' | translate}}
+                              </div>
+                          </div>
                             <div class="form-group">
                                 <label class="container-checkbox small">{{'Remember me' | translate}}
                                     <input tabindex="3" type="checkbox" name="save_" formControlName="remember">

@@ -17,6 +17,7 @@ export interface LoginResponseModel {
         tz: string;
         margin_call: number;
         margin_stop_out: number;
+        num_login?: number;
     };
 }
 
