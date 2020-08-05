@@ -53,6 +53,9 @@
                             <div *ngIf="passWordExpired == true" class="invalid-mess mb-2">
                                 <div>{{'Password expired' |translate}}</div>
                             </div>
+                            <div *ngIf="isFoundUser == true" class="invalid-mess mb-2">
+                              <div>{{'Invalid email or password' |translate}}</div>
+                          </div>
                             <div *ngIf="isLockAccount == true" class="invalid-mess mb-2">
                               <div>{{'Your account has been locked because you entered the wrong password more than' |translate}}
                                 {{numFailLogin}}

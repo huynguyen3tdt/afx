@@ -50,6 +50,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
   isFailLogin: boolean;
   isLockAccount: boolean;
   numFailLogin: number;
+  isFoundUser: boolean;
 
   constructor(
     private router: Router,
@@ -66,6 +67,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
     this.isSending = false;
     this.isFailLogin = false;
     this.isLockAccount = false;
+    this.isFoundUser = false;
     this.login_layout();
     $(window).resize(() => {
       this.login_layout();
@@ -117,6 +119,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
     this.invalidAccount = false;
     this.isFailLogin = false;
     this.isLockAccount = false;
+    this.isFoundUser = false;
     if (this.loginFormGroup.invalid) {
       return;
     }
@@ -194,6 +197,8 @@ export class LoginComponent implements OnInit, AfterViewInit {
         } else if (response.meta.code === 111) {
           this.numFailLogin = response.data.num_login;
           this.isLockAccount = true;
+        } else if (response.meta.code === 109) {
+          this.isFoundUser = true;
         }
       }
     });
