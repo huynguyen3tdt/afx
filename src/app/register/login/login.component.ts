@@ -47,6 +47,9 @@ export class LoginComponent implements OnInit, AfterViewInit {
   passWordExpired: boolean;
   hostNameRegis: string;
   isSending: boolean;
+  isFailLogin: boolean;
+  isLockAccount: boolean;
+  numFailLogin: number;
 
   constructor(
     private router: Router,
@@ -61,6 +64,8 @@ export class LoginComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.titleService.setTitle('フィリップMT5 口座ログイン');
     this.isSending = false;
+    this.isFailLogin = false;
+    this.isLockAccount = false;
     this.login_layout();
     $(window).resize(() => {
       this.login_layout();
@@ -110,6 +115,8 @@ export class LoginComponent implements OnInit, AfterViewInit {
     this.isSubmitted = true;
     this.passWordExpired = false;
     this.invalidAccount = false;
+    this.isFailLogin = false;
+    this.isLockAccount = false;
     if (this.loginFormGroup.invalid) {
       return;
     }
@@ -180,9 +187,13 @@ export class LoginComponent implements OnInit, AfterViewInit {
       } else {
         this.isSending = false;
         if (response.meta.code === 102) {
+          this.numFailLogin = response.data.num_login;
           this.invalidAccount = true;
         } else if (response.meta.code === 101) {
           this.passWordExpired = true;
+        } else if (response.meta.code === 111) {
+          this.numFailLogin = response.data.num_login;
+          this.isLockAccount = true;
         }
       }
     });

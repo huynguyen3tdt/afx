@@ -272,5 +272,9 @@
   "Unread Notifications": "Unread Notifications",
   "Request": "Request",
   "Finish": "Finish",
-  "If the number is less than 7 digits, add 0 to the head. Example) 0123456": "If the number is less than 7 digits, add 0 to the head. Example) 0123456"
+  "If the number is less than 7 digits, add 0 to the head. Example) 0123456": "If the number is less than 7 digits, add 0 to the head. Example) 0123456",
+  "Login ID and Password is NOT matching" : "Login ID and Password is NOT matching",
+  "Attempts remaining": "Attempts remaining",
+  "Your account has been locked because you entered the wrong password more than": "Your account has been locked because you entered the wrong password more than",
+  "times consecutively": "times consecutively"
 }

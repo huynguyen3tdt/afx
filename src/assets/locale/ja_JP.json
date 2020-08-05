@@ -270,5 +270,9 @@
   "Unread Notifications": "未読のお知らせ",
   "Request": "依頼",
   "Finish": "完了",
-  "If the number is less than 7 digits, add 0 to the head. Example) 0123456": "7桁未満の場合は、頭に「０」をつけてください。例）0123456"
+  "If the number is less than 7 digits, add 0 to the head. Example) 0123456": "7桁未満の場合は、頭に「０」をつけてください。例）0123456",
+  "Login ID and Password is NOT matching" : "無効なメールアドレスまたはパスワードです",
+  "Attempts remaining": "残った回数",
+  "Your account has been locked because you entered the wrong password more than": "間違ったパスワードを",
+  "times consecutively": "回以上連続して入力したから、口座がロックされました。"
 }
