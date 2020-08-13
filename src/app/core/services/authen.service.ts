@@ -15,6 +15,8 @@ import {
   ChangeEmail,
   CheckTokenParam
 } from '../model/user.model';
+import { MailFlagResponseModel } from '../model/mail-flag.model';
+import { MailFlagModel } from 'src/app/core/model/mail-flag.model';
 
 @Injectable({
   providedIn: 'root'
@@ -112,6 +114,30 @@ export class AuthenService {
   checkTokenEmail(param: CheckTokenParam): Observable<ResponseWihtoutDataModel>  {
     return this.httpClient
       .post(`${this.envConfigService.getConfig()}/${AppSettings.API_CHECK_TOKEN_EMAIL}`, param)
+      .pipe(
+      catchError((error: HttpErrorResponse) => {
+        return new Observable((observer: InnerSubscriber<any, any>) => {
+          observer.next(error);
+        });
+      })
+    );
+  }
+
+  getMailFlag(): Observable<MailFlagResponseModel>  {
+    return this.httpClient
+      .get(`${this.envConfigService.getConfig()}/${AppSettings.API_MAIL_FLG}`)
+      .pipe(
+      catchError((error: HttpErrorResponse) => {
+        return new Observable((observer: InnerSubscriber<any, any>) => {
+          observer.next(error);
+        });
+      })
+    );
+  }
+
+  updateMailFlag(param: MailFlagModel): Observable<MailFlagResponseModel>  {
+    return this.httpClient
+      .put(`${this.envConfigService.getConfig()}/${AppSettings.API_MAIL_FLG}`, param)
       .pipe(
       catchError((error: HttpErrorResponse) => {
         return new Observable((observer: InnerSubscriber<any, any>) => {

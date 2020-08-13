@@ -9,6 +9,7 @@ import { AuthenService } from 'src/app/core/services/authen.service';
 import { UserService } from 'src/app/core/services/user.service';
 import { take } from 'rxjs/operators';
 import { ResetPasswordParam } from 'src/app/core/model/user.model';
+import { MailFlagModel } from 'src/app/core/model/mail-flag.model';
 declare var $: any;
 
 @Component({
@@ -17,7 +18,7 @@ declare var $: any;
   styleUrls: ['./setting.component.scss']
 })
 export class SettingComponent implements OnInit {
-  changePassForm: FormGroup;
+  settingForm: FormGroup;
   countries = ['Vietnamese', 'English'];
   language: string;
   listTradingAccount: Array<AccountType>;
@@ -26,6 +27,8 @@ export class SettingComponent implements OnInit {
   errorMessage: boolean;
   invalidPassword: boolean;
   successPassword: boolean;
+  mailFlag: MailFlagModel;
+
   constructor(private spinnerService: Ng4LoadingSpinnerService,
               private translate: TranslateService,
               private userService: UserService,
@@ -34,16 +37,31 @@ export class SettingComponent implements OnInit {
   ngOnInit() {
     this.initSettingForm();
     this.openSetting();
+    this.getMailFlag();
   }
 
   initSettingForm() {
-    this.changePassForm = new FormGroup({
+    this.settingForm = new FormGroup({
       current_password: new FormControl('', [passwordValidation]),
       new_password: new FormControl('', [passwordValidation]),
       confirm_password: new FormControl('', [passwordValidation]),
       language: new FormControl(),
+      marginCallMail: new FormControl(false),
+      lossCutMail: new FormControl(false)
     });
-    this.changePassForm.controls.language.setValue(localStorage.getItem(LOCALE));
+    this.settingForm.controls.language.setValue(localStorage.getItem(LOCALE));
+  }
+
+  getMailFlag() {
+    this.spinnerService.show();
+    this.authenService.getMailFlag().subscribe(response => {
+      this.spinnerService.hide();
+      if (response.meta.code === 200) {
+        this.mailFlag = response.data;
+        this.settingForm.controls.marginCallMail.setValue(this.mailFlag.margincall_email_flg);
+        this.settingForm.controls.lossCutMail.setValue(this.mailFlag.losscut_email_flg);
+      }
+    });
   }
 
   changeLang(language) {
@@ -59,20 +77,20 @@ export class SettingComponent implements OnInit {
     this.isSubmittedSetting = true;
     this.successPassword = false;
     this.invalidPassword = false;
-    if (this.changePassForm.invalid) {
+    if (this.settingForm.invalid) {
       this.errorMessage = false;
       return;
     }
-    if (this.changePassForm.controls.new_password.value !== this.changePassForm.controls.confirm_password.value) {
+    if (this.settingForm.controls.new_password.value !== this.settingForm.controls.confirm_password.value) {
       return;
     }
-    if (this.changePassForm.controls.current_password.value === this.changePassForm.controls.confirm_password.value
-      && this.changePassForm.controls.new_password.value === this.changePassForm.controls.confirm_password.value) {
+    if (this.settingForm.controls.current_password.value === this.settingForm.controls.confirm_password.value
+      && this.settingForm.controls.new_password.value === this.settingForm.controls.confirm_password.value) {
       return;
     }
     const param: ResetPasswordParam = {
-      new_password: this.changePassForm.controls.confirm_password.value,
-      old_password: this.changePassForm.controls.current_password.value,
+      new_password: this.settingForm.controls.confirm_password.value,
+      old_password: this.settingForm.controls.current_password.value,
     };
     this.spinnerService.show();
     this.authenService.changePassword(param).pipe(take(1)).subscribe(response => {
@@ -110,4 +128,19 @@ export class SettingComponent implements OnInit {
     });
   }
 
+  changeMailFlag() {
+    const param: MailFlagModel = {
+      losscut_email_flg: this.settingForm.controls.lossCutMail.value,
+      margincall_email_flg: this.settingForm.controls.marginCallMail.value
+    };
+    this.spinnerService.show();
+    this.authenService.updateMailFlag(param).subscribe(response => {
+      this.spinnerService.hide();
+      if (response.meta.code === 200) {
+        this.mailFlag = response.data;
+      }
+      this.settingForm.controls.marginCallMail.setValue(this.mailFlag.margincall_email_flg);
+      this.settingForm.controls.lossCutMail.setValue(this.mailFlag.losscut_email_flg);
+    });
+  }
 }
