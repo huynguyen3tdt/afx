@@ -271,27 +271,29 @@ export class ReportListComponent implements OnInit {
     this.reportservice.downLoadReportFile(item.id).pipe(take(1)).subscribe(response => {
       this.spinnerService.hide();
       let file;
+      let fileName;
       if (item.file_type === 'pdf') {
         file = new Blob([response], {
           type: 'application/pdf',
         });
+        fileName = `${item.file_name}.pdf`;
       } else {
         file = new Blob([response], {
           type: 'text/csv',
         });
-      }
-      const fileURL = URL.createObjectURL(file);
-      const a = document.createElement('a');
-      let fileName;
-      if (item.file_type === 'pdf') {
-        fileName = item.file_name;
-      } else {
         fileName = `${item.file_name}.csv`;
       }
-      a.href = fileURL;
-      a.download = fileName;
-      document.body.appendChild(a);
-      a.click();
+      if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+        window.navigator.msSaveOrOpenBlob(file, fileName);
+        return;
+      } else {
+        const fileURL = URL.createObjectURL(file);
+        const a = document.createElement('a');
+        a.href = fileURL;
+        a.download = fileName;
+        document.body.appendChild(a);
+        a.click();
+      }
       this.changeReadStatus(item.id);
     });
   }
