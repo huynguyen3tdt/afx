@@ -274,5 +274,6 @@
   "Login ID and Password is NOT matching" : "無効なメールアドレスまたはパスワードです",
   "Attempts remaining": "残った回数",
   "Your account has been locked because you entered the wrong password more than": "間違ったパスワードを",
-  "times consecutively": "回以上連続して入力したから、口座がロックされました。"
+  "times consecutively": "回以上連続して入力したから、口座がロックされました。",
+  "Please enter a fax with at least 10 characters": "ファックスは、10文字以上で入力してください。"
 }
