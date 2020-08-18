@@ -276,5 +276,6 @@
   "Login ID and Password is NOT matching" : "Login ID and Password is NOT matching",
   "Attempts remaining": "Attempts remaining",
   "Your account has been locked because you entered the wrong password more than": "Your account has been locked because you entered the wrong password more than",
-  "times consecutively": "times consecutively"
+  "times consecutively": "times consecutively",
+  "Please enter a fax with at least 10 characters": "Please enter a fax with at least 10 characters"
 }

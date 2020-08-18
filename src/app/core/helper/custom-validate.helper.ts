@@ -93,6 +93,12 @@ const BANK_ACCOUNT_ERR = {
   message: '7桁未満の場合は、頭に「０」をつけてください。例）0123456'
 };
 
+const FAX_ERR = {
+  ErrFax: true,
+  message: 'ファックスは、10文字以上で入力してください。'
+};
+
+
 const DIGITS_PATTERN = '^\\d+$';
 const SALARY_PATTEN = '^[0-9, ]*$';
 const NOT_SPECIAL_CHARACTERS_FOR_EMAIL = '^[a-zA-Z0-9-._ ]*$';
@@ -286,4 +292,14 @@ export function bankAccountValidation(control: AbstractControl) {
       }
   }
   return null;
+}
+
+export function faxValidation(control: AbstractControl) {
+  if (!control.value || typeof control.value === 'string' && !control.value.trim()) {
+    return null;
+  }
+  if (control.value.length < 10) {
+    return FAX_ERR;
+  }
+  return;
 }
