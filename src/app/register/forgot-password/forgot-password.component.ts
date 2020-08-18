@@ -10,7 +10,7 @@ import { EN_FORMATDATE, JAPAN_FORMATDATE} from 'src/app/core/constant/format-dat
 import { LANGUAGLE } from 'src/app/core/constant/language-constant';
 import { defineLocale, jaLocale } from 'ngx-bootstrap/chronos';
 import { take } from 'rxjs/operators';
-import { BsLocaleService } from 'ngx-bootstrap';
+import { BsLocaleService, BsDatepickerDirective } from 'ngx-bootstrap';
 import { ForgotPasswordParam } from 'src/app/core/model/user.model';
 import { Title } from '@angular/platform-browser';
 declare var $: any;
@@ -23,6 +23,7 @@ defineLocale('ja', jaLocale);
 })
 export class ForgotPasswordComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('loginid', { static: true }) loginid: ElementRef;
+  @ViewChild('dp', {static: true}) picker: BsDatepickerDirective;
   forgotPasswordForm: FormGroup;
   isSubmitted: boolean;
   successMess = '';
@@ -117,6 +118,24 @@ export class ForgotPasswordComponent implements OnInit, AfterViewInit, OnDestroy
         }
       }
     });
+  }
+
+  onShowPicker(event) {
+    const dayHoverHandler = event.dayHoverHandler;
+    const hoverWrapper = (hoverEvent) => {
+      const { cell, isHovered } = hoverEvent;
+
+      if ((isHovered &&
+        !!navigator.platform &&
+        /iPad|iPhone|iPod/.test(navigator.platform)) &&
+        'ontouchstart' in window
+      ) {
+        (this.picker as any)._datepickerRef.instance.daySelectHandler(cell);
+      }
+
+      return dayHoverHandler(hoverEvent);
+    };
+    event.dayHoverHandler = hoverWrapper;
   }
 
   ngOnDestroy(): void {

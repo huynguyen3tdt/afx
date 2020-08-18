@@ -18,7 +18,7 @@ import moment from 'moment-timezone';
 import { LANGUAGLE } from 'src/app/core/constant/language-constant';
 import { TransacstionModalComponent } from '../transacstion-modal/transacstion-modal.component';
 import { defineLocale, jaLocale } from 'ngx-bootstrap/chronos';
-import { BsLocaleService } from 'ngx-bootstrap';
+import { BsLocaleService, BsDatepickerDirective } from 'ngx-bootstrap';
 import { take } from 'rxjs/operators';
 import { Title } from '@angular/platform-browser';
 declare var $: any;
@@ -33,6 +33,8 @@ export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
   @ViewChild('tranModal', { static: true }) tranModal: TransacstionModalComponent;
   @ViewChild('depositTab', { static: true }) depositTab: ElementRef;
   @ViewChild('withdrawTab', { static: true }) withdrawTab: ElementRef;
+  @ViewChild('dp', {static: true}) pickerFrom: BsDatepickerDirective;
+  @ViewChild('dp2', {static: true}) pickerTo: BsDatepickerDirective;
   listBankInfor: BankInforModel;
   listDwHistory: Array<TransactionModel>;
   listReport: Array<TransactionModel>;
@@ -386,6 +388,28 @@ export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
     this.tradingAccount = this.listTradingAccount.find((account: AccountType) =>
     this.searchForm.controls.tradingAccount.value === account.account_id);
     this.searchTranHistory();
+  }
+
+  onShowPicker(event, type) {
+    const dayHoverHandler = event.dayHoverHandler;
+    const hoverWrapper = (hoverEvent) => {
+      const { cell, isHovered } = hoverEvent;
+
+      if ((isHovered &&
+        !!navigator.platform &&
+        /iPad|iPhone|iPod/.test(navigator.platform)) &&
+        'ontouchstart' in window
+      ) {
+        if (type === 'From') {
+          (this.pickerFrom as any)._datepickerRef.instance.daySelectHandler(cell);
+        } else {
+          (this.pickerTo as any)._datepickerRef.instance.daySelectHandler(cell);
+        }
+      }
+
+      return dayHoverHandler(hoverEvent);
+    };
+    event.dayHoverHandler = hoverWrapper;
   }
 
 }

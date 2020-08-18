@@ -8,7 +8,7 @@ import { GlobalService } from 'src/app/core/services/global.service';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import moment from 'moment-timezone';
 import { LANGUAGLE } from 'src/app/core/constant/language-constant';
-import { BsLocaleService, defineLocale, jaLocale, ModalDirective } from 'ngx-bootstrap';
+import { BsLocaleService, defineLocale, jaLocale, ModalDirective, BsDatepickerDirective } from 'ngx-bootstrap';
 import { take } from 'rxjs/operators';
 import { Title } from '@angular/platform-browser';
 declare var $: any;
@@ -22,6 +22,8 @@ defineLocale('ja', jaLocale);
 export class ReportListComponent implements OnInit {
   @ViewChild('pdfViewer', { static: true }) public pdfViewer;
   @ViewChild('pdfModal', { static: true }) pdfModal: ModalDirective;
+  @ViewChild('dp', {static: true}) pickerFrom: BsDatepickerDirective;
+  @ViewChild('dp2', {static: true}) pickerTo: BsDatepickerDirective;
   currentPage: number;
   pageSize: number;
   totalItem: number;
@@ -298,5 +300,27 @@ export class ReportListComponent implements OnInit {
     this.tradingAccount = this.listTradingAccount.find((account: AccountType) =>
     this.searchForm.controls.tradingAccount.value === account.account_id);
     this.searchReport();
+  }
+
+  onShowPicker(event, type) {
+    const dayHoverHandler = event.dayHoverHandler;
+    const hoverWrapper = (hoverEvent) => {
+      const { cell, isHovered } = hoverEvent;
+
+      if ((isHovered &&
+        !!navigator.platform &&
+        /iPad|iPhone|iPod/.test(navigator.platform)) &&
+        'ontouchstart' in window
+      ) {
+        if (type === 'From') {
+          (this.pickerFrom as any)._datepickerRef.instance.daySelectHandler(cell);
+        } else {
+          (this.pickerTo as any)._datepickerRef.instance.daySelectHandler(cell);
+        }
+      }
+
+      return dayHoverHandler(hoverEvent);
+    };
+    event.dayHoverHandler = hoverWrapper;
   }
 }

@@ -48,7 +48,9 @@
         button:nth-last-child(3) {
             order: 1;
             span {
-                margin-left: -96px
+                margin-left: -96px;
+                z-index: 999;
+                position: relative;
             }
         }
         button:nth-last-child(4) {
@@ -56,6 +58,8 @@
         }
         button:nth-last-child(2):after {
             content: "年";
+            z-index: 1;
+            position: relative;
         }
     }
     }
