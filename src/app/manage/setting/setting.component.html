@@ -7,7 +7,7 @@
             <label class="label mt-1">{{'Current password' | translate}}</label>
         </div>
         <div class="col-md-8 col-lg-9">
-            <input maxlength="50" type="password" class="form-control form-control-sm" formControlName="current_password" style="max-width: 240px" 
+            <input maxlength="50" type="password" class="form-control form-control-sm" formControlName="current_password" style="max-width: 240px"
             autocomplete="off"
             [ngClass]="{'invalid': isSubmittedSetting && settingForm.controls.current_password?.errors}">
         </div>
@@ -34,7 +34,7 @@
             <label class="label mt-1">{{'New password' | translate}}</label>
         </div>
         <div class="col-md-8 col-lg-9">
-            <input maxlength="50" type="password" class="form-control form-control-sm" formControlName="new_password" style="max-width: 240px" 
+            <input maxlength="50" type="password" class="form-control form-control-sm" formControlName="new_password" style="max-width: 240px"
             autocomplete="off"
             [ngClass]="{'invalid': isSubmittedSetting && (settingForm?.controls?.new_password?.errors || settingForm?.controls?.new_password?.errors?.RequiredPass)}">
         </div>
@@ -51,7 +51,7 @@
                     {{'Password requires 8 characters and contain at least two of three types of characters (lower case, upper case and digits)' | translate}}
                 </div>
         </div>
-        
+
     </div>
     <div class="row">
         <div class="col-md-4 col-lg-3">
@@ -127,7 +127,7 @@
         <div class="col-md-8 col-lg-9">
                 <!-- <input type="checkbox" formControlName="marginCallMail"> -->
             <label class="container-checkbox small mb-2">
-                <input type="checkbox" (change)="changeMailFlag()" formControlName="marginCallMail">
+                <input [attr.disabled]="!editableMargincall ? true : null" type="checkbox" (change)="changeMailFlag()" formControlName="marginCallMail">
                 <span class="checkmark"></span>
             </label>
         </div>
@@ -138,7 +138,7 @@
         </div>
         <div class="col-md-8 col-lg-9">
             <label class="container-checkbox small mb-2">
-                <input type="checkbox" (change)="changeMailFlag()" formControlName="lossCutMail">
+                <input [attr.disabled]="!editableLosscut ? true : null" type="checkbox" (change)="changeMailFlag()" formControlName="lossCutMail">
                 <span class="checkmark"></span>
             </label>
         </div>
