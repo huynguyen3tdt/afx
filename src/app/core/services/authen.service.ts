@@ -16,7 +16,7 @@ import {
   CheckTokenParam
 } from '../model/user.model';
 import { MailFlagResponseModel } from '../model/mail-flag.model';
-import { MailFlagModel } from 'src/app/core/model/mail-flag.model';
+import { MailFlagParamModel } from 'src/app/core/model/mail-flag.model';
 
 @Injectable({
   providedIn: 'root'
@@ -135,7 +135,7 @@ export class AuthenService {
     );
   }
 
-  updateMailFlag(param: MailFlagModel): Observable<MailFlagResponseModel>  {
+  updateMailFlag(param: MailFlagParamModel): Observable<MailFlagResponseModel>  {
     return this.httpClient
       .put(`${this.envConfigService.getConfig()}/${AppSettings.API_MAIL_FLG}`, param)
       .pipe(

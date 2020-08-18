@@ -9,7 +9,7 @@ import { AuthenService } from 'src/app/core/services/authen.service';
 import { UserService } from 'src/app/core/services/user.service';
 import { take } from 'rxjs/operators';
 import { ResetPasswordParam } from 'src/app/core/model/user.model';
-import { MailFlagModel } from 'src/app/core/model/mail-flag.model';
+import { MailFlagModel, MailFlagParamModel } from 'src/app/core/model/mail-flag.model';
 declare var $: any;
 
 @Component({
@@ -28,6 +28,9 @@ export class SettingComponent implements OnInit {
   invalidPassword: boolean;
   successPassword: boolean;
   mailFlag: MailFlagModel;
+  editableLosscut: boolean;
+  editableMargincall: boolean;
+
 
   constructor(private spinnerService: Ng4LoadingSpinnerService,
               private translate: TranslateService,
@@ -60,6 +63,9 @@ export class SettingComponent implements OnInit {
         this.mailFlag = response.data;
         this.settingForm.controls.marginCallMail.setValue(this.mailFlag.margincall_email_flg);
         this.settingForm.controls.lossCutMail.setValue(this.mailFlag.losscut_email_flg);
+        this.editableMargincall = this.mailFlag.company_margincall_flg;
+        this.editableLosscut = this.mailFlag.company_losscut_flg;
+
       }
     });
   }
@@ -129,7 +135,7 @@ export class SettingComponent implements OnInit {
   }
 
   changeMailFlag() {
-    const param: MailFlagModel = {
+    const param: MailFlagParamModel = {
       losscut_email_flg: this.settingForm.controls.lossCutMail.value,
       margincall_email_flg: this.settingForm.controls.marginCallMail.value
     };
