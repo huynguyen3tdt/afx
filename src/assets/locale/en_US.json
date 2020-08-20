@@ -277,5 +277,7 @@
   "Attempts remaining": "Attempts remaining",
   "Your account has been locked because you entered the wrong password more than": "Your account has been locked because you entered the wrong password more than",
   "times consecutively": "times consecutively",
-  "Please enter a fax with at least 10 characters": "Please enter a fax with at least 10 characters"
+  "Please enter a fax with at least 10 characters": "Please enter a fax with at least 10 characters",
+  "Receiving margin-call mail": "Receiving margin-call mail",
+  "Receiving loss-cut mail": "Receiving loss-cut mail"
 }
