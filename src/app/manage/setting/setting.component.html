@@ -3,10 +3,10 @@
     <h5 class="label mb-0"><strong>{{'Change Passwords' | translate}}</strong></h5>
     <p class="small text-secondary">{{'It is a good idea to use a strong password that you are not using elsewhere' | translate}}</p>
     <div class="row">
-        <div class="col-md-4 col-lg-3">
+        <div class="col-md-4 col-lg-4">
             <label class="label mt-1">{{'Current password' | translate}}</label>
         </div>
-        <div class="col-md-8 col-lg-9">
+        <div class="col-md-8 col-lg-8">
             <input maxlength="50" type="password" class="form-control form-control-sm" formControlName="current_password" style="max-width: 240px"
             autocomplete="off"
             [ngClass]="{'invalid': isSubmittedSetting && settingForm.controls.current_password?.errors}">
@@ -14,39 +14,39 @@
 
     </div>
     <div class="row">
-        <div class="col-md-4 col-lg-3">
+        <div class="col-md-4 col-lg-4">
             &nbsp;
         </div>
-        <!-- <div *ngIf="isSubmittedSetting && settingForm?.controls?.current_password?.errors?.RequiredPass" class="invalid-mess col-md-8 col-lg-9">
+        <!-- <div *ngIf="isSubmittedSetting && settingForm?.controls?.current_password?.errors?.RequiredPass" class="invalid-mess col-md-8 col-lg-8">
             <div>{{'This field is required' | translate}}</div>
         </div> -->
-        <div *ngIf="isSubmittedSetting && settingForm?.controls?.current_password?.errors?.Required" class="invalid-mess col-md-8 col-lg-9">
+        <div *ngIf="isSubmittedSetting && settingForm?.controls?.current_password?.errors?.Required" class="invalid-mess col-md-8 col-lg-8">
                 {{'This field is required' | translate}}
             </div>
-            <div class="col-md-8 col-lg-9">
+            <div class="col-md-8 col-lg-8">
                     <div *ngIf="isSubmittedSetting && settingForm?.controls.current_password?.errors?.RequiredPass" class="invalid-mess">
                         {{'Password requires 8 characters and contain at least two of three types of characters (lower case, upper case and digits)' | translate}}
                     </div>
             </div>
     </div>
     <div class="row">
-        <div class="col-md-4 col-lg-3">
+        <div class="col-md-4 col-lg-4">
             <label class="label mt-1">{{'New password' | translate}}</label>
         </div>
-        <div class="col-md-8 col-lg-9">
+        <div class="col-md-8 col-lg-8">
             <input maxlength="50" type="password" class="form-control form-control-sm" formControlName="new_password" style="max-width: 240px"
             autocomplete="off"
             [ngClass]="{'invalid': isSubmittedSetting && (settingForm?.controls?.new_password?.errors || settingForm?.controls?.new_password?.errors?.RequiredPass)}">
         </div>
     </div>
     <div class="row">
-        <div class="col-md-4 col-lg-3">
+        <div class="col-md-4 col-lg-4">
             &nbsp;
         </div>
-        <div *ngIf="isSubmittedSetting && settingForm?.controls['new_password']?.errors?.Required" class="invalid-mess col-md-8 col-lg-9">
+        <div *ngIf="isSubmittedSetting && settingForm?.controls['new_password']?.errors?.Required" class="invalid-mess col-md-8 col-lg-8">
             {{'This field is required' | translate}}
         </div>
-        <div class="col-md-8 col-lg-9">
+        <div class="col-md-8 col-lg-8">
                 <div *ngIf="isSubmittedSetting && settingForm?.controls['new_password']?.errors?.RequiredPass" class="invalid-mess">
                     {{'Password requires 8 characters and contain at least two of three types of characters (lower case, upper case and digits)' | translate}}
                 </div>
@@ -54,10 +54,10 @@
 
     </div>
     <div class="row">
-        <div class="col-md-4 col-lg-3">
+        <div class="col-md-4 col-lg-4">
             <label class="label mt-1">{{'Confirm password' | translate}}</label>
         </div>
-        <div class="col-md-8 col-lg-9">
+        <div class="col-md-8 col-lg-8">
             <input type="password" class="form-control form-control-sm" value="" maxlength="50"
                 formControlName="confirm_password" style="max-width: 240px" autocomplete="off"
                 [ngClass]="{'invalid': isSubmittedSetting && (settingForm.controls['confirm_password'].errors || settingForm?.controls['confirm_password']?.errors?.RequiredPass)}">
@@ -88,20 +88,20 @@
     </div>
 
     <div class="row">
-        <div class="col-md-4 col-lg-3">
+        <div class="col-md-4 col-lg-4">
             &nbsp;
         </div>
 
-        <div class="col-md-8 col-lg-9 pt-2">
+        <div class="col-md-8 col-lg-8 pt-2">
             <button type="button" class="btn btn-save btn-success pl-3 pr-3" (click)="settingSave()">{{'Save' | translate}}</button>
         </div>
     </div>
     <hr>
     <div class="row mb-2">
-        <div class="col-md-4 col-lg-3">
+        <div class="col-md-4 col-lg-4">
             <label class="label mt-1">{{'Font Size' | translate}}</label>
         </div>
-        <div class="col-md-8 col-lg-9">
+        <div class="col-md-8 col-lg-8">
             <div class="btn-group">
                 <button type="button" class="btn btn-outline-secondary btn-sm btn-size-sm" data-size="sm" id="font-size-sm" (click)="changeFontSize('font-size-sm')">小</button>
                 <button type="button" class="btn btn-outline-secondary btn-sm btn-size-md" id="font-size-md" data-size="md" (click)="changeFontSize('font-size-md')">中</button>
@@ -110,10 +110,10 @@
         </div>
     </div>
     <div class="row mb-2">
-        <div class="col-md-4 col-lg-3">
+        <div class="col-md-4 col-lg-4">
             <label class="label mt-1">{{'Language' | translate}}</label>
         </div>
-        <div class="col-md-8 col-lg-9">
+        <div class="col-md-8 col-lg-8">
             <select formControlName="language" (change)="changeLang($event.target.value)" class="form-control form-control-sm select2" style="max-width: 240px;">
               <option value="en_US">English</option>
               <option value="ja_JP">Japanese</option>
@@ -121,10 +121,11 @@
         </div>
     </div>
     <div class="row mb-2">
-        <div class="col-md-4 col-lg-3">
+        <div class="col-md-4 col-lg-4">
             <label class="label mt-1 pt-1">{{'Receiving margin-call mail' | translate}}</label>
+            <h5>{{'Notification that the margin maintenance rate has fallen below 120%' | translate}}</h5>
         </div>
-        <div class="col-md-8 col-lg-9">
+        <div class="col-md-8 col-lg-8">
                 <!-- <input type="checkbox" formControlName="marginCallMail"> -->
             <label class="container-checkbox small mb-2">
                 <input [attr.disabled]="!editableMargincall ? true : null" type="checkbox" (change)="changeMailFlag()" formControlName="marginCallMail">
@@ -133,10 +134,11 @@
         </div>
     </div>
     <div class="row mb-2">
-        <div class="col-md-4 col-lg-3">
+        <div class="col-md-4 col-lg-4">
             <label class="label mt-1 pt-1">{{'Receiving loss-cut mail' | translate}}</label>
+            <h5>{{'Notifies that the loss cut has been executed' | translate}}</h5>
         </div>
-        <div class="col-md-8 col-lg-9">
+        <div class="col-md-8 col-lg-8">
             <label class="container-checkbox small mb-2">
                 <input [attr.disabled]="!editableLosscut ? true : null" type="checkbox" (change)="changeMailFlag()" formControlName="lossCutMail">
                 <span class="checkmark"></span>
