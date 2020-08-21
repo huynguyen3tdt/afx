@@ -31,6 +31,7 @@ import { take } from 'rxjs/operators';
 import { LoginParam } from 'src/app/core/model/user.model';
 import { Title } from '@angular/platform-browser';
 declare const $: any;
+import { LANGUAGLE } from 'src/app/core/constant/language-constant';
 
 @Component({
   selector: 'app-login',
@@ -51,6 +52,8 @@ export class LoginComponent implements OnInit, AfterViewInit {
   isLockAccount: boolean;
   numFailLogin: number;
   isFoundUser: boolean;
+  language;
+  locale: string;
 
   constructor(
     private router: Router,
@@ -77,6 +80,8 @@ export class LoginComponent implements OnInit, AfterViewInit {
     this.initKeyboard();
     this.initLoginForm();
     this.hostNameRegis = this.envConfigService.getHostNameRegis();
+    this.language = LANGUAGLE;
+    this.locale = localStorage.getItem(LOCALE);
   }
 
   ngAfterViewInit() {
