@@ -294,8 +294,10 @@ export class ReportListComponent implements OnInit {
         document.body.appendChild(a);
         a.click();
       }
-      this.changeReadStatus(item.id);
     });
+    if (!item.read_flg) {
+      this.changeReadStatus(item.id);
+    }
   }
 
   changeTradingAccount() {
