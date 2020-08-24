@@ -120,7 +120,7 @@
           </select>
         </div>
     </div>
-    <div class="row mb-2">
+    <div *ngIf= "editableMargincall" class="row mb-2">
         <div class="col-md-4 col-lg-4">
             <label class="label mt-1 pt-1">{{'Receiving margin-call mail' | translate}}</label>
             <h5>{{'Notification that the margin maintenance rate has fallen below 120%' | translate}}</h5>
@@ -133,7 +133,7 @@
             </label>
         </div>
     </div>
-    <div class="row mb-2">
+    <div *ngIf= "editableLosscut" class="row mb-2">
         <div class="col-md-4 col-lg-4">
             <label class="label mt-1 pt-1">{{'Receiving loss-cut mail' | translate}}</label>
             <h5>{{'Notifies that the loss cut has been executed' | translate}}</h5>
