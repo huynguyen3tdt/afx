@@ -369,18 +369,23 @@ export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
         const file = new Blob([response], {
           type: 'text/csv',
         });
-        const fileURL = URL.createObjectURL(file);
-        const a = document.createElement('a');
         let fileName;
         if (this.locale === LANGUAGLE.english) {
           fileName = `History(${this.searchForm.controls.fromDate.value}-${this.searchForm.controls.toDate.value}).csv`;
         } else {
           fileName = `入出金履歴(${this.searchForm.controls.fromDate.value}-${this.searchForm.controls.toDate.value}).csv`;
         }
-        a.href = fileURL;
-        a.download = fileName;
-        document.body.appendChild(a);
-        a.click();
+        if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+          window.navigator.msSaveOrOpenBlob(file, fileName);
+          return;
+        } else {
+          const fileURL = URL.createObjectURL(file);
+          const a = document.createElement('a');
+          a.href = fileURL;
+          a.download = fileName;
+          document.body.appendChild(a);
+          a.click();
+        }
       });
   }
 
