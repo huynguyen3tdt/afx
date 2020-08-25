@@ -273,7 +273,7 @@
   "If the number is less than 7 digits, add 0 to the head. Example) 0123456": "7桁未満の場合は、頭に「０」をつけてください。例）0123456",
   "Login ID and Password is NOT matching" : "無効なメールアドレスまたはパスワードです",
   "Attempts remaining": "残った回数",
-  "Your account has been locked because you entered the wrong password more than": "間違ったパスワードを",
+  "Your account has been locked because you entered the wrong password. Please contact our support service": "パスワード入力間違いによりアカウントがロックされました。当社サポートサービスまでご連絡ください。",
   "times consecutively": "回以上連続して入力したから、口座がロックされました。",
   "Please enter a fax with at least 10 characters": "ファックスは、10文字以上で入力してください。",
   "Receiving margin-call mail": "アラート通知",

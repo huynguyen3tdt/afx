@@ -57,12 +57,10 @@
                             <div *ngIf="isFoundUser == true" class="invalid-mess mb-2">
                               <div>{{'Invalid email or password' |translate}}</div>
                           </div>
-                            <div *ngIf="isLockAccount == true" class="invalid-mess mb-2">
-                              <div>{{'Your account has been locked because you entered the wrong password more than' |translate}}
-                                {{numFailLogin}}
-                                {{'times consecutively' | translate}}
-                              </div>
-                          </div>
+                          <div *ngIf="isLockAccount == true" class="invalid-mess mb-2">
+                            <div>{{'Your account has been locked because you entered the wrong password. Please contact our support service' |translate}} <a href="mailto:info-pfkk@phillip.co.jp">info-pfkk@phillip.co.jp</a>
+                            </div>
+                        </div>
                             <div class="form-group">
                                 <label class="container-checkbox small">{{'Remember me' | translate}}
                                     <input tabindex="3" type="checkbox" name="save_" formControlName="remember">

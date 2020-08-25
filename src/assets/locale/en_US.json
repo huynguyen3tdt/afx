@@ -275,7 +275,7 @@
   "If the number is less than 7 digits, add 0 to the head. Example) 0123456": "If the number is less than 7 digits, add 0 to the head. Example) 0123456",
   "Login ID and Password is NOT matching" : "Login ID and Password is NOT matching",
   "Attempts remaining": "Attempts remaining",
-  "Your account has been locked because you entered the wrong password more than": "Your account has been locked because you entered the wrong password more than",
+  "Your account has been locked because you entered the wrong password. Please contact our support service": "Your account has been locked because you entered the wrong password. Please contact our support service",
   "times consecutively": "times consecutively",
   "Please enter a fax with at least 10 characters": "Please enter a fax with at least 10 characters",
   "Receiving margin-call mail": "Receiving margin-call mail",
