@@ -83,8 +83,6 @@ export class ForgotPasswordComponent implements OnInit, AfterViewInit, OnDestroy
 
   onSubmit() {
     this.isSubmitted = true;
-    this.errSubmit = false;
-    this.lockAccount = false;
     if (this.forgotPasswordForm.invalid) {
       return;
     }
@@ -104,6 +102,8 @@ export class ForgotPasswordComponent implements OnInit, AfterViewInit, OnDestroy
       this.spinnerService.hide();
       if (response.meta.code === 200) {
         this.showInterval = true;
+        this.errSubmit = false;
+        this.lockAccount = false;
         this.interval = setInterval(() => {
           this.time = this.time - 1;
           if (this.time <= 0) {
@@ -118,9 +118,11 @@ export class ForgotPasswordComponent implements OnInit, AfterViewInit, OnDestroy
         this.isSending = false;
         if (response.meta.code === 104) {
           this.errSubmit = true;
+          this.lockAccount = false;
         }
         if (response.meta.code === 111) {
           this.lockAccount = true;
+          this.errSubmit = false;
         }
 
       }
