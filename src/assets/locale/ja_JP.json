@@ -278,6 +278,6 @@
   "Please enter a fax with at least 10 characters": "ファックスは、10文字以上で入力してください。",
   "Receiving margin-call mail": "アラート通知",
   "Receiving loss-cut mail": "ロスカット通知",
-  "Notification that the margin maintenance rate has fallen below 120%": "証拠金維持率が120％を下回ったことを通知",
+  "Notification that the margin maintenance rate has fallen below 120%": "証拠金維持率が120％を下回ったことを通知します。",
   "Notifies that the loss cut has been executed": "ロスカットが執行されたことを通知します。"
 }
