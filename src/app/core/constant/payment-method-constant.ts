@@ -6,7 +6,8 @@ export const PAYMENTMETHOD = {
 
 export const TYPEOFTRANHISTORY = {
     DEPOSIT: {key: 'd', nameJP: '入金', name: 'Deposit'},
-    WITHDRAWAL: {key: 'w', nameJP: '出金', name: 'Withdrawal'}
+    WITHDRAWAL: {key: 'w', nameJP: '出金', name: 'Withdrawal'},
+    INTERNALTRANSFER: {key: 'it', nameJP: '振替', name: 'Transfer'}
 };
 
 export const STATUSTRANHISTORY = {
@@ -16,3 +17,7 @@ export const STATUSTRANHISTORY = {
     NEW: {key: 4, name: 'New'}
 };
 
+export const TRADING_TYPE = {
+    FX: {key: '01', name: '[FX]'},
+    CFD: {key: '02', name: '[CFD]'}
+};

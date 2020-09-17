@@ -1,7 +1,7 @@
 import { Component, OnInit, AfterViewInit, ViewChild, ElementRef, Input } from '@angular/core';
 import { WithdrawRequestService } from 'src/app/core/services/withdraw-request.service';
 import { FormGroup, FormControl } from '@angular/forms';
-import { TransactionModel, BankInforModel } from 'src/app/core/model/withdraw-request-response.model';
+import { TransactionModel, BankInforModel, TransferResulteModel } from 'src/app/core/model/withdraw-request-response.model';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { ACCOUNT_IDS, LOCALE, TIMEZONEAFX, TIMEZONESERVER } from 'src/app/core/constant/authen-constant';
 import { JAPAN_FORMATDATE, JAPAN_FORMATDATE_HH_MM, EN_FORMATDATE, EN_FORMATDATE_HH_MM } from 'src/app/core/constant/format-date-constant';
@@ -25,21 +25,17 @@ declare var $: any;
 defineLocale('ja', jaLocale);
 
 @Component({
-  selector: 'app-withdraw-history',
-  templateUrl: './withdraw-history.component.html',
-  styleUrls: ['./withdraw-history.component.scss']
+  selector: 'app-transfer-history',
+  templateUrl: './transfer-history.component.html',
+  styleUrls: ['./transfer-history.component.scss']
 })
-export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
+export class TransferHistoryComponent implements OnInit, AfterViewInit {
   @ViewChild('tranModal', { static: true }) tranModal: TransacstionModalComponent;
   @ViewChild('depositTab', { static: true }) depositTab: ElementRef;
   @ViewChild('withdrawTab', { static: true }) withdrawTab: ElementRef;
   @ViewChild('dp', {static: true}) pickerFrom: BsDatepickerDirective;
   @ViewChild('dp2', {static: true}) pickerTo: BsDatepickerDirective;
-  @Input() filterDepositHistory: boolean;
-  @Input() filterWithDrawHistory: boolean;
-  listBankInfor: BankInforModel;
-  listDwHistory: Array<TransactionModel>;
-  listReport: Array<TransactionModel>;
+  listTranTransfer: Array<TransferResulteModel>;
   searchForm: FormGroup;
   isSubmitted;
   fromDate: Date = new Date();
@@ -53,7 +49,6 @@ export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
   pageSize: number;
   totalItem: number;
   tab: string;
-  statusWithdrawal: string;
   tranHistoryDetail: TransactionModel;
   listTotalItem: Array<number> = [10, 20, 30];
   totalPage: number;
@@ -124,26 +119,13 @@ export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
     }
     this.initSearchForm();
     if (!this.querytab && this.searchForm.controls.tradingAccount.value) {
-      this.getTranHistory(this.searchForm.controls.tradingAccount.value, this.currentPage, this.pageSize, this.TABS.ALL.value,
+      this.getTranHistory(this.searchForm.controls.tradingAccount.value, this.currentPage, this.pageSize,
         this.formatDate(this.searchForm.controls.fromDate.value), this.formatDate(this.searchForm.controls.toDate.value));
     }
   }
 
 
   ngAfterViewInit(): void {
-    console.log('filterDepositHistory ', this.filterDepositHistory);
-    setTimeout(() => {
-      if (this.filterDepositHistory) {
-        this.searchForm.controls.type.setValue(this.TABS.DEPOSIT.value);
-        this.getTranHistory(this.searchForm.controls.tradingAccount.value, this.currentPage, this.pageSize, this.TABS.DEPOSIT.value,
-          this.formatDate(this.searchForm.controls.fromDate.value), this.formatDate(this.searchForm.controls.toDate.value));
-      }
-      if (this.filterWithDrawHistory) {
-        this.searchForm.controls.type.setValue(this.TABS.WITHDRAWAL.value);
-        this.getTranHistory(this.searchForm.controls.tradingAccount.value, this.currentPage, this.pageSize, this.TABS.WITHDRAWAL.value,
-          this.formatDate(this.searchForm.controls.fromDate.value), this.formatDate(this.searchForm.controls.toDate.value));
-      }
-    }, 200);
   }
 
   initStatus() {
@@ -174,25 +156,24 @@ export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
   }
 
   getTranHistory(accountNumber: number,
-                 pageNumber: number, pageSize: number, type?: string, dateFrom?: string, dateTo?: string, statusSearch?: string) {
+                 pageNumber: number, pageSize: number, dateFrom?: string, dateTo?: string, statusSearch?: string) {
     this.spinnerService.show();
-    this.checkTab(type);
-    this.withdrawRequestService.getDwHistory(accountNumber, pageSize, pageNumber, type, dateFrom,
+    this.withdrawRequestService.getInternalHistory(accountNumber, pageSize, pageNumber, dateFrom,
       dateTo, statusSearch).pipe(take(1)).subscribe(response => {
         this.spinnerService.hide();
         if (response.meta.code === 200) {
-          this.listReport = response.data.results;
+          this.listTranTransfer = response.data.results;
           this.totalItem = response.data.count;
           this.totalPage = (response.data.count / pageSize) * 10;
-          this.listReport.forEach(item => {
+          this.listTranTransfer.forEach(item => {
             item.create_date += TIMEZONESERVER;
             item.create_date = moment(item.create_date).tz(this.timeZone).format(this.formatDateHour);
-            item.funding_type = this.globalService.checkType(item.funding_type);
-            item.method = this.globalService.checkPaymentMedthod(item.method);
+            // item.method = this.globalService.checkPaymentMedthod(item.method);
           });
           this.recordFrom = this.pageSize * (this.currentPage - 1) + 1;
-          this.recordTo = this.recordFrom + (this.listReport.length - 1);
+          this.recordTo = this.recordFrom + (this.listTranTransfer.length - 1);
         }
+        console.log('listTranTransfer ', this.listTranTransfer);
       });
   }
 
@@ -209,30 +190,12 @@ export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
       this.showErrorDate = true;
       return;
     }
-    // if (this.showErrorDate === true) {
-    //   return;
-    // }
     if (this.searchForm.controls.tradingAccount.value) {
       accounID = this.searchForm.controls.tradingAccount.value;
-      console.log('accountIDDĐ ', accounID);
     }
-    switch (this.tab) {
-      case this.TABS.ALL.name:
-        this.getTranHistory(accounID, this.currentPage, this.pageSize, this.TABS.ALL.value,
-          this.formatDate(this.searchForm.controls.fromDate.value), this.formatDate(this.searchForm.controls.toDate.value),
-          this.statusSearch);
-        break;
-      case this.TABS.DEPOSIT.name:
-        this.getTranHistory(accounID, this.currentPage, this.pageSize, this.TABS.DEPOSIT.value,
-          this.formatDate(this.searchForm.controls.fromDate.value), this.formatDate(this.searchForm.controls.toDate.value),
-          this.statusSearch);
-        break;
-      case this.TABS.WITHDRAWAL.name:
-        this.getTranHistory(accounID, this.currentPage, this.pageSize, this.TABS.WITHDRAWAL.value,
-          this.formatDate(this.searchForm.controls.fromDate.value), this.formatDate(this.searchForm.controls.toDate.value),
-          this.statusSearch);
-        break;
-    }
+    this.getTranHistory(accounID, this.currentPage, this.pageSize,
+      this.formatDate(this.searchForm.controls.fromDate.value), this.formatDate(this.searchForm.controls.toDate.value),
+      this.statusSearch);
   }
 
   setDate(duration: string) {
@@ -263,56 +226,12 @@ export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
     this.searchTranHistory();
   }
 
-  checkTab(type: string, callSearh?: string) {
-    switch (type) {
-      case this.TABS.ALL.value:
-        this.tab = this.TABS.ALL.name;
-        break;
-      case this.TABS.DEPOSIT.value:
-        this.tab = this.TABS.DEPOSIT.name;
-        break;
-      case this.TABS.WITHDRAWAL.value:
-        this.tab = this.TABS.WITHDRAWAL.name;
-        break;
-    }
-    if (callSearh) {
-      if (this.querytab === 'detailwithdrawal') {
-        this.searchTranHistory();
-        this.querytab = '';
-      } else {
-        this.currentPage = 1;
-        this.pageSize = 10;
-        this.searchForm.controls.status.setValue([]);
-        this.statusSearch = '';
-        this.searchTranHistory();
-      }
-    }
-  }
-
-  changeType(type) {
-    console.log('aaaaa ', this.searchForm.controls.type.value);
-    switch (type) {
-      case this.TABS.ALL.value:
-        this.checkTab(this.TABS.ALL.value, 'call');
-        break;
-      case this.TABS.DEPOSIT.value:
-        this.checkTab(this.TABS.DEPOSIT.value, 'call');
-        break;
-      case this.TABS.WITHDRAWAL.value:
-        this.checkTab(this.TABS.WITHDRAWAL.value, 'call');
-        break;
-    }
-  }
-
   onValueChangeFrom(event) {
     this.showErrorDate = false;
     if ((new Date(event).getTime()) >
       new Date(this.searchForm.controls.toDate.value).getTime()) {
       this.showErrorDate = true;
     }
-    // if (moment(this.searchForm.controls.fromDate.value) > moment(this.searchForm.controls.toDate.value)) {
-    //   this.showErrorDate = true;
-    // }
   }
 
   onValueChangeTo(event) {
@@ -357,7 +276,7 @@ export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
     this.statusSearch = '';
     this.currentPage = 1;
     this.searchForm.controls.status.value.forEach(item => {
-      this.statusSearch += item.id + '+';
+      this.statusSearch += item.id + ',';
     });
     this.searchTranHistory();
   }

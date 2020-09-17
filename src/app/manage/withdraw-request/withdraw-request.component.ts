@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
 import { WithdrawRequestService } from 'src/app/core/services/withdraw-request.service';
 // import { ACCOUNT_TYPE, TIMEZONEAFX } from 'src/app/core/constant/authen-constant';
 import { FormGroup, FormControl } from '@angular/forms';
@@ -53,6 +53,7 @@ export class WithdrawRequestComponent implements OnInit {
   @ViewChild('modalWithdrawConfirm', { static: true }) modalWithdrawConfirm: ModalDirective;
   @ViewChild('modalWithdrawResult', { static: true }) modalWithdrawResult: ModalDirective;
   @ViewChild('modalRuleWithdraw', { static: false }) modalRuleWithdraw: ModalDepositWithdrawComponent;
+  @Output() emitTabFromDeposit: EventEmitter<string> = new EventEmitter<string>();
   mt5Infor: Mt5Model;
   accountType;
   bankInfor: BankInforModel;
@@ -335,5 +336,9 @@ export class WithdrawRequestComponent implements OnInit {
     this.withdrawForm.controls.amount.setValue(0);
     this.minWithdrawError = false;
     this.totalAmount = 0;
+  }
+
+  getTabFromList(event) {
+    this.emitTabFromDeposit.emit(event);
   }
 }

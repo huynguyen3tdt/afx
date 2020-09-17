@@ -23,7 +23,7 @@
                                 <div class="col-md-6 col-lg-7">
                                     <div class="p-3 border mb-3 form form-line bg-light">
                                         <h5 class="text-primary mb-2">{{'MT5 Information' | translate}}</h5>
-                                        <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <div class="d-flex flex-wrap justify-content-between align-items-center mb-2">
                                             <div class="d-flex align-items-center">
                                                 <label class="label mb-0 mr-2 pt-1">{{'Trading account' | translate}}</label>
                                                 <div class="d-inline-block">
@@ -587,7 +587,7 @@
                 </div>
             </div>
             <ng-container *ngIf="accountID">
-                <app-list-transaction #listTran *ngIf="accountID" #listTran [accountID]="accountID" [tranType]="transactionType"></app-list-transaction>
+                <app-list-transaction #listTran *ngIf="accountID" #listTran [accountID]="accountID" [tranType]="transactionType" (emitTabFromList)="getTabFromList($event)"></app-list-transaction>
             </ng-container>
 
         </div>

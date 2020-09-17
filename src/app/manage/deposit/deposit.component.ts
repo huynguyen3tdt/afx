@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { requiredInput } from 'src/app/core/helper/custom-validate.helper';
 import { DepositModel } from 'src/app/core/model/deposit-response.model';
@@ -52,6 +52,7 @@ export class DepositComponent implements OnInit {
   @ViewChild('listTran', { static: false }) listTran: ListTransactionComponent;
   @ViewChild('BJPSystem', { static: true }) BJPSystem: ElementRef;
   @ViewChild('modalRuleDeposit', { static: false }) modalRuleDeposit: ModalDepositWithdrawComponent;
+  @Output() emitTabFromDeposit: EventEmitter<string> = new EventEmitter<string>();
   depositAmountForm: FormGroup;
   depositTransactionForm: FormGroup;
   listBankTranfer: Array<DepositModel>;
@@ -349,5 +350,9 @@ export class DepositComponent implements OnInit {
 
   openModal() {
     this.modalRuleDeposit.open();
+  }
+
+  getTabFromList(event) {
+    this.emitTabFromDeposit.emit(event);
   }
 }

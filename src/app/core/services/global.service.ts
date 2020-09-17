@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AccountType } from '../model/report-response.model';
-import { TYPEOFTRANHISTORY, PAYMENTMETHOD } from '../constant/payment-method-constant';
+import { TYPEOFTRANHISTORY, PAYMENTMETHOD, TRADING_TYPE } from '../constant/payment-method-constant';
 import { LOCALE } from '../constant/authen-constant';
 import { LANGUAGLE } from '../constant/language-constant';
 import { AbstractControl, ValidatorFn } from '@angular/forms';
@@ -51,6 +51,13 @@ export class GlobalService {
         return TYPEOFTRANHISTORY.WITHDRAWAL.name;
       } else {
         return TYPEOFTRANHISTORY.WITHDRAWAL.nameJP;
+      }
+    }
+    if (type === TYPEOFTRANHISTORY.INTERNALTRANSFER.key) {
+      if (locale === LANGUAGLE.english) {
+        return TYPEOFTRANHISTORY.INTERNALTRANSFER.name;
+      } else {
+        return TYPEOFTRANHISTORY.INTERNALTRANSFER.nameJP;
       }
     }
     return '';
@@ -129,5 +136,13 @@ export class GlobalService {
       formControl.setValidators([]);
       formControl.updateValueAndValidity();
     }
+  }
+
+  convertTradingAcount(accountNumber: string) {
+    const tradingType = accountNumber.substring(accountNumber.length - 2, accountNumber.length);
+    if (tradingType === TRADING_TYPE.FX.key) {
+      return TRADING_TYPE.FX.name + ' ' + accountNumber;
+    }
+    return TRADING_TYPE.CFD.name + ' ' + accountNumber;
   }
 }

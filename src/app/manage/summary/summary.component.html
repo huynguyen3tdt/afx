@@ -1,0 +1,42 @@
+<div class="container">
+    <div class="content-wrapper">
+        <div class="content-inner">
+            <div class="row row-mypage">
+                <div class="col-lg-3 col-mypage-sidebar">
+                    <div class="card card-profile">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center">
+                            </div>
+
+                        </div>
+                    </div>
+                    <nav class="mb-0">
+                        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                            <a class="nav-item nav-link active" id="nav-account-tab" data-toggle="tab"
+                                href="#nav-account" role="tab" aria-controls="nav-account" aria-selected="true"><i class="icon ion-md-person"></i>
+                                <strong class="d-none d-md-inline">&nbsp;{{'Account Information' | translate}}</strong></a>
+                            <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile"
+                                 role="tab" aria-controls="nav-profile" aria-selected="true"><i class="icon ion-md-contact"></i>
+                                <strong class="d-none d-md-inline">&nbsp;{{'User Information' | translate}}</strong></a>
+                        </div>
+                    </nav>
+                </div>
+                <div class="col-lg-9 col-mypage-content">
+                    <div class="tab-content border" id="nav-tabContent">
+                        <!-- BEGIN ACCOUNT -->
+                        <div class="tab-pane fade show active" id="nav-account"
+                            role="tabpanel" aria-labelledby="nav-account-tab">
+                            <app-all-account></app-all-account>
+                        </div>
+                        <div class="tab-pane fade" id="nav-profile" role="tabpanel"
+                            aria-labelledby="nav-profile-tab">
+                            <app-user-infor></app-user-infor>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng4-loading-spinner [timeout]="30000"></ng4-loading-spinner>

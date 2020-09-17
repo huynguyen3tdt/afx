@@ -281,5 +281,18 @@
   "Receiving margin-call mail": "Receiving margin-call mail",
   "Receiving loss-cut mail": "Receiving loss-cut mail",
   "Notification that the margin maintenance rate has fallen below 120%": "Notification that the margin maintenance rate has fallen below 120%",
-  "Notifies that the loss cut has been executed": "Notifies that the loss cut has been executed"
+  "Notifies that the loss cut has been executed": "Notifies that the loss cut has been executed",
+  "Overview of all accounts": "Overview of all accounts",
+  "Summary": "Summary",
+  "Total Balance": "Total Balance",
+  "Total Unrealize PL": "Total Unrealize PL",
+  "Transfer": "Transfer",
+  "Transfer Amount": "Transfer Amount",
+  "Sent account": "Sent account",
+  "Receive account": "Receive account",
+  "Are you sure you want to make the transfer request?": "Are you sure you want to make the transfer request?",
+  "Your transfer request has been successful:": "Your transfer request has been successful",
+  "Your transfer request has been received:": "Your transfer request has been received:",
+  "Your transfer request has been rejected:": "Your transfer request has been rejected:",
+  "Entire Transfer History": "Entire Transfer History"
 }

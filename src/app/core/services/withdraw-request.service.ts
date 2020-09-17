@@ -11,7 +11,11 @@ import {
   TransactionResponse,
   WithdrawHistory,
   WithdrawAmountResponse,
-  TransactionModel
+  TransactionModel,
+  TransferModel,
+  TransferResponseModel,
+  TransferResulteModel,
+  ListTransferResponseModel
 } from '../model/withdraw-request-response.model';
 import { ResponseWihtoutDataModel } from '../model/none-data-response.model';
 import * as moment from 'moment';
@@ -151,6 +155,49 @@ export class WithdrawRequestService {
     }
     return this.httpClient
       .get(`${this.envConfigService.getConfig()}/${AppSettings.API_EXPORT_CSV}` + URL, { responseType: 'arraybuffer' })
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          return new Observable((observer: InnerSubscriber<any, any>) => {
+            observer.next(error);
+          });
+        })
+      );
+  }
+
+  postTransfer(param: TransferModel): Observable<TransferResponseModel> {
+    return this.httpClient
+      .post(`${this.envConfigService.getConfig()}/${AppSettings.API_INTERNAL_TRANSFER}`, param)
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          return new Observable((observer: InnerSubscriber<any, any>) => {
+            observer.next(error);
+          });
+        })
+      );
+  }
+
+  getInternalHistory(accountNumber: number, pageSize: number, pageNumber: number,
+                     dateFrom?: string, dateTo?: string, statusSearch?: string): Observable<ListTransferResponseModel> {
+    let URL = '';
+    const locale = localStorage.getItem(LOCALE);
+    URL = `?account_id=${accountNumber}&page_size=${pageSize}&page=${pageNumber}`;
+    if (dateFrom && dateFrom !== 'Invalid date') {
+      if (locale === LANGUAGLE.english) {
+        dateFrom = moment(dateFrom, DATE_CLIENT_ENG).format(DATE_CLIENT_ENG_SUBMIT);
+      }
+      URL += `&date_from=${dateFrom}`;
+    }
+    if (dateTo && dateTo !== 'Invalid date') {
+      if (locale === LANGUAGLE.english) {
+        dateTo = moment(dateTo, DATE_CLIENT_ENG).format(DATE_CLIENT_ENG_SUBMIT);
+      }
+      URL += `&date_to=${dateTo}`;
+    }
+    if (statusSearch) {
+      URL += `&status=${statusSearch}`;
+    }
+    return this.httpClient
+      .get(`${this.envConfigService.getConfig()}/${AppSettings.API_GET_INTERNAL_HISTORY}` + URL)
       .pipe(
         catchError((error: HttpErrorResponse) => {
           return new Observable((observer: InnerSubscriber<any, any>) => {

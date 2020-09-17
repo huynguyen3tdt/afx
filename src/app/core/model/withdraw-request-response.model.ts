@@ -5,6 +5,21 @@ export interface WithdrawRequestModel {
   data: Mt5Model;
 }
 
+export interface TransferResponseModel {
+  meta: MetaResponseModel;
+  data: TransferResulteModel;
+}
+
+export interface ListTransferResponseModel {
+  meta: MetaResponseModel;
+  data: {
+    next: string;
+    previous: string;
+    count: number;
+    results: Array<TransferResulteModel>;
+  };
+}
+
 export interface WithdrawHistoryModel {
   meta: MetaResponseModel;
   data: BankInforModel;
@@ -92,6 +107,23 @@ export interface postWithdrawModel {
   status: number;
 }
 
+export interface TransferModel {
+  from_account_id: number;
+  to_account_id: number;
+  amount: number;
+  device_type: string;
+}
+
+export interface TransferResulteModel {
+  amount: number;
+  currency: string;
+  method: string;
+  status: string;
+  transfer_id: number;
+  create_date: string;
+  from_trading_account_id: number;
+  to_trading_account_id: number;
+}
 
 
 

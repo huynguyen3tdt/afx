@@ -75,7 +75,7 @@ export class HeaderComponent implements OnInit {
     if (url && url.indexOf('?') > -1 ) {
       url = url.substring(0, url.indexOf('?'));
     }
-    const listRouter = ['notifications', 'deposit', 'withdrawRequest', 'withdrawHistory', 'reportList', 'accountInfo'];
+    const listRouter = ['notifications', 'deposit', 'withdrawRequest', 'withdrawHistory', 'reportList', 'accountInfo', 'summary'];
     listRouter.forEach(element => {
       if (url === element) {
         $(`#${element}`).addClass('active');

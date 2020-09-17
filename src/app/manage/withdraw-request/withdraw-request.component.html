@@ -147,7 +147,7 @@
 
             </div>
             <ng-container *ngIf="accountID">
-                <app-list-transaction #listTran [accountID]="this.accountID" [tranType]="transactionType"></app-list-transaction>
+                <app-list-transaction #listTran [accountID]="this.accountID" [tranType]="transactionType" (emitTabFromList)="getTabFromList($event)"></app-list-transaction>
             </ng-container>
         </div>
     </div>

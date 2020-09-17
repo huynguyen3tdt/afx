@@ -1,8 +1,8 @@
-import { Component, OnInit, OnChanges, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, OnChanges, Input, ViewChild, Output, EventEmitter } from '@angular/core';
 import { WithdrawRequestService } from 'src/app/core/services/withdraw-request.service';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { Router, ActivatedRoute } from '@angular/router';
-import { TransactionModel } from 'src/app/core/model/withdraw-request-response.model';
+import { TransactionModel, TransferResulteModel } from 'src/app/core/model/withdraw-request-response.model';
 import { JAPAN_FORMATDATE_HH_MM, EN_FORMATDATE, EN_FORMATDATE_HH_MM, JAPAN_FORMATDATE } from 'src/app/core/constant/format-date-constant';
 import { PAYMENTMETHOD, TYPEOFTRANHISTORY, STATUSTRANHISTORY } from 'src/app/core/constant/payment-method-constant';
 declare var $: any;
@@ -23,6 +23,7 @@ export class ListTransactionComponent implements OnInit, OnChanges {
   @ViewChild('tranModal', { static: true }) tranModal: TransacstionModalComponent;
   @Input() accountID: string;
   @Input() tranType: string;
+  @Output() emitTabFromList: EventEmitter<string> = new EventEmitter<string>();
 
   titleTransaction: string;
   listTransaction: Array<TransactionModel>;
@@ -34,6 +35,7 @@ export class ListTransactionComponent implements OnInit, OnChanges {
   typeTranHistory;
   paymentMethod;
   listTradingAccount: Array<AccountType>;
+  listTranTransfer: Array<TransferResulteModel>;
   tradingAccount: AccountType;
 
   constructor(private withdrawRequestService: WithdrawRequestService,
@@ -42,7 +44,6 @@ export class ListTransactionComponent implements OnInit, OnChanges {
               private router: Router) { }
 
   ngOnInit() {
-    this.typeTranHistory = TYPEOFTRANHISTORY;
     this.transactionStatus = STATUSTRANHISTORY;
     this.paymentMethod = PAYMENTMETHOD;
     this.locale = localStorage.getItem(LOCALE);
@@ -55,10 +56,15 @@ export class ListTransactionComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(): void {
+    this.typeTranHistory = TYPEOFTRANHISTORY;
     if (this.accountID) {
       this.listTradingAccount = JSON.parse(localStorage.getItem(ACCOUNT_IDS));
       this.tradingAccount = this.listTradingAccount.find((account: AccountType) => account.account_id === this.accountID);
-      this.getTranHistory(Number(this.accountID), 1, 5, this.tranType);
+      if (this.tranType !== this.typeTranHistory.INTERNALTRANSFER.key) {
+        this.getTranHistory(Number(this.accountID), 1, 5, this.tranType);
+      } else {
+        this.getTransferHistory(Number(this.accountID), 1, 5);
+      }
     }
   }
 
@@ -80,6 +86,23 @@ export class ListTransactionComponent implements OnInit, OnChanges {
     });
   }
 
+  getTransferHistory(accountNumber: number,
+                     pageNumber: number, pageSize: number, dateFrom?: string, dateTo?: string, statusSearch?: string) {
+    this.spinnerService.show();
+    this.withdrawRequestService.getInternalHistory(accountNumber, pageSize, pageNumber, dateFrom,
+      dateTo, statusSearch).pipe(take(1)).subscribe(response => {
+        this.spinnerService.hide();
+        if (response.meta.code === 200) {
+          this.listTranTransfer = response.data.results;
+          this.listTranTransfer.forEach(item => {
+            item.create_date += TIMEZONESERVER;
+            item.create_date = moment(item.create_date).tz(this.timeZone).format(this.formatDateHour);
+            item.method = this.globalService.checkPaymentMedthod(item.method);
+          });
+        }
+      });
+  }
+
   openDetail(tranId: number) {
     this.withdrawRequestService.getDetailTranHistory(tranId).pipe(take(1)).subscribe(response => {
       if (response.meta.code === 200) {
@@ -96,5 +119,10 @@ export class ListTransactionComponent implements OnInit, OnChanges {
 
   closeModal() {
     this.tranModal.close();
+  }
+
+  goToHistory(type: string) {
+    console.log('typeee ', type);
+    this.emitTabFromList.emit(type);
   }
 }
