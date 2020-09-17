@@ -292,5 +292,6 @@
   "Your transfer request has been successful": "口座振替が成功となっておりました:",
   "Your transfer request has been received:": "振替依頼を受け付けました:",
   "Your transfer request has been rejected:": "振替依頼は拒否されました:",
-  "Entire Transfer History": "振替履歴"
+  "Entire Transfer History": "振替履歴",
+  "Transfer History": "振替履歴"
 }

@@ -122,7 +122,6 @@ export class ListTransactionComponent implements OnInit, OnChanges {
   }
 
   goToHistory(type: string) {
-    console.log('typeee ', type);
     this.emitTabFromList.emit(type);
   }
 }

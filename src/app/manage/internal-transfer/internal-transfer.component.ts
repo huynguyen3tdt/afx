@@ -25,6 +25,7 @@ export class InternalTransferComponent implements OnInit {
   hideTransferTab: boolean;
   filterDepositHistory: boolean;
   filterWithDrawHistory: boolean;
+  showTransferHistory: boolean;
   constructor() { }
 
   ngOnInit() {
@@ -43,6 +44,7 @@ export class InternalTransferComponent implements OnInit {
     }
   }
   goToTab(event) {
+    console.log('eventtt ', event);
     this.showTabHistory = true;
     setTimeout(() => {
       this.historyTab.nativeElement.click();
@@ -51,11 +53,14 @@ export class InternalTransferComponent implements OnInit {
       this.filterDepositHistory = true;
     } else if (event === TYPEOFTRANHISTORY.WITHDRAWAL.key) {
       this.filterWithDrawHistory = true;
+    } else {
+      this.showTransferHistory = true;
     }
   }
 
   initFilterHistory() {
     this.filterDepositHistory = false;
     this.filterWithDrawHistory = false;
+    this.showTransferHistory = false;
   }
 }

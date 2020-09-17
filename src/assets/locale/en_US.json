@@ -294,5 +294,6 @@
   "Your transfer request has been successful:": "Your transfer request has been successful",
   "Your transfer request has been received:": "Your transfer request has been received:",
   "Your transfer request has been rejected:": "Your transfer request has been rejected:",
-  "Entire Transfer History": "Entire Transfer History"
+  "Entire Transfer History": "Entire Transfer History",
+  "Transfer History": "Transfer History"
 }

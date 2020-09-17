@@ -51,7 +51,7 @@
 
     <div *ngIf="this.tranType === this.typeTranHistory.INTERNALTRANSFER.key" class="card-body">
         <div class="d-flex justify-content-between align-items-center border-bottom mb-3 pb-2">
-            <h6 *ngIf="tranType == typeTranHistory.DEPOSIT.key" class="mb-0 text-uppercase text-primary"><i class="icon ion-md-time"></i> <strong> {{'Entire Transfer History' | translate}}</strong></h6>
+            <h6 *ngIf="tranType == typeTranHistory.INTERNALTRANSFER.key" class="mb-0 text-uppercase text-primary"><i class="icon ion-md-time"></i> <strong> {{'Entire Transfer History' | translate}}</strong></h6>
             <div class="text-right small text-secondary">{{'Currency:' | translate}} <strong>{{tradingAccount?.currency}}</strong></div>
         </div>
         <div class="table-responsive">
@@ -68,7 +68,6 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <ng-container>
                         <tr *ngFor="let item of listTranTransfer">
                             <td><a (click)="openDetail(item?.id)">{{item?.create_date}}</a></td>
                             <td><a (click)="openDetail(item?.id)"><span class="keep-all">{{'Transfer' | translate}}</span></a></td>
@@ -88,7 +87,11 @@
                                     <a (click)="openDetail(item?.id)">{{'Completed' | translate}}</a>
                                 </span></td>
                         </tr>
-                    </ng-container>
+                        <tr>
+                            <td colspan="7">
+                                <a href="javascript:;" (click)="goToHistory(typeTranHistory.INTERNALTRANSFER.key)"> {{'View entire operation history' | translate}}</a>
+                            </td>
+                        </tr>
                 </tbody>
             </table>
         </div>

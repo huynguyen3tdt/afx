@@ -28,7 +28,7 @@
                         </div>
                         <div *ngIf="showTabTransfer" class="tab-pane fade" id="transfer-tab" role="tabpanel"
                             aria-labelledby="transfer-tab">
-                            <app-tranfer></app-tranfer>
+                            <app-tranfer (emitTabFromDeposit)="goToTab($event)"></app-tranfer>
                         </div>
                         <div *ngIf="showTabHistory" class="tab-pane fade" id="history-tab" role="tabpanel"
                             aria-labelledby="history-tab">
@@ -39,13 +39,20 @@
                                             <div class="card-body">
                                                 <nav class="mb-0">
                                                     <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                                                        <a class="nav-item nav-link active" id="nav-billing-tab" data-toggle="tab" href="#nav-billing" role="tab" aria-controls="nav-billing" aria-selected="true"><strong>{{'Quick deposit' | translate}}</strong></a>
-                                                        <a class="nav-item nav-link" id="nav-bank-tab" data-toggle="tab" href="#nav-bank" role="tab" aria-controls="nav-bank" aria-selected="true"><strong>{{'Bank Tranfer' | translate}}</strong></a>
+                                                        <ng-container *ngIf="!showTransferHistory">
+                                                                <a class="nav-item nav-link active" id="nav-billing-tab" data-toggle="tab" href="#nav-billing" role="tab" aria-controls="nav-billing" aria-selected="true"><strong>{{'Quick deposit' | translate}}</strong></a>
+                                                                <a class="nav-item nav-link" id="nav-bank-tab" data-toggle="tab" href="#nav-bank" role="tab" aria-controls="nav-bank" aria-selected="true"><strong>{{'Bank Tranfer' | translate}}</strong></a>
+                                                        </ng-container>
+                                                        <ng-container *ngIf="showTransferHistory">
+                                                                <a class="nav-item nav-link" id="nav-billing-tab" data-toggle="tab" href="#nav-billing" role="tab" aria-controls="nav-billing" aria-selected="true"><strong>{{'Quick deposit' | translate}}</strong></a>
+                                                                <a class="nav-item nav-link active" id="nav-bank-tab" data-toggle="tab" href="#nav-bank" role="tab" aria-controls="nav-bank" aria-selected="true"><strong>{{'Bank Tranfer' | translate}}</strong></a>
+                                                        </ng-container>
                                                     </div>
                                                 </nav>
                                                 <div class="tab-content border-0 p-0 pt-3 mb-3" id="nav-tabContent">
                                                     <!-- BEGIN BBILLING SYSTEM -->
-                                                    <div class="tab-pane show active" id="nav-billing" role="tabpanel" aria-labelledby="nav-billing-tab">
+                                                    <div [className]="showTransferHistory ? 'tab-pane fade show' : 'tab-pane show active'" 
+                                                     id="nav-billing" role="tabpanel" aria-labelledby="nav-billing-tab">
                                                         <div class="">
                                                             <app-withdraw-history 
                                                             [filterDepositHistory]="filterDepositHistory"
@@ -55,9 +62,9 @@
                                                     </div>
                                                     <!-- END BILLING SYSTEM -->
                                                     <!-- BEGIN BANK ACCOUNT -->
-                                                    <div #transferHistory class="tab-pane fade show" id="nav-bank" role="tabpanel" aria-labelledby="nav-bank-tab">
+                                                    <div [className]="!showTransferHistory ? 'tab-pane fade show' : 'tab-pane show active'"  id="nav-bank" role="tabpanel" aria-labelledby="nav-bank-tab">
                                                         <div class="">
-                                                            <!-- <app-transfer-history></app-transfer-history> -->
+                                                            <app-transfer-history></app-transfer-history>
                                                         </div>
                                                     </div>
                                                 </div>

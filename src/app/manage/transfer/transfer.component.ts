@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
 import { WithdrawRequestService } from 'src/app/core/services/withdraw-request.service';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { Router } from '@angular/router';
@@ -20,7 +20,6 @@ import { ListTransactionComponent } from '../list-transaction/list-transaction.c
 import { TYPEOFTRANHISTORY, STATUSTRANHISTORY } from 'src/app/core/constant/payment-method-constant';
 declare var $: any;
 const numeral = require('numeral');
-
 @Component({
   selector: 'app-tranfer',
   templateUrl: './transfer.component.html',
@@ -30,6 +29,7 @@ export class TransferComponent implements OnInit {
   @ViewChild('modalTransferConfirm', { static: true }) modalTransferConfirm: ModalDirective;
   @ViewChild('modalTransferResult', { static: true }) modalTransferResult: ModalDirective;
   @ViewChild('listTran', { static: false }) listTran: ListTransactionComponent;
+  @Output() emitTabFromDeposit: EventEmitter<string> = new EventEmitter<string>();
   transferForm: FormGroup;
   mt5Infor: Mt5Model;
   sentAccountInfo: Mt5Model;
@@ -239,5 +239,9 @@ export class TransferComponent implements OnInit {
     this.getMt5Infor(Number(this.sentAccountID), 'sent');
     this.getMt5Infor(Number(this.receiveAccountID), 'receive');
     this.transferForm.controls.amount.setValue(0);
+  }
+
+  getTabFromList(event) {
+    this.emitTabFromDeposit.emit(event);
   }
 }
