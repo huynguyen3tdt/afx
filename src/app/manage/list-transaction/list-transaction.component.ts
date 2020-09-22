@@ -24,10 +24,10 @@ export class ListTransactionComponent implements OnInit, OnChanges {
   @Input() accountID: string;
   @Input() tranType: string;
   @Output() emitTabFromList: EventEmitter<string> = new EventEmitter<string>();
-
   titleTransaction: string;
   listTransaction: Array<TransactionModel>;
   transactionDetail: TransactionModel;
+  transferTransactionDetail: TransferResulteModel;
   locale: string;
   formatDateHour: string;
   timeZone: string;
@@ -104,17 +104,28 @@ export class ListTransactionComponent implements OnInit, OnChanges {
   }
 
   openDetail(tranId: number) {
-    this.withdrawRequestService.getDetailTranHistory(tranId).pipe(take(1)).subscribe(response => {
-      if (response.meta.code === 200) {
-        this.transactionDetail = response.data;
-        this.transactionDetail.create_date += TIMEZONESERVER;
-        this.transactionDetail.create_date = moment(this.transactionDetail.create_date).tz(this.timeZone).format(this.formatDateHour);
-        this.transactionDetail.method = this.globalService.checkPaymentMedthod(this.transactionDetail.method);
-        this.transactionDetail.funding_type = this.globalService.checkType(this.transactionDetail.funding_type);
-        this.tranModal.open(this.transactionDetail, this.tradingAccount.value);
-        // $('#tran_detail').modal('show');
-      }
-    });
+    if (this.tranType !== this.typeTranHistory.INTERNALTRANSFER.key) {
+      this.withdrawRequestService.getDetailTranHistory(tranId).pipe(take(1)).subscribe(response => {
+        if (response.meta.code === 200) {
+          this.transactionDetail = response.data;
+          this.transactionDetail.create_date += TIMEZONESERVER;
+          this.transactionDetail.create_date = moment(this.transactionDetail.create_date).tz(this.timeZone).format(this.formatDateHour);
+          this.transactionDetail.method = this.globalService.checkPaymentMedthod(this.transactionDetail.method);
+          this.transactionDetail.funding_type = this.globalService.checkType(this.transactionDetail.funding_type);
+          this.tranModal.open(this.transactionDetail, this.tradingAccount.value, this.tranType);
+          // $('#tran_detail').modal('show');
+        }
+      });
+    } else {
+      this.withdrawRequestService.getDetailTransferTranHistory(tranId).pipe(take(1)).subscribe(response => {
+        if (response.meta.code === 200) {
+          this.transferTransactionDetail = response.data;
+          this.transferTransactionDetail.create_date =
+          moment(this.transferTransactionDetail.create_date).tz(this.timeZone).format(this.formatDateHour);
+          this.tranModal.openTransfer(this.transferTransactionDetail, this.tranType);
+        }
+      });
+    }
   }
 
   closeModal() {

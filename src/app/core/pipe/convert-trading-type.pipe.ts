@@ -5,11 +5,14 @@ import {TRADING_TYPE} from './../constant/payment-method-constant';
 })
 export class ConvertTradingTypePipe implements PipeTransform {
   transform(value: string, arg: any): any {
-    const accountNumber = value.toString();
-    const tradingType = accountNumber.substring(accountNumber.length - 2, accountNumber.length);
-    if (tradingType === TRADING_TYPE.FX.key) {
-      return TRADING_TYPE.FX.name + ' ' + accountNumber;
+    if (value) {
+      const accountNumber = value.toString();
+      const tradingType = accountNumber.substring(accountNumber.length - 2, accountNumber.length);
+      if (tradingType === TRADING_TYPE.FX.key) {
+        return TRADING_TYPE.FX.name + ' ' + accountNumber;
+      }
+      return TRADING_TYPE.CFD.name + ' ' + accountNumber;
     }
-    return TRADING_TYPE.CFD.name + ' ' + accountNumber;
+    return null;
   }
 }

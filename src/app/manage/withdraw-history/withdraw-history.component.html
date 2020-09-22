@@ -37,7 +37,7 @@
                             <div class="d-md-flex flex-grow-1 mr-lg-2">
                                 <div class="form-group mr-md-1 flex-grow-1 min-150">
                                     <label class="label d-block mb-0 mr-2">{{'Trading account' | translate}}</label>
-                                    <select disabled formControlName="tradingAccount" (change)="changeTradingAccount()"
+                                    <select formControlName="tradingAccount" (change)="changeTradingAccount()"
                                         class="form-control form-control-sm">
                                         <option *ngFor="let item of listTradingAccount" value="{{item?.account_id}}">
                                             {{item?.value}}</option>

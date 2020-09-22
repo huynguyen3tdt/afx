@@ -15,13 +15,16 @@ import {
   TransferModel,
   TransferResponseModel,
   TransferResulteModel,
-  ListTransferResponseModel
+  ListTransferResponseModel,
+  Mt5Model
 } from '../model/withdraw-request-response.model';
 import { ResponseWihtoutDataModel } from '../model/none-data-response.model';
 import * as moment from 'moment';
 import { LOCALE } from '../constant/authen-constant';
 import { LANGUAGLE } from '../constant/language-constant';
 import { DATE_CLIENT_ENG, DATE_CLIENT_ENG_SUBMIT } from '../constant/format-date-constant';
+import { AccountType } from '../model/report-response.model';
+import { forkJoin } from 'rxjs';
 
 
 @Injectable({
@@ -45,6 +48,22 @@ export class WithdrawRequestService {
         })
       );
   }
+
+  // getListMt5Info(listAccount: Array<AccountType>): Observable<Array<Mt5Model>> {
+  //   const listMT5: any [] = [];
+  //   // const result;
+  //   let listMt5Info: Array<WithdrawRequestModel>;
+  //   listAccount.forEach((item) => {
+  //     listMT5.push(this.getmt5Infor(Number(item.account_id)));
+  //   });
+  //   forkJoin (
+  //     listMT5
+  //   ).subscribe((result) => {
+  //     console.log('aaaaaaa ', result);
+  //     listMt5Info = result;
+  //   });
+  //   return listMt5Info;
+  // }
 
   getBankInfor(): Observable<WithdrawHistoryModel> {
     return this.httpClient
@@ -167,6 +186,18 @@ export class WithdrawRequestService {
   postTransfer(param: TransferModel): Observable<TransferResponseModel> {
     return this.httpClient
       .post(`${this.envConfigService.getConfig()}/${AppSettings.API_INTERNAL_TRANSFER}`, param)
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          return new Observable((observer: InnerSubscriber<any, any>) => {
+            observer.next(error);
+          });
+        })
+      );
+  }
+
+  getDetailTransferTranHistory(transferId: number): Observable<TransferResponseModel> {
+    return this.httpClient
+      .get(`${this.envConfigService.getConfig()}/${AppSettings.API_GET_INTERNAL_HISTORY}${transferId}/`)
       .pipe(
         catchError((error: HttpErrorResponse) => {
           return new Observable((observer: InnerSubscriber<any, any>) => {

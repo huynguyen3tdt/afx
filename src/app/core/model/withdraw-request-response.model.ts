@@ -61,6 +61,7 @@ export interface Mt5Model {
   lastest_time: string;
   unrealize_pl: number;
   currency: string;
+  account_id?: string;
 }
 
 export interface BankInforModel {

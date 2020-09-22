@@ -62,6 +62,12 @@
                                         <strong>{{sentAccountInfo?.margin_level | number: '1.2-2'}}%</strong>
                                     </div>
                                 </div>
+                                <div class="mb-1 d-flex justify-content-between">
+                                    <label class="label">{{'Margin Level estimate' | translate}}</label>
+                                    <div>
+                                        <strong>{{marginLevelEstimateSend | number: '1.2-2'}}%</strong>
+                                    </div>
+                                </div>
 
 
                                 <div class="d-flex align-items-center">
@@ -123,6 +129,12 @@
                                             <strong>{{receiveAccountInfo?.margin_level | number: '1.2-2'}}%</strong>
                                         </div>
                                     </div>
+                                    <div class="mb-1 d-flex justify-content-between">
+                                        <label class="label">{{'Margin Level estimate' | translate}}</label>
+                                        <div>
+                                            <strong>{{marginLevelEstimateReceive | number: '1.2-2'}}%</strong>
+                                        </div>
+                                    </div>
     
     
                                     <div class="d-flex align-items-center">
@@ -176,7 +188,7 @@
                                 <div class="mb-1 d-flex justify-content-between">
                                     <label class="label">{{'Total amount'| translate}}</label>
                                     <div>
-                                        <strong>{{totalAmount | number}}</strong>
+                                        <strong>{{transferValue | number}}</strong>
                                     </div>
                                 </div>
                             </div>
@@ -221,18 +233,22 @@
                         <tr>
                             <td width="180">{{'Sent account' | translate}}</td>
                             <td>{{tradingSentAccount?.value}}</td>
+                            <td class="text-right">{{marginLevelEstimateSend | number: '1.2-2'}}%</td>
                         </tr>
                         <tr>
                             <td width="180">{{'Receive account' | translate}}</td>
                             <td><strong>{{tradingReceiveAccount?.value}}</strong></td>
+                            <td class="text-right"><strong>{{marginLevelEstimateReceive | number: '1.2-2'}}%</strong></td>
                         </tr>
                         <tr>
                             <td width="180">{{'Transfer Amount' | translate}}</td>
                             <td><strong>{{transferValue | number}}</strong></td>
+                            <td></td>
                         </tr>
                         <tr>
                             <td width="180">{{'Currency' | translate}}</td>
                             <td>{{tradingSentAccount?.currency}}</td>
+                            <td></td>
                         </tr>
                     </tbody>
                 </table>
@@ -277,6 +293,14 @@
                         <tr>
                             <td width="180">{{'Createdate time' | translate}}</td>
                             <td>{{transferResult?.create_date}}</td>
+                        </tr>
+                        <tr>
+                            <td width="180">{{'Sent account' | translate}}</td>
+                            <td>{{transferResult?.to_trading_account_id | convertTradingType}}</td>
+                        </tr>
+                        <tr>
+                            <td width="180">{{'Receive account' | translate}}</td>
+                            <td><strong>{{transferResult?.from_trading_account_id | convertTradingType}}</strong></td>
                         </tr>
                     </tbody>
                 </table>

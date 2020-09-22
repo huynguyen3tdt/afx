@@ -29,7 +29,7 @@ export class TransferComponent implements OnInit {
   @ViewChild('modalTransferConfirm', { static: true }) modalTransferConfirm: ModalDirective;
   @ViewChild('modalTransferResult', { static: true }) modalTransferResult: ModalDirective;
   @ViewChild('listTran', { static: false }) listTran: ListTransactionComponent;
-  @Output() emitTabFromDeposit: EventEmitter<string> = new EventEmitter<string>();
+  @Output() emitTabFromTranser = new EventEmitter<{tab: string, accountID: number}>();
   transferForm: FormGroup;
   mt5Infor: Mt5Model;
   sentAccountInfo: Mt5Model;
@@ -50,8 +50,8 @@ export class TransferComponent implements OnInit {
   language;
   transferAmountError: boolean;
   errMessage: boolean;
-  equityEstimate: number;
-  marginLevelEstimate: number;
+  marginLevelEstimateSend: number;
+  marginLevelEstimateReceive: number;
   marginCall: number;
   transferValue: number;
   newDate: string;
@@ -96,11 +96,9 @@ export class TransferComponent implements OnInit {
     if (this.sentAccountID) {
       this.getMt5Infor(Number(this.sentAccountID), 'sent');
     }
-    setTimeout(() => {
-      if (this.receiveAccountID) {
+    if (this.receiveAccountID) {
         this.getMt5Infor(Number(this.receiveAccountID), 'receive');
       }
-    }, 500);
   }
 
   getMt5Infor(accountId, type) {
@@ -109,15 +107,17 @@ export class TransferComponent implements OnInit {
       this.spinnerService.hide();
       if (response.meta.code === 200) {
         this.mt5Infor = response.data;
-        this.equity = this.mt5Infor.equity;
-        this.usedMargin = this.mt5Infor.used_margin;
+        // this.equity = this.mt5Infor.equity;
+        // this.usedMargin = this.mt5Infor.used_margin;
         if (this.mt5Infor.free_margin < this.minWithdraw) {
           this.mt5Infor.free_margin = 0;
         }
         if (type === 'sent') {
           this.sentAccountInfo = this.mt5Infor;
+          this.marginLevelEstimateSend = this.sentAccountInfo.margin_level;
         } else {
           this.receiveAccountInfo = this.mt5Infor;
+          this.marginLevelEstimateReceive = this.receiveAccountInfo.margin_level;
         }
         this.lastestTime = moment(this.mt5Infor.lastest_time).tz(this.timeZone).format(this.formatDateHour);
       }
@@ -132,6 +132,7 @@ export class TransferComponent implements OnInit {
     this.transferForm.controls.amount.valueChanges.subscribe((val) => {
       this.changeWithdraw();
     });
+    this.transferValue = numeral(this.transferForm.controls.amount.value).value();
   }
 
   changeWithdraw() {
@@ -166,9 +167,15 @@ export class TransferComponent implements OnInit {
 
   calculateWithdraw() {
     this.errMessage = false;
-    this.equityEstimate = Math.floor(this.equity - this.transferValue);
-    this.marginLevelEstimate = this.globalService.calculateMarginLevel(this.equityEstimate, this.usedMargin);
-    if (this.marginLevelEstimate <= this.marginCall && this.marginLevelEstimate > 0) {
+    this.marginLevelEstimateSend =
+    this.globalService.calculateMarginLevel(Math.floor(this.sentAccountInfo.equity - this.transferValue), this.sentAccountInfo.used_margin);
+
+    this.marginLevelEstimateReceive =
+    this.globalService.calculateMarginLevel(Math.floor(this.receiveAccountInfo.equity - this.transferValue),
+    this.receiveAccountInfo.used_margin);
+
+    if ((this.marginLevelEstimateSend <= this.marginCall && this.marginLevelEstimateSend > 0) ||
+    (this.marginLevelEstimateReceive <= this.marginCall && this.marginLevelEstimateReceive > 0)) {
       this.errMessage = true;
     }
   }
@@ -236,12 +243,17 @@ export class TransferComponent implements OnInit {
 
   resetTransferAmount() {
     this.modalTransferConfirm.hide();
+    if (this.transferForm.controls.wholeMoney.value === true) {
+      this.transferForm.controls.wholeMoney.setValue(false);
+      this.getAllFreeMargin();
+    }
     this.getMt5Infor(Number(this.sentAccountID), 'sent');
     this.getMt5Infor(Number(this.receiveAccountID), 'receive');
     this.transferForm.controls.amount.setValue(0);
+    this.listTran.ngOnChanges();
   }
 
   getTabFromList(event) {
-    this.emitTabFromDeposit.emit(event);
+    this.emitTabFromTranser.emit({tab: event, accountID: Number(this.sentAccountID)});
   }
 }

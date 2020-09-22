@@ -293,5 +293,7 @@
   "Your transfer request has been received:": "振替依頼を受け付けました:",
   "Your transfer request has been rejected:": "振替依頼は拒否されました:",
   "Entire Transfer History": "振替履歴",
-  "Transfer History": "振替履歴"
+  "Transfer History": "振替履歴",
+  "Deposit and Withdrawal": "入出金",
+  "Customer Information": "お客様情報"
 }

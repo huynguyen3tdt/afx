@@ -1,5 +1,5 @@
 import { Component, OnInit, OnChanges, ViewChild } from '@angular/core';
-import { TransactionModel } from 'src/app/core/model/withdraw-request-response.model';
+import { TransactionModel, TransferResulteModel } from 'src/app/core/model/withdraw-request-response.model';
 import { ModalDirective } from 'ngx-bootstrap';
 import { TYPEOFTRANHISTORY, STATUSTRANHISTORY, PAYMENTMETHOD } from 'src/app/core/constant/payment-method-constant';
 
@@ -11,10 +11,12 @@ import { TYPEOFTRANHISTORY, STATUSTRANHISTORY, PAYMENTMETHOD } from 'src/app/cor
 export class TransacstionModalComponent implements OnInit {
   @ViewChild('tranModal', { static: true }) modal: ModalDirective;
   transactionDetail: TransactionModel;
+  transferTransactionDetail: TransferResulteModel;
   transactionStatus;
   typeTranHistory;
   paymentMethod;
   accounID: string;
+  tranType: string;
   constructor() { }
 
   ngOnInit() {
@@ -23,9 +25,16 @@ export class TransacstionModalComponent implements OnInit {
     this.paymentMethod = PAYMENTMETHOD;
   }
 
-  open(tranDetal: TransactionModel, accounID: string) {
+  open(tranDetal: TransactionModel, accounID: string, tranType: string) {
     this.transactionDetail = tranDetal;
     this.accounID = accounID;
+    this.tranType = tranType;
+    this.modal.show();
+  }
+
+  openTransfer(tranDetail: TransferResulteModel, tranType: string) {
+    this.transferTransactionDetail = tranDetail;
+    this.tranType = tranType;
     this.modal.show();
   }
 

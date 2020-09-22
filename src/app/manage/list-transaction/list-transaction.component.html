@@ -69,7 +69,7 @@
                 </thead>
                 <tbody>
                         <tr *ngFor="let item of listTranTransfer">
-                            <td><a (click)="openDetail(item?.id)">{{item?.create_date}}</a></td>
+                            <td><a href="javascript:;" (click)="openDetail(item?.id)">{{item?.create_date}}</a></td>
                             <td><a (click)="openDetail(item?.id)"><span class="keep-all">{{'Transfer' | translate}}</span></a></td>
                             <td><a (click)="openDetail(item?.id)"><span class="keep-all">{{item?.from_trading_account_id | convertTradingType}}</span></a></td>
                             <td><a (click)="openDetail(item?.id)">{{item?.to_trading_account_id | convertTradingType}}</a></td>

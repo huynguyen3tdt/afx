@@ -49,7 +49,7 @@ export class TransferHistoryComponent implements OnInit, AfterViewInit {
   pageSize: number;
   totalItem: number;
   tab: string;
-  tranHistoryDetail: TransactionModel;
+  transferTransactionDetail: TransferResulteModel;
   listTotalItem: Array<number> = [10, 20, 30];
   totalPage: number;
   STATUS: SelectItem[];
@@ -173,7 +173,6 @@ export class TransferHistoryComponent implements OnInit, AfterViewInit {
           this.recordFrom = this.pageSize * (this.currentPage - 1) + 1;
           this.recordTo = this.recordFrom + (this.listTranTransfer.length - 1);
         }
-        console.log('listTranTransfer ', this.listTranTransfer);
       });
   }
 
@@ -246,17 +245,12 @@ export class TransferHistoryComponent implements OnInit, AfterViewInit {
   }
 
   openDetail(tranId: number) {
-    this.spinnerService.show();
-    this.withdrawRequestService.getDetailTranHistory(tranId).pipe(take(1)).subscribe(response => {
-      this.spinnerService.hide();
+    this.withdrawRequestService.getDetailTransferTranHistory(tranId).pipe(take(1)).subscribe(response => {
       if (response.meta.code === 200) {
-        this.tranHistoryDetail = response.data;
-        this.tranHistoryDetail.create_date += TIMEZONESERVER;
-        this.tranHistoryDetail.create_date = moment(this.tranHistoryDetail.create_date).tz(this.timeZone).format(this.formatDateHour);
-        this.tranHistoryDetail.method = this.globalService.checkPaymentMedthod(this.tranHistoryDetail.method);
-        this.tranHistoryDetail.funding_type = this.globalService.checkType(this.tranHistoryDetail.funding_type);
-        this.tranModal.open(this.tranHistoryDetail, this.tradingAccount.value);
-        // $('#tran_detail').modal('show');
+        this.transferTransactionDetail = response.data;
+        this.transferTransactionDetail.create_date =
+        moment(this.transferTransactionDetail.create_date).tz(this.timeZone).format(this.formatDateHour);
+        this.tranModal.openTransfer(this.transferTransactionDetail, TYPEOFTRANHISTORY.INTERNALTRANSFER.key);
       }
     });
   }
