@@ -19,5 +19,6 @@ export const STATUSTRANHISTORY = {
 
 export const TRADING_TYPE = {
     FX: {key: '01', name: '[FX]'},
-    CFD: {key: '02', name: '[CFD]'}
+    ICFD: {key: '02', name: '[I-CFD]'},
+    CCFD: {key: '03', name: '[C-CFD]'}
 };

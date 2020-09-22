@@ -17,7 +17,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { requiredInput } from 'src/app/core/helper/custom-validate.helper';
 import { ModalDirective } from 'ngx-bootstrap';
 import { ListTransactionComponent } from '../list-transaction/list-transaction.component';
-import { TYPEOFTRANHISTORY, STATUSTRANHISTORY } from 'src/app/core/constant/payment-method-constant';
+import { TYPEOFTRANHISTORY, STATUSTRANHISTORY, TRADING_TYPE } from 'src/app/core/constant/payment-method-constant';
 declare var $: any;
 const numeral = require('numeral');
 @Component({
@@ -59,6 +59,9 @@ export class TransferComponent implements OnInit {
   transferResult: TransferResulteModel;
   disabledTransfer: boolean;
   transactionType: string;
+  accountType;
+  sentType: string;
+  receiveType: string;
 
   constructor(private withdrawRequestService: WithdrawRequestService,
               private spinnerService: Ng4LoadingSpinnerService,
@@ -69,6 +72,7 @@ export class TransferComponent implements OnInit {
               private titleService: Title) { }
 
   ngOnInit() {
+    this.accountType = TRADING_TYPE;
     this.titleService.setTitle('フィリップMT5 Mypage');
     this.minWithdraw = Number(localStorage.getItem(MIN_WITHDRAW));
     this.timeZone = localStorage.getItem(TIMEZONEAFX);
@@ -88,8 +92,10 @@ export class TransferComponent implements OnInit {
     if (this.listTradingAccount.length > 1) {
       this.tradingSentAccount = this.listTradingAccount[0];
       this.sentAccountID = this.tradingSentAccount.account_id;
+      this.sentType = this.sentAccountID.substring(this.sentAccountID.length - 2, this.sentAccountID.length);
       this.tradingReceiveAccount = this.listTradingAccount[1];
       this.receiveAccountID = this.tradingReceiveAccount.account_id;
+      this.receiveType = this.receiveAccountID.substring(this.sentAccountID.length - 2, this.receiveAccountID.length);
     }
     this.minWithdraw = Number(localStorage.getItem(MIN_WITHDRAW));
     this.initTransferForm();
@@ -184,10 +190,12 @@ export class TransferComponent implements OnInit {
     if (type === 'sent') {
       this.tradingSentAccount = this.listTradingAccount.find((account: AccountType) =>
       this.sentAccountID === account.account_id);
+      this.sentType = this.sentAccountID.substring(this.sentAccountID.length - 2, this.sentAccountID.length);
       this.getMt5Infor(Number(this.sentAccountID), 'sent');
     } else {
       this.tradingReceiveAccount = this.listTradingAccount.find((account: AccountType) =>
        this.receiveAccountID === account.account_id);
+      this.receiveType = this.receiveAccountID.substring(this.sentAccountID.length - 2, this.receiveAccountID.length);
       this.getMt5Infor(Number(this.receiveAccountID), 'receive');
     }
     if (this.sentAccountID === this.receiveAccountID || this.sentAccountInfo.currency !== this.receiveAccountInfo.currency) {
