@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { requiredInput } from 'src/app/core/helper/custom-validate.helper';
 import { DepositModel } from 'src/app/core/model/deposit-response.model';
@@ -52,6 +52,8 @@ export class DepositComponent implements OnInit {
   @ViewChild('listTran', { static: false }) listTran: ListTransactionComponent;
   @ViewChild('BJPSystem', { static: true }) BJPSystem: ElementRef;
   @ViewChild('modalRuleDeposit', { static: false }) modalRuleDeposit: ModalDepositWithdrawComponent;
+  @Output() emitTabFromDeposit = new EventEmitter<{tab: string, accountID: number}>();
+  @Output() emitAccountID: EventEmitter<string> = new EventEmitter<string>();
   depositAmountForm: FormGroup;
   depositTransactionForm: FormGroup;
   listBankTranfer: Array<DepositModel>;
@@ -336,8 +338,8 @@ export class DepositComponent implements OnInit {
   }
 
   changeTradingAccount() {
-    this.tradingAccount = this.listTradingAccount.find((account: AccountType) => this.accountID === account.value);
-    this.accountID = this.tradingAccount.value;
+    this.tradingAccount = this.listTradingAccount.find((account: AccountType) => this.accountID === account.account_id);
+    this.accountID = this.tradingAccount.account_id;
     this.getMt5Infor(Number(this.accountID));
     this.getDwAmount(Number(this.accountID));
     this.remark = this.accountID;
@@ -349,5 +351,9 @@ export class DepositComponent implements OnInit {
 
   openModal() {
     this.modalRuleDeposit.open();
+  }
+
+  getTabFromList(event) {
+    this.emitTabFromDeposit.emit({tab: event, accountID: Number(this.accountID)});
   }
 }

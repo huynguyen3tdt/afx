@@ -73,5 +73,6 @@ export class Mt5InfoComponent implements OnInit {
   changeTradingAccount() {
     this.tradingAccount = this.listTradingAccount.find((account: AccountType) =>
     this.accountID === account.account_id);
+    this.getMt5Infor(this.accountID);
   }
 }

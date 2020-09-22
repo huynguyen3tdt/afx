@@ -1,0 +1,99 @@
+<div class="container">
+    <div class="content-wrapper">
+        <div class="content-inner">
+            <div class="row">
+                <div class="col-md-3 col-lg-2">
+                    <div class="nav flex-md-column nav-pills mb-3 filter-nav" id="v-pills-tab" role="tablist"
+                        aria-orientation="vertical">
+                        <a [className]="showTabDeposit ? 'nav-link active' : 'nav-link'"
+                            id="a-deposit-tab" data-toggle="pill" href="#deposit-tab" 
+                            (click)="changeTab(TAB.deposit)" role="tab" aria-controls="deposit-tab" aria-selected="true">{{'Deposit' | translate}}</a>
+                        <a [className]="showTabWithdraw ? 'nav-link active' : 'nav-link'"
+                            id="a-withdraw-tab" data-toggle="pill" href="#withdraw-tab"
+                            (click)="changeTab(TAB.withdraw)" role="tab" aria-controls="withdraw-tab"
+                            aria-selected="false">{{'Withdrawal' | translate}}</a>
+                        <a [className]="showTabTransfer ? 'nav-link active' : 'nav-link'"
+                            id="a-transfer-tab" data-toggle="pill" href="#transfer-tab" role="tab"
+                            *ngIf="hideTransferTab" (click)="changeTab(TAB.transfer)" aria-controls="transfer-tab" aria-selected="false">{{'Transfer' | translate}}</a>
+                        <a [className]="showTabHistory ? 'nav-link active' : 'nav-link'"
+                            #historyTab id="a-history-tab" data-toggle="pill" href="#history-tab" role="tab"
+                            (click)="changeTab(TAB.history)" aria-controls="history-tab" aria-selected="false">{{'History' | translate}}</a>
+                    </div>
+                </div>
+                <div class="col-md-9 col-lg-10">
+                    <div class="tab-content" id="deposit-tab">
+                        <div *ngIf="showTabDeposit"
+                            [className]="showTabDeposit ? 'tab-pane fade show active' : 'tab-pane fade'"
+                            class="tab-pane fade show active" 
+                            id="deposit-tab" role="tabpanel"
+                            aria-labelledby="v-pills-all-tab">
+                            <app-deposit (emitTabFromDeposit)="goToTabHistory($event)"></app-deposit>
+                        </div>
+                        <div *ngIf="showTabWithdraw" 
+                            [className]="showTabWithdraw ? 'tab-pane fade show active' : 'tab-pane fade'"
+                            id="withdraw-tab" role="tabpanel"
+                            aria-labelledby="withdraw-tab">
+                            <app-withdraw-request (emitTabFromWithDraw)="goToTabHistory($event)"></app-withdraw-request>
+                        </div>
+                        <div *ngIf="showTabTransfer" 
+                            [className]="showTabTransfer ? 'tab-pane fade show active' : 'tab-pane fade'"
+                            id="transfer-tab" role="tabpanel"
+                            aria-labelledby="transfer-tab">
+                            <app-tranfer (emitTabFromTranser)="goToTabHistory($event)"></app-tranfer>
+                        </div>
+                        <div *ngIf="showTabHistory" 
+                            [className]="showTabHistory ? 'tab-pane fade show active' : 'tab-pane fade'" id="history-tab" role="tabpanel"
+                            aria-labelledby="history-tab">
+                            <div class="container">
+                                <div class="content-wrapper">
+                                    <div class="content-inner">
+                                        <div class="card bg-white mb-3 shadow">
+                                            <div class="card-body">
+                                                <nav class="mb-0">
+                                                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                                                        <a  [className]="showTabDeposit ? 'tab-pane fade show active' : 'tab-pane fade'"
+                                                            [className]="!showTransferHistory ? 'nav-item nav-link active' : 'nav-item nav-link'" id="nav-billing-tab"
+                                                            data-toggle="tab" href="#nav-billing" role="tab" aria-controls="nav-billing"
+                                                            aria-selected="true"><strong>{{'History' | translate}}</strong></a>
+                                                        <a [className]="showTransferHistory ? 'nav-item nav-link active' : 'nav-item nav-link'" id="nav-bank-tab"
+                                                           #abc data-toggle="tab" href="#nav-bank" role="tab" aria-controls="nav-bank"
+                                                            aria-selected="true"><strong>{{'Transfer History' | translate}}</strong></a>
+                                                    </div>
+                                                </nav>
+                                                <div class="tab-content border-0 p-0 pt-3 mb-3" id="nav-tabContent">
+                                                    <!-- BEGIN BBILLING SYSTEM -->
+                                                    <div [className]="showTransferHistory ? 'tab-pane fade show' : 'tab-pane show active'" 
+                                                     id="nav-billing" role="tabpanel" aria-labelledby="nav-billing-tab">
+                                                        <div class="">
+                                                            <app-withdraw-history 
+                                                            [filterDepositHistory]="filterDepositHistory"
+                                                            [filterWithDrawHistory]="filterWithDrawHistory"
+                                                            [detaiWithdrawFlag]="detaiWithdrawFlag"
+                                                            [accountID]="accountID">
+                                                        </app-withdraw-history>
+                                                        </div>
+                                                    </div>
+                                                    <!-- END BILLING SYSTEM -->
+                                                    <!-- BEGIN BANK ACCOUNT -->
+                                                    <div [className]="!showTransferHistory ? 'tab-pane fade show' : 'tab-pane show active'"  id="nav-bank" role="tabpanel" aria-labelledby="nav-bank-tab">
+                                                        <div class="">
+                                                            <app-transfer-history [accountID]="accountID"></app-transfer-history>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                            
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

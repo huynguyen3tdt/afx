@@ -39,4 +39,6 @@ export class AppSettings {
     public static API_CHECK_TOKEN_EMAIL         = `api/${versionAPI}/users/check_token_email/`;
     public static API_POST_BACK_BJP             = `api/${versionAPI}/deposits/post_back/`;
     public static API_MAIL_FLG                  = `api/${versionAPI}/mail_flg/`;
+    public static API_INTERNAL_TRANSFER         = `api/${versionAPI}/internal_transfer/`;
+    public static API_GET_INTERNAL_HISTORY      = `api/${versionAPI}/funding/internal_tran_history/`;
 }

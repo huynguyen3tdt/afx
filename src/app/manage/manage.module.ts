@@ -29,6 +29,12 @@ import { SettingComponent } from './setting/setting.component';
 import { ConvertAccountTypeBankPipe } from '../core/pipe/convert-account-type-bank.pipe';
 import { SafePipe } from '../core/pipe/safePipe.pipe';
 import { ModalDepositWithdrawComponent } from './modal-deposit-withdraw/modal-deposit-withdraw.component';
+import { SummaryComponent } from './summary/summary.component';
+import { AllAccountComponent } from './all-account/all-account.component';
+import { InternalTransferComponent } from './internal-transfer/internal-transfer.component';
+import { TransferComponent } from './transfer/transfer.component';
+import { TransferHistoryComponent } from './transfer-history/transfer-history.component';
+import { ConvertTradingTypePipe } from '../core/pipe/convert-trading-type.pipe';
 
 @NgModule({
     imports: [
@@ -64,7 +70,13 @@ import { ModalDepositWithdrawComponent } from './modal-deposit-withdraw/modal-de
       ConvertInvestmentPurposePipe,
       ConvertAccountTypeBankPipe,
       SafePipe,
-      ModalDepositWithdrawComponent
+      ModalDepositWithdrawComponent,
+      SummaryComponent,
+      AllAccountComponent,
+      InternalTransferComponent,
+      TransferComponent,
+      TransferHistoryComponent,
+      ConvertTradingTypePipe
     ],
     schemas: [NO_ERRORS_SCHEMA]
 })

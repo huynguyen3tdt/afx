@@ -1,0 +1,324 @@
+<div class="container">
+    <!-- <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item" aria-current="page"><a href="javascript:;">Dashboard</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Withdrawal</li>
+            </ol>
+        </nav> -->
+    <div class="content-wrapper">
+        <div class="content-inner">
+            <div class="card bg-white mb-3 shadow">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6 col-lg-7">
+                            <div class="p-3 border mb-3 form form-line bg-light">
+                                <div class="d-flex justify-content-between mb-2">
+                                    <h5 class="text-primary mb-0">{{'MT5 Information' | translate}}</h5>
+
+                                </div>
+                                <div class="d-flex flex-wrap justify-content-between align-items-center mb-2">
+                                    <div class="d-flex align-items-center">
+                                        <label class="label mb-0 mr-2 pt-1">{{'Trading account' | translate}}</label>
+                                        <div class="d-inline-block">
+                                            <select class="form-control form-control-sm mb-0 bg-none"
+                                                (change)="changeTradingAccount('sent')" [(ngModel)]="sentAccountID"
+                                                style="min-width: 160px;">
+                                                <option *ngFor="let item of listTradingAccount"
+                                                    value="{{item?.account_id}}">{{item?.value}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="pt-1">{{'Currency' | translate}}:
+                                        <strong>{{tradingSentAccount?.currency}}</strong></div>
+                                </div>
+
+                                <div class="mb-1 d-flex justify-content-between">
+                                    <label class="label">{{'Balance' | translate}}</label>
+                                    <div>
+                                        <strong>{{sentAccountInfo?.balance | number}}</strong>
+                                    </div>
+                                </div>
+                                <div class="mb-1 d-flex justify-content-between">
+                                    <label class="label">{{'Used Margin' | translate}}</label>
+                                    <div>
+                                        <strong>{{sentAccountInfo?.used_margin | number}}</strong>
+                                    </div>
+                                </div>
+                                <div class="mb-1 d-flex justify-content-between">
+                                    <label class="label">{{'Equity' | translate}}</label>
+                                    <div>
+                                        <strong>{{sentAccountInfo?.equity | number}}</strong>
+                                    </div>
+                                </div>
+                                <div class="mb-1 d-flex justify-content-between">
+                                    <label class="label">{{'Withdrawable amount' | translate}}</label>
+                                    <div>
+                                        <strong>{{sentAccountInfo?.free_margin | number}}</strong>
+                                    </div>
+                                </div>
+                                <div class="mb-1 d-flex justify-content-between">
+                                    <label class="label">{{'Margin Maintenance Rate' | translate}}</label>
+                                    <div>
+                                        <strong>{{sentAccountInfo?.margin_level | number: '1.2-2'}}%</strong>
+                                    </div>
+                                </div>
+                                <div class="mb-1 d-flex justify-content-between">
+                                    <label class="label">{{'Margin Level estimate' | translate}}</label>
+                                    <div>
+                                        <strong>{{marginLevelEstimateSend | number: '1.2-2'}}%</strong>
+                                    </div>
+                                </div>
+
+
+                                <div class="d-flex align-items-center">
+                                    <div class="mr-2" (click)="onRefesh('sent')"><a href="javascript:;" class="btn-link-24"><i
+                                                class="icon ion-md-refresh-circle pr-1"></i></a></div>
+                                    <div class="small text-secondary"><i class="icon ion-md-time"></i>
+                                        <em>{{lastestTime}}</em></div>
+                                </div>
+                            </div>
+                            <div class="p-3 border mb-3 form form-line bg-light">
+                                    <div class="d-flex justify-content-between mb-2">
+                                        <h5 class="text-primary mb-0">{{'MT5 Information' | translate}}</h5>
+    
+                                    </div>
+                                    <div class="d-flex flex-wrap justify-content-between align-items-center mb-2">
+                                        <div class="d-flex align-items-center">
+                                            <label class="label mb-0 mr-2 pt-1">{{'Trading account' | translate}}</label>
+                                            <div class="d-inline-block">
+                                                <select class="form-control form-control-sm mb-0 bg-none"
+                                                    (change)="changeTradingAccount('receive')" [(ngModel)]="receiveAccountID"
+                                                    style="min-width: 160px;">
+                                                    <option *ngFor="let item of listTradingAccount"
+                                                        value="{{item?.account_id}}">{{item?.value}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="pt-1"><label
+                                                class="label mb-0 mr-2 d-inline">{{'Currency' | translate}}:</label>
+                                            <strong>{{tradingReceiveAccount?.currency}}</strong></div>
+                                    </div>
+    
+                                    <div class="mb-1 d-flex justify-content-between">
+                                        <label class="label">{{'Balance' | translate}}</label>
+                                        <div>
+                                            <strong>{{receiveAccountInfo?.balance | number}}</strong>
+                                        </div>
+                                    </div>
+                                    <div class="mb-1 d-flex justify-content-between">
+                                        <label class="label">{{'Used Margin' | translate}}</label>
+                                        <div>
+                                            <strong>{{receiveAccountInfo?.used_margin | number}}</strong>
+                                        </div>
+                                    </div>
+                                    <div class="mb-1 d-flex justify-content-between">
+                                        <label class="label">{{'Equity' | translate}}</label>
+                                        <div>
+                                            <strong>{{receiveAccountInfo?.equity | number}}</strong>
+                                        </div>
+                                    </div>
+                                    <div class="mb-1 d-flex justify-content-between">
+                                        <label class="label">{{'Withdrawable amount' | translate}}</label>
+                                        <div>
+                                            <strong>{{receiveAccountInfo?.free_margin | number}}</strong>
+                                        </div>
+                                    </div>
+                                    <div class="mb-1 d-flex justify-content-between">
+                                        <label class="label">{{'Margin Maintenance Rate' | translate}}</label>
+                                        <div>
+                                            <strong>{{receiveAccountInfo?.margin_level | number: '1.2-2'}}%</strong>
+                                        </div>
+                                    </div>
+                                    <div class="mb-1 d-flex justify-content-between">
+                                        <label class="label">{{'Margin Level estimate' | translate}}</label>
+                                        <div>
+                                            <strong>{{marginLevelEstimateReceive | number: '1.2-2'}}%</strong>
+                                        </div>
+                                    </div>
+    
+    
+                                    <div class="d-flex align-items-center">
+                                        <div class="mr-2" (click)="onRefesh('receive')"><a href="javascript:;" class="btn-link-24"><i
+                                                    class="icon ion-md-refresh-circle pr-1"></i></a></div>
+                                        <div class="small text-secondary"><i class="icon ion-md-time"></i>
+                                            <em>{{lastestTime}}</em></div>
+                                    </div>
+                                </div>
+
+                        </div>
+                        <div class="col-md-6 col-lg-5" [formGroup]="transferForm">
+                            <h4 class="text-primary border-bottom pb-1 mb-3 title-deposit">
+                                {{'Transfer Amount' | translate}}
+                            </h4>
+                            <div class="form form-line">
+                                <div class="mb-3">
+                                    <label class="label"><strong>{{'Transfer Amount' | translate}}</strong></label>
+                                    <input maxlength="15" type="text" name="amount" id="sendAmount"
+                                        class="form-control form-control-lg text-right font-weight-bold text-success"
+                                        placeholder="" formControlName="amount" currency autocomplete="off"
+                                        [ngClass]="{'invalid': isSubmitted && withdrawForm.controls['amount'].errors}">
+                                    <div *ngIf="minWithdrawError == true" class="invalid-mess">
+                                        <div *ngIf="locale == 'en_US'">Minimum amount is not below
+                                            {{minWithDraw | number}}</div>
+                                        <div *ngIf="locale == 'ja_JP'">ご入金額は{{minWithDraw | number}}円以上から承ります</div>
+                                    </div>
+                                    <div *ngIf="maxWithdrawError == true" class="invalid-mess">
+                                        <div>{{'Withdrawal amount is not above the maximum amount' | translate}}
+                                            {{maxWithDraw | number}}</div>
+                                    </div>
+                                    <div *ngIf="transferAmountError == true" class="invalid-mess">
+                                        <div>{{'Withdrawal amount is not above the withdrawable amount' | translate}}
+                                        </div>
+                                    </div>
+                                    <div class="mt-2">
+                                        <label class="container-checkbox small">{{'Whole of money' | translate}}
+                                            <input type="checkbox" name="Junior" formControlName="wholeMoney"
+                                                (change)="getAllFreeMargin()">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="mb-1 d-flex justify-content-between">
+                                    <label class="label">{{'Currency' | translate}}</label>
+                                    <div>
+                                        <strong>{{tradingSentAccount?.currency}}</strong>
+                                    </div>
+                                </div>
+                                <!--  -->
+                                <div class="mb-1 d-flex justify-content-between">
+                                    <label class="label">{{'Total amount'| translate}}</label>
+                                    <div>
+                                        <strong>{{transferValue | number}}</strong>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <p class="small text-secondary p-2 bg-light" *ngIf="locale == language.english">Notice: Minimum single withdrawal amount is {{minWithdraw | number}}
+                                </p>
+                                <p class="small text-secondary p-2 bg-light" *ngIf="locale == language.japan">※全額出金以外の最低出金額は{{minWithdraw | number}}円となります。 
+                                    </p> -->
+                            <div *ngIf="errMessage == true" class="invalid-mess">
+                                <div>{{'Your Margin Level is nearly the Margin Call Level' | translate}}</div>
+                            </div>
+                            <button class="btn btn-success btn-block text-uppercase btn-lg mb-3" [attr.disabled]="disabledTransfer ? true : null"
+                                (click)="showConfirm()"><strong>{{'Transfer'| translate}}</strong></button>
+                            <!-- <p class="text-center" style="line-height: 1.2"><a href="javascript:;" (click)="openModal()"><i class="icon ion-md-information-circle"></i>
+                                {{'General rules for depositing and withdrawing funds' | translate}}</a></p> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <ng-container *ngIf="sentAccountID">
+                <app-list-transaction #listTran [accountID]="this.sentAccountID" [tranType]="transactionType" (emitTabFromList)="getTabFromList($event)"></app-list-transaction>
+            </ng-container>
+        </div>
+    </div>
+</div>
+
+<div bsModal #modalTransferConfirm="bs-modal" class="modal fade" id="modal-withdraw-confirm" tabindex="-1" role="dialog"
+    aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-light pt-2 pb-2">
+                <div>
+                    <h5 class="modal-title text-primary"><strong>{{'Withdrawal Request' | translate}}</strong></h5>
+                </div>
+            </div>
+            <div class="modal-body">
+                <table class="table table-hover table-sm small" cellspacing="0" cellpadding="0">
+                    <tbody>
+                        <tr>
+                            <td width="180" class="border-top-0">{{'Transfer date time' | translate}}</td>
+                            <td class="border-top-0">{{newDate}}</td>
+                        </tr>
+                        <tr>
+                            <td width="180">{{'Sent account' | translate}}</td>
+                            <td>{{tradingSentAccount?.value}}</td>
+                            <td class="text-right">{{marginLevelEstimateSend | number: '1.2-2'}}%</td>
+                        </tr>
+                        <tr>
+                            <td width="180">{{'Receive account' | translate}}</td>
+                            <td><strong>{{tradingReceiveAccount?.value}}</strong></td>
+                            <td class="text-right"><strong>{{marginLevelEstimateReceive | number: '1.2-2'}}%</strong></td>
+                        </tr>
+                        <tr>
+                            <td width="180">{{'Transfer Amount' | translate}}</td>
+                            <td><strong>{{transferValue | number}}</strong></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td width="180">{{'Currency' | translate}}</td>
+                            <td>{{tradingSentAccount?.currency}}</td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p>{{'Are you sure you want to make the transfer request?' | translate}}</p>
+                <hr>
+                <div class="text-right">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                        (click)="cancelWithDraw()">{{'Cancel' | translate}}</button>
+                    <button type="button" class="btn btn-primary ml-2"
+                        (click)="sendConfirm()">{{'Request' | translate}}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div bsModal #modalTransferResult="bs-modal" class="modal fade" id="modal_withdraw" tabindex="-1" role="dialog"
+    aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-light pt-2 pb-2">
+                <div>
+                    <h5 class="modal-title text-primary"><strong>{{'Transaction ID' | translate}} :
+                            {{transferResult?.transfer_id}}</strong></h5>
+                </div>
+            </div>
+            <div class="modal-body">
+                <p *ngIf="this.transferResult?.status == this.transferStatus.COMPLETE.key">{{'Your transfer request has been successful:' | translate }}</p>
+                <p *ngIf="this.transferResult?.status == this.transferStatus.PENDING.key">{{'Your transfer request has been received:' | translate }}</p>
+                <p *ngIf="this.transferResult?.status == this.transferStatus.CANCEL.key">{{'Your transfer request has been rejected:' | translate }}</p>
+                <table class="table table-hover table-sm small" cellspacing="0" cellpadding="0">
+                    <tbody>
+                        <tr>
+                            <td width="180" class="border-top-0">{{'Transfer Amount' | translate}}</td>
+                            <td class="border-top-0">{{transferResult?.amount | number}}
+                                {{transferResult?.currency}}</td>
+                        </tr>
+                        <!-- <tr>
+                          <td width="180">{{'Transaction ID' | translate}}</td>
+                          <td>{{transactionWithdraw?.id}}</td>
+                      </tr> -->
+                        <tr>
+                            <td width="180">{{'Createdate time' | translate}}</td>
+                            <td>{{transferResult?.create_date}}</td>
+                        </tr>
+                        <tr>
+                            <td width="180">{{'Sent account' | translate}}</td>
+                            <td>{{transferResult?.to_trading_account_id | convertTradingType}}</td>
+                        </tr>
+                        <tr>
+                            <td width="180">{{'Receive account' | translate}}</td>
+                            <td><strong>{{transferResult?.from_trading_account_id | convertTradingType}}</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <!-- <p *ngIf="checkWithDrawal == true">{{'It is being processed within 3-5 business day.' | translate}}</p> -->
+                <div *ngIf="this.transferResult?.status === this.transferStatus.in_progress">
+                    <div>{{'Requests made by 15:00 will be withdrawn on the next business day.' | translate}}</div>
+                    <div>{{'Requests received after 15:00 will be handled the next business day.' | translate}}</div>
+                </div>
+
+                <p *ngIf="this.transferResult?.status === this.transferStatus.cancel">
+                    {{'Reason: MT5 account balance is not enough money to withdraw' | translate}}</p>
+                <hr>
+                <div class="text-center">
+                    <button type="button" class="btn btn-success" id="got_it" data-dismiss="modal"
+                        (click)="modalTransferResult.hide()">{{'Finish' | translate}}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<ng4-loading-spinner [timeout]="30000"> </ng4-loading-spinner>
