@@ -4,7 +4,7 @@ import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { Router, ActivatedRoute } from '@angular/router';
 import { TransactionModel, TransferResulteModel } from 'src/app/core/model/withdraw-request-response.model';
 import { JAPAN_FORMATDATE_HH_MM, EN_FORMATDATE, EN_FORMATDATE_HH_MM, JAPAN_FORMATDATE } from 'src/app/core/constant/format-date-constant';
-import { PAYMENTMETHOD, TYPEOFTRANHISTORY, STATUSTRANHISTORY } from 'src/app/core/constant/payment-method-constant';
+import { PAYMENTMETHOD, TYPEOFTRANHISTORY, STATUSTRANHISTORY, TRADING_TYPE } from 'src/app/core/constant/payment-method-constant';
 declare var $: any;
 import moment from 'moment-timezone';
 import { LOCALE, TIMEZONEAFX, TIMEZONESERVER, ACCOUNT_IDS } from 'src/app/core/constant/authen-constant';
@@ -37,13 +37,14 @@ export class ListTransactionComponent implements OnInit, OnChanges {
   listTradingAccount: Array<AccountType>;
   listTranTransfer: Array<TransferResulteModel>;
   tradingAccount: AccountType;
-
+  accountType;
   constructor(private withdrawRequestService: WithdrawRequestService,
               private spinnerService: Ng4LoadingSpinnerService,
               private globalService: GlobalService,
               private router: Router) { }
 
   ngOnInit() {
+    this.accountType = TRADING_TYPE;
     this.transactionStatus = STATUSTRANHISTORY;
     this.paymentMethod = PAYMENTMETHOD;
     this.locale = localStorage.getItem(LOCALE);
@@ -98,7 +99,12 @@ export class ListTransactionComponent implements OnInit, OnChanges {
             item.create_date += TIMEZONESERVER;
             item.create_date = moment(item.create_date).tz(this.timeZone).format(this.formatDateHour);
             item.method = this.globalService.checkPaymentMedthod(item.method);
+            item.sent_account_type = item.from_trading_account_id.toString().
+            substring(item.from_trading_account_id.toString().length - 2, item.from_trading_account_id.toString().length);
+            item.receive_account_type = item.to_trading_account_id.toString().
+            substring(item.to_trading_account_id.toString().length - 2, item.to_trading_account_id.toString().length);
           });
+          console.log('666666666 ', this.listTranTransfer);
         }
       });
   }

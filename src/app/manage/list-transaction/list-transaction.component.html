@@ -71,8 +71,27 @@
                         <tr *ngFor="let item of listTranTransfer">
                             <td><a href="javascript:;" (click)="openDetail(item?.id)">{{item?.create_date}}</a></td>
                             <td><a (click)="openDetail(item?.id)"><span class="keep-all">{{'Transfer' | translate}}</span></a></td>
-                            <td><a (click)="openDetail(item?.id)"><span class="keep-all">{{item?.from_trading_account_id | convertTradingType}}</span></a></td>
-                            <td><a (click)="openDetail(item?.id)">{{item?.to_trading_account_id | convertTradingType}}</a></td>
+                            <td><a (click)="openDetail(item?.id)"><span
+                                        class="keep-all">{{item?.from_trading_account_id | convertTradingType}}</span></a>
+                                <ng-cotainer class="ml-1">
+                                    <img *ngIf="item?.sent_account_type == accountType.CCFD.key" src="assets/images/badge-C-CFD.svg" width="37"
+                                        height="20">
+                                    <img *ngIf="item?.sent_account_type == accountType.FX.key" src="assets/images/badge-FX.svg" width="33"
+                                        height="20">
+                                    <img *ngIf="item?.sent_account_type == accountType.ICFD.key" src="assets/images/badge-I-CFD.svg" width="37"
+                                        height="20">
+                                </ng-cotainer>
+                            </td>
+                            <td><a (click)="openDetail(item?.id)">{{item?.to_trading_account_id | convertTradingType}}</a>
+                                <ng-cotainer class="ml-1">
+                                    <img *ngIf="item?.receive_account_type == accountType.CCFD.key" src="assets/images/badge-C-CFD.svg" width="37"
+                                        height="20">
+                                    <img *ngIf="item?.receive_account_type == accountType.FX.key" src="assets/images/badge-FX.svg" width="33"
+                                        height="20">
+                                    <img *ngIf="item?.receive_account_type == accountType.ICFD.key" src="assets/images/badge-I-CFD.svg" width="37"
+                                        height="20">
+                                </ng-cotainer>
+                            </td>
                             <td class="text-right"><a (click)="openDetail(item?.id)">{{item?.amount | number}}</a></td>
                             <td class="text-right"><a (click)="openDetail(item?.id)">{{item?.currency}}</a></td>
                             <td *ngIf="item?.status == transactionStatus.PENDING.key" class="text-right">

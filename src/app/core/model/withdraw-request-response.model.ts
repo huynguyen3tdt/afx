@@ -124,6 +124,8 @@ export interface TransferResulteModel {
   create_date: string;
   from_trading_account_id: number;
   to_trading_account_id: number;
+  sent_account_type?: string;
+  receive_account_type?: string;
 }
 
 
