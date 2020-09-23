@@ -13,7 +13,7 @@
                         <div class="col-md-6 col-lg-7">
                             <div class="p-3 border mb-3 form form-line bg-light">
                                 <div class="d-flex justify-content-between mb-2">
-                                    <h5 class="text-primary mb-0">{{'MT5 Information' | translate}}</h5>
+                                    <h5 class="text-primary mb-0">{{'Sender account' | translate}}</h5>
 
                                 </div>
                                 <div class="d-flex flex-wrap justify-content-between align-items-center mb-2">
@@ -82,7 +82,7 @@
                             </div>
                             <div class="p-3 border mb-3 form form-line bg-light">
                                     <div class="d-flex justify-content-between mb-2">
-                                        <h5 class="text-primary mb-0">{{'MT5 Information' | translate}}</h5>
+                                        <h5 class="text-primary mb-0">{{'Receiver account' | translate}}</h5>
     
                                     </div>
                                     <div class="d-flex flex-wrap justify-content-between align-items-center mb-2">
@@ -237,7 +237,7 @@
                             <td class="border-top-0">{{newDate}}</td>
                         </tr>
                         <tr>
-                            <td width="130">{{'Sent account' | translate}}</td>
+                            <td width="130">{{'Sender account' | translate}}</td>
                             <td>{{tradingSentAccount?.value}}
                                 <ng-cotainer>
                                     <img *ngIf="sentType == accountType.CCFD.key" src="assets/images/badge-C-CFD.svg" width="37"
@@ -250,13 +250,13 @@
                             <td class="text-right">{{marginLevelEstimateSend | number: '1.2-2'}}%</td>
                         </tr>
                         <tr>
-                            <td width="130">{{'Receive account' | translate}}</td>
+                            <td width="130">{{'Receiver account' | translate}}</td>
                             <td><strong>{{tradingReceiveAccount?.value}}</strong>
                                 <ng-conatiner>
                                     <ng-cotainer class="ml-1">
                                         <img *ngIf="receiveType == accountType.CCFD.key" src="assets/images/badge-C-CFD.svg" width="37" height="20">
                                         <img *ngIf="receiveType == accountType.FX.key" src="assets/images/badge-FX.svg" width="33" height="20">
-                                        <img *ngIf="receiveType == accountType.ICFD.key" src="assets/images/badge-I-CFD.svg" width="37" height="30">
+                                        <img *ngIf="receiveType == accountType.ICFD.key" src="assets/images/badge-I-CFD.svg" width="37" height="20">
                                     </ng-cotainer>
                                 </ng-conatiner>
                             </td>
@@ -303,37 +303,36 @@
                 <p *ngIf="this.transferResult?.status == this.transferStatus.CANCEL.key">{{'Your transfer request has been rejected:' | translate }}</p>
                 <table class="table table-hover table-sm small" cellspacing="0" cellpadding="0">
                     <tbody>
-                        <tr>
-                            <td width="180" class="border-top-0">{{'Transfer Amount' | translate}}</td>
-                            <td class="border-top-0">{{transferResult?.amount | number}}
-                                {{transferResult?.currency}}</td>
-                        </tr>
-                        <!-- <tr>
-                          <td width="180">{{'Transaction ID' | translate}}</td>
-                          <td>{{transactionWithdraw?.id}}</td>
-                      </tr> -->
-                        <tr>
-                            <td width="180">{{'Createdate time' | translate}}</td>
-                            <td>{{transferResult?.create_date}}</td>
-                        </tr>
-                        <tr>
-                            <td width="180">{{'Sent account' | translate}}</td>
-                            <td>{{transferResult?.to_trading_account_id | convertTradingType}}</td>
-                        </tr>
-                        <tr>
-                            <td width="180">{{'Receive account' | translate}}</td>
-                            <td><strong>{{transferResult?.from_trading_account_id | convertTradingType}}</strong></td>
-                        </tr>
+                    <tr>
+                        <td width="180">{{'Sender account' | translate}}</td>
+                        <td>{{transferResult?.to_trading_account_id | convertTradingType}}</td>
+                    </tr>
+                    <tr>
+                        <td width="180">{{'Receiver account' | translate}}</td>
+                        <td><strong>{{transferResult?.from_trading_account_id | convertTradingType}}</strong></td>
+                    </tr>
+                    <tr>
+                        <td width="180">{{'Transfer Amount' | translate}}</td>
+                        <td>{{transferResult?.amount | number}}
+                            {{transferResult?.currency}}</td>
+                    </tr>
+                    <!-- <tr>
+                                              <td width="180">{{'Transaction ID' | translate}}</td>
+                                              <td>{{transactionWithdraw?.id}}</td>
+                                          </tr> -->
+                    <tr>
+                        <td width="180">{{'Createdate time' | translate}}</td>
+                        <td>{{transferResult?.create_date}}</td>
+                    </tr>
                     </tbody>
                 </table>
                 <!-- <p *ngIf="checkWithDrawal == true">{{'It is being processed within 3-5 business day.' | translate}}</p> -->
                 <div *ngIf="this.transferResult?.status === this.transferStatus.in_progress">
-                    <div>{{'Requests made by 15:00 will be withdrawn on the next business day.' | translate}}</div>
-                    <div>{{'Requests received after 15:00 will be handled the next business day.' | translate}}</div>
+                    <div>{{'There are some problem when makes internal transfer. Please contact customer support' | translate}}</div>
                 </div>
 
-                <p *ngIf="this.transferResult?.status === this.transferStatus.cancel">
-                    {{'Reason: MT5 account balance is not enough money to withdraw' | translate}}</p>
+                <!-- <p *ngIf="this.transferResult?.status === this.transferStatus.cancel">
+                    {{'Reason: MT5 account balance is not enough money to withdraw' | translate}}</p> -->
                 <hr>
                 <div class="text-center">
                     <button type="button" class="btn btn-success" id="got_it" data-dismiss="modal"

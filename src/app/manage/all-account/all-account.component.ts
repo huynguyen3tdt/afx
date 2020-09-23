@@ -19,10 +19,14 @@ export class AllAccountComponent implements OnInit {
 
   ngOnInit() {
     this.listTradingAccount = JSON.parse(localStorage.getItem(ACCOUNT_IDS));
+    this.totalBalance = 0;
+    this.totalPL = 0;
     if (this.listTradingAccount) {
       const listMT5: Observable<WithdrawRequestModel> [] = [];
       this.listTradingAccount.forEach((item) => {
-        listMT5.push(this.withdrawRequestService.getmt5Infor(Number(item.account_id)));
+        if (item.account_id) {
+          listMT5.push(this.withdrawRequestService.getmt5Infor(Number(item.account_id)));
+        }
       });
       forkJoin (
         listMT5
@@ -33,11 +37,12 @@ export class AllAccountComponent implements OnInit {
           this.listMt5Infor[index].data.account_id = this.listTradingAccount[index].account_id;
         });
         this.listMt5Infor.forEach(item => {
-          this.totalBalance += item.data.balance;
-          this.totalBalance += item.data.unrealize_pl;
+          console.log('itemmm ', item);
+          this.totalBalance += Number(item.data.balance);
+          this.totalPL += Number(item.data.unrealize_pl);
+          console.log('1111 ', this.totalBalance);
         });
       });
     }
   }
-
 }

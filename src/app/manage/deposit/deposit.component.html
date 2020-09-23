@@ -156,16 +156,16 @@
                                         </ul> -->
                                         <ul class="idTabs list-banks">
                                             <ng-container *ngFor="let item of listBankTranfer">
-                                                <li (click)="showInforBank('ufj_bank')" class="bank-item" *ngIf="item?.name == '三菱ＵＦＪ'">
-                                                    <a id="ufj_bank">
+                                                <li (click)="showInforBank('三菱ＵＦＪ', item)" class="bank-item" *ngIf="item?.name == '三菱ＵＦＪ'">
+                                                    <a id="三菱ＵＦＪ">
                                                         <div class="text-center">
                                                             <div><img src="assets/images/bank_logo/ufj.png"
                                                                     alt="Mizuho Bank" class="bank_logo scale_img"></div>
                                                         </div>
                                                     </a>
                                                 </li>
-                                                <li (click)="showInforBank('mizuho_bank')" class="bank-item" *ngIf="item?.name == 'みずほ'">
-                                                    <a id="mizuho_bank">
+                                                <li (click)="showInforBank('みずほ', item)" class="bank-item" *ngIf="item?.name == 'みずほ'">
+                                                    <a id="みずほ">
                                                         <div class="text-center">
                                                             <div><img src="assets/images/bank_logo/mizuho.png"
                                                                     alt="Mizuho Bank" class="bank_logo"></div>
@@ -173,8 +173,8 @@
                                                         </div>
                                                     </a>
                                                 </li>
-                                                <li (click)="showInforBank('sm_bank')" class="bank-item" *ngIf="item?.name == '三井住友'">
-                                                    <a id="sm_bank">
+                                                <li (click)="showInforBank('三井住友', item)" class="bank-item" *ngIf="item?.name == '三井住友'">
+                                                    <a id="三井住友">
                                                         <div class="text-center">
                                                             <div><img src="assets/images/bank_logo/smbc.png"
                                                                     alt="Mizuho Bank" class="bank_logo"></div>
@@ -182,8 +182,8 @@
                                                         </div>
                                                     </a>
                                                 </li>
-                                                <li (click)="showInforBank('jpb_bank')" class="bank-item" *ngIf="item?.name == 'ゆうちょ'">
-                                                    <a id="jpb_bank">
+                                                <li (click)="showInforBank('ゆうちょ', item)" class="bank-item" *ngIf="item?.name == 'ゆうちょ'">
+                                                    <a id="ゆうちょ">
                                                         <div class="text-center">
                                                             <div><img src="assets/images/bank_logo/jpb.png"
                                                                     alt="Japan Post Bank" class="bank_logo"></div>
@@ -191,8 +191,8 @@
                                                         </div>
                                                     </a>
                                                 </li>
-                                                <li (click)="showInforBank('jn_bank')" class="bank-item" *ngIf="item?.name == 'ジャパンネット'">
-                                                    <a id="jn_bank">
+                                                <li (click)="showInforBank('ジャパンネット', item)" class="bank-item" *ngIf="item?.name == 'ジャパンネット'">
+                                                    <a id="ジャパンネット">
                                                         <div class="text-center">
                                                             <div><img src="assets/images/bank_logo/jnb.png"
                                                                     alt="Mizuho Bank" class="bank_logo"></div>
@@ -200,8 +200,8 @@
                                                         </div>
                                                     </a>
                                                 </li>
-                                                <li (click)="showInforBank('rakuten_bank')" class="bank-item" *ngIf="item?.name == '楽天'">
-                                                    <a id="rakuten_bank">
+                                                <li (click)="showInforBank('楽天', item)" class="bank-item" *ngIf="item?.name == '楽天'">
+                                                    <a id="楽天">
                                                         <div class="text-center">
                                                             <div><img src="assets/images/bank_logo/rakuten.png"
                                                                     alt="Mizuho Bank" class="bank_logo"></div>
@@ -214,7 +214,8 @@
                                     </div>
                                     <p class="mb-1"><strong>{{'Please transfer to the following account.' | translate}}</strong></p>
                                     <p class="mb-1"><strong>{{'As soon as we confirm the payment, we will notify you of the payment.' | translate}}</strong></p>
-                                    <p class="mb-1"><strong>{{'Please note that the name of the transfer person cannot be accepted unless it is the same as the name of the registered account of the Company.' | translate}}</strong></p>
+                                    <p class="mb-1"><strong>{{'Please note that we can only accept the name of the transfer person who is the same as the name of our registered account.' | translate}}</strong></p>
+                                    <p class="mb-1"><strong>{{'Please be sure to enter our trading account number (10 digits) of the deposit destination after the name of the transfer person. If you do not specify a deposit destination trading account, we will arbitrarily select an account.' | translate}}</strong></p>
                                     <!-- <ng-container *ngFor="let item of listBankTranfer;let i = index">
                                         <div id="bank_{{item?.id}}" class="mb-2">
                                             <table class="table border table-sm" cellpadding="0" cellspacing="0">
@@ -251,10 +252,9 @@
                                             </table>
                                         </div>
                                     </ng-container> -->
-
-                                    <div id="ufj_bank" class="mb-2">
-                                        <ng-container *ngFor="let item of listBankTranfer">
-                                            <table *ngIf="item?.name == '三菱ＵＦＪ'" class="table border table-sm" cellpadding="0" cellspacing="0">
+                                    <ng-container *ngFor="let item of listBankTranfer">
+                                    <div id="{{item?.name}}" class="mb-2">
+                                            <table class="table border table-sm" cellpadding="0" cellspacing="0">
                                                 <tbody>
                                                     <tr>
                                                         <td width="120">銀行名</td>
@@ -286,9 +286,10 @@
                                                     </tr>
                                                 </tbody>
                                             </table>
-                                        </ng-container>
                                     </div>
-                                    <div id="mizuho_bank" class="mb-2">
+                                </ng-container>
+
+                                    <!-- <div id="みずほ" class="mb-2">
                                         <ng-container *ngFor="let item of listBankTranfer">
                                             <table *ngIf="item?.name == 'みずほ'" class="table border table-sm" cellpadding="0" cellspacing="0">
                                                 <tbody>
@@ -324,7 +325,7 @@
                                             </table>
                                         </ng-container>
                                     </div>
-                                    <div id="sm_bank" class="mb-2">
+                                    <div id="三井住友" class="mb-2">
                                         <ng-container *ngFor="let item of listBankTranfer">
                                             <table *ngIf="item?.name == '三井住友'" class="table border table-sm" cellpadding="0" cellspacing="0">
                                                 <tbody>
@@ -360,7 +361,7 @@
                                             </table>
                                         </ng-container>
                                     </div>
-                                    <div id="jpb_bank" class="mb-2">
+                                    <div id="ゆうちょ" class="mb-2">
                                         <ng-container *ngFor="let item of listBankTranfer">
                                             <table *ngIf="item?.name == 'ゆうちょ'" class="table border table-sm" cellpadding="0" cellspacing="0">
                                                 <tbody>
@@ -396,7 +397,7 @@
                                             </table>
                                         </ng-container>
                                     </div>
-                                    <div id="jn_bank" class="mb-2">
+                                    <div id="ジャパンネット" class="mb-2">
                                         <ng-container *ngFor="let item of listBankTranfer">
                                             <table *ngIf="item?.name == 'ジャパンネット'" class="table border table-sm" cellpadding="0" cellspacing="0">
                                                 <tbody>
@@ -433,7 +434,7 @@
                                             </table>
                                         </ng-container>
                                     </div>
-                                    <div id="rakuten_bank" class="mb-2">
+                                    <div id="楽天" class="mb-2">
                                         <ng-container *ngFor="let item of listBankTranfer">
                                             <table *ngIf="item?.name == '楽天'" class="table border table-sm" cellpadding="0" cellspacing="0">
                                                 <tbody>
@@ -468,7 +469,7 @@
                                                 </tbody>
                                             </table>
                                         </ng-container>
-                                    </div>
+                                    </div> -->
                                 </div>
                                 <div class="col-lg-5">
                                     <div class="p-3 border mb-3 form form-line bg-light">
@@ -476,7 +477,7 @@
                                         <div class="mb-1 d-flex justify-content-between">
                                             <label class="label">{{'Trading account' | translate}}</label>
                                             <div>
-                                                <select [(ngModel)]="accountID" (change)="changeTradingAccount()" disabled class="form-control form-control-sm" style="min-width: 80px;background: none;">
+                                                <select [(ngModel)]="accountID" (change)="changeTradingAccount()" class="form-control form-control-sm" style="min-width: 80px;background: none;">
                                                 <option *ngFor="let item of listTradingAccount" value="{{item?.account_id}}">{{item?.value}}</option>
                                               </select>
                                             </div>
@@ -539,20 +540,47 @@
                                         <div [formGroup]="depositAmountForm" class="form form-line">
                                             <div class="form form-line">
                                                 <div class="mb-3">
-                                                    <label class="label">{{'Deposit Amount' | translate}}</label>
-                                                    <input maxlength="15" type="text" name="amount" 
-                                                    formControlName="deposit" currency autocomplete="off" 
-                                                    class="form-control form-control-lg text-right font-weight-bold text-warning" 
-                                                    placeholder="">
+                                                    <label class="label">{{'Name' | translate}}</label>
+                                                    <input maxlength="15" type="text" disabled formControlName="cusName" autocomplete="off"
+                                                        class="form-control form-control text-left" placeholder="">
                                                 </div>
-                                                <div *ngIf="bankError == true" class="invalid-mess">
+                                                <div class="mb-3">
+                                                    <label class="label">{{'Trading account' | translate}}</label>
+                                                    <input maxlength="15" type="text" disabled formControlName="tradingAcount" autocomplete="off"
+                                                        class="form-control form-control text-left" placeholder="">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label class="label">{{'Beneficiary Bank' | translate}}</label>
+                                                    <input maxlength="15" type="text" disabled formControlName="bankName" autocomplete="off"
+                                                        class="form-control form-control text-left" placeholder="">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label class="label">{{'Datetime' | translate}}</label>
+                                                    <input type="text" name="end-date"
+                                                        [ngClass]="{'invalid': depositAmountForm?.controls?.dateTime?.errors}"
+                                                        class="form-control date"
+                                                        placeholder="{{formatDateYear}}" #dp="bsDatepicker" bsDatepicker
+                                                        formControlName="dateTime" autocomplete="off"
+                                                        (onShown)="onShowPicker($event, 'To')"
+                                                        [bsConfig]="{ showWeekNumbers:false, dateInputFormat: formatDateYear, containerClass: 'theme-blue' }">
+                                                        <div *ngIf="depositAmountForm?.controls?.dateTime?.errors" class="invalid-mess">
+                                                            <div>{{'This field is required' | translate}}</div>
+                                                        </div>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label class="label">{{'Deposit Amount' | translate}}</label>
+                                                    <input [ngClass]="{'invalid': bankTransferError}"
+                                                        maxlength="15" type="text" name="amount" formControlName="deposit" currency autocomplete="off"
+                                                        class="form-control form-control-lg text-left font-weight-bold text-warning" placeholder="">
+                                                </div>
+                                                <div *ngIf="bankTransferError == true" class="invalid-mess">
                                                     <div *ngIf="locale == 'en_US'">Minimum amount is not below {{minDeposit | number}}</div>
                                                     <div *ngIf="locale == 'ja_JP'">ご入金額は{{minDeposit | number}}円以上から承ります</div>
                                                 </div>
                                                 <div *ngIf="errMessageBankTran == true" class="invalid-mess">
                                                     <div>{{'Your Margin Level is nearly the Margin Call Levels' | translate}}</div>
                                                 </div>
-                                                <div class="mb-1 d-flex justify-content-between">
+                                                <!-- <div class="mb-1 d-flex justify-content-between">
                                                     <label class="label">{{'Currency' | translate}}</label>
                                                     <div>
                                                         <strong>{{tradingAccount?.currency}}</strong>
@@ -561,15 +589,15 @@
                                                 <div class="mb-1 d-flex justify-content-between align-items-center">
                                                     <label class="label">{{'Margin Level estimate after deposit' | translate}}</label>
                                                     <div>{{marginLevelEstimateBank | number: '1.2-2'}}%</div>
-                                                </div>
-
+                                                </div> -->
+                                                <button class="btn btn-success btn-block text-uppercase btn-lg mb-3 mt-4" (click)="onSubmitBankTransfer()"><strong>{{'Submit' | translate}}</strong></button>
 
 
                                             </div>
                                         </div>
                                     </div>
-                                    <p class="small text-secondary p-2 bg-light" *ngIf="locale == language.english">Notice: Minimum single deposit amount is {{minDeposit | number}}</p>
-                                    <p class="small text-secondary p-2 bg-light" *ngIf="locale == language.japan">※最低入金額は{{minDeposit | number}}円となります。</p>
+                                    <!-- <p class="small text-secondary p-2 bg-light" *ngIf="locale == language.english">Notice: Minimum single deposit amount is {{minDeposit | number}}</p>
+                                    <p class="small text-secondary p-2 bg-light" *ngIf="locale == language.japan">※最低入金額は{{minDeposit | number}}円となります。</p> -->
 
                                     <p class="text-center" style="line-height: 1.2"><a href="javascript:;" (click)="openModal()"><i
                                                 class="icon ion-md-information-circle"></i> {{'General rules for depositing and withdrawing funds' | translate}}</a></p>

@@ -19,7 +19,8 @@ import {
   ERROR_MAX_DEPOSIT_EN,
   ERROR_MIN_DEPOSIT_JP,
   ERROR_MAX_DEPOSIT_JP,
-  MIN_WITHDRAW} from 'src/app/core/constant/authen-constant';
+  MIN_WITHDRAW,
+  IS_COMPANY} from 'src/app/core/constant/authen-constant';
 import { WithdrawRequestService } from './../../core/services/withdraw-request.service';
 import { Mt5Model, TransactionModel, WithdrawAmountModel } from 'src/app/core/model/withdraw-request-response.model';
 import { AccountType } from 'src/app/core/model/report-response.model';
@@ -35,12 +36,14 @@ import { take } from 'rxjs/operators';
 import { EnvConfigService } from 'src/app/core/services/env-config.service';
 import { AppSettings } from 'src/app/core/services/api.setting';
 import { PORTAL_CODE, SHOP_CODE } from 'src/app/core/constant/bjp-constant';
-import { ModalDirective } from 'ngx-bootstrap';
+import { ModalDirective, BsDatepickerDirective } from 'ngx-bootstrap';
 import { Title } from '@angular/platform-browser';
 import { ToastrService } from 'ngx-toastr';
 import { MAX_DEPOSIT } from './../../core/constant/authen-constant';
 const numeral = require('numeral');
 import { ModalDepositWithdrawComponent } from '../modal-deposit-withdraw/modal-deposit-withdraw.component';
+import { UserService } from 'src/app/core/services/user.service';
+import { UserModel, CorporateModel } from 'src/app/core/model/user.model';
 declare var $: any;
 
 @Component({
@@ -52,6 +55,7 @@ export class DepositComponent implements OnInit {
   @ViewChild('listTran', { static: false }) listTran: ListTransactionComponent;
   @ViewChild('BJPSystem', { static: true }) BJPSystem: ElementRef;
   @ViewChild('modalRuleDeposit', { static: false }) modalRuleDeposit: ModalDepositWithdrawComponent;
+  @ViewChild('dp', {static: true}) picker: BsDatepickerDirective;
   @Output() emitTabFromDeposit = new EventEmitter<{tab: string, accountID: number}>();
   @Output() emitAccountID: EventEmitter<string> = new EventEmitter<string>();
   depositAmountForm: FormGroup;
@@ -69,7 +73,7 @@ export class DepositComponent implements OnInit {
   errMessageQuickDeposit: boolean;
   errMessageBankTran: boolean;
   depositError: boolean;
-  bankError: boolean;
+  bankTransferError: boolean;
   depositValue: number;
   depositAmount: number;
   listTradingAccount: Array<AccountType>;
@@ -101,6 +105,9 @@ export class DepositComponent implements OnInit {
   kessaiFlag: string;
   maxDeposit: number;
   minWithDraw: number;
+  isCompany: string;
+  userInfor: UserModel;
+  corporateInfor: CorporateModel;
 
   constructor(private depositService: DepositService,
               private withdrawRequestService: WithdrawRequestService,
@@ -109,9 +116,11 @@ export class DepositComponent implements OnInit {
               private globalService: GlobalService,
               private envConfigService: EnvConfigService,
               private titleService: Title,
-              private toastr: ToastrService) { }
+              private toastr: ToastrService,
+              private userService: UserService) { }
 
   ngOnInit() {
+    this.isCompany = localStorage.getItem(IS_COMPANY);
     this.showUFJBank = this.envConfigService.getUFJ() === '1';
     this.kessaiFlag = 'OB';
     this.titleService.setTitle('フィリップMT5 Mypage');
@@ -147,6 +156,27 @@ export class DepositComponent implements OnInit {
     this.initDepositTransactionForm();
   }
 
+  getUserInfo() {
+    this.spinnerService.show();
+    if (this.isCompany === 'false') {
+      this.userService.getUserInfor().pipe(take(1)).subscribe(response => {
+        this.spinnerService.hide();
+        if (response.meta.code === 200) {
+          this.userInfor = response.data;
+          this.depositAmountForm.controls.cusName.setValue(this.userInfor.name);
+        }
+      });
+    } else {
+      this.userService.getCorporateInfor().pipe(take(1)).subscribe(response => {
+        this.spinnerService.hide();
+        if (response.meta.code === 200) {
+          this.corporateInfor = response.data;
+          this.depositAmountForm.controls.cusName.setValue(this.corporateInfor.pic.info.value.fx_name1);
+        }
+      });
+    }
+  }
+
   initBjpSystem() {
     this.bjpSystem = this.envConfigService.getBJPSystem();
     this.apiPostBack = this.envConfigService.getConfig() + '/' + AppSettings.API_POST_BACK_BJP;
@@ -156,11 +186,21 @@ export class DepositComponent implements OnInit {
 
   initDepositAmountForm() {
     this.depositAmountForm = new FormGroup({
-      deposit: new FormControl(numeral(10000).format('0,0'), requiredInput)
+      deposit: new FormControl(numeral(10000).format('0,0'), requiredInput),
+      cusName: new FormControl('', requiredInput),
+      bankName: new FormControl('', requiredInput),
+      dateTime: new FormControl('', requiredInput),
+      tradingAcount: new FormControl('', requiredInput)
     });
     this.depositAmountForm.controls.deposit.valueChanges.subscribe((value) => {
       this.changeDepositCal();
     });
+    this.depositAmountForm.controls.dateTime.setValue(moment((new Date()).toDateString()).format(this.formatDateYear));
+    if (this.accountID) {
+      this.tradingAccount = this.listTradingAccount.find((account: AccountType) => this.accountID === account.account_id);
+      this.depositAmountForm.controls.tradingAcount.setValue(this.tradingAccount.value);
+    }
+    this.getUserInfo();
   }
 
   initDepositTransactionForm() {
@@ -183,7 +223,8 @@ export class DepositComponent implements OnInit {
       if (response.meta.code === 200) {
         this.listBankTranfer = response.data;
         setTimeout(() => {
-          this.showInforBank('ufj_bank');
+          const bank = this.listBankTranfer.find((item: DepositModel) => item.name === '三菱ＵＦＪ');
+          this.showInforBank('三菱ＵＦＪ', bank);
         }, 50);
       }
     });
@@ -217,11 +258,11 @@ export class DepositComponent implements OnInit {
     });
   }
 
-  showInforBank(bank: string) {
-    const listTab = ['ufj_bank', 'mizuho_bank', 'sm_bank', 'jpb_bank', 'jn_bank', 'rakuten_bank'];
+  showInforBank(bankName: string, bank?: DepositModel) {
+    const listTab = ['三菱ＵＦＪ', 'みずほ', '三井住友', 'ゆうちょ', 'ジャパンネット', '楽天'];
     // tslint:disable-next-line:no-shadowed-variable
     listTab.forEach(element => {
-      if (bank === element) {
+      if (bankName === element) {
         $(`a#${element}`).addClass('selected');
         $(`div#${element}`).show();
       } else {
@@ -229,6 +270,7 @@ export class DepositComponent implements OnInit {
         $(`div#${element}`).hide();
       }
     });
+    this.depositAmountForm.controls.bankName.setValue(bankName);
   }
 
   onSubmit() {
@@ -308,10 +350,10 @@ export class DepositComponent implements OnInit {
   changeDepositCal() {
     this.depositAmount = numeral(this.depositAmountForm.controls.deposit.value).value();
     if (this.depositAmount < this.minDeposit) {
-      this.bankError = true;
+      this.bankTransferError = true;
       return;
     }
-    this.bankError = false;
+    this.bankTransferError = false;
     this.calculateDepositAmount();
   }
 
@@ -340,6 +382,7 @@ export class DepositComponent implements OnInit {
   changeTradingAccount() {
     this.tradingAccount = this.listTradingAccount.find((account: AccountType) => this.accountID === account.account_id);
     this.accountID = this.tradingAccount.account_id;
+    this.depositAmountForm.controls.tradingAcount.setValue(this.tradingAccount.value);
     this.getMt5Infor(Number(this.accountID));
     this.getDwAmount(Number(this.accountID));
     this.remark = this.accountID;
@@ -355,5 +398,30 @@ export class DepositComponent implements OnInit {
 
   getTabFromList(event) {
     this.emitTabFromDeposit.emit({tab: event, accountID: Number(this.accountID)});
+  }
+
+  onSubmitBankTransfer() {
+    if (this.depositAmountForm.invalid || this.bankTransferError) {
+      return;
+    }
+    console.log(this.depositAmountForm.value);
+  }
+
+  onShowPicker(event, type) {
+    const dayHoverHandler = event.dayHoverHandler;
+    const hoverWrapper = (hoverEvent) => {
+      const { cell, isHovered } = hoverEvent;
+
+      if ((isHovered &&
+        !!navigator.platform &&
+        /iPad|iPhone|iPod/.test(navigator.platform)) &&
+        'ontouchstart' in window
+      ) {
+        (this.picker as any)._datepickerRef.instance.daySelectHandler(cell);
+      }
+
+      return dayHoverHandler(hoverEvent);
+    };
+    event.dayHoverHandler = hoverWrapper;
   }
 }

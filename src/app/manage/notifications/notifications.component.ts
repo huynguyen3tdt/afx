@@ -93,7 +93,7 @@ export class NotificationsComponent implements OnInit {
     });
     this.listTradingAccount = JSON.parse(localStorage.getItem(ACCOUNT_IDS));
     if (this.listTradingAccount) {
-      this.accountID = this.listTradingAccount[0].value;
+      this.accountID = this.listTradingAccount[0].account_id;
     }
     if (this.accountID) {
       this.getListNotifications(this.pageSize, this.currentPage, this.unreadAll, this.TABS.ALL.value);
@@ -126,7 +126,7 @@ export class NotificationsComponent implements OnInit {
     this.getTotalNotification();
   }
   getTotalNotification() {
-    const accountNumber = this.accountID.split('-')[1];
+    const accountNumber = this.accountID;
     this.notificationsService.getTotalNotification(accountNumber).pipe(take(1)).subscribe(response => {
       if (response.meta.code === 200) {
         this.totalNoti = response.data;
@@ -156,22 +156,23 @@ export class NotificationsComponent implements OnInit {
 
   filterUnreadNoti() {
     this.currentPage = 1;
+    this.unreadAll = !this.unreadAll;
     switch (this.tab) {
       case this.TABS.ALL.name:
-        this.unreadAll = !this.unreadAll;
+        // this.unreadAll = !this.unreadAll;
         this.getListNotifications(this.pageSize, this.currentPage, this.unreadAll, this.TABS.ALL.value);
         break;
       case this.TABS.IMPORTANT.name:
-        this.unreadImportant = !this.unreadImportant;
-        this.getListNotifications(this.pageSize, this.currentPage, this.unreadImportant, this.TABS.IMPORTANT.value);
+        // this.unreadImportant = !this.unreadImportant;
+        this.getListNotifications(this.pageSize, this.currentPage, this.unreadAll, this.TABS.IMPORTANT.value);
         break;
       case this.TABS.NOTIFICATIONS.name:
-        this.unreadNotification = !this.unreadNotification;
-        this.getListNotifications(this.pageSize, this.currentPage, this.unreadNotification, this.TABS.NOTIFICATIONS.value);
+        // this.unreadNotification = !this.unreadNotification;
+        this.getListNotifications(this.pageSize, this.currentPage, this.unreadAll, this.TABS.NOTIFICATIONS.value);
         break;
       case this.TABS.CAMPAIGN.name:
-        this.unreadCampagn = !this.unreadCampagn;
-        this.getListNotifications(this.pageSize, this.currentPage, this.unreadCampagn, this.TABS.CAMPAIGN.value);
+        // this.unreadCampagn = !this.unreadCampagn;
+        this.getListNotifications(this.pageSize, this.currentPage, this.unreadAll, this.TABS.CAMPAIGN.value);
         break;
     }
   }
@@ -186,11 +187,11 @@ export class NotificationsComponent implements OnInit {
         if (this.tab === this.TABS.ALL.name) {
           this.getListNotifications(this.pageSize, this.currentPage, this.unreadAll, this.TABS.ALL.value);
         } else if (this.tab === this.TABS.IMPORTANT.name) {
-          this.getListNotifications(this.pageSize, this.currentPage, this.unreadImportant, this.TABS.IMPORTANT.value);
+          this.getListNotifications(this.pageSize, this.currentPage, this.unreadAll, this.TABS.IMPORTANT.value);
         } else if (this.tab === this.TABS.NOTIFICATIONS.name) {
-          this.getListNotifications(this.pageSize, this.currentPage, this.unreadNotification, this.TABS.NOTIFICATIONS.value);
+          this.getListNotifications(this.pageSize, this.currentPage, this.unreadAll, this.TABS.NOTIFICATIONS.value);
         } else if (this.tab === this.TABS.CAMPAIGN.name) {
-          this.getListNotifications(this.pageSize, this.currentPage, this.unreadCampagn, this.TABS.CAMPAIGN.value);
+          this.getListNotifications(this.pageSize, this.currentPage,  this.unreadAll, this.TABS.CAMPAIGN.value);
         }
       }
     });
@@ -204,13 +205,13 @@ export class NotificationsComponent implements OnInit {
         this.getListNotifications(this.pageSize, this.currentPage, this.unreadAll, this.TABS.ALL.value);
         break;
       case this.TABS.IMPORTANT.name:
-        this.getListNotifications(this.pageSize, this.currentPage, this.unreadImportant, this.TABS.IMPORTANT.value);
+        this.getListNotifications(this.pageSize, this.currentPage, this.unreadAll, this.TABS.IMPORTANT.value);
         break;
       case this.TABS.NOTIFICATIONS.name:
-        this.getListNotifications(this.pageSize, this.currentPage, this.unreadNotification, this.TABS.NOTIFICATIONS.value);
+        this.getListNotifications(this.pageSize, this.currentPage, this.unreadAll, this.TABS.NOTIFICATIONS.value);
         break;
       case this.TABS.CAMPAIGN.name:
-        this.getListNotifications(this.pageSize, this.currentPage, this.unreadCampagn, this.TABS.CAMPAIGN.value);
+        this.getListNotifications(this.pageSize, this.currentPage, this.unreadAll, this.TABS.CAMPAIGN.value);
         break;
     }
   }
@@ -243,15 +244,15 @@ export class NotificationsComponent implements OnInit {
         break;
       case this.TABS.IMPORTANT.value:
         this.tab = this.TABS.IMPORTANT.name;
-        this.getListNotifications(this.pageSize, this.currentPage, this.unreadImportant, this.TABS.IMPORTANT.value);
+        this.getListNotifications(this.pageSize, this.currentPage, this.unreadAll, this.TABS.IMPORTANT.value);
         break;
       case this.TABS.NOTIFICATIONS.value:
         this.tab = this.TABS.NOTIFICATIONS.name;
-        this.getListNotifications(this.pageSize, this.currentPage, this.unreadNotification, this.TABS.NOTIFICATIONS.value);
+        this.getListNotifications(this.pageSize, this.currentPage, this.unreadAll, this.TABS.NOTIFICATIONS.value);
         break;
       case this.TABS.CAMPAIGN.value:
         this.tab = this.TABS.CAMPAIGN.name;
-        this.getListNotifications(this.pageSize, this.currentPage, this.unreadCampagn, this.TABS.CAMPAIGN.value);
+        this.getListNotifications(this.pageSize, this.currentPage, this.unreadAll, this.TABS.CAMPAIGN.value);
         break;
     }
   }
@@ -264,43 +265,21 @@ export class NotificationsComponent implements OnInit {
         this.getListNotifications(this.pageSize, this.currentPage, this.unreadAll, this.TABS.ALL.value);
         break;
       case this.TABS.IMPORTANT.name:
-        this.getListNotifications(this.pageSize, this.currentPage, this.unreadImportant, this.TABS.IMPORTANT.value);
+        this.getListNotifications(this.pageSize, this.currentPage, this.unreadAll, this.TABS.IMPORTANT.value);
         break;
       case this.TABS.NOTIFICATIONS.name:
-        this.getListNotifications(this.pageSize, this.currentPage, this.unreadNotification, this.TABS.NOTIFICATIONS.value);
+        this.getListNotifications(this.pageSize, this.currentPage, this.unreadAll, this.TABS.NOTIFICATIONS.value);
         break;
       case this.TABS.CAMPAIGN.name:
-        this.getListNotifications(this.pageSize, this.currentPage, this.unreadCampagn, this.TABS.CAMPAIGN.value);
+        this.getListNotifications(this.pageSize, this.currentPage, this.unreadAll, this.TABS.CAMPAIGN.value);
         break;
     }
   }
 
   showDetail(index: number, item: Notification) {
-    switch (this.tab) {
-      case this.TABS.ALL.name:
-        $(`#noti_${index}`).toggleClass('opened');
-        if (this.checkAgreementIsRead(item) === true) {
-          $(`#noti_${index}`).removeClass('unread');
-        }
-        break;
-      case this.TABS.IMPORTANT.name:
-        $(`#important_${index}`).toggleClass('opened');
-        if (this.checkAgreementIsRead(item) === true) {
-          $(`#important_${index}`).removeClass('unread');
-        }
-        break;
-      case this.TABS.NOTIFICATIONS.name:
-        $(`#system_${index}`).toggleClass('opened');
-        if (this.checkAgreementIsRead(item) === true) {
-          $(`#system_${index}`).removeClass('unread');
-        }
-        break;
-      case this.TABS.CAMPAIGN.name:
-        $(`#campain_${index}`).toggleClass('opened');
-        if (this.checkAgreementIsRead(item) === true) {
-          $(`#campain_${index}`).removeClass('unread');
-        }
-        break;
+    $(`#noti_${index}`).toggleClass('opened');
+    if (this.checkAgreementIsRead(item) === true) {
+      $(`#noti_${index}`).removeClass('unread');
     }
     // if (item.agreement_flg === 1) {
     //   this.contentAgeement = item.news_content;
@@ -341,9 +320,9 @@ export class NotificationsComponent implements OnInit {
 
   initFilterRead() {
     this.unreadAll = false;
-    this.unreadCampagn = false;
-    this.unreadImportant = false;
-    this.unreadNotification = false;
+    // this.unreadCampagn = false;
+    // this.unreadImportant = false;
+    // this.unreadNotification = false;
   }
 
   changeFilterRead() {
