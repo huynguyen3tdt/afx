@@ -65,7 +65,6 @@ export class InternalTransferComponent implements OnInit, AfterViewInit {
     }
   }
   goToTabHistory(event) {
-    console.log('eventtt ', event);
     this.accountID = event.accountID;
     this.showTabHistory = true;
     this.showTabDeposit = false;
@@ -78,7 +77,6 @@ export class InternalTransferComponent implements OnInit, AfterViewInit {
     } else {
       this.showTransferHistory = true;
     }
-    console.log('hhhhh ', this.showTransferHistory);
   }
 
   initFilterHistory() {

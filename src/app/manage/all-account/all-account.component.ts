@@ -37,10 +37,8 @@ export class AllAccountComponent implements OnInit {
           this.listMt5Infor[index].data.account_id = this.listTradingAccount[index].account_id;
         });
         this.listMt5Infor.forEach(item => {
-          console.log('itemmm ', item);
           this.totalBalance += Number(item.data.balance);
           this.totalPL += Number(item.data.unrealize_pl);
-          console.log('1111 ', this.totalBalance);
         });
       });
     }

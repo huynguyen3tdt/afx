@@ -104,7 +104,6 @@ export class ListTransactionComponent implements OnInit, OnChanges {
             item.receive_account_type = item.to_trading_account_id.toString().
             substring(item.to_trading_account_id.toString().length - 2, item.to_trading_account_id.toString().length);
           });
-          console.log('666666666 ', this.listTranTransfer);
         }
       });
   }
