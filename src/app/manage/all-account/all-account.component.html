@@ -47,8 +47,8 @@
 </div>
 <br>
 <h4 class="border-bottom pb-1 mb-3">{{'Overview of all accounts' | translate}}</h4>
-<div *ngFor="let item of listMt5Infor" class="row">
-    <div class="col-lg-8">
+<div class="row">
+    <div *ngFor="let item of listMt5Infor" class="col-lg-8">
         <div class="d-flex justify-content-between align-items-center mb-2">
             <div class="d-flex">
                 <div class="mr-2">
@@ -83,6 +83,9 @@
             </table>
         </div>
     </div>
+    <p class="small text-secondary pl-3"><i class="icon ion-md-time"></i> <em>{{'Last updated:' | translate}}
+            {{lastestTime}}
+        </em><br>{{'The system automatically updates data after 1 minute' | translate}}</p>
 </div>
 <br>
 
