@@ -300,5 +300,6 @@
   "Customer Information": "Customer Information",
   "There are some problem when makes internal transfer. Please contact customer support": "There are some problem when makes internal transfer. Please contact customer support",
   "Please note that we can only accept the name of the transfer person who is the same as the name of our registered account.": "Please note that we can only accept the name of the transfer person who is the same as the name of our registered account.",
-  "Please be sure to enter our trading account number (10 digits) of the deposit destination after the name of the transfer person. If you do not specify a deposit destination trading account, we will arbitrarily select an account.":"Please be sure to enter our trading account number (10 digits) of the deposit destination after the name of the transfer person. If you do not specify a deposit destination trading account, we will arbitrarily select an account."
+  "Please be sure to enter our trading account number (10 digits) of the deposit destination after the name of the transfer person. If you do not specify a deposit destination trading account, we will arbitrarily select an account.":"Please be sure to enter our trading account number (10 digits) of the deposit destination after the name of the transfer person. If you do not specify a deposit destination trading account, we will arbitrarily select an account.",
+  "Amount must be bigger than 0": "Amount must be bigger than 0"
 }

@@ -162,8 +162,8 @@
                                     <input maxlength="15" type="text" name="amount" id="sendAmount"
                                         class="form-control form-control-lg text-right font-weight-bold text-success"
                                         placeholder="" formControlName="amount" currency autocomplete="off"
-                                        [ngClass]="{'invalid': isSubmitted && withdrawForm.controls['amount'].errors}">
-                                    <div *ngIf="minWithdrawError == true" class="invalid-mess">
+                                        [ngClass]="{'invalid': transferForm?.controls?.amount?.errors}">
+                                    <!-- <div *ngIf="minWithdrawError == true" class="invalid-mess">
                                         <div *ngIf="locale == 'en_US'">Minimum amount is not below
                                             {{minWithDraw | number}}</div>
                                         <div *ngIf="locale == 'ja_JP'">ご入金額は{{minWithDraw | number}}円以上から承ります</div>
@@ -171,6 +171,10 @@
                                     <div *ngIf="maxWithdrawError == true" class="invalid-mess">
                                         <div>{{'Withdrawal amount is not above the maximum amount' | translate}}
                                             {{maxWithDraw | number}}</div>
+                                    </div> -->
+                                    <div *ngIf="transferForm?.controls?.amount?.errors" class="invalid-mess">
+                                            <div>{{'Amount must be bigger than 0' | translate}}
+                                            </div>
                                     </div>
                                     <div *ngIf="transferAmountError == true" class="invalid-mess">
                                         <div>{{'Withdrawal amount is not above the withdrawable amount' | translate}}

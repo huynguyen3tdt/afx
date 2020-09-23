@@ -60,7 +60,7 @@ export interface Mt5Model {
   leverage: number;
   lastest_time: string;
   unrealize_pl: number;
-  currency: string;
+  currency?: string;
   account_id?: string;
 }
 
@@ -116,6 +116,7 @@ export interface TransferModel {
 }
 
 export interface TransferResulteModel {
+  id?: number;
   amount: number;
   currency: string;
   method: string;
