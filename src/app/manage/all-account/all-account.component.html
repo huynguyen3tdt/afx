@@ -1,0 +1,92 @@
+<h4 class="border-bottom pb-1 mb-3">{{'Overview of all accounts' | translate}}</h4>
+<div class="row">
+    <div class="col-lg-8">
+        <div class="d-flex justify-content-between align-items-center mb-2">
+            <div class="d-flex">
+                <div class="mr-2">
+                    {{'Trading account' | translate}}
+                </div>
+                <div class="all-account">
+                    <div *ngFor="let item of listTradingAccount" class="d-inline-block">
+                        {{item.account_id | convertTradingType}}
+                    </div>
+                    <!-- <div class="d-inline-block">
+                        [I-CFD] 1011111
+                    </div>
+                    <div class="d-inline-block">
+                        [C-FX] 1011111
+                    </div> -->
+                </div>
+
+            </div>
+            <div>{{'Currency:' | translate}}<strong> {{listTradingAccount[0]?.currency}}</strong></div>
+        </div>
+        <hr>
+        <div class="table-responsive">
+            <table class="table table-borderless table-sm table-hover" cellspacing="0" cellpadding="0">
+                <tbody>
+                    <tr>
+                        <td>{{'Total Balance' | translate}}</td>
+                        <td class="text-right">
+                            <strong>{{totalBalance | number}}</strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>{{'Total Unrealize PL' | translate}}</td>
+                        <td class="text-right">
+                            <strong>{{totalPL | number}}</strong>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <p class="small text-secondary"><i class="icon ion-md-time"></i> <em>{{'Last updated:' | translate}}
+                    {{lastestTime}}
+                </em><br>{{'The system automatically updates data after 1 minute' | translate}}</p>
+        </div>
+    </div>
+</div>
+<br>
+<h4 class="border-bottom pb-1 mb-3">{{'Overview of all accounts' | translate}}</h4>
+<div *ngFor="let item of listMt5Infor" class="row">
+    <div class="col-lg-8">
+        <div class="d-flex justify-content-between align-items-center mb-2">
+            <div class="d-flex">
+                <div class="mr-2">
+                    {{'Trading account' | translate}}
+                </div>
+                <div class="all-account">
+                    <div class="d-inline-block">
+                        {{item?.data?.account_id | convertTradingType}}
+                    </div>
+                </div>
+
+            </div>
+            <div>{{'Currency:' | translate}}<strong> {{item?.data?.currency}}</strong></div>
+        </div>
+        <hr>
+        <div class="table-responsive">
+            <table class="table table-borderless table-sm table-hover" cellspacing="0" cellpadding="0">
+                <tbody>
+                    <tr>
+                        <td>{{'Total Balance' | translate}}</td>
+                        <td class="text-right">
+                            <strong>{{item?.data?.balance | number}}</strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>{{'Total Unrealize PL' | translate}}</td>
+                        <td class="text-right">
+                            <strong>{{item?.data?.unrealize_pl | number}}</strong>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<br>
+
+
+
+
+<ng4-loading-spinner [timeout]="30000"></ng4-loading-spinner>

@@ -5,6 +5,8 @@ import { WithdrawRequestComponent } from './withdraw-request/withdraw-request.co
 import { WithdrawHistoryComponent } from './withdraw-history/withdraw-history.component';
 import { ReportListComponent } from './report-list/report-list.component';
 import { DepositComponent } from './deposit/deposit.component';
+import { SummaryComponent } from './summary/summary.component';
+import { InternalTransferComponent } from './internal-transfer/internal-transfer.component';
 
 export const ManageRoutes: Routes = [
   {
@@ -30,5 +32,13 @@ export const ManageRoutes: Routes = [
   {
     path: 'deposit',
     component: DepositComponent
-  }
+  },
+  {
+    path: 'summary',
+    component: SummaryComponent
+  },
+  {
+    path: 'internal',
+    component: InternalTransferComponent
+  },
 ];

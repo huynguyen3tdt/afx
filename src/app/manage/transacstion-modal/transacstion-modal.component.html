@@ -1,6 +1,6 @@
 <div bsModal #tranModal="bs-modal" class="modal fade" id="tran_detail" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
+        <div *ngIf="tranType != typeTranHistory?.INTERNALTRANSFER?.key" class="modal-content">
             <div class="modal-header pt-2 pb-2">
                 <div>
                     <h5 class="modal-title text-primary"><strong>{{'Transaction' | translate}} {{transactionDetail?.id}}</strong></h5>
@@ -47,6 +47,52 @@
                             <td *ngIf="transactionDetail?.status == transactionStatus.COMPLETE.key"><span class="text-success"><i class="icon ion-md-checkmark"></i> {{'Completed' | translate}}</span></td>
                             <td *ngIf="transactionDetail?.status == transactionStatus.CANCEL.key"><span> {{'Cancel' | translate}}</span></td>
                             <td *ngIf="transactionDetail?.status == transactionStatus.PENDING.key"><span class="text-info"><i class="icon ion-md-hourglass"></i> {{'In-progress' | translate}}</span></td>
+                            <!-- <td *ngIf="transactionDetail?.status == transactionStatus.NEW.key"><span class="text-info"><i class="icon ion-md-hourglass"></i> {{'New' | translate}}</span></td> -->
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
+
+        <div *ngIf="tranType == typeTranHistory?.INTERNALTRANSFER?.key" class="modal-content">
+            <div class="modal-header pt-2 pb-2">
+                <div>
+                    <h5 class="modal-title text-primary"><strong>{{'Transaction' | translate}} {{transferTransactionDetail?.id}}</strong></h5>
+                </div>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="modal.hide()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table class="table table-hover table-sm" cellspacing="0" cellpadding="0">
+                    <tbody>
+                        <tr>
+                            <td width="180" class="border-top-0">{{'Date time' | translate}}</td>
+                            <td class="border-top-0">{{transferTransactionDetail.create_date}}</td>
+                        </tr>
+                        <tr>
+                            <td width="180">{{'Type' | translate}}</td>
+                            <td>{{'Transfer' | translate}}</td>
+                        </tr>
+                        <tr>
+                            <td width="180">{{'Sender account' | translate}}</td>
+                            <td>{{transferTransactionDetail?.from_trading_account_id | convertTradingType}}</td>
+                        </tr>
+                        <tr>
+                            <td width="180">{{'Receiver account' | translate}}</td>
+                            <td>{{transferTransactionDetail?.to_trading_account_id | convertTradingType}}</td>
+                        </tr>
+                        <tr>
+                            <td width="180">{{'Amount' | translate}}</td>
+                            <td><strong>{{transferTransactionDetail?.amount | number}}</strong> <span class="small text-secondary"></span> {{transferTransactionDetail?.currency}}</td>
+                        </tr>
+                        <tr>
+                            <td width="180">{{'Status' | translate}}</td>
+                            <td *ngIf="transferTransactionDetail?.status == transactionStatus.COMPLETE.key"><span class="text-success"><i class="icon ion-md-checkmark"></i> {{'Completed' | translate}}</span></td>
+                            <td *ngIf="transferTransactionDetail?.status == transactionStatus.CANCEL.key"><span> {{'Cancel' | translate}}</span></td>
+                            <td *ngIf="transferTransactionDetail?.status == transactionStatus.PENDING.key"><span class="text-info"><i class="icon ion-md-hourglass"></i> {{'In-progress' | translate}}</span></td>
                             <!-- <td *ngIf="transactionDetail?.status == transactionStatus.NEW.key"><span class="text-info"><i class="icon ion-md-hourglass"></i> {{'New' | translate}}</span></td> -->
                         </tr>
                     </tbody>

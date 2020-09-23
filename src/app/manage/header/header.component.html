@@ -14,7 +14,7 @@
                 <!-- BEGIN HEADER TOP NAV -->
                 <ul class="header-top-nav nav">
                   <li class="nav-item nav-item-account-type dropdown" *ngIf="this.accountTradingForm.controls.afxAccount || this.accountTradingForm.controls.afxAccount || this.accountTradingForm.controls.cfdCommunityAccount" (click)="openAddAccountModal()">
-                    <a href="javascript:;" class="nav-link" role="button" aria-haspopup="true" aria-expanded="false"><i class="icon ion-md-add mr-1"></i><span class="d-none d-md-inline">Add Account</span></a>
+                    <a href="javascript:;" class="nav-link" role="button" aria-haspopup="true" aria-expanded="false"><i class="icon ion-md-add mr-1"></i><span class="d-none d-md-inline">{{'Add Account' | translate}}</span></a>
                 </li>
                 <!-- <li class="nav-item nav-item-language dropdown d-none d-md-inline-block">
                     <a href="javascript:;" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">EN</a>
@@ -78,19 +78,27 @@
                     <a [routerLink]="['/manage/notifications']" id="notifications" class="nav-link" title="Notifications"><i class="icon ion-md-notifications d-md-none"></i> <span
                         class="d-none d-md-inline">{{'Notifications' | translate}}</span></a>
                 </li>
-                <li class="nav-item nav-item-deposit">
+                <!-- <li class="nav-item nav-item-deposit">
                     <a [routerLink]="['/manage/deposit']" id="deposit" class="nav-link" title="Deposit"><i
                             class="icon ion-md-add d-md-none"></i> <span class="d-none d-md-inline">{{'Deposit' | translate}}</span></a>
+                </li> -->
+                <li class="nav-item nav-item-deposit">
+                    <a [routerLink]="['/manage/summary']" id="summary" class="nav-link" title="Sum"><i
+                            class="icon ion-md-add d-md-none"></i> <span class="d-none d-md-inline">{{'Account Information' | translate}}</span></a>
                 </li>
-                <li class="nav-item nav-item-withdraw">
+                <li class="nav-item nav-item-deposit">
+                    <a [routerLink]="['/manage/internal']" id="internal" class="nav-link" title="Sum"><i
+                            class="icon ion-md-add d-md-none"></i> <span class="d-none d-md-inline">{{'Deposit and Withdrawal' | translate}}</span></a>
+                </li>
+                <!-- <li class="nav-item nav-item-withdraw">
                     <a [routerLink]="['/manage/withdrawRequest']" id="withdrawRequest" class="nav-link" title="Withdraw"><i
                             class="icon ion-md-remove d-md-none"></i> <span
                             class="d-none d-md-inline">{{'Withdrawal' | translate}}</span></a>
-                </li>
-                <li class="nav-item nav-item-history">
+                </li> -->
+                <!-- <li class="nav-item nav-item-history">
                     <a [routerLink]="['/manage/withdrawHistory']" id="withdrawHistory" class="nav-link" title="History"><i
                           class="icon ion-md-time d-md-none"></i> <span class="d-none d-md-inline">{{'History' | translate}}</span></a>
-                </li>
+                </li> -->
                 <li class="nav-item nav-item-report">
                     <a [routerLink]="['/manage/reportList']" id="reportList" class="nav-link" title="Report"><i
                             class="icon ion-md-today d-md-none"></i> <span class="d-none d-md-inline">{{'Report' | translate}}</span></a>
@@ -98,7 +106,7 @@
 
                 <li class="nav-item nav-item-account">
                     <a [routerLink]="['/manage/accountInfo']" id="accountInfo" class="nav-link" title="My Account"><i class="icon ion-md-person d-md-none"></i> <span
-                            class="d-none d-md-inline">{{'My Account' | translate}}</span></a>
+                            class="d-none d-md-inline">{{'Customer Information' | translate}}</span></a>
                 </li>
 
             </ul>
@@ -120,20 +128,23 @@
                 <li class="nav-item nav-item-notifications">
                     <a [routerLink]="['/manage/notifications']" id="notifications" class="nav-link has-icon btn-offcanvas-close"><i class="icon ion-md-notifications"></i> {{'Notifications' | translate}}</a>
                 </li>
-                <li class="nav-item nav-item-deposit">
+                <!-- <li class="nav-item nav-item-deposit">
                     <a [routerLink]="['/manage/deposit']" id="deposit" class="nav-link has-icon btn-offcanvas-close"><i class="icon ion-md-add"></i> {{'Deposit' | translate}}</a>
+                </li> -->
+                <!-- <li class="nav-item nav-item-withdraw">                                                                                                                
+                    <a [routerLink]="['/manage/withdrawRequest']" id="withdrawRequest" class="nav-link has-icon btn-offcanvas-close"><i class="icon ion-md-remove"></i> {{'Withdrawal' | translate}}</a>
+                </li> -->
+                <li class="nav-item nav-item-history">
+                    <a [routerLink]="['/manage/summary']" id="summary" class="nav-link has-icon btn-offcanvas-close"><i class="icon ion-md-time"></i> {{'Account Information' | translate}}</a>
                 </li>
                 <li class="nav-item nav-item-withdraw">                                                                                                                
-                    <a [routerLink]="['/manage/withdrawRequest']" id="withdrawRequest" class="nav-link has-icon btn-offcanvas-close"><i class="icon ion-md-remove"></i> {{'Withdrawal' | translate}}</a>
-                </li>
-                <li class="nav-item nav-item-history">
-                    <a [routerLink]="['/manage/withdrawHistory']" id="withdrawHistory" class="nav-link has-icon btn-offcanvas-close"><i class="icon ion-md-time"></i> {{'History' | translate}}</a>
+                    <a [routerLink]="['/manage/internal']" id="internal" class="nav-link has-icon btn-offcanvas-close"><i class="icon ion-md-remove"></i> {{'Deposit and Withdrawal' | translate}}</a>
                 </li>
                 <li class="nav-item nav-item-report">
                     <a [routerLink]="['/manage/reportList']" id="reportList" class="nav-link has-icon btn-offcanvas-close"><i class="icon ion-md-today"></i> {{'Report' | translate}}</a>
                 </li>
                 <li class="nav-item nav-item-account">
-                    <a [routerLink]="['/manage/accountInfo']" id="accountInfo" class="nav-link has-icon btn-offcanvas-close"><i class="icon ion-md-person"></i> {{'My Account' | translate}}</a>
+                    <a [routerLink]="['/manage/accountInfo']" id="accountInfo" class="nav-link has-icon btn-offcanvas-close"><i class="icon ion-md-person"></i> {{'Customer Information' | translate}}</a>
                 </li>
 
             </ul>
