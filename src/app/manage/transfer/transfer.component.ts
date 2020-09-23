@@ -8,7 +8,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Title } from '@angular/platform-browser';
 import { take } from 'rxjs/operators';
 import { Mt5Model, TransferModel, TransferResulteModel } from 'src/app/core/model/withdraw-request-response.model';
-import { MIN_WITHDRAW, TIMEZONEAFX, LOCALE, ACCOUNT_IDS, MARGIN_CALL, TIMEZONESERVER, MAX_WITHDRAW } from 'src/app/core/constant/authen-constant';
+import { MIN_WITHDRAW, TIMEZONEAFX, LOCALE, ACCOUNT_IDS, MARGIN_CALL, MAX_WITHDRAW } from 'src/app/core/constant/authen-constant';
 import moment from 'moment-timezone';
 import { EN_FORMATDATE, EN_FORMATDATE_HH_MM, JAPAN_FORMATDATE, JAPAN_FORMATDATE_HH_MM } from 'src/app/core/constant/format-date-constant';
 import { LANGUAGLE } from 'src/app/core/constant/language-constant';
