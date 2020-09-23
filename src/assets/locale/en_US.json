@@ -288,8 +288,8 @@
   "Total Unrealize PL": "Total Unrealize PL",
   "Transfer": "Transfer",
   "Transfer Amount": "Transfer Amount",
-  "Sent account": "Sent account",
-  "Receive account": "Receive account",
+  "Sender account": "Sender account",
+  "Receiver account": "Receiver account",
   "Are you sure you want to make the transfer request?": "Are you sure you want to make the transfer request?",
   "Your transfer request has been successful:": "Your transfer request has been successful",
   "Your transfer request has been received:": "Your transfer request has been received:",
@@ -297,5 +297,9 @@
   "Entire Transfer History": "Entire Transfer History",
   "Transfer History": "Transfer History",
   "Deposit and Withdrawal": "Deposit and Withdrawal",
-  "Customer Information": "Customer Information"
+  "Customer Information": "Customer Information",
+  "There are some problem when makes internal transfer. Please contact customer support": "There are some problem when makes internal transfer. Please contact customer support",
+  "Please note that we can only accept the name of the transfer person who is the same as the name of our registered account.": "Please note that we can only accept the name of the transfer person who is the same as the name of our registered account.",
+  "Please be sure to enter our trading account number (10 digits) of the deposit destination after the name of the transfer person. If you do not specify a deposit destination trading account, we will arbitrarily select an account.":"Please be sure to enter our trading account number (10 digits) of the deposit destination after the name of the transfer person. If you do not specify a deposit destination trading account, we will arbitrarily select an account.",
+  "Amount must be bigger than 0": "Amount must be bigger than 0"
 }

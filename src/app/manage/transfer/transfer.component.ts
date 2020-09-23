@@ -8,13 +8,13 @@ import { ToastrService } from 'ngx-toastr';
 import { Title } from '@angular/platform-browser';
 import { take } from 'rxjs/operators';
 import { Mt5Model, TransferModel, TransferResulteModel } from 'src/app/core/model/withdraw-request-response.model';
-import { MIN_WITHDRAW, TIMEZONEAFX, LOCALE, ACCOUNT_IDS, MARGIN_CALL, TIMEZONESERVER } from 'src/app/core/constant/authen-constant';
+import { MIN_WITHDRAW, TIMEZONEAFX, LOCALE, ACCOUNT_IDS, MARGIN_CALL, MAX_WITHDRAW } from 'src/app/core/constant/authen-constant';
 import moment from 'moment-timezone';
 import { EN_FORMATDATE, EN_FORMATDATE_HH_MM, JAPAN_FORMATDATE, JAPAN_FORMATDATE_HH_MM } from 'src/app/core/constant/format-date-constant';
 import { LANGUAGLE } from 'src/app/core/constant/language-constant';
 import { AccountType } from 'src/app/core/model/report-response.model';
 import { FormGroup, FormControl } from '@angular/forms';
-import { requiredInput } from 'src/app/core/helper/custom-validate.helper';
+import { requiredInput, transferValidation } from 'src/app/core/helper/custom-validate.helper';
 import { ModalDirective } from 'ngx-bootstrap';
 import { ListTransactionComponent } from '../list-transaction/list-transaction.component';
 import { TYPEOFTRANHISTORY, STATUSTRANHISTORY, TRADING_TYPE } from 'src/app/core/constant/payment-method-constant';
@@ -62,6 +62,8 @@ export class TransferComponent implements OnInit {
   accountType;
   sentType: string;
   receiveType: string;
+  minWithDraw: number;
+  maxWithDraw: number;
 
   constructor(private withdrawRequestService: WithdrawRequestService,
               private spinnerService: Ng4LoadingSpinnerService,
@@ -75,6 +77,7 @@ export class TransferComponent implements OnInit {
     this.accountType = TRADING_TYPE;
     this.titleService.setTitle('フィリップMT5 Mypage');
     this.minWithdraw = Number(localStorage.getItem(MIN_WITHDRAW));
+    this.maxWithDraw = Number(localStorage.getItem(MAX_WITHDRAW));
     this.timeZone = localStorage.getItem(TIMEZONEAFX);
     this.locale = localStorage.getItem(LOCALE);
     this.language = LANGUAGLE;
@@ -132,7 +135,7 @@ export class TransferComponent implements OnInit {
 
   initTransferForm() {
     this.transferForm = new FormGroup({
-      amount: new FormControl(numeral(10000).format('0,0'), requiredInput),
+      amount: new FormControl(numeral(10000).format('0,0'), transferValidation),
       wholeMoney: new FormControl(false),
     });
     this.transferForm.controls.amount.valueChanges.subscribe((val) => {
@@ -214,7 +217,7 @@ export class TransferComponent implements OnInit {
   }
 
   showConfirm() {
-    if (!this.checkValidateWithDrawal()) {
+    if (!this.checkValidateWithDrawal() || this.transferForm.invalid) {
       return;
     }
     this.modalTransferConfirm.show();
@@ -223,7 +226,7 @@ export class TransferComponent implements OnInit {
 
   cancelWithDraw() {
     this.modalTransferConfirm.hide();
-    this.transferForm.controls.amount.setValue(0);
+    this.transferForm.controls.amount.setValue(numeral(10000).format('0,0'));
   }
 
   sendConfirm() {
@@ -257,7 +260,7 @@ export class TransferComponent implements OnInit {
     }
     this.getMt5Infor(Number(this.sentAccountID), 'sent');
     this.getMt5Infor(Number(this.receiveAccountID), 'receive');
-    this.transferForm.controls.amount.setValue(0);
+    this.transferForm.controls.amount.setValue(numeral(10000).format('0,0'));
     this.listTran.ngOnChanges();
   }
 

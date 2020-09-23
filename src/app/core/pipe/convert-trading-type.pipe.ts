@@ -4,7 +4,7 @@ import {TRADING_TYPE} from './../constant/payment-method-constant';
   name: 'convertTradingType'
 })
 export class ConvertTradingTypePipe implements PipeTransform {
-  transform(value: string, arg: any): any {
+  transform(value: string, arg?: any): any {
     if (value) {
       const accountNumber = value.toString();
       const tradingType = accountNumber.substring(accountNumber.length - 2, accountNumber.length);
