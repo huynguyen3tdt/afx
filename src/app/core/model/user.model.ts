@@ -190,4 +190,18 @@ export interface QuestionModel {
   sequence: number;
 }
 
+export interface AccountTypeAFX {
+  account_id: string;
+  account_type: number;
+  currency: string;
+  value: string;
+}
 
+export interface GroupAccountType {
+  group_account_type: GroupAccountTypeDetail[];
+}
+
+export interface GroupAccountTypeDetail {
+  lp_code: string;
+  account_type: string;
+}

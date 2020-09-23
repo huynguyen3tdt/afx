@@ -1,0 +1,188 @@
+<div bsModal class="modal fade" [formGroup]="rulesForm" #modalAddAccountStep2="bs-modal" id="modalAddAccountStep2" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+      <div class="modal-content">
+          <div class="modal-header pt-2 pb-2">
+              <h5 class="modal-title">口座の追加</h5>
+              <button type="button" class="close" aria-label="Close" (click)="close()">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+          <div class="modal-body pt-0">
+              <div class="steps-wrapper pt-1 pb-1 border-bottom mb-3">
+                  <ul class="nav nav-tabs nav-steps">
+                      <li class="nav-item">
+                          <a href="#step1" class="nav-link disabled" title="Step 1"><span class="number mr-3">1</span> <strong>情報入力</strong></a>
+                      </li>
+                      <li class="nav-item">
+                          <a href="#step2" class="nav-link active" title="Step 2"><span class="number mr-3">2</span> <strong>確認画面</strong></a>
+                      </li>
+                      <li class="nav-item">
+                          <a href="#complete" class="nav-link disabled" title="Complete"><span class="number mr-3">3</span> <strong>登録完了</strong></a>
+                      </li>
+                  </ul>
+              </div>
+              <div class="agreement-rules">
+                  <!-- <div class="d-flex justify-content-between align-items-center mb-3">
+                      <h5 class="c-title text-primary mb-0"><strong>契約締結前交付書面、各種重要事項の承諾</strong></h5>                               
+                      <p class="mb-0">
+                          <img src="assets/images/badge-FX.svg" class="icon-type inline only-for-fx" alt="">
+                          <img src="assets/images/badge-I-CFD.svg" class="icon-type inline only-for-icfd" alt="">
+                          <img src="assets/images/badge-C-CFD.svg" class="icon-type inline only-for-ccfd" alt="">
+                      </p>
+                  </div> -->
+                  <h5 class="c-title text-primary mb-3"><strong>契約締結前交付書面、各種重要事項の承諾</strong></h5>
+                  <!-- BEGIN Term -->
+                  <p class="mb-1">契約締結前交付書面の確認、承諾</p>
+                  <div class="p-3 border mb-4">
+                      <div class="row">
+                          <div class="col-lg-6">
+                            <div class="mb-2 mb-lg-0">
+                              <div *ngIf="this.accountTradingForm.controls.afxAccount && this.accountTradingForm.controls.afxAccount.value">
+                                <div><strong>契約締結前交付書面 (FX)</strong></div><!-- 2 -->
+                                <a href="https://www.phillip.co.jp/fx/pdf/phillipmt5_01_important_notes.pdf"
+                                  target="_blank" class="pdf-link">重要事項説明書および約款
+                                </a>
+                                </div>
+                              <div *ngIf="this.accountTradingForm.controls.cfdAccount && this.accountTradingForm.controls.cfdAccount.value">
+                                <div><strong>契約締結前交付書面 (I-CFD)</strong></div><!-- 3 -->
+                                <a href="https://www.phillip.co.jp/fx/pdf/phillipmt5_01_important_notes.pdf"
+                                  target="_blank" class="pdf-link">重要事項説明書および約款
+                                </a>
+                                </div>
+                              <div *ngIf="this.accountTradingForm.controls.cfdCommunityAccount && this.accountTradingForm.controls.cfdCommunityAccount.value">
+                                <div><strong>契約締結前交付書面 (C-CFD)</strong></div><!-- 4 -->
+                                <a href="https://www.phillip.co.jp/fx/pdf/phillipmt5_01_important_notes.pdf"
+                                  target="_blank" class="pdf-link">重要事項説明書および約款
+                                </a>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-lg-6">
+                              <div class="mb-0">
+                                  <div><strong>勧誘方針</strong></div><!-- 5 -->
+                                  <div><a href="javascript:;" class="pdf-link">勧誘方針</a></div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  <p class="mb-1">取引に係るご注意について</p>
+                  <div class="p-3 border mb-4">
+                    <div *ngIf="this.accountTradingForm.controls.afxAccount && this.accountTradingForm.controls.afxAccount.value"><a href="https://www.phillip.co.jp/fx/pdf/phillipmt5_01_important_notes.pdf"
+                      target="_blank" class="pdf-link">注意喚起文書 FX</a></div>
+                    <div *ngIf="this.accountTradingForm.controls.cfdAccount && this.accountTradingForm.controls.cfdAccount.value"><a href="https://www.phillip.co.jp/fx/pdf/phillipmt5_01_important_notes.pdf"
+                      target="_blank" class="pdf-link">注意喚起文書 (I-CFD)</a></div>
+                    <div *ngIf="this.accountTradingForm.controls.cfdCommunityAccount && this.accountTradingForm.controls.cfdCommunityAccount.value"><a href="https://www.phillip.co.jp/fx/pdf/phillipmt5_01_important_notes.pdf"
+                      target="_blank" class="pdf-link">注意喚起文書 (C-CFD)</a></div>
+                  </div>
+                  <p class="mb-1">個人情報の取扱いについて</p><!-- 9 -->
+                  <div class="p-3 border mb-4">
+                      <div class="row">
+                          <div class="col-lg-6">
+                              <div class="mb-2 mb-lg-0">
+                                  <div><a href="javascript:;" class="pdf-link">個人情報の利用目的</a></div>
+                              </div>
+                          </div>
+                          <div class="col-lg-6">
+                              <div class="mb-0">
+                                  <div><a href="javascript:;" class="pdf-link">個人情報保護宣言</a></div><!-- 10 -->
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  <p class="mb-1">反社会的勢力に対する基本方針について</p><!-- 11 -->
+                  <div class="p-3 border mb-4">
+                      <div class="row">
+                          <div class="col-lg-6">
+                              <div class="mb-2 mb-lg-0">
+                                  <div><a href="javascript:;" class="pdf-link">反社会的勢力に対する基本方針</a></div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  <p class="mb-1">口座開設の表明確約書について</p><!-- 12 -->
+                  <div class="p-3 border mb-4">
+                      <div class="row">
+                          <div class="col-lg-6">
+                              <div class="mb-2 mb-lg-0">
+                                  <div><a href="javascript:;" class="pdf-link">口座開設の表明確約書</a></div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  <p class="mb-1">口座開設のお申し込みにあたりましては、上記の契約締結前交付書面、各種重要事項に同意、承諾、誓約をしていただく必要がございます。</p><!-- 13 -->
+                  <label class="container-checkbox small mb-2 box-item-checkbox"
+                  [ngClass]="{'invalid': isConfirm && !rulesForm.controls.agree_electronic_delivery.value}">
+                      <p class="mb-0">「<span class="inline only-for-fx">店頭外国為替証拠金取引・</span><span class="inline only-for-icfd">店頭株価指数CFD取引・</span><span class="inline only-for-ccfd">店頭商品CFD取引・</span>受託契約に関する重要事項説明書」、「電磁的方法等による交付について」、「勧誘方針」、「注意喚起文書」、「個人情報の利用目的」、「個人情報保護宣言」及び「反社会的勢力に対する基本方針」は、PDFファイルにより、当社サイトを通じてお客様の閲覧に供する方法により交付されます。<br>
+                      また、「取引報告書兼残高報告書兼証拠金受領通知書（日次）」及び「年間損益報告書」は、当社マイページ画面にPDFファイルを設け、お客様の閲覧に供する方法により交付されます。<br>
+                      各種交付書面について、上記のとおり電子交付されることに同意します。</p>
+                      <input formControlName="agree_electronic_delivery" type="checkbox" name="checkbox_13" value="">
+                      <span class="checkmark"></span>
+                  </label>
+                  <div *ngIf="isConfirm && !rulesForm.controls.agree_electronic_delivery.value"
+                              class="invalid-mess">
+                              <div>該当する場合、当社の口座開設を承れません。</div>
+                          </div>
+                  <!-- 15 -->
+                  <label class="container-checkbox small mb-2 box-item-checkbox"
+                  [ngClass]="{'invalid': isConfirm && !rulesForm.controls.agree_contract_tnc.value}">
+                      <p>各種契約締結前交付書面及び約款について確認し、承諾します。</p>
+                      <input formControlName="agree_contract_tnc" type="checkbox" name="checkbox_15" value="">
+                      <span class="checkmark"></span>
+                  </label>
+                  <div *ngIf="isConfirm && !rulesForm.controls.agree_contract_tnc.value"
+                  class="invalid-mess">
+                  <div>該当する場合、当社の口座開設を承れません。</div>
+              </div>
+                 <!-- 16 -->
+                  <label class="container-checkbox small mb-2 box-item-checkbox"
+                  [ngClass]="{'invalid': isConfirm && !rulesForm.controls.agree_fx_tnc.value}">
+                      <ul class="list-unstyled ml-3 b">
+                          <li><span class="inline only-for-fx">店頭外国為替証拠金取引・</span><span class="inline only-for-icfd">店頭株価指数CFD取引・</span><span class="inline only-for-ccfd">店頭商品CFD取引</span>に関する「説明書」及び「約款」の内容をよく読み、取引の仕組み、内容、リスク等を十分に理解した上で私の責任と判断で当該取引を行います。また、私は法令及び社内規定等で<span class="inline only-for-fx">店頭外国為替証拠金取引・</span><span class="inline only-for-icfd">店頭株価指数CFD取引・</span><span class="inline only-for-ccfd">店頭商品CFD取引</span>が禁じられている者に該当していないことを誓約します。</li>
+                          <li>注意喚起文書について確認し、承諾します。</li>
+                          <li>個人情報の取扱いについて同意します。</li>
+                          <li>口座開設の表明確約書に同意します。</li>
+                          <li>反社会的勢力に対する基本方針について同意します。</li>
+                      </ul>
+                      <input formControlName="agree_fx_tnc" type="checkbox" name="checkbox_16" value="">
+                      <span class="checkmark"></span>
+                  </label>
+                  <div *ngIf="isConfirm && !rulesForm.controls.agree_fx_tnc.value"
+                  class="invalid-mess">
+                  <div>該当する場合、当社の口座開設を承れません。</div>
+              </div>
+                  <!-- 17 -->
+                  <label class="container-checkbox small mb-2 box-item-checkbox"
+                  [ngClass]="{'invalid': isConfirm && !rulesForm.controls.agree_tax.value}">
+                      <p class="mb-0">私は①および②に該当しません。</p>
+                      <p class="mb-0">①日本以外で納税義務のある方②米国における納税義務のある方</p>
+                      <input formControlName="agree_tax" type="checkbox" name="checkbox_17" value="">
+                      <span class="checkmark"></span>
+                  </label>
+                  <div *ngIf="isConfirm && !rulesForm.controls.agree_tax.value"
+                  class="invalid-mess">
+                  <div>該当する場合、当社の口座開設を承れません。</div>
+              </div>
+                  <!-- 18 -->
+                  <label class="container-checkbox small mb-2 box-item-checkbox"
+                  [ngClass]="{'invalid': isConfirm && !rulesForm.controls.agree_pep.value}">
+                      <p class="mb-0">私は外国PEPsに該当しません。</p>
+                      <p class="small mb-0">※外国PEPsとは、外国の政府等において重要な地位を占める者（外国の国家元首等とその地位にあった者、その家族等）を指します。詳しくはこちらをご覧ください。</p>
+                      <input formControlName="agree_pep" type="checkbox" name="checkbox_18" value="">
+                      <span class="checkmark"></span>
+                  </label>     
+                  <div *ngIf="isConfirm && !rulesForm.controls.agree_pep.value"
+                  class="invalid-mess">
+                  <div>該当する場合、当社の口座開設を承れません。</div>
+              </div>                       
+                  <!-- END Term -->
+                  
+              </div>
+              
+          </div>
+          <div class="modal-footer pt-2 pb-2">
+              <button type="button" class="btn btn-secondary btn-prev" (click)="onReturnStep1()"><i class="icon ion-md-arrow-back"></i>戻る</button> 
+              <button type="button" class="btn btn-primary btn-next" (click)="onConfirm()" >口座登録 <i class="icon ion-md-arrow-forward"></i></button>
+          </div>
+      </div>
+  </div>
+</div><!-- END 4b -->

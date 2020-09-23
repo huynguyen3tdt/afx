@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
-import { TOKEN_AFX, FIRST_LOGIN, LOCALE, ACCOUNT_IDS } from 'src/app/core/constant/authen-constant';
+import { TOKEN_AFX, FIRST_LOGIN, LOCALE, ACCOUNT_IDS, IS_COMPANY } from 'src/app/core/constant/authen-constant';
 import { AuthenService } from 'src/app/core/services/authen.service';
 import { NotificationsService } from 'src/app/core/services/notifications.service';
 import { PageNotificationResponse, Notification } from 'src/app/core/model/page-noti.model';
@@ -10,6 +10,14 @@ import { AccountType } from 'src/app/core/model/report-response.model';
 import { LANGUAGLE } from 'src/app/core/constant/language-constant';
 import { take } from 'rxjs/operators';
 import { GlobalService } from 'src/app/core/services/global.service';
+import { ModalAddAccountStep1Component } from '../modal-add-account-step1/modal-add-account-step1.component';
+import { ModalAddAccountStep2Component } from '../modal-add-account-step2/modal-add-account-step2.component';
+import { ModalAddAccountStep3Component } from '../modal-add-account-step3/modal-add-account-step3.component';
+import { FormGroup, FormBuilder } from '@angular/forms';
+import { AccountTypeAFX, GroupAccountType } from 'src/app/core/model/user.model';
+import { UserService } from 'src/app/core/services/user.service';
+import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
+
 declare const $: any;
 declare const TweenMax: any;
 
@@ -38,10 +46,19 @@ export class HeaderComponent implements OnInit {
   isPc: boolean;
   isAndroid: boolean;
   isIos: boolean;
+  accountTradingForm: FormGroup;
+
+  @ViewChild('modalAddAccountStep1', { static: false }) modalAddAccountStep1: ModalAddAccountStep1Component;
+  @ViewChild('modalAddAccountStep2', { static: false }) modalAddAccountStep2: ModalAddAccountStep2Component;
+  @ViewChild('modalAddAccountStep3', { static: false }) modalAddAccountStep3: ModalAddAccountStep3Component;
 
   constructor(private router: Router, private authenService: AuthenService,
               private notificationsService: NotificationsService,
-              private globalService: GlobalService) {
+              private globalService: GlobalService,
+              private fb: FormBuilder,
+              private userService: UserService,
+              private spinnerService: Ng4LoadingSpinnerService,
+              ) {
     this.router.events.subscribe((e: any) => {
       this.activeRouter(this.router.url);
     });
@@ -67,6 +84,31 @@ export class HeaderComponent implements OnInit {
     this.pageSize = 3;
     if (this.listTradingAccount) {
       this.getListNotifications(this.pageSize, this.currentPage, this.unreadAll, this.TABS.ALL.value);
+    }
+    this.initAccountTradingForm();
+  }
+
+  initAccountTradingForm() {
+    this.accountTradingForm = this.fb.group({
+      afxAccount: [false],
+      cfdAccount: [false],
+      cfdCommunityAccount: [false],
+    });
+    if (localStorage.getItem(ACCOUNT_IDS)) {
+      const accountType: AccountTypeAFX[] = JSON.parse(localStorage.getItem(ACCOUNT_IDS));
+      accountType.map(value => {
+        switch (value.account_type) {
+          case 1 :
+            this.accountTradingForm.removeControl('afxAccount');
+            break;
+          case 2:
+            this.accountTradingForm.removeControl('cfdAccount');
+            break;
+          case 3:
+            this.accountTradingForm.removeControl('cfdCommunityAccount');
+            break;
+        }
+      });
     }
   }
 
@@ -156,5 +198,54 @@ export class HeaderComponent implements OnInit {
     } else {
       this.isPc = true;
     }
+  }
+
+  openAddAccountModal() {
+    this.modalAddAccountStep1.open();
+  }
+
+  onConfirmStep1() {
+    this.modalAddAccountStep2.open();
+  }
+
+  onConfirmStep2() {
+    this.modalAddAccountStep3.open();
+  }
+
+  onConfirmStep3() {
+    this.spinnerService.show();
+    const param: GroupAccountType = {
+      group_account_type: []
+    };
+    if (this.accountTradingForm.controls.afxAccount && this.accountTradingForm.controls.afxAccount.value) {
+      param.group_account_type.push({
+        lp_code: Boolean(localStorage.getItem(IS_COMPANY)) ? 'lp001' : 'lp004',
+        account_type: '1'
+      });
+    }
+    if (this.accountTradingForm.controls.cfdAccount && this.accountTradingForm.controls.cfdAccount.value) {
+      param.group_account_type.push({
+        lp_code: Boolean(localStorage.getItem(IS_COMPANY)) ? 'lp002' : 'lp005',
+        account_type: '2'
+      });
+    }
+    if (this.accountTradingForm.controls.cfdCommunityAccount && this.accountTradingForm.controls.cfdCommunityAccount.value) {
+      param.group_account_type.push({
+        lp_code: Boolean(localStorage.getItem(IS_COMPANY)) ? 'lp003' : 'lp006',
+        account_type: '3'
+      });
+    }
+    this.userService.registrationAccountType(param).pipe(take(1)).subscribe(response => {
+      this.spinnerService.hide();
+      if (response.meta.code === 200) {
+        window.location.reload();
+      }
+    }
+      );
+  }
+
+  onReturnStep1() {
+    this.modalAddAccountStep2.close();
+    this.modalAddAccountStep1.open();
   }
 }
