@@ -79,6 +79,13 @@ export class GlobalService {
         return PAYMENTMETHOD.BANKTRANSFER.nameJP;
       }
     }
+    if (type === PAYMENTMETHOD.INTERNALTRANSFER.key) {
+      if (locale === LANGUAGLE.english) {
+        return PAYMENTMETHOD.INTERNALTRANSFER.name;
+      } else {
+        return PAYMENTMETHOD.INTERNALTRANSFER.nameJP;
+      }
+    }
     return '';
   }
 

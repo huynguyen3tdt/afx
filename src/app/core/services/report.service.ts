@@ -20,7 +20,7 @@ export class ReportService {
   constructor(private httpClient: HttpClient,
               private envConfigService: EnvConfigService) { }
 
-  getReport(accountNumber: number, pageSize: number, pageNumber: number,
+  getReport(accountNumber: string, pageSize: number, pageNumber: number,
             type?: string, dateFrom?: string, dateTo?: string): Observable<ReportResponseModel> {
     let URL = '';
     const locale = localStorage.getItem(LOCALE);

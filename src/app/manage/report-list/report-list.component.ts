@@ -81,6 +81,13 @@ export class ReportListComponent implements OnInit {
     this.currentPage = 1;
     this.pageSize = 10;
     this.listTradingAccount = JSON.parse(localStorage.getItem(ACCOUNT_IDS));
+    const allTradingAcount: AccountType = {
+      account_id: 'all',
+      account_type: 0,
+      currency: '0',
+      value: this.locale === LANGUAGLE.english ? 'All' : 'すべて'
+    };
+    this.listTradingAccount.unshift(allTradingAcount);
     if (this.listTradingAccount) {
       this.tradingAccount = this.listTradingAccount[0];
     }
@@ -98,7 +105,7 @@ export class ReportListComponent implements OnInit {
     this.setDate(this.DURATION.YEAR);
   }
 
-  getReport(accountNumber: number, pageNumber: number, pageSize: number, type?: string, dateFrom?: string, dateTo?: string) {
+  getReport(accountNumber: string, pageNumber: number, pageSize: number, type?: string, dateFrom?: string, dateTo?: string) {
     this.spinnerService.show();
     this.checkTab(type);
     this.reportservice.getReport(accountNumber, pageSize, pageNumber, type, dateFrom, dateTo).pipe(take(1)).subscribe(response => {

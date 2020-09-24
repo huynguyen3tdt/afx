@@ -30,12 +30,12 @@
                                 href="#nav-account" role="tab" (click)="changeTab(TAB.accountInfo)"
                                 aria-controls="nav-account" aria-selected="true"><i class="icon ion-md-person"></i>
                                 <strong class="d-none d-md-inline">{{'Account Information' | translate}}</strong></a> -->
-                            <a [className]="showTabUserInfo == true ? 'nav-item nav-link active' : 'nav-bank-tab'" 
+                            <a [className]="showTabUserInfo == true ? 'nav-item nav-link active' : 'nav-item nav-link'" 
                                 id="nav-profile-tab" data-toggle="tab" href="#nav-profile"
                                 (click)="changeTab(TAB.userInfo)" *ngIf="isCompany == 'false'" role="tab"
                                 aria-controls="nav-profile" aria-selected="true"><i class="icon ion-md-contact"></i>
                                 <strong class="d-none d-md-inline">{{'User Information' | translate}}</strong></a>
-                            <a [className]="showTabCorpInfo == true ? 'nav-item nav-link active' : 'nav-bank-tab'" 
+                            <a [className]="showTabCorpInfo == true ? 'nav-item nav-link active' : 'nav-item nav-link'" 
                                 id="nav-bank-tab" data-toggle="tab" href="#nav-corporate"
                                 role="tab" (click)="changeTab(TAB.corpInfo)" *ngIf="isCompany == 'true'"
                                 aria-controls="nav-corporate" aria-selected="false"><i

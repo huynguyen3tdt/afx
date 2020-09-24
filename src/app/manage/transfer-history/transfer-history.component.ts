@@ -114,6 +114,13 @@ export class TransferHistoryComponent implements OnInit, AfterViewInit {
     this.currentPage = 1;
     this.pageSize = 10;
     this.listTradingAccount = JSON.parse(localStorage.getItem(ACCOUNT_IDS));
+    const allTradingAcount: AccountType = {
+      account_id: 'all',
+      account_type: 0,
+      currency: '0',
+      value: this.locale === LANGUAGLE.english ? 'All' : 'すべて'
+    };
+    this.listTradingAccount.unshift(allTradingAcount);
     if (this.listTradingAccount) {
       this.tradingAccount = this.listTradingAccount[0];
     }
@@ -155,7 +162,7 @@ export class TransferHistoryComponent implements OnInit, AfterViewInit {
     this.setDate(this.DURATION.YEAR);
   }
 
-  getTranHistory(accountNumber: number,
+  getTranHistory(accountNumber: string,
                  pageNumber: number, pageSize: number, dateFrom?: string, dateTo?: string, statusSearch?: string) {
     this.spinnerService.show();
     this.withdrawRequestService.getInternalHistory(accountNumber, pageSize, pageNumber, dateFrom,

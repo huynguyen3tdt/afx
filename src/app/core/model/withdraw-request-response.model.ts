@@ -90,6 +90,7 @@ export interface TransactionModel {
   funding_type: string;
   status: number;
   name: string;
+  partner_account?: number;
 }
 
 export interface WithdrawAmountModel {

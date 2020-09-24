@@ -300,5 +300,6 @@
   "Please note that we can only accept the name of the transfer person who is the same as the name of our registered account.": "振込人名義は当社登録口座名義と同一のもの以外受付できませんので、くれぐれもご注意ください。",
   "Please be sure to enter our trading account number (10 digits) of the deposit destination after the name of the transfer person. If you do not specify a deposit destination trading account, we will arbitrarily select an account.":"振込人名義の後ろに、必ず入金先の当社取引口座番号（10桁）をご入力ください。入金先取引口座の指定がない場合、当社が任意で口座を選択させていただきます。",
   "Amount must be bigger than 0": "金額は0より大きくなければなりません",
-  "Add Account" : "より多くのアカウント"
+  "Add Account" : "より多くのアカウント",
+  "Partner account": "取引先"
 }

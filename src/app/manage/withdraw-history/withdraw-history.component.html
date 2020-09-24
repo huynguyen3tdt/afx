@@ -136,11 +136,14 @@
                                     <th class="border-top-0" width="140"><span
                                             class="keep-all">{{'Transaction ID' | translate}}</span></th>
                                     <th class="border-top-0"><span class="keep-all">{{'Date' | translate}}</span></th>
+                                    <th class="border-top-0"><span class="keep-all">{{'Trading account' | translate}}</span></th>
                                     <th class="border-top-0"><span class="keep-all">{{'Type' | translate}}</span></th>
                                     <th class="border-top-0"><span
                                             class="keep-all">{{'Payment Method' | translate}}</span></th>
                                     <th class="border-top-0 text-right" width="50"><span
                                             class="keep-all">{{'Amount' | translate}}</span></th>
+                                    <th class="border-top-0 text-right" width="50"><span
+                                        class="keep-all">{{'Currency' | translate}}</span></th>
                                     <th class="border-top-0 text-right" width="140"><span
                                             class="keep-all">{{'Status' | translate}}</span>
                                     </th>
@@ -151,12 +154,15 @@
                                     <tr *ngFor="let item of listReport">
                                         <td><a href="javascript:;" (click)="openDetail(item?.id)">{{item?.id}}</a></td>
                                         <td><a (click)="openDetail(item?.id)">{{item?.create_date}}</a></td>
+                                        <td><a (click)="openDetail(item?.id)">{{item?.trading_account_id | convertTradingType}}</a></td>
                                         <td><a (click)="openDetail(item?.id)"><span
                                                     class="keep-all">{{item?.funding_type}}</span></a></td>
                                         <td><a (click)="openDetail(item?.id)"><span
                                                     class="keep-all">{{item?.method}}</span></a></td>
                                         <td class="text-right">
                                             <a (click)="openDetail(item?.id)">{{item?.amount | number}}</a></td>
+                                        <td class="text-right">
+                                            <a (click)="openDetail(item?.id)">{{item?.currency}}</a></td>
                                         <!-- <td *ngIf="item?.status == transactionStatus.NEW.key" class="text-right"><span
                                                         class="text-info"><i class="icon ion-md-hourglass"></i>
                                                         <a (click)="openDetail(item?.id)">{{'New' | translate}}</a></span></td> -->
