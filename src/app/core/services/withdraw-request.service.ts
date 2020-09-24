@@ -101,7 +101,7 @@ export class WithdrawRequestService {
       );
   }
 
-  getDwHistory(accountNumber: number, pageSize: number, pageNumber: number,
+  getDwHistory(accountNumber: string, pageSize: number, pageNumber: number,
                type?: string, dateFrom?: string, dateTo?: string, statusSearch?: string): Observable<WithdrawHistory> {
     let URL = '';
     const locale = localStorage.getItem(LOCALE);
@@ -148,7 +148,7 @@ export class WithdrawRequestService {
       );
   }
 
-  exportHistoryToCsv(accountNumber: number, type?: string,
+  exportHistoryToCsv(accountNumber: string, type?: string,
                      dateFrom?: string, dateTo?: string, statusSearch?: string): Observable<ArrayBuffer> {
     let URL = '';
     const locale = localStorage.getItem(LOCALE);
@@ -207,7 +207,7 @@ export class WithdrawRequestService {
       );
   }
 
-  getInternalHistory(accountNumber: number, pageSize: number, pageNumber: number,
+  getInternalHistory(accountNumber: string, pageSize: number, pageNumber: number,
                      dateFrom?: string, dateTo?: string, statusSearch?: string): Observable<ListTransferResponseModel> {
     let URL = '';
     const locale = localStorage.getItem(LOCALE);

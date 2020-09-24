@@ -62,14 +62,14 @@ export class ListTransactionComponent implements OnInit, OnChanges {
       this.listTradingAccount = JSON.parse(localStorage.getItem(ACCOUNT_IDS));
       this.tradingAccount = this.listTradingAccount.find((account: AccountType) => account.account_id === this.accountID);
       if (this.tranType !== this.typeTranHistory.INTERNALTRANSFER.key) {
-        this.getTranHistory(Number(this.accountID), 1, 5, this.tranType);
+        this.getTranHistory(this.accountID, 1, 5, this.tranType);
       } else {
-        this.getTransferHistory(Number(this.accountID), 1, 5);
+        this.getTransferHistory(this.accountID, 1, 5);
       }
     }
   }
 
-  getTranHistory(accountNumber: number, pageSize: number, pageNumber: number, type?: string, dateFrom?: string, dateTo?: string) {
+  getTranHistory(accountNumber: string, pageSize: number, pageNumber: number, type?: string, dateFrom?: string, dateTo?: string) {
     this.spinnerService.show();
     this.withdrawRequestService.getDwHistory(accountNumber, pageNumber, pageSize, type, dateFrom, dateTo).subscribe(response => {
       if (response.meta.code === 200) {
@@ -87,7 +87,7 @@ export class ListTransactionComponent implements OnInit, OnChanges {
     });
   }
 
-  getTransferHistory(accountNumber: number,
+  getTransferHistory(accountNumber: string,
                      pageNumber: number, pageSize: number, dateFrom?: string, dateTo?: string, statusSearch?: string) {
     this.spinnerService.show();
     this.withdrawRequestService.getInternalHistory(accountNumber, pageSize, pageNumber, dateFrom,

@@ -39,6 +39,10 @@
                           <td>{{transactionDetail?.name}}</td>
                       </tr>
                         <tr>
+                            <td width="180">{{'Partner account' | translate}}</td>
+                            <td>{{transactionDetail?.partner_account | convertTradingType}}</td>
+                        </tr>
+                        <tr>
                             <td width="180">{{'Amount' | translate}}</td>
                             <td><strong>{{transactionDetail?.amount | number}}</strong> <span class="small text-secondary"></span> {{transactionDetail?.currency}}</td>
                         </tr>
