@@ -13,6 +13,16 @@
                 <!-- END SITE BRAND -->
                 <!-- BEGIN HEADER TOP NAV -->
                 <ul class="header-top-nav nav">
+                  <li class="nav-item nav-item-account-type dropdown" *ngIf="this.accountTradingForm.controls.afxAccount || this.accountTradingForm.controls.afxAccount || this.accountTradingForm.controls.cfdCommunityAccount" (click)="openAddAccountModal()">
+                    <a href="javascript:;" class="nav-link" role="button" aria-haspopup="true" aria-expanded="false"><i class="icon ion-md-add mr-1"></i><span class="d-none d-md-inline">{{'Add Account' | translate}}</span></a>
+                </li>
+                <!-- <li class="nav-item nav-item-language dropdown d-none d-md-inline-block">
+                    <a href="javascript:;" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">EN</a>
+                    <div class="dropdown-menu dropdown-menu-language dropdown-menu-right">
+                        <a class="dropdown-item active" href="#" data-language="EN"><img src="assets/images/flags/flag-en.svg" class="icon flag" alt=""> English</a>
+                        <a class="dropdown-item" data-language="JP" href="#"><img src="assets/images/flags/flag-jp.svg" class="icon flag" alt=""> Japanese</a>
+                    </div>
+                </li> -->
                     <li class="nav-item nav-item-dmt5">
                         <a target="_blank" *ngIf="isPc == true" href="https://download.mql5.com/cdn/web/16266/mt5/phillipsecuritiesjp5setup.exe" class="nav-link"><img src="./../../../assets/images/metatrader-5.png"></a>
                         <a target="_blank" *ngIf="isAndroid == true" href="https://download.mql5.com/cdn/mobile/mt5/android?server=PhillipSecuritiesJP-PROD" class="nav-link">
@@ -140,4 +150,9 @@
             </ul>
         </div>
     </div>
+    
 </div>
+<app-modal-add-account-step1  #modalAddAccountStep1 [accountTradingForm]="accountTradingForm" (confirmStep1)="onConfirmStep1()"></app-modal-add-account-step1>
+<app-modal-add-account-step2 class="mt-5 mb-5" #modalAddAccountStep2 [accountTradingForm]="accountTradingForm" (returnStep1)="onReturnStep1()" (confirmStep2)="onConfirmStep2()"></app-modal-add-account-step2>
+<app-modal-add-account-step3  #modalAddAccountStep3 (confirmStep3)="onConfirmStep3()" ></app-modal-add-account-step3>
+<ng4-loading-spinner  [timeout]="30000"> </ng4-loading-spinner>

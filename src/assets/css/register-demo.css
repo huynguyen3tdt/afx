@@ -1,0 +1,226 @@
+/* Import Font */
+@import url('https://fonts.googleapis.com/css?family=M+PLUS+1p:400,700&display=swap&subset=japanese,latin-ext');
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans+JP:400,700&display=swap&subset=japanese');
+
+/* Main */
+body{
+	/*font-family: "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", Osaka, メイリオ, Meiryo, "ＭＳ Ｐゴシック", "MS PGothic", "ＭＳ ゴシック" , "MS Gothic", "Noto Sans CJK JP", TakaoPGothic, sans-serif;*/
+	font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+	background-color: #EFF3F8;
+	font-size: 15px;
+	color: #000;
+}
+a {
+	color: #0D688F;
+}
+.lead{
+	font-size: 18px;
+}
+.btn {
+	border-radius: 3px;
+}
+.btn-primary{
+	background-color: #0D688F;
+	border-color: #0D688F;
+}
+
+.btn-primary:hover,
+.btn-primary:focus{
+	background-color: #0D688F;
+}
+.btn-outline-primary {
+	color: #0D688F;
+	border-color: #0D688F;
+}
+.btn-outline-primary:hover,
+.btn-outline-primary:focus{
+	background-color:  #0D688F;
+	border-color: #0D688F;
+}
+.text-primary{
+	color: #0D688F !important;
+}
+
+/* Site Wrapper */
+
+.site-wrapper{
+	position: relative;
+}
+.site-wrapper .register-process {
+	width: 60%;
+	position: fixed;
+	right: 0;
+	top: 0;
+	z-index: 999;
+}
+.site-wrapper .register-process .progress{
+	height: 6px;
+	border-radius: 0;
+	background-color: #CEDEF2;
+}
+/* Site Brard */
+.site-brand {
+	position: fixed;
+	left: 20px;
+	top: 20px;
+	z-index: 888;
+	margin: 0;
+}
+.site-brand .site-link {
+	display: inline-block;
+}
+.site-brand .site-link .logo {
+	max-height: 50px;	
+}
+.site-brand .site-link .logo.dark{
+	display: none;
+}
+/* Resiter Wrapper*/
+.register-wrapper{
+	width: 100%;
+	min-height: 100vh;
+	display: flex;
+	justify-content: flex-end;
+}
+.register-wrapper .banner-hero {
+	width: 40%;
+	height: 100%;
+	position: fixed;
+	background: #eee;
+	left: 0;
+	top: 0;
+	z-index: 10;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.register-wrapper .banner-hero .bg{
+	content: '';
+	width: 100%;
+	height: 100%;
+	background-color: #ccc;
+	background-repeat: no-repeat;
+	background-position: 50% 50%;
+	position: absolute;
+	z-index: 5;
+	background-size: cover;
+}
+.register-wrapper .banner-hero .bg:after{
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	content: '';
+	background: rgba(0,0,0,0.4);
+}
+.register-wrapper .banner-hero .box-text{
+	width: 80%;
+	margin: 0 auto;
+	z-index: 10;
+	position: relative;
+	color: #fff;
+}
+.register-wrapper .content{
+	width: 60%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding-bottom: 50px;
+}
+.register-wrapper .content .inner{
+	max-width: 640px;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 30px;
+}
+
+.register-wrapper .content .inner .page-title{
+	font-size: 48px;
+	font-weight: bold;
+}
+/* Form */
+.form .form-group {
+	margin-bottom: 1.5rem;
+}
+.form .label {
+	line-height: 24px;
+}
+.form .label .badge{
+	padding-top: 0;
+	padding-bottom: 0;
+	display: inline-block;
+	line-height: 18px;
+	font-size: 11px;
+	vertical-align: top;
+	margin-top: 3px;
+}
+.form .form-control {
+	border-radius: 3px;
+}
+.site-wrapper .site-footer{
+	position: absolute;
+	width: 60%;
+	right: 0;
+	bottom: 0;
+	border-top: 1px solid #DCE5F0;
+	background: rgba(255,255,255,0.5);
+}
+.site-wrapper .site-footer .copyright{
+	font-size: 14px;
+	color: #666;
+	padding: 15px 30px 10px;
+}
+
+/* Step */
+.step-2, .step-3 {
+	display: none;
+}
+@media screen and (max-width: 991px){
+	.register-wrapper .content .inner .page-title {
+		font-size: 36px;
+	}
+}
+@media screen and (max-width: 767px){
+	.site-wrapper .register-process .progress {
+		height: 4px;
+	}
+	.site-brand {
+		position: relative;
+		left: auto;
+		top: auto;
+		padding: 30px;
+	}
+	.site-brand .site-link .logo.dark{
+		display: block;
+	}
+	.site-brand .site-link .logo.light{
+		display: none;
+	} 
+	.register-wrapper .content,
+	.site-wrapper .site-footer,
+	.site-wrapper .register-process {
+		width: 100%;
+	}
+	.register-wrapper .banner-hero {
+		display: none;
+	}
+	.register-wrapper .content .inner .page-title {
+		font-size: 32px;
+	}
+}
+
+@media screen and (max-width: 539px){
+	.site-wrapper .register-process .progress {
+		height: 3px;
+	}
+	.site-brand {		
+		padding: 30px 15px;
+	}
+	.register-wrapper .content .inner {
+		padding: 30px 15px;
+	}
+	.site-wrapper .site-footer .copyright {
+		padding: 15px 15px 10px;
+	}
+}

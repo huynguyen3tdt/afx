@@ -1,0 +1,64 @@
+<div bsModal class="modal fade" #modalAddAccountStep3="bs-modal" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+      <div class="modal-content">
+          <div class="modal-header pt-2 pb-2">
+              <h5 class="modal-title">口座の追加</h5>
+              <button type="button" class="close" aria-label="Close" (click)="close()">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+          <div class="modal-body pt-0">
+                  <div class="steps-wrapper pt-1 pb-1 border-bottom mb-3">
+                      <ul class="nav nav-tabs nav-steps">
+                          <li class="nav-item">
+                              <a href="#step1" class="nav-link disabled" title="Step 1"><span class="number mr-3">1</span> <strong>情報入力</strong></a>
+                          </li>
+                          <li class="nav-item">
+                              <a href="#step2" class="nav-link disabled" title="Step 2"><span class="number mr-3">2</span> <strong>確認画面</strong></a>
+                          </li>
+                          <li class="nav-item">
+                              <a href="#complete" class="nav-link active" title="Complete"><span class="number mr-3">3</span> <strong>登録完了</strong></a>
+                          </li>
+                      </ul>
+                  </div>
+                  <p>
+                      オンライン口座開設にお申込みいただき誠にありがとうございます。<br>
+                      口座開設に必要な書類のご案内を郵送させていただきますので、<br>
+                      ご確認及びお手続きの程、宜しくお願いいたします。<br>ご不明の点がございましたら当社カスタマーサービスまでご遠慮なくお尋ねください。
+                  </p>
+                  <div class="row">
+                      <div class="col-lg-4">
+                          <h6>Eメール</h6>
+                          <div class="box-info border p-3 mb-3 d-flex align-items-center h-90">
+                              <div class="inner">
+                                  <div>送信先アドレス</div>
+                                  <div><a href="javascript:;">info-pfkk@phillip.co.jp</a></div>
+                                  <div>必ず件名に「本人確認書類」と記入してください</div>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col-lg-4">
+                          <h6>TEL</h6>
+                          <div class="box-info border p-3 mb-3 d-flex align-items-center h-90">
+                              <div class="inner">
+                                  <div class="text-center"><strong>03-4589-3300</strong></div>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col-lg-4">
+                          <h6>郵送</h6>
+                          <div class="box-info border p-3 mb-3 d-flex align-items-center h-80">
+                               <div class="inner">
+                                  <div>〒103-0026 東京都中央区日本橋兜町4-2</div>
+                                  <div>フィリップ証券株式会社</div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+          </div>
+          <div class="modal-footer pt-2 pb-2">
+              <button (click)="onConfirm()" type="button" class="btn btn-warning pl-5 pr-5 btn-ok" data-dismiss="modal" aria-label="Close" >OK</button>
+          </div>
+      </div>
+  </div>
+</div>

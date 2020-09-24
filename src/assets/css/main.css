@@ -1764,3 +1764,432 @@ h1{
 	padding-left: 6px;
 	padding-right: 6px;
 }
+
+@media screen and (max-width: 540px) {}
+
+span.multiselect-native-select {
+    position: relative
+}
+
+span.multiselect-native-select select {
+    border: 0 !important;
+    clip: rect(0 0 0 0) !important;
+    height: 1px !important;
+    margin: -1px -1px -1px -3px !important;
+    overflow: hidden !important;
+    padding: 0 !important;
+    position: absolute !important;
+    width: 1px !important;
+    left: 50%;
+    top: 30px
+}
+
+.multiselect-container {
+    
+}
+
+.multiselect-container .input-group {
+    margin: 5px
+}
+
+.multiselect-container .multiselect-reset .input-group {
+    width: 93%
+}
+
+.multiselect-container>li {
+    padding: 0
+}
+
+.multiselect-container>li>a.multiselect-all label {
+    font-weight: 700
+}
+
+.multiselect-container>li.multiselect-group label {
+    margin: 0;
+    padding: 5px 10px;
+    height: 100%;
+    font-weight: 700
+}
+
+.multiselect-container>li.multiselect-group-clickable label {
+    cursor: pointer
+}
+
+.multiselect-container>li>a {
+    padding: 0
+}
+
+.multiselect-container>li>a>label {
+    margin: 0;
+    height: 100%;
+    cursor: pointer;
+    font-weight: 400;
+    padding: 5px 10px 5px 10px;
+    display: block;
+}
+
+
+.multiselect-container>li>a>label.checkbox,
+.multiselect-container>li>a>label.radio {
+    margin: 0
+}
+
+.multiselect-container>li>a>label>input[type=checkbox] {
+    margin-bottom: 3px;
+    vertical-align: middle;
+}
+
+.btn-group>.btn-group:nth-child(2)>.multiselect.btn {
+    
+}
+
+.form-inline .multiselect-container label.checkbox,
+.form-inline .multiselect-container label.radio {
+    padding: 5px 10px 5px 10px;
+}
+
+.form-inline .multiselect-container li a label.checkbox input[type=checkbox],
+.form-inline .multiselect-container li a label.radio input[type=radio] {
+    margin-left: -20px;
+    margin-right: 0
+}
+
+.multiselect-container .dropdown-item.active,
+.multiselect-container .dropdown-item:active {
+	background-color: #fff;
+}
+
+.multiselect-container .dropdown-item.active a,
+.multiselect-container .dropdown-item:active a{
+	color: #000;
+}
+
+/* Filter Account Type */
+.filter-account-type .icon-type{
+    max-height: 16px;
+}
+/* Add Account */
+.icon-type{
+    max-height: 20px;
+}
+
+.account-type-header .icon-type{
+    max-height: 20px;
+    margin-top: -3px;
+}
+.only-for-fx,
+.only-for-icfd,
+.only-for-ccfd{
+    display: none !important;
+}
+.for-fx .only-for-fx,
+.for-icfd .only-for-icfd,
+.for-ccfd .only-for-ccfd{
+    display: block !important;
+}
+.for-fx .inline.only-for-fx,
+.for-icfd .inline.only-for-icfd,
+.for-ccfd .inline.only-for-ccfd{
+    display: inline !important;;
+}
+.for-fx .inline-block.only-for-fx,
+.for-icfd .inline-block.only-for-icfd,
+.for-ccfd .inline-block.only-for-ccfd{
+    display: inline-block !important;;
+}
+.agreement-rules {
+    max-height: 768px;
+    overflow-y: auto;
+}
+
+
+.header-top-nav.nav .nav-item.nav-item-language .dropdown-menu-language .icon {
+  max-width: 16px;
+  vertical-align: middle;
+}
+.header-top-nav.nav .nav-item.nav-item-account-type .icon {
+  max-height: 16px;
+  vertical-align: middle;
+  margin-right: 10px;
+}
+
+
+/* Header Top Nav */
+.header-top-nav.nav {
+  margin-right: -15px;
+}
+
+.header-top-nav.nav .nav-item {
+  border-left: 1px solid #eee;
+}
+
+.header-top-nav.nav .nav-item .nav-link {
+  padding: 12px 20px 11px;
+  line-height: 32px;
+  box-sizing: border-box;
+}
+
+.header-top-nav.nav .nav-item .nav-link .icon {
+  font-size: 18px;
+}
+
+.header-top-nav.nav .nav-item .nav-link:hover {
+  background-color: #F0F8FC;
+  color: #0D688F;
+}
+
+.header-top-nav.nav .nav-item.nav-item-user-panel .nav-link img {
+  width: 32px;
+  height: 32px;
+  vertical-align: middle;
+  margin: 0;
+  padding: 0;
+  line-height: 32px;
+  max-height: 32px;
+  display: inline-block;
+}
+
+.header-top-nav.nav .nav-item.nav-item-notification.has-notification .nav-link:before {
+  content: '';
+  width: 12px;
+  height: 12px;
+  position: absolute;
+  left: 15px;
+  top: 20px;
+  background: #FF4B55;
+  border-radius: 50%;
+  border: 2px solid #fff;
+}
+
+.header-top-nav.nav .nav-item.nav-item-notification.has-notification .nav-link:hover:before {
+  border-color: #F0F8FC;
+}
+
+.header-top-nav.nav .nav-item.nav-item-notification.has-notification .icon {
+  margin-left: 2px;
+}
+
+.header-top-nav.nav .nav-item.show .nav-link {
+  color: #666;
+  background-color: #F0F8FC;
+}
+
+.header-top-nav.nav .nav-item.nav-item-notification.has-notification.show .nav-link:before {
+  display: none;
+}
+
+
+.header-top-nav.nav .nav-item.nav-item-mt5 img {
+  max-height: 32px;
+}
+.header-top-nav.nav .nav-item.nav-item-language .dropdown-menu-language {
+padding-top: 0;
+padding-bottom: 0;
+min-width: 8rem;
+}
+
+.header-top-nav.nav .nav-item.nav-item-language .dropdown-menu-language .icon {
+ max-width: 16px;
+ vertical-align: middle;
+}
+.header-top-nav.nav .nav-item.nav-item-account-type .icon {
+ max-height: 16px;
+ vertical-align: middle;
+ margin-right: 10px;
+}
+/*Dropdown Menu*/
+.header-top-nav.nav .dropdown-menu{
+padding-top: 0;
+padding-bottom: 0;
+}
+.header-top-nav.nav .dropdown-menu .dropdown-item{
+padding-left: 15px;
+padding-right: 15px;
+}
+.header-top-nav.nav .dropdown-menu .dropdown-item.active,
+.header-top-nav.nav .dropdown-menu .dropdown-item:active {
+background-color: #8AB4C6;
+}
+.header-top-nav.nav .dropdown-menu .dropdown-item:focus{
+background-color:#F0F8FC;
+color: #0D688F;
+}
+@media screen and (max-width: 992px) {
+  .header-top-nav.nav .nav-item .nav-link,
+  .header-top-nav.nav .dropdown-menu .dropdown-item {
+      padding-left: 15px;
+      padding-right: 15px;
+  }
+
+  .header-top-nav.nav .nav-item .dropdown-menu .dropdown-item {
+      padding-left: 15px;
+      padding-right: 15px;
+  }
+
+  .header-top-nav.nav .nav-item.nav-item-notification.has-notification .nav-link:before {
+      left: 10px;
+  }
+}
+
+@media screen and (max-width: 540px) {
+  .header-top-nav.nav .nav-item {
+      border-left: 0;
+  }
+
+  .header-top-nav.nav .nav-item .nav-link,
+  .header-top-nav.nav .dropdown-menu .dropdown-item {
+      padding-left: 10px;
+      padding-right: 10px;
+  }
+
+  .header-top-nav.nav .nav-item .nav-link:after {
+      display: none;
+  }
+
+  .header-top-nav.nav .nav-item .dropdown-menu .dropdown-item {
+      padding-left: 10px;
+      padding-right: 10px;
+  }
+
+  .header-top-nav.nav .nav-item.nav-item-menu .nav-link {
+      padding-left: 15px;
+      padding-right: 15px;
+  }
+
+  .header-top-nav.nav .nav-item.nav-item-notification.has-notification .nav-link:before {
+      left: 5px;
+  }
+}
+
+/* Notification Dropdown */
+.dropdown-menu-notification {
+  padding: 8px;
+  border-radius: 0;
+}
+
+.dropdown-menu-notification .title {
+  font-size: 12px;
+}
+
+.dropdown-menu-notification .notification-item {
+  margin-bottom: 2px;
+  border-left: 3px solid #0D688F;
+  background: #F0F8FC;
+  padding-left: 12px !important;
+  padding-right: 15px !important;
+}
+
+.dropdown-menu-notification .notification-item:last-child {
+  border-bottom: 0;
+  margin-bottom: 0;
+}
+
+/* Type */
+.dropdown-menu-notification .notification-item.important {
+  border-left-color: #721c24;
+  background-color: #f8d7da;
+}
+
+.dropdown-menu-notification .notification-item.system {
+  border-left-color: #856404;
+  background-color: #fff3cd;
+}
+
+.dropdown-menu-notification .notification-item.campaign {
+  border-left-color: #155724;
+  ;
+  background-color: #d4edda;
+}
+
+
+ul.a {
+  list-style-type: circle;
+}
+
+ul.b {
+  list-style-type: disc;
+}
+
+ul.c {
+  list-style-type: square;
+}
+
+ol.d {
+  list-style-type: armenian;
+}
+
+ol.e {
+  list-style-type: cjk-ideographic;
+}
+
+ol.f {
+  list-style-type: decimal;
+}
+
+ol.g {
+  list-style-type: decimal-leading-zero;
+}
+
+ol.h {
+  list-style-type: georgian;
+}
+
+ol.i {
+  list-style-type: hebrew;
+}
+
+ol.j {
+  list-style-type: hiragana;
+}
+
+ol.k {
+  list-style-type: hiragana-iroha;
+}
+
+ol.l {
+  list-style-type: katakana;
+}
+
+ol.m {
+  list-style-type: katakana-iroha;
+}
+
+ol.n {
+  list-style-type: lower-alpha;
+}
+
+ol.o {
+  list-style-type: lower-greek;
+}
+
+ol.p {
+  list-style-type: lower-latin;
+}
+
+ol.q {
+  list-style-type: lower-roman;
+}
+
+ol.r {
+  list-style-type: upper-alpha;
+}
+
+ol.s {
+  list-style-type: upper-greek;
+}
+
+ol.t {
+  list-style-type: upper-latin;
+}
+
+ol.u {
+  list-style-type: upper-roman;
+}
+
+ol.v {
+  list-style-type: none;
+}
+
+ol.w {
+  list-style-type: inherit;
+}
