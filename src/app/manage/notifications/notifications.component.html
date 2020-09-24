@@ -62,17 +62,17 @@
                                 <div class="d-flex">
                                     <div class="filter-account-type">
                                         <label class="container-checkbox small mr-3">
-                                            <input type="checkbox" [checked]="filterFX ? true : null"  name="fx" checked="checked" (change)="filterType()">
+                                            <input type="checkbox" [checked]="filterFX ? true : null"  name="fx" checked="checked" (change)="filterType('fx')">
                                             <span>FX News</span>
                                             <span class="checkmark"></span>
                                         </label>
                                         <label class="container-checkbox small mr-3">
-                                            <input type="checkbox" [checked]="filterICFD ? true : null" name="cfd-i" checked="checked">
+                                            <input type="checkbox" [checked]="filterICFD ? true : null" name="cfd-i" checked="checked" (change)="filterType('icfd')">
                                             <span>i-CFD News</span>
                                             <span class="checkmark"></span>
                                         </label>
                                         <label class="container-checkbox small">
-                                            <input type="checkbox" [checked]="filterCCFD ? true : null" name="cfd-c" checked="checked">
+                                            <input type="checkbox" [checked]="filterCCFD ? true : null" name="cfd-c" checked="checked" (change)="filterType('ccfd')">
                                             <span>C-CFD News</span>
                                             <span class="checkmark"></span>
                                         </label>
