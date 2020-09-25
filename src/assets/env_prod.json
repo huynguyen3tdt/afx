@@ -1,5 +1,5 @@
 {
-  "backEnd": "https://afx-api.ecomedic.vn",
+  "backEnd": "http://10.1.20.132:8000",
   "hostNameRegis": "https://afx-regis.ecomedic.vn/regist",
   "bjpSystem": "https://www.e5.billingjapan.co.jp/NASApp/bjp/PB71SelectBankServlet_Ph1",
   "UFJBank": "0"

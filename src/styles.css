@@ -16,4 +16,18 @@ strong {
 .container {
     max-width: 1360px !important;
 } 
-
+.badge-fx{
+	background-color: #6D6E71;
+	color: #fff;
+}
+.badge-cfd-i{
+	background-color: #FDE8A9;
+	color: #4E4529;
+}
+.badge-cfd-c{
+	background-color: #E9DAAD;
+	color: #4E4529;
+}
+.notification-item {
+    max-height: 110px !important;
+}
