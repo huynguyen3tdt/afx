@@ -239,7 +239,19 @@ export class HeaderComponent implements OnInit {
     this.userService.registrationAccountType(param).pipe(take(1)).subscribe(response => {
       this.spinnerService.hide();
       if (response.meta.code === 200) {
-        window.location.reload();
+        param.group_account_type.map(value => {
+          switch (value.account_type) {
+            case '1':
+              this.accountTradingForm.removeControl('afxAccount');
+              break;
+            case '2':
+              this.accountTradingForm.removeControl('cfdAccount');
+              break;
+            case '3':
+              this.accountTradingForm.removeControl('cfdCommunityAccount');
+              break;
+          }
+        });
       }
     }
       );
