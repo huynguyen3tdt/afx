@@ -25,7 +25,6 @@ export class InternalTransferComponent implements OnInit, AfterViewInit {
   showTabTransfer: boolean;
   showTabHistory: boolean;
   listTradingAccount: Array<AccountType>;
-  hideTransferTab: boolean;
   filterDepositHistory: boolean;
   filterWithDrawHistory: boolean;
   showTransferHistory: boolean;
@@ -41,7 +40,6 @@ export class InternalTransferComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.showTabDeposit = true;
     this.listTradingAccount = JSON.parse(localStorage.getItem(ACCOUNT_IDS));
-    this.hideTransferTab = this.listTradingAccount.length > 1;
     this.activatedRoute.queryParams.pipe(take(1)).subscribe(res => {
       this.querytab = res.tab;
       if (this.querytab === 'detailwithdrawal') {
