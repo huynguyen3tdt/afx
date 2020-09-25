@@ -195,7 +195,7 @@ export class DepositComponent implements OnInit {
     this.depositAmountForm.controls.deposit.valueChanges.subscribe((value) => {
       this.changeDepositCal();
     });
-    this.depositAmountForm.controls.dateTime.setValue(moment((new Date()).toDateString()).format(this.formatDateYear));
+    this.depositAmountForm.controls.dateTime.setValue(moment((new Date()).toDateString()).format(this.formatDateHour));
     if (this.accountID) {
       this.tradingAccount = this.listTradingAccount.find((account: AccountType) => this.accountID === account.account_id);
       this.depositAmountForm.controls.tradingAcount.setValue(this.tradingAccount.value);

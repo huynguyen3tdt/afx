@@ -214,8 +214,8 @@
                                     </div>
                                     <p class="mb-1"><strong>{{'Please transfer to the following account.' | translate}}</strong></p>
                                     <p class="mb-1"><strong>{{'As soon as we confirm the payment, we will notify you of the payment.' | translate}}</strong></p>
-                                    <p class="mb-1"><strong>{{'Please note that we can only accept the name of the transfer person who is the same as the name of our registered account.' | translate}}</strong></p>
-                                    <p class="mb-1"><strong>{{'Please be sure to enter our trading account number (10 digits) of the deposit destination after the name of the transfer person. If you do not specify a deposit destination trading account, we will arbitrarily select an account.' | translate}}</strong></p>
+                                    <p class="mb-1 text-danger"><strong>{{'Please note that we can only accept the name of the transfer person who is the same as the name of our registered account.' | translate}}</strong></p>
+                                    <p class="mb-1 text-danger"><strong>{{'Please be sure to enter our trading account number (10 digits) of the deposit destination after the name of the transfer person. If you do not specify a deposit destination trading account, we will arbitrarily select an account.' | translate}}</strong></p>
                                     <!-- <ng-container *ngFor="let item of listBankTranfer;let i = index">
                                         <div id="bank_{{item?.id}}" class="mb-2">
                                             <table class="table border table-sm" cellpadding="0" cellspacing="0">
@@ -558,11 +558,11 @@
                                                     <label class="label">{{'Datetime' | translate}}</label>
                                                     <input type="text" name="end-date"
                                                         [ngClass]="{'invalid': depositAmountForm?.controls?.dateTime?.errors}"
-                                                        class="form-control date"
-                                                        placeholder="{{formatDateYear}}" #dp="bsDatepicker" bsDatepicker
+                                                        class="form-control date text-left"
+                                                        placeholder="{{formatDateHour}}" #dp="bsDatepicker" bsDatepicker
                                                         formControlName="dateTime" autocomplete="off"
                                                         (onShown)="onShowPicker($event, 'To')"
-                                                        [bsConfig]="{ showWeekNumbers:false, dateInputFormat: formatDateYear, containerClass: 'theme-blue' }">
+                                                        [bsConfig]="{ showWeekNumbers:false, dateInputFormat: formatDateHour, containerClass: 'theme-blue' }">
                                                         <div *ngIf="depositAmountForm?.controls?.dateTime?.errors" class="invalid-mess">
                                                             <div>{{'This field is required' | translate}}</div>
                                                         </div>
@@ -571,7 +571,10 @@
                                                     <label class="label">{{'Deposit Amount' | translate}}</label>
                                                     <input [ngClass]="{'invalid': bankTransferError}"
                                                         maxlength="15" type="text" name="amount" formControlName="deposit" currency autocomplete="off"
-                                                        class="form-control form-control-lg text-left font-weight-bold text-warning" placeholder="">
+                                                        class="form-control form-control-lg text-right font-weight-bold text-warning" placeholder="">
+                                                </div>
+                                                <div class="mb-3 text-right">
+                                                    <span>{{tradingAccount?.currency}}</span>
                                                 </div>
                                                 <div *ngIf="bankTransferError == true" class="invalid-mess">
                                                     <div *ngIf="locale == 'en_US'">Minimum amount is not below {{minDeposit | number}}</div>
