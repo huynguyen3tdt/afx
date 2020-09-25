@@ -13,8 +13,8 @@
                             (click)="changeTab(TAB.withdraw)" role="tab" aria-controls="withdraw-tab"
                             aria-selected="false">{{'Withdrawal' | translate}}</a>
                         <a [className]="showTabTransfer ? 'nav-link active' : 'nav-link'"
-                            id="a-transfer-tab" data-toggle="pill" href="#transfer-tab" role="tab"
-                            *ngIf="hideTransferTab" (click)="changeTab(TAB.transfer)" aria-controls="transfer-tab" aria-selected="false">{{'Transfer' | translate}}</a>
+                            id="a-transfer-tab" data-toggle="pill" href="#transfer-tab" role="tab" 
+                            (click)="changeTab(TAB.transfer)" aria-controls="transfer-tab" aria-selected="false">{{'Transfer' | translate}}</a>
                         <a [className]="showTabHistory ? 'nav-link active' : 'nav-link'"
                             #historyTab id="a-history-tab" data-toggle="pill" href="#history-tab" role="tab"
                             (click)="changeTab(TAB.history)" aria-controls="history-tab" aria-selected="false">{{'History' | translate}}</a>
