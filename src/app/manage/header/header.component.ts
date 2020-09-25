@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
-import { TOKEN_AFX, FIRST_LOGIN, LOCALE, ACCOUNT_IDS, IS_COMPANY } from 'src/app/core/constant/authen-constant';
+import { TOKEN_AFX, FIRST_LOGIN, LOCALE, ACCOUNT_IDS, IS_COMPANY, ACCOUNT_TYPE } from 'src/app/core/constant/authen-constant';
 import { AuthenService } from 'src/app/core/services/authen.service';
 import { NotificationsService } from 'src/app/core/services/notifications.service';
 import { PageNotificationResponse, Notification } from 'src/app/core/model/page-noti.model';
@@ -17,6 +17,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { AccountTypeAFX, GroupAccountType } from 'src/app/core/model/user.model';
 import { UserService } from 'src/app/core/services/user.service';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
+import { PL001, PL002, PL003, PL004, PL005, PL006 } from 'src/app/core/constant/user-code-constant';
 
 declare const $: any;
 declare const TweenMax: any;
@@ -220,19 +221,19 @@ export class HeaderComponent implements OnInit {
     };
     if (this.accountTradingForm.controls.afxAccount && this.accountTradingForm.controls.afxAccount.value) {
       param.group_account_type.push({
-        lp_code: Boolean(localStorage.getItem(IS_COMPANY)) ? 'lp001' : 'lp004',
+        lp_code: Boolean(localStorage.getItem(IS_COMPANY)) ? PL001 : PL002,
         account_type: '1'
       });
     }
     if (this.accountTradingForm.controls.cfdAccount && this.accountTradingForm.controls.cfdAccount.value) {
       param.group_account_type.push({
-        lp_code: Boolean(localStorage.getItem(IS_COMPANY)) ? 'lp002' : 'lp005',
+        lp_code: Boolean(localStorage.getItem(IS_COMPANY)) ? PL003 : PL004,
         account_type: '2'
       });
     }
     if (this.accountTradingForm.controls.cfdCommunityAccount && this.accountTradingForm.controls.cfdCommunityAccount.value) {
       param.group_account_type.push({
-        lp_code: Boolean(localStorage.getItem(IS_COMPANY)) ? 'lp003' : 'lp006',
+        lp_code: Boolean(localStorage.getItem(IS_COMPANY)) ? PL005 : PL006,
         account_type: '3'
       });
     }
@@ -241,13 +242,13 @@ export class HeaderComponent implements OnInit {
       if (response.meta.code === 200) {
         param.group_account_type.map(value => {
           switch (value.account_type) {
-            case '1':
+            case ACCOUNT_TYPE.ACCOUNT_FX.account_type.toString():
               this.accountTradingForm.removeControl('afxAccount');
               break;
-            case '2':
+            case ACCOUNT_TYPE.ACCOUNT_CFDIndex.account_type.toString():
               this.accountTradingForm.removeControl('cfdAccount');
               break;
-            case '3':
+            case ACCOUNT_TYPE.ACCOUNT_CFDCom.account_type.toString():
               this.accountTradingForm.removeControl('cfdCommunityAccount');
               break;
           }
