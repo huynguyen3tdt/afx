@@ -15,7 +15,7 @@ export class AccountInformationComponent implements OnInit {
     withDrawal: 'withDrawal',
     setting: 'setting'
   };
-  isCompany: string;
+  isCompany: boolean;
   showTabCorpInfo: boolean;
   showTabUserInfo: boolean;
   showTabMt5: boolean;
@@ -27,12 +27,8 @@ export class AccountInformationComponent implements OnInit {
 
   ngOnInit() {
     this.titleService.setTitle('フィリップMT5 Mypage');
-    this.isCompany = localStorage.getItem(IS_COMPANY);
-    if (this.isCompany === 'false') {
-      this.showTabUserInfo = true;
-    } else {
-      this.showTabCorpInfo = true;
-    }
+    this.isCompany = Boolean(localStorage.getItem(IS_COMPANY));
+    this.showTabUserInfo = this.isCompany;
   }
 
   changeTab(type: string) {
@@ -41,5 +37,6 @@ export class AccountInformationComponent implements OnInit {
     this.showTabCorpInfo = this.TAB.corpInfo === type;
     this.showTabWithDrawal = this.TAB.withDrawal === type;
     this.showTabSetting = this.TAB.setting === type;
+    console.log('11111 ', this.showTabUserInfo);
   }
 }
