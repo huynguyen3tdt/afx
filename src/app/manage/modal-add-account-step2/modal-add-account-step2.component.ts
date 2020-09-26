@@ -23,7 +23,7 @@ export class ModalAddAccountStep2Component implements OnInit {
 
   ngOnInit() {
     this.initRulesForm();
-    $('.agreement-rules').css('max-height', ($(window).height() * 0.7));
+    $('.agreement-rules').css('max-height', ($(window).height() * 0.5));
   }
 
   initRulesForm() {
