@@ -62,6 +62,7 @@ export interface Mt5Model {
   unrealize_pl: number;
   currency?: string;
   account_id?: string;
+  img_type_account?: string;
 }
 
 export interface BankInforModel {
@@ -128,6 +129,8 @@ export interface TransferResulteModel {
   to_trading_account_id: number;
   sent_account_type?: string;
   receive_account_type?: string;
+  img_send_type?: string;
+  img_receive_type?: string;
 }
 
 

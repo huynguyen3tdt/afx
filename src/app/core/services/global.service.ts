@@ -154,4 +154,16 @@ export class GlobalService {
     }
     return TRADING_TYPE.CCFD.name + ' ' + accountNumber;
   }
+
+  convertTypeToImg(accountNumber: string) {
+    const tradingType = accountNumber.substring(accountNumber.length - 2, accountNumber.length);
+    switch (tradingType) {
+      case TRADING_TYPE.FX.key:
+        return 'assets/images/badge-FX.svg';
+      case TRADING_TYPE.ICFD.key:
+        return 'assets/images/badge-I-CFD.svg';
+      case TRADING_TYPE.CCFD.key:
+        return 'assets/images/badge-C-CFD.svg';
+    }
+  }
 }

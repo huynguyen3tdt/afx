@@ -40,6 +40,7 @@ export interface AccountType {
   account_id: string;
   value: string;
   currency: string;
+  img_type_account?: string;
 }
 
 export interface Report {
