@@ -25,6 +25,7 @@ import { LANGUAGLE } from '../constant/language-constant';
 import { DATE_CLIENT_ENG, DATE_CLIENT_ENG_SUBMIT } from '../constant/format-date-constant';
 import { AccountType } from '../model/report-response.model';
 import { forkJoin } from 'rxjs';
+import { BankTransferParamModel } from '../model/deposit-response.model';
 
 
 @Injectable({
@@ -186,6 +187,18 @@ export class WithdrawRequestService {
   postTransfer(param: TransferModel): Observable<TransferResponseModel> {
     return this.httpClient
       .post(`${this.envConfigService.getConfig()}/${AppSettings.API_INTERNAL_TRANSFER}`, param)
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          return new Observable((observer: InnerSubscriber<any, any>) => {
+            observer.next(error);
+          });
+        })
+      );
+  }
+
+  postBankTransfer(param: BankTransferParamModel): Observable<any> {
+    return this.httpClient
+      .post(`${this.envConfigService.getConfig()}/${AppSettings.API_BANK_TRANSFER}`, param)
       .pipe(
         catchError((error: HttpErrorResponse) => {
           return new Observable((observer: InnerSubscriber<any, any>) => {

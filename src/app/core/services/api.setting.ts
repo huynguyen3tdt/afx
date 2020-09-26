@@ -42,4 +42,5 @@ export class AppSettings {
     public static API_REGISTRATION_ADD_MORE     = `api/${versionAPI}/registration/add_more/`;
     public static API_INTERNAL_TRANSFER         = `api/${versionAPI}/internal_transfer/`;
     public static API_GET_INTERNAL_HISTORY      = `api/${versionAPI}/funding/internal_tran_history/`;
+    public static API_BANK_TRANSFER             = `api/${versionAPI}/bank_transfer/`;
 }

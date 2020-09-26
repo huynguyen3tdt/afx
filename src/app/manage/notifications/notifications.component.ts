@@ -182,7 +182,6 @@ export class NotificationsComponent implements OnInit {
     }
     this.checkSearchTypeTrading();
     this.currentPage = 1;
-    this.unreadAll = !this.unreadAll;
     this.searchByTab();
   }
 
