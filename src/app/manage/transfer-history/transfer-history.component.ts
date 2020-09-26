@@ -299,7 +299,7 @@ export class TransferHistoryComponent implements OnInit, AfterViewInit {
     this.spinnerService.show();
     this.withdrawRequestService.exportHistoryToCsv(accounID, tabValue,
       this.formatDate(this.searchForm.controls.fromDate.value),
-      this.formatDate(this.searchForm.controls.toDate.value), this.statusSearch).pipe(take(1)).subscribe(response => {
+      this.formatDate(this.searchForm.controls.toDate.value), this.statusSearch, true).pipe(take(1)).subscribe(response => {
         this.spinnerService.hide();
         const file = new Blob([response], {
           type: 'text/csv',
