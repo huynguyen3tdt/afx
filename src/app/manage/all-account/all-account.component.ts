@@ -7,6 +7,7 @@ import { forkJoin, Observable } from 'rxjs';
 import moment from 'moment-timezone';
 import { LANGUAGLE } from 'src/app/core/constant/language-constant';
 import { EN_FORMATDATE_HH_MM, JAPAN_FORMATDATE_HH_MM } from 'src/app/core/constant/format-date-constant';
+import { GlobalService } from 'src/app/core/services/global.service';
 
 @Component({
   selector: 'app-all-account',
@@ -22,7 +23,8 @@ export class AllAccountComponent implements OnInit {
   timeZone: string;
   formatDateHour: string;
   locale: string;
-  constructor(private withdrawRequestService: WithdrawRequestService) { }
+  constructor(private withdrawRequestService: WithdrawRequestService,
+              private globalService: GlobalService) { }
 
   ngOnInit() {
     this.timeZone = localStorage.getItem(TIMEZONEAFX);
@@ -38,6 +40,7 @@ export class AllAccountComponent implements OnInit {
     if (this.listTradingAccount) {
       const listMT5: Observable<WithdrawRequestModel> [] = [];
       this.listTradingAccount.forEach((item) => {
+        item.img_type_account = this.globalService.convertTypeToImg(item.account_id);
         if (item.account_id) {
           listMT5.push(this.withdrawRequestService.getmt5Infor(Number(item.account_id)));
         }
@@ -52,6 +55,8 @@ export class AllAccountComponent implements OnInit {
           this.listMt5Infor[index].data.currency = this.listTradingAccount[index].currency;
         });
         this.listMt5Infor.forEach(item => {
+          item.data.img_type_account = this.globalService.convertTypeToImg(item.data.account_id);
+          console.log('3333 ', item.data.img_type_account);
           this.totalBalance += Number(item.data.balance);
           this.totalPL += Number(item.data.unrealize_pl);
           this.lastestTime = moment(item.data.lastest_time).tz(this.timeZone).format(this.formatDateHour);

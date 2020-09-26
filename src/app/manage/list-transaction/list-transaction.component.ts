@@ -99,10 +99,8 @@ export class ListTransactionComponent implements OnInit, OnChanges {
             item.create_date += TIMEZONESERVER;
             item.create_date = moment(item.create_date).tz(this.timeZone).format(this.formatDateHour);
             item.method = this.globalService.checkPaymentMedthod(item.method);
-            item.sent_account_type = item.from_trading_account_id.toString().
-            substring(item.from_trading_account_id.toString().length - 2, item.from_trading_account_id.toString().length);
-            item.receive_account_type = item.to_trading_account_id.toString().
-            substring(item.to_trading_account_id.toString().length - 2, item.to_trading_account_id.toString().length);
+            item.img_send_type = this.globalService.convertTypeToImg(item.from_trading_account_id.toString());
+            item.img_receive_type = this.globalService.convertTypeToImg(item.to_trading_account_id.toString());
           });
         }
       });

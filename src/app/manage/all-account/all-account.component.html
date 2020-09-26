@@ -10,6 +10,7 @@
                     <div class="all-account">
                         <div *ngFor="let item of listTradingAccount" class="d-inline-block">
                             {{item.account_id | convertTradingType}}
+                            <img class="ml-2" src={{item?.img_type_account}} width="37" height="20"/>
                         </div>
                         <!-- <div class="d-inline-block">
                         [I-CFD] 1011111
@@ -59,6 +60,7 @@
                 <div class="all-account">
                     <div class="d-inline-block">
                         {{item?.data?.account_id | convertTradingType}}
+                        <img class="ml-2" src={{item?.data?.img_type_account}} width="37" height="20"/>
                     </div>
                 </div>
 

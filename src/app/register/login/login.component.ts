@@ -150,7 +150,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
         } else {
           localStorage.setItem(REMEMBER_LOGIN, 'false');
         }
-        response.data.account_ids = this.getListAccountIds(response.data.account_ids);
+        response.data.account_ids = this.getListAccountIds(this.sortListAccount(response.data.account_ids));
         localStorage.setItem(TOKEN_AFX, response.data.access_token);
         localStorage.setItem(ACCOUNT_IDS, JSON.stringify(response.data.account_ids));
         localStorage.setItem(IS_COMPANY, response.data.is_company.toString());
@@ -267,6 +267,18 @@ export class LoginComponent implements OnInit, AfterViewInit {
     } else {
       this.isPc = true;
     }
+  }
+
+  sortListAccount(arr: any) {
+    arr.sort((a, b) => {
+      if (a.account_type < b.account_type) {
+        return -1;
+      }  else if (a.account_type > b.account_type) {
+        return 1;
+      }
+      return 0;
+    });
+    return arr;
   }
 
   openKeyboard() {
