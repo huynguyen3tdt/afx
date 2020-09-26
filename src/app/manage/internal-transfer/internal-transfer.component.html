@@ -12,7 +12,7 @@
                             id="a-withdraw-tab" data-toggle="pill" href="#withdraw-tab"
                             (click)="changeTab(TAB.withdraw)" role="tab" aria-controls="withdraw-tab"
                             aria-selected="false">{{'Withdrawal' | translate}}</a>
-                        <a [className]="showTabTransfer ? 'nav-link active' : 'nav-link'"
+                        <a *ngIf="hideTransfer" [className]="showTabTransfer ? 'nav-link active' : 'nav-link'"
                             id="a-transfer-tab" data-toggle="pill" href="#transfer-tab" role="tab" 
                             (click)="changeTab(TAB.transfer)" aria-controls="transfer-tab" aria-selected="false">{{'Transfer' | translate}}</a>
                         <a [className]="showTabHistory ? 'nav-link active' : 'nav-link'"
@@ -55,7 +55,7 @@
                                                             [className]="!showTransferHistory ? 'nav-item nav-link active' : 'nav-item nav-link'" id="nav-billing-tab"
                                                             data-toggle="tab" href="#nav-billing" role="tab" aria-controls="nav-billing"
                                                             aria-selected="true"><strong>{{'History' | translate}}</strong></a>
-                                                        <a [className]="showTransferHistory ? 'nav-item nav-link active' : 'nav-item nav-link'" id="nav-bank-tab"
+                                                        <a *ngIf="hideTransfer" [className]="showTransferHistory ? 'nav-item nav-link active' : 'nav-item nav-link'" id="nav-bank-tab"
                                                            #abc data-toggle="tab" href="#nav-bank" role="tab" aria-controls="nav-bank"
                                                             aria-selected="true"><strong>{{'Transfer History' | translate}}</strong></a>
                                                     </div>

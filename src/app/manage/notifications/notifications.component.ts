@@ -106,7 +106,6 @@ export class NotificationsComponent implements OnInit {
     }
     if (this.accountID) {
       this.checkSearchTypeTrading();
-      console.log('tradingTYpeee ', this.searchTypeTrading);
       this.getListNotifications(this.pageSize, this.currentPage, this.unreadAll, this.TABS.ALL.value, this.searchTypeTrading);
       this.getTotalNotification();
     }

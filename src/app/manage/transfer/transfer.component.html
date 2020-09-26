@@ -26,6 +26,7 @@
                                                 <option *ngFor="let item of listTradingAccount"
                                                     value="{{item?.account_id}}">{{item?.value}}</option>
                                             </select>
+                                            <div *ngIf="!sentAccountID" class="invalid-mess">Please choose trading acount</div>
                                         </div>
                                         <img *ngIf="sentType == accountType.CCFD.key" class="ml-1 pt-1" src="assets/images/badge-C-CFD.svg" width="45" height="35">
                                         <img *ngIf="sentType == accountType.FX.key" class="ml-1 pt-1" src="assets/images/badge-FX.svg" width="45" height="35">
@@ -95,6 +96,7 @@
                                                     <option *ngFor="let item of listTradingAccount"
                                                         value="{{item?.account_id}}">{{item?.value}}</option>
                                                 </select>
+                                                <div *ngIf="!receiveAccountID" class="invalid-mess">Please choose trading acount</div>
                                             </div>
                                             <img *ngIf="receiveType == accountType.CCFD.key" class="ml-1 pt-1" src="assets/images/badge-C-CFD.svg" width="45" height="35">
                                             <img *ngIf="receiveType == accountType.FX.key" class="ml-1 pt-1" src="assets/images/badge-FX.svg" width="45" height="35">

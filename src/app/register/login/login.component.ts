@@ -20,6 +20,7 @@ import {
   CHANGE_PASS_FLG,
   MARGIN_CALL,
   MARGIN_STOP_OUT,
+  INTERNAL_TRANSFER,
 } from './../../core/constant/authen-constant';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthenService } from 'src/app/core/services/authen.service';
@@ -179,6 +180,9 @@ export class LoginComponent implements OnInit, AfterViewInit {
         }
         if (response.data.margin_stop_out) {
           localStorage.setItem(MARGIN_STOP_OUT, response.data.margin_stop_out.toString());
+        }
+        if (response.data.fx_internal_transfer_flg) {
+          localStorage.setItem(INTERNAL_TRANSFER, response.data.fx_internal_transfer_flg.toString());
         }
         localStorage.setItem(FIRST_LOGIN, '1');
         localStorage.setItem(CHANGE_PASS_FLG, response.data.pwd_change_flg.toString());

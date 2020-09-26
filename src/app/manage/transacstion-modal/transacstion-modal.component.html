@@ -14,7 +14,7 @@
                     <tbody>
                         <tr>
                             <td width="180" class="border-top-0">{{'Trading account' | translate}}</td>
-                            <td class="border-top-0">{{accounID}}</td>
+                            <td class="border-top-0">{{transactionDetail?.trading_account_id | convertTradingType}}</td>
                         </tr>
                         <tr>
                             <td width="180">{{'Date time' | translate}}</td>
