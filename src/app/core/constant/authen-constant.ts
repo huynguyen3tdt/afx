@@ -38,6 +38,6 @@ export const ERROR_MIN_DEPOSIT_JP = '最小預金は';
 
 export const ACCOUNT_TYPE = {
     ACCOUNT_FX: {account_type: 1, name: 'FX'},
-    ACCOUNT_CFDIndex: {account_type: 2, name: 'CFD Index'},
-    ACCOUNT_CFDCom: {account_type: 3, name: 'CFD Index'},
+    ACCOUNT_CFDIndex: {account_type: 2, name: 'I-CFD'},
+    ACCOUNT_CFDCom: {account_type: 3, name: 'C-CFD'},
 };

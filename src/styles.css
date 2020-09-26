@@ -28,6 +28,6 @@ strong {
 	background-color: #E9DAAD;
 	color: #4E4529;
 }
-.notification-item {
-    max-height: 110px !important;
-}
+/* .notification-item {
+    min-height: 110px !important;
+} */

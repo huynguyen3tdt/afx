@@ -23,6 +23,7 @@
                                             <select class="form-control form-control-sm mb-0 bg-none"
                                                 (change)="changeTradingAccount('sent')" [(ngModel)]="sentAccountID"
                                                 style="min-width: 160px;">
+                                                <option value="" disabled [selected]="true">Please choose trading acount</option>
                                                 <option *ngFor="let item of listTradingAccount"
                                                     value="{{item?.account_id}}">{{item?.value}}</option>
                                             </select>
@@ -93,6 +94,7 @@
                                                 <select class="form-control form-control-sm mb-0 bg-none"
                                                     (change)="changeTradingAccount('receive')" [(ngModel)]="receiveAccountID"
                                                     style="min-width: 160px;">
+                                                    <option value="" disabled [selected]="true">Please choose trading acount</option>
                                                     <option *ngFor="let item of listTradingAccount"
                                                         value="{{item?.account_id}}">{{item?.value}}</option>
                                                 </select>

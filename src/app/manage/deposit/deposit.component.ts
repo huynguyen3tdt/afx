@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { requiredInput } from 'src/app/core/helper/custom-validate.helper';
-import { DepositModel } from 'src/app/core/model/deposit-response.model';
+import { DepositModel, BankTransferParamModel } from 'src/app/core/model/deposit-response.model';
 import { DepositService } from 'src/app/core/services/deposit.service';
 import {
   MIN_DEPOST,
@@ -25,7 +25,12 @@ import { WithdrawRequestService } from './../../core/services/withdraw-request.s
 import { Mt5Model, TransactionModel, WithdrawAmountModel } from 'src/app/core/model/withdraw-request-response.model';
 import { AccountType } from 'src/app/core/model/report-response.model';
 import { GlobalService } from 'src/app/core/services/global.service';
-import { JAPAN_FORMATDATE_HH_MM, EN_FORMATDATE, EN_FORMATDATE_HH_MM, JAPAN_FORMATDATE } from 'src/app/core/constant/format-date-constant';
+import { JAPAN_FORMATDATE_HH_MM,
+   EN_FORMATDATE,
+   EN_FORMATDATE_HH_MM,
+   JAPAN_FORMATDATE,
+   DATE_CLIENT_ENG,
+   DATE_CLIENT_ENG_SUBMIT } from 'src/app/core/constant/format-date-constant';
 import { TYPEOFTRANHISTORY } from 'src/app/core/constant/payment-method-constant';
 import { Router } from '@angular/router';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
@@ -108,6 +113,7 @@ export class DepositComponent implements OnInit {
   isCompany: string;
   userInfor: UserModel;
   corporateInfor: CorporateModel;
+  currentBank: DepositModel;
 
   constructor(private depositService: DepositService,
               private withdrawRequestService: WithdrawRequestService,
@@ -260,6 +266,8 @@ export class DepositComponent implements OnInit {
 
   showInforBank(bankName: string, bank?: DepositModel) {
     const listTab = ['三菱ＵＦＪ', 'みずほ', '三井住友', 'ゆうちょ', 'ジャパンネット', '楽天'];
+    console.log('bankkk ', bank);
+    this.currentBank = bank;
     // tslint:disable-next-line:no-shadowed-variable
     listTab.forEach(element => {
       if (bankName === element) {
@@ -404,7 +412,22 @@ export class DepositComponent implements OnInit {
     if (this.depositAmountForm.invalid || this.bankTransferError) {
       return;
     }
+    console.log('1111 ', this.depositAmountForm.controls.dateTime.value);
+    let dateTime = this.depositAmountForm.controls.dateTime.value;
+    if (this.locale === LANGUAGLE.english) {
+      dateTime = moment(dateTime, DATE_CLIENT_ENG).format(DATE_CLIENT_ENG_SUBMIT);
+    }
     console.log(this.depositAmountForm.value);
+    const param: BankTransferParamModel = {
+      trading_account_id: Number(this.tradingAccount.account_id),
+      bank_code: this.currentBank.bic,
+      remark : this.currentBank.name + ', ' + dateTime,
+      amount: numeral(this.depositAmountForm.controls.deposit.value).value(),
+      currency: this.tradingAccount.currency
+    };
+    this.withdrawRequestService.postBankTransfer(param).subscribe(response => {
+        console.log('responsee ', response);
+    });
   }
 
   onShowPicker(event, type) {
