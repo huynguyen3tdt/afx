@@ -23,6 +23,7 @@ export const MOCK_LOGIN_RESPONSE = {
     fx_name1: '23',
     tz: 'Asia/Tokyo',
     margin_call: 120,
-    margin_stop_out: 100
+    margin_stop_out: 100,
+    fx_internal_transfer_flg: false
   }
 };

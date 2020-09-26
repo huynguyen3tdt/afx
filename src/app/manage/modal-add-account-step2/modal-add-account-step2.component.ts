@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, Output, EventEmitter, Input } from '@angu
 import { ModalDirective } from 'ngx-bootstrap';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { requiredInput } from 'src/app/core/helper/custom-validate.helper';
+declare var $: any;
 
 @Component({
   selector: 'app-modal-add-account-step2',
@@ -22,6 +23,7 @@ export class ModalAddAccountStep2Component implements OnInit {
 
   ngOnInit() {
     this.initRulesForm();
+    $('.agreement-rules').css('max-height', ($(window).height() * 0.7));
   }
 
   initRulesForm() {

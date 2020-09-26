@@ -20,7 +20,6 @@ export class NotificationsService {
 
   getListNotifications(pageSize: number,
                        pageNumber: number, unread: boolean, type?: number, listAccountId?: string): Observable<PageNotificationResponse> {
-    console.log('2222 ', listAccountId);
     let URL = '';
     let checkUnread = 0;
     if (unread === false) {
