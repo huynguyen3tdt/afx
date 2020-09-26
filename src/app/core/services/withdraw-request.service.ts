@@ -152,7 +152,7 @@ export class WithdrawRequestService {
   }
 
   exportHistoryToCsv(accountNumber: string, type?: string,
-                     dateFrom?: string, dateTo?: string, statusSearch?: string): Observable<ArrayBuffer> {
+                     dateFrom?: string, dateTo?: string, statusSearch?: string, isTransfer?: boolean): Observable<ArrayBuffer> {
     let URL = '';
     const locale = localStorage.getItem(LOCALE);
     if (type) {
@@ -175,8 +175,14 @@ export class WithdrawRequestService {
     if (statusSearch) {
       URL += `&status=${statusSearch}`;
     }
+    let API = '';
+    if (!isTransfer) {
+      API = AppSettings.API_EXPORT_CSV;
+    } else {
+      API = AppSettings.API_EXPORT_INTERNAL_CSV;
+    }
     return this.httpClient
-      .get(`${this.envConfigService.getConfig()}/${AppSettings.API_EXPORT_CSV}` + URL, { responseType: 'arraybuffer' })
+      .get(`${this.envConfigService.getConfig()}/${API}` + URL, { responseType: 'arraybuffer' })
       .pipe(
         catchError((error: HttpErrorResponse) => {
           return new Observable((observer: InnerSubscriber<any, any>) => {
