@@ -145,7 +145,7 @@ export class TransferComponent implements OnInit {
 
   initTransferForm() {
     this.transferForm = new FormGroup({
-      amount: new FormControl(numeral(10000).format('0,0'), transferValidation),
+      amount: new FormControl(numeral(0).format('0,0'), transferValidation),
       wholeMoney: new FormControl(false),
     });
     this.transferForm.controls.amount.valueChanges.subscribe((val) => {
@@ -234,7 +234,7 @@ export class TransferComponent implements OnInit {
 
   cancelWithDraw() {
     this.modalTransferConfirm.hide();
-    this.transferForm.controls.amount.setValue(numeral(10000).format('0,0'));
+    this.transferForm.controls.amount.setValue(numeral(0).format('0,0'));
   }
 
   sendConfirm() {
@@ -268,7 +268,7 @@ export class TransferComponent implements OnInit {
     }
     this.getMt5Infor(Number(this.sentAccountID), 'sent');
     this.getMt5Infor(Number(this.receiveAccountID), 'receive');
-    this.transferForm.controls.amount.setValue(numeral(10000).format('0,0'));
+    this.transferForm.controls.amount.setValue(numeral(0).format('0,0'));
     this.listTran.ngOnChanges();
   }
 

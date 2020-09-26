@@ -27,8 +27,9 @@ export class AccountInformationComponent implements OnInit {
 
   ngOnInit() {
     this.titleService.setTitle('フィリップMT5 Mypage');
-    this.isCompany = Boolean(localStorage.getItem(IS_COMPANY));
-    this.showTabUserInfo = this.isCompany;
+    this.isCompany = localStorage.getItem(IS_COMPANY) === 'true';
+    console.log('isCOmpany ', this.isCompany);
+    this.showTabUserInfo = !this.isCompany;
   }
 
   changeTab(type: string) {
