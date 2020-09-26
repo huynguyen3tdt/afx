@@ -240,13 +240,13 @@ export class LoginComponent implements OnInit, AfterViewInit {
       // tslint:disable-next-line:no-shadowed-variable
       data.map((element: any) => {
         if (element.account_type === ACCOUNT_TYPE.ACCOUNT_FX.account_type) {
-          element.value = '[' + ACCOUNT_TYPE.ACCOUNT_FX.name + ']' + ' ' + element.account_id;
+          element.value = ACCOUNT_TYPE.ACCOUNT_FX.name + ' ' + element.account_id;
         }
         if (element.account_type === ACCOUNT_TYPE.ACCOUNT_CFDIndex.account_type) {
-          element.value = '[' + ACCOUNT_TYPE.ACCOUNT_CFDIndex.name + ']' + ' ' + element.account_id;
+          element.value = ACCOUNT_TYPE.ACCOUNT_CFDIndex.name + ' ' + element.account_id;
         }
         if (element.account_type === ACCOUNT_TYPE.ACCOUNT_CFDCom.account_type) {
-          element.value = '[' + ACCOUNT_TYPE.ACCOUNT_CFDCom.name + ']' + ' ' + element.account_id;
+          element.value = ACCOUNT_TYPE.ACCOUNT_CFDCom.name + ' ' + element.account_id;
         }
         const dataObj: AccountType = {
           account_type: element.account_type,

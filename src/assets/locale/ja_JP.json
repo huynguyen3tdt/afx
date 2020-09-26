@@ -302,5 +302,7 @@
   "Amount must be bigger than 0": "金額は0より大きくなければなりません",
   "Add Account" : "より多くのアカウント",
   "Partner account": "取引先",
-  "Bank transfer information": "振込情報"
+  "Bank transfer information": "振込情報",
+  "Please choose trading acount": "口座を選択してください",
+  "Overview of each account": "各口座の概要"
 }

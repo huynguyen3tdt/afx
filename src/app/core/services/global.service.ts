@@ -159,11 +159,11 @@ export class GlobalService {
     const tradingType = accountNumber.substring(accountNumber.length - 2, accountNumber.length);
     switch (tradingType) {
       case TRADING_TYPE.FX.key:
-        return 'assets/images/badge-FX.svg';
+        return 'assets/images/icon-for-FX.svg';
       case TRADING_TYPE.ICFD.key:
-        return 'assets/images/badge-I-CFD.svg';
+        return 'assets/images/icon-for-ICFD.svg';
       case TRADING_TYPE.CCFD.key:
-        return 'assets/images/badge-C-CFD.svg';
+        return 'assets/images/icon-for-CCFD.svg';
     }
   }
 }

@@ -16,7 +16,9 @@ import {
   TransferResponseModel,
   TransferResulteModel,
   ListTransferResponseModel,
-  Mt5Model
+  Mt5Model,
+  postWithdrawModel,
+  BankTransferReponseModel
 } from '../model/withdraw-request-response.model';
 import { ResponseWihtoutDataModel } from '../model/none-data-response.model';
 import * as moment from 'moment';
@@ -196,7 +198,7 @@ export class WithdrawRequestService {
       );
   }
 
-  postBankTransfer(param: BankTransferParamModel): Observable<any> {
+  postBankTransfer(param: BankTransferParamModel): Observable<BankTransferReponseModel> {
     return this.httpClient
       .post(`${this.envConfigService.getConfig()}/${AppSettings.API_BANK_TRANSFER}`, param)
       .pipe(

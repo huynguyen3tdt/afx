@@ -10,6 +10,11 @@ export interface TransferResponseModel {
   data: TransferResulteModel;
 }
 
+export interface BankTransferReponseModel {
+  meta: MetaResponseModel;
+  data: postWithdrawModel;
+}
+
 export interface ListTransferResponseModel {
   meta: MetaResponseModel;
   data: {
