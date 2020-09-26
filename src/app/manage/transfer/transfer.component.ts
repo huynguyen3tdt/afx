@@ -94,20 +94,21 @@ export class TransferComponent implements OnInit {
     this.listTradingAccount = JSON.parse(localStorage.getItem(ACCOUNT_IDS));
     if (this.listTradingAccount.length > 1) {
       this.tradingSentAccount = this.listTradingAccount[0];
-      this.sentAccountID = this.tradingSentAccount.account_id;
-      this.sentType = this.sentAccountID.substring(this.sentAccountID.length - 2, this.sentAccountID.length);
+      // this.sentAccountID = this.tradingSentAccount.account_id;
+      // this.sentType = this.sentAccountID.substring(this.sentAccountID.length - 2, this.sentAccountID.length);
       this.tradingReceiveAccount = this.listTradingAccount[1];
-      this.receiveAccountID = this.tradingReceiveAccount.account_id;
-      this.receiveType = this.receiveAccountID.substring(this.sentAccountID.length - 2, this.receiveAccountID.length);
+      // this.receiveAccountID = this.tradingReceiveAccount.account_id;
+      // this.receiveType = this.receiveAccountID.substring(this.sentAccountID.length - 2, this.receiveAccountID.length);
     }
     this.minWithdraw = Number(localStorage.getItem(MIN_WITHDRAW));
     this.initTransferForm();
-    if (this.sentAccountID) {
-      this.getMt5Infor(Number(this.sentAccountID), 'sent');
-    }
-    if (this.receiveAccountID) {
-        this.getMt5Infor(Number(this.receiveAccountID), 'receive');
-      }
+    this.disabledTransfer = true;
+    // if (this.sentAccountID) {
+    //   this.getMt5Infor(Number(this.sentAccountID), 'sent');
+    // }
+    // if (this.receiveAccountID) {
+    //     this.getMt5Infor(Number(this.receiveAccountID), 'receive');
+    //   }
   }
 
   getMt5Infor(accountId, type) {
@@ -127,6 +128,15 @@ export class TransferComponent implements OnInit {
         } else {
           this.receiveAccountInfo = this.mt5Infor;
           this.marginLevelEstimateReceive = this.receiveAccountInfo.margin_level;
+        }
+        if (this.sentAccountID && this.receiveAccountID) {
+          if (this.sentAccountID === this.receiveAccountID || this.sentAccountInfo.currency !== this.receiveAccountInfo.currency) {
+            this.disabledTransfer = true;
+          } else {
+            this.disabledTransfer = false;
+          }
+        } else {
+          this.disabledTransfer = true;
         }
         this.lastestTime = moment(this.mt5Infor.lastest_time).tz(this.timeZone).format(this.formatDateHour);
       }
@@ -198,13 +208,8 @@ export class TransferComponent implements OnInit {
     } else {
       this.tradingReceiveAccount = this.listTradingAccount.find((account: AccountType) =>
        this.receiveAccountID === account.account_id);
-      this.receiveType = this.receiveAccountID.substring(this.sentAccountID.length - 2, this.receiveAccountID.length);
+      this.receiveType = this.receiveAccountID.substring(this.receiveAccountID.length - 2, this.receiveAccountID.length);
       this.getMt5Infor(Number(this.receiveAccountID), 'receive');
-    }
-    if (this.sentAccountID === this.receiveAccountID || this.sentAccountInfo.currency !== this.receiveAccountInfo.currency) {
-      this.disabledTransfer = true;
-    } else {
-      this.disabledTransfer = false;
     }
   }
 
@@ -217,6 +222,9 @@ export class TransferComponent implements OnInit {
   }
 
   showConfirm() {
+    if (!this.sentAccountID || !this.receiveAccountID) {
+      return;
+    }
     if (!this.checkValidateWithDrawal() || this.transferForm.invalid) {
       return;
     }

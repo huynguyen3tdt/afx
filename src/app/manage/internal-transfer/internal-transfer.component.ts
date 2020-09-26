@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { AccountType } from 'src/app/core/model/report-response.model';
-import { ACCOUNT_IDS } from 'src/app/core/constant/authen-constant';
+import { ACCOUNT_IDS, INTERNAL_TRANSFER } from 'src/app/core/constant/authen-constant';
 import { TYPEOFTRANHISTORY } from 'src/app/core/constant/payment-method-constant';
 import { ActivatedRoute } from '@angular/router';
 import { take } from 'rxjs/operators';
@@ -31,6 +31,7 @@ export class InternalTransferComponent implements OnInit, AfterViewInit {
   querytab: string;
   detaiWithdrawFlag: boolean;
   accountID: number;
+  hideTransfer: boolean;
 
   constructor(private activatedRoute: ActivatedRoute) { }
 
@@ -38,6 +39,7 @@ export class InternalTransferComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    this.hideTransfer = Boolean(localStorage.getItem(INTERNAL_TRANSFER));
     this.showTabDeposit = true;
     this.listTradingAccount = JSON.parse(localStorage.getItem(ACCOUNT_IDS));
     this.activatedRoute.queryParams.pipe(take(1)).subscribe(res => {

@@ -1,6 +1,7 @@
 
 export const REMEMBER_LOGIN = 'rememberAFX';
 export const TOKEN_AFX = 'currentTokenAFX';
+export const INTERNAL_TRANSFER = 'fx_internal_transfer_flg';
 export const USERNAME_LOGIN = 'useNameLoginAFX';
 export const PASSWORD_LOGIN = 'passWordLoginAFX';
 export const ACCOUNT_IDS    = 'accountTypeAFX';
