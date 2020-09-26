@@ -103,6 +103,8 @@ export class TransferComponent implements OnInit {
     this.minWithdraw = Number(localStorage.getItem(MIN_WITHDRAW));
     this.initTransferForm();
     this.disabledTransfer = true;
+    this.sentAccountID = '';
+    this.receiveAccountID = '';
     // if (this.sentAccountID) {
     //   this.getMt5Infor(Number(this.sentAccountID), 'sent');
     // }

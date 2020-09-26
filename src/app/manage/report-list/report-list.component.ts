@@ -119,11 +119,7 @@ export class ReportListComponent implements OnInit {
         this.listReport.forEach(item => {
           item.create_date += TIMEZONESERVER;
           item.create_date = moment(item.create_date).tz(this.timeZone).format(this.formatDateYear);
-          if (item.file_name.includes(']_')) {
-            item.file_name = item.file_name.split('.')[0].split('_')[2] + '_' + item.file_name.split('.')[0].split('_')[3];
-          } else {
-            item.file_name = item.file_name.split('.')[0].split('_')[1] + '_' + item.file_name.split('.')[0].split('_')[2];
-          }
+          item.file_name = item.file_name.split('.')[0];
           item.report_date = moment((new Date(item.report_date)).toDateString()).format(this.formatDateYear);
         });
       }

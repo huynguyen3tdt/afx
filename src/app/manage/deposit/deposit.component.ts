@@ -426,7 +426,10 @@ export class DepositComponent implements OnInit {
       currency: this.tradingAccount.currency
     };
     this.withdrawRequestService.postBankTransfer(param).subscribe(response => {
-        console.log('responsee ', response);
+        if (response.meta.code === 200) {
+          this.toastr.success('Success');
+          this.listTran.ngOnChanges();
+        }
     });
   }
 

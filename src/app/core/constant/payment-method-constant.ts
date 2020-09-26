@@ -1,7 +1,7 @@
 export const PAYMENTMETHOD = {
     QUICKDEPOSIT: {key: 'qd', nameJP: 'クイック入金', name: 'Quick deposit'},
     BANKTRANSFER: {key: 'bt', nameJP: '銀行振込', name: 'Bank transfer'},
-    INTERNALTRANSFER: {key: 'it', nameJP: 'Transfer', name: 'Transfer'}
+    INTERNALTRANSFER: {key: 'it', nameJP: '振替', name: 'Transfer'}
 };
 
 
