@@ -56,7 +56,6 @@ export class AllAccountComponent implements OnInit {
         });
         this.listMt5Infor.forEach(item => {
           item.data.img_type_account = this.globalService.convertTypeToImg(item.data.account_id);
-          console.log('3333 ', item.data.img_type_account);
           this.totalBalance += Number(item.data.balance);
           this.totalPL += Number(item.data.unrealize_pl);
           this.lastestTime = moment(item.data.lastest_time).tz(this.timeZone).format(this.formatDateHour);

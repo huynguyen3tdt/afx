@@ -82,6 +82,7 @@ export class ListTransactionComponent implements OnInit, OnChanges {
           moment(item.create_date).tz(this.timeZone).format(this.formatDateHour);
           item.funding_type = this.globalService.checkType(item.funding_type);
           item.method = this.globalService.checkPaymentMedthod(item.method);
+          item.img_account_type = this.globalService.convertTypeToImg(item.trading_account_id.toString());
         });
       }
     });

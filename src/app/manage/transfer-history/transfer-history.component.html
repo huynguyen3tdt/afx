@@ -118,8 +118,12 @@
                                         <tr *ngFor="let item of listTranTransfer">
                                             <td><a (click)="openDetail(item?.id)">{{item?.create_date}}</a></td>
                                             <td><a (click)="openDetail(item?.id)"><span class="keep-all">{{'Transfer' | translate}}</span></a></td>
-                                            <td><a (click)="openDetail(item?.id)"><span class="keep-all">{{item?.from_trading_account_id | convertTradingType}}</span></a></td>
-                                            <td><a (click)="openDetail(item?.id)">{{item?.to_trading_account_id | convertTradingType}}</a></td>
+                                            <td><a (click)="openDetail(item?.id)"><span class="keep-all">{{item?.from_trading_account_id | convertTradingType}}</span></a>
+                                                <img class="ml-0" src="{{item?.img_send_type}}" width="37" height="20">
+                                            </td>
+                                            <td><a (click)="openDetail(item?.id)">{{item?.to_trading_account_id | convertTradingType}}</a>
+                                                <img class="ml-0" src="{{item?.img_receive_type}}" width="37" height="20">
+                                            </td>
                                             <td class="text-right"><a (click)="openDetail(item?.id)">{{item?.amount | number}}</a></td>
                                             <td class="text-right"><a (click)="openDetail(item?.id)">{{item?.currency}}</a></td>
                                             <td *ngIf="item?.status == transactionStatus.PENDING.key" class="text-right">

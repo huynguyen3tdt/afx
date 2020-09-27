@@ -97,6 +97,7 @@ export interface TransactionModel {
   status: number;
   name: string;
   partner_account?: number;
+  img_account_type?: string;
 }
 
 export interface WithdrawAmountModel {

@@ -14,7 +14,8 @@
                     <tbody>
                         <tr>
                             <td width="180" class="border-top-0">{{'Trading account' | translate}}</td>
-                            <td class="border-top-0">{{transactionDetail?.trading_account_id | convertTradingType}}</td>
+                            <td class="border-top-0">{{transactionDetail?.trading_account_id | convertTradingType}} 
+                                <img class="ml-1" src="{{transactionDetail?.img_account_type}}" width="37" height="20"></td>
                         </tr>
                         <tr>
                             <td width="180">{{'Date time' | translate}}</td>
@@ -82,11 +83,15 @@
                         </tr>
                         <tr>
                             <td width="180">{{'Sender account' | translate}}</td>
-                            <td>{{transferTransactionDetail?.from_trading_account_id | convertTradingType}}</td>
+                            <td>{{transferTransactionDetail?.from_trading_account_id | convertTradingType}}
+                                <img class="ml-1" src="{{transferTransactionDetail?.img_send_type}}" width="37" height="20">
+                            </td>
                         </tr>
                         <tr>
                             <td width="180">{{'Receiver account' | translate}}</td>
-                            <td>{{transferTransactionDetail?.to_trading_account_id | convertTradingType}}</td>
+                            <td>{{transferTransactionDetail?.to_trading_account_id | convertTradingType}}
+                                <img class="ml-1" src="{{transferTransactionDetail?.img_receive_type}}" width="37" height="20">
+                            </td>
                         </tr>
                         <tr>
                             <td width="180">{{'Amount' | translate}}</td>

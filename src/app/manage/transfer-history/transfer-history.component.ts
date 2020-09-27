@@ -176,6 +176,8 @@ export class TransferHistoryComponent implements OnInit, AfterViewInit {
             item.create_date += TIMEZONESERVER;
             item.create_date = moment(item.create_date).tz(this.timeZone).format(this.formatDateHour);
             // item.method = this.globalService.checkPaymentMedthod(item.method);
+            item.img_send_type = this.globalService.convertTypeToImg(item.from_trading_account_id.toString());
+            item.img_receive_type = this.globalService.convertTypeToImg(item.to_trading_account_id.toString());
           });
           this.recordFrom = this.pageSize * (this.currentPage - 1) + 1;
           this.recordTo = this.recordFrom + (this.listTranTransfer.length - 1);
