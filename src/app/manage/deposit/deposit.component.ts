@@ -266,7 +266,6 @@ export class DepositComponent implements OnInit {
 
   showInforBank(bankName: string, bank?: DepositModel) {
     const listTab = ['三菱ＵＦＪ', 'みずほ', '三井住友', 'ゆうちょ', 'ジャパンネット', '楽天'];
-    console.log('bankkk ', bank);
     this.currentBank = bank;
     // tslint:disable-next-line:no-shadowed-variable
     listTab.forEach(element => {
@@ -412,12 +411,10 @@ export class DepositComponent implements OnInit {
     if (this.depositAmountForm.invalid || this.bankTransferError) {
       return;
     }
-    console.log('1111 ', this.depositAmountForm.controls.dateTime.value);
     let dateTime = this.depositAmountForm.controls.dateTime.value;
     if (this.locale === LANGUAGLE.english) {
       dateTime = moment(dateTime, DATE_CLIENT_ENG).format(DATE_CLIENT_ENG_SUBMIT);
     }
-    console.log(this.depositAmountForm.value);
     const param: BankTransferParamModel = {
       trading_account_id: Number(this.tradingAccount.account_id),
       bank_code: this.currentBank.bic,

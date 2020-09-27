@@ -5,6 +5,7 @@ import { LOCALE } from '../constant/authen-constant';
 import { LANGUAGLE } from '../constant/language-constant';
 import { AbstractControl, ValidatorFn } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
+import { FX_IMAGE, ICFD_IMAGE, CCFD_IMAGE } from '../constant/img-constant';
 
 export const ACCOUNT_TYPE = {
   ACCOUNT_FX: { account_type: 1, name: 'FX' },
@@ -159,11 +160,11 @@ export class GlobalService {
     const tradingType = accountNumber.substring(accountNumber.length - 2, accountNumber.length);
     switch (tradingType) {
       case TRADING_TYPE.FX.key:
-        return 'assets/images/icon-for-FX.svg';
+        return FX_IMAGE;
       case TRADING_TYPE.ICFD.key:
-        return 'assets/images/icon-for-ICFD.svg';
+        return ICFD_IMAGE;
       case TRADING_TYPE.CCFD.key:
-        return 'assets/images/icon-for-CCFD.svg';
+        return CCFD_IMAGE;
     }
   }
 }

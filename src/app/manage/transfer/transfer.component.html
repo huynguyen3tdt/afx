@@ -29,9 +29,7 @@
                                             </select>
                                             <!-- <div *ngIf="!sentAccountID" class="invalid-mess">Please choose trading acount</div> -->
                                         </div>
-                                        <img *ngIf="sentType == accountType.CCFD.key" class="ml-1 pt-1" src="assets/images/icon-for-CCFD.svg" width="45" height="35">
-                                        <img *ngIf="sentType == accountType.FX.key" class="ml-1 pt-1" src="assets/images/icon-for-FX.svg" width="45" height="35">
-                                        <img *ngIf="sentType == accountType.ICFD.key" class="ml-1 pt-1" src="assets/images/icon-for-ICFD.svg" width="45" height="35">
+                                        <img *ngIf="tradingSentAccount" class="ml-1 pt-1" src="{{tradingSentAccount?.img_type_account}}" width="45" height="35">
                                     </div>
                                     <div class="pt-1">{{'Currency' | translate}}:
                                         <strong>{{tradingSentAccount?.currency}}</strong></div>
@@ -98,11 +96,8 @@
                                                     <option *ngFor="let item of listTradingAccount"
                                                         value="{{item?.account_id}}">{{item?.value}}</option>
                                                 </select>
-                                                <!-- <div *ngIf="!receiveAccountID" class="invalid-mess">Please choose trading acount</div> -->
                                             </div>
-                                            <img *ngIf="receiveType == accountType.CCFD.key" class="ml-1 pt-1" src="assets/images/icon-for-CCFD.svg" width="45" height="35">
-                                            <img *ngIf="receiveType == accountType.FX.key" class="ml-1 pt-1" src="assets/images/icon-for-FX.svg" width="45" height="35">
-                                            <img *ngIf="receiveType == accountType.ICFD.key" class="ml-1 pt-1" src="assets/images/icon-for-ICFD.svg" width="45" height="35">
+                                            <img *ngIf="tradingReceiveAccount" class="ml-1 pt-1" src="{{tradingReceiveAccount?.img_type_account}}" width="45" height="35">
                                         </div>
                                         <div class="pt-1"><label
                                                 class="label mb-0 mr-2 d-inline">{{'Currency' | translate}}:</label>

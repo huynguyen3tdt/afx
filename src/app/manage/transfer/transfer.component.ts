@@ -93,24 +93,16 @@ export class TransferComponent implements OnInit {
     }
     this.listTradingAccount = JSON.parse(localStorage.getItem(ACCOUNT_IDS));
     if (this.listTradingAccount.length > 1) {
-      this.tradingSentAccount = this.listTradingAccount[0];
+      // this.tradingSentAccount = this.listTradingAccount[0];
       // this.sentAccountID = this.tradingSentAccount.account_id;
-      // this.sentType = this.sentAccountID.substring(this.sentAccountID.length - 2, this.sentAccountID.length);
-      this.tradingReceiveAccount = this.listTradingAccount[1];
+      // this.tradingReceiveAccount = this.listTradingAccount[1];
       // this.receiveAccountID = this.tradingReceiveAccount.account_id;
-      // this.receiveType = this.receiveAccountID.substring(this.sentAccountID.length - 2, this.receiveAccountID.length);
     }
     this.minWithdraw = Number(localStorage.getItem(MIN_WITHDRAW));
     this.initTransferForm();
     this.disabledTransfer = true;
     this.sentAccountID = '';
     this.receiveAccountID = '';
-    // if (this.sentAccountID) {
-    //   this.getMt5Infor(Number(this.sentAccountID), 'sent');
-    // }
-    // if (this.receiveAccountID) {
-    //     this.getMt5Infor(Number(this.receiveAccountID), 'receive');
-    //   }
   }
 
   getMt5Infor(accountId, type) {

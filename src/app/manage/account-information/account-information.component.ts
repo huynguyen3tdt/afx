@@ -38,6 +38,5 @@ export class AccountInformationComponent implements OnInit {
     this.showTabCorpInfo = this.TAB.corpInfo === type;
     this.showTabWithDrawal = this.TAB.withDrawal === type;
     this.showTabSetting = this.TAB.setting === type;
-    console.log('11111 ', this.showTabUserInfo);
   }
 }

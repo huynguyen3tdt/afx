@@ -23,7 +23,8 @@
                     <tr *ngFor="let item of listTransaction">
                         <td><a href="javascript:;" (click)="openDetail(item?.id)">{{item?.id}}</a></td>
                         <td><a (click)="openDetail(item?.id)">{{item?.create_date}}</a></td>
-                        <td><a href="javascript:;" (click)="openDetail(item?.id)">{{item?.trading_account_id | convertTradingType}}</a></td>
+                        <td><a href="javascript:;" (click)="openDetail(item?.id)">{{item?.trading_account_id | convertTradingType}}</a>
+                            <img class="ml-1" src="{{item?.img_account_type}}" width="37" height="20"></td>
                         <td><a (click)="openDetail(item?.id)"><span class="keep-all">{{item?.funding_type}}</span></a></td>
                         <td><a (click)="openDetail(item?.id)">{{item?.method}}</a></td>
                         <!-- <td class="text-right">JPY</td> -->
@@ -70,7 +71,7 @@
                 </thead>
                 <tbody>
                         <tr *ngFor="let item of listTranTransfer">
-                            <td><a href="javascript:;" (click)="openDetail(item?.id)">{{item?.create_date}}</a></td>
+                            <td><a (click)="openDetail(item?.id)">{{item?.create_date}}</a></td>
                             <td><a (click)="openDetail(item?.id)"><span class="keep-all">{{'Transfer' | translate}}</span></a></td>
                             <td><a (click)="openDetail(item?.id)"><span
                                         class="keep-all">{{item?.from_trading_account_id | convertTradingType}}</span></a>

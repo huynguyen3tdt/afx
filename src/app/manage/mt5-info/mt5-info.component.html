@@ -13,6 +13,7 @@
                         </option>
                     </select>
                 </div>
+                <img *ngIf="tradingAccount" class="ml-1 pt-1" src="{{tradingAccount?.img_type_account}}" width="45" height="35">
             </div>
             <div>{{'Currency:' | translate}}<strong> {{tradingAccount?.currency}}</strong></div>
         </div>

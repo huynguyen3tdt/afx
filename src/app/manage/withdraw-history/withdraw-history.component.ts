@@ -211,6 +211,7 @@ export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
             item.create_date = moment(item.create_date).tz(this.timeZone).format(this.formatDateHour);
             item.funding_type = this.globalService.checkType(item.funding_type);
             item.method = this.globalService.checkPaymentMedthod(item.method);
+            item.img_account_type = this.globalService.convertTypeToImg(item.trading_account_id.toString());
           });
           this.recordFrom = this.pageSize * (this.currentPage - 1) + 1;
           this.recordTo = this.recordFrom + (this.listReport.length - 1);

@@ -154,7 +154,9 @@
                                     <tr *ngFor="let item of listReport">
                                         <td><a href="javascript:;" (click)="openDetail(item?.id)">{{item?.id}}</a></td>
                                         <td><a (click)="openDetail(item?.id)">{{item?.create_date}}</a></td>
-                                        <td><a (click)="openDetail(item?.id)">{{item?.trading_account_id | convertTradingType}}</a></td>
+                                        <td><a (click)="openDetail(item?.id)">{{item?.trading_account_id | convertTradingType}}</a>
+                                            <img class="ml-0" src="{{item?.img_account_type}}" width="37" height="20">
+                                        </td>
                                         <td><a (click)="openDetail(item?.id)"><span
                                                     class="keep-all">{{item?.funding_type}}</span></a></td>
                                         <td><a (click)="openDetail(item?.id)"><span
