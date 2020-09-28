@@ -53,7 +53,7 @@ export class WithdrawRequestComponent implements OnInit {
   @ViewChild('modalWithdrawConfirm', { static: true }) modalWithdrawConfirm: ModalDirective;
   @ViewChild('modalWithdrawResult', { static: true }) modalWithdrawResult: ModalDirective;
   @ViewChild('modalRuleWithdraw', { static: false }) modalRuleWithdraw: ModalDepositWithdrawComponent;
-  @Output() emitTabFromWithDraw = new EventEmitter<{tab: string, accountID: number}>();
+  @Output() emitTabFromWithDraw = new EventEmitter<{tab: string, accountID: string}>();
   mt5Infor: Mt5Model;
   accountType;
   bankInfor: BankInforModel;
@@ -339,6 +339,6 @@ export class WithdrawRequestComponent implements OnInit {
   }
 
   getTabFromList(event) {
-    this.emitTabFromWithDraw.emit({tab: event, accountID: Number(this.accountID)});
+    this.emitTabFromWithDraw.emit({tab: event, accountID: this.accountID});
   }
 }

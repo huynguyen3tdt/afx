@@ -51,8 +51,7 @@
                                             <div class="card-body">
                                                 <nav class="mb-0">
                                                     <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                                                        <a  [className]="showTabDeposit ? 'tab-pane fade show active' : 'tab-pane fade'"
-                                                            [className]="!showTransferHistory ? 'nav-item nav-link active' : 'nav-item nav-link'" id="nav-billing-tab"
+                                                        <a [className]="!showTransferHistory ? 'nav-item nav-link active' : 'nav-item nav-link'" id="nav-billing-tab"
                                                             data-toggle="tab" href="#nav-billing" role="tab" aria-controls="nav-billing"
                                                             aria-selected="true"><strong>{{'History' | translate}}</strong></a>
                                                         <a *ngIf="hideTransfer" [className]="showTransferHistory ? 'nav-item nav-link active' : 'nav-item nav-link'" id="nav-bank-tab"

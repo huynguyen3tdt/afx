@@ -22,7 +22,7 @@ import {
   MIN_WITHDRAW,
   IS_COMPANY} from 'src/app/core/constant/authen-constant';
 import { WithdrawRequestService } from './../../core/services/withdraw-request.service';
-import { Mt5Model, TransactionModel, WithdrawAmountModel } from 'src/app/core/model/withdraw-request-response.model';
+import { Mt5Model, TransactionModel, WithdrawAmountModel, postWithdrawModel } from 'src/app/core/model/withdraw-request-response.model';
 import { AccountType } from 'src/app/core/model/report-response.model';
 import { GlobalService } from 'src/app/core/services/global.service';
 import { JAPAN_FORMATDATE_HH_MM,
@@ -60,10 +60,12 @@ export class DepositComponent implements OnInit {
   @ViewChild('listTran', { static: false }) listTran: ListTransactionComponent;
   @ViewChild('BJPSystem', { static: true }) BJPSystem: ElementRef;
   @ViewChild('modalRuleDeposit', { static: false }) modalRuleDeposit: ModalDepositWithdrawComponent;
+  @ViewChild('modalBankTransferResult', { static: false }) modalBankTransferResult: ModalDirective;
+  @ViewChild('modalBankTransferConfirm', { static: false }) modalBankTransferConfirm: ModalDirective;
   @ViewChild('dp', {static: true}) picker: BsDatepickerDirective;
-  @Output() emitTabFromDeposit = new EventEmitter<{tab: string, accountID: number}>();
+  @Output() emitTabFromDeposit = new EventEmitter<{tab: string, accountID: string}>();
   @Output() emitAccountID: EventEmitter<string> = new EventEmitter<string>();
-  depositAmountForm: FormGroup;
+  bankTransferForm: FormGroup;
   depositTransactionForm: FormGroup;
   listBankTranfer: Array<DepositModel>;
   minDeposit: number;
@@ -80,7 +82,7 @@ export class DepositComponent implements OnInit {
   depositError: boolean;
   bankTransferError: boolean;
   depositValue: number;
-  depositAmount: number;
+  bankTransferAmount: number;
   listTradingAccount: Array<AccountType>;
   accountID: string;
   listDeposit: Array<TransactionModel>;
@@ -114,6 +116,7 @@ export class DepositComponent implements OnInit {
   userInfor: UserModel;
   corporateInfor: CorporateModel;
   currentBank: DepositModel;
+  bankTransferDetailResult: postWithdrawModel;
 
   constructor(private depositService: DepositService,
               private withdrawRequestService: WithdrawRequestService,
@@ -169,7 +172,7 @@ export class DepositComponent implements OnInit {
         this.spinnerService.hide();
         if (response.meta.code === 200) {
           this.userInfor = response.data;
-          this.depositAmountForm.controls.cusName.setValue(this.userInfor.name);
+          this.bankTransferForm.controls.cusName.setValue(this.userInfor.name);
         }
       });
     } else {
@@ -177,7 +180,7 @@ export class DepositComponent implements OnInit {
         this.spinnerService.hide();
         if (response.meta.code === 200) {
           this.corporateInfor = response.data;
-          this.depositAmountForm.controls.cusName.setValue(this.corporateInfor.pic.info.value.fx_name1);
+          this.bankTransferForm.controls.cusName.setValue(this.corporateInfor.pic.info.value.fx_name1);
         }
       });
     }
@@ -191,20 +194,20 @@ export class DepositComponent implements OnInit {
   }
 
   initDepositAmountForm() {
-    this.depositAmountForm = new FormGroup({
+    this.bankTransferForm = new FormGroup({
       deposit: new FormControl(numeral(10000).format('0,0'), requiredInput),
       cusName: new FormControl('', requiredInput),
       bankName: new FormControl('', requiredInput),
       dateTime: new FormControl('', requiredInput),
       tradingAcount: new FormControl('', requiredInput)
     });
-    this.depositAmountForm.controls.deposit.valueChanges.subscribe((value) => {
-      this.changeDepositCal();
+    this.bankTransferForm.controls.deposit.valueChanges.subscribe((value) => {
+      this.changeAmountBankTransfer();
     });
-    this.depositAmountForm.controls.dateTime.setValue(moment((new Date()).toDateString()).format(this.formatDateHour));
+    this.bankTransferForm.controls.dateTime.setValue(moment((new Date()).toDateString()).format(this.formatDateHour));
     if (this.accountID) {
       this.tradingAccount = this.listTradingAccount.find((account: AccountType) => this.accountID === account.account_id);
-      this.depositAmountForm.controls.tradingAcount.setValue(this.tradingAccount.value);
+      this.bankTransferForm.controls.tradingAcount.setValue(this.tradingAccount.value);
     }
     this.getUserInfo();
   }
@@ -277,7 +280,7 @@ export class DepositComponent implements OnInit {
         $(`div#${element}`).hide();
       }
     });
-    this.depositAmountForm.controls.bankName.setValue(bankName);
+    this.bankTransferForm.controls.bankName.setValue(bankName);
   }
 
   onSubmit() {
@@ -354,9 +357,9 @@ export class DepositComponent implements OnInit {
     this.calculateDeposit();
   }
 
-  changeDepositCal() {
-    this.depositAmount = numeral(this.depositAmountForm.controls.deposit.value).value();
-    if (this.depositAmount < this.minDeposit) {
+  changeAmountBankTransfer() {
+    this.bankTransferAmount = numeral(this.bankTransferForm.controls.deposit.value).value();
+    if (this.bankTransferAmount < this.minDeposit) {
       this.bankTransferError = true;
       return;
     }
@@ -375,7 +378,7 @@ export class DepositComponent implements OnInit {
 
   calculateDepositAmount() {
     this.errMessageBankTran = false;
-    this.equityDeposit = Math.floor(this.equity + numeral(this.depositAmountForm.controls.deposit.value).value());
+    this.equityDeposit = Math.floor(this.equity + numeral(this.bankTransferForm.controls.deposit.value).value());
     this.marginLevelEstimateBank = this.globalService.calculateMarginLevel(this.equityDeposit, this.usedMargin);
     if (this.marginLevelEstimateBank <= this.marginCall && this.marginLevelEstimateBank > 0) {
       this.errMessageBankTran = true;
@@ -389,7 +392,7 @@ export class DepositComponent implements OnInit {
   changeTradingAccount() {
     this.tradingAccount = this.listTradingAccount.find((account: AccountType) => this.accountID === account.account_id);
     this.accountID = this.tradingAccount.account_id;
-    this.depositAmountForm.controls.tradingAcount.setValue(this.tradingAccount.value);
+    this.bankTransferForm.controls.tradingAcount.setValue(this.tradingAccount.value);
     this.getMt5Infor(Number(this.accountID));
     this.getDwAmount(Number(this.accountID));
     this.remark = this.accountID;
@@ -404,14 +407,20 @@ export class DepositComponent implements OnInit {
   }
 
   getTabFromList(event) {
-    this.emitTabFromDeposit.emit({tab: event, accountID: Number(this.accountID)});
+    this.emitTabFromDeposit.emit({tab: event, accountID: this.accountID});
+  }
+
+  confirmBankTransfer() {
+    this.changeAmountBankTransfer();
+    if (this.bankTransferForm.invalid || this.bankTransferError) {
+      return;
+    }
+    this.modalBankTransferConfirm.show();
   }
 
   onSubmitBankTransfer() {
-    if (this.depositAmountForm.invalid || this.bankTransferError) {
-      return;
-    }
-    let dateTime = this.depositAmountForm.controls.dateTime.value;
+    this.modalBankTransferConfirm.hide();
+    let dateTime = this.bankTransferForm.controls.dateTime.value;
     if (this.locale === LANGUAGLE.english) {
       dateTime = moment(dateTime, DATE_CLIENT_ENG).format(DATE_CLIENT_ENG_SUBMIT);
     }
@@ -419,14 +428,19 @@ export class DepositComponent implements OnInit {
       trading_account_id: Number(this.tradingAccount.account_id),
       bank_code: this.currentBank.bic,
       remark : this.currentBank.name + ', ' + dateTime,
-      amount: numeral(this.depositAmountForm.controls.deposit.value).value(),
+      amount: this.bankTransferAmount,
       currency: this.tradingAccount.currency
     };
+    this.spinnerService.show();
     this.withdrawRequestService.postBankTransfer(param).subscribe(response => {
-        if (response.meta.code === 200) {
-          this.toastr.success('Success');
-          this.listTran.ngOnChanges();
-        }
+      this.spinnerService.hide();
+      if (response.meta.code === 200) {
+        this.bankTransferDetailResult = response.data;
+        this.bankTransferDetailResult.create_date =
+        moment(this.bankTransferDetailResult.create_date).tz(this.timeZone).format(this.formatDateHour);
+        this.listTran.ngOnChanges();
+        this.modalBankTransferResult.show();
+      }
     });
   }
 
