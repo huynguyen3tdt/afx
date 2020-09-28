@@ -63,25 +63,25 @@
                                     <div class="filter-account-type">
                                         <label *ngIf="showFilterFX" class="container-checkbox small mr-3">
                                             <input type="checkbox" [checked]="filterFX ? true : null"  name="fx" checked="checked" (change)="filterType('fx')">
-                                            <span>FX News</span>
+                                            <span>{{'FX News' | translate}}</span>
                                             <span class="checkmark"></span>
                                         </label>
                                         <label *ngIf="showFilterICFD" class="container-checkbox small mr-3">
                                             <input type="checkbox" [checked]="filterICFD ? true : null" name="cfd-i" checked="checked" (change)="filterType('icfd')">
-                                            <span>i-CFD News</span>
+                                            <span>{{'I-CFD News' | translate}}</span>
                                             <span class="checkmark"></span>
                                         </label>
                                         <label *ngIf="showFilterCCFD" class="container-checkbox small">
                                             <input type="checkbox" [checked]="filterCCFD ? true : null" name="cfd-c" checked="checked" (change)="filterType('ccfd')">
-                                            <span>C-CFD News</span>
+                                            <span>{{'C-CFD News' | translate}}</span>
                                             <span class="checkmark"></span>
                                         </label>
                                     </div>
                                     <div class="mb-2 d-none">
                                         <select id="important_filter" multiple="multiple">
-                                            <option value="fx" selected="selected">FX News</option>
-                                            <option value="cfd-i" selected="selected">CFD-i News</option>
-                                            <option value="cfd-c" selected="selected">CFD-c News</option>
+                                            <option value="fx" selected="selected">{{'FX News' | translate}}</option>
+                                            <option value="cfd-i" selected="selected">{{'I-CFD News' | translate}}</option>
+                                            <option value="cfd-c" selected="selected">{{'C-CFD News' | translate}}</option>
                                         </select>
                                     </div>
                                     
@@ -105,11 +105,11 @@
                                                 class="badge badge-success d-lg-block mb-lg-1">
                                                 {{'Campaign' | translate}}</span>
                                             <span *ngIf="item?.group_name == 'FX'"
-                                            class="badge badge-fx d-lg-block mb-lg-1">FX News</span>
+                                            class="badge badge-fx d-lg-block mb-lg-1">{{'FX News' | translate}}</span>
                                             <span *ngIf="item?.group_name == 'I-CFD'"
-                                            class="badge badge-cfd-i d-lg-block mb-lg-1">CFD-I News</span>
+                                            class="badge badge-cfd-i d-lg-block mb-lg-1">{{'I-CFD News' | translate}}</span>
                                             <span *ngIf="item?.group_name == 'C-CFD'"
-                                            class="badge badge-cfd-c d-lg-block mb-lg-1">CFD-C News</span>
+                                            class="badge badge-cfd-c d-lg-block mb-lg-1">{{'C-CFD News' | translate}}</span>
                                         </div>
                                         <div class="item-header">
                                             <h5 class="item-title"><a href="javascript:;">{{item?.news_title}}</a></h5>
