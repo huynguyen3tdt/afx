@@ -240,6 +240,7 @@ export class TransferComponent implements OnInit {
       amount: this.transferValue,
       device_type: ''
     };
+    this.modalTransferConfirm.hide();
     this.spinnerService.show();
     this.withdrawRequestService.postTransfer(param).subscribe(response => {
       this.spinnerService.hide();
@@ -259,7 +260,6 @@ export class TransferComponent implements OnInit {
   }
 
   resetTransferAmount() {
-    this.modalTransferConfirm.hide();
     if (this.transferForm.controls.wholeMoney.value === true) {
       this.transferForm.controls.wholeMoney.setValue(false);
       this.getAllFreeMargin();
