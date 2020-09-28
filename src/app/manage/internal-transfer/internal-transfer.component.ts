@@ -39,7 +39,7 @@ export class InternalTransferComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    this.hideTransfer = Boolean(localStorage.getItem(INTERNAL_TRANSFER));
+    this.hideTransfer = localStorage.getItem(INTERNAL_TRANSFER) === 'true';
     this.showTabDeposit = true;
     this.listTradingAccount = JSON.parse(localStorage.getItem(ACCOUNT_IDS));
     this.activatedRoute.queryParams.pipe(take(1)).subscribe(res => {
