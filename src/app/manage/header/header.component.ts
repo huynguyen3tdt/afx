@@ -260,6 +260,6 @@ export class HeaderComponent implements OnInit {
 
   onReturnStep1() {
     this.modalAddAccountStep2.close();
-    this.modalAddAccountStep1.open();
+    this.modalAddAccountStep1.openWithOutReset();
   }
 }

@@ -31,6 +31,10 @@ export class ModalAddAccountStep1Component implements OnInit {
     }
   }
 
+  openWithOutReset() {
+    this.modal.show();
+  }
+
   close() {
     this.modal.hide();
   }
