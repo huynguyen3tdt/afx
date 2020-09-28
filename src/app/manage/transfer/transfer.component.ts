@@ -188,8 +188,7 @@ export class TransferComponent implements OnInit {
     this.globalService.calculateMarginLevel(Math.floor(this.receiveAccountInfo.equity - this.transferValue),
     this.receiveAccountInfo.used_margin);
 
-    if ((this.marginLevelEstimateSend <= this.marginCall && this.marginLevelEstimateSend > 0) ||
-    (this.marginLevelEstimateReceive <= this.marginCall && this.marginLevelEstimateReceive > 0)) {
+    if (this.marginLevelEstimateSend <= this.marginCall && this.marginLevelEstimateSend > 0) {
       this.errMessage = true;
     }
   }
