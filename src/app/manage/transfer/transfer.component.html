@@ -215,8 +215,8 @@
                     </div>
                 </div>
             </div>
-            <ng-container *ngIf="sentAccountID">
-                <app-list-transaction #listTran [accountID]="this.sentAccountID" [tranType]="transactionType" (emitTabFromList)="getTabFromList($event)"></app-list-transaction>
+            <ng-container>
+                <app-list-transaction #listTran [accountID]="'all'" [tranType]="transactionType" (emitTabFromList)="getTabFromList($event)"></app-list-transaction>
             </ng-container>
         </div>
     </div>
