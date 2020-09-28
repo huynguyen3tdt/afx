@@ -194,7 +194,7 @@
                                 </div>
                                 <!--  -->
                                 <div class="mb-1 d-flex justify-content-between">
-                                    <label class="label">{{'Total amount'| translate}}</label>
+                                    <label class="label">{{'Actual amount'| translate}}</label>
                                     <div>
                                         <strong>{{transferValue | number}}</strong>
                                     </div>
@@ -241,26 +241,14 @@
                         <tr>
                             <td width="130">{{'Sender account' | translate}}</td>
                             <td>{{tradingSentAccount?.value}}
-                                <ng-cotainer>
-                                    <img *ngIf="sentType == accountType.CCFD.key" src="assets/images/badge-C-CFD.svg" width="37"
-                                        height="20">
-                                    <img *ngIf="sentType == accountType.FX.key" src="assets/images/badge-FX.svg" width="33" height="20">
-                                    <img *ngIf="sentType == accountType.ICFD.key" src="assets/images/badge-I-CFD.svg" width="37"
-                                        height="30">
-                                </ng-cotainer>
+                                <img class="ml-1" src="{{tradingSentAccount?.img_type_account}}" width="37" height="20">
                             </td>
                             <td class="text-right">{{marginLevelEstimateSend | number: '1.2-2'}}%</td>
                         </tr>
                         <tr>
                             <td width="130">{{'Receiver account' | translate}}</td>
                             <td><strong>{{tradingReceiveAccount?.value}}</strong>
-                                <ng-conatiner>
-                                    <ng-cotainer class="ml-1">
-                                        <img *ngIf="receiveType == accountType.CCFD.key" src="assets/images/badge-C-CFD.svg" width="37" height="20">
-                                        <img *ngIf="receiveType == accountType.FX.key" src="assets/images/badge-FX.svg" width="33" height="20">
-                                        <img *ngIf="receiveType == accountType.ICFD.key" src="assets/images/badge-I-CFD.svg" width="37" height="20">
-                                    </ng-cotainer>
-                                </ng-conatiner>
+                                <img class="ml-1" src="{{tradingReceiveAccount?.img_type_account}}" width="37" height="20">
                             </td>
                             <td class="text-right"><strong>{{marginLevelEstimateReceive | number: '1.2-2'}}%</strong></td>
                         </tr>
@@ -307,11 +295,14 @@
                     <tbody>
                     <tr>
                         <td width="180">{{'Sender account' | translate}}</td>
-                        <td>{{transferResult?.to_trading_account_id | convertTradingType}}</td>
+                        <td>{{transferResult?.to_trading_account_id | convertTradingType}}
+                            <img class="ml-1" src="{{transferResult?.img_send_type}}" width="37" height="20">
+                        </td>
                     </tr>
                     <tr>
                         <td width="180">{{'Receiver account' | translate}}</td>
-                        <td><strong>{{transferResult?.from_trading_account_id | convertTradingType}}</strong></td>
+                        <td>{{transferResult?.from_trading_account_id | convertTradingType}}
+                            <img class="ml-1" src="{{transferResult?.img_receive_type}}" width="37" height="20"></td>
                     </tr>
                     <tr>
                         <td width="180">{{'Transfer Amount' | translate}}</td>
