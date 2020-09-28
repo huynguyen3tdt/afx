@@ -170,7 +170,7 @@
                                         <div>{{'Withdrawal amount is not above the maximum amount' | translate}}
                                             {{maxWithDraw | number}}</div>
                                     </div> -->
-                                    <div *ngIf="transferForm?.controls?.amount?.errors" class="invalid-mess">
+                                    <div *ngIf="isConfirm && transferForm?.controls?.amount?.errors" class="invalid-mess">
                                             <div>{{'Amount must be bigger than 0' | translate}}
                                             </div>
                                     </div>

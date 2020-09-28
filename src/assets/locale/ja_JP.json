@@ -289,7 +289,7 @@
   "Sender account": "振替元",
   "Receiver account": "振替先",
   "Are you sure you want to make the transfer request?": "振替リクエストをしてもよろしいですか？",
-  "Your transfer request has been successful": "口座振替が成功となっておりました:",
+  "Your transfer request has been successful:": "口座振替が成功となっておりました:",
   "Your transfer request has been received:": "振替依頼を受け付けました:",
   "Your transfer request has been rejected:": "振替依頼は拒否されました:",
   "Entire Transfer History": "振替履歴",
@@ -304,5 +304,6 @@
   "Partner account": "取引先",
   "Bank transfer information": "振込情報",
   "Please choose trading acount": "口座を選択してください",
-  "Overview of each account": "各口座の概要"
+  "Overview of each account": "各口座の概要",
+  "Transfer Request": "転送依頼"
 }

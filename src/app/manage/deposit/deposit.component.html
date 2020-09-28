@@ -539,7 +539,7 @@
                                     </div>
                                     <div class="p-3 border mb-3 shadow">
                                         <h5 class="text-primary mb-3"><i class="icon ion-md-calculator"></i> {{'Bank transfer information' | translate}}</h5>
-                                        <div [formGroup]="depositAmountForm" class="form form-line">
+                                        <div [formGroup]="bankTransferForm" class="form form-line">
                                             <div class="form form-line">
                                                 <div class="mb-3">
                                                     <label class="label">{{'Name' | translate}}</label>
@@ -559,20 +559,20 @@
                                                 <div class="mb-3">
                                                     <label class="label">{{'Datetime' | translate}}</label>
                                                     <input type="text" name="end-date"
-                                                        [ngClass]="{'invalid': depositAmountForm?.controls?.dateTime?.errors}"
+                                                        [ngClass]="{'invalid': bankTransferForm?.controls?.dateTime?.errors}"
                                                         class="form-control date text-left"
                                                         placeholder="{{formatDateHour}}" #dp="bsDatepicker" bsDatepicker
                                                         formControlName="dateTime" autocomplete="off"
                                                         (onShown)="onShowPicker($event, 'To')"
                                                         [bsConfig]="{ showWeekNumbers:false, dateInputFormat: formatDateHour, containerClass: 'theme-blue' }">
-                                                        <div *ngIf="depositAmountForm?.controls?.dateTime?.errors" class="invalid-mess">
+                                                        <div *ngIf="bankTransferForm?.controls?.dateTime?.errors" class="invalid-mess">
                                                             <div>{{'This field is required' | translate}}</div>
                                                         </div>
                                                 </div>
                                                 <div class="mb-3">
                                                     <label class="label">{{'Deposit Amount' | translate}}</label>
                                                     <input [ngClass]="{'invalid': bankTransferError}"
-                                                        maxlength="15" type="text" name="amount" formControlName="deposit" currency autocomplete="off"
+                                                        maxlength="15" type="text" name="deposit" formControlName="deposit" currency autocomplete="off"
                                                         class="form-control form-control-lg text-right font-weight-bold text-warning" placeholder="">
                                                 </div>
                                                 <div class="mb-3 text-right">
@@ -585,17 +585,7 @@
                                                 <div *ngIf="errMessageBankTran == true" class="invalid-mess">
                                                     <div>{{'Your Margin Level is nearly the Margin Call Levels' | translate}}</div>
                                                 </div>
-                                                <!-- <div class="mb-1 d-flex justify-content-between">
-                                                    <label class="label">{{'Currency' | translate}}</label>
-                                                    <div>
-                                                        <strong>{{tradingAccount?.currency}}</strong>
-                                                    </div>
-                                                </div>
-                                                <div class="mb-1 d-flex justify-content-between align-items-center">
-                                                    <label class="label">{{'Margin Level estimate after deposit' | translate}}</label>
-                                                    <div>{{marginLevelEstimateBank | number: '1.2-2'}}%</div>
-                                                </div> -->
-                                                <button class="btn btn-success btn-block text-uppercase btn-lg mb-3 mt-4" (click)="onSubmitBankTransfer()"><strong>{{'Submit' | translate}}</strong></button>
+                                                <button class="btn btn-success btn-block text-uppercase btn-lg mb-3 mt-4" (click)="confirmBankTransfer()"><strong>{{'Submit' | translate}}</strong></button>
 
 
                                             </div>
@@ -639,6 +629,87 @@
     <input type="hidden" name="INVALID_RETURN_URL" value="{{apiPostBack}}">
     <input #BJPSystem type="submit" value="Pay">
 </FORM>
+
+
+<div bsModal #modalBankTransferConfirm="bs-modal" class="modal fade" id="modal-withdraw-confirm" tabindex="-1" role="dialog"  aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header bg-light pt-2 pb-2">
+          <div>
+            <h5 class="modal-title text-primary"><strong>{{'Transfer Request' | translate}}</strong></h5>
+          </div>
+        </div>
+        <div class="modal-body">
+          <table class="table table-hover table-sm small" cellspacing="0" cellpadding="0">
+              <tbody>
+                  <tr>
+                      <td width="180" class="border-top-0">{{'Trading account' | translate}}</td>
+                      <td class="border-top-0">{{tradingAccount?.value}}
+                        <img src="{{tradingAccount?.img_type_account}}" width="37"
+                        height="20">
+                      </td>
+                  </tr>
+                  <tr>
+                      <td width="180">{{'Transfer date time' | translate}}</td>
+                      <td>{{bankTransferForm?.controls?.dateTime?.value}}</td>
+                  </tr>
+                  <tr>
+                      <td width="180">{{'Bank Account Number' | translate}}</td>
+                      <td><strong>{{currentBank?.name}}</strong></td>
+                  </tr>
+                  <tr>
+                      <td width="180">{{'Amount' | translate}}</td>
+                      <td><strong>{{bankTransferAmount | number}}</strong></td>
+                  </tr>
+                  <tr>
+                      <td width="180">{{'Currency' | translate}}</td>
+                      <td>{{tradingAccount?.currency}}</td>
+                  </tr>
+              </tbody>
+          </table>
+          <!-- <p>{{'Are you sure you want to make the withdrawal request?' | translate}}</p>
+          <div>{{'Requests made by 15:00 will be withdrawn on the next business day.' | translate}}</div>
+          <div>{{'Requests received after 15:00 will be handled the next business day.' | translate}}</div> -->
+          <hr>
+          <div class="text-right">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="modalBankTransferConfirm.hide()">{{'Cancel' | translate}}</button>
+            <button type="button" class="btn btn-primary ml-2" (click)="onSubmitBankTransfer()">{{'Request' | translate}}</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<div bsModal #modalBankTransferResult="bs-modal" class="modal fade" id="modal_withdraw" tabindex="-1" role="dialog"  aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header bg-light pt-2 pb-2">
+          <div>
+            <h5 class="modal-title text-primary"><strong>{{'Transaction ID' | translate}} : {{bankTransferDetailResult?.id}}</strong></h5>
+          </div>
+        </div>
+        <div class="modal-body">
+            <p>{{'Your transfer request has been successful:' | translate }}</p>
+          <table class="table table-hover table-sm small" cellspacing="0" cellpadding="0">
+              <tbody>
+                  <tr>
+                      <td width="180" class="border-top-0">{{'Amount' | translate}}</td>
+                      <td class="border-top-0">{{bankTransferDetailResult?.amount | number}} {{bankTransferDetailResult?.currency}}</td>
+                  </tr>
+                  <tr>
+                      <td width="180">{{'Createdate time' | translate}}</td>
+                      <td>{{bankTransferDetailResult?.create_date}}</td>
+                  </tr>
+              </tbody>
+          </table>
+          <hr>
+          <div class="text-center">
+            <button type="button" class="btn btn-success" id="got_it" data-dismiss="modal" (click)="modalBankTransferResult.hide()">{{'Finish' | translate}}</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
 <app-modal-deposit-withdraw #modalRuleDeposit [minDeposit]="minDeposit" [minWithDraw]="minWithDraw" [tradingAccount]="tradingAccount"></app-modal-deposit-withdraw>
 

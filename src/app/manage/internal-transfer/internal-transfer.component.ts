@@ -30,7 +30,7 @@ export class InternalTransferComponent implements OnInit, AfterViewInit {
   showTransferHistory: boolean;
   querytab: string;
   detaiWithdrawFlag: boolean;
-  accountID: number;
+  accountID: string;
   hideTransfer: boolean;
 
   constructor(private activatedRoute: ActivatedRoute) { }
@@ -50,7 +50,7 @@ export class InternalTransferComponent implements OnInit, AfterViewInit {
         this.showTabTransfer = false;
         this.showTabWithdraw = false;
         this.detaiWithdrawFlag = true;
-        this.accountID = Number(res.accountID);
+        this.accountID = res.accountID;
       }
     });
   }
@@ -62,6 +62,9 @@ export class InternalTransferComponent implements OnInit, AfterViewInit {
     this.showTabHistory = this.TAB.history === type;
     if (type !== this.TAB.history) {
       this.initFilterHistory();
+    }
+    if (this.showTabHistory) {
+      this.accountID = 'all';
     }
   }
   goToTabHistory(event) {

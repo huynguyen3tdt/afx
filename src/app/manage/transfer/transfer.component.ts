@@ -29,7 +29,7 @@ export class TransferComponent implements OnInit {
   @ViewChild('modalTransferConfirm', { static: true }) modalTransferConfirm: ModalDirective;
   @ViewChild('modalTransferResult', { static: true }) modalTransferResult: ModalDirective;
   @ViewChild('listTran', { static: false }) listTran: ListTransactionComponent;
-  @Output() emitTabFromTranser = new EventEmitter<{tab: string, accountID: number}>();
+  @Output() emitTabFromTranser = new EventEmitter<{tab: string, accountID: string}>();
   transferForm: FormGroup;
   mt5Infor: Mt5Model;
   sentAccountInfo: Mt5Model;
@@ -64,6 +64,7 @@ export class TransferComponent implements OnInit {
   receiveType: string;
   minWithDraw: number;
   maxWithDraw: number;
+  isConfirm: boolean;
 
   constructor(private withdrawRequestService: WithdrawRequestService,
               private spinnerService: Ng4LoadingSpinnerService,
@@ -216,6 +217,7 @@ export class TransferComponent implements OnInit {
   }
 
   showConfirm() {
+    this.isConfirm = true;
     if (!this.sentAccountID || !this.receiveAccountID) {
       return;
     }
@@ -229,6 +231,7 @@ export class TransferComponent implements OnInit {
   cancelWithDraw() {
     this.modalTransferConfirm.hide();
     this.transferForm.controls.amount.setValue(numeral(0).format('0,0'));
+    this.isConfirm = false;
   }
 
   sendConfirm() {
@@ -263,10 +266,11 @@ export class TransferComponent implements OnInit {
     this.getMt5Infor(Number(this.sentAccountID), 'sent');
     this.getMt5Infor(Number(this.receiveAccountID), 'receive');
     this.transferForm.controls.amount.setValue(numeral(0).format('0,0'));
+    this.isConfirm = false;
     this.listTran.ngOnChanges();
   }
 
   getTabFromList(event) {
-    this.emitTabFromTranser.emit({tab: event, accountID: Number(this.sentAccountID)});
+    this.emitTabFromTranser.emit({tab: event, accountID: this.sentAccountID});
   }
 }

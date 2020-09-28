@@ -35,6 +35,7 @@ export class TransferHistoryComponent implements OnInit, AfterViewInit {
   @ViewChild('withdrawTab', { static: true }) withdrawTab: ElementRef;
   @ViewChild('dp', {static: true}) pickerFrom: BsDatepickerDirective;
   @ViewChild('dp2', {static: true}) pickerTo: BsDatepickerDirective;
+  @Input() accountID: string;
   listTranTransfer: Array<TransferResulteModel>;
   searchForm: FormGroup;
   isSubmitted;
@@ -160,6 +161,9 @@ export class TransferHistoryComponent implements OnInit, AfterViewInit {
       type: new FormControl(this.TABS.ALL.value)
     });
     this.setDate(this.DURATION.YEAR);
+    if (this.accountID) {
+      this.searchForm.controls.tradingAccount.setValue(this.accountID);
+    }
   }
 
   getTranHistory(accountNumber: string,

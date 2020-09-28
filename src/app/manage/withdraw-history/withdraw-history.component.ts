@@ -38,7 +38,7 @@ export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
   @Input() filterDepositHistory: boolean;
   @Input() filterWithDrawHistory: boolean;
   @Input() detaiWithdrawFlag: boolean;
-  @Input() accountID: number;
+  @Input() accountID: string;
   listBankInfor: BankInforModel;
   listDwHistory: Array<TransactionModel>;
   listReport: Array<TransactionModel>;
