@@ -117,6 +117,7 @@ export class DepositComponent implements OnInit {
   corporateInfor: CorporateModel;
   currentBank: DepositModel;
   bankTransferDetailResult: postWithdrawModel;
+  dateTimeBankTransfer: string;
 
   constructor(private depositService: DepositService,
               private withdrawRequestService: WithdrawRequestService,
@@ -415,19 +416,16 @@ export class DepositComponent implements OnInit {
     if (this.bankTransferForm.invalid || this.bankTransferError) {
       return;
     }
+    this.dateTimeBankTransfer = moment(this.bankTransferForm.controls.dateTime.value).format(this.formatDateHour);
     this.modalBankTransferConfirm.show();
   }
 
   onSubmitBankTransfer() {
     this.modalBankTransferConfirm.hide();
-    let dateTime = this.bankTransferForm.controls.dateTime.value;
-    if (this.locale === LANGUAGLE.english) {
-      dateTime = moment(dateTime, DATE_CLIENT_ENG).format(DATE_CLIENT_ENG_SUBMIT);
-    }
     const param: BankTransferParamModel = {
       trading_account_id: Number(this.tradingAccount.account_id),
       bank_code: this.currentBank.bic,
-      remark : this.currentBank.name + ', ' + dateTime,
+      remark : this.currentBank.name + ', ' + this.dateTimeBankTransfer,
       amount: this.bankTransferAmount,
       currency: this.tradingAccount.currency
     };
