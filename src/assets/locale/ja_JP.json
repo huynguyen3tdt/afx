@@ -50,7 +50,7 @@
   "Bank Account Number": "口座番号",
   "Withdrawal Request": "出金依頼",
   "Withdrawal Fee": "手数料",
-  "Total amount": "出金金額",
+  "Actual amount": "振込額",
   "Notice: Minimum single withdrawal amount is": "警告: 下限入金額は",
   "Date": "日付",
   "Withdrawal History": "出金履歴",

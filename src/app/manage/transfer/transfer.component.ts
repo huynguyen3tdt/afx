@@ -249,6 +249,8 @@ export class TransferComponent implements OnInit {
         if (this.transferResult) {
           this.transferResult.create_date =
           moment(this.transferResult.create_date).tz(this.timeZone).format(this.formatDateHour);
+          this.transferResult.img_send_type = this.globalService.convertTypeToImg(this.transferResult.from_trading_account_id.toString());
+          this.transferResult.img_receive_type = this.globalService.convertTypeToImg(this.transferResult.to_trading_account_id.toString());
           this.modalTransferResult.show();
         }
       }
