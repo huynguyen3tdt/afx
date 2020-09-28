@@ -571,8 +571,7 @@
                                                 </div>
                                                 <div class="mb-3">
                                                     <label class="label">{{'Deposit Amount' | translate}}</label>
-                                                    <input [ngClass]="{'invalid': bankTransferError}"
-                                                        maxlength="15" type="text" name="deposit" formControlName="deposit" currency autocomplete="off"
+                                                    <input maxlength="15" type="text" name="deposit" formControlName="deposit" currency autocomplete="off"
                                                         class="form-control form-control-lg text-right font-weight-bold text-warning" placeholder="">
                                                 </div>
                                                 <div class="mb-3 text-right">
@@ -694,7 +693,7 @@
               <tbody>
                   <tr>
                       <td width="180" class="border-top-0">{{'Amount' | translate}}</td>
-                      <td class="border-top-0">{{bankTransferDetailResult?.amount | number}} {{bankTransferDetailResult?.currency}}</td>
+                      <td class="border-top-0">{{bankTransferDetailResult?.amount | number}} {{tradingAccount?.currency}}</td>
                   </tr>
                   <tr>
                       <td width="180">{{'Createdate time' | translate}}</td>
