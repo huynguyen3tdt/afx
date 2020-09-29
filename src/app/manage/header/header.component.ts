@@ -18,6 +18,7 @@ import { AccountTypeAFX, GroupAccountType } from 'src/app/core/model/user.model'
 import { UserService } from 'src/app/core/services/user.service';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { PL001, PL002, PL003, PL004, PL005, PL006 } from 'src/app/core/constant/user-code-constant';
+import { ModalCanNotAddAccountComponent } from '../modal-can-not-add-account/modal-can-not-add-account.component';
 
 declare const $: any;
 declare const TweenMax: any;
@@ -47,11 +48,14 @@ export class HeaderComponent implements OnInit {
   isPc: boolean;
   isAndroid: boolean;
   isIos: boolean;
+  isLateRegis: boolean;
   accountTradingForm: FormGroup;
+  currentTime: Date;
 
   @ViewChild('modalAddAccountStep1', { static: false }) modalAddAccountStep1: ModalAddAccountStep1Component;
   @ViewChild('modalAddAccountStep2', { static: false }) modalAddAccountStep2: ModalAddAccountStep2Component;
   @ViewChild('modalAddAccountStep3', { static: false }) modalAddAccountStep3: ModalAddAccountStep3Component;
+  @ViewChild('modalCanNotAddAccount', { static: false }) modalCanNotAddAccount: ModalCanNotAddAccountComponent;
 
   constructor(private router: Router, private authenService: AuthenService,
               private notificationsService: NotificationsService,
@@ -203,7 +207,40 @@ export class HeaderComponent implements OnInit {
   }
 
   openAddAccountModal() {
-    this.modalAddAccountStep1.open();
+    this.spinnerService.show();
+    this.userService.getUserListAccount().pipe(take(1)).subscribe(response => {
+      this.spinnerService.hide();
+      if (response.meta.code === 200) {
+        response.data.list_account.map(value => {
+          if (value.trading_account_id === null) {
+            switch (value.account_type) {
+              case 1 :
+                this.accountTradingForm.removeControl('afxAccount');
+                break;
+              case 2:
+                this.accountTradingForm.removeControl('cfdAccount');
+                break;
+              case 3:
+                this.accountTradingForm.removeControl('cfdCommunityAccount');
+                break;
+            }
+          }
+        });
+      }
+      if (!Object.keys(this.accountTradingForm.value).length) {
+        this.modalCanNotAddAccount.open();
+      } else {
+        this.modalAddAccountStep1.open();
+      }
+      if (response.data.next_audit_date === null) {
+        const nextAuditDate = moment(response.data.next_audit_date).format('YYYY-MM-DD');
+        const currentTime = new Date();
+        const currentTimeUTC = moment(currentTime.toUTCString()).format('YYYY-MM-DD');
+        this.isLateRegis = Date.parse(nextAuditDate) >= Date.parse(currentTimeUTC) ? true : false;
+      } else {
+        this.isLateRegis = true;
+      }
+    });
   }
 
   onConfirmStep1() {

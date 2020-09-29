@@ -205,3 +205,20 @@ export interface GroupAccountTypeDetail {
   lp_code: string;
   account_type: string;
 }
+
+export interface ListAccountResponeModel {
+  meta: MetaResponseModel;
+  data: AccountRespondModel;
+}
+
+export interface AccountRespondModel {
+  list_account: AccountType[];
+  next_audit_date: string;
+}
+
+export interface AccountType {
+  account_type: number;
+  trading_account_id: number;
+  status: number;
+  partner_id: number;
+}
