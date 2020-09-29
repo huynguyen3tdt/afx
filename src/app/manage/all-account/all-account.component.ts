@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AccountType } from 'src/app/core/model/report-response.model';
 import { Mt5Model, WithdrawRequestModel } from 'src/app/core/model/withdraw-request-response.model';
 import { ACCOUNT_IDS, TIMEZONEAFX, LOCALE } from 'src/app/core/constant/authen-constant';
@@ -14,7 +14,7 @@ import { GlobalService } from 'src/app/core/services/global.service';
   templateUrl: './all-account.component.html',
   styleUrls: ['./all-account.component.scss']
 })
-export class AllAccountComponent implements OnInit {
+export class AllAccountComponent implements OnInit, OnDestroy {
   listTradingAccount: Array<AccountType>;
   listMt5Infor: Array<WithdrawRequestModel> = [];
   totalBalance: number;
@@ -23,6 +23,7 @@ export class AllAccountComponent implements OnInit {
   timeZone: string;
   formatDateHour: string;
   locale: string;
+  intervalResetMt5Infor;
   constructor(private withdrawRequestService: WithdrawRequestService,
               private globalService: GlobalService) { }
 
@@ -35,6 +36,13 @@ export class AllAccountComponent implements OnInit {
       this.formatDateHour = JAPAN_FORMATDATE_HH_MM;
     }
     this.listTradingAccount = JSON.parse(localStorage.getItem(ACCOUNT_IDS));
+    this.getSummaryAllAccount();
+    this.intervalResetMt5Infor = setInterval(() => {
+      this.getSummaryAllAccount();
+    }, 60000);
+  }
+
+  getSummaryAllAccount() {
     this.totalBalance = 0;
     this.totalPL = 0;
     if (this.listTradingAccount) {
@@ -63,4 +71,9 @@ export class AllAccountComponent implements OnInit {
       });
     }
   }
+
+  ngOnDestroy(): void {
+    clearInterval(this.intervalResetMt5Infor);
+  }
+
 }
