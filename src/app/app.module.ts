@@ -26,6 +26,7 @@ import { ModalAddAccountStep1Component } from './manage/modal-add-account-step1/
 import { ModalAddAccountStep2Component } from './manage/modal-add-account-step2/modal-add-account-step2.component';
 import { ModalAddAccountStep3Component } from './manage/modal-add-account-step3/modal-add-account-step3.component';
 import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
+import { ModalCanNotAddAccountComponent } from './manage/modal-can-not-add-account/modal-can-not-add-account.component';
 
 const appEnvInitializerFn = (envConfig: EnvConfigService) => {
   return () => {
@@ -52,6 +53,7 @@ const Routing: ModuleWithProviders = RouterModule.forRoot(AppRoutes, {
     ModalAddAccountStep1Component,
     ModalAddAccountStep2Component,
     ModalAddAccountStep3Component,
+    ModalCanNotAddAccountComponent
   ],
   imports: [
     BrowserModule,
