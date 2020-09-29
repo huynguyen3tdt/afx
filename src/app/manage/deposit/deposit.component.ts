@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { requiredInput } from 'src/app/core/helper/custom-validate.helper';
 import { DepositModel, BankTransferParamModel } from 'src/app/core/model/deposit-response.model';
@@ -54,7 +54,7 @@ declare var $: any;
   templateUrl: './deposit.component.html',
   styleUrls: ['./deposit.component.scss']
 })
-export class DepositComponent implements OnInit {
+export class DepositComponent implements OnInit, OnDestroy {
   @ViewChild('listTran', { static: false }) listTran: ListTransactionComponent;
   @ViewChild('BJPSystem', { static: true }) BJPSystem: ElementRef;
   @ViewChild('modalRuleDeposit', { static: false }) modalRuleDeposit: ModalDepositWithdrawComponent;
@@ -464,5 +464,9 @@ export class DepositComponent implements OnInit {
       return dayHoverHandler(hoverEvent);
     };
     event.dayHoverHandler = hoverWrapper;
+  }
+
+  ngOnDestroy(): void {
+    clearInterval(this.intervalResetMt5Info);
   }
 }
