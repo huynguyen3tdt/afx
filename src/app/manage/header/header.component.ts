@@ -212,7 +212,6 @@ export class HeaderComponent implements OnInit {
       this.spinnerService.hide();
       if (response.meta.code === 200) {
         response.data.list_account.map(value => {
-          if (value.trading_account_id === null) {
             switch (value.account_type) {
               case 1 :
                 this.accountTradingForm.removeControl('afxAccount');
@@ -224,7 +223,6 @@ export class HeaderComponent implements OnInit {
                 this.accountTradingForm.removeControl('cfdCommunityAccount');
                 break;
             }
-          }
         });
       }
       if (!Object.keys(this.accountTradingForm.value).length) {
