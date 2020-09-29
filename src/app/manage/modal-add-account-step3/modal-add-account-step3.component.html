@@ -29,11 +29,18 @@
                   <div class="row">
                       <div class="col-lg-4">
                           <h6>Eメール</h6>
-                          <div class="box-info border p-3 mb-3 d-flex align-items-center h-90">
+                          <div *ngIf="isLateRegis" class="box-info border p-3 mb-3 d-flex align-items-center h-90">
                               <div class="inner">
                                   <div>送信先アドレス</div>
                                   <div><a href="javascript:;">info-pfkk@phillip.co.jp</a></div>
-                                  <div>必ず件名に「本人確認書類」と記入してください</div>
+                              </div>
+                          </div>
+                          <div *ngIf="!isLateRegis" class="box-info border p-3 mb-3 d-flex align-items-center h-90">
+                              <div class="inner">
+                                  <div>送信先アドレス</div>
+                                  <div><a href="javascript:;">info-pfkk@phillip.co.jp</a></div>
+                                  <div>必ず件名に「本人確認書類」</div>
+                                  <div>と記入してください</div>
                               </div>
                           </div>
                       </div>

@@ -1,0 +1,15 @@
+<div bsModal class="modal fade" #modalCanNotAddAccount="bs-modal" id="modal-rule" tabindex="-1" role="dialog" aria-labelledby="ruleTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document" >
+      <div class="modal-content">
+          <div class="modal-header pt-2 pb-2">
+              <h5 class="text-info">{{'Add account' | translate}}</h5>
+          </div>
+          <div class="modal-body">
+            <h6>{{'You signed up all accounts type' | translate}}</h6>
+          </div>
+          <div class="modal-footer p-1">
+            <button type="button" class="btn btn-secondary text-white bg-success" (click)="close()" data-dismiss="modal">{{'Close' | translate}}</button>
+          </div>
+      </div>
+  </div>
+</div>
