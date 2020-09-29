@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ViewChild, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { WithdrawRequestService } from 'src/app/core/services/withdraw-request.service';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { Router } from '@angular/router';
@@ -25,7 +25,7 @@ const numeral = require('numeral');
   templateUrl: './transfer.component.html',
   styleUrls: ['./transfer.component.scss']
 })
-export class TransferComponent implements OnInit {
+export class TransferComponent implements OnInit, OnDestroy {
   @ViewChild('modalTransferConfirm', { static: true }) modalTransferConfirm: ModalDirective;
   @ViewChild('modalTransferResult', { static: true }) modalTransferResult: ModalDirective;
   @ViewChild('listTran', { static: false }) listTran: ListTransactionComponent;
@@ -65,6 +65,8 @@ export class TransferComponent implements OnInit {
   minWithDraw: number;
   maxWithDraw: number;
   isConfirm: boolean;
+  intervalResetSentAccountMt5Info;
+  intervalResetReceiveAccountMt5Info;
 
   constructor(private withdrawRequestService: WithdrawRequestService,
               private spinnerService: Ng4LoadingSpinnerService,
@@ -199,11 +201,17 @@ export class TransferComponent implements OnInit {
       this.sentAccountID === account.account_id);
       this.sentType = this.sentAccountID.substring(this.sentAccountID.length - 2, this.sentAccountID.length);
       this.getMt5Infor(Number(this.sentAccountID), 'sent');
+      this.intervalResetSentAccountMt5Info = setInterval(() => {
+        this.getMt5Infor(Number(this.sentAccountID), 'sent');
+      }, 60000);
     } else {
       this.tradingReceiveAccount = this.listTradingAccount.find((account: AccountType) =>
        this.receiveAccountID === account.account_id);
       this.receiveType = this.receiveAccountID.substring(this.receiveAccountID.length - 2, this.receiveAccountID.length);
       this.getMt5Infor(Number(this.receiveAccountID), 'receive');
+      this.intervalResetReceiveAccountMt5Info = setInterval(() => {
+        this.getMt5Infor(Number(this.receiveAccountID), 'receive');
+      }, 60000);
     }
   }
 
@@ -273,5 +281,10 @@ export class TransferComponent implements OnInit {
 
   getTabFromList(event) {
     this.emitTabFromTranser.emit({tab: event, accountID: this.sentAccountID});
+  }
+
+  ngOnDestroy(): void {
+    clearInterval(this.intervalResetSentAccountMt5Info);
+    clearInterval(this.intervalResetReceiveAccountMt5Info);
   }
 }
