@@ -8,7 +8,6 @@ import {
   ACCOUNT_IDS,
   LOCALE,
   TIMEZONEAFX,
-  TIMEZONESERVER,
   MARGIN_CALL,
   TYPE_ERROR_TOAST_EN,
   TYPE_ERROR_TOAST_JP,
@@ -26,11 +25,10 @@ import { Mt5Model, TransactionModel, WithdrawAmountModel, postWithdrawModel } fr
 import { AccountType } from 'src/app/core/model/report-response.model';
 import { GlobalService } from 'src/app/core/services/global.service';
 import { JAPAN_FORMATDATE_HH_MM,
-   EN_FORMATDATE,
-   EN_FORMATDATE_HH_MM,
-   JAPAN_FORMATDATE,
-   DATE_CLIENT_ENG,
-   DATE_CLIENT_ENG_SUBMIT } from 'src/app/core/constant/format-date-constant';
+  EN_FORMATDATE,
+  EN_FORMATDATE_HH_MM,
+  JAPAN_FORMATDATE
+  } from 'src/app/core/constant/format-date-constant';
 import { TYPEOFTRANHISTORY } from 'src/app/core/constant/payment-method-constant';
 import { Router } from '@angular/router';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
@@ -118,6 +116,7 @@ export class DepositComponent implements OnInit {
   currentBank: DepositModel;
   bankTransferDetailResult: postWithdrawModel;
   dateTimeBankTransfer: string;
+  intervalResetMt5Info;
 
   constructor(private depositService: DepositService,
               private withdrawRequestService: WithdrawRequestService,
@@ -161,6 +160,7 @@ export class DepositComponent implements OnInit {
       this.getMt5Infor(Number(this.accountID));
       this.getDwAmount(Number(this.accountID));
       this.remark = this.accountID;
+      this.autoRefreshMt5Info();
     }
     this.initDepositAmountForm();
     this.initDepositTransactionForm();
@@ -185,6 +185,12 @@ export class DepositComponent implements OnInit {
         }
       });
     }
+  }
+
+  autoRefreshMt5Info() {
+    this.intervalResetMt5Info = setInterval(() => {
+      this.onRefesh();
+    }, 60000);
   }
 
   initBjpSystem() {
