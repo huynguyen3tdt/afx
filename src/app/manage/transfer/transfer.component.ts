@@ -187,7 +187,7 @@ export class TransferComponent implements OnInit, OnDestroy {
     this.globalService.calculateMarginLevel(Math.floor(this.sentAccountInfo.equity - this.transferValue), this.sentAccountInfo.used_margin);
 
     this.marginLevelEstimateReceive =
-    this.globalService.calculateMarginLevel(Math.floor(this.receiveAccountInfo.equity - this.transferValue),
+    this.globalService.calculateMarginLevel(Math.floor(this.receiveAccountInfo.equity + this.transferValue),
     this.receiveAccountInfo.used_margin);
 
     if (this.marginLevelEstimateSend <= this.marginCall && this.marginLevelEstimateSend > 0) {
