@@ -8,7 +8,6 @@ import { ModalDirective } from 'ngx-bootstrap';
 })
 export class ModalAddAccountStep3Component implements OnInit {
   @ViewChild('modalAddAccountStep3', { static: true }) modal: ModalDirective;
-  @Output() confirmStep3 = new EventEmitter();
   @Input() isLateRegis: boolean;
   constructor() { }
 
@@ -23,8 +22,4 @@ export class ModalAddAccountStep3Component implements OnInit {
     this.modal.hide();
   }
 
-  onConfirm() {
-    this.modal.hide();
-    this.confirmStep3.emit();
-  }
 }

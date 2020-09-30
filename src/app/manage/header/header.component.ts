@@ -246,10 +246,6 @@ export class HeaderComponent implements OnInit {
   }
 
   onConfirmStep2() {
-    this.modalAddAccountStep3.open();
-  }
-
-  onConfirmStep3() {
     this.spinnerService.show();
     const param: GroupAccountType = {
       group_account_type: []
@@ -288,6 +284,7 @@ export class HeaderComponent implements OnInit {
               break;
           }
         });
+        this.modalAddAccountStep3.open();
       }
     }
       );
