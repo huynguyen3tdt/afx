@@ -67,12 +67,12 @@
                                             <span class="checkmark"></span>
                                         </label>
                                         <label *ngIf="showFilterICFD" class="container-checkbox small mr-3">
-                                            <input type="checkbox" [checked]="filterICFD ? true : null" name="cfd-i" checked="checked" (change)="filterType('icfd')">
+                                            <input type="checkbox" [checked]="filterICFD ? true : null" name="cfd-i" checked="checked" (change)="filterType('ccfd')">
                                             <span>{{'I-CFD News' | translate}}</span>
                                             <span class="checkmark"></span>
                                         </label>
                                         <label *ngIf="showFilterCCFD" class="container-checkbox small">
-                                            <input type="checkbox" [checked]="filterCCFD ? true : null" name="cfd-c" checked="checked" (change)="filterType('ccfd')">
+                                            <input type="checkbox" [checked]="filterCCFD ? true : null" name="cfd-c" checked="checked" (change)="filterType('icfd')">
                                             <span>{{'C-CFD News' | translate}}</span>
                                             <span class="checkmark"></span>
                                         </label>
