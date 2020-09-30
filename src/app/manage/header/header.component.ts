@@ -231,12 +231,12 @@ export class HeaderComponent implements OnInit {
         this.modalAddAccountStep1.open();
       }
       if (response.data.next_audit_date === null) {
+        this.isLateRegis = true;
+      } else {
         const nextAuditDate = moment(response.data.next_audit_date).format('YYYY-MM-DD');
         const currentTime = new Date();
         const currentTimeUTC = moment(currentTime.toUTCString()).format('YYYY-MM-DD');
         this.isLateRegis = Date.parse(nextAuditDate) >= Date.parse(currentTimeUTC) ? true : false;
-      } else {
-        this.isLateRegis = true;
       }
     });
   }
