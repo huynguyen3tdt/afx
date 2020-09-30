@@ -142,35 +142,37 @@
                                 </tbody>
                             </table>
                         </div>
-                        <div class="text-right">
-                            <button (click)="exportToCSV()"
-                                class="btn btn-sm btn-success btn-outline-secondary pt-0 pb-0"><i
-                                    class="icon ion-md-download"></i></button>
-                        </div>
-                        <div class="d-md-flex align-items-center justify-content-between mb-2 pt-2">
-                            <div class="mb-2 mb-md-0">
-                                <div class="d-inline-block mr-2">
-                                    <select (change)="changeTotalItem($event)" [(ngModel)]="pageSize"
-                                        class="form-control form-control-sm">
-                                        <option *ngFor="let item of listTotalItem" value="{{item}}">{{item}}
-                                        </option>
-                                    </select>
-                                </div>
-                                <div *ngIf="locale == language.english" class="small text-secondary d-inline-block mr-2">
-                                    Showing {{recordFrom}} To {{recordTo}} of {{totalItem}} entries</div>
-                                <div *ngIf="locale == language.japan" class="small text-secondary d-inline-block mr-2">
-                                    {{totalItem}}件中{{recordFrom}} to {{recordTo}}の表示
-                                </div>
+                        <ng-container *ngIf="listTranTransfer?.length > 0">
+                            <div class="text-right">
+                                <button (click)="exportToCSV()"
+                                    class="btn btn-sm btn-success btn-outline-secondary pt-0 pb-0"><i
+                                        class="icon ion-md-download"></i></button>
                             </div>
-                            <ul class="pagination pagination-sm mb-0">
-                                <pagination [(ngModel)]="currentPage" id="pagination" [totalItems]="totalPage"
-                                    [boundaryLinks]="true" class="pagination pagination-sm justify-content-end"
-                                    (pageChanged)="pageChanged($event)" previousText="&lsaquo;" nextText="&rsaquo;"
-                                    firstText="&laquo;" lastText="&raquo;" [maxSize]="5">
-                                </pagination>
-                            </ul>
-    
-                        </div>
+                            <div class="d-md-flex align-items-center justify-content-between mb-2 pt-2">
+                                <div class="mb-2 mb-md-0">
+                                    <div class="d-inline-block mr-2">
+                                        <select (change)="changeTotalItem($event)" [(ngModel)]="pageSize"
+                                            class="form-control form-control-sm">
+                                            <option *ngFor="let item of listTotalItem" value="{{item}}">{{item}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div *ngIf="locale == language.english" class="small text-secondary d-inline-block mr-2">
+                                        Showing {{recordFrom}} To {{recordTo}} of {{totalItem}} entries</div>
+                                    <div *ngIf="locale == language.japan" class="small text-secondary d-inline-block mr-2">
+                                        {{totalItem}}件中{{recordFrom}} to {{recordTo}}の表示
+                                    </div>
+                                </div>
+                                <ul class="pagination pagination-sm mb-0">
+                                    <pagination [(ngModel)]="currentPage" id="pagination" [totalItems]="totalPage"
+                                        [boundaryLinks]="true" class="pagination pagination-sm justify-content-end"
+                                        (pageChanged)="pageChanged($event)" previousText="&lsaquo;" nextText="&rsaquo;"
+                                        firstText="&laquo;" lastText="&raquo;" [maxSize]="5">
+                                    </pagination>
+                                </ul>
+        
+                            </div>
+                        </ng-container>
                     </div>
                     <div class="tab-pane fade" id="v-pills-deposit" role="tabpanel" aria-labelledby="v-pills-deposit-tab">
                         <h3 class="mb-3"><i class="icon ion-md-time text-secondary"></i> {{'Deposit History' | translate}}
