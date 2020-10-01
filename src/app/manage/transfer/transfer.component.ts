@@ -127,7 +127,7 @@ export class TransferComponent implements OnInit, OnDestroy {
           this.marginLevelEstimateReceive = this.receiveAccountInfo.margin_level;
         }
         if (this.sentAccountID && this.receiveAccountID) {
-          if (this.sentAccountID === this.receiveAccountID || this.sentAccountInfo.currency !== this.receiveAccountInfo.currency) {
+          if (this.sentAccountID === this.receiveAccountID || this.tradingSentAccount.currency !== this.tradingReceiveAccount.currency) {
             this.disabledTransfer = true;
           } else {
             this.disabledTransfer = false;

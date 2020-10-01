@@ -179,7 +179,7 @@
                                         </div>
                                     </div>
                                     <div class="mt-2">
-                                        <label class="container-checkbox small">{{'Whole of money' | translate}}
+                                        <label class="container-checkbox small">{{'Full Transfer' | translate}}
                                             <input type="checkbox" name="Junior" formControlName="wholeMoney"
                                                 (change)="getAllFreeMargin()">
                                             <span class="checkmark"></span>
@@ -228,7 +228,7 @@
         <div class="modal-content">
             <div class="modal-header bg-light pt-2 pb-2">
                 <div>
-                    <h5 class="modal-title text-primary"><strong>{{'Withdrawal Request' | translate}}</strong></h5>
+                    <h5 class="modal-title text-primary"><strong>{{'Transfer Request' | translate}}</strong></h5>
                 </div>
             </div>
             <div class="modal-body">
@@ -295,13 +295,13 @@
                     <tbody>
                     <tr>
                         <td width="180">{{'Sender account' | translate}}</td>
-                        <td>{{transferResult?.to_trading_account_id | convertTradingType}}
+                        <td>{{transferResult?.from_trading_account_id| convertTradingType}}
                             <img class="ml-1" src="{{transferResult?.img_send_type}}" width="37" height="20">
                         </td>
                     </tr>
                     <tr>
                         <td width="180">{{'Receiver account' | translate}}</td>
-                        <td>{{transferResult?.from_trading_account_id | convertTradingType}}
+                        <td>{{transferResult?.to_trading_account_id  | convertTradingType}}
                             <img class="ml-1" src="{{transferResult?.img_receive_type}}" width="37" height="20"></td>
                     </tr>
                     <tr>
@@ -309,10 +309,6 @@
                         <td>{{transferResult?.amount | number}}
                             {{transferResult?.currency}}</td>
                     </tr>
-                    <!-- <tr>
-                                              <td width="180">{{'Transaction ID' | translate}}</td>
-                                              <td>{{transactionWithdraw?.id}}</td>
-                                          </tr> -->
                     <tr>
                         <td width="180">{{'Createdate time' | translate}}</td>
                         <td>{{transferResult?.create_date}}</td>
