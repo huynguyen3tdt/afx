@@ -236,7 +236,7 @@ export class HeaderComponent implements OnInit {
         const nextAuditDate = moment(response.data.next_audit_date).format('YYYY-MM-DD');
         const currentTime = new Date();
         const currentTimeUTC = moment(currentTime.toUTCString()).format('YYYY-MM-DD');
-        this.isLateRegis = Date.parse(nextAuditDate) >= Date.parse(currentTimeUTC) ? false : true;
+        this.isLateRegis = Date.parse(currentTimeUTC) >= Date.parse(nextAuditDate) ? true : false;
       }
     });
   }
