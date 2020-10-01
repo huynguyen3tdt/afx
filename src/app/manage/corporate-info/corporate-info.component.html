@@ -154,7 +154,7 @@
 <div class="financial_info" *ngIf="editFinancial == false">
     <div class="row mb-1">
         <div class="col-md-4 col-lg-3">
-            <label class="label">事業体の年商</label>
+            <label class="label">{{"Business's annual sales" | translate}}</label>
         </div>
         <div class="col-md-8 col-lg-6">
             <strong>{{financialInforForm?.controls?.businessEntityAnnual?.value | convertFinancial: 'corp'}}</strong>
@@ -162,7 +162,7 @@
     </div>
     <div class="row mb-1">
         <div class="col-md-4 col-lg-3">
-            <label class="label">事業体の税抜後年間所得</label>
+            <label class="label">{{'Annual sales after tax' | translate}}</label>
         </div>
         <div class="col-md-8 col-lg-6">
             <strong>{{financialInforForm?.controls?.tax?.value | convertFinancial: 'corp'}}</strong>
@@ -170,7 +170,7 @@
     </div>
     <div class="row mb-1">
         <div class="col-md-4 col-lg-3">
-            <label class="label">事業体の資本金</label>
+            <label class="label">{{"Business's capital" | translate}}</label>
         </div>
         <div class="col-md-8 col-lg-6">
             <strong>{{financialInforForm?.controls?.businessCapital?.value | convertFinancial: 'corp'}}</strong>
@@ -178,7 +178,7 @@
     </div>
     <div class="row mb-1">
         <div class="col-md-4 col-lg-3">
-            <label class="label">事業体の投資可能額</label>
+            <label class="label">{{'Investment amount of corporate' | translate}}</label>
         </div>
         <div class="col-md-8 col-lg-6">
             <strong>{{financialInforForm?.controls?.investment?.value | convertFinancial: 'corp'}}</strong>
@@ -188,7 +188,7 @@
 <div [formGroup]="financialInforForm" class="financial_edit p-3 bg-light" *ngIf="editFinancial == true">
     <div class="row mb-1">
         <div class="col-md-4 col-lg-3">
-            <label class="label">事業体の年商</label>
+            <label class="label">{{"Business's annual sales" | translate}}</label>
         </div>
         <div class="col-md-8 col-lg-6">
             <select class="form-control" formControlName="businessEntityAnnual">
@@ -200,7 +200,7 @@
     </div>
     <div class="row mb-1">
         <div class="col-md-4 col-lg-3">
-            <label class="label">事業体の税抜後年間所得</label>
+            <label class="label">{{'Annual sales after tax' | translate}}</label>
         </div>
         <div class="col-md-8 col-lg-6">
             <select class="form-control" formControlName="tax">
@@ -212,7 +212,7 @@
     </div>
     <div class="row mb-1">
         <div class="col-md-4 col-lg-3">
-            <label class="label">事業体の資本金</label>
+            <label class="label">{{"Business's capital" | translate}}</label>
         </div>
         <div class="col-md-8 col-lg-6">
             <select class="form-control" formControlName="businessCapital" (change)="changeBusinessCapital()">
@@ -224,7 +224,7 @@
     </div>
     <div class="row mb-1">
         <div class="col-md-4 col-lg-3">
-            <label class="label">事業体の投資可能額</label>
+            <label class="label">{{'Investment amount of corporate' | translate}}</label>
         </div>
         <div class="col-md-8 col-lg-6">
             <select class="form-control" formControlName="investment">
@@ -426,7 +426,7 @@
 <div class="investment_purpose" *ngIf="editPurpose == false">
     <div class="row mb-1">
         <div class="col-md-4 col-lg-3">
-            <label class="label">投資目的</label>
+            <label class="label">{{'Investment Purpose' | translate}}</label>
         </div>
         <div class="col-md-8 col-lg-6">
             <strong>{{purposeInvestForm?.controls?.investPurposeSortTerm?.value == true ? '短期売買 ' : ''}}
@@ -439,7 +439,7 @@
     </div>
     <div class="row mb-1">
             <div class="col-md-4 col-lg-3">
-                <label class="label">その他をご選択の場合</label>
+                <label class="label">{{'If you select other' | translate}}</label>
             </div>
             <div class="col-md-8 col-lg-6">
                 <strong>{{purposeInvestForm?.controls?.otherPurpose?.value}}</strong>
@@ -447,7 +447,7 @@
     </div>
     <div class="row mb-1">
             <div class="col-md-4 col-lg-3">
-                <label class="label">申込の経緯（取引の動機）</label>
+                <label class="label">{{'Background of application (motivation for transaction)' | translate}}</label>
             </div>
             <div class="col-md-8 col-lg-6">
                 <strong>{{purposeInvestForm?.controls?.backgroundApplication?.value | convertInvestmentPurpose : 'background'}}</strong>
@@ -455,7 +455,7 @@
     </div>
     <div class="row mb-1">
             <div class="col-md-4 col-lg-3">
-                <label class="label">具体名をご記入ください </label>
+                <label class="label">{{'Specific Name' | translate}}</label>
             </div>
             <div class="col-md-8 col-lg-6">
                 <strong>{{purposeInvestForm?.controls?.specificName?.value}}</strong>
@@ -463,7 +463,7 @@
     </div>
     <div class="row mb-1">
         <div class="col-md-4 col-lg-3">
-            <label class="label">投資経験：FX取引</label>
+            <label class="label">{{'FX trading experience' | translate}}</label>
         </div>
         <div class="col-md-8 col-lg-6">
             <strong>{{purposeInvestForm?.controls?.investExFx?.value | convertInvestmentPurpose: 'experience'}}</strong>
@@ -471,7 +471,7 @@
     </div>
     <div class="row mb-1">
         <div class="col-md-4 col-lg-3">
-            <label class="label">投資経験：CFD取引</label>
+            <label class="label">{{'CFD trading experience' | translate}}</label>
         </div>
         <div class="col-md-8 col-lg-6">
             <strong>{{purposeInvestForm?.controls?.inversExCfd?.value | convertInvestmentPurpose: 'experience'}}</strong>
@@ -479,7 +479,7 @@
     </div>
     <div class="row mb-1">
         <div class="col-md-4 col-lg-3">
-            <label class="label">投資経験：株式取引</label>
+            <label class="label">{{'Stock trading experience' | translate}}</label>
         </div>
         <div class="col-md-8 col-lg-6">
             <strong>{{purposeInvestForm?.controls?.investStockTrading?.value | convertInvestmentPurpose: 'experience'}}</strong>
@@ -487,7 +487,7 @@
     </div>
     <div class="row mb-1">
         <div class="col-md-4 col-lg-3">
-            <label class="label">投資経験：信用取引</label>
+            <label class="label">{{'Margin trading experience' | translate}}</label>
         </div>
         <div class="col-md-8 col-lg-6">
             <strong>{{purposeInvestForm?.controls?.investMarginTrading?.value | convertInvestmentPurpose: 'experience'}}</strong>
@@ -495,7 +495,7 @@
     </div>
     <div class="row mb-1">
         <div class="col-md-4 col-lg-3">
-            <label class="label">投資経験：商品先物</label>
+            <label class="label">{{'Commodities futures experience' | translate}}</label>
         </div>
         <div class="col-md-8 col-lg-6">
             <strong>{{purposeInvestForm?.controls?.investCommodities?.value | convertInvestmentPurpose: 'experience'}}</strong>
@@ -503,7 +503,7 @@
     </div>
     <div class="row mb-1">
         <div class="col-md-4 col-lg-3">
-            <label class="label">投資経験：その他</label>
+            <label class="label">{{'Other investment experience' | translate}}</label>
         </div>
         <div class="col-md-8 col-lg-6">
             <strong>{{purposeInvestForm?.controls?.other?.value == '1' ? '特になし' : '上記以外の投資経験がある'}}</strong>
@@ -511,7 +511,7 @@
     </div>
     <div class="row mb-1">
         <div class="col-md-4 col-lg-3">
-            <label class="label mr-lg-2">投資経験がある金融商品名</label>
+            <label class="label mr-lg-2">{{'Other financial instruments name' | translate}}</label>
         </div>
         <div class="col-md-8 col-lg-6">
             <strong>{{purposeInvestForm?.controls?.financialInstrument?.value}}</strong>
@@ -520,7 +520,7 @@
     </div>
     <div class="row mb-1">
         <div class="col-md-4 col-lg-3">
-            <label class="label mr-lg-2">取引経験</label>
+            <label class="label mr-lg-2">{{'Other trading experience' | translate}}</label>
         </div>
         <div class="col-md-8 col-lg-6">
             <strong> {{purposeInvestForm?.controls?.tradingExperience?.value | convertInvestmentPurpose: 'experience'}}</strong>
@@ -528,7 +528,7 @@
     </div>
 </div>
 <div [formGroup]="purposeInvestForm" class="investment_purpose_edit p-3 bg-light" *ngIf="editPurpose == true">
-    <label class="label mb-1">投資目的</label>
+    <label class="label mb-1">{{'Investment Purpose' | translate}}</label>
     <div *ngIf="purposeInvestForm.controls.investPurpose.errors"
                 class="text-danger small mt-1">1つ以上の選択が必要です</div>
     <div class="row small-gutters">
@@ -584,7 +584,7 @@
     <div>&nbsp;</div>
     <div class="row mb-1" *ngIf="purposeInvestForm.controls.investPurposeOther.value == true">
         <div class="col-md-4 col-lg-3">
-            <label class="label mr-lg-2">その他をご選択の場合</label>
+            <label class="label mr-lg-2">{{'If you select other' | translate}}</label>
         </div>
         <div class="col-md-8 col-lg-6">
             <input formControlName="otherPurpose" type="text" name="exx" value="" maxlength="255"
@@ -596,7 +596,7 @@
     </div>
     <div class="row mb-1">
         <div class="col-md-4 col-lg-3">
-            <label class="label">申込の経緯（取引の動機）</label>
+            <label class="label">{{'Background of application (motivation for transaction)' | translate}}</label>
         </div>
         <div class="col-md-8 col-lg-6">
             <select formControlName="backgroundApplication" (change)="changeBackGroundApplication()"
@@ -611,7 +611,7 @@
     </div>
     <div class="row mb-1" *ngIf="purposeInvestForm.controls.backgroundApplication.value == 7">
             <div class="col-md-4 col-lg-3">
-                <label class="label mr-lg-2">具体名をご記入ください</label>
+                <label class="label mr-lg-2">{{'Specific Name'}}</label>
             </div>
             <div class="col-md-8 col-lg-6">
                 <input formControlName="specificName" type="text" placeholder="例)先物・オプション・仮想通貨" maxlength="255"
@@ -624,7 +624,7 @@
     </div>
     <div class="row mb-1">
             <div class="col-md-4 col-lg-3">
-                <label class="label">投資経験：FX取引</label>
+                <label class="label">{{'FX trading experience' | translate}}</label>
             </div>
             <div class="col-md-8 col-lg-6">
                 <select formControlName="investExFx" (change)="changeExPurPose()"
@@ -641,7 +641,7 @@
         </div>
     <div class="row mb-1">
         <div class="col-md-4 col-lg-3">
-            <label class="label">投資経験：CFD取引</label>
+            <label class="label">{{'CFD trading experience' | translate}}</label>
         </div>
         <div class="col-md-8 col-lg-6">
             <select formControlName="inversExCfd" 
@@ -660,7 +660,7 @@
     <div>&nbsp;</div>
     <div class="row mb-1">
         <div class="col-md-4 col-lg-3">
-            <label class="label">投資経験：株式取引</label>
+            <label class="label">{{'Stock trading experience' | translate}}</label>
         </div>
         <div class="col-md-8 col-lg-6">
             <select formControlName="investStockTrading"
@@ -676,7 +676,7 @@
     </div>
     <div class="row mb-1">
         <div class="col-md-4 col-lg-3">
-            <label class="label">投資経験：信用取引</label>
+            <label class="label">{{'Margin trading experience' | translate}}</label>
         </div>
         <div class="col-md-8 col-lg-6">
             <select formControlName="investMarginTrading"
@@ -692,7 +692,7 @@
     </div>
     <div class="row mb-1">
         <div class="col-md-4 col-lg-3">
-            <label class="label">投資経験：商品先物</label>
+            <label class="label">{{'Commodities futures experience' | translate}}</label>
         </div>
         <div class="col-md-8 col-lg-6">
             <select formControlName="investCommodities" 
@@ -711,7 +711,7 @@
     </div>
     <div class="row mb-1">
         <div class="col-md-4 col-lg-3">
-            <label class="label">投資経験：その他</label>
+            <label class="label">{{'Other investment experience' | translate}}</label>
         </div>
         <div class="col-md-8 col-lg-6">
             <div class="container-radios-wrapper">
@@ -733,7 +733,7 @@
     <ng-container *ngIf="purposeInvestForm.controls.other.value == '2'">
         <div class="row mb-1">
             <div class="col-md-4 col-lg-3">
-                <label class="label mr-lg-2">投資経験がある金融商品名</label>
+                <label class="label mr-lg-2">{{'Other financial instruments name' | translate}}</label>
             </div>
             <div class="col-md-8 col-lg-6">
                 <input type="text" formControlName="financialInstrument" maxlength="255"
@@ -746,7 +746,7 @@
     
         <div class="row mb-1">
             <div class="col-md-4 col-lg-3">
-                <label class="label mr-lg-2">取引経験</label>
+                <label class="label mr-lg-2">{{'Other trading experience' | translate}}</label>
             </div>
             <div class="col-md-8 col-lg-6">
                 <select formControlName="tradingExperience" (change)="changeExPurPose()"
