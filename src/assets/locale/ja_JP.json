@@ -307,7 +307,7 @@
   "Bank transfer information": "振込情報",
   "Please choose trading acount": "口座を選択してください",
   "Overview of each account": "各口座の概要",
-  "Transfer Request": "入金依頼",
+  "Transfer Request": "振替依頼",
   "FX News": "FXお知らせ",
   "I-CFD News": "I-CFDお知らせ",
   "C-CFD News": "C-CFDお知らせ",
@@ -332,5 +332,6 @@
   "Other trading experience": "取引経験",
   "Annual Income": "年収",
   "Financial assets / own assets": "金融資産・自己資産",
-  "The amount of the above own assets that can be used for investment": "上記自己資産のうち投資に利用可能な額"
+  "The amount of the above own assets that can be used for investment": "上記自己資産のうち投資に利用可能な額",
+  "Deposit Request": "入金依頼"
 }
