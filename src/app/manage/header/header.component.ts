@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Router, NavigationEnd } from '@angular/router';
+import { Router, NavigationEnd, NavigationStart } from '@angular/router';
 import { TOKEN_AFX, FIRST_LOGIN, LOCALE, ACCOUNT_IDS, IS_COMPANY, ACCOUNT_TYPE } from 'src/app/core/constant/authen-constant';
 import { AuthenService } from 'src/app/core/services/authen.service';
 import { NotificationsService } from 'src/app/core/services/notifications.service';
@@ -19,6 +19,7 @@ import { UserService } from 'src/app/core/services/user.service';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { PL001, PL002, PL003, PL004, PL005, PL006 } from 'src/app/core/constant/user-code-constant';
 import { ModalCanNotAddAccountComponent } from '../modal-can-not-add-account/modal-can-not-add-account.component';
+import { CCFD_IMAGE, ICFD_IMAGE, FX_IMAGE } from 'src/app/core/constant/img-constant';
 
 declare const $: any;
 declare const TweenMax: any;
@@ -65,7 +66,10 @@ export class HeaderComponent implements OnInit {
               private spinnerService: Ng4LoadingSpinnerService,
               ) {
     this.router.events.subscribe((e: any) => {
-      this.activeRouter(this.router.url);
+      if (e instanceof NavigationEnd) {
+        this.activeRouter(this.router.url);
+        this.callListAccount();
+      }
     });
   }
 
@@ -92,6 +96,24 @@ export class HeaderComponent implements OnInit {
     }
     this.initAccountTradingForm();
   }
+
+  callListAccount() {
+    this.spinnerService.show();
+    this.userService.getUserListAccount().subscribe(value => {
+        this.spinnerService.hide();
+        const listAccount = [];
+        if (value.meta.code === 200) {
+          value.data.list_account.map(el => {
+            if (el.trading_account_id) {
+              listAccount.push(el);
+            }
+          });
+          const param = this.globalService.getListAccountIds(this.globalService.sortListAccount(listAccount));
+          localStorage.setItem(ACCOUNT_IDS, JSON.stringify(param));
+        }
+      });
+  }
+
 
   initAccountTradingForm() {
     this.accountTradingForm = this.fb.group({

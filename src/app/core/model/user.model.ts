@@ -221,4 +221,5 @@ export interface AccountType {
   trading_account_id: number;
   status: number;
   partner_id: number;
+  currency_cd: string;
 }
