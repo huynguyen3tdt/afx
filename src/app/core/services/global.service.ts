@@ -167,4 +167,46 @@ export class GlobalService {
         return CCFD_IMAGE;
     }
   }
+
+  sortListAccount(arr: any) {
+    arr.sort((a, b) => {
+      if (a.account_type < b.account_type) {
+        return -1;
+      }  else if (a.account_type > b.account_type) {
+        return 1;
+      }
+      return 0;
+    });
+    return arr;
+  }
+
+  getListAccountIds(data) {
+    const listData = [];
+    if (data) {
+      // tslint:disable-next-line:no-shadowed-variable
+      data.map((element: any) => {
+        if (element.account_type === ACCOUNT_TYPE.ACCOUNT_FX.account_type) {
+          element.value = ACCOUNT_TYPE.ACCOUNT_FX.name + ' ' + element.trading_account_id;
+          element.img_type_account = FX_IMAGE;
+        }
+        if (element.account_type === ACCOUNT_TYPE.ACCOUNT_CFDIndex.account_type) {
+          element.value = ACCOUNT_TYPE.ACCOUNT_CFDIndex.name + ' ' + element.trading_account_id;
+          element.img_type_account = ICFD_IMAGE;
+        }
+        if (element.account_type === ACCOUNT_TYPE.ACCOUNT_CFDCom.account_type) {
+          element.value = ACCOUNT_TYPE.ACCOUNT_CFDCom.name + ' ' + element.trading_account_id;
+          element.img_type_account = CCFD_IMAGE;
+        }
+        const dataObj: AccountType = {
+          account_type: element.account_type,
+          account_id: element.trading_account_id,
+          value : element.value,
+          currency: element.currency_cd,
+          img_type_account: element.img_type_account
+        };
+        listData.push(dataObj);
+      });
+    }
+    return listData;
+  }
 }
