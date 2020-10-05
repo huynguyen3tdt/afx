@@ -62,17 +62,17 @@
                                 <div class="d-flex" *ngIf="listTradingAccount.length > 1">
                                     <div class="filter-account-type">
                                         <label *ngIf="showFilterFX" class="container-checkbox small mr-3">
-                                            <input type="checkbox" [checked]="filterFX ? true : null"  name="fx" checked="checked" (change)="filterType('fx')">
+                                            <input type="checkbox" [checked]="filterFX ? true : null"  name="fx" (change)="filterType('fx')">
                                             <span>{{'FX News' | translate}}</span>
                                             <span class="checkmark"></span>
                                         </label>
                                         <label *ngIf="showFilterICFD" class="container-checkbox small mr-3">
-                                            <input type="checkbox" [checked]="filterICFD ? true : null" name="cfd-i" checked="checked" (change)="filterType('ccfd')">
+                                            <input type="checkbox" [checked]="filterICFD ? true : null" name="cfd-i" (change)="filterType('icfd')">
                                             <span>{{'I-CFD News' | translate}}</span>
                                             <span class="checkmark"></span>
                                         </label>
                                         <label *ngIf="showFilterCCFD" class="container-checkbox small">
-                                            <input type="checkbox" [checked]="filterCCFD ? true : null" name="cfd-c" checked="checked" (change)="filterType('icfd')">
+                                            <input type="checkbox" [checked]="filterCCFD ? true : null" name="cfd-c" (change)="filterType('ccfd')">
                                             <span>{{'C-CFD News' | translate}}</span>
                                             <span class="checkmark"></span>
                                         </label>
@@ -119,10 +119,13 @@
                                             [innerHTML]="item?.news_content | safe: 'html'">
                                         </div>
                                         <div *ngIf="item?.agreement_flg == 1" class="item-content">
-                                            <div [innerHTML]="item?.news_content | safe: 'html'"></div>
-                                            <button (click)="confirmAgreement()"
+                                            <div class="clearfix" [innerHTML]="item?.news_content | safe: 'html'"></div>
+                                            <div class="text-right">
+                                                <button (click)="confirmAgreement()"
                                                 [disabled]="item.agree_flg == true ? true : false" type="button"
-                                                class="btn btn-primary f-right">{{'Confirm' | translate}}</button>
+                                                class="btn btn-primary">{{'Confirm' | translate}}</button>
+                                            </div>
+                                                
                                         </div>
                                     </div>
                                 </ng-container>

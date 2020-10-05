@@ -116,9 +116,6 @@ export class TransferComponent implements OnInit, OnDestroy {
         this.mt5Infor = response.data;
         // this.equity = this.mt5Infor.equity;
         // this.usedMargin = this.mt5Infor.used_margin;
-        if (this.mt5Infor.free_margin < this.minWithdraw) {
-          this.mt5Infor.free_margin = 0;
-        }
         if (type === 'sent') {
           this.sentAccountInfo = this.mt5Infor;
           this.marginLevelEstimateSend = this.sentAccountInfo.margin_level;
