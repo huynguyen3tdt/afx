@@ -203,7 +203,7 @@ export interface GroupAccountType {
 
 export interface GroupAccountTypeDetail {
   lp_code: string;
-  account_type: string;
+  account_type?: string;
 }
 
 export interface ListAccountResponeModel {
