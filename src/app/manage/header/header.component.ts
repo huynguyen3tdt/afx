@@ -275,19 +275,16 @@ export class HeaderComponent implements OnInit {
     if (this.accountTradingForm.controls.afxAccount && this.accountTradingForm.controls.afxAccount.value) {
       param.group_account_type.push({
         lp_code: localStorage.getItem(IS_COMPANY) === 'true' ? PL002 : PL001,
-        account_type: '1'
       });
     }
     if (this.accountTradingForm.controls.cfdAccount && this.accountTradingForm.controls.cfdAccount.value) {
       param.group_account_type.push({
         lp_code: localStorage.getItem(IS_COMPANY) === 'true' ? PL004 : PL003,
-        account_type: '2'
       });
     }
     if (this.accountTradingForm.controls.cfdCommunityAccount && this.accountTradingForm.controls.cfdCommunityAccount.value) {
       param.group_account_type.push({
         lp_code: localStorage.getItem(IS_COMPANY) === 'true' ? PL006 : PL005,
-        account_type: '3'
       });
     }
     this.userService.registrationAccountType(param).pipe(take(1)).subscribe(response => {
