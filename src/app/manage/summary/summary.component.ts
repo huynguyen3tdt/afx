@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
+import { UserService } from 'src/app/core/services/user.service';
+import { GlobalService } from 'src/app/core/services/global.service';
+import { ACCOUNT_IDS } from 'src/app/core/constant/authen-constant';
 @Component({
   selector: 'app-summary',
   templateUrl: './summary.component.html',
@@ -11,7 +15,11 @@ export class SummaryComponent implements OnInit {
     summary: 'summary',
     detail: 'detail'
   };
-  constructor() { }
+  constructor(
+    private spinnerService: Ng4LoadingSpinnerService,
+    private userService: UserService,
+    private globalService: GlobalService,
+  ) { }
 
   ngOnInit() {
     this.showSummary = true;
@@ -19,5 +27,7 @@ export class SummaryComponent implements OnInit {
   changeTab(type) {
     this.showSummary = type === this.TAB.summary;
     this.showDetail = type === this.TAB.detail;
+    this.globalService.callListAccount();
   }
+
 }

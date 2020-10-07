@@ -13,6 +13,7 @@ import { ModalDirective } from 'ngx-bootstrap';
 import { take } from 'rxjs/operators';
 import { GlobalService } from 'src/app/core/services/global.service';
 import { Title } from '@angular/platform-browser';
+import { UserService } from 'src/app/core/services/user.service';
 declare var $: any;
 
 @Component({
@@ -271,6 +272,7 @@ export class NotificationsComponent implements OnInit {
         this.getListNotifications(this.pageSize, this.currentPage, this.unreadAll, this.TABS.CAMPAIGN.value, this.searchTypeTrading);
         break;
     }
+    this.globalService.callListAccount();
   }
 
   changeTotalItem(event) {

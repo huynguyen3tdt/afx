@@ -17,7 +17,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { AccountTypeAFX, GroupAccountType } from 'src/app/core/model/user.model';
 import { UserService } from 'src/app/core/services/user.service';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
-import { PL001, PL002, PL003, PL004, PL005, PL006 } from 'src/app/core/constant/user-code-constant';
+import { PL001, PL002, PL003, PL004, PL005, PL006, BIZ_GROUP } from 'src/app/core/constant/user-code-constant';
 import { ModalCanNotAddAccountComponent } from '../modal-can-not-add-account/modal-can-not-add-account.component';
 import { CCFD_IMAGE, ICFD_IMAGE, FX_IMAGE } from 'src/app/core/constant/img-constant';
 import { TranslateService } from '@ngx-translate/core';
@@ -53,6 +53,7 @@ export class HeaderComponent implements OnInit {
   isLateRegis: boolean;
   accountTradingForm: FormGroup;
   currentTime: Date;
+  bizGroup: string;
 
   @ViewChild('modalAddAccountStep1', { static: false }) modalAddAccountStep1: ModalAddAccountStep1Component;
   @ViewChild('modalAddAccountStep2', { static: false }) modalAddAccountStep2: ModalAddAccountStep2Component;
@@ -70,7 +71,7 @@ export class HeaderComponent implements OnInit {
     this.router.events.subscribe((e: any) => {
       if (e instanceof NavigationEnd) {
         this.activeRouter(this.router.url);
-        this.callListAccount();
+        this.globalService.callListAccount();
       }
     });
   }
@@ -78,6 +79,7 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
     this.checkDevice();
     this.locale = localStorage.getItem(LOCALE);
+    this.bizGroup = localStorage.getItem(BIZ_GROUP);
     this.listTradingAccount = JSON.parse(localStorage.getItem(ACCOUNT_IDS));
     this.globalService.recallUnread.subscribe(response => {
       if (response === 'recall') {
