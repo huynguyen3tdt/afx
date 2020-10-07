@@ -16,13 +16,13 @@
                   <li class="nav-item nav-item-account-type dropdown" (click)="openAddAccountModal()">
                     <a href="javascript:;" class="nav-link" role="button" aria-haspopup="true" aria-expanded="false"><i class="icon ion-md-add mr-1"></i><span class="d-none d-md-inline">{{'Add Account' | translate}}</span></a>
                 </li>
-                <!-- <li class="nav-item nav-item-language dropdown d-none d-md-inline-block">
-                    <a href="javascript:;" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">EN</a>
+                <li class="nav-item nav-item-language dropdown d-none d-md-inline-block">
+                    <a href="javascript:;" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{locale == 'en_US' ? 'EN' : 'JP'}}</a>
                     <div class="dropdown-menu dropdown-menu-language dropdown-menu-right">
-                        <a class="dropdown-item active" href="#" data-language="EN"><img src="assets/images/flags/flag-en.svg" class="icon flag" alt=""> English</a>
-                        <a class="dropdown-item" data-language="JP" href="#"><img src="assets/images/flags/flag-jp.svg" class="icon flag" alt=""> Japanese</a>
+                        <a (click)="changeLang('en_US')" [className]="locale == 'en_US' ? 'dropdown-item active' : 'dropdown-item'" class="dropdown-item" data-language="EN"><img src="assets/images/flags/flag-en.svg" class="icon flag" alt=""> English</a>
+                        <a (click)="changeLang('ja_JP')" [className]="locale == 'ja_JP' ? 'dropdown-item active' : 'dropdown-item'" data-language="JP"><img src="assets/images/flags/flag-jp.svg" class="icon flag" alt=""> Japanese</a>
                     </div>
-                </li> -->
+                </li>
                     <li class="nav-item nav-item-dmt5">
                         <a target="_blank" *ngIf="isPc == true" href="https://download.mql5.com/cdn/web/16266/mt5/phillipsecuritiesjp5setup.exe" class="nav-link"><img src="./../../../assets/images/metatrader-5.png"></a>
                         <a target="_blank" *ngIf="isAndroid == true" href="https://download.mql5.com/cdn/mobile/mt5/android?server=PhillipSecuritiesJP-PROD" class="nav-link">
