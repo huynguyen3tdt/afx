@@ -291,7 +291,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
     return arr;
   }
 
-  changeLang(language: string, callAPI: boolean) {
+  changeLang(language: string, callAPI?: boolean) {
     this.translate.use(language);
     localStorage.setItem(LOCALE, language);
     this.locale = localStorage.getItem(LOCALE);
