@@ -23,6 +23,13 @@ export class GlobalService {
   totalNoti = new BehaviorSubject('');
   recallUnread = this.totalNoti.asObservable();
 
+  language = new BehaviorSubject('');
+  recallLanguage = this.language.asObservable();
+
+  changeLanguage(language: string) {
+    this.language.next(language);
+  }
+
   changeStatusNoti(status: string) {
     this.totalNoti.next(status);
   }

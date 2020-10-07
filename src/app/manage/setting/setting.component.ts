@@ -10,6 +10,7 @@ import { UserService } from 'src/app/core/services/user.service';
 import { take } from 'rxjs/operators';
 import { ResetPasswordParam } from 'src/app/core/model/user.model';
 import { MailFlagModel, MailFlagParamModel } from 'src/app/core/model/mail-flag.model';
+import { GlobalService } from 'src/app/core/services/global.service';
 declare var $: any;
 
 @Component({
@@ -35,12 +36,18 @@ export class SettingComponent implements OnInit {
   constructor(private spinnerService: Ng4LoadingSpinnerService,
               private translate: TranslateService,
               private userService: UserService,
-              private authenService: AuthenService) { }
+              private authenService: AuthenService,
+              private globalService: GlobalService) { }
 
   ngOnInit() {
     this.initSettingForm();
     this.openSetting();
     this.getMailFlag();
+    this.globalService.recallLanguage.subscribe(response => {
+      if (response) {
+        this.settingForm.controls.language.setValue(response);
+      }
+    });
   }
 
   initSettingForm() {
@@ -65,7 +72,6 @@ export class SettingComponent implements OnInit {
         this.settingForm.controls.lossCutMail.setValue(this.mailFlag.losscut_email_flg);
         this.editableMargincall = this.mailFlag.company_margincall_flg;
         this.editableLosscut = this.mailFlag.company_losscut_flg;
-
       }
     });
   }
@@ -76,7 +82,9 @@ export class SettingComponent implements OnInit {
     const param = {
       lang: language
     };
-    this.userService.changeLanguage(param).pipe(take(1)).subscribe();
+    this.userService.changeLanguage(param).pipe(take(1)).subscribe((response) => {
+      this.globalService.changeLanguage(language);
+    });
   }
 
   settingSave() {

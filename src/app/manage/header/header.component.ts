@@ -86,6 +86,11 @@ export class HeaderComponent implements OnInit {
         this.getListNotifications(this.pageSize, this.currentPage, this.unreadAll, this.TABS.ALL.value);
       }
     });
+    this.globalService.recallLanguage.subscribe(response => {
+      if (response) {
+        this.locale = response;
+      }
+    });
     if (this.locale === LANGUAGLE.english) {
       this.formatDateYear = EN_FORMATDATE;
     } else if (this.locale === LANGUAGLE.japan) {
@@ -109,6 +114,7 @@ export class HeaderComponent implements OnInit {
     };
     this.userService.changeLanguage(param).pipe(take(1)).subscribe(response => {
       this.locale = localStorage.getItem(LOCALE);
+      this.globalService.changeLanguage(language);
     });
   }
 
