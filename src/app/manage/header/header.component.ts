@@ -17,7 +17,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { AccountTypeAFX, GroupAccountType } from 'src/app/core/model/user.model';
 import { UserService } from 'src/app/core/services/user.service';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
-import { PL001, PL002, PL003, PL004, PL005, PL006 } from 'src/app/core/constant/user-code-constant';
+import { PL001, PL002, PL003, PL004, PL005, PL006, BIZ_GROUP } from 'src/app/core/constant/user-code-constant';
 import { ModalCanNotAddAccountComponent } from '../modal-can-not-add-account/modal-can-not-add-account.component';
 import { CCFD_IMAGE, ICFD_IMAGE, FX_IMAGE } from 'src/app/core/constant/img-constant';
 
@@ -52,6 +52,7 @@ export class HeaderComponent implements OnInit {
   isLateRegis: boolean;
   accountTradingForm: FormGroup;
   currentTime: Date;
+  bizGroup: string;
 
   @ViewChild('modalAddAccountStep1', { static: false }) modalAddAccountStep1: ModalAddAccountStep1Component;
   @ViewChild('modalAddAccountStep2', { static: false }) modalAddAccountStep2: ModalAddAccountStep2Component;
@@ -68,7 +69,7 @@ export class HeaderComponent implements OnInit {
     this.router.events.subscribe((e: any) => {
       if (e instanceof NavigationEnd) {
         this.activeRouter(this.router.url);
-        this.callListAccount();
+        this.globalService.callListAccount();
       }
     });
   }
@@ -76,6 +77,7 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
     this.checkDevice();
     this.locale = localStorage.getItem(LOCALE);
+    this.bizGroup = localStorage.getItem(BIZ_GROUP);
     this.listTradingAccount = JSON.parse(localStorage.getItem(ACCOUNT_IDS));
     this.globalService.recallUnread.subscribe(response => {
       if (response === 'recall') {
@@ -96,24 +98,6 @@ export class HeaderComponent implements OnInit {
     }
     this.initAccountTradingForm();
   }
-
-  callListAccount() {
-    this.spinnerService.show();
-    this.userService.getUserListAccount().subscribe(value => {
-        this.spinnerService.hide();
-        const listAccount = [];
-        if (value.meta.code === 200) {
-          value.data.list_account.map(el => {
-            if (el.trading_account_id) {
-              listAccount.push(el);
-            }
-          });
-          const param = this.globalService.getListAccountIds(this.globalService.sortListAccount(listAccount));
-          localStorage.setItem(ACCOUNT_IDS, JSON.stringify(param));
-        }
-      });
-  }
-
 
   initAccountTradingForm() {
     this.accountTradingForm = this.fb.group({

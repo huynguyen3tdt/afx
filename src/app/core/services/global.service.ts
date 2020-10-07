@@ -1,18 +1,24 @@
 import { Injectable } from '@angular/core';
 import { AccountType } from '../model/report-response.model';
 import { TYPEOFTRANHISTORY, PAYMENTMETHOD, TRADING_TYPE } from '../constant/payment-method-constant';
-import { LOCALE, ACCOUNT_TYPE } from '../constant/authen-constant';
+import { LOCALE, ACCOUNT_TYPE, ACCOUNT_IDS } from '../constant/authen-constant';
 import { LANGUAGLE } from '../constant/language-constant';
 import { AbstractControl, ValidatorFn } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
 import { FX_IMAGE, ICFD_IMAGE, CCFD_IMAGE } from '../constant/img-constant';
+import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
+import { UserService } from './user.service';
 
 const numeral = require('numeral');
 @Injectable({
   providedIn: 'root'
 })
 export class GlobalService {
-  constructor() { }
+  constructor(
+    private spinnerService: Ng4LoadingSpinnerService,
+    private userService: UserService,
+    private globalService: GlobalService,
+  ) { }
 
   totalNoti = new BehaviorSubject('');
   recallUnread = this.totalNoti.asObservable();
@@ -202,5 +208,22 @@ export class GlobalService {
       });
     }
     return listData;
+  }
+
+  callListAccount() {
+    this.spinnerService.show();
+    this.userService.getUserListAccount().subscribe(value => {
+        this.spinnerService.hide();
+        const listAccount = [];
+        if (value.meta.code === 200) {
+          value.data.list_account.map(el => {
+            if (el.trading_account_id) {
+              listAccount.push(el);
+            }
+          });
+          const param = this.getListAccountIds(this.sortListAccount(listAccount));
+          localStorage.setItem(ACCOUNT_IDS, JSON.stringify(param));
+        }
+      });
   }
 }
