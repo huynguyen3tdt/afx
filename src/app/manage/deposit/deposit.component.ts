@@ -427,6 +427,15 @@ export class DepositComponent implements OnInit, OnDestroy {
   }
 
   onSubmitBankTransfer() {
+    let typeErr;
+    let messageErrMaxDeposit;
+    if (this.locale === LANGUAGLE.english) {
+      typeErr = TYPE_ERROR_TOAST_EN;
+      messageErrMaxDeposit = ERROR_MAX_DEPOSIT_EN;
+    } else {
+      typeErr = TYPE_ERROR_TOAST_JP;
+      messageErrMaxDeposit = ERROR_MAX_DEPOSIT_JP;
+    }
     this.modalBankTransferConfirm.hide();
     const param: BankTransferParamModel = {
       trading_account_id: Number(this.tradingAccount.account_id),
@@ -444,6 +453,11 @@ export class DepositComponent implements OnInit, OnDestroy {
         moment(this.bankTransferDetailResult.create_date).tz(this.timeZone).format(this.formatDateHour);
         this.listTran.ngOnChanges();
         this.modalBankTransferResult.show();
+      }
+      if (response.meta.code === 601) {
+        this.toastr.error(messageErrMaxDeposit + this.maxDeposit.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,'), typeErr, {
+          timeOut: TIMEOUT_TOAST
+        });
       }
     });
   }
