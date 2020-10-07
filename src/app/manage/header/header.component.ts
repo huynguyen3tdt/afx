@@ -20,6 +20,7 @@ import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { PL001, PL002, PL003, PL004, PL005, PL006, BIZ_GROUP } from 'src/app/core/constant/user-code-constant';
 import { ModalCanNotAddAccountComponent } from '../modal-can-not-add-account/modal-can-not-add-account.component';
 import { CCFD_IMAGE, ICFD_IMAGE, FX_IMAGE } from 'src/app/core/constant/img-constant';
+import { TranslateService } from '@ngx-translate/core';
 
 declare const $: any;
 declare const TweenMax: any;
@@ -65,6 +66,7 @@ export class HeaderComponent implements OnInit {
               private fb: FormBuilder,
               private userService: UserService,
               private spinnerService: Ng4LoadingSpinnerService,
+              private translate: TranslateService
               ) {
     this.router.events.subscribe((e: any) => {
       if (e instanceof NavigationEnd) {
@@ -98,6 +100,35 @@ export class HeaderComponent implements OnInit {
     }
     this.initAccountTradingForm();
   }
+
+  changeLang(language) {
+    this.translate.use(language);
+    localStorage.setItem(LOCALE, language);
+    const param = {
+      lang: language
+    };
+    this.userService.changeLanguage(param).pipe(take(1)).subscribe(response => {
+      this.locale = localStorage.getItem(LOCALE);
+    });
+  }
+
+  callListAccount() {
+    this.spinnerService.show();
+    this.userService.getUserListAccount().subscribe(value => {
+        this.spinnerService.hide();
+        const listAccount = [];
+        if (value.meta.code === 200) {
+          value.data.list_account.map(el => {
+            if (el.trading_account_id) {
+              listAccount.push(el);
+            }
+          });
+          const param = this.globalService.getListAccountIds(this.globalService.sortListAccount(listAccount));
+          localStorage.setItem(ACCOUNT_IDS, JSON.stringify(param));
+        }
+      });
+  }
+
 
   initAccountTradingForm() {
     this.accountTradingForm = this.fb.group({

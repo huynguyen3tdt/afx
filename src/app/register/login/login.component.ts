@@ -34,6 +34,7 @@ import { Title } from '@angular/platform-browser';
 declare const $: any;
 import { LANGUAGLE } from 'src/app/core/constant/language-constant';
 import { FX_IMAGE, ICFD_IMAGE, CCFD_IMAGE } from 'src/app/core/constant/img-constant';
+import { UserService } from 'src/app/core/services/user.service';
 import { BIZ_GROUP } from 'src/app/core/constant/user-code-constant';
 
 @Component({
@@ -60,6 +61,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
 
   constructor(
     private router: Router,
+    private userService: UserService,
     private authenService: AuthenService,
     private activatedRoute: ActivatedRoute,
     private translate: TranslateService,
@@ -199,6 +201,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
           this.router.navigate(['/reset_password'], {
           });
         }
+        this.changeLang(this.locale, true);
       } else {
         this.isSending = false;
         if (response.meta.code === 102) {
@@ -286,6 +289,20 @@ export class LoginComponent implements OnInit, AfterViewInit {
       return 0;
     });
     return arr;
+  }
+
+  changeLang(language: string, callAPI: boolean) {
+    this.translate.use(language);
+    localStorage.setItem(LOCALE, language);
+    this.locale = localStorage.getItem(LOCALE);
+    if (callAPI) {
+      const param = {
+        lang: language
+      };
+      this.userService.changeLanguage(param).pipe(take(1)).subscribe(response => {
+        this.locale = localStorage.getItem(LOCALE);
+      });
+    }
   }
 
   openKeyboard() {
