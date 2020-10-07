@@ -34,6 +34,7 @@ import { Title } from '@angular/platform-browser';
 declare const $: any;
 import { LANGUAGLE } from 'src/app/core/constant/language-constant';
 import { FX_IMAGE, ICFD_IMAGE, CCFD_IMAGE } from 'src/app/core/constant/img-constant';
+import { BIZ_GROUP } from 'src/app/core/constant/user-code-constant';
 
 @Component({
   selector: 'app-login',
@@ -144,6 +145,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
     this.authenService.login(param).pipe(take(1)).subscribe(response => {
       this.spinnerService.hide();
       if (response.meta.code === 200) {
+        localStorage.setItem(BIZ_GROUP, response.data.biz_group);
         localStorage.setItem(USERNAME_LOGIN, btoa(this.loginFormGroup.value.userName.trim()));
         localStorage.setItem(PASSWORD_LOGIN, btoa(this.loginFormGroup.value.passWord));
         if (this.loginFormGroup.value.remember === true) {

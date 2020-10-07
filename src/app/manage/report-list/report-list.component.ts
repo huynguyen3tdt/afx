@@ -11,6 +11,7 @@ import { LANGUAGLE } from 'src/app/core/constant/language-constant';
 import { BsLocaleService, defineLocale, jaLocale, ModalDirective, BsDatepickerDirective } from 'ngx-bootstrap';
 import { take } from 'rxjs/operators';
 import { Title } from '@angular/platform-browser';
+import { UserService } from 'src/app/core/services/user.service';
 declare var $: any;
 defineLocale('ja', jaLocale);
 
@@ -59,7 +60,10 @@ export class ReportListComponent implements OnInit {
   constructor(private reportservice: ReportService,
               private spinnerService: Ng4LoadingSpinnerService,
               private localeService: BsLocaleService,
-              private titleService: Title) { }
+              private titleService: Title,
+              private globalService: GlobalService,
+              private userService: UserService,
+              ) { }
 
   ngOnInit() {
     this.titleService.setTitle('フィリップMT5 Mypage');
@@ -182,6 +186,7 @@ export class ReportListComponent implements OnInit {
       this.pageSize = 10;
       this.searchReport();
     }
+    this.globalService.callListAccount();
   }
 
   setDate(duration: string) {

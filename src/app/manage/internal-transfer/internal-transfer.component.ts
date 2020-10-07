@@ -4,6 +4,7 @@ import { ACCOUNT_IDS, INTERNAL_TRANSFER } from 'src/app/core/constant/authen-con
 import { TYPEOFTRANHISTORY } from 'src/app/core/constant/payment-method-constant';
 import { ActivatedRoute } from '@angular/router';
 import { take } from 'rxjs/operators';
+import { GlobalService } from 'src/app/core/services/global.service';
 
 @Component({
   selector: 'app-internal-tranfer',
@@ -33,7 +34,10 @@ export class InternalTransferComponent implements OnInit, AfterViewInit {
   accountID: string;
   hideTransfer: boolean;
 
-  constructor(private activatedRoute: ActivatedRoute) { }
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private globalService: GlobalService
+    ) { }
 
   ngAfterViewInit(): void {
   }
@@ -66,7 +70,10 @@ export class InternalTransferComponent implements OnInit, AfterViewInit {
     if (this.showTabHistory) {
       this.accountID = 'all';
     }
+    this.globalService.callListAccount();
   }
+
+
   goToTabHistory(event) {
     this.accountID = event.accountID;
     this.showTabHistory = true;

@@ -19,6 +19,7 @@ export interface LoginResponseModel {
         margin_stop_out: number;
         num_login?: number;
         fx_internal_transfer_flg: boolean;
+        biz_group?: string;
     };
 }
 
