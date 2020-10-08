@@ -14,7 +14,8 @@ import { take } from 'rxjs/operators';
 import { GlobalService } from 'src/app/core/services/global.service';
 import { Title } from '@angular/platform-browser';
 import { UserService } from 'src/app/core/services/user.service';
-import { FX_GROUP, I_CFD_GROUP, C_CFD_GROUP } from 'src/app/core/constant/new-group-constant';
+import { FX_GROUP, I_CFD_GROUP, C_CFD_GROUP, B2B_GROUP } from 'src/app/core/constant/new-group-constant';
+import { BIZ_GROUP } from 'src/app/core/constant/user-code-constant';
 declare var $: any;
 
 @Component({
@@ -193,7 +194,11 @@ export class NotificationsComponent implements OnInit {
       if (item.account_type === ACCOUNT_TYPE.ACCOUNT_FX.account_type) {
         this.showFilterFX = true;
         if (this.filterFX) {
-          this.newsGroup += FX_GROUP + ',';
+          if (localStorage.getItem(BIZ_GROUP) === 'it') {
+            this.newsGroup += FX_GROUP + ',';
+          } else {
+            this.newsGroup += B2B_GROUP + ',';
+          }
         }
       }
       if (item.account_type === ACCOUNT_TYPE.ACCOUNT_CFDIndex.account_type) {

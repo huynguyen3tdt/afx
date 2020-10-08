@@ -6,7 +6,7 @@
 // }
 
 ::ng-deep .o_image.o_we_selected_image {
-    background-image: url("../../../assets/images/download.png") !important;
+    background-image: url("../../../assets/images/download.jpg") !important;
     background-position: 0 0;
     background-repeat: no-repeat;
     background-size: auto 24px;
@@ -17,6 +17,6 @@
 }
 
 ::ng-deep .o_image.o_we_selected_image::after {
-    content: "download";
+    content: " ";
     white-space: pre;
 }
