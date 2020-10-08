@@ -14,6 +14,7 @@ import { take } from 'rxjs/operators';
 import { GlobalService } from 'src/app/core/services/global.service';
 import { Title } from '@angular/platform-browser';
 import { UserService } from 'src/app/core/services/user.service';
+import { FX_GROUP, I_CFD_GROUP, C_CFD_GROUP } from 'src/app/core/constant/new-group-constant';
 declare var $: any;
 
 @Component({
@@ -68,7 +69,7 @@ export class NotificationsComponent implements OnInit {
   showFilterFX: boolean;
   showFilterICFD: boolean;
   showFilterCCFD: boolean;
-  searchTypeTrading: string;
+  newsGroup: string;
 
   constructor(
     private notificationsService: NotificationsService,
@@ -107,7 +108,7 @@ export class NotificationsComponent implements OnInit {
     }
     if (this.accountID) {
       this.checkSearchTypeTrading();
-      this.getListNotifications(this.pageSize, this.currentPage, this.unreadAll, this.TABS.ALL.value, this.searchTypeTrading);
+      this.getListNotifications(this.pageSize, this.currentPage, this.unreadAll, this.TABS.ALL.value, this.newsGroup);
       this.getTotalNotification();
     }
   }
@@ -187,30 +188,30 @@ export class NotificationsComponent implements OnInit {
   }
 
   checkSearchTypeTrading() {
-    this.searchTypeTrading = '';
+    this.newsGroup = '';
     this.listTradingAccount.forEach(item => {
       if (item.account_type === ACCOUNT_TYPE.ACCOUNT_FX.account_type) {
         this.showFilterFX = true;
         if (this.filterFX) {
-          this.searchTypeTrading += item.account_id + ',';
+          this.newsGroup += FX_GROUP + ',';
         }
       }
       if (item.account_type === ACCOUNT_TYPE.ACCOUNT_CFDIndex.account_type) {
         this.showFilterICFD = true;
         if (this.filterICFD) {
-          this.searchTypeTrading += item.account_id + ',';
+          this.newsGroup += I_CFD_GROUP + ',';
         }
       }
       if (item.account_type === ACCOUNT_TYPE.ACCOUNT_CFDCom.account_type) {
         this.showFilterCCFD = true;
         if (this.filterCCFD) {
-          this.searchTypeTrading += item.account_id + ',';
+          this.newsGroup += C_CFD_GROUP + ',';
         }
       }
     });
-    if (this.searchTypeTrading) {
-      if (this.searchTypeTrading[this.searchTypeTrading.length - 1] === ',') {
-        this.searchTypeTrading = this.searchTypeTrading.substr(0, this.searchTypeTrading.length - 1);
+    if (this.newsGroup) {
+      if (this.newsGroup[this.newsGroup.length - 1] === ',') {
+        this.newsGroup = this.newsGroup.substr(0, this.newsGroup.length - 1);
       }
     }
   }
@@ -257,19 +258,19 @@ export class NotificationsComponent implements OnInit {
     switch (type) {
       case this.TABS.ALL.value:
         this.tab = this.TABS.ALL.name;
-        this.getListNotifications(this.pageSize, this.currentPage, this.unreadAll, this.TABS.ALL.value, this.searchTypeTrading);
+        this.getListNotifications(this.pageSize, this.currentPage, this.unreadAll, this.TABS.ALL.value, this.newsGroup);
         break;
       case this.TABS.IMPORTANT.value:
         this.tab = this.TABS.IMPORTANT.name;
-        this.getListNotifications(this.pageSize, this.currentPage, this.unreadAll, this.TABS.IMPORTANT.value, this.searchTypeTrading);
+        this.getListNotifications(this.pageSize, this.currentPage, this.unreadAll, this.TABS.IMPORTANT.value, this.newsGroup);
         break;
       case this.TABS.NOTIFICATIONS.value:
         this.tab = this.TABS.NOTIFICATIONS.name;
-        this.getListNotifications(this.pageSize, this.currentPage, this.unreadAll, this.TABS.NOTIFICATIONS.value, this.searchTypeTrading);
+        this.getListNotifications(this.pageSize, this.currentPage, this.unreadAll, this.TABS.NOTIFICATIONS.value, this.newsGroup);
         break;
       case this.TABS.CAMPAIGN.value:
         this.tab = this.TABS.CAMPAIGN.name;
-        this.getListNotifications(this.pageSize, this.currentPage, this.unreadAll, this.TABS.CAMPAIGN.value, this.searchTypeTrading);
+        this.getListNotifications(this.pageSize, this.currentPage, this.unreadAll, this.TABS.CAMPAIGN.value, this.newsGroup);
         break;
     }
     this.globalService.callListAccount();
@@ -284,16 +285,16 @@ export class NotificationsComponent implements OnInit {
   searchByTab() {
     switch (this.tab) {
       case this.TABS.ALL.name:
-        this.getListNotifications(this.pageSize, this.currentPage, this.unreadAll, this.TABS.ALL.value, this.searchTypeTrading);
+        this.getListNotifications(this.pageSize, this.currentPage, this.unreadAll, this.TABS.ALL.value, this.newsGroup);
         break;
       case this.TABS.IMPORTANT.name:
-        this.getListNotifications(this.pageSize, this.currentPage, this.unreadAll, this.TABS.IMPORTANT.value, this.searchTypeTrading);
+        this.getListNotifications(this.pageSize, this.currentPage, this.unreadAll, this.TABS.IMPORTANT.value, this.newsGroup);
         break;
       case this.TABS.NOTIFICATIONS.name:
-        this.getListNotifications(this.pageSize, this.currentPage, this.unreadAll, this.TABS.NOTIFICATIONS.value, this.searchTypeTrading);
+        this.getListNotifications(this.pageSize, this.currentPage, this.unreadAll, this.TABS.NOTIFICATIONS.value, this.newsGroup);
         break;
       case this.TABS.CAMPAIGN.name:
-        this.getListNotifications(this.pageSize, this.currentPage, this.unreadAll, this.TABS.CAMPAIGN.value, this.searchTypeTrading);
+        this.getListNotifications(this.pageSize, this.currentPage, this.unreadAll, this.TABS.CAMPAIGN.value, this.newsGroup);
         break;
     }
   }

@@ -19,7 +19,7 @@ export class NotificationsService {
     private envConfigService: EnvConfigService) { }
 
   getListNotifications(pageSize: number,
-                       pageNumber: number, unread: boolean, type?: number, listAccountId?: string): Observable<PageNotificationResponse> {
+                       pageNumber: number, unread: boolean, type?: number, newsGroup?: string): Observable<PageNotificationResponse> {
     let URL = '';
     let checkUnread = 0;
     if (unread === false) {
@@ -32,8 +32,8 @@ export class NotificationsService {
     } else {
       URL = `?not_read=${checkUnread}&page_size=${pageSize}&page=${pageNumber}`;
     }
-    if (listAccountId) {
-      URL += `&list_account_id=${listAccountId}`;
+    if (newsGroup) {
+      URL += `&news_group=${newsGroup}`;
     }
     return this.httpClient.get(`${this.envConfigService.getConfig()}/${AppSettings.API_GET_LIST_NOTIFICATIONS}` + URL)
       .pipe(
