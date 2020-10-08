@@ -236,7 +236,40 @@ export class NotificationsComponent implements OnInit {
 
   pageChanged(event) {
     this.currentPage = event.page;
-    this.searchByTab();
+    // this.searchByTab();
+    let tabName;
+    switch (this.tab) {
+      case this.TABS.ALL.name:
+        tabName = this.TABS.ALL.value;
+        break;
+      case this.TABS.IMPORTANT.name:
+        tabName = this.TABS.IMPORTANT.value;
+        break;
+      case this.TABS.NOTIFICATIONS.name:
+        tabName = this.TABS.NOTIFICATIONS.value;
+        break;
+      case this.TABS.CAMPAIGN.name:
+        tabName = this.TABS.CAMPAIGN.value;
+        break;
+    }
+    this.spinnerService.show();
+    this.notificationsService.getListNotifications(this.pageSize,
+      this.currentPage, this.unreadAll, tabName, this.newsGroup).pipe(take(1)).subscribe(response => {
+      if (response.meta.code === 200) {
+        this.pageNotification = response;
+        this.listNotification = this.pageNotification.data.results;
+        this.listNotification.forEach(item => {
+          item.publish_date += TIMEZONESERVER;
+          item.publish_date = moment(item.publish_date).tz(this.timeZone).format(this.formatDateHour);
+        });
+        this.totalItem = this.pageNotification.data.count;
+        this.totalPage = (this.totalItem / this.pageSize) * 10;
+        this.spinnerService.hide();
+        this.recordFrom = this.pageSize * (this.currentPage - 1) + 1;
+        this.recordTo = this.recordFrom + (this.listNotification.length - 1);
+      }
+    });
+    this.getTotalNotification();
   }
 
   checkTab(type: number) {
