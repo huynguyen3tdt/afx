@@ -254,7 +254,11 @@ export class HeaderComponent implements OnInit {
     this.userService.getUserListAccount().pipe(take(1)).subscribe(response => {
       this.spinnerService.hide();
       if (response.meta.code === 200) {
-        this.initAccountTradingForm();
+        this.accountTradingForm = this.fb.group({
+          afxAccount: [false],
+          cfdAccount: [false],
+          cfdCommunityAccount: [false],
+        });
         response.data.list_account.map(value => {
             switch (value.account_type) {
               case 1 :
