@@ -310,13 +310,13 @@
                             {{transferResult?.currency}}</td>
                     </tr>
                     <tr>
-                        <td width="180">{{'Createdate time' | translate}}</td>
+                        <td width="180">{{'Create date time' | translate}}</td>
                         <td>{{transferResult?.create_date}}</td>
                     </tr>
                     </tbody>
                 </table>
                 <!-- <p *ngIf="checkWithDrawal == true">{{'It is being processed within 3-5 business day.' | translate}}</p> -->
-                <div *ngIf="this.transferResult?.status === this.transferStatus.in_progress">
+                <div *ngIf="this.transferResult?.status == transferStatus?.PENDING?.key">
                     <div>{{'There are some problem when makes internal transfer. Please contact customer support' | translate}}</div>
                 </div>
 

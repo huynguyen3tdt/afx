@@ -20,3 +20,9 @@
     content: " ";
     white-space: pre;
 }
+
+@media screen and (max-width: 600px) {
+    .trading_id {
+      width: 50%;
+    }
+}

@@ -50,6 +50,7 @@ export class ErrorInterceptor implements HttpInterceptor {
             });
           }
           if (err.status === 423) {
+            alert('Maintain Mode');
             window.location.reload();
           }
           return throwError(err.error);
