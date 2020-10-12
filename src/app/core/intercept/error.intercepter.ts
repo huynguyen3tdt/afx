@@ -49,6 +49,9 @@ export class ErrorInterceptor implements HttpInterceptor {
               timeOut: TIMEOUT_TOAST
             });
           }
+          if (err.status === 423) {
+            window.location.reload();
+          }
           return throwError(err.error);
         }));
     }
