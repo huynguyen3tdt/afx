@@ -84,6 +84,10 @@
                 class="invalid-mess">
                 {{'Password requires 8 characters and contain at least two of three types of characters (lower case, upper case and digits)' | translate}}
             </div>
+            <div *ngIf="messageCanotChangePassword != ''"
+                class="invalid-mess">
+                {{messageCanotChangePassword}}
+            </div>
         </div>
     </div>
 

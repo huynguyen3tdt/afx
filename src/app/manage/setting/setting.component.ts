@@ -31,7 +31,7 @@ export class SettingComponent implements OnInit {
   mailFlag: MailFlagModel;
   editableLosscut: boolean;
   editableMargincall: boolean;
-
+  messageCanotChangePassword: string;
 
   constructor(private spinnerService: Ng4LoadingSpinnerService,
               private translate: TranslateService,
@@ -91,6 +91,7 @@ export class SettingComponent implements OnInit {
     this.isSubmittedSetting = true;
     this.successPassword = false;
     this.invalidPassword = false;
+    this.messageCanotChangePassword = '';
     if (this.settingForm.invalid) {
       this.errorMessage = false;
       return;
@@ -116,6 +117,8 @@ export class SettingComponent implements OnInit {
         this.invalidPassword = false;
       } else if (response.meta.code === 103) {
         this.invalidPassword = true;
+      } else if (response.meta.code === 136) {
+        this.messageCanotChangePassword = response.meta.message;
       }
     });
   }
