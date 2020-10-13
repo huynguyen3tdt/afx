@@ -9,4 +9,5 @@ document.write( '    <script src=\"assets/js/jquery.matchHeight-min.js\"></scrip
 document.write( '    <script src=\"assets/js/jquery.inputmask.min.js\"></script>\n' );
 document.write( '    <script src=\"assets/js/smooth-scroll.min.js\"></script>\n' );
 document.write( '    <script src=\"assets/js/js.cookie.min.js\"></script>\n' );
+document.write( '    <script src=\"assets/js/bootstrap-multiselect.js\"></script>\n' );
 document.write( '    <!-- END Include Js Libs -->' );

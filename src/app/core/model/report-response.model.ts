@@ -33,6 +33,7 @@ export interface ReportIDS {
   write_date: string;
   create_uid: number;
   write_uid: number;
+  account_type: string;
 }
 
 export interface AccountType {
@@ -40,6 +41,7 @@ export interface AccountType {
   account_id: string;
   value: string;
   currency: string;
+  img_type_account?: string;
 }
 
 export interface Report {

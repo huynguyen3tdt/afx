@@ -7,12 +7,13 @@
                     {{'Trading Accounts' | translate}}
                 </div>
                 <div class="d-inline-block">
-                    <select [(ngModel)]="accountID" disabled class="form-control form-control-sm mb-0" (change)="changeTradingAccount()"
-                        style="min-width: 160px;">
+                    <select [(ngModel)]="accountID" class="form-control form-control-sm mb-0"
+                        (change)="changeTradingAccount()" style="min-width: 160px;">
                         <option *ngFor="let item of listTradingAccount" value="{{item?.account_id}}">{{item?.value}}
                         </option>
                     </select>
                 </div>
+                <img *ngIf="tradingAccount" class="ml-1 pt-1" src="{{tradingAccount?.img_type_account}}" width="45" height="35">
             </div>
             <div>{{'Currency:' | translate}}<strong> {{tradingAccount?.currency}}</strong></div>
         </div>
@@ -32,8 +33,8 @@
                             <strong>{{withdrawAmount?.withdraw_amount_pending | number}}</strong>
                         </td>
                         <td colspan="7">
-                            <a href="javascript:;" routerLink="/manage/withdrawHistory/" target="_blank"
-                                [queryParams]="{tab: 'detailwithdrawal'}"> {{'Detail' | translate}}</a>
+                            <a href="javascript:;" routerLink="/manage/internal/" target="_blank"
+                                [queryParams]="{tab: 'detailwithdrawal', accountID: accountID}"> {{'Detail' | translate}}</a>
                         </td>
                     </tr>
                     <tr>

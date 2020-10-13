@@ -5,6 +5,26 @@ export interface WithdrawRequestModel {
   data: Mt5Model;
 }
 
+export interface TransferResponseModel {
+  meta: MetaResponseModel;
+  data: TransferResulteModel;
+}
+
+export interface BankTransferReponseModel {
+  meta: MetaResponseModel;
+  data: postWithdrawModel;
+}
+
+export interface ListTransferResponseModel {
+  meta: MetaResponseModel;
+  data: {
+    next: string;
+    previous: string;
+    count: number;
+    results: Array<TransferResulteModel>;
+  };
+}
+
 export interface WithdrawHistoryModel {
   meta: MetaResponseModel;
   data: BankInforModel;
@@ -45,7 +65,9 @@ export interface Mt5Model {
   leverage: number;
   lastest_time: string;
   unrealize_pl: number;
-  currency: string;
+  currency?: string;
+  account_id?: string;
+  img_type_account?: string;
 }
 
 export interface BankInforModel {
@@ -74,6 +96,8 @@ export interface TransactionModel {
   funding_type: string;
   status: number;
   name: string;
+  partner_account?: number;
+  img_account_type?: string;
 }
 
 export interface WithdrawAmountModel {
@@ -92,6 +116,28 @@ export interface postWithdrawModel {
   status: number;
 }
 
+export interface TransferModel {
+  from_account_id: number;
+  to_account_id: number;
+  amount: number;
+  device_type: string;
+}
+
+export interface TransferResulteModel {
+  id?: number;
+  amount: number;
+  currency: string;
+  method: string;
+  status: string;
+  transfer_id: number;
+  create_date: string;
+  from_trading_account_id: number;
+  to_trading_account_id: number;
+  sent_account_type?: string;
+  receive_account_type?: string;
+  img_send_type?: string;
+  img_receive_type?: string;
+}
 
 
 

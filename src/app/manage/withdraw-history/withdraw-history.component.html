@@ -7,8 +7,8 @@
     </nav> -->
     <div class="content-wrapper">
         <div class="content-inner">
-            <div class="row">
-                <div class="col-md-3 col-lg-2">
+            <!-- <div class="row"> -->
+            <!-- <div class="col-md-3 col-lg-2">
                     <div class="nav flex-md-column nav-pills mb-3 filter-nav" id="v-pills-tab" role="tablist"
                         aria-orientation="vertical">
                         <a class="nav-link active" #allTab id="v-pills-all-tab" data-toggle="pill" href="#v-pills-all"
@@ -21,125 +21,172 @@
                             href="#v-pills-all" (click)="checkTab(TABS.WITHDRAWAL.value, 'call')" role="tab"
                             aria-controls="v-pills-withdrawal" aria-selected="false">{{'Withdrawal History' | translate}}</a>
                     </div>
-                </div>
-                <div class="col-md-9 col-lg-10">
-                    <div class="tab-content" id="v-pills-tabContent">
-                        <div class="tab-pane fade show active" id="v-pills-all" role="tabpanel" aria-labelledby="v-pills-all-tab">
-                            <h3 class="mb-3" *ngIf="tab == 'ALL'"><i class="icon ion-md-time text-secondary"></i> {{'Deposit and Withdrawal History' | translate}}</h3>
-                            <h3 class="mb-3" *ngIf="tab == 'DEPOSIT'"><i class="icon ion-md-time text-secondary"></i> {{'Deposit History' | translate}}</h3>
-                            <h3 class="mb-3" *ngIf="tab == 'WITHDRAWAL'"><i class="icon ion-md-time text-secondary"></i> {{'Withdrawal History' | translate}}</h3>
-                            <div [formGroup]="searchForm" class="form mb-3 form-search-box">
-                                <div class="d-lg-flex justify-content-between">
-                                    <div class="d-md-flex flex-grow-1 mr-lg-2">
-                                        <div class="form-group mr-md-1 flex-grow-1">
-                                            <label class="label d-block mb-0 mr-2">{{'Trading account' | translate}}</label>
-                                            <select disabled formControlName="tradingAccount" (change)="changeTradingAccount()" class="form-control form-control-sm">
-                                                <option *ngFor="let item of listTradingAccount"
-                                                    value="{{item?.account_id}}">
-                                                    {{item?.value}}</option>
-                                            </select>
-                                        </div>
-                                        <div class="form-group ml-md-1 flex-grow-1">
-                                            <label class="label d-block mb-0">{{'Status' | translate}}</label>
-                                            <p-multiSelect [defaultLabel]="defaultLabel" [options]="STATUS" [maxSelectedLabels]="1"
-                                                [panelStyle]="{minWidth:'20em'}" formControlName="status" (onChange)="changeStatus()">
-                                        
-                                            </p-multiSelect>
+                </div> -->
+            <!-- <div class="col-md-12 col-lg-12"> -->
+            <div class="tab-content p-0" id="v-pills-tabContent">
+                <div class="tab-pane fade show active" id="v-pills-all" role="tabpanel"
+                    aria-labelledby="v-pills-all-tab">
+                    <h3 class="mb-3" *ngIf="tab == 'ALL'"><i class="icon ion-md-time text-secondary"></i>
+                        {{'Deposit and Withdrawal History' | translate}}</h3>
+                    <h3 class="mb-3" *ngIf="tab == 'DEPOSIT'"><i class="icon ion-md-time text-secondary"></i>
+                        {{'Deposit History' | translate}}</h3>
+                    <h3 class="mb-3" *ngIf="tab == 'WITHDRAWAL'"><i class="icon ion-md-time text-secondary"></i>
+                        {{'Withdrawal History' | translate}}</h3>
+                    <div [formGroup]="searchForm" class="form mb-3 form-search-box">
+                        <div class="d-lg-flex justify-content-between">
+                            <div class="d-md-flex flex-grow-1 mr-lg-2">
+                                <div class="form-group mr-md-1 flex-grow-1 min-150">
+                                    <label class="label d-block mb-0 mr-2">{{'Trading account' | translate}}</label>
+                                    <select formControlName="tradingAccount" (change)="changeTradingAccount()"
+                                        class="form-control form-control-sm">
+                                        <option *ngFor="let item of listTradingAccount" value="{{item?.account_id}}">
+                                            {{item?.value}}</option>
+                                    </select>
+                                </div>
+                                <div class="form-group mr-md-1 flex-grow-1 min-150"> <label
+                                        class="label d-block mb-0 mr-2">{{'Type' | translate}}</label> 
+                                        <select formControlName="type" (change)="changeType($event.target.value)" class="form-control form-control-sm">
+                                            <option value="{{TABS.ALL.value}}">{{'All' | translate}}</option>
+                                            <option value="{{TABS.DEPOSIT.value}}">{{'Deposit History' | translate}}</option>
+                                            <option value="{{TABS.WITHDRAWAL.value}}">{{'Withdrawal History' | translate}}</option>
+                                        </select>
+                                </div>
+                                <div class="form-group ml-md-1 flex-grow-1">
+                                    <label class="label d-block mb-0">{{'Status' | translate}}</label>
+                                    <p-multiSelect [defaultLabel]="defaultLabel" [options]="STATUS"
+                                        [maxSelectedLabels]="1" [panelStyle]="{minWidth:'20em'}"
+                                        formControlName="status" (onChange)="changeStatus()">
+
+                                    </p-multiSelect>
+                                </div>
+                            </div>
+                            <div class="d-lg-flex">
+                                <div class="d-md-flex">
+                                    <div class="form-group flex-grow-1 mr-md-2">
+                                        <label class="label d-none d-md-block mb-0">&nbsp;</label>
+                                        <div class="btn-group d-flex">
+                                            <button type="button" (click)="setDate(DURATION.YEAR)"
+                                                class="btn btn-sm btn-outline-secondary">{{'Y' | translate}}</button>
+                                            <button type="button" (click)="setDate(DURATION.MONTH)"
+                                                class="btn btn-sm btn-outline-secondary">{{'M' | translate}}</button>
+                                            <button type="button" (click)="setDate(DURATION.DAY)"
+                                                class="btn btn-sm btn-outline-secondary"
+                                                style="width: 30px">{{'D' | translate}}</button>
                                         </div>
                                     </div>
-                                    <div class="d-lg-flex">
-                                        <div class="d-md-flex">
-                                            <div class="form-group flex-grow-1 mr-md-2">
-                                                    <label class="label d-none d-md-block mb-0">&nbsp;</label>
-                                                    <div class="btn-group d-flex">
-                                                        <button type="button" (click)="setDate(DURATION.YEAR)" class="btn btn-sm btn-outline-secondary">{{'Y' | translate}}</button>
-                                                        <button type="button" (click)="setDate(DURATION.MONTH)" class="btn btn-sm btn-outline-secondary">{{'M' | translate}}</button>
-                                                        <button type="button" (click)="setDate(DURATION.DAY)" class="btn btn-sm btn-outline-secondary" style="width: 30px">{{'D' | translate}}</button>
-                                                    </div>
+                                    <div class="d-flex">
+                                        <div class="form-group mr-1 flex-grow-1">
+                                            <label class="label d-block mb-0">{{'From' | translate}} </label>
+                                            <div class="input-wrapper">
+                                                <input type="text" name="start-date"
+                                                    class="form-control form-control-sm date" placeholder="YYYY/MM/DD"
+                                                    #dp="bsDatepicker" bsDatepicker formControlName="fromDate"
+                                                    (bsValueChange)="onValueChangeFrom($event)"
+                                                    (onShown)="onShowPicker($event, 'From')" autocomplete="off"
+                                                    [bsConfig]="{ showWeekNumbers:false, dateInputFormat: formatDateYear, containerClass: 'theme-blue' }">
+                                                <button type="button" class="btn btn-none btn-sm" (click)="dp.toggle()"
+                                                    [attr.aria-expanded]="dp.isOpen"><i
+                                                        class="icon ion-md-calendar"></i></button>
                                             </div>
-                                            <div class="d-flex">
-                                                <div class="form-group mr-1 flex-grow-1">
-                                                    <label class="label d-block mb-0">{{'From' | translate}} </label>
-                                                    <div class="input-wrapper">
-                                                        <input type="text" name="start-date" class="form-control form-control-sm date" placeholder="YYYY/MM/DD" #dp="bsDatepicker" bsDatepicker formControlName="fromDate"
-                                                         (bsValueChange)="onValueChangeFrom($event)" (onShown)="onShowPicker($event, 'From')" autocomplete="off" 
-                                                         [bsConfig]="{ showWeekNumbers:false, dateInputFormat: formatDateYear, containerClass: 'theme-blue' }">
-                                                        <button type="button" class="btn btn-none btn-sm" (click)="dp.toggle()" [attr.aria-expanded]="dp.isOpen"><i
-                                                                class="icon ion-md-calendar"></i></button>
-                                                    </div>
-                                                    <div *ngIf="showErrorDate == true" class="invalid-mess">
-                                                        {{'Period is incorrect, the to date must be greater than the from date' | translate}}
-                                                    </div>
-                                                </div>
+                                            <div *ngIf="showErrorDate == true" class="invalid-mess">
+                                                {{'Period is incorrect, the to date must be greater than the from date' | translate}}
                                             </div>
-                                            <div class="form-group ml-1 flex-grow-1">
-                                                    <label class="label d-block mb-0">{{'To' | translate}} </label>
-                                                    <div class="input-wrapper">
-                                                        <input type="text" name="end-date" class="form-control form-control-sm date" placeholder="YYYY/MM/DD" #dp2="bsDatepicker" bsDatepicker formControlName="toDate"
-                                                         autocomplete="off" (bsValueChange)="onValueChangeTo($event)" (onShown)="onShowPicker($event, 'To')"
-                                                         [bsConfig]="{ showWeekNumbers:false, dateInputFormat: formatDateYear, containerClass: 'theme-blue' }">
-                                                        <button type="button" class="btn btn-none btn-sm" (click)="dp2.toggle()" [attr.aria-expanded]="dp2.isOpen"><i
-                                                                class="icon ion-md-calendar"></i></button>
-                                                    </div>
-                                            </div>
-                                            <!-- <div class="col-md-3 col-lg-2">
+                                        </div>
+                                    </div>
+                                    <div class="form-group ml-1 flex-grow-1">
+                                        <label class="label d-block mb-0">{{'To' | translate}} </label>
+                                        <div class="input-wrapper">
+                                            <input type="text" name="end-date" class="form-control form-control-sm date"
+                                                placeholder="YYYY/MM/DD" #dp2="bsDatepicker" bsDatepicker
+                                                formControlName="toDate" autocomplete="off"
+                                                (bsValueChange)="onValueChangeTo($event)"
+                                                (onShown)="onShowPicker($event, 'To')"
+                                                [bsConfig]="{ showWeekNumbers:false, dateInputFormat: formatDateYear, containerClass: 'theme-blue' }">
+                                            <button type="button" class="btn btn-none btn-sm" (click)="dp2.toggle()"
+                                                [attr.aria-expanded]="dp2.isOpen"><i
+                                                    class="icon ion-md-calendar"></i></button>
+                                        </div>
+                                    </div>
+                                    <!-- <div class="col-md-3 col-lg-2">
                                                 <div class="form-group">
                                                     <label class="label d-none d-lg-block mb-0">&nbsp;</label>
                                                     <button (click)="searchTranHistory()" class="btn btn-success btn-search btn-block btn-sm">{{'Apply' | translate}}</button>
                                                 </div>
                                             </div> -->
-                                        </div>
-                                        <div class="form-group ml-lg-2">
-                                            <label class="label d-none d-lg-block mb-0">&nbsp;</label>
-                                            <button (click)="searchTranHistory()" class="btn btn-success btn-search btn-block btn-sm pl-4 pr-4"><span class="keep-all">{{'Apply' | translate}}</span></button>
-                                            <div class="d-block d-lg-none">&nbsp;</div>
-                                        </div>
-
-
-                                    </div>
                                 </div>
+                                <div class="form-group ml-lg-2">
+                                    <label class="label d-none d-lg-block mb-0">&nbsp;</label>
+                                    <button (click)="searchTranHistory()"
+                                        class="btn btn-success btn-search btn-block btn-sm pl-4 pr-4"><span
+                                            class="keep-all">{{'Apply' | translate}}</span></button>
+                                    <div class="d-block d-lg-none">&nbsp;</div>
+                                </div>
+
+
                             </div>
-                            <!-- END Filter Banr -->
-                            <div class="text-right small text-secondary">{{'Currency:' | translate}}
-                                <strong>{{tradingAccount?.currency}}</strong></div>
-                            <div class="table-responsive">
-                                <table class="table table-sm table-hover mb-3" cellspacing="0" cellpadding="0">
-                                    <thead>
-                                        <tr>
-                                            <th class="border-top-0" width="140"><span class="keep-all">{{'Transaction ID' | translate}}</span></th>
-                                            <th class="border-top-0"><span class="keep-all">{{'Date' | translate}}</span></th>
-                                            <th class="border-top-0"><span class="keep-all">{{'Type' | translate}}</span></th>
-                                            <th class="border-top-0"><span class="keep-all">{{'Payment Method' | translate}}</span></th>
-                                            <th class="border-top-0 text-right" width="50"><span class="keep-all">{{'Amount' | translate}}</span></th>
-                                            <th class="border-top-0 text-right" width="140"><span class="keep-all">{{'Status' | translate}}</span>
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <ng-container>
-                                            <tr *ngFor="let item of listReport">
-                                                <td><a href="javascript:;" (click)="openDetail(item?.id)">{{item?.id}}</a></td>
-                                                <td><a (click)="openDetail(item?.id)">{{item?.create_date}}</a></td>
-                                                <td><a (click)="openDetail(item?.id)"><span class="keep-all">{{item?.funding_type}}</span></a></td>
-                                                <td><a (click)="openDetail(item?.id)"><span class="keep-all">{{item?.method}}</span></a></td>
-                                                <td class="text-right">
-                                                    <a (click)="openDetail(item?.id)">{{item?.amount | number}}</a></td>
-                                                <!-- <td *ngIf="item?.status == transactionStatus.NEW.key" class="text-right"><span
+                        </div>
+                    </div>
+                    <!-- END Filter Banr -->
+                    <!-- <div class="text-right small text-secondary">{{'Currency:' | translate}}
+                        <strong>{{tradingAccount?.currency}}</strong></div> -->
+                    <div class="table-responsive">
+                        <table class="table table-sm table-hover mb-3" cellspacing="0" cellpadding="0">
+                            <thead>
+                                <tr>
+                                    <th class="border-top-0" width="140"><span
+                                            class="keep-all">{{'Transaction ID' | translate}}</span></th>
+                                    <th class="border-top-0"><span class="keep-all">{{'Date' | translate}}</span></th>
+                                    <th class="border-top-0"><span class="keep-all">{{'Trading account' | translate}}</span></th>
+                                    <th class="border-top-0"><span class="keep-all">{{'Type' | translate}}</span></th>
+                                    <th class="border-top-0"><span
+                                            class="keep-all">{{'Payment Method' | translate}}</span></th>
+                                    <th class="border-top-0 text-right" width="50"><span
+                                            class="keep-all">{{'Amount' | translate}}</span></th>
+                                    <th class="border-top-0 text-right" width="50"><span
+                                        class="keep-all">{{'Currency' | translate}}</span></th>
+                                    <th class="border-top-0 text-right" width="140"><span
+                                            class="keep-all">{{'Status' | translate}}</span>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <ng-container>
+                                    <tr *ngFor="let item of listReport">
+                                        <td><a href="javascript:;" (click)="openDetail(item?.id)">{{item?.id}}</a></td>
+                                        <td><a (click)="openDetail(item?.id)">{{item?.create_date}}</a></td>
+                                        <td><a (click)="openDetail(item?.id)">{{item?.trading_account_id | convertTradingType}}</a>
+                                            <img class="ml-0" src="{{item?.img_account_type}}" width="37" height="20">
+                                        </td>
+                                        <td><a (click)="openDetail(item?.id)"><span
+                                                    class="keep-all">{{item?.funding_type}}</span></a></td>
+                                        <td><a (click)="openDetail(item?.id)"><span
+                                                    class="keep-all">{{item?.method}}</span></a></td>
+                                        <td class="text-right">
+                                            <a (click)="openDetail(item?.id)">{{item?.amount | number}}</a></td>
+                                        <td class="text-right">
+                                            <a (click)="openDetail(item?.id)">{{item?.currency}}</a></td>
+                                        <!-- <td *ngIf="item?.status == transactionStatus.NEW.key" class="text-right"><span
                                                         class="text-info"><i class="icon ion-md-hourglass"></i>
                                                         <a (click)="openDetail(item?.id)">{{'New' | translate}}</a></span></td> -->
-                                                <td *ngIf="item?.status == transactionStatus.PENDING.key" class="text-right"><span
-                                                        class="text-info keep-all"><i class="icon ion-md-hourglass"></i>
-                                                        <a (click)="openDetail(item?.id)">{{'In-progress' | translate}}</a></span></td>
-                                                <td *ngIf="item?.status == transactionStatus.CANCEL.key" class="text-right">
-                                                    <span class="keep-all"><a (click)="openDetail(item?.id)">{{'Cancel' | translate}} </a></span></td>
-                                                <td *ngIf="item?.status == transactionStatus.COMPLETE.key" class="text-right"><span class="text-success keep-all"><i class="icon ion-md-checkmark"></i>
-                                                  <a  (click)="openDetail(item?.id)">{{'Completed' | translate}}</a> </span></td>
-                                            </tr>
-                                        </ng-container>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <!-- <div class="d-flex justify-content-between align-items-center mb-3">
+                                        <td *ngIf="item?.status == transactionStatus.PENDING.key" class="text-right">
+                                            <span class="text-info keep-all"><i class="icon ion-md-hourglass"></i>
+                                                <a
+                                                    (click)="openDetail(item?.id)">{{'In-progress' | translate}}</a></span>
+                                        </td>
+                                        <td *ngIf="item?.status == transactionStatus.CANCEL.key" class="text-right">
+                                            <span class="keep-all"><a
+                                                    (click)="openDetail(item?.id)">{{'Cancel' | translate}} </a></span>
+                                        </td>
+                                        <td *ngIf="item?.status == transactionStatus.COMPLETE.key" class="text-right">
+                                            <span class="text-success keep-all"><i class="icon ion-md-checkmark"></i>
+                                                <a (click)="openDetail(item?.id)">{{'Completed' | translate}}</a>
+                                            </span></td>
+                                    </tr>
+                                </ng-container>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- <div class="d-flex justify-content-between align-items-center mb-3">
                                 <div>
                                     <div class="d-flex justify-content-between">
                                         <div class="mr-4">Total deposit amount</div>
@@ -153,39 +200,48 @@
                                 <button class="btn btn-outline-secondary pt-1 pb-1"><i
                                         class="icon ion-md-download"></i></button>
                             </div> -->
-                            <div class="text-right">
-                                <button (click)="exportToCSV()" class="btn btn-sm btn-success btn-outline-secondary pt-0 pb-0"><i
+                    <ng-container *ngIf="listReport?.length > 0">
+                        <div class="text-right">
+                            <button (click)="exportToCSV()" class="btn btn-sm btn-success btn-outline-secondary pt-0 pb-0"><i
                                     class="icon ion-md-download"></i></button>
-                            </div>
-                            <div class="d-md-flex align-items-center justify-content-between mb-2 pt-2">
-                                <div class="mb-2 mb-md-0">
-                                    <div class="d-inline-block mr-2">
-                                        <select (change)="changeTotalItem($event)" [(ngModel)]="pageSize" class="form-control form-control-sm">
-                                            <option *ngFor="let item of listTotalItem" value="{{item}}">{{item}}
-                                            </option>
-                                        </select>
-                                    </div>
-                                    <div *ngIf="locale == language.english" class="small text-secondary d-inline-block mr-2">Showing {{recordFrom}} To {{recordTo}} of {{totalItem}} entries</div>
-                                    <div *ngIf="locale == language.japan" class="small text-secondary d-inline-block mr-2">{{totalItem}}件中{{recordFrom}} to {{recordTo}}の表示
-                                    </div>
+                        </div>
+                        <div class="d-md-flex align-items-center justify-content-between mb-2 pt-2">
+                            <div class="mb-2 mb-md-0">
+                                <div class="d-inline-block mr-2">
+                                    <select (change)="changeTotalItem($event)" [(ngModel)]="pageSize" class="form-control form-control-sm">
+                                        <option *ngFor="let item of listTotalItem" value="{{item}}">{{item}}
+                                        </option>
+                                    </select>
                                 </div>
-                                <ul class="pagination pagination-sm mb-0">
-                                    <pagination [(ngModel)]="currentPage" id="pagination" [totalItems]="totalPage" [boundaryLinks]="true" class="pagination pagination-sm justify-content-end" (pageChanged)="pageChanged($event)" previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;"
-                                        lastText="&raquo;" [maxSize]="5">
-                                    </pagination>
-                                </ul>
-
+                                <div *ngIf="locale == language.english" class="small text-secondary d-inline-block mr-2">
+                                    Showing {{recordFrom}} To {{recordTo}} of {{totalItem}} entries</div>
+                                <div *ngIf="locale == language.japan" class="small text-secondary d-inline-block mr-2">
+                                    {{totalItem}}件中{{recordFrom}} to {{recordTo}}の表示
+                                </div>
                             </div>
+                            <ul class="pagination pagination-sm mb-0">
+                                <pagination [(ngModel)]="currentPage" id="pagination" [totalItems]="totalPage" [boundaryLinks]="true"
+                                    class="pagination pagination-sm justify-content-end" (pageChanged)="pageChanged($event)"
+                                    previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;" [maxSize]="5">
+                                </pagination>
+                            </ul>
+                    
                         </div>
-                        <div class="tab-pane fade" id="v-pills-deposit" role="tabpanel" aria-labelledby="v-pills-deposit-tab">
-                            <h3 class="mb-3"><i class="icon ion-md-time text-secondary"></i> {{'Deposit History' | translate}}</h3>
-                        </div>
-                        <div class="tab-pane fade" id="v-pills-withdrawal" role="tabpanel" aria-labelledby="v-pills-withdrawal-tab">
-                            <h3 class="mb-3"><i class="icon ion-md-time text-secondary"></i> {{'Withdrawal History' | translate}}</h3>
-                        </div>
-                    </div>
+                    </ng-container>
+                  
+                </div>
+                <div class="tab-pane fade" id="v-pills-deposit" role="tabpanel" aria-labelledby="v-pills-deposit-tab">
+                    <h3 class="mb-3"><i class="icon ion-md-time text-secondary"></i> {{'Deposit History' | translate}}
+                    </h3>
+                </div>
+                <div class="tab-pane fade" id="v-pills-withdrawal" role="tabpanel"
+                    aria-labelledby="v-pills-withdrawal-tab">
+                    <h3 class="mb-3"><i class="icon ion-md-time text-secondary"></i>
+                        {{'Withdrawal History' | translate}}</h3>
                 </div>
             </div>
+            <!-- </div>
+            </div> -->
         </div>
     </div>
 </div>

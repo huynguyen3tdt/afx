@@ -1,5 +1,5 @@
 <div class="card bg-white mb-3">
-    <div class="card-body">
+    <div *ngIf="this.tranType !== this.typeTranHistory.INTERNALTRANSFER.key" class="card-body">
         <div class="d-flex justify-content-between align-items-center border-bottom mb-3 pb-2">
             <h6 *ngIf="tranType == typeTranHistory.DEPOSIT.key" class="mb-0 text-uppercase text-primary"><i class="icon ion-md-time"></i> <strong> {{'Entire Deposit History' | translate}}</strong></h6>
             <h6 *ngIf="tranType == typeTranHistory.WITHDRAWAL.key" class="mb-0 text-uppercase text-primary"><i class="icon ion-md-time"></i> <strong> {{'Entire Withdrawl History' | translate}}</strong></h6>
@@ -11,6 +11,7 @@
                     <tr>
                         <th class="border-top-0" ><span class="keep-all">{{'Transaction ID' | translate}}</span></th>
                         <th class="border-top-0"><span class="keep-all">{{'Date time' | translate}}</span></th>
+                        <th class="border-top-0"><span class="keep-all">{{'Trading account' | translate}}</span></th>
                         <th class="border-top-0"><span class="keep-all">{{'Type' | translate}}</span></th>
                         <th class="border-top-0"><span class="keep-all">{{'Payment Method' | translate}}</span></th>
                         <!-- <th class="border-top-0 text-right" width="70">Currency</th> -->
@@ -22,10 +23,12 @@
                     <tr *ngFor="let item of listTransaction">
                         <td><a href="javascript:;" (click)="openDetail(item?.id)">{{item?.id}}</a></td>
                         <td><a (click)="openDetail(item?.id)">{{item?.create_date}}</a></td>
+                        <td><a href="javascript:;" (click)="openDetail(item?.id)">{{item?.trading_account_id | convertTradingType}}</a>
+                            <img class="ml-1" src="{{item?.img_account_type}}" width="37" height="20"></td>
                         <td><a (click)="openDetail(item?.id)"><span class="keep-all">{{item?.funding_type}}</span></a></td>
                         <td><a (click)="openDetail(item?.id)">{{item?.method}}</a></td>
                         <!-- <td class="text-right">JPY</td> -->
-                        <td class="text-right">{{item?.amount | number}}</td>
+                        <td (click)="openDetail(item?.id)" class="text-right">{{item?.amount | number}}</td>
                         <!-- <td class="text-right"><span class="text-info"><i class="icon ion-md-hourglass"></i>
                                 Pending</span></td> -->
 
@@ -39,11 +42,62 @@
 
                     </tr>
                     <tr>
-                        <td colspan="7">
-                            <a *ngIf="tranType == typeTranHistory.DEPOSIT.key" href="javascript:;"  routerLink="/manage/withdrawHistory/" target="_blank" [queryParams]="{tab: 'DEPOSIT'}"> {{'View entire operation history' | translate}}</a>
-                            <a *ngIf="tranType == typeTranHistory.WITHDRAWAL.key" href="javascript:;"  routerLink="/manage/withdrawHistory/" target="_blank" [queryParams]="{tab: 'WITHDRAWAL'}"> {{'View entire operation history' | translate}}</a>
+                        <td colspan="8">
+                            <a *ngIf="tranType == typeTranHistory.DEPOSIT.key" href="javascript:;" (click)="goToHistory(typeTranHistory.DEPOSIT.key)"> {{'View entire operation history' | translate}}</a>
+                            <a *ngIf="tranType == typeTranHistory.WITHDRAWAL.key" href="javascript:;" (click)="goToHistory(typeTranHistory.WITHDRAWAL.key)"> {{'View entire operation history' | translate}}</a>
                         </td>
                     </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div *ngIf="this.tranType === this.typeTranHistory.INTERNALTRANSFER.key" class="card-body">
+        <div class="d-flex justify-content-between align-items-center border-bottom mb-3 pb-2">
+            <h6 *ngIf="tranType == typeTranHistory.INTERNALTRANSFER.key" class="mb-0 text-uppercase text-primary"><i class="icon ion-md-time"></i> <strong> {{'Entire Transfer History' | translate}}</strong></h6>
+            <!-- <div class="text-right small text-secondary">{{'Currency:' | translate}} <strong>{{tradingAccount?.currency}}</strong></div> -->
+        </div>
+        <div class="table-responsive">
+            <table class="table table-sm table-hover mb-3" cellspacing="0" cellpadding="0">
+                <thead>
+                    <tr>
+                        <th class="border-top-0" width="140"><span class="keep-all">{{'Date time' | translate}}</span></th>
+                        <th class="border-top-0"><span class="keep-all">{{'Payment Method' | translate}}</span></th>
+                        <th class="border-top-0"><span class="keep-all">{{'Sender account' | translate}}</span></th>
+                        <th class="border-top-0"><span class="keep-all">{{'Receiver account' | translate}}</span></th>
+                        <th class="border-top-0 text-right" width="50"><span class="keep-all">{{'Amount' | translate}}</span></th>
+                        <th class="border-top-0 text-right" width="140"><span class="keep-all">{{'Status' | translate}}</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                        <tr *ngFor="let item of listTranTransfer">
+                            <td><a (click)="openDetail(item?.id)">{{item?.create_date}}</a></td>
+                            <td><a (click)="openDetail(item?.id)"><span class="keep-all">{{'Transfer' | translate}}</span></a></td>
+                            <td><a (click)="openDetail(item?.id)"><span
+                                        class="keep-all">{{item?.from_trading_account_id | convertTradingType}}</span></a>
+                                <img class="ml-1" src="{{item?.img_send_type}}" width="37" height="20">
+                            </td>
+                            <td><a (click)="openDetail(item?.id)">{{item?.to_trading_account_id | convertTradingType}}</a>
+                                <img class="ml-1" src="{{item?.img_receive_type}}" width="37" height="20">
+                            </td>
+                            <td class="text-right"><a (click)="openDetail(item?.id)">{{item?.amount | number}}</a></td>
+                            <td *ngIf="item?.status == transactionStatus.PENDING.key" class="text-right">
+                                <span class="text-info keep-all"><i class="icon ion-md-hourglass"></i>
+                                    <a (click)="openDetail(item?.id)">{{'In-progress' | translate}}</a></span>
+                            </td>
+                            <td *ngIf="item?.status == transactionStatus.CANCEL.key" class="text-right">
+                                <span class="keep-all"><a (click)="openDetail(item?.id)">{{'Cancel' | translate}} </a></span>
+                            </td>
+                            <td *ngIf="item?.status == transactionStatus.COMPLETE.key" class="text-right">
+                                <span class="text-success keep-all"><i class="icon ion-md-checkmark"></i>
+                                    <a (click)="openDetail(item?.id)">{{'Completed' | translate}}</a>
+                                </span></td>
+                        </tr>
+                        <tr>
+                            <td colspan="7">
+                                <a href="javascript:;" (click)="goToHistory(typeTranHistory.INTERNALTRANSFER.key)"> {{'View entire operation history' | translate}}</a>
+                            </td>
+                        </tr>
                 </tbody>
             </table>
         </div>

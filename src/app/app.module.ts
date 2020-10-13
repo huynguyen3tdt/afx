@@ -22,6 +22,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { ModalModule } from 'ngx-bootstrap';
 import { NotFoundComponent } from './404/not-found/not-found.component';
+import { ModalAddAccountStep1Component } from './manage/modal-add-account-step1/modal-add-account-step1.component';
+import { ModalAddAccountStep2Component } from './manage/modal-add-account-step2/modal-add-account-step2.component';
+import { ModalAddAccountStep3Component } from './manage/modal-add-account-step3/modal-add-account-step3.component';
+import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
+import { ModalCanNotAddAccountComponent } from './manage/modal-can-not-add-account/modal-can-not-add-account.component';
 
 const appEnvInitializerFn = (envConfig: EnvConfigService) => {
   return () => {
@@ -44,7 +49,11 @@ const Routing: ModuleWithProviders = RouterModule.forRoot(AppRoutes, {
     ManageLayoutComponent,
     HeaderComponent,
     FooterComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    ModalAddAccountStep1Component,
+    ModalAddAccountStep2Component,
+    ModalAddAccountStep3Component,
+    ModalCanNotAddAccountComponent
   ],
   imports: [
     BrowserModule,
@@ -61,7 +70,8 @@ const Routing: ModuleWithProviders = RouterModule.forRoot(AppRoutes, {
     }),
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
+    Ng4LoadingSpinnerModule.forRoot(),
   ],
   providers: [
     EnvConfigService,

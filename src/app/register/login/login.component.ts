@@ -20,6 +20,7 @@ import {
   CHANGE_PASS_FLG,
   MARGIN_CALL,
   MARGIN_STOP_OUT,
+  INTERNAL_TRANSFER,
 } from './../../core/constant/authen-constant';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthenService } from 'src/app/core/services/authen.service';
@@ -32,6 +33,9 @@ import { LoginParam } from 'src/app/core/model/user.model';
 import { Title } from '@angular/platform-browser';
 declare const $: any;
 import { LANGUAGLE } from 'src/app/core/constant/language-constant';
+import { FX_IMAGE, ICFD_IMAGE, CCFD_IMAGE } from 'src/app/core/constant/img-constant';
+import { UserService } from 'src/app/core/services/user.service';
+import { BIZ_GROUP } from 'src/app/core/constant/user-code-constant';
 
 @Component({
   selector: 'app-login',
@@ -57,6 +61,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
 
   constructor(
     private router: Router,
+    private userService: UserService,
     private authenService: AuthenService,
     private activatedRoute: ActivatedRoute,
     private translate: TranslateService,
@@ -142,6 +147,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
     this.authenService.login(param).pipe(take(1)).subscribe(response => {
       this.spinnerService.hide();
       if (response.meta.code === 200) {
+        localStorage.setItem(BIZ_GROUP, response.data.biz_group);
         localStorage.setItem(USERNAME_LOGIN, btoa(this.loginFormGroup.value.userName.trim()));
         localStorage.setItem(PASSWORD_LOGIN, btoa(this.loginFormGroup.value.passWord));
         if (this.loginFormGroup.value.remember === true) {
@@ -149,7 +155,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
         } else {
           localStorage.setItem(REMEMBER_LOGIN, 'false');
         }
-        response.data.account_ids = this.getListAccountIds(response.data.account_ids);
+        response.data.account_ids = this.getListAccountIds(this.sortListAccount(response.data.account_ids));
         localStorage.setItem(TOKEN_AFX, response.data.access_token);
         localStorage.setItem(ACCOUNT_IDS, JSON.stringify(response.data.account_ids));
         localStorage.setItem(IS_COMPANY, response.data.is_company.toString());
@@ -180,6 +186,9 @@ export class LoginComponent implements OnInit, AfterViewInit {
         if (response.data.margin_stop_out) {
           localStorage.setItem(MARGIN_STOP_OUT, response.data.margin_stop_out.toString());
         }
+        if (response.data.fx_internal_transfer_flg) {
+          localStorage.setItem(INTERNAL_TRANSFER, response.data.fx_internal_transfer_flg.toString());
+        }
         localStorage.setItem(FIRST_LOGIN, '1');
         localStorage.setItem(CHANGE_PASS_FLG, response.data.pwd_change_flg.toString());
         if (response.data.pwd_change_flg === false) {
@@ -192,6 +201,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
           this.router.navigate(['/reset_password'], {
           });
         }
+        this.changeLang(this.locale, true);
       } else {
         this.isSending = false;
         if (response.meta.code === 102) {
@@ -236,19 +246,23 @@ export class LoginComponent implements OnInit, AfterViewInit {
       // tslint:disable-next-line:no-shadowed-variable
       data.map((element: any) => {
         if (element.account_type === ACCOUNT_TYPE.ACCOUNT_FX.account_type) {
-          element.value = ACCOUNT_TYPE.ACCOUNT_FX.name + '-' + element.account_id;
+          element.value = ACCOUNT_TYPE.ACCOUNT_FX.name + ' ' + element.account_id;
+          element.img_type_account = FX_IMAGE;
         }
         if (element.account_type === ACCOUNT_TYPE.ACCOUNT_CFDIndex.account_type) {
-          element.value = ACCOUNT_TYPE.ACCOUNT_CFDIndex.name + '-' + element.account_id;
+          element.value = ACCOUNT_TYPE.ACCOUNT_CFDIndex.name + ' ' + element.account_id;
+          element.img_type_account = ICFD_IMAGE;
         }
         if (element.account_type === ACCOUNT_TYPE.ACCOUNT_CFDCom.account_type) {
-          element.value = ACCOUNT_TYPE.ACCOUNT_CFDCom.name + '-' + element.account_id;
+          element.value = ACCOUNT_TYPE.ACCOUNT_CFDCom.name + ' ' + element.account_id;
+          element.img_type_account = CCFD_IMAGE;
         }
         const dataObj: AccountType = {
           account_type: element.account_type,
           account_id: element.account_id,
           value : element.value,
-          currency: element.currency
+          currency: element.currency,
+          img_type_account: element.img_type_account
         };
         listData.push(dataObj);
       });
@@ -262,6 +276,32 @@ export class LoginComponent implements OnInit, AfterViewInit {
       this.isPc = false;
     } else {
       this.isPc = true;
+    }
+  }
+
+  sortListAccount(arr: any) {
+    arr.sort((a, b) => {
+      if (a.account_type < b.account_type) {
+        return -1;
+      }  else if (a.account_type > b.account_type) {
+        return 1;
+      }
+      return 0;
+    });
+    return arr;
+  }
+
+  changeLang(language: string, callAPI?: boolean) {
+    this.translate.use(language);
+    localStorage.setItem(LOCALE, language);
+    this.locale = localStorage.getItem(LOCALE);
+    if (callAPI) {
+      const param = {
+        lang: language
+      };
+      this.userService.changeLanguage(param).pipe(take(1)).subscribe(response => {
+        this.locale = localStorage.getItem(LOCALE);
+      });
     }
   }
 

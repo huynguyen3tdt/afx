@@ -13,6 +13,16 @@
                 <!-- END SITE BRAND -->
                 <!-- BEGIN HEADER TOP NAV -->
                 <ul class="header-top-nav nav">
+                  <li class="nav-item nav-item-account-type dropdown" (click)="openAddAccountModal()" *ngIf ="bizGroup === 'it'">
+                    <a href="javascript:;" class="nav-link" role="button" aria-haspopup="true" aria-expanded="false"><i class="icon ion-md-add mr-1"></i><span class="d-none d-md-inline">{{'Add Account' | translate}}</span></a>
+                </li>
+                <li class="nav-item nav-item-language dropdown d-none d-md-inline-block">
+                    <a href="javascript:;" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{locale == 'en_US' ? 'EN' : 'JP'}}</a>
+                    <div class="dropdown-menu dropdown-menu-language dropdown-menu-right">
+                        <a (click)="changeLang('en_US')" [className]="locale == 'en_US' ? 'dropdown-item active' : 'dropdown-item'" class="dropdown-item" data-language="EN"><img src="assets/images/flags/flag-en.svg" class="icon flag" alt=""> English</a>
+                        <a (click)="changeLang('ja_JP')" [className]="locale == 'ja_JP' ? 'dropdown-item active' : 'dropdown-item'" data-language="JP"><img src="assets/images/flags/flag-jp.svg" class="icon flag" alt=""> Japanese</a>
+                    </div>
+                </li>
                     <li class="nav-item nav-item-dmt5">
                         <a target="_blank" *ngIf="isPc == true" href="https://download.mql5.com/cdn/web/16266/mt5/phillipsecuritiesjp5setup.exe" class="nav-link"><img src="./../../../assets/images/metatrader-5.png"></a>
                         <a target="_blank" *ngIf="isAndroid == true" href="https://download.mql5.com/cdn/mobile/mt5/android?server=PhillipSecuritiesJP-PROD" class="nav-link">
@@ -68,19 +78,27 @@
                     <a [routerLink]="['/manage/notifications']" id="notifications" class="nav-link" title="Notifications"><i class="icon ion-md-notifications d-md-none"></i> <span
                         class="d-none d-md-inline">{{'Notifications' | translate}}</span></a>
                 </li>
-                <li class="nav-item nav-item-deposit">
+                <!-- <li class="nav-item nav-item-deposit">
                     <a [routerLink]="['/manage/deposit']" id="deposit" class="nav-link" title="Deposit"><i
                             class="icon ion-md-add d-md-none"></i> <span class="d-none d-md-inline">{{'Deposit' | translate}}</span></a>
+                </li> -->
+                <li class="nav-item nav-item-deposit">
+                    <a [routerLink]="['/manage/summary']" id="summary" class="nav-link" title="Sum"><i
+                            class="icon ion-md-add d-md-none"></i> <span class="d-none d-md-inline">{{'Account Information' | translate}}</span></a>
                 </li>
-                <li class="nav-item nav-item-withdraw">
+                <li class="nav-item nav-item-deposit">
+                    <a [routerLink]="['/manage/internal']" id="internal" class="nav-link" title="Sum"><i
+                            class="icon ion-md-add d-md-none"></i> <span class="d-none d-md-inline">{{'Deposit and Withdrawal' | translate}}</span></a>
+                </li>
+                <!-- <li class="nav-item nav-item-withdraw">
                     <a [routerLink]="['/manage/withdrawRequest']" id="withdrawRequest" class="nav-link" title="Withdraw"><i
                             class="icon ion-md-remove d-md-none"></i> <span
                             class="d-none d-md-inline">{{'Withdrawal' | translate}}</span></a>
-                </li>
-                <li class="nav-item nav-item-history">
+                </li> -->
+                <!-- <li class="nav-item nav-item-history">
                     <a [routerLink]="['/manage/withdrawHistory']" id="withdrawHistory" class="nav-link" title="History"><i
                           class="icon ion-md-time d-md-none"></i> <span class="d-none d-md-inline">{{'History' | translate}}</span></a>
-                </li>
+                </li> -->
                 <li class="nav-item nav-item-report">
                     <a [routerLink]="['/manage/reportList']" id="reportList" class="nav-link" title="Report"><i
                             class="icon ion-md-today d-md-none"></i> <span class="d-none d-md-inline">{{'Report' | translate}}</span></a>
@@ -88,7 +106,7 @@
 
                 <li class="nav-item nav-item-account">
                     <a [routerLink]="['/manage/accountInfo']" id="accountInfo" class="nav-link" title="My Account"><i class="icon ion-md-person d-md-none"></i> <span
-                            class="d-none d-md-inline">{{'My Account' | translate}}</span></a>
+                            class="d-none d-md-inline">{{'Customer Information' | translate}}</span></a>
                 </li>
 
             </ul>
@@ -110,23 +128,32 @@
                 <li class="nav-item nav-item-notifications">
                     <a [routerLink]="['/manage/notifications']" id="notifications" class="nav-link has-icon btn-offcanvas-close"><i class="icon ion-md-notifications"></i> {{'Notifications' | translate}}</a>
                 </li>
-                <li class="nav-item nav-item-deposit">
+                <!-- <li class="nav-item nav-item-deposit">
                     <a [routerLink]="['/manage/deposit']" id="deposit" class="nav-link has-icon btn-offcanvas-close"><i class="icon ion-md-add"></i> {{'Deposit' | translate}}</a>
+                </li> -->
+                <!-- <li class="nav-item nav-item-withdraw">                                                                                                                
+                    <a [routerLink]="['/manage/withdrawRequest']" id="withdrawRequest" class="nav-link has-icon btn-offcanvas-close"><i class="icon ion-md-remove"></i> {{'Withdrawal' | translate}}</a>
+                </li> -->
+                <li class="nav-item nav-item-history">
+                    <a [routerLink]="['/manage/summary']" id="summary" class="nav-link has-icon btn-offcanvas-close"><i class="icon ion-md-time"></i> {{'Account Information' | translate}}</a>
                 </li>
                 <li class="nav-item nav-item-withdraw">                                                                                                                
-                    <a [routerLink]="['/manage/withdrawRequest']" id="withdrawRequest" class="nav-link has-icon btn-offcanvas-close"><i class="icon ion-md-remove"></i> {{'Withdrawal' | translate}}</a>
-                </li>
-                <li class="nav-item nav-item-history">
-                    <a [routerLink]="['/manage/withdrawHistory']" id="withdrawHistory" class="nav-link has-icon btn-offcanvas-close"><i class="icon ion-md-time"></i> {{'History' | translate}}</a>
+                    <a [routerLink]="['/manage/internal']" id="internal" class="nav-link has-icon btn-offcanvas-close"><i class="icon ion-md-remove"></i> {{'Deposit and Withdrawal' | translate}}</a>
                 </li>
                 <li class="nav-item nav-item-report">
                     <a [routerLink]="['/manage/reportList']" id="reportList" class="nav-link has-icon btn-offcanvas-close"><i class="icon ion-md-today"></i> {{'Report' | translate}}</a>
                 </li>
                 <li class="nav-item nav-item-account">
-                    <a [routerLink]="['/manage/accountInfo']" id="accountInfo" class="nav-link has-icon btn-offcanvas-close"><i class="icon ion-md-person"></i> {{'My Account' | translate}}</a>
+                    <a [routerLink]="['/manage/accountInfo']" id="accountInfo" class="nav-link has-icon btn-offcanvas-close"><i class="icon ion-md-person"></i> {{'Customer Information' | translate}}</a>
                 </li>
 
             </ul>
         </div>
     </div>
+    
 </div>
+<app-modal-can-not-add-account #modalCanNotAddAccount></app-modal-can-not-add-account>
+<app-modal-add-account-step1  #modalAddAccountStep1 [accountTradingForm]="accountTradingForm" (confirmStep1)="onConfirmStep1()"></app-modal-add-account-step1>
+<app-modal-add-account-step2 class="mt-5 mb-5" #modalAddAccountStep2 [accountTradingForm]="accountTradingForm" (returnStep1)="onReturnStep1()" (confirmStep2)="onConfirmStep2()"></app-modal-add-account-step2>
+<app-modal-add-account-step3  #modalAddAccountStep3 [isLateRegis]="isLateRegis" ></app-modal-add-account-step3>
+<ng4-loading-spinner  [timeout]="30000"> </ng4-loading-spinner>

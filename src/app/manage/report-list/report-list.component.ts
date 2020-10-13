@@ -11,6 +11,7 @@ import { LANGUAGLE } from 'src/app/core/constant/language-constant';
 import { BsLocaleService, defineLocale, jaLocale, ModalDirective, BsDatepickerDirective } from 'ngx-bootstrap';
 import { take } from 'rxjs/operators';
 import { Title } from '@angular/platform-browser';
+import { UserService } from 'src/app/core/services/user.service';
 declare var $: any;
 defineLocale('ja', jaLocale);
 
@@ -59,7 +60,10 @@ export class ReportListComponent implements OnInit {
   constructor(private reportservice: ReportService,
               private spinnerService: Ng4LoadingSpinnerService,
               private localeService: BsLocaleService,
-              private titleService: Title) { }
+              private titleService: Title,
+              private globalService: GlobalService,
+              private userService: UserService,
+              ) { }
 
   ngOnInit() {
     this.titleService.setTitle('フィリップMT5 Mypage');
@@ -81,6 +85,13 @@ export class ReportListComponent implements OnInit {
     this.currentPage = 1;
     this.pageSize = 10;
     this.listTradingAccount = JSON.parse(localStorage.getItem(ACCOUNT_IDS));
+    const allTradingAcount: AccountType = {
+      account_id: 'all',
+      account_type: 0,
+      currency: '0',
+      value: this.locale === LANGUAGLE.english ? 'All' : 'すべて'
+    };
+    this.listTradingAccount.unshift(allTradingAcount);
     if (this.listTradingAccount) {
       this.tradingAccount = this.listTradingAccount[0];
     }
@@ -98,7 +109,7 @@ export class ReportListComponent implements OnInit {
     this.setDate(this.DURATION.YEAR);
   }
 
-  getReport(accountNumber: number, pageNumber: number, pageSize: number, type?: string, dateFrom?: string, dateTo?: string) {
+  getReport(accountNumber: string, pageNumber: number, pageSize: number, type?: string, dateFrom?: string, dateTo?: string) {
     this.spinnerService.show();
     this.checkTab(type);
     this.reportservice.getReport(accountNumber, pageSize, pageNumber, type, dateFrom, dateTo).pipe(take(1)).subscribe(response => {
@@ -112,11 +123,7 @@ export class ReportListComponent implements OnInit {
         this.listReport.forEach(item => {
           item.create_date += TIMEZONESERVER;
           item.create_date = moment(item.create_date).tz(this.timeZone).format(this.formatDateYear);
-          if (item.file_name.includes(']_')) {
-            item.file_name = item.file_name.split('.')[0].split('_')[2] + '_' + item.file_name.split('.')[0].split('_')[3];
-          } else {
-            item.file_name = item.file_name.split('.')[0].split('_')[1] + '_' + item.file_name.split('.')[0].split('_')[2];
-          }
+          item.file_name = item.file_name.split('.')[0];
           item.report_date = moment((new Date(item.report_date)).toDateString()).format(this.formatDateYear);
         });
       }
@@ -179,6 +186,7 @@ export class ReportListComponent implements OnInit {
       this.pageSize = 10;
       this.searchReport();
     }
+    this.globalService.callListAccount();
   }
 
   setDate(duration: string) {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { TIMEZONEAFX, LOCALE, ACCOUNT_IDS } from 'src/app/core/constant/authen-constant';
 import { LANGUAGLE } from 'src/app/core/constant/language-constant';
 import { EN_FORMATDATE_HH_MM, JAPAN_FORMATDATE_HH_MM } from 'src/app/core/constant/format-date-constant';
@@ -15,7 +15,7 @@ import { take } from 'rxjs/operators';
   templateUrl: './mt5-info.component.html',
   styleUrls: ['./mt5-info.component.scss']
 })
-export class Mt5InfoComponent implements OnInit {
+export class Mt5InfoComponent implements OnInit, OnDestroy {
   accountID: string;
   timeZone: string;
   locale: string;
@@ -25,6 +25,7 @@ export class Mt5InfoComponent implements OnInit {
   lastestTime: string;
   withdrawAmount: WithdrawAmountModel;
   tradingAccount: AccountType;
+  intervalResetMt5Info;
   constructor(private spinnerService: Ng4LoadingSpinnerService,
               private withdrawRequestService: WithdrawRequestService,
               private globalService: GlobalService) { }
@@ -44,6 +45,10 @@ export class Mt5InfoComponent implements OnInit {
     }
     this.getMt5Infor(this.accountID);
     this.getWithDrawAmount(this.accountID);
+    this.intervalResetMt5Info = setInterval(() => {
+      this.getMt5Infor(this.accountID);
+      this.getWithDrawAmount(this.accountID);
+    }, 60000);
   }
 
   getMt5Infor(accountId) {
@@ -73,5 +78,10 @@ export class Mt5InfoComponent implements OnInit {
   changeTradingAccount() {
     this.tradingAccount = this.listTradingAccount.find((account: AccountType) =>
     this.accountID === account.account_id);
+    this.getMt5Infor(this.accountID);
+  }
+
+  ngOnDestroy(): void {
+    clearInterval(this.intervalResetMt5Info);
   }
 }

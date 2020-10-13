@@ -5,7 +5,14 @@ import { Observable } from 'rxjs/internal/Observable';
 import { InnerSubscriber } from 'rxjs/internal/InnerSubscriber';
 import { EnvConfigService } from './env-config.service';
 import { catchError } from 'rxjs/operators';
-import { UserResponse, CorporateResponse, BankResponse, AddressResponse, UpdateUserParam, UpdateCorporateParam } from '../model/user.model';
+import { UserResponse,
+        CorporateResponse,
+        BankResponse,
+        AddressResponse,
+        UpdateUserParam,
+        UpdateCorporateParam,
+        GroupAccountType,
+        ListAccountResponeModel} from '../model/user.model';
 import { ResponseWihtoutDataModel } from '../model/none-data-response.model';
 import { SearchBankResponseModel, SearchBranchResponseModel } from '../model/bank-response.model';
 import { WithdrawHistoryModel } from '../model/withdraw-request-response.model';
@@ -170,5 +177,29 @@ export class UserService {
         });
       })
     );
+  }
+
+  registrationAccountType(param: GroupAccountType): Observable<ResponseWihtoutDataModel> {
+    return this.httpClient
+      .post(`${this.envConfigService.getConfig()}/${AppSettings.API_REGISTRATION_ADD_MORE}`, param)
+      .pipe(
+      catchError((error: HttpErrorResponse) => {
+        return new Observable((observer: InnerSubscriber<any, any>) => {
+          observer.next(error);
+        });
+      })
+    );
+  }
+
+  getUserListAccount(): Observable<ListAccountResponeModel> {
+    return this.httpClient
+      .get(`${this.envConfigService.getConfig()}/${AppSettings.API_GET_LIST_ACCOUNT}`)
+        .pipe(
+          catchError((error: HttpErrorResponse) => {
+            return new Observable((observer: InnerSubscriber<any, any>) => {
+              observer.next(error);
+            });
+          })
+        );
   }
 }

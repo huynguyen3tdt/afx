@@ -1,6 +1,7 @@
 
 export const REMEMBER_LOGIN = 'rememberAFX';
 export const TOKEN_AFX = 'currentTokenAFX';
+export const INTERNAL_TRANSFER = 'fx_internal_transfer_flg';
 export const USERNAME_LOGIN = 'useNameLoginAFX';
 export const PASSWORD_LOGIN = 'passWordLoginAFX';
 export const ACCOUNT_IDS    = 'accountTypeAFX';
@@ -36,7 +37,7 @@ export const ERROR_MIN_DEPOSIT_EN = 'Min deposit is ';
 export const ERROR_MIN_DEPOSIT_JP = '最小預金は';
 
 export const ACCOUNT_TYPE = {
-    ACCOUNT_FX: {account_type: 1, name: 'FX'},
-    ACCOUNT_CFDIndex: {account_type: 2, name: 'CFD Index'},
-    ACCOUNT_CFDCom: {account_type: 3, name: 'CFD Index'},
+    ACCOUNT_FX: {account_type: 1, name: '[FX]'},
+    ACCOUNT_CFDIndex: {account_type: 2, name: '[I-CFD]'},
+    ACCOUNT_CFDCom: {account_type: 3, name: '[C-CFD]'},
 };

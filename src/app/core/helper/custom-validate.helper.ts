@@ -98,6 +98,10 @@ const FAX_ERR = {
   message: 'ファックスは、10文字以上で入力してください。'
 };
 
+const TRANSFER_ERR = {
+  ErrTransfer: true,
+  message: 'Amount must be bigger than 0'
+};
 
 const DIGITS_PATTERN = '^\\d+$';
 const SALARY_PATTEN = '^[0-9, ]*$';
@@ -302,4 +306,14 @@ export function faxValidation(control: AbstractControl) {
     return FAX_ERR;
   }
   return;
+}
+
+export function transferValidation(control: AbstractControl) {
+  if (!control.value || typeof control.value === 'string' && !control.value.trim()) {
+    return null;
+  }
+  if (Number(control.value) < 1) {
+    return TRANSFER_ERR;
+  }
+  return null;
 }

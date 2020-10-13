@@ -31,3 +31,11 @@ export interface BillingSystemModel {
   funding_type: string;
   status: number;
 }
+
+export interface BankTransferParamModel {
+  trading_account_id: number;
+  bank_code: string;
+  remark: string;
+  amount: number;
+  currency: string;
+}

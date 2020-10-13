@@ -4,7 +4,7 @@ import { PageNotificationResponse, Notification, TotalNotification } from 'src/a
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { FIRST_LOGIN, LOCALE, TIMEZONEAFX, TIMEZONESERVER, ACCOUNT_IDS } from 'src/app/core/constant/authen-constant';
+import { FIRST_LOGIN, LOCALE, TIMEZONEAFX, TIMEZONESERVER, ACCOUNT_IDS, ACCOUNT_TYPE } from 'src/app/core/constant/authen-constant';
 import { EN_FORMATDATE_HH_MM, JAPAN_FORMATDATE_HH_MM } from 'src/app/core/constant/format-date-constant';
 import moment from 'moment-timezone';
 import { AccountType } from 'src/app/core/model/report-response.model';
@@ -13,6 +13,9 @@ import { ModalDirective } from 'ngx-bootstrap';
 import { take } from 'rxjs/operators';
 import { GlobalService } from 'src/app/core/services/global.service';
 import { Title } from '@angular/platform-browser';
+import { UserService } from 'src/app/core/services/user.service';
+import { FX_GROUP, I_CFD_GROUP, C_CFD_GROUP, B2B_GROUP } from 'src/app/core/constant/new-group-constant';
+import { BIZ_GROUP } from 'src/app/core/constant/user-code-constant';
 declare var $: any;
 
 @Component({
@@ -61,6 +64,14 @@ export class NotificationsComponent implements OnInit {
     SYSTEM_IMPORTANT: {name: 'SYS_IMPORTATNT', value: '01'}
   };
   language;
+  filterFX: boolean;
+  filterICFD: boolean;
+  filterCCFD: boolean;
+  showFilterFX: boolean;
+  showFilterICFD: boolean;
+  showFilterCCFD: boolean;
+  newsGroup: string;
+
   constructor(
     private notificationsService: NotificationsService,
     private spinnerService: Ng4LoadingSpinnerService,
@@ -79,6 +90,7 @@ export class NotificationsComponent implements OnInit {
       this.formatDateHour = JAPAN_FORMATDATE_HH_MM;
     }
     this.initFilterRead();
+    this.initFilterTradingAcount();
     this.currentPage = 1;
     this.pageSize = 10;
     this.activatedRoute.queryParams.pipe(take(1)).subscribe(param => {
@@ -93,22 +105,23 @@ export class NotificationsComponent implements OnInit {
     });
     this.listTradingAccount = JSON.parse(localStorage.getItem(ACCOUNT_IDS));
     if (this.listTradingAccount) {
-      this.accountID = this.listTradingAccount[0].value;
+      this.accountID = this.listTradingAccount[0].account_id;
     }
     if (this.accountID) {
-      this.getListNotifications(this.pageSize, this.currentPage, this.unreadAll, this.TABS.ALL.value);
+      this.checkSearchTypeTrading();
+      this.getListNotifications(this.pageSize, this.currentPage, this.unreadAll, this.TABS.ALL.value, this.newsGroup);
       this.getTotalNotification();
     }
   }
 
-  getListNotifications(pageSize: number, pageNumber: number, unread: boolean, type?: number) {
+  getListNotifications(pageSize: number, pageNumber: number, unread: boolean, type?: number, listAccountId?: string) {
     this.checkTab(type);
     this.listNotification = [];
     if (type !== -1) {
       localStorage.setItem(FIRST_LOGIN, '0');
     }
     this.spinnerService.show();
-    this.notificationsService.getListNotifications(pageSize, pageNumber, unread, type).pipe(take(1)).subscribe(response => {
+    this.notificationsService.getListNotifications(pageSize, pageNumber, unread, type, listAccountId).pipe(take(1)).subscribe(response => {
       if (response.meta.code === 200) {
         this.pageNotification = response;
         this.listNotification = this.pageNotification.data.results;
@@ -126,7 +139,7 @@ export class NotificationsComponent implements OnInit {
     this.getTotalNotification();
   }
   getTotalNotification() {
-    const accountNumber = this.accountID.split('-')[1];
+    const accountNumber = this.accountID;
     this.notificationsService.getTotalNotification(accountNumber).pipe(take(1)).subscribe(response => {
       if (response.meta.code === 200) {
         this.totalNoti = response.data;
@@ -156,23 +169,55 @@ export class NotificationsComponent implements OnInit {
 
   filterUnreadNoti() {
     this.currentPage = 1;
-    switch (this.tab) {
-      case this.TABS.ALL.name:
-        this.unreadAll = !this.unreadAll;
-        this.getListNotifications(this.pageSize, this.currentPage, this.unreadAll, this.TABS.ALL.value);
-        break;
-      case this.TABS.IMPORTANT.name:
-        this.unreadImportant = !this.unreadImportant;
-        this.getListNotifications(this.pageSize, this.currentPage, this.unreadImportant, this.TABS.IMPORTANT.value);
-        break;
-      case this.TABS.NOTIFICATIONS.name:
-        this.unreadNotification = !this.unreadNotification;
-        this.getListNotifications(this.pageSize, this.currentPage, this.unreadNotification, this.TABS.NOTIFICATIONS.value);
-        break;
-      case this.TABS.CAMPAIGN.name:
-        this.unreadCampagn = !this.unreadCampagn;
-        this.getListNotifications(this.pageSize, this.currentPage, this.unreadCampagn, this.TABS.CAMPAIGN.value);
-        break;
+    this.unreadAll = !this.unreadAll;
+    this.searchByTab();
+  }
+
+  filterType(type) {
+    if (type === 'fx') {
+      this.filterFX = !this.filterFX;
+    }
+    if (type === 'icfd') {
+      this.filterICFD = !this.filterICFD;
+    }
+    if (type === 'ccfd') {
+      this.filterCCFD = !this.filterCCFD;
+    }
+    this.checkSearchTypeTrading();
+    this.currentPage = 1;
+    this.searchByTab();
+  }
+
+  checkSearchTypeTrading() {
+    this.newsGroup = '';
+    this.listTradingAccount.forEach(item => {
+      if (item.account_type === ACCOUNT_TYPE.ACCOUNT_FX.account_type) {
+        this.showFilterFX = true;
+        if (this.filterFX) {
+          if (localStorage.getItem(BIZ_GROUP) === 'it') {
+            this.newsGroup += FX_GROUP + ',';
+          } else {
+            this.newsGroup += B2B_GROUP + ',';
+          }
+        }
+      }
+      if (item.account_type === ACCOUNT_TYPE.ACCOUNT_CFDIndex.account_type) {
+        this.showFilterICFD = true;
+        if (this.filterICFD) {
+          this.newsGroup += I_CFD_GROUP + ',';
+        }
+      }
+      if (item.account_type === ACCOUNT_TYPE.ACCOUNT_CFDCom.account_type) {
+        this.showFilterCCFD = true;
+        if (this.filterCCFD) {
+          this.newsGroup += C_CFD_GROUP + ',';
+        }
+      }
+    });
+    if (this.newsGroup) {
+      if (this.newsGroup[this.newsGroup.length - 1] === ',') {
+        this.newsGroup = this.newsGroup.substr(0, this.newsGroup.length - 1);
+      }
     }
   }
 
@@ -183,15 +228,7 @@ export class NotificationsComponent implements OnInit {
     this.notificationsService.changeAgreementStatus(param).pipe(take(1)).subscribe(response => {
       if (response.meta.code === 200) {
         this.changeReadStatus(this.agreementID);
-        if (this.tab === this.TABS.ALL.name) {
-          this.getListNotifications(this.pageSize, this.currentPage, this.unreadAll, this.TABS.ALL.value);
-        } else if (this.tab === this.TABS.IMPORTANT.name) {
-          this.getListNotifications(this.pageSize, this.currentPage, this.unreadImportant, this.TABS.IMPORTANT.value);
-        } else if (this.tab === this.TABS.NOTIFICATIONS.name) {
-          this.getListNotifications(this.pageSize, this.currentPage, this.unreadNotification, this.TABS.NOTIFICATIONS.value);
-        } else if (this.tab === this.TABS.CAMPAIGN.name) {
-          this.getListNotifications(this.pageSize, this.currentPage, this.unreadCampagn, this.TABS.CAMPAIGN.value);
-        }
+        this.searchByTab();
       }
     });
     this.getTotalNotification();
@@ -199,20 +236,40 @@ export class NotificationsComponent implements OnInit {
 
   pageChanged(event) {
     this.currentPage = event.page;
+    // this.searchByTab();
+    let tabName;
     switch (this.tab) {
       case this.TABS.ALL.name:
-        this.getListNotifications(this.pageSize, this.currentPage, this.unreadAll, this.TABS.ALL.value);
+        tabName = this.TABS.ALL.value;
         break;
       case this.TABS.IMPORTANT.name:
-        this.getListNotifications(this.pageSize, this.currentPage, this.unreadImportant, this.TABS.IMPORTANT.value);
+        tabName = this.TABS.IMPORTANT.value;
         break;
       case this.TABS.NOTIFICATIONS.name:
-        this.getListNotifications(this.pageSize, this.currentPage, this.unreadNotification, this.TABS.NOTIFICATIONS.value);
+        tabName = this.TABS.NOTIFICATIONS.value;
         break;
       case this.TABS.CAMPAIGN.name:
-        this.getListNotifications(this.pageSize, this.currentPage, this.unreadCampagn, this.TABS.CAMPAIGN.value);
+        tabName = this.TABS.CAMPAIGN.value;
         break;
     }
+    this.spinnerService.show();
+    this.notificationsService.getListNotifications(this.pageSize,
+      this.currentPage, this.unreadAll, tabName, this.newsGroup).pipe(take(1)).subscribe(response => {
+      if (response.meta.code === 200) {
+        this.pageNotification = response;
+        this.listNotification = this.pageNotification.data.results;
+        this.listNotification.forEach(item => {
+          item.publish_date += TIMEZONESERVER;
+          item.publish_date = moment(item.publish_date).tz(this.timeZone).format(this.formatDateHour);
+        });
+        this.totalItem = this.pageNotification.data.count;
+        this.totalPage = (this.totalItem / this.pageSize) * 10;
+        this.spinnerService.hide();
+        this.recordFrom = this.pageSize * (this.currentPage - 1) + 1;
+        this.recordTo = this.recordFrom + (this.listNotification.length - 1);
+      }
+    });
+    this.getTotalNotification();
   }
 
   checkTab(type: number) {
@@ -239,68 +296,51 @@ export class NotificationsComponent implements OnInit {
     switch (type) {
       case this.TABS.ALL.value:
         this.tab = this.TABS.ALL.name;
-        this.getListNotifications(this.pageSize, this.currentPage, this.unreadAll, this.TABS.ALL.value);
+        this.getListNotifications(this.pageSize, this.currentPage, this.unreadAll, this.TABS.ALL.value, this.newsGroup);
         break;
       case this.TABS.IMPORTANT.value:
         this.tab = this.TABS.IMPORTANT.name;
-        this.getListNotifications(this.pageSize, this.currentPage, this.unreadImportant, this.TABS.IMPORTANT.value);
+        this.getListNotifications(this.pageSize, this.currentPage, this.unreadAll, this.TABS.IMPORTANT.value, this.newsGroup);
         break;
       case this.TABS.NOTIFICATIONS.value:
         this.tab = this.TABS.NOTIFICATIONS.name;
-        this.getListNotifications(this.pageSize, this.currentPage, this.unreadNotification, this.TABS.NOTIFICATIONS.value);
+        this.getListNotifications(this.pageSize, this.currentPage, this.unreadAll, this.TABS.NOTIFICATIONS.value, this.newsGroup);
         break;
       case this.TABS.CAMPAIGN.value:
         this.tab = this.TABS.CAMPAIGN.name;
-        this.getListNotifications(this.pageSize, this.currentPage, this.unreadCampagn, this.TABS.CAMPAIGN.value);
+        this.getListNotifications(this.pageSize, this.currentPage, this.unreadAll, this.TABS.CAMPAIGN.value, this.newsGroup);
         break;
     }
+    this.globalService.callListAccount();
   }
 
   changeTotalItem(event) {
     this.pageSize = event.target.value;
     this.currentPage = 1;
+    this.searchByTab();
+  }
+
+  searchByTab() {
     switch (this.tab) {
       case this.TABS.ALL.name:
-        this.getListNotifications(this.pageSize, this.currentPage, this.unreadAll, this.TABS.ALL.value);
+        this.getListNotifications(this.pageSize, this.currentPage, this.unreadAll, this.TABS.ALL.value, this.newsGroup);
         break;
       case this.TABS.IMPORTANT.name:
-        this.getListNotifications(this.pageSize, this.currentPage, this.unreadImportant, this.TABS.IMPORTANT.value);
+        this.getListNotifications(this.pageSize, this.currentPage, this.unreadAll, this.TABS.IMPORTANT.value, this.newsGroup);
         break;
       case this.TABS.NOTIFICATIONS.name:
-        this.getListNotifications(this.pageSize, this.currentPage, this.unreadNotification, this.TABS.NOTIFICATIONS.value);
+        this.getListNotifications(this.pageSize, this.currentPage, this.unreadAll, this.TABS.NOTIFICATIONS.value, this.newsGroup);
         break;
       case this.TABS.CAMPAIGN.name:
-        this.getListNotifications(this.pageSize, this.currentPage, this.unreadCampagn, this.TABS.CAMPAIGN.value);
+        this.getListNotifications(this.pageSize, this.currentPage, this.unreadAll, this.TABS.CAMPAIGN.value, this.newsGroup);
         break;
     }
   }
 
   showDetail(index: number, item: Notification) {
-    switch (this.tab) {
-      case this.TABS.ALL.name:
-        $(`#noti_${index}`).toggleClass('opened');
-        if (this.checkAgreementIsRead(item) === true) {
-          $(`#noti_${index}`).removeClass('unread');
-        }
-        break;
-      case this.TABS.IMPORTANT.name:
-        $(`#important_${index}`).toggleClass('opened');
-        if (this.checkAgreementIsRead(item) === true) {
-          $(`#important_${index}`).removeClass('unread');
-        }
-        break;
-      case this.TABS.NOTIFICATIONS.name:
-        $(`#system_${index}`).toggleClass('opened');
-        if (this.checkAgreementIsRead(item) === true) {
-          $(`#system_${index}`).removeClass('unread');
-        }
-        break;
-      case this.TABS.CAMPAIGN.name:
-        $(`#campain_${index}`).toggleClass('opened');
-        if (this.checkAgreementIsRead(item) === true) {
-          $(`#campain_${index}`).removeClass('unread');
-        }
-        break;
+    $(`#noti_${index}`).toggleClass('opened');
+    if (this.checkAgreementIsRead(item) === true) {
+      $(`#noti_${index}`).removeClass('unread');
     }
     // if (item.agreement_flg === 1) {
     //   this.contentAgeement = item.news_content;
@@ -341,9 +381,9 @@ export class NotificationsComponent implements OnInit {
 
   initFilterRead() {
     this.unreadAll = false;
-    this.unreadCampagn = false;
-    this.unreadImportant = false;
-    this.unreadNotification = false;
+    // this.unreadCampagn = false;
+    // this.unreadImportant = false;
+    // this.unreadNotification = false;
   }
 
   changeFilterRead() {
@@ -351,6 +391,12 @@ export class NotificationsComponent implements OnInit {
     this.unreadCampagn = true;
     this.unreadImportant = true;
     this.unreadNotification = true;
+  }
+
+  initFilterTradingAcount() {
+    this.filterFX = true;
+    this.filterICFD = true;
+    this.filterCCFD = true;
   }
 
 }

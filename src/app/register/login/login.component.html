@@ -14,7 +14,30 @@
         <div class="col-lg-6">
             <!-- BEGIN Form Login -->
             <div class="p-4 form form-line form-login">
-                <h5 class="text-center text-lg-right"><img src="assets/images/logo.svg" class="logo"></h5>
+              
+                    <div class="d-flex flex-row justify-content-end">
+                        <li class="nav-item nav-item-language dropdown d-none d-md-inline-block">
+                            <a href="javascript:;" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">{{locale == 'en_US' ? 'EN' : 'JP'}}</a>
+                            <!-- <div class="dropdown-menu dropdown-menu-language dropdown-menu-right">
+                                <a (click)="changeLang('en_US')" [className]="locale == 'en_US' ? 'dropdown-item active' : 'dropdown-item'"
+                                    class="dropdown-item" data-language="EN"><img src="assets/images/flags/flag-en.svg" style="height: 28px; width: auto" class="icon flag"
+                                        alt=""> English</a>
+                                <a (click)="changeLang('ja_JP')" [className]="locale == 'ja_JP' ? 'dropdown-item active' : 'dropdown-item'"
+                                    data-language="JP"><img src="assets/images/flags/flag-jp.svg" class="icon flag" style="height: 28px; width: auto" alt=""> Japanese</a>
+                            </div> -->
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                                    <button [className]="locale == 'en_US' ? 'dropdown-item active' : 'dropdown-item'"
+                                     type="button" (click)="changeLang('en_US')">
+                                        <img src="assets/images/flags/flag-en.svg" style="height: 28px; width: auto" class="icon flag" alt=""> English</button>
+                                    <button [className]="locale == 'ja_JP' ? 'dropdown-item active' : 'dropdown-item'"
+                                     type="button" (click)="changeLang('ja_JP')">
+                                        <img src="assets/images/flags/flag-jp.svg" style="height: 28px; width: auto" class="icon flag" alt=""> Japanese</button>
+                                  </div>
+                        </li>
+                        <h5 class="text-center text-lg-right"><img src="assets/images/logo.svg" class="logo"></h5>
+                    </div>
+                <!-- <h5 class="text-center text-lg-right"><img src="assets/images/logo.svg" class="logo"></h5> -->
                 <div class="row justify-content-center mt-4">
 
                     <div class="col-lg-10">

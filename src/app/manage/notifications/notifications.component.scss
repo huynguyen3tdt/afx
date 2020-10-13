@@ -1,3 +1,28 @@
 .f-right {
     float: right;
 }
+// ::ng-deep .o_image.o_we_selected_image::before {
+//     background-image: url("../../../assets/images/folder.jpg") !important;
+// }
+
+::ng-deep .o_image.o_we_selected_image {
+    background-image: url("../../../assets/images/download.jpg") !important;
+    background-position: 0 0;
+    background-repeat: no-repeat;
+    background-size: auto 24px;
+    padding-left: 30px;
+    line-height: 24px;
+    // background-color: #ffffff;
+    display: inline-block;
+}
+
+::ng-deep .o_image.o_we_selected_image::after {
+    content: " ";
+    white-space: pre;
+}
+
+@media screen and (max-width: 600px) {
+    .trading_id {
+      width: 50%;
+    }
+}
