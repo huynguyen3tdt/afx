@@ -38,6 +38,8 @@ export class ResetPasswordComponent implements OnInit {
   locale: string;
   showScreen: boolean;
   isSending: boolean;
+  messageCanotChangePassword: string;
+
   constructor(private authenService: AuthenService,
               private router: Router,
               private activatedRoute: ActivatedRoute,
@@ -107,6 +109,7 @@ export class ResetPasswordComponent implements OnInit {
   onSubmit() {
     this.isSubmitted = true;
     this.erroMessage = false;
+    this.messageCanotChangePassword = '';
     if (this.resetPassForm.invalid) {
       this.erroMessage = false;
       return;
@@ -172,6 +175,9 @@ export class ResetPasswordComponent implements OnInit {
           this.isSending = false;
           if (response.meta.code === 103) {
             this.errorMess = response.meta.message;
+          }
+          if (response.meta.code === 136) {
+            this.messageCanotChangePassword = response.meta.message;
           }
         }
       });
