@@ -71,7 +71,9 @@ export class HeaderComponent implements OnInit {
     this.router.events.subscribe((e: any) => {
       if (e instanceof NavigationEnd) {
         this.activeRouter(this.router.url);
-        this.globalService.callListAccount();
+        if (localStorage.getItem(TOKEN_AFX)) {
+          this.globalService.callListAccount();
+        }
       }
     });
   }
