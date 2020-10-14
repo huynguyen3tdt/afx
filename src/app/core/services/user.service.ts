@@ -75,9 +75,9 @@ export class UserService {
     );
   }
 
-  getAllCharacBranch(bankId: number): Observable<BankResponse> {
+  getAllCharacBranch(bic: string): Observable<BankResponse> {
     return this.httpClient
-      .get(`${this.envConfigService.getConfig()}/${AppSettings.API_BRANCH}` + `?bank_id=${bankId}`)
+      .get(`${this.envConfigService.getConfig()}/${AppSettings.API_BRANCH}` + `?bic=${bic}`)
       .pipe(
         catchError((error: HttpErrorResponse) => {
           return new Observable((observer: InnerSubscriber<any, any>) => {
@@ -121,16 +121,16 @@ export class UserService {
       );
   }
 
-  getSearchBranch(bankId: number, firstChar: string, branchName: string, branchCode: string): Observable<SearchBranchResponseModel> {
+  getSearchBranch(bic: string, firstChar: string, branchName: string, branchCode: string): Observable<SearchBranchResponseModel> {
     let URL = '';
-    if (firstChar && bankId) {
-      URL += `?bank_id=${bankId}&first_char=${firstChar}`;
+    if (firstChar && bic) {
+      URL += `?bic=${bic}&first_char=${firstChar}`;
     }
-    if (branchName && bankId) {
-      URL += `?bank_id=${bankId}&branch_name=${branchName}`;
+    if (branchName && bic) {
+      URL += `?bic=${bic}&branch_name=${branchName}`;
     }
-    if (branchCode && bankId) {
-      URL += `?bank_id=${bankId}&branch_code=${branchCode}`;
+    if (branchCode && bic) {
+      URL += `?bic=${bic}&branch_code=${branchCode}`;
     }
     return this.httpClient
       .get(`${this.envConfigService.getConfig()}/${AppSettings.API_BRANCH_SEARCH}` + URL)

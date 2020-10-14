@@ -118,10 +118,10 @@ export class BankInfoComponent implements OnInit {
       }
     });
   }
-  getAllCharacBranch(bankId: number) {
+  getAllCharacBranch(bic: string) {
     this.initHiraCode();
     this.spinnerService.show();
-    this.userService.getAllCharacBranch(bankId).pipe(take(1)).subscribe(response => {
+    this.userService.getAllCharacBranch(bic).pipe(take(1)).subscribe(response => {
       this.spinnerService.hide();
       if (response.meta.code === 200) {
         this.characBranch = response.data;
@@ -145,9 +145,9 @@ export class BankInfoComponent implements OnInit {
       }
     });
   }
-  searchBranch(bankId: number, firstChar: string, branName: string, branchCode: string) {
+  searchBranch(bic: string, firstChar: string, branName: string, branchCode: string) {
     this.spinnerService.show();
-    this.userService.getSearchBranch(bankId, firstChar, branName, branchCode).pipe(take(1)).subscribe(response => {
+    this.userService.getSearchBranch(bic, firstChar, branName, branchCode).pipe(take(1)).subscribe(response => {
       this.spinnerService.hide();
       if (response.meta.code === 200) {
         this.branchSearch = response.data;
@@ -195,7 +195,7 @@ export class BankInfoComponent implements OnInit {
       }
       this.showBank = false;
       this.showBranch = true;
-      this.getAllCharacBranch(this.currentBank.id);
+      this.getAllCharacBranch(this.currentBank.bic);
     } else if (type === 2) {
       // $('#modal-select-bank').modal('show');
       this.bankModal.show();
@@ -219,7 +219,7 @@ export class BankInfoComponent implements OnInit {
     const param = {
       branch_id: this.bankInfor.branch_id,
       acc_number: this.bankAccountForm.controls.bank_account_number.value,
-      bank_id: this.bankInfor.bank_id,
+      bic: this.bankInfor.bic,
       fx_acc_type: this.bankAccountForm.controls.bank_account_type.value.toString(),
       acc_holder_name: this.bankAccountForm.controls.account_holder.value.trim()
     };
@@ -262,15 +262,15 @@ export class BankInfoComponent implements OnInit {
         }
       }
     });
-    this.searchBranch(this.currentBank.id, item.key_kata, '', '');
+    this.searchBranch(this.currentBank.bic, item.key_kata, '', '');
   }
 
   searchBranchSubmit(type: number) {
     if (type === 1) {
-      this.searchBranch(this.currentBank.id, '', this.upperCaseHira(this.branchForm.controls.branch_name.value), '');
+      this.searchBranch(this.currentBank.bic, '', this.upperCaseHira(this.branchForm.controls.branch_name.value), '');
     }
     if (type === 2) {
-      this.searchBranch(this.currentBank.id, '', '', this.branchForm.controls.branch_code.value);
+      this.searchBranch(this.currentBank.bic, '', '', this.branchForm.controls.branch_code.value);
     }
   }
 
@@ -287,7 +287,7 @@ export class BankInfoComponent implements OnInit {
     this.showBank = false;
     this.showBranch = true;
     this.currentBank = item;
-    this.getAllCharacBranch(this.currentBank.id);
+    this.getAllCharacBranch(this.currentBank.bic);
     this.branchSearch = [];
   }
 
@@ -297,6 +297,7 @@ export class BankInfoComponent implements OnInit {
     this.currentBranch = item;
     this.bankInfor.branch_id = this.currentBranch.id;
     this.bankInfor.bank_id = this.currentBank.id;
+    this.bankInfor.bic = this.currentBank.bic;
     this.bankAccountForm.controls.beneficiary_bank.setValue(this.currentBank.name);
     this.bankAccountForm.controls.bank_branch.setValue(this.currentBranch.branch_name);
   }
