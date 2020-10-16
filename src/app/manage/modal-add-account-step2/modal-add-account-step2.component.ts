@@ -1,7 +1,9 @@
-import { Component, OnInit, ViewChild, Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, Output, EventEmitter, Input, OnChanges } from '@angular/core';
 import { ModalDirective } from 'ngx-bootstrap';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { requiredInput } from 'src/app/core/helper/custom-validate.helper';
+import { LOCALE } from 'src/app/core/constant/authen-constant';
+import { LANGUAGLE } from 'src/app/core/constant/language-constant';
 declare var $: any;
 
 @Component({
@@ -9,7 +11,7 @@ declare var $: any;
   templateUrl: './modal-add-account-step2.component.html',
   styleUrls: ['./modal-add-account-step2.component.scss']
 })
-export class ModalAddAccountStep2Component implements OnInit {
+export class ModalAddAccountStep2Component implements OnInit, OnChanges {
   @ViewChild('modalAddAccountStep2', { static: true }) modal: ModalDirective;
   @Input() accountTradingForm: FormGroup;
   @Output() confirmStep2 = new EventEmitter();
@@ -18,7 +20,14 @@ export class ModalAddAccountStep2Component implements OnInit {
   rulesForm: FormGroup;
   isConfirm: boolean;
   divElement: HTMLElement;
+  locale: string;
+  language;
   constructor( private fb: FormBuilder) {
+  }
+
+  ngOnChanges(changes: import('@angular/core').SimpleChanges): void {
+    this.language = LANGUAGLE;
+    this.locale = localStorage.getItem(LOCALE);
   }
 
   ngOnInit() {
