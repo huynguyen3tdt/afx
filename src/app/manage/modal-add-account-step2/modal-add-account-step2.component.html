@@ -60,14 +60,14 @@
                           <div class="col-lg-5">
                               <div class="mb-0">
                                   <div><strong>{{'Solicitation policy' | translate}}</strong></div><!-- 5 -->
-                                  <div><a href="javascript:;" class="pdf-link">{{'Solicitation policy' | translate}}</a></div>
+                                  <div><a target="_blank" href="https://www.phillip.co.jp/fx/pdf/phillipmt5_02_solicitation_policy.pdf" class="pdf-link">{{'Solicitation policy' | translate}}</a></div>
                               </div>
                           </div>
                       </div>
                   </div>
                   <p class="mb-1">{{'Notice regarding transactions' | translate}}</p>
                   <div class="p-3 border mb-4">
-                    <div *ngIf="this.accountTradingForm.controls.afxAccount && this.accountTradingForm.controls.afxAccount.value"><a href="https://www.phillip.co.jp/fx/pdf/phillipmt5_01_important_notes.pdf"
+                    <div *ngIf="this.accountTradingForm.controls.afxAccount && this.accountTradingForm.controls.afxAccount.value"><a href="https://www.phillip.co.jp/fx/pdf/phillipmt5_03_notice_document.pdf"
                       target="_blank" class="pdf-link">{{'Alert document (FX)' | translate}}</a></div>
                     <div *ngIf="this.accountTradingForm.controls.cfdAccount && this.accountTradingForm.controls.cfdAccount.value"><a href="https://www.phillip.co.jp/fx/pdf/phillipmt5_01_important_notes.pdf"
                       target="_blank" class="pdf-link">{{'Alert document (I-CFD)' | translate}}</a></div>
@@ -79,12 +79,12 @@
                       <div class="row">
                           <div class="col-lg-7">
                               <div class="mb-2 mb-lg-0">
-                                  <div><a href="javascript:;" class="pdf-link">{{'Purpose of using personal information' | translate}}</a></div>
+                                  <div><a target="_blank" href="https://www.phillip.co.jp/fx/pdf/phillipmt5_04_personal_info_purpose.pdf" class="pdf-link">{{'Purpose of using personal information' | translate}}</a></div>
                               </div>
                           </div>
                           <div class="col-lg-5">
                               <div class="mb-0">
-                                  <div><a href="javascript:;" class="pdf-link">{{'Protection of personal information' | translate}}</a></div><!-- 10 -->
+                                  <div><a target="_blank" href="https://www.phillip.co.jp/fx/pdf/phillipmt5_05_personal_info_protection.pdf" class="pdf-link">{{'Protection of personal information' | translate}}</a></div><!-- 10 -->
                               </div>
                           </div>
                       </div>
@@ -94,7 +94,7 @@
                       <div class="row">
                           <div class="col-lg-6">
                               <div class="mb-2 mb-lg-0">
-                                  <div><a href="javascript:;" class="pdf-link">{{'Basic policy for antisocial forces' | translate}}</a></div>
+                                  <div><a target="_blank" href="https://www.phillip.co.jp/fx/pdf/phillipmt5_06_basic_policy.pdf" class="pdf-link">{{'Basic policy for antisocial forces' | translate}}</a></div>
                               </div>
                           </div>
                       </div>
@@ -104,7 +104,7 @@
                       <div class="row">
                           <div class="col-lg-6">
                               <div class="mb-2 mb-lg-0">
-                                  <div><a href="javascript:;" class="pdf-link">{{'Clarification about opening account' | translate}}</a></div>
+                                  <div><a target="_blank" href="https://www.phillip.co.jp/fx/pdf/phillipmt5_07_open_account.pdf" class="pdf-link">{{'Clarification about opening account' | translate}}</a></div>
                               </div>
                           </div>
                       </div>
@@ -117,7 +117,7 @@
                         「<span *ngIf ="this.accountTradingForm.controls.afxAccount?.value">{{'Forex trading' | translate}} </span>
                         <span *ngIf ="this.accountTradingForm.controls.cfdAccount?.value">{{'CFD Index trading' | translate}} </span>
                         <span *ngIf ="this.accountTradingForm.controls.cfdCommunityAccount?.value">{{'CFD Commondity trading' | translate}}</span>
-                        受託契約に関する重要事項説明書」、「電磁的方法等による交付について」、「勧誘方針」、「注意喚起文書」、「個人情報の利用目的」、「個人情報保護宣言」及び「反社会的勢力に対する基本方針」は、PDFファイルにより、当社サイトを通じてお客様の閲覧に供する方法により交付されます。<br>
+                        受託契約に関する重要事項説明書」、<a target="_blank" href="https://www.phillip.co.jp/fx/pdf/phillipmt5_08_electronic_delivery.pdf">「電磁的方法等による交付について」</a>、「勧誘方針」、「注意喚起文書」、「個人情報の利用目的」、「個人情報保護宣言」及び「反社会的勢力に対する基本方針」は、PDFファイルにより、当社サイトを通じてお客様の閲覧に供する方法により交付されます。<br>
                       また、「取引報告書兼残高報告書兼証拠金受領通知書（日次）」及び「年間損益報告書」は、当社マイページ画面にPDFファイルを設け、お客様の閲覧に供する方法により交付されます。<br>
                       各種交付書面について、上記のとおり電子交付されることに同意します。</p>
                     </ng-container>
@@ -128,7 +128,7 @@
                         「<span *ngIf ="this.accountTradingForm.controls.afxAccount?.value">{{'Forex trading' | translate}} </span>
                         <span *ngIf ="this.accountTradingForm.controls.cfdAccount?.value">{{'CFD Index trading' | translate}} </span>
                         <span *ngIf ="this.accountTradingForm.controls.cfdCommunityAccount?.value">{{'CFD Commondity trading' | translate}}</span>
-                        "Explanation for electronic delivery"、"Solicitation policy"、"Alert document", "Purpose of using personal information", "Protection of personal information" and "Basic policy for antisocial forces" can be seen by PDF file which share through Phillip website.
+                        "<a target="_blank" href="https://www.phillip.co.jp/fx/pdf/phillipmt5_08_electronic_delivery.pdf">Explanation for electronic delivery</a>"、"Solicitation policy"、"Alert document", "Purpose of using personal information", "Protection of personal information" and "Basic policy for antisocial forces" can be seen by PDF file which share through Phillip website.
                         Also, "Daily Customer Statement" and "Yearly Customer Report" can be seen through My page.<br>
                         I agree with electronic delivery method of above documents.</p>
                     </ng-container>
@@ -219,7 +219,7 @@
                   <label class="container-checkbox small mb-2 box-item-checkbox"
                   [ngClass]="{'invalid': isConfirm && !rulesForm.controls.agree_pep.value}">
                       <p class="mb-0">{{'I am not being relevant to oversea PEPs' | translate}}</p>
-                      <p class="small mb-0">※{{'Overea PEPs refers to persons who occupy important positions in foreign governments (heads of state of foreign countries, persons in that position, their families, etc.). ' | translate}}</p>
+                      <p class="small mb-0">※{{'Overea PEPs refers to persons who occupy important positions in foreign governments (heads of state of foreign countries, persons in that position, their families, etc.). Please check this for details.' | translate}}</p>
                       <input formControlName="agree_pep" type="checkbox" name="checkbox_18" value="">
                       <span class="checkmark"></span>
                   </label>     

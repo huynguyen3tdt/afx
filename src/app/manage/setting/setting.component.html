@@ -78,11 +78,7 @@
                 {{'You have successfully changed the password' | translate}}
             </div>
             <div *ngIf="invalidPassword == true" class="invalid-mess">
-                {{'Password incorrect' | translate}}
-            </div>
-            <div *ngIf="isSubmittedSetting && settingForm?.controls['confirm_password']?.errors?.RequiredPass"
-                class="invalid-mess">
-                {{'Password requires 8 characters and contain at least two of three types of characters (lower case, upper case and digits)' | translate}}
+                    {{errorContent}}
             </div>
             <div *ngIf="messageCanotChangePassword != ''"
                 class="invalid-mess">
