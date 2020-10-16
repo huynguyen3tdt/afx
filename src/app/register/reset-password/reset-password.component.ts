@@ -12,7 +12,7 @@ import { PASSWORD_LOGIN,
    TYPE_SUCCESS_TOAST_EN,
    TYPE_SUCCESS_TOAST_JP,
    CHANGE_PASS_FLG} from 'src/app/core/constant/authen-constant';
-import { passwordValidation } from 'src/app/core/helper/custom-validate.helper';
+import { requiredInput } from 'src/app/core/helper/custom-validate.helper';
 import { LANGUAGLE } from 'src/app/core/constant/language-constant';
 import { take } from 'rxjs/operators';
 import { ResetPasswordParam, ResetPasswordWithTokenParam, CheckTokenParam } from 'src/app/core/model/user.model';
@@ -39,6 +39,7 @@ export class ResetPasswordComponent implements OnInit {
   showScreen: boolean;
   isSending: boolean;
   messageCanotChangePassword: string;
+  isShowErrorFromBackend: boolean;
 
   constructor(private authenService: AuthenService,
               private router: Router,
@@ -64,8 +65,8 @@ export class ResetPasswordComponent implements OnInit {
   }
   initResetPassForm() {
     this.resetPassForm = new FormGroup({
-      new_password: new FormControl('', [passwordValidation]),
-      confirm_password: new FormControl('', [passwordValidation])
+      new_password: new FormControl('', [requiredInput]),
+      confirm_password: new FormControl('', [requiredInput])
     });
   }
 
@@ -110,6 +111,7 @@ export class ResetPasswordComponent implements OnInit {
     this.isSubmitted = true;
     this.erroMessage = false;
     this.messageCanotChangePassword = '';
+    this.isShowErrorFromBackend = false;
     if (this.resetPassForm.invalid) {
       this.erroMessage = false;
       return;
@@ -155,8 +157,13 @@ export class ResetPasswordComponent implements OnInit {
           });
         } else {
           this.isSending = false;
-          if (response.meta.code === 103) {
+          if (response.meta.code === 103 || response.meta.code === 106) {
             this.errorMess = response.meta.message;
+            this.isShowErrorFromBackend = true;
+          }
+          if (response.meta.code === 136) {
+            this.messageCanotChangePassword = response.meta.message;
+            this.isShowErrorFromBackend = true;
           }
         }
       });
@@ -173,11 +180,13 @@ export class ResetPasswordComponent implements OnInit {
           });
         } else {
           this.isSending = false;
-          if (response.meta.code === 103) {
+          if (response.meta.code === 103 || response.meta.code === 106) {
             this.errorMess = response.meta.message;
+            this.isShowErrorFromBackend = true;
           }
           if (response.meta.code === 136) {
             this.messageCanotChangePassword = response.meta.message;
+            this.isShowErrorFromBackend = true;
           }
         }
       });

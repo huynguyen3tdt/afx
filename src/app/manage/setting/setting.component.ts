@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { AccountType } from 'src/app/core/model/report-response.model';
-import { passwordValidation } from 'src/app/core/helper/custom-validate.helper';
+import { requiredInput } from 'src/app/core/helper/custom-validate.helper';
 import { LOCALE, FONTSIZE_AFX } from 'src/app/core/constant/authen-constant';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { TranslateService } from '@ngx-translate/core';
@@ -32,6 +32,7 @@ export class SettingComponent implements OnInit {
   editableLosscut: boolean;
   editableMargincall: boolean;
   messageCanotChangePassword: string;
+  errorContent: string;
 
   constructor(private spinnerService: Ng4LoadingSpinnerService,
               private translate: TranslateService,
@@ -52,9 +53,9 @@ export class SettingComponent implements OnInit {
 
   initSettingForm() {
     this.settingForm = new FormGroup({
-      current_password: new FormControl('', [passwordValidation]),
-      new_password: new FormControl('', [passwordValidation]),
-      confirm_password: new FormControl('', [passwordValidation]),
+      current_password: new FormControl('', [requiredInput]),
+      new_password: new FormControl('', [requiredInput]),
+      confirm_password: new FormControl('', [requiredInput]),
       language: new FormControl(),
       marginCallMail: new FormControl(false),
       lossCutMail: new FormControl(false)
@@ -115,8 +116,9 @@ export class SettingComponent implements OnInit {
         this.initSettingForm();
         this.isSubmittedSetting = false;
         this.invalidPassword = false;
-      } else if (response.meta.code === 103) {
+      } else if (response.meta.code === 103 || response.meta.code === 106) {
         this.invalidPassword = true;
+        this.errorContent = response.meta.message;
       } else if (response.meta.code === 136) {
         this.messageCanotChangePassword = response.meta.message;
       }
