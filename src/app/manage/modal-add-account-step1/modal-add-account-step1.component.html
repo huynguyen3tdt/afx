@@ -3,7 +3,7 @@
       <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg" role="document" >
           <div class="modal-content">
               <div class="modal-header pt-2 pb-2">
-                  <h5 class="modal-title">口座の追加</h5>
+                  <h5 class="modal-title">{{'Add More Account' | translate}}</h5>
                   <button type="button" class="close" aria-label="Close" (click)="close()">
                       <span aria-hidden="true">&times;</span>
                   </button>
@@ -12,31 +12,31 @@
                   <div class="steps-wrapper pt-1 pb-1 border-bottom mb-3">
                       <ul class="nav nav-tabs nav-steps">
                           <li class="nav-item">
-                              <a href="#step1" class="nav-link active" title="Step 1"><span class="number mr-3">1</span> <strong>情報入力</strong></a>
+                              <a href="#step1" class="nav-link active" title="Step 1"><span class="number mr-3">1</span> <strong>{{'Selection' | translate}}</strong></a>
                           </li>
                           <li class="nav-item">
-                              <a href="#step2" class="nav-link disabled" title="Step 2"><span class="number mr-3">2</span> <strong>確認画面</strong></a>
+                              <a href="#step2" class="nav-link disabled" title="Step 2"><span class="number mr-3">2</span> <strong>{{'Confirmation' | translate}}</strong></a>
                           </li>
                           <li class="nav-item">
-                              <a href="#complete" class="nav-link disabled" title="Complete"><span class="number mr-3">3</span> <strong>登録完了</strong></a>
+                              <a href="#complete" class="nav-link disabled" title="Complete"><span class="number mr-3">3</span> <strong>{{'Completion' | translate}}</strong></a>
                           </li>
                       </ul>
                   </div>
-                  <p class="text-danger">お客様情報（連絡先・住所等）にご変更はございませんか。</p>
-                  <p class="text-danger">ご変更がある場合は、事前にメニューの「お客様情報」からご変更手続きをお願いいたします。</p>
+                  <p class="text-danger">{{'Do you want to change customer information (Contact information, address etc)?' | translate}}</p>
+                  <p class="text-danger">{{"If you want to change, please change information at 'Customer Information' before hand." | translate}}</p>
                   <div class="row container-radios-wrapper">
                       <div class="col-lg-6 mb-3" *ngIf="accountTradingForm.controls.cfdAccount">
                           <label class="container-checkbox small box-item-checkbox">
                               <div class="account-type-header d-flex justify-content-between">
-                                  <h5 class="text-primary">株価指数CFD口座</h5>
+                                  <h5 class="text-primary">{{'CFD Index' | translate}}</h5>
                                   <img src="assets/images/badge-I-CFD.svg" class="icon-type" alt="">
                               </div>
                               <ul class="list-unstyled b ml-3">
-                                  <li>日経225、NYダウなど4銘柄</li>
-                                  <li>ほぼ24時間取引可能</li>
-                                  <li>最低1単位から取引可能</li>
-                                  <li>FXもCFDも同一プラットフォームで取引可能</li>
-                                  <li>口座間資金振替可能</li>
+                                  <li>{{'There are 4 symbols of Nikkei 225, NYDow etc' | translate}}</li>
+                                  <li>{{'Available for trading almost 24 hours' | translate}}</li>
+                                  <li>{{'Can trade from 1 unit' | translate}}</li>
+                                  <li>{{'Both FX and CFD can be traded on the same platform' | translate}}</li>
+                                  <li>{{'Can proceed internal tranfer between accounts' | translate}}</li>
                               </ul>
                               <input type="checkbox" name="account_type_icfd" value="1" formControlName="cfdAccount">
                               <span class="checkmark"></span>
@@ -45,15 +45,15 @@
                       <div class="col-lg-6 mb-3" *ngIf="accountTradingForm.controls.cfdCommunityAccount">
                           <label class="container-checkbox small box-item-checkbox">
                               <div class="account-type-header d-flex justify-content-between">
-                                  <h5 class="text-primary">商品CFD口座 </h5>
+                                  <h5 class="text-primary">{{'CFD Commodity' | translate}} </h5>
                                   <img src="assets/images/badge-C-CFD.svg" class="icon-type" alt="">
                               </div>
                               <ul class="list-unstyled b ml-3">
-                                  <li>金、原油など4銘柄</li>
-                                  <li>ほぼ24時間取引可能</li>
-                                  <li>最低1単位から取引可能</li>
-                                  <li>FXもCFDも同一プラットフォームで取引可能</li>
-                                  <li>口座間資金振替可能</li>
+                                  <li>{{'There are 4 symbols of gold, oil etc' | translate}}</li>
+                                  <li>{{'Available for trading almost 24 hours' | translate}}</li>
+                                  <li>{{'Can trade from 1 unit' | translate}}</li>
+                                  <li>{{'Both FX and CFD can be traded on the same platform' | translate}}</li>
+                                  <li>{{'Can proceed internal tranfer between accounts' | translate}}</li>
                               </ul>
                               <input type="checkbox" name="account_type_ccfd" value="2" formControlName="cfdCommunityAccount">
                               <span class="checkmark"></span>
@@ -62,14 +62,14 @@
                       <div class="col-lg-6" *ngIf="accountTradingForm.controls.afxAccount">
                           <label class="container-checkbox small box-item-checkbox">
                               <div class="account-type-header d-flex justify-content-between">
-                                  <h5 class="text-primary">FX口座</h5>
+                                  <h5 class="text-primary">{{'Forex' | translate}}</h5>
                                   <img src="assets/images/badge-FX.svg" class="icon-type" alt="">
                               </div>
                               <ul class="list-unstyled b ml-3">
-                                  <li>高金利通貨を含む24通貨ペア</li>
-                                  <li>1,000通貨単位から取引可能</li>
-                                  <li>FXもCFDも同一プラットフォームで取引可能</li>
-                                  <li>口座間資金振替可能</li>
+                                  <li>{{'There are 24 currency pairs with high interest rate' | translate}}</li>
+                                  <li>{{'Can trade from 1000 units' |  translate}}</li>
+                                  <li>{{'Both FX and CFD can be traded on the same platform' | translate}}</li>
+                                  <li>{{'Can proceed internal tranfer between accounts' | translate}}</li>
                               </ul>
                               <input type="checkbox" name="account_type_fx" formControlName="afxAccount" value="3">
                               <span class="checkmark"></span>
@@ -77,11 +77,11 @@
                       </div>
                   </div>
                   <div *ngIf="isConfirm && accountTradingForm.errors" class="invalid-mess">
-                    <div>最低１つの口座種類を選択ください。</div>
+                    <div>{{'Please select at least one account type.' | translate}}</div>
                   </div>
               </div>
               <div class="modal-footer pt-2 pb-2">
-                  <button (click)="onConfirm()"type="button" class="btn btn-primary btn-next">確定画面 <i class="icon ion-md-arrow-forward"></i></button>
+                  <button (click)="onConfirm()"type="button" class="btn btn-primary btn-next">{{'Confirmation' | translate}} <i class="icon ion-md-arrow-forward"></i></button>
               </div>
           </div>
       </div>
