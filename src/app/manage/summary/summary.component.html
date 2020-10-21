@@ -12,10 +12,12 @@
                     </div>
                     <nav class="mb-0">
                         <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                            <a class="nav-item nav-link active" id="nav-account-tab" data-toggle="tab" (click)="changeTab(TAB.summary)"
+                            <!-- tạm ẩn khi deploy b2b tạm ẩn khi deploy b2b tạm ẩn khi deploy b2b-->
+                            <!-- <a class="nav-item nav-link active" id="nav-account-tab" data-toggle="tab" (click)="changeTab(TAB.summary)"
                                 href="#nav-account" role="tab" aria-controls="nav-account" aria-selected="true"><i class="icon ion-md-person"></i>
-                                <strong class="d-none d-md-inline">&nbsp;{{'Summary' | translate}}</strong></a>
-                            <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" (click)="changeTab(TAB.detail)"
+                                <strong class="d-none d-md-inline">&nbsp;{{'Summary' | translate}}</strong></a> -->
+
+                            <a class="nav-item nav-link active" id="nav-profile-tab" data-toggle="tab" (click)="changeTab(TAB.detail)"
                             href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="true"><i class="icon ion-md-contact"></i>
                                 <strong class="d-none d-md-inline">&nbsp;{{'Account Information' | translate}}</strong></a>
                         </div>
@@ -24,11 +26,14 @@
                 <div class="col-lg-9 col-mypage-content">
                     <div class="tab-content border" id="nav-tabContent">
                         <!-- BEGIN ACCOUNT -->
-                        <div *ngIf="showSummary" class="tab-pane fade show active" id="nav-account"
+
+                        <!-- tạm ẩn khi deploy b2b tạm ẩn khi deploy b2b tạm ẩn khi deploy b2b-->
+                        <!-- <div *ngIf="showSummary" class="tab-pane fade show active" id="nav-account"
                             role="tabpanel" aria-labelledby="nav-account-tab">
                             <app-all-account></app-all-account>
-                        </div>
-                        <div *ngIf="showDetail" class="tab-pane fade" id="nav-profile" role="tabpanel"
+                        </div> -->
+
+                        <div *ngIf="showDetail" class="tab-pane fade show active" id="nav-profile" role="tabpanel"
                             aria-labelledby="nav-profile-tab">
                             <app-mt5-info></app-mt5-info>
                         </div>
