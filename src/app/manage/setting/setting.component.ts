@@ -116,6 +116,8 @@ export class SettingComponent implements OnInit {
         this.initSettingForm();
         this.isSubmittedSetting = false;
         this.invalidPassword = false;
+        this.settingForm.controls.marginCallMail.setValue(this.mailFlag.margincall_email_flg);
+        this.settingForm.controls.lossCutMail.setValue(this.mailFlag.losscut_email_flg);
       } else if (response.meta.code === 103 || response.meta.code === 106) {
         this.invalidPassword = true;
         this.errorContent = response.meta.message;
