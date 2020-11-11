@@ -192,9 +192,9 @@ export class NotificationsComponent implements OnInit {
     this.newsGroup = '';
     this.listTradingAccount.forEach(item => {
       if (item.account_type === ACCOUNT_TYPE.ACCOUNT_FX.account_type) {
-        this.showFilterFX = true;
         if (this.filterFX) {
           if (localStorage.getItem(BIZ_GROUP) === 'it') {
+            this.showFilterFX = true;
             this.newsGroup += FX_GROUP + ',';
           } else {
             this.newsGroup += B2B_GROUP + ',';
@@ -202,15 +202,19 @@ export class NotificationsComponent implements OnInit {
         }
       }
       if (item.account_type === ACCOUNT_TYPE.ACCOUNT_CFDIndex.account_type) {
-        this.showFilterICFD = true;
         if (this.filterICFD) {
-          this.newsGroup += I_CFD_GROUP + ',';
+          if (localStorage.getItem(BIZ_GROUP) === 'it') {
+            this.showFilterICFD = true;
+            this.newsGroup += I_CFD_GROUP + ',';
+          }
         }
       }
       if (item.account_type === ACCOUNT_TYPE.ACCOUNT_CFDCom.account_type) {
-        this.showFilterCCFD = true;
         if (this.filterCCFD) {
-          this.newsGroup += C_CFD_GROUP + ',';
+          if (localStorage.getItem(BIZ_GROUP) === 'it') {
+            this.showFilterCCFD = true;
+            this.newsGroup += C_CFD_GROUP + ',';
+          }
         }
       }
     });
