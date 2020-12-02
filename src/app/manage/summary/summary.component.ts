@@ -22,9 +22,7 @@ export class SummaryComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    // tạm ẩn khi deploy b2b tạm ẩn khi deploy b2b tạm ẩn khi deploy b2b
-    // this.showSummary = true;
-    this.showDetail  = true;
+    this.showSummary = true;
   }
   changeTab(type) {
     this.showSummary = type === this.TAB.summary;
