@@ -203,7 +203,7 @@ export class TransferComponent implements OnInit, OnDestroy {
       }, 60000);
     } else {
       this.tradingReceiveAccount = this.listTradingAccount.find((account: AccountType) =>
-       this.receiveAccountID === account.account_id);
+        this.receiveAccountID === account.account_id);
       this.receiveType = this.receiveAccountID.substring(this.receiveAccountID.length - 2, this.receiveAccountID.length);
       this.getMt5Infor(Number(this.receiveAccountID), 'receive');
       this.intervalResetReceiveAccountMt5Info = setInterval(() => {
@@ -250,6 +250,9 @@ export class TransferComponent implements OnInit, OnDestroy {
     this.withdrawRequestService.postTransfer(param).subscribe(response => {
       this.spinnerService.hide();
       this.transferResult = response.data;
+      if (response.meta.code === 130) {
+        this.toastr.warning(response.meta.message);
+      }
       if (response.meta.code !== 500) {
         if (this.transferResult) {
           this.transferResult.create_date =
