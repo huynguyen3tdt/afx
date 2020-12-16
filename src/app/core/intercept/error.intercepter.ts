@@ -50,9 +50,7 @@ export class ErrorInterceptor implements HttpInterceptor {
             });
           }
           if (err.status === 423) {
-            // Redirect browser to get maintain page
-            // Should redirect to path root "/" to fix 404 error media files (png, svg, ...)
-            window.location.replace('/');
+            window.location.reload();
           }
           return throwError(err.error);
         }));
