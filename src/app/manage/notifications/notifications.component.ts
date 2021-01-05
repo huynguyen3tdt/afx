@@ -14,7 +14,8 @@ import { take } from 'rxjs/operators';
 import { GlobalService } from 'src/app/core/services/global.service';
 import { Title } from '@angular/platform-browser';
 import { UserService } from 'src/app/core/services/user.service';
-import { FX_GROUP, I_CFD_GROUP, C_CFD_GROUP, B2B_GROUP } from 'src/app/core/constant/new-group-constant';
+import { FX_GROUP, I_CFD_GROUP, C_CFD_GROUP, B2B_FX_GROUP,
+   C_CFD_B2B_GROUP, I_CFD_B2B_GROUP } from 'src/app/core/constant/new-group-constant';
 import { BIZ_GROUP } from 'src/app/core/constant/user-code-constant';
 declare var $: any;
 
@@ -192,28 +193,33 @@ export class NotificationsComponent implements OnInit {
     this.newsGroup = '';
     this.listTradingAccount.forEach(item => {
       if (item.account_type === ACCOUNT_TYPE.ACCOUNT_FX.account_type) {
+        this.showFilterFX = true;
         if (this.filterFX) {
           if (localStorage.getItem(BIZ_GROUP) === 'it') {
-            this.showFilterFX = true;
             this.newsGroup += FX_GROUP + ',';
           } else {
-            this.newsGroup += B2B_GROUP + ',';
+            this.newsGroup += B2B_FX_GROUP + ',';
           }
         }
       }
       if (item.account_type === ACCOUNT_TYPE.ACCOUNT_CFDIndex.account_type) {
+        this.showFilterICFD = true;
         if (this.filterICFD) {
           if (localStorage.getItem(BIZ_GROUP) === 'it') {
-            this.showFilterICFD = true;
             this.newsGroup += I_CFD_GROUP + ',';
+          } else {
+            this.newsGroup += I_CFD_B2B_GROUP + ',';
           }
+
         }
       }
       if (item.account_type === ACCOUNT_TYPE.ACCOUNT_CFDCom.account_type) {
+        this.showFilterCCFD = true;
         if (this.filterCCFD) {
           if (localStorage.getItem(BIZ_GROUP) === 'it') {
-            this.showFilterCCFD = true;
             this.newsGroup += C_CFD_GROUP + ',';
+          } else {
+            this.newsGroup += C_CFD_B2B_GROUP + ',';
           }
         }
       }
