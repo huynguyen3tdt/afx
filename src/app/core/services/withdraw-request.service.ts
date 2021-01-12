@@ -94,7 +94,7 @@ export class WithdrawRequestService {
 
   postWithdraw(param): Observable<ResponseWihtoutDataModel> {
     return this.httpClient
-      .post(`${this.envConfigService.getConfig()}/${AppSettings.API_POST_WITHDRAW}`, param)
+      .post(`${this.envConfigService.getConfig()}/${AppSettings.API_POST_WITHDRAW_PHILLIP}`, param)
       .pipe(
         catchError((error: HttpErrorResponse) => {
           return new Observable((observer: InnerSubscriber<any, any>) => {
