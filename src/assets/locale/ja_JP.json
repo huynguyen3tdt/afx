@@ -383,5 +383,6 @@
   "Please write 「本人確認書類」": "必ず件名に「本人確認書類」と記入してください",
   "Mailing": "郵送",
   "Back": "戻る",
-  "Register": "口座登録"
+  "Register": "口座登録",
+  "Bank Balance": "実質預り金"
 }
