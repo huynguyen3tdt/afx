@@ -68,6 +68,7 @@ export interface Mt5Model {
   currency?: string;
   account_id?: string;
   img_type_account?: string;
+  bank_balance: number;
 }
 
 export interface BankInforModel {
