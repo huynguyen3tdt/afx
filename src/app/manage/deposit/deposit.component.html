@@ -128,7 +128,7 @@
                                     <p class="small text-secondary p-2 bg-light" *ngIf="locale == language.english">Notice: Minimum single deposit amount is {{minDeposit | number}}</p>
                                     <p class="small text-secondary p-2 bg-light" *ngIf="locale == language.japan">※最低入金額は{{minDeposit | number}}円となります。</p>
                                     <div *ngIf="errMessageQuickDeposit == true" class="invalid-mess">
-                                        <div>{{'Your Margin Level is nearly the Margin Call Levels' | translate}}</div>
+                                        <div>{{'Your Margin Level is nearly the Margin Call Level' | translate}}</div>
                                     </div>
                                     <button class="btn btn-warning btn-block text-uppercase btn-lg mb-3" (click)="onSubmit()"><strong>{{'Deposit' | translate}}</strong></button>
                                     <p class="text-center" style="line-height: 1.2"><a href="javascript:;" (click)="openModal()"><i
@@ -581,7 +581,7 @@
                                                     <div *ngIf="locale == 'ja_JP'">ご入金額は{{minDeposit | number}}円以上から承ります</div>
                                                 </div>
                                                 <div *ngIf="errMessageBankTran == true" class="invalid-mess">
-                                                    <div>{{'Your Margin Level is nearly the Margin Call Levels' | translate}}</div>
+                                                    <div>{{'Your Margin Level is nearly the Margin Call Level' | translate}}</div>
                                                 </div>
                                                 <button class="btn btn-success btn-block text-uppercase btn-lg mb-3 mt-4" (click)="confirmBankTransfer()"><strong>{{'Submit' | translate}}</strong></button>
 
