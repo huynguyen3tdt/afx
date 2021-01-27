@@ -129,6 +129,9 @@ export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
     this.listTradingAccount.unshift(allTradingAcount);
     if (this.listTradingAccount) {
       this.tradingAccount = this.listTradingAccount[0];
+      if (this.querytab) {
+        this.tradingAccount.account_id = this.accountID;
+      }
     }
     this.initSearchForm();
     // if (!this.querytab && this.searchForm.controls.tradingAccount.value) {
@@ -232,9 +235,6 @@ export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
       this.showErrorDate = true;
       return;
     }
-    // if (this.showErrorDate === true) {
-    //   return;
-    // }
     if (this.searchForm.controls.tradingAccount.value) {
       accounID = this.searchForm.controls.tradingAccount.value;
     }
@@ -254,6 +254,11 @@ export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
           this.formatDate(this.searchForm.controls.fromDate.value), this.formatDate(this.searchForm.controls.toDate.value),
           this.statusSearch);
         break;
+    }
+    if (this.querytab) {
+      this.getTranHistory(accounID, this.currentPage, this.pageSize, this.TABS.WITHDRAWAL.value,
+         this.formatDate(this.searchForm.controls.fromDate.value),
+         this.formatDate(this.searchForm.controls.toDate.value), this.STATUS[0].value.id); // id status = 3 (In Progress)
     }
   }
 
