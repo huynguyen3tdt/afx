@@ -35,6 +35,8 @@ export const ERROR_MAX_DEPOSIT_EN = 'Max deposit is ';
 export const ERROR_MAX_DEPOSIT_JP = '最大預金は ';
 export const ERROR_MIN_DEPOSIT_EN = 'Min deposit is ';
 export const ERROR_MIN_DEPOSIT_JP = '最小預金は';
+export const ERROR_GEN_ISSUANCE_KEY_EN = 'Failed to generate API key';
+export const ERROR_GEN_ISSUANCE_KEY_JP = 'APIキーの発行は失敗しました';
 
 export const ACCOUNT_TYPE = {
     ACCOUNT_FX: {account_type: 1, name: '[FX]'},

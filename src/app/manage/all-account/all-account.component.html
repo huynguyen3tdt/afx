@@ -85,6 +85,18 @@
                                 <strong>{{item?.data?.unrealize_pl | number}}</strong>
                             </td>
                         </tr>
+                        <tr *ngIf="item?.data?.issuance_key == ''">
+                            <td><button class="issuarance" (click)="genQuoreaKey(item?.data?.account_id)">{{'API key' | translate}}</button></td>
+                            <td class="text-right">
+                                <strong>{{item?.data?.issuance_key}}</strong>
+                            </td>
+                        </tr>
+                        <tr *ngIf="item?.data?.issuance_key != ''">
+                            <td><button disabled="true">{{'API key' | translate}}</button></td>
+                            <td class="text-right">
+                                <strong>{{item?.data?.issuance_key}}</strong>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
