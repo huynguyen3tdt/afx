@@ -304,6 +304,8 @@
   "Please be sure to enter our trading account number (10 digits) of the deposit destination after the name of the transfer person. If you do not specify a deposit destination trading account, we will arbitrarily select an account.":"Please be sure to enter our trading account number (10 digits) of the deposit destination after the name of the transfer person. If you do not specify a deposit destination trading account, we will arbitrarily select an account.",
   "Amount must be bigger than 0": "Amount must be bigger than 0",
   "Add Account" : "Add Account",
+  "API key issuance": "API Key Issuance",
+  "API key": "API Key Issuance",
   "Partner account": "Partner account",
   "Bank transfer information": "Bank transfer information",
   "Please choose trading acount": "Please choose trading acount",
