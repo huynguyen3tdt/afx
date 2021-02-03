@@ -101,7 +101,7 @@ export class AllAccountComponent implements OnInit, OnDestroy {
     this.userService.genQuoreaKey(param).pipe(take(1)).subscribe(response => {
       this.spinnerService.hide();
       if (response.meta.code === 200) {
-        this.withdrawRequestService.getmt5Infor(Number(accountID));
+        this.getSummaryAllAccount();
         this.toastr.success(messageSuccess);
       } else {
         this.toastr.error(messageErr);

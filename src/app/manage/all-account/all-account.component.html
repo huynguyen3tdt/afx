@@ -86,13 +86,13 @@
                             </td>
                         </tr>
                         <tr *ngIf="item?.data?.issuance_key == ''">
-                            <td><button class="issuarance" (click)="genQuoreaKey(item?.data?.account_id)">{{'API key' | translate}}</button></td>
+                            <td><button class="btn btn-sm btn-primary pl-2 pr-2" (click)="genQuoreaKey(item?.data?.account_id)">{{'API key' | translate}}</button></td>
                             <td class="text-right">
                                 <strong>{{item?.data?.issuance_key}}</strong>
                             </td>
                         </tr>
                         <tr *ngIf="item?.data?.issuance_key != ''">
-                            <td><button disabled="true">{{'API key' | translate}}</button></td>
+                            <td><button class="btn btn-sm btn-primary pl-2 pr-2" disabled="true">{{'API key' | translate}}</button></td>
                             <td class="text-right">
                                 <strong>{{item?.data?.issuance_key}}</strong>
                             </td>
