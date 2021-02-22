@@ -1,13 +1,22 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AccountType } from 'src/app/core/model/report-response.model';
-import { Mt5Model, WithdrawRequestModel } from 'src/app/core/model/withdraw-request-response.model';
-import { ACCOUNT_IDS, TIMEZONEAFX, LOCALE } from 'src/app/core/constant/authen-constant';
+import { WithdrawRequestModel } from 'src/app/core/model/withdraw-request-response.model';
+import { ACCOUNT_IDS, TIMEZONEAFX, LOCALE,
+  TYPE_SUCCESS_TOAST_EN,
+  TYPE_SUCCESS_TOAST_JP,
+  ERROR_GEN_ISSUANCE_KEY_EN,
+  ERROR_GEN_ISSUANCE_KEY_JP } from 'src/app/core/constant/authen-constant';
 import { WithdrawRequestService } from 'src/app/core/services/withdraw-request.service';
 import { forkJoin, Observable } from 'rxjs';
 import moment from 'moment-timezone';
 import { LANGUAGLE } from 'src/app/core/constant/language-constant';
 import { EN_FORMATDATE_HH_MM, JAPAN_FORMATDATE_HH_MM } from 'src/app/core/constant/format-date-constant';
 import { GlobalService } from 'src/app/core/services/global.service';
+import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
+import { take } from 'rxjs/operators';
+import { UserService } from 'src/app/core/services/user.service';
+import { TradingAccount } from 'src/app/core/model/user.model';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-all-account',
@@ -25,7 +34,10 @@ export class AllAccountComponent implements OnInit, OnDestroy {
   locale: string;
   intervalResetMt5Infor;
   constructor(private withdrawRequestService: WithdrawRequestService,
-              private globalService: GlobalService) { }
+              private globalService: GlobalService,
+              private spinnerService: Ng4LoadingSpinnerService,
+              private userService: UserService,
+              private toastr: ToastrService) { }
 
   ngOnInit() {
     this.timeZone = localStorage.getItem(TIMEZONEAFX);
@@ -72,8 +84,52 @@ export class AllAccountComponent implements OnInit, OnDestroy {
     }
   }
 
+  genQuoreaKey(accountID) {
+    let messageSuccess;
+    let messageErr;
+    if (this.locale === LANGUAGLE.english) {
+      messageSuccess = TYPE_SUCCESS_TOAST_EN;
+      messageErr = ERROR_GEN_ISSUANCE_KEY_EN;
+    } else {
+      messageSuccess = TYPE_SUCCESS_TOAST_JP;
+      messageErr = ERROR_GEN_ISSUANCE_KEY_JP;
+    }
+    const param: TradingAccount = {
+      trading_account_id: accountID
+    };
+    this.spinnerService.show();
+    this.userService.genQuoreaKey(param).pipe(take(1)).subscribe(response => {
+      this.spinnerService.hide();
+      if (response.meta.code === 200) {
+        this.getSummaryAllAccount();
+        this.toastr.success(messageSuccess);
+      } else {
+        this.toastr.error(messageErr);
+      }
+    });
+  }
+
+  toggleDisplayKey(item?) {
+    item.is_show_key = !item.is_show_key;
+  }
+
   ngOnDestroy(): void {
     clearInterval(this.intervalResetMt5Infor);
+  }
+
+  copyMessage(val: string){
+    const selBox = document.createElement('textarea');
+    selBox.style.position = 'fixed';
+    selBox.style.left = '0';
+    selBox.style.top = '0';
+    selBox.style.opacity = '0';
+    selBox.value = val;
+    document.body.appendChild(selBox);
+    selBox.focus();
+    selBox.select();
+    document.execCommand('copy');
+    document.body.removeChild(selBox);
+    this.toastr.success('Copy success to clipboard!')
   }
 
 }
