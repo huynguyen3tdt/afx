@@ -12,7 +12,9 @@ import { UserResponse,
         UpdateUserParam,
         UpdateCorporateParam,
         GroupAccountType,
-        ListAccountResponeModel} from '../model/user.model';
+        ListAccountResponeModel,
+        TradingAccountResponeModel,
+        TradingAccount} from '../model/user.model';
 import { ResponseWihtoutDataModel } from '../model/none-data-response.model';
 import { SearchBankResponseModel, SearchBranchResponseModel } from '../model/bank-response.model';
 import { WithdrawHistoryModel } from '../model/withdraw-request-response.model';
@@ -194,6 +196,18 @@ export class UserService {
   getUserListAccount(): Observable<ListAccountResponeModel> {
     return this.httpClient
       .get(`${this.envConfigService.getConfig()}/${AppSettings.API_GET_LIST_ACCOUNT}`)
+        .pipe(
+          catchError((error: HttpErrorResponse) => {
+            return new Observable((observer: InnerSubscriber<any, any>) => {
+              observer.next(error);
+            });
+          })
+        );
+  }
+  genQuoreaKey(param: TradingAccount): Observable<TradingAccountResponeModel> {
+    return this.httpClient
+      .post(`${this.envConfigService.getConfig()}/${AppSettings.API_GEN_QUOREA_KEY}`,
+          param)
         .pipe(
           catchError((error: HttpErrorResponse) => {
             return new Observable((observer: InnerSubscriber<any, any>) => {

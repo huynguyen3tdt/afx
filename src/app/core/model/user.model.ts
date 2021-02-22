@@ -222,4 +222,14 @@ export interface AccountType {
   status: number;
   partner_id: number;
   currency_cd: string;
+  issuance_key: string;
+}
+
+export interface TradingAccountResponeModel {
+  meta: MetaResponseModel;
+  data: AccountType;
+}
+
+export interface TradingAccount {
+  trading_account_id: number;
 }
