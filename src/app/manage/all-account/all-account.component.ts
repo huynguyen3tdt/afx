@@ -117,7 +117,7 @@ export class AllAccountComponent implements OnInit, OnDestroy {
     clearInterval(this.intervalResetMt5Infor);
   }
 
-  copyMessage(val: string){
+  copyMessage(val: string) {
     const selBox = document.createElement('textarea');
     selBox.style.position = 'fixed';
     selBox.style.left = '0';
@@ -129,7 +129,7 @@ export class AllAccountComponent implements OnInit, OnDestroy {
     selBox.select();
     document.execCommand('copy');
     document.body.removeChild(selBox);
-    this.toastr.success('Copy success to clipboard!')
+    this.toastr.success('Copy success to clipboard!');
   }
 
 }
