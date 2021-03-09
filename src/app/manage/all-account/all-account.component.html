@@ -87,16 +87,25 @@
                         </tr>
                         <tr *ngIf="item?.data?.issuance_key == ''">
                             <td><button class="btn btn-sm btn-primary pl-2 pr-2" (click)="genQuoreaKey(item?.data?.account_id)">{{'API key' | translate}}</button></td>
-                            <td class="text-right">
-                                <strong>{{item?.data?.issuance_key}}</strong>
-                            </td>
                         </tr>
                         <tr *ngIf="item?.data?.issuance_key != ''">
-                            <td><button class="btn btn-sm btn-primary pl-2 pr-2" disabled="true">{{'API key' | translate}}</button></td>
-                            <td class="text-right">
-                                <strong>{{item?.data?.issuance_key}}</strong>
+                            <td><button class="btn btn-sm btn-primary pl-2 pr-2" (click)="toggleDisplayKey(item?.data)">{{'API key' | translate}}</button></td>
+                        </tr>
+                        <tr *ngIf="item?.data?.is_show_key">
+                            <td>{{'Trading account' | translate}}: </td>
+                            <td style="text-align:right">
+                                {{item?.data?.account_id | convertTradingType}}
+                                <button class="btn btn-sm btn-primary pl-2 pr-2" (click)="copyMessage(item?.data?.account_id)">{{'Copy' | translate}}</button>
                             </td>
                         </tr>
+                        <tr *ngIf="item?.data?.is_show_key">
+                            <td>{{'API key' | translate}}: </td>
+                            <td style="text-align:right">
+                                {{item?.data?.issuance_key}}
+                                <button class="btn btn-sm btn-primary pl-2 pr-2" (click)="copyMessage(item?.data?.issuance_key)">{{'Copy' | translate}}</button>
+                            </td>
+                        </tr>
+
                     </tbody>
                 </table>
             </div>

@@ -5,7 +5,9 @@ import { ACCOUNT_IDS, TIMEZONEAFX, LOCALE,
   TYPE_SUCCESS_TOAST_EN,
   TYPE_SUCCESS_TOAST_JP,
   ERROR_GEN_ISSUANCE_KEY_EN,
-  ERROR_GEN_ISSUANCE_KEY_JP } from 'src/app/core/constant/authen-constant';
+  ERROR_GEN_ISSUANCE_KEY_JP,
+  SUCCESS_CLIPBOARD_EN,
+  SUCCESS_CLIPBOARD_JP} from 'src/app/core/constant/authen-constant';
 import { WithdrawRequestService } from 'src/app/core/services/withdraw-request.service';
 import { forkJoin, Observable } from 'rxjs';
 import moment from 'moment-timezone';
@@ -109,8 +111,33 @@ export class AllAccountComponent implements OnInit, OnDestroy {
     });
   }
 
+  toggleDisplayKey(item?) {
+    item.is_show_key = !item.is_show_key;
+  }
+
   ngOnDestroy(): void {
     clearInterval(this.intervalResetMt5Infor);
+  }
+
+  copyMessage(val: string) {
+    let message;
+    if (this.locale === LANGUAGLE.english) {
+      message = SUCCESS_CLIPBOARD_EN;
+    } else {
+      message = SUCCESS_CLIPBOARD_JP;
+    }
+    const selBox = document.createElement('textarea');
+    selBox.style.position = 'fixed';
+    selBox.style.left = '0';
+    selBox.style.top = '0';
+    selBox.style.opacity = '0';
+    selBox.value = val;
+    document.body.appendChild(selBox);
+    selBox.focus();
+    selBox.select();
+    document.execCommand('copy');
+    document.body.removeChild(selBox);
+    this.toastr.success(message);
   }
 
 }
