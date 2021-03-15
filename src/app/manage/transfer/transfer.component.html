@@ -36,6 +36,13 @@
                                 </div>
 
                                 <div class="mb-1 d-flex justify-content-between">
+                                    <label class="label">{{'Actual Balance' | translate}}</label>
+                                    <div>
+                                        <strong>{{sentAccountInfo?.bank_balance | number}}</strong>
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-1 d-flex justify-content-between">
                                     <label class="label">{{'Balance' | translate}}</label>
                                     <div>
                                         <strong>{{sentAccountInfo?.balance | number}}</strong>
@@ -104,6 +111,13 @@
                                             <strong>{{tradingReceiveAccount?.currency}}</strong></div>
                                     </div>
     
+                                    <div class="mb-1 d-flex justify-content-between">
+                                        <label class="label">{{'Actual Balance' | translate}}</label>
+                                        <div>
+                                            <strong>{{receiveAccountInfo?.bank_balance | number}}</strong>
+                                        </div>
+                                    </div>
+
                                     <div class="mb-1 d-flex justify-content-between">
                                         <label class="label">{{'Balance' | translate}}</label>
                                         <div>
