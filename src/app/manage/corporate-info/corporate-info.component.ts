@@ -66,6 +66,7 @@ export class CorporateInfoComponent implements OnInit {
     financial: 'financial',
     purpose: 'purpose'
   };
+  statusEmail: string;
   saveType;
   listBusinessEntityAnnualCorporation: Array<LabelModel>;
   listTaxCorporation: Array<LabelModel>;
@@ -194,6 +195,7 @@ export class CorporateInfoComponent implements OnInit {
           this.picForm.controls.person_phone.setValue(this.corporateInfor.pic.mobile);
           this.picForm.controls.person_email.setValue(this.corporateInfor.pic.email.value);
           this.picForm.controls.person_gender.setValue(this.corporateInfor.pic.info.value.fx_gender);
+          this.statusEmail = this.corporateInfor.pic.email.status;
           this.corporateInfor.pic.info.value.fx_gender = this.globalService.checkGender(this.corporateInfor.pic.info.value.fx_gender);
         }
         if (this.corporateInfor.surveys.length > 0) {
@@ -338,7 +340,8 @@ export class CorporateInfoComponent implements OnInit {
         name: this.picForm.controls.per_picname.value.trim(),
         fx_name1: this.picForm.controls.person_picname.value.trim(),
         fx_gender: this.picForm.controls.person_gender.value,
-        email: this.picForm.controls.person_email.value.trim(),
+        email: this.statusEmail === this.STATUS_INFO.approve
+        ? this.picForm.controls.person_email.value.trim() : null,
         mobile: this.picForm.controls.person_phone.value,
         function: this.picForm.controls.person_pic.value.trim(),
         fx_dept: this.picForm.controls.person_bod.value
