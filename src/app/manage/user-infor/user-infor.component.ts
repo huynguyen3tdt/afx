@@ -49,6 +49,7 @@ export class UserInforComponent implements OnInit {
     approve: 'A',
     inProgress: 'P'
   };
+  statusEmail: string;
   listAmountAvaiableInvidual: Array<LabelModel>;
   listAnnualIncomeInvidual: Array<LabelModel>;
   listFinancialAssetInvidual: Array<LabelModel>;
@@ -155,6 +156,7 @@ export class UserInforComponent implements OnInit {
         this.userForm.controls.name_build.setValue(this.userInfor.address.value.fx_street3);
         this.userForm.controls.email.setValue(this.userInfor.email.value);
         this.userForm.controls.phone.setValue(this.userInfor.mobile);
+        this.statusEmail = this.userInfor.email.status;
         this.userInfor.fx_gender = this.globalService.checkGender(this.userInfor.fx_gender);
         if (this.userInfor.surveys.length > 0) {
           if (this.userInfor.surveys.find(item =>
@@ -309,7 +311,8 @@ export class UserInforComponent implements OnInit {
         fx_street3: this.userForm.controls.name_build.value
         ? this.userForm.controls.name_build.value.trim() : '',
       },
-      email: this.userForm.controls.email.value,
+      email: this.statusEmail === this.STATUS_INFO.approve
+      ? this.userForm.controls.email.value.trim() : null,
       mobile: this.userForm.controls.phone.value,
       surveys: [],
       survey_cd: 'phillip_individual'

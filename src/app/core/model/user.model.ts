@@ -85,7 +85,7 @@ export interface UpdateCorporateParam {
     name: string;
     fx_name1: string;
     fx_gender: string;
-    email: string;
+    email?: string;
     mobile: string;
     function: string;
     fx_dept: string;
@@ -109,7 +109,7 @@ export interface UserModel {
     }
   };
   email: {
-    status: number,
+    status: string,
     value: string
   };
   mobile: string;
