@@ -275,7 +275,7 @@ export class DepositComponent implements OnInit, OnDestroy {
   }
 
   showInforBank(bankName: string, bank?: DepositModel) {
-    const listTab = ['三菱ＵＦＪ', 'みずほ', '三井住友', 'ゆうちょ', 'ジャパンネット', '楽天'];
+    const listTab = ['三菱ＵＦＪ', 'みずほ', '三井住友', 'ゆうちょ', 'PayPay', '楽天'];
     this.currentBank = bank;
     // tslint:disable-next-line:no-shadowed-variable
     listTab.forEach(element => {
