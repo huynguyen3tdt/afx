@@ -17,7 +17,7 @@ import {
   RakutenBank,
   SumitomoMitsuiBank,
   MitsubishiUFJBank,
-  JapanNetBank,
+  PayPayBank,
   JapanPostBank
 } from 'src/app/core/constant/japan-constant';
 import { take } from 'rxjs/operators';
@@ -186,8 +186,8 @@ export class BankInfoComponent implements OnInit {
         case MitsubishiUFJBank.name:
           this.currentBank = MitsubishiUFJBank;
           break;
-        case JapanNetBank.name:
-          this.currentBank = JapanNetBank;
+        case PayPayBank.name:
+          this.currentBank = PayPayBank;
           break;
         case JapanPostBank.name:
           this.currentBank = JapanPostBank;

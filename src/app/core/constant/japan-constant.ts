@@ -24,10 +24,10 @@ export const MitsubishiUFJBank: BankModel = {
   fx_name_kana: 'ﾐﾂﾋﾞｼﾕ-ｴﾌｼﾞｴｲ',
   bic: '0005'
 };
-export const JapanNetBank: BankModel = {
+export const PayPayBank: BankModel = {
   id: 1286,
-  name: 'ジャパンネット',
-  fx_name_kana: 'ｼﾞﾔﾊﾟﾝﾈﾂﾄ',
+  name: 'PayPay',
+  fx_name_kana: 'ﾍﾟｲﾍﾟｲ',
   bic: '0033'
 };
 export const JapanPostBank: BankModel = {
