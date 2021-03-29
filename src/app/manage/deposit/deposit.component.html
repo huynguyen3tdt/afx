@@ -100,7 +100,7 @@
                                                         <option value="0009">{{'Sumitomo Mitsui' | translate}}</option>
                                                         <option value="0003">{{'Mizuho' | translate}}</option>
                                                         <option value="0036">{{'Rakuten' | translate}}</option>
-                                                        <option value="0033">{{'Japan Net' | translate}}</option>
+                                                        <option value="0033">{{'Pay Pay' | translate}}</option>
                                                       </select>
                                                     </div>
                                                 </div>
@@ -191,12 +191,12 @@
                                                         </div>
                                                     </a>
                                                 </li>
-                                                <li (click)="showInforBank('ジャパンネット', item)" class="bank-item" *ngIf="item?.name == 'ジャパンネット'">
-                                                    <a id="ジャパンネット">
+                                                <li (click)="showInforBank('PayPay', item)" class="bank-item" *ngIf="item?.name == 'PayPay'">
+                                                    <a id="PayPay">
                                                         <div class="text-center">
-                                                            <div><img src="assets/images/bank_logo/jnb.png"
+                                                            <div><img src="assets/images/bank_logo/paypay.png"
                                                                     alt="Mizuho Bank" class="bank_logo"></div>
-                                                            <div class="d-none">Japan Net Bank</div>
+                                                            <div class="d-none">Pay Pay Bank</div>
                                                         </div>
                                                     </a>
                                                 </li>
@@ -397,9 +397,9 @@
                                             </table>
                                         </ng-container>
                                     </div>
-                                    <div id="ジャパンネット" class="mb-2">
+                                    <div id="PayPay" class="mb-2">
                                         <ng-container *ngFor="let item of listBankTranfer">
-                                            <table *ngIf="item?.name == 'ジャパンネット'" class="table border table-sm" cellpadding="0" cellspacing="0">
+                                            <table *ngIf="item?.name == 'PayPay'" class="table border table-sm" cellpadding="0" cellspacing="0">
                                                 <tbody>
                                                     <tr>
 
