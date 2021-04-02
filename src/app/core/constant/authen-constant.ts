@@ -24,6 +24,8 @@ export const TYPE_ERROR_TOAST_EN    = 'ERROR';
 export const TYPE_ERROR_TOAST_JP    = 'エラー';
 export const TYPE_SUCCESS_TOAST_EN  = 'SUCCESS';
 export const TYPE_SUCCESS_TOAST_JP  = '成功';
+export const SUCCESS_CLIPBOARD_EN = 'Copy success to clipboard!';
+export const SUCCESS_CLIPBOARD_JP = 'コピーされました！';
 export const TOKEN_EXPIRED_EN  = 'Token has been expired or revoked';
 export const TOKEN_EXPIRED_JP  = 'トークンの有効期限が切れました。';
 export const INTERNAL_SERVER_EN = 'Internal server error';
@@ -35,6 +37,8 @@ export const ERROR_MAX_DEPOSIT_EN = 'Max deposit is ';
 export const ERROR_MAX_DEPOSIT_JP = '最大預金は ';
 export const ERROR_MIN_DEPOSIT_EN = 'Min deposit is ';
 export const ERROR_MIN_DEPOSIT_JP = '最小預金は';
+export const ERROR_GEN_ISSUANCE_KEY_EN = 'Failed to generate API key';
+export const ERROR_GEN_ISSUANCE_KEY_JP = 'APIキーの発行は失敗しました';
 
 export const ACCOUNT_TYPE = {
     ACCOUNT_FX: {account_type: 1, name: '[FX]'},

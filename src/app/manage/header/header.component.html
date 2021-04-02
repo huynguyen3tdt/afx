@@ -13,6 +13,11 @@
                 <!-- END SITE BRAND -->
                 <!-- BEGIN HEADER TOP NAV -->
                 <ul class="header-top-nav nav">
+                    <li class="nav-item nav-item-account-type dropdown" [routerLink]="['/manage/summary']" id="summary">
+                        <a href="javascript:;" class="nav-link" role="button" aria-haspopup="true" aria-expanded="false">
+                            <span class="d-none d-md-inline">{{'API key issuance' | translate}}</span>
+                        </a>
+                    </li>
                   <li class="nav-item nav-item-account-type dropdown" (click)="openAddAccountModal()" *ngIf ="bizGroup === 'it'">
                     <a href="javascript:;" class="nav-link" role="button" aria-haspopup="true" aria-expanded="false"><i class="icon ion-md-add mr-1"></i><span class="d-none d-md-inline">{{'Add Account' | translate}}</span></a>
                 </li>
