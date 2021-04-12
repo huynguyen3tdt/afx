@@ -23,9 +23,10 @@ export class ModalApiKeyComponent implements OnInit {
   latestTime: string;
   timeZone: string;
   formatDateHour: string;
-  agree_api_policy: boolean;
+  agreeApiPolicy: boolean;
   isConfirm = false;
   theCheckbox = false;
+  showAccount = false;
   constructor(private withdrawRequestService: WithdrawRequestService,
               private globalService: GlobalService,
               private spinnerService: Ng4LoadingSpinnerService,
@@ -72,7 +73,13 @@ toggleDisplayKey(item?) {
     item.is_show_key = !item.is_show_key;
   }
 
-  toggleVisibility(e){
-    this.agree_api_policy = e.target.checked;
+toggleCheckBox(e) {
+  this.agreeApiPolicy = e.target.checked;
   }
+
+  toggleShowListAccount() {
+    this.showAccount = !this.showAccount;
+    this.agreeApiPolicy = false;
+  }
+
 }

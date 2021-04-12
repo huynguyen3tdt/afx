@@ -4,25 +4,32 @@
         <div class="modal-content">
             <div class="modal-header pt-2 pb-2">
                 <h5 class="text-info">Phillip MT5 API Key Issuing Information</h5>
+                <button type="button" class="close" aria-label="Close" (click)="close()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
             <div class="modal-body pt-0">
-                <h5>Please read and understand the following rules before issuing the API key required to use the API
-                    connection service.</h5>
-                <h5>PDF Phillip Securities API Service Usage Policy</h5>
-                <div class="row container-radios-wrapper pl-3">
-                    <form name="policy">
-                       <label class="container-checkbox small mb-2 box-item-checkbox"
-                  [ngClass]="{'invalid': isConfirm && !agree_api_policy.value}">
-                      <p>{{'Agree to "Phillip Securities API Service Usage Policy' | translate}}</p>
-                      <input type="checkbox" [(ngModel)]="theCheckbox" data-md-icheck (change)="toggleVisibility($event)">
-                      <span class="checkmark"></span>
-                  </label>
-                    <button type="submit" [disabled]="!agree_api_policy" class="btn bg-primary mb-3" ng-model="genAPI" ng-required="checkbox">{{'API
-                            key issuance' | translate}}
-                    </button>
-                    </form>
+                <div *ngIf="!showAccount">
+                    <h5>Please read and understand the following rules before issuing the API key required to use the
+                        API
+                        connection service.</h5>
+                    <h5>PDF Phillip Securities API Service Usage Policy</h5>
+                    <div class="row container-radios-wrapper pl-3">
+                        <form name="policy">
+                            <label class="container-checkbox small mb-2 box-item-checkbox"
+                                [ngClass]="{'invalid': isConfirm && !agreeApiPolicy.value}">
+                                <p>{{'Agree to "Phillip Securities API Service Usage Policy' | translate}}</p>
+                                <input type="checkbox" [(ngModel)]="theCheckbox" data-md-icheck
+                                    (change)="toggleCheckBox($event)">
+                                <span class="checkmark"></span>
+                            </label>
+                            <button type="submit" [disabled]="!agreeApiPolicy" (click)="toggleShowListAccount()"
+                                class="btn bg-primary mb-3 float: right">{{'API key issuance' | translate}}</button>
+                        </form>
+                    </div>
                 </div>
-                <div class="card bg-white mb-3 shadow p-3">
+
+                <div *ngIf="showAccount" class="card bg-white mb-3 shadow p-3">
                     <h4 class="border-bottom pb-1 mb-3">{{'Overview of each account' | translate}}</h4>
                     <div class="row">
                         <div *ngFor="let item of listMt5Infor" class="col-lg-12">
@@ -35,7 +42,7 @@
                                         <div class="d-inline-block">
                                             {{item?.data?.account_id}}
                                             <img class="ml-2" src={{item?.data?.img_type_account}} width="37"
-                                                height="20"/>
+                                                height="20" />
                                         </div>
                                     </div>
 
@@ -90,10 +97,6 @@
 
                     </div>
                 </div>
-            </div>
-            <div class="modal-footer p-1">
-                <button type="button" class="btn btn-secondary text-white bg-success" (click)="close()"
-                    data-dismiss="modal">{{'Close' | translate}}</button>
             </div>
         </div>
     </div>
