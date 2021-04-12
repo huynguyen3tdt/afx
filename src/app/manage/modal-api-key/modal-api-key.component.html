@@ -1,0 +1,24 @@
+<div bsModal class="modal fade" #modalApiKey="bs-modal" id="modal-rule" tabindex="-1" role="dialog" aria-labelledby="ruleTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document" >
+      <div class="modal-content">
+          <div class="modal-header pt-2 pb-2">
+              <h5 class="text-info">Phillip MT5 API Key Issuing Information</h5>
+          </div>
+          <div class="modal-body">
+            <h5>Please read and understand the following rules before issuing the API key required to use the API connection service.</h5>
+            <h5>PDF Phillip Securities API Service Usage Policy</h5>
+            <div class="row container-radios-wrapper">
+                <form name="policy">
+                    <input type="checkbox" ng-model="checkbox" value="check">
+                    <h5>Agree to "Phillip Securities API Service Usage Policy"</h5>
+                    <button type="submit" class="btn btn-primary" ng-model="genAPI" ng-required="checkbox">{{'API key issuance' | translate}}</button>
+                </form>
+            </div>
+
+          </div>
+          <div class="modal-footer p-1">
+            <button type="button" class="btn btn-secondary text-white bg-success" (click)="close()" data-dismiss="modal">{{'Close' | translate}}</button>
+          </div>
+      </div>
+  </div>
+</div>

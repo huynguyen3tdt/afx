@@ -21,6 +21,7 @@ import { PL001, PL002, PL003, PL004, PL005, PL006, BIZ_GROUP } from 'src/app/cor
 import { ModalCanNotAddAccountComponent } from '../modal-can-not-add-account/modal-can-not-add-account.component';
 import { CCFD_IMAGE, ICFD_IMAGE, FX_IMAGE } from 'src/app/core/constant/img-constant';
 import { TranslateService } from '@ngx-translate/core';
+import { ModalApiKeyComponent } from '../modal-api-key/modal-api-key.component';
 
 declare const $: any;
 declare const TweenMax: any;
@@ -59,6 +60,7 @@ export class HeaderComponent implements OnInit {
   @ViewChild('modalAddAccountStep2', { static: false }) modalAddAccountStep2: ModalAddAccountStep2Component;
   @ViewChild('modalAddAccountStep3', { static: false }) modalAddAccountStep3: ModalAddAccountStep3Component;
   @ViewChild('modalCanNotAddAccount', { static: false }) modalCanNotAddAccount: ModalCanNotAddAccountComponent;
+  @ViewChild('modalApiKey', { static: false }) modalApiKey: ModalApiKeyComponent;
 
   constructor(private router: Router, private authenService: AuthenService,
               private notificationsService: NotificationsService,
@@ -250,6 +252,22 @@ export class HeaderComponent implements OnInit {
       this.isPc = true;
     }
   }
+
+  openApiKeyModal() {
+  this.spinnerService.show();
+  this.modalApiKey.open();
+  this.userService.getUserListAccount().pipe(take(1)).subscribe(response => {
+    this.spinnerService.hide();
+    if (response.meta.code === 200) {
+      this.accountTradingForm = this.fb.group({
+        afxAccount: [false],
+        cfdAccount: [false],
+        cfdComAccount: [false],
+      });
+    }
+  });
+}
+
 
   openAddAccountModal() {
     this.spinnerService.show();
