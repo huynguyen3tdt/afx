@@ -1,24 +1,99 @@
-<div bsModal class="modal fade" #modalApiKey="bs-modal" id="modal-rule" tabindex="-1" role="dialog" aria-labelledby="ruleTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document" >
-      <div class="modal-content">
-          <div class="modal-header pt-2 pb-2">
-              <h5 class="text-info">Phillip MT5 API Key Issuing Information</h5>
-          </div>
-          <div class="modal-body">
-            <h5>Please read and understand the following rules before issuing the API key required to use the API connection service.</h5>
-            <h5>PDF Phillip Securities API Service Usage Policy</h5>
-            <div class="row container-radios-wrapper">
-                <form name="policy">
-                    <input type="checkbox" ng-model="checkbox" value="check">
-                    <h5>Agree to "Phillip Securities API Service Usage Policy"</h5>
-                    <button type="submit" class="btn btn-primary" ng-model="genAPI" ng-required="checkbox">{{'API key issuance' | translate}}</button>
-                </form>
+<div bsModal class="modal fade" #modalApiKey="bs-modal" id="modal-rule" tabindex="-1" role="dialog"
+    aria-labelledby="ruleTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header pt-2 pb-2">
+                <h5 class="text-info">Phillip MT5 API Key Issuing Information</h5>
             </div>
+            <div class="modal-body pt-0">
+                <h5>Please read and understand the following rules before issuing the API key required to use the API
+                    connection service.</h5>
+                <h5>PDF Phillip Securities API Service Usage Policy</h5>
+                <div class="row container-radios-wrapper pl-3">
+                    <form name="policy">
+                        <table>
+                        <tr>
+                            <td><input type="checkbox" class="checkbox" ng-model="checkbox" value="check"> Agree to "Phillip Securities API
+                            Service Usage Policy"</td>
+                            <td><button type="submit" class="btn bg-primary mb-3 float-right" ng-model="genAPI" ng-required="checkbox">{{'API
+                            key issuance' | translate}}</button></td>
+                        </tr>
+                        </table>
+                    </form>
+                </div>
+                <div class="card bg-white mb-3 shadow p-3">
+                    <h4 class="border-bottom pb-1 mb-3">{{'Overview of each account' | translate}}</h4>
+                    <div class="row">
+                        <div *ngFor="let item of listMt5Infor" class="col-lg-12">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <div class="d-flex">
+                                    <div class="mr-2">
+                                        {{'Trading account' | translate}}
+                                    </div>
+                                    <div class="all-account">
+                                        <div class="d-inline-block">
+                                            {{item?.data?.account_id}}
+                                            <img class="ml-2" src={{item?.data?.img_type_account}} width="37"
+                                                height="20" />
+                                        </div>
+                                    </div>
 
-          </div>
-          <div class="modal-footer p-1">
-            <button type="button" class="btn btn-secondary text-white bg-success" (click)="close()" data-dismiss="modal">{{'Close' | translate}}</button>
-          </div>
-      </div>
-  </div>
+                                </div>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-borderless table-sm table-hover" cellspacing="0"
+                                    cellpadding="0">
+                                    <tbody>
+                                        <tr *ngIf="item?.data?.issuance_key == ''">
+                                            <td><button class="btn btn-sm btn-primary pl-2 pr-2"
+                                                    (click)="genQuoreaKey(item?.data?.account_id)">{{'API key' |
+                                                    translate}}</button></td>
+                                        </tr>
+                                        <tr *ngIf="item?.data?.issuance_key != ''">
+                                            <td><button class="btn btn-sm btn-primary pl-2 pr-2"
+                                                    (click)="toggleDisplayKey(item?.data)">{{'API key' |
+                                                    translate}}</button></td>
+                                        </tr>
+                                        <tr *ngIf="item?.data?.is_show_key">
+                                            <td>{{'Trading account' | translate}}: </td>
+                                            <td style="text-align:right">
+                                                {{item?.data?.account_id}}
+                                                <button class="btn btn-sm btn-primary pl-2 pr-2"
+                                                    (click)="copyMessage(item?.data?.account_id)">{{'Copy' |
+                                                    translate}}</button>
+                                            </td>
+                                        </tr>
+                                        <tr *ngIf="item?.data?.is_show_key">
+                                            <td>{{'API key' | translate}}: </td>
+                                            <td style="text-align:right">
+                                                {{item?.data?.issuance_key}}
+                                                <button class="btn btn-sm btn-primary pl-2 pr-2"
+                                                    (click)="copyMessage(item?.data?.issuance_key)">{{'Copy' |
+                                                    translate}}</button>
+                                            </td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                            <hr class="mt-0">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <p class="small text-secondary"><i class="icon ion-md-time"></i> <em>{{'Last updated:' |
+                                    translate}}
+                                    {{lastestTime}}
+                                </em><br>{{'The system automatically updates data after 1 minute' | translate}}</p>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer p-1">
+                <button type="button" class="btn btn-secondary text-white bg-success" (click)="close()"
+                    data-dismiss="modal">{{'Close' | translate}}</button>
+            </div>
+        </div>
+    </div>
 </div>

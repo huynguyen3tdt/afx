@@ -58,6 +58,7 @@ export class ModalApiKeyComponent implements OnInit {
         });
         this.listMt5Infor.forEach(item => {
           item.data.img_type_account = this.globalService.convertTypeToImg(item.data.account_id);
+          this.latestTime = moment(item.data.lastest_time).tz(this.timeZone).format(this.formatDateHour);
         });
       });
     }
