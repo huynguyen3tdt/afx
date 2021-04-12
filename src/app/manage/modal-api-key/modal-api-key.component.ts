@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import moment from 'moment-timezone';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { ModalDirective } from 'ngx-bootstrap';
@@ -22,6 +23,9 @@ export class ModalApiKeyComponent implements OnInit {
   latestTime: string;
   timeZone: string;
   formatDateHour: string;
+  agree_api_policy: boolean;
+  isConfirm = false;
+  theCheckbox = false;
   constructor(private withdrawRequestService: WithdrawRequestService,
               private globalService: GlobalService,
               private spinnerService: Ng4LoadingSpinnerService,
@@ -66,5 +70,9 @@ export class ModalApiKeyComponent implements OnInit {
 
 toggleDisplayKey(item?) {
     item.is_show_key = !item.is_show_key;
+  }
+
+  toggleVisibility(e){
+    this.agree_api_policy = e.target.checked;
   }
 }
