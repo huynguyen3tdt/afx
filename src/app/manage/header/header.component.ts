@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, NavigationEnd, NavigationStart } from '@angular/router';
-import { TOKEN_AFX, FIRST_LOGIN, LOCALE, ACCOUNT_IDS, IS_COMPANY, ACCOUNT_TYPE, SUCCESS_CLIPBOARD_EN, SUCCESS_CLIPBOARD_JP, TYPE_SUCCESS_TOAST_EN, ERROR_GEN_ISSUANCE_KEY_EN, TYPE_SUCCESS_TOAST_JP, ERROR_GEN_ISSUANCE_KEY_JP } from 'src/app/core/constant/authen-constant';
+import { TOKEN_AFX, FIRST_LOGIN, LOCALE, ACCOUNT_IDS, IS_COMPANY, ACCOUNT_TYPE } from 'src/app/core/constant/authen-constant';
 import { AuthenService } from 'src/app/core/services/authen.service';
 import { NotificationsService } from 'src/app/core/services/notifications.service';
 import { PageNotificationResponse, Notification } from 'src/app/core/model/page-noti.model';
@@ -264,35 +264,9 @@ export class HeaderComponent implements OnInit {
   }
 
   openApiKeyModal() {
-  this.spinnerService.show();
-  this.modalApiKey.open();
-  this.spinnerService.hide();
-}
-
-getSummaryAllAccount() {
-  if (this.listTradingAccount) {
-    const listMT5: Observable<WithdrawRequestModel> [] = [];
-    this.listTradingAccount.forEach((item) => {
-      item.img_type_account = this.globalService.convertTypeToImg(item.account_id);
-      if (item.account_id) {
-        listMT5.push(this.withdrawRequestService.getmt5Infor(Number(item.account_id)));
-      }
-    });
-    forkJoin (
-      listMT5
-      // this.getMT5info()
-    ).subscribe((result) => {
-      this.listMt5Infor = result;
-      this.listMt5Infor.forEach((item, index) => {
-        this.listMt5Infor[index].data.account_id = this.listTradingAccount[index].account_id;
-        this.listMt5Infor[index].data.currency = this.listTradingAccount[index].currency;
-      });
-      this.listMt5Infor.forEach(item => {
-        item.data.img_type_account = this.globalService.convertTypeToImg(item.data.account_id);
-        this.latestTime = moment(item.data.lastest_time).tz(this.timeZone).format(this.formatDateHour);
-      });
-    });
-  }
+    this.spinnerService.show();
+    this.modalApiKey.open();
+    this.spinnerService.hide();
 }
 
   openAddAccountModal() {
@@ -385,56 +359,4 @@ getSummaryAllAccount() {
     this.modalAddAccountStep2.close();
     this.modalAddAccountStep1.openWithOutReset();
   }
-
-  genQuoreaKey(accountID) {
-    let messageSuccess;
-    let messageErr;
-    if (this.locale === LANGUAGLE.english) {
-      messageSuccess = TYPE_SUCCESS_TOAST_EN;
-      messageErr = ERROR_GEN_ISSUANCE_KEY_EN;
-    } else {
-      messageSuccess = TYPE_SUCCESS_TOAST_JP;
-      messageErr = ERROR_GEN_ISSUANCE_KEY_JP;
-    }
-    const param: TradingAccount = {
-      trading_account_id: accountID
-    };
-    this.spinnerService.show();
-    this.userService.genQuoreaKey(param).pipe(take(1)).subscribe(response => {
-      this.spinnerService.hide();
-      if (response.meta.code === 200) {
-        this.getSummaryAllAccount();
-        this.toastr.success(messageSuccess);
-      } else {
-        this.toastr.error(messageErr);
-      }
-    });
-  }
-  
-  copyMessage(val: string) {
-    let message;
-    if (this.locale === LANGUAGLE.english) {
-      message = SUCCESS_CLIPBOARD_EN;
-    } else {
-      message = SUCCESS_CLIPBOARD_JP;
-    }
-    const selBox = document.createElement('textarea');
-    selBox.style.position = 'fixed';
-    selBox.style.left = '0';
-    selBox.style.top = '0';
-    selBox.style.opacity = '0';
-    selBox.value = val;
-    document.body.appendChild(selBox);
-    selBox.focus();
-    selBox.select();
-    document.execCommand('copy');
-    document.body.removeChild(selBox);
-    this.toastr.success(message);
-  }
-
-
-  toggleDisplayKey(item?) {
-    item.is_show_key = !item.is_show_key;
-  }
-
 }

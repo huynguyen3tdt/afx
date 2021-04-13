@@ -70,6 +70,7 @@ export interface Mt5Model {
   img_type_account?: string;
   bank_balance: number;
   issuance_key?: string;
+  account_id_char?: string;
 }
 
 export interface BankInforModel {
