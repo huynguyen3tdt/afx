@@ -1,11 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormGroup } from '@angular/forms';
 import moment from 'moment-timezone';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { ModalDirective } from 'ngx-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { forkJoin, Observable } from 'rxjs';
-import { ACCOUNT_IDS } from 'src/app/core/constant/authen-constant';
+import { ACCOUNT_IDS, LOCALE, TIMEZONEAFX } from 'src/app/core/constant/authen-constant';
+import { EN_FORMATDATE_HH_MM, JAPAN_FORMATDATE_HH_MM } from 'src/app/core/constant/format-date-constant';
+import { LANGUAGLE } from 'src/app/core/constant/language-constant';
 import { AccountType } from 'src/app/core/model/report-response.model';
 import { WithdrawRequestModel } from 'src/app/core/model/withdraw-request-response.model';
 import { GlobalService } from 'src/app/core/services/global.service';
@@ -27,12 +28,20 @@ export class ModalApiKeyComponent implements OnInit {
   isConfirm = false;
   theCheckbox = false;
   showAccount = false;
+  locale: string;
   constructor(private withdrawRequestService: WithdrawRequestService,
               private globalService: GlobalService,
               private spinnerService: Ng4LoadingSpinnerService,
               private toastr: ToastrService) { }
 
   ngOnInit() {
+    this.timeZone = localStorage.getItem(TIMEZONEAFX);
+    this.locale = localStorage.getItem(LOCALE);
+    if (this.locale === LANGUAGLE.english) {
+      this.formatDateHour = EN_FORMATDATE_HH_MM;
+    } else if (this.locale === LANGUAGLE.japan) {
+      this.formatDateHour = JAPAN_FORMATDATE_HH_MM;
+    }
     this.listTradingAccount = JSON.parse(localStorage.getItem(ACCOUNT_IDS));
     this.getAccountInformation();
   }

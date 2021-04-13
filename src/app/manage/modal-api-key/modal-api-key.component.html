@@ -20,7 +20,7 @@
                                 [ngClass]="{'invalid': isConfirm && !agreeApiPolicy.value}">
                                 <p>{{'Agree to "Phillip Securities API Service Usage Policy' | translate}}</p>
                                 <input type="checkbox" [(ngModel)]="theCheckbox" data-md-icheck
-                                    (change)="toggleCheckBox($event)">
+                                    (change)="toggleCheckBox($event)" [ngModelOptions]="{standalone: true}">
                                 <span class="checkmark"></span>
                             </label>
                             <button type="submit" [disabled]="!agreeApiPolicy" (click)="toggleShowListAccount()"

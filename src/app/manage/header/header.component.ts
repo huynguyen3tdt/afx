@@ -1,10 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, NavigationEnd, NavigationStart } from '@angular/router';
-import { TOKEN_AFX, FIRST_LOGIN, LOCALE, ACCOUNT_IDS, IS_COMPANY, ACCOUNT_TYPE } from 'src/app/core/constant/authen-constant';
+import { TOKEN_AFX, FIRST_LOGIN, LOCALE, ACCOUNT_IDS, IS_COMPANY, ACCOUNT_TYPE, SUCCESS_CLIPBOARD_EN, SUCCESS_CLIPBOARD_JP, TYPE_SUCCESS_TOAST_EN, ERROR_GEN_ISSUANCE_KEY_EN, TYPE_SUCCESS_TOAST_JP, ERROR_GEN_ISSUANCE_KEY_JP } from 'src/app/core/constant/authen-constant';
 import { AuthenService } from 'src/app/core/services/authen.service';
 import { NotificationsService } from 'src/app/core/services/notifications.service';
 import { PageNotificationResponse, Notification } from 'src/app/core/model/page-noti.model';
-import * as moment from 'moment';
+import moment from 'moment-timezone';
 import { EN_FORMATDATE, JAPAN_FORMATDATE } from 'src/app/core/constant/format-date-constant';
 import { AccountType } from 'src/app/core/model/report-response.model';
 import { LANGUAGLE } from 'src/app/core/constant/language-constant';
@@ -14,7 +14,7 @@ import { ModalAddAccountStep1Component } from '../modal-add-account-step1/modal-
 import { ModalAddAccountStep2Component } from '../modal-add-account-step2/modal-add-account-step2.component';
 import { ModalAddAccountStep3Component } from '../modal-add-account-step3/modal-add-account-step3.component';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { AccountTypeAFX, GroupAccountType } from 'src/app/core/model/user.model';
+import { AccountTypeAFX, GroupAccountType, TradingAccount } from 'src/app/core/model/user.model';
 import { UserService } from 'src/app/core/services/user.service';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { PL001, PL002, PL003, PL004, PL005, PL006, BIZ_GROUP } from 'src/app/core/constant/user-code-constant';
@@ -22,6 +22,10 @@ import { ModalCanNotAddAccountComponent } from '../modal-can-not-add-account/mod
 import { CCFD_IMAGE, ICFD_IMAGE, FX_IMAGE } from 'src/app/core/constant/img-constant';
 import { TranslateService } from '@ngx-translate/core';
 import { ModalApiKeyComponent } from '../modal-api-key/modal-api-key.component';
+import { forkJoin, Observable } from 'rxjs';
+import { WithdrawRequestModel } from 'src/app/core/model/withdraw-request-response.model';
+import { WithdrawRequestService } from 'src/app/core/services/withdraw-request.service';
+import { ToastrService } from 'ngx-toastr';
 
 declare const $: any;
 declare const TweenMax: any;
@@ -47,6 +51,7 @@ export class HeaderComponent implements OnInit {
     CAMPAIGN: { name: 'CAMPAIGN', value: 2 }
   };
   listTradingAccount: Array<AccountType>;
+  listMt5Infor: Array<WithdrawRequestModel> = [];
   accountID: string;
   isPc: boolean;
   isAndroid: boolean;
@@ -55,6 +60,9 @@ export class HeaderComponent implements OnInit {
   accountTradingForm: FormGroup;
   currentTime: Date;
   bizGroup: string;
+  latestTime: string;
+  formatDateHour: string;
+  timeZone: string;
 
   @ViewChild('modalAddAccountStep1', { static: false }) modalAddAccountStep1: ModalAddAccountStep1Component;
   @ViewChild('modalAddAccountStep2', { static: false }) modalAddAccountStep2: ModalAddAccountStep2Component;
@@ -68,7 +76,9 @@ export class HeaderComponent implements OnInit {
               private fb: FormBuilder,
               private userService: UserService,
               private spinnerService: Ng4LoadingSpinnerService,
-              private translate: TranslateService
+              private translate: TranslateService,
+              private withdrawRequestService: WithdrawRequestService,
+              private toastr: ToastrService
               ) {
     this.router.events.subscribe((e: any) => {
       if (e instanceof NavigationEnd) {
@@ -256,18 +266,34 @@ export class HeaderComponent implements OnInit {
   openApiKeyModal() {
   this.spinnerService.show();
   this.modalApiKey.open();
-  this.userService.getUserListAccount().pipe(take(1)).subscribe(response => {
-    this.spinnerService.hide();
-    if (response.meta.code === 200) {
-      this.accountTradingForm = this.fb.group({
-        afxAccount: [false],
-        cfdAccount: [false],
-        cfdComAccount: [false],
-      });
-    }
-  });
+  this.spinnerService.hide();
 }
 
+getSummaryAllAccount() {
+  if (this.listTradingAccount) {
+    const listMT5: Observable<WithdrawRequestModel> [] = [];
+    this.listTradingAccount.forEach((item) => {
+      item.img_type_account = this.globalService.convertTypeToImg(item.account_id);
+      if (item.account_id) {
+        listMT5.push(this.withdrawRequestService.getmt5Infor(Number(item.account_id)));
+      }
+    });
+    forkJoin (
+      listMT5
+      // this.getMT5info()
+    ).subscribe((result) => {
+      this.listMt5Infor = result;
+      this.listMt5Infor.forEach((item, index) => {
+        this.listMt5Infor[index].data.account_id = this.listTradingAccount[index].account_id;
+        this.listMt5Infor[index].data.currency = this.listTradingAccount[index].currency;
+      });
+      this.listMt5Infor.forEach(item => {
+        item.data.img_type_account = this.globalService.convertTypeToImg(item.data.account_id);
+        this.latestTime = moment(item.data.lastest_time).tz(this.timeZone).format(this.formatDateHour);
+      });
+    });
+  }
+}
 
   openAddAccountModal() {
     this.spinnerService.show();
@@ -359,4 +385,56 @@ export class HeaderComponent implements OnInit {
     this.modalAddAccountStep2.close();
     this.modalAddAccountStep1.openWithOutReset();
   }
+
+  genQuoreaKey(accountID) {
+    let messageSuccess;
+    let messageErr;
+    if (this.locale === LANGUAGLE.english) {
+      messageSuccess = TYPE_SUCCESS_TOAST_EN;
+      messageErr = ERROR_GEN_ISSUANCE_KEY_EN;
+    } else {
+      messageSuccess = TYPE_SUCCESS_TOAST_JP;
+      messageErr = ERROR_GEN_ISSUANCE_KEY_JP;
+    }
+    const param: TradingAccount = {
+      trading_account_id: accountID
+    };
+    this.spinnerService.show();
+    this.userService.genQuoreaKey(param).pipe(take(1)).subscribe(response => {
+      this.spinnerService.hide();
+      if (response.meta.code === 200) {
+        this.getSummaryAllAccount();
+        this.toastr.success(messageSuccess);
+      } else {
+        this.toastr.error(messageErr);
+      }
+    });
+  }
+  
+  copyMessage(val: string) {
+    let message;
+    if (this.locale === LANGUAGLE.english) {
+      message = SUCCESS_CLIPBOARD_EN;
+    } else {
+      message = SUCCESS_CLIPBOARD_JP;
+    }
+    const selBox = document.createElement('textarea');
+    selBox.style.position = 'fixed';
+    selBox.style.left = '0';
+    selBox.style.top = '0';
+    selBox.style.opacity = '0';
+    selBox.value = val;
+    document.body.appendChild(selBox);
+    selBox.focus();
+    selBox.select();
+    document.execCommand('copy');
+    document.body.removeChild(selBox);
+    this.toastr.success(message);
+  }
+
+
+  toggleDisplayKey(item?) {
+    item.is_show_key = !item.is_show_key;
+  }
+
 }
