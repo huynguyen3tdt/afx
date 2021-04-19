@@ -13,7 +13,7 @@
                 <!-- END SITE BRAND -->
                 <!-- BEGIN HEADER TOP NAV -->
                 <ul class="header-top-nav nav">
-                    <li class="nav-item nav-item-account-type dropdown" (click)="openApiKeyModal()">
+                    <li class="nav-item nav-item-account-type dropdown" (click)="openApiKeyModal()" *ngIf="bizGroup === 'it' && showModalApiKey">
                     <a href="javascript:;" class="nav-link" role="button" aria-haspopup="true" aria-expanded="false">
                         <span class="d-none d-md-inline">{{'API key issuance' | translate}}</span>
                     </a>

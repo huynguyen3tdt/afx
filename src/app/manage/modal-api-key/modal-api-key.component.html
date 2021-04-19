@@ -33,10 +33,10 @@
                 </div>
 
                 <div *ngIf="showAccount" class="card bg-white mb-3 shadow p-3">
-                    <h4 class="border-bottom pb-1 mb-3">{{'Overview of each account' | translate}}</h4>
+                    <h4 class="border-bottom pb-1 mb-3">{{'Overview of trading account' | translate}}</h4>
                     <div class="row">
                         <div *ngFor="let item of listMt5Infor" class="col-lg-12">
-                            <div class="d-flex justify-content-between align-items-center mb-2">
+                            <div class="d-flex justify-content-between align-items-center mb-2" *ngIf="item?.data?.account_type == '1'">
                                 <div class="d-flex">
                                     <div class="mr-2">
                                         {{'Trading account' | translate}}
@@ -51,7 +51,7 @@
 
                                 </div>
                             </div>
-                            <div class="table-responsive">
+                            <div class="table-responsive" *ngIf="item?.data?.account_type == '1'">
                                 <table class="table table-borderless table-sm table-hover" cellspacing="0"
                                     cellpadding="0">
                                     <tbody>
@@ -87,17 +87,7 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <hr class="mt-0">
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-8">
-                            <p class="small text-secondary"><i class="icon ion-md-time"></i> <em>{{'Last updated:' |
-                                    translate}}
-                                    {{lastestTime}}
-                                </em><br>{{'The system automatically updates data after 1 minute' | translate}}</p>
-                        </div>
-
                     </div>
                 </div>
             </div>

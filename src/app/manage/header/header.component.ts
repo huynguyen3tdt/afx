@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, NavigationEnd, NavigationStart } from '@angular/router';
-import { TOKEN_AFX, FIRST_LOGIN, LOCALE, ACCOUNT_IDS, IS_COMPANY, ACCOUNT_TYPE } from 'src/app/core/constant/authen-constant';
+import { TOKEN_AFX, LOCALE, ACCOUNT_IDS, IS_COMPANY, ACCOUNT_TYPE } from 'src/app/core/constant/authen-constant';
 import { AuthenService } from 'src/app/core/services/authen.service';
 import { NotificationsService } from 'src/app/core/services/notifications.service';
 import { PageNotificationResponse, Notification } from 'src/app/core/model/page-noti.model';
@@ -26,6 +26,7 @@ import { forkJoin, Observable } from 'rxjs';
 import { WithdrawRequestModel } from 'src/app/core/model/withdraw-request-response.model';
 import { WithdrawRequestService } from 'src/app/core/services/withdraw-request.service';
 import { ToastrService } from 'ngx-toastr';
+import { PhillipAccountType } from 'src/app/core/enum/enum-info';
 
 declare const $: any;
 declare const TweenMax: any;
@@ -63,6 +64,7 @@ export class HeaderComponent implements OnInit {
   latestTime: string;
   formatDateHour: string;
   timeZone: string;
+  showModalApiKey = false;
 
   @ViewChild('modalAddAccountStep1', { static: false }) modalAddAccountStep1: ModalAddAccountStep1Component;
   @ViewChild('modalAddAccountStep2', { static: false }) modalAddAccountStep2: ModalAddAccountStep2Component;
@@ -95,6 +97,11 @@ export class HeaderComponent implements OnInit {
     this.locale = localStorage.getItem(LOCALE);
     this.bizGroup = localStorage.getItem(BIZ_GROUP);
     this.listTradingAccount = JSON.parse(localStorage.getItem(ACCOUNT_IDS));
+    this.listTradingAccount.forEach((item) => {
+    if (item.account_type === PhillipAccountType.FX) {
+        this.showModalApiKey = true;
+      }
+    });
     this.globalService.recallUnread.subscribe(response => {
       if (response === 'recall') {
         this.getListNotifications(this.pageSize, this.currentPage, this.unreadAll, this.TABS.ALL.value);
