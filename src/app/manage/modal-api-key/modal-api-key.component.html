@@ -1,0 +1,96 @@
+<div bsModal class="modal fade" #modalApiKey="bs-modal" id="modal-rule" tabindex="-1" role="dialog"
+    aria-labelledby="ruleTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header pt-3 pb-2">
+                <h4 class="text-primary">{{'Phillip MT5 API Key Issuing Information' | translate}}</h4>
+                <button type="button" class="close" aria-label="Close" (click)="close()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body pt-0">
+                <div *ngIf="!showAccount">
+                    <h5 class="pt-3">{{'Getting started with the Philip MT5 API connection' | translate}}</h5>
+                    <h5>{{'Please read and understand the following rules before issuing the API key required to use connection service.'| translate}}</h5>
+                    <h5><a href="https://www.phillip.co.jp/fx/pdf/phillipmt5_api_terms_service.pdf"
+                        class="pdf-link" target="_blank">{{'Phillip Securities API Service Usage Policy' | translate}}</a></h5>
+                    <div class="row container-radios-wrapper pl-3">
+                        <div>
+                            <label class="container-checkbox small mb-2 box-item-checkbox"
+                                [ngClass]="{'invalid': isConfirm && !agreeApiPolicy.value}">
+                                <h5 class="pt-2">{{'Agree to Phillip Securities API Service Usage Policy' | translate}}</h5>
+                                <input type="checkbox" [(ngModel)]="agreeApiPolicy" data-md-icheck
+                                    (change)="toggleCheckBox($event)" [ngModelOptions]="{standalone: true}">
+                                <span class="checkmark mt-2"></span>
+                            </label>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer pt-1 pb-1 text-right bg-light">
+                        <button type="submit" [disabled]="!agreeApiPolicy" (click)="toggleShowListAccount()"
+                            class="btn btn-primary pl-4 pr-4 btn-confirm">{{'API key issuance' | translate}}</button>
+                    </div>
+                </div>
+
+                <div *ngIf="showAccount" class="card bg-white mb-3 shadow p-3">
+                    <h4 class="border-bottom pb-1 mb-3">{{'Overview of trading account' | translate}}</h4>
+                    <div class="row">
+                        <div *ngFor="let item of listMt5Infor" class="col-lg-12">
+                            <div class="d-flex justify-content-between align-items-center mb-2" *ngIf="item?.data?.account_type == '1'">
+                                <div class="d-flex">
+                                    <div class="mr-2">
+                                        {{'Trading account' | translate}}
+                                    </div>
+                                    <div class="all-account">
+                                        <div class="d-inline-block">
+                                            {{item?.data?.account_id_char}}
+                                            <img class="ml-2" src={{item?.data?.img_type_account}} width="37"
+                                                height="20" />
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="table-responsive" *ngIf="item?.data?.account_type == '1'">
+                                <table class="table table-borderless table-sm table-hover" cellspacing="0"
+                                    cellpadding="0">
+                                    <tbody>
+                                        <tr *ngIf="item?.data?.issuance_key == ''">
+                                            <td><button class="btn btn-sm btn-primary pl-2 pr-2"
+                                                    (click)="genQuoreaKey(item?.data?.account_id)">{{'API key' |
+                                                    translate}}</button></td>
+                                        </tr>
+                                        <tr *ngIf="item?.data?.issuance_key != ''">
+                                            <td><button class="btn btn-sm btn-primary pl-2 pr-2"
+                                                    (click)="toggleDisplayKey(item?.data)">{{'API key' |
+                                                    translate}}</button></td>
+                                        </tr>
+                                        <tr *ngIf="item?.data?.is_show_key">
+                                            <td>{{'Trading account' | translate}}: </td>
+                                            <td style="text-align:right">
+                                                {{item?.data?.account_id_char}}
+                                                <button class="btn btn-sm btn-primary pl-2 pr-2"
+                                                    (click)="copyMessage(item?.data?.account_id)">{{'Copy' |
+                                                    translate}}</button>
+                                            </td>
+                                        </tr>
+                                        <tr *ngIf="item?.data?.is_show_key">
+                                            <td>{{'API key' | translate}}: </td>
+                                            <td style="text-align:right">
+                                                {{item?.data?.issuance_key}}
+                                                <button class="btn btn-sm btn-primary pl-2 pr-2"
+                                                    (click)="copyMessage(item?.data?.issuance_key)">{{'Copy' |
+                                                    translate}}</button>
+                                            </td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
