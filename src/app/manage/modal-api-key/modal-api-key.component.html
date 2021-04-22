@@ -17,7 +17,7 @@
                     <div class="row container-radios-wrapper pl-3">
                         <div>
                             <label class="container-checkbox small mb-2 box-item-checkbox"
-                                [ngClass]="{'invalid': isConfirm && !agreeApiPolicy.value}">
+                                [ngClass]="{'invalid':!agreeApiPolicy}">
                                 <h5 class="pt-2">{{'Agree to Phillip Securities API Service Usage Policy' | translate}}</h5>
                                 <input type="checkbox" [(ngModel)]="agreeApiPolicy" data-md-icheck
                                     (change)="toggleCheckBox($event)" [ngModelOptions]="{standalone: true}">
