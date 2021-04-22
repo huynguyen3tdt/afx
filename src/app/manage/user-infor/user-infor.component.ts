@@ -6,7 +6,7 @@ import {
   validationPhoneNumber,
   postCodevalidation,
   annualIncomeValidation,
-  experienceValidation
+  experienceValidation, validationMobileNumber, toString
 } from 'src/app/core/helper/custom-validate.helper';
 import { UserModel, AddressModel, LabelModel, QuestionModel, UpdateUserParam } from 'src/app/core/model/user.model';
 import { UserService } from 'src/app/core/services/user.service';
@@ -42,6 +42,7 @@ export class UserInforComponent implements OnInit {
   editAddress: boolean;
   editEmail: boolean;
   editPhone: boolean;
+  editMobile: boolean;
   showSave: boolean;
   userAddress: AddressModel;
   occupationSurveyForm: FormGroup;
@@ -73,6 +74,12 @@ export class UserInforComponent implements OnInit {
   listPurposeSubmit: Array<QuestionModel>;
   invalidEmail: boolean;
   notFoundPostCode: boolean;
+  mobile: '';
+  phone: '';
+  // tslint:disable-next-line:max-line-length
+  public phoneFormError: { Phone: boolean; message: string; } | { message: string; phoneLength: boolean; } | { ErrorHalfSizeNumber: boolean; message: string; };
+  // tslint:disable-next-line:max-line-length
+  public mobileFormError: { Phone: boolean; message: string; } | { message: string; phoneLength: boolean; } | { ErrorHalfSizeNumber: boolean; message: string; };
 
   constructor(private userService: UserService,
               private globalService: GlobalService,
@@ -98,6 +105,18 @@ export class UserInforComponent implements OnInit {
     this.listInvestMarginTradingInvidual = investMarginTradingInvidual.labels;
     this.listInvestCommoditiesInvidual = investCommoditiesInvidual.labels;
     this.listTradingExperienceInvidual = tradingExperienceInvidual.labels;
+
+    this.mobile = this.userForm.get('mobile').value;
+    this.phone = this.userForm.get('phone').value;
+    this.validatePhoneMobile(this.mobile, this.phone);
+    this.userForm.get('phone').valueChanges.subscribe(next => {
+      this.validatePhoneMobile(this.mobile, next);
+      this.phone = next;
+    });
+    this.userForm.get('mobile').valueChanges.subscribe(next => {
+      this.validatePhoneMobile(next, this.phone);
+      this.mobile = next;
+    });
   }
 
   initUserForm() {
@@ -108,7 +127,8 @@ export class UserInforComponent implements OnInit {
       house_numb: new FormControl('', requiredInput),
       name_build: new FormControl(''),
       email: new FormControl('', emailValidation),
-      phone: new FormControl('', requiredInput),
+      phone: new FormControl(''),
+      mobile: new FormControl(''),
     });
   }
 
@@ -118,6 +138,11 @@ export class UserInforComponent implements OnInit {
       financialAsset: new FormControl('', requiredInput),
       amountAvaiable: new FormControl('', requiredInput)
     });
+  }
+
+  validatePhoneMobile(mobile: string, phone: string) {
+    this.phoneFormError = validationPhoneNumber(phone, mobile);
+    this.mobileFormError = validationMobileNumber(mobile, phone);
   }
 
   initPurposeInvestForm() {
@@ -155,7 +180,8 @@ export class UserInforComponent implements OnInit {
         this.userForm.controls.house_numb.setValue(this.userInfor.address.value.street2);
         this.userForm.controls.name_build.setValue(this.userInfor.address.value.fx_street3);
         this.userForm.controls.email.setValue(this.userInfor.email.value);
-        this.userForm.controls.phone.setValue(this.userInfor.mobile);
+        this.userForm.controls.phone.setValue(this.userInfor.phone);
+        this.userForm.controls.mobile.setValue(this.userInfor.mobile);
         this.statusEmail = this.userInfor.email.status;
         this.userInfor.fx_gender = this.globalService.checkGender(this.userInfor.fx_gender);
         if (this.userInfor.surveys.length > 0) {
@@ -280,6 +306,14 @@ export class UserInforComponent implements OnInit {
 
   saveUser(type: string) {
     this.saveType = type;
+
+    // Prevent clicking Save button when detected an invalid field
+    const firstElementWithError = document.getElementsByClassName('invalid');
+
+    if (firstElementWithError[0]) {
+      return;
+    }
+
     if (this.saveType === this.formType.userInfor) {
       if (this.userForm.invalid) {
         return;
@@ -313,7 +347,8 @@ export class UserInforComponent implements OnInit {
       },
       email: this.statusEmail === this.STATUS_INFO.approve
       ? this.userForm.controls.email.value.trim() : null,
-      mobile: this.userForm.controls.phone.value,
+      phone: toString(this.userForm.controls.phone.value),
+      mobile: toString(this.userForm.controls.mobile.value),
       surveys: [],
       survey_cd: 'phillip_individual'
     };
@@ -322,6 +357,7 @@ export class UserInforComponent implements OnInit {
       param.zip = null;
       param.address = null;
       param.email = null;
+      param.phone = null;
       param.mobile = null;
       param.lang = null;
     }
@@ -330,6 +366,7 @@ export class UserInforComponent implements OnInit {
       param.zip = null;
       param.address = null;
       param.email = null;
+      param.phone = null;
       param.mobile = null;
       param.lang = null;
     }
@@ -371,8 +408,12 @@ export class UserInforComponent implements OnInit {
         this.editEmail = true;
         break;
       case 'phone':
-        this.userForm.controls.phone.setValue(this.userInfor.mobile);
+        this.userForm.controls.phone.setValue(this.userInfor.phone);
         this.editPhone = true;
+        break;
+      case 'mobile':
+        this.userForm.controls.mobile.setValue(this.userInfor.mobile);
+        this.editMobile = true;
         break;
     }
   }
@@ -392,11 +433,15 @@ export class UserInforComponent implements OnInit {
         this.editEmail = false;
         break;
       case 'phone':
-        this.userForm.controls.phone.setValue(this.userInfor.mobile);
+        this.userForm.controls.phone.setValue(this.userInfor.phone);
         this.editPhone = false;
         break;
+      case 'mobile':
+        this.userForm.controls.mobile.setValue(this.userInfor.mobile);
+        this.editMobile = false;
+        break;
     }
-    if (!this.editAddress && !this.editEmail && !this.editPhone) {
+    if (!this.editAddress && !this.editEmail && !this.editPhone && !this.editMobile) {
       this.showSave = false;
     }
 
@@ -506,6 +551,7 @@ export class UserInforComponent implements OnInit {
     this.editAddress = false;
     this.editEmail = false;
     this.editPhone = false;
+    this.editMobile = false;
     this.showSave = false;
     this.invalidEmail = false;
   }

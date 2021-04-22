@@ -16,11 +16,10 @@
                         class="pdf-link" target="_blank">{{'Phillip Securities API Service Usage Policy' | translate}}</a></h5>
                     <div class="row container-radios-wrapper pl-3">
                         <div>
-                            <label class="container-checkbox small mb-2 box-item-checkbox"
-                                [ngClass]="{'invalid':!agreeApiPolicy}">
+                            <label class="container-checkbox small mb-2 box-item-checkbox">
                                 <h5 class="pt-2">{{'Agree to Phillip Securities API Service Usage Policy' | translate}}</h5>
                                 <input type="checkbox" [(ngModel)]="agreeApiPolicy" data-md-icheck
-                                    (change)="toggleCheckBox($event)" [ngModelOptions]="{standalone: true}">
+                                    (change)="toggleCheckBox($event)">
                                 <span class="checkmark mt-2"></span>
                             </label>
                         </div>

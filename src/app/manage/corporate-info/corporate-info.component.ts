@@ -9,7 +9,7 @@ import {
   validationPhoneNumber,
   emailValidation,
   experienceValidation,
-  fullWidthRequired
+  fullWidthRequired, validationMobileNumber, validationNumber, toString
 } from 'src/app/core/helper/custom-validate.helper';
 import { GlobalService } from 'src/app/core/services/global.service';
 import { LISTCITY_JAPAN } from 'src/app/core/constant/japan-constant';
@@ -48,6 +48,7 @@ export class CorporateInfoComponent implements OnInit {
   editPersonPic: boolean;
   editPersonPicname: boolean;
   editPersonPhone: boolean;
+  editPersonMobile: boolean;
   editPersonEmail: boolean;
   editGender: boolean;
   corpAddress: AddressModel;
@@ -85,7 +86,10 @@ export class CorporateInfoComponent implements OnInit {
   listPurposeSubmit: Array<QuestionModel>;
   invalidEmail: boolean;
   notFoundPostCode: boolean;
-
+  mobile: '';
+  phone: '';
+  public phoneFormError: { Phone?: boolean; message: string; ErrorHalfSizeNumber?: boolean;  phoneLength?: boolean; };
+  public mobileFormError: { Phone?: boolean; message: string; ErrorHalfSizeNumber?: boolean; phoneLength?: boolean; };
   constructor(private spinnerService: Ng4LoadingSpinnerService,
               private userService: UserService,
               private globalService: GlobalService,
@@ -114,6 +118,16 @@ export class CorporateInfoComponent implements OnInit {
     this.listInvestMarginTradingInvidual = investMarginTradingInvidual.labels;
     this.listInvestCommoditiesInvidual = investCommoditiesInvidual.labels;
     this.listTradingExperienceInvidual = tradingExperienceInvidual.labels;
+    this.mobile = this.picForm.get('person_mobile').value;
+    this.phone = this.picForm.get('person_phone').value;
+    this.picForm.get('person_phone').valueChanges.subscribe(next => {
+      this.validatePhoneMobile(this.mobile, next);
+      this.phone = next;
+    });
+    this.picForm.get('person_mobile').valueChanges.subscribe(next => {
+      this.validatePhoneMobile(next, this.phone);
+      this.mobile = next;
+    });
   }
 
   initCorporateForm() {
@@ -123,7 +137,7 @@ export class CorporateInfoComponent implements OnInit {
       cor_district: new FormControl('', requiredInput),
       cor_house: new FormControl('', requiredInput),
       cor_build: new FormControl(''),
-      cor_phone: new FormControl('', requiredInput),
+      cor_phone: new FormControl('', validationNumber),
       cor_fax: new FormControl(''),
     });
   }
@@ -135,9 +149,15 @@ export class CorporateInfoComponent implements OnInit {
       per_picname: new FormControl('', requiredInput),
       person_picname: new FormControl('', fullWidthRequired),
       person_gender: new FormControl('', requiredInput),
-      person_phone: new FormControl('', requiredInput),
+      person_phone: new FormControl(''),
+      person_mobile: new FormControl(''),
       person_email: new FormControl('', emailValidation),
     });
+  }
+
+  validatePhoneMobile(mobile: string, phone: string) {
+    this.phoneFormError = validationPhoneNumber(phone, mobile);
+    this.mobileFormError = validationMobileNumber(mobile, phone);
   }
 
   initFinancialInforForm() {
@@ -192,7 +212,8 @@ export class CorporateInfoComponent implements OnInit {
           this.picForm.controls.person_pic.setValue(this.corporateInfor.pic.function);
           this.picForm.controls.per_picname.setValue(this.corporateInfor.pic.info.value.name);
           this.picForm.controls.person_picname.setValue(this.corporateInfor.pic.info.value.fx_name1);
-          this.picForm.controls.person_phone.setValue(this.corporateInfor.pic.mobile);
+          this.picForm.controls.person_phone.setValue(this.corporateInfor.pic.phone);
+          this.picForm.controls.person_mobile.setValue(this.corporateInfor.pic.mobile);
           this.picForm.controls.person_email.setValue(this.corporateInfor.pic.email.value);
           this.picForm.controls.person_gender.setValue(this.corporateInfor.pic.info.value.fx_gender);
           this.statusEmail = this.corporateInfor.pic.email.status;
@@ -342,7 +363,8 @@ export class CorporateInfoComponent implements OnInit {
         fx_gender: this.picForm.controls.person_gender.value,
         email: this.statusEmail === this.STATUS_INFO.approve
         ? this.picForm.controls.person_email.value.trim() : null,
-        mobile: this.picForm.controls.person_phone.value,
+        phone: toString(this.picForm.controls.person_phone.value),
+        mobile: toString(this.picForm.controls.person_mobile.value),
         function: this.picForm.controls.person_pic.value.trim(),
         fx_dept: this.picForm.controls.person_bod.value
       },
@@ -391,6 +413,14 @@ export class CorporateInfoComponent implements OnInit {
 
   saveCorp(type) {
     this.saveType = type;
+
+    // Prevent clicking Save button when detected an invalid field
+    const firstElementWithError = document.getElementsByClassName('invalid');
+
+    if (firstElementWithError[0]) {
+      return;
+    }
+
     if (this.saveType === this.formType.corporateInfor) {
       if (this.corporateForm.invalid) {
         return;
@@ -549,8 +579,12 @@ export class CorporateInfoComponent implements OnInit {
         this.editPersonPicname = true;
         break;
       case 'p-phone':
-        this.picForm.controls.person_phone.setValue(this.corporateInfor.pic.mobile);
+        this.picForm.controls.person_phone.setValue(this.corporateInfor.pic.phone);
         this.editPersonPhone = true;
+        break;
+      case 'p-mobile':
+        this.picForm.controls.person_mobile.setValue(this.corporateInfor.pic.mobile);
+        this.editPersonMobile = true;
         break;
       case 'p-email':
         this.picForm.controls.person_email.setValue(this.corporateInfor.pic.email.value);
@@ -586,6 +620,9 @@ export class CorporateInfoComponent implements OnInit {
       case 'p-phone':
         this.editPersonPhone = false;
         break;
+      case 'p-mobile':
+        this.editPersonMobile = false;
+        break;
       case 'p-email':
         this.picForm.controls.person_email.setValue(this.corporateInfor.pic.email.value);
         this.editPersonEmail = false;
@@ -605,6 +642,7 @@ export class CorporateInfoComponent implements OnInit {
       && !this.editPersonPic
       && !this.editPersonPicname
       && !this.editPersonPhone
+      && !this.editPersonMobile
       && !this.editPersonEmail
       && !this.editGender) {
       this.showSavePic = false;
@@ -633,6 +671,7 @@ export class CorporateInfoComponent implements OnInit {
     this.editPersonPic = false;
     this.editPersonPicname = false;
     this.editPersonPhone = false;
+    this.editPersonMobile = false;
     this.editPersonEmail = false;
     this.editGender = false;
     this.invalidEmail = false;

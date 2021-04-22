@@ -86,6 +86,9 @@
   "Used Margin": "Used Margin",
   "My Profile": "My Profile",
   "Phone": "Phone",
+  "PIC Phone": "Phone",
+  "PIC Mobile": "Mobile",
+  "Mobile": "Mobile",
   "Email": "Email",
   "Address": "Address",
   "Postcode": "Postcode",
@@ -209,7 +212,7 @@
   "Phone number must be at least 10 characters long.": "Phone number must be at least 10 characters long.",
   "Please enter your phone number in single-byte numbers.": "Please enter your phone number in single-byte numbers.",
   "Enter the phone number without a hyphen (-).": "Enter the phone number without a hyphen (-).",
-  "Invalid email": "Invalid email",
+  "Invalid email": "Email address format is incorrect.",
   "Please enter your zip code": "Please enter your zip code",
   "Postal code is incorrect": "Postal code is incorrect",
   "Enter the postal code using single-byte numbers.": "Enter the postal code using single-byte numbers.",
@@ -393,5 +396,11 @@
   "Back": "Back",
   "Register": "Register",
   "Actual Balance": "Actual Balance",
-  "Copy": "Copy"
+  "Copy": "Copy",
+  "Please enter your phone number in 10 digits.": "Please enter your phone number in 10 digits.",
+  "Please enter your pic phone number in 10 digits.": "Please enter your phone number in 10 digits.",
+  "Please enter your mobile number in 11 digits.": "Please enter your mobile number in 11 digits.",
+  "Please enter your pic mobile number in 11 digits.": "Please enter your mobile number in 11 digits.",
+  "Only half-width number can be entered.": "Only half-width number can be entered.",
+  "Only half-width characters can be entered.": "Only half-width characters can be entered."
 }

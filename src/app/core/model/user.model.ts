@@ -62,7 +62,8 @@ export interface UpdateUserParam {
     fx_street3: string;
   };
   email: string;
-  mobile: string;
+  phone?: string;
+  mobile?: string;
   lang?: string;
   surveys: Array<QuestionModel>;
   survey_cd: string;
@@ -86,6 +87,7 @@ export interface UpdateCorporateParam {
     fx_name1: string;
     fx_gender: string;
     email?: string;
+    phone: string;
     mobile: string;
     function: string;
     fx_dept: string;
@@ -112,6 +114,7 @@ export interface UserModel {
     status: string,
     value: string
   };
+  phone: string;
   mobile: string;
   lang: string;
   surveys: Array<QuestionModel>;
@@ -151,6 +154,7 @@ export interface CorporateModel {
       status: string,
       value: string,
     },
+    phone: string,
     mobile: string,
     function: string,
     fx_dept: string,
