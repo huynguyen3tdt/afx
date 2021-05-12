@@ -411,19 +411,19 @@
                     <div class="editable d-block" *ngIf="editPersonEmail == true">
                         <input type="text" name="p-email" maxlength="100" placeholder="" formControlName="person_email"
                           [className]="(picForm?.controls?.person_email?.errors || invalidEmail) ? 'form-control form-control-sm mb-1 invalid' : 'form-control form-control-sm mb-1'">
-                        <div *ngIf="picForm?.controls?.person_email?.errors" class="invalid-mess">
+                        <div *ngIf="picForm?.controls?.person_email?.errors || invalidEmail" class="invalid-mess">
                           <div *ngIf="picForm?.controls?.person_email?.errors?.Required">
                             <div>{{'This field is required' | translate}}</div>
                           </div>
-                        <div *ngIf="invalidEmail">
-                            <div>{{'This email address is already registered' | translate}}</div>
-                        </div>
                         <div *ngIf="picForm?.controls?.person_email?.errors?.ErrorHalfSizeNumber">
                           <div>{{'Only half-width characters can be entered.' | translate}}</div>
                         </div>
                         <div *ngIf="picForm?.controls?.person_email?.errors?.Email">
                           <div>{{'Invalid email' | translate}}</div>
                         </div>
+                        </div>
+                        <div *ngIf="invalidEmail" class="invalid-mess">
+                            <div>{{'This email address is already registered' | translate}}</div>
                         </div>
                         <div class="text-right">
                             <button type="button" class="btn btn-sm btn-cancel btn-outline-secondary pt-0 pb-0" (click)="cancelEditCor('p-email', formType.pic)">{{'Cancel' | translate}}</button>

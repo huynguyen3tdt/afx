@@ -122,6 +122,8 @@ const JP_REQUIRED = /[\u3000-\u303f\u3040-\u309f\u30a0-\u30ff\uff00-\uff9f\u4e00
 // tslint:disable-next-line:max-line-length
 const FULL_WIDTH_TXT = /[\u3000-\u303F]|[\u3040-\u309F]|[\u30A0-\u30FF]|[\uFF00-\uFFEF]|[\u4E00-\u9FAF]|[\u2605-\u2606]|[\u2190-\u2195]|\u203B/g;
 // https://gist.github.com/ryanmcgrath/982242
+const PHONE_LENGTH = 10;
+const MOBILE_LENGTH = 11;
 
 // export function emailValidation(control: AbstractControl) {
 //     if (!control.value || typeof control.value === 'string' && !control.value.trim()) {
@@ -216,7 +218,7 @@ export function validationPhoneNumber(control: string, mobile: string) {
   const patternNumber = RegExp(HALF_SIZE_NUMBER);
   if (!toString(control).trim() && !patternMobile.test(mobile)) {
     return DEFAULT_PHONE_REQUIRED;
-  } else if (control && control.length < 10 && patternNumber.test(control)) {
+  } else if (control && control.length < PHONE_LENGTH && patternNumber.test(control)) {
     return DEFAULT_PHONE_LENGTH;
   }
   if (patternFullWidth.test(control) && !patternNumber.test(control)
@@ -235,7 +237,7 @@ export function validationMobileNumber(control: string, phone: string) {
   const patternNumber = RegExp(HALF_SIZE_NUMBER);
   if (!toString(control).trim() && !patternPhone.test(phone)) {
     return DEFAULT_PHONE_REQUIRED;
-  } else if (control && control.length < 11 && patternNumber.test(control)) {
+  } else if (control && control.length < MOBILE_LENGTH && patternNumber.test(control)) {
     return DEFAULT_PHONE_LENGTH;
   }
   if (patternFullWidth.test(control) && !patternNumber.test(control)

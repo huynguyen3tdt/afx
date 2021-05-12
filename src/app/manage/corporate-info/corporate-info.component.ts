@@ -414,13 +414,6 @@ export class CorporateInfoComponent implements OnInit {
   saveCorp(type) {
     this.saveType = type;
 
-    // Prevent clicking Save button when detected an invalid field
-    const firstElementWithError = document.getElementsByClassName('invalid');
-
-    if (firstElementWithError[0]) {
-      return;
-    }
-
     if (this.saveType === this.formType.corporateInfor) {
       if (this.corporateForm.invalid) {
         return;

@@ -133,12 +133,9 @@
                             <div *ngIf="editEmail == true" class="editable d-block">
                                 <input type="text" name="email" formControlName="email" maxlength="100"
                                     [className]="(invalidEmail || userForm?.controls?.email?.errors) ? 'form-control form-control-sm mb-1 invalid' : 'form-control form-control-sm mb-1'">
-                              <div *ngIf="userForm?.controls?.email?.errors" class="invalid-mess">
+                              <div *ngIf="userForm?.controls?.email?.errors || invalidEmail" class="invalid-mess">
                                 <div *ngIf="userForm?.controls?.email?.errors?.Required">
                                   <div>{{'This field is required' | translate}}</div>
-                                </div>
-                                <div *ngIf="invalidEmail">
-                                  <div>{{'This email address is already registered' | translate}}</div>
                                 </div>
                                 <div *ngIf="userForm?.controls?.email?.errors?.ErrorHalfSizeNumber">
                                   <div>{{'Only half-width characters can be entered.' | translate}}</div>
@@ -146,6 +143,9 @@
                                 <div *ngIf="userForm?.controls?.email?.errors?.Email">
                                   <div>{{'Invalid email' | translate}}</div>
                                 </div>
+                              </div>
+                              <div *ngIf="invalidEmail" class="invalid-mess">
+                                <div>{{'This email address is already registered' | translate}}</div>
                               </div>
 
                                 <div class="text-right">

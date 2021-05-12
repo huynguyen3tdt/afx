@@ -76,10 +76,8 @@ export class UserInforComponent implements OnInit {
   notFoundPostCode: boolean;
   mobile: '';
   phone: '';
-  // tslint:disable-next-line:max-line-length
-  public phoneFormError: { Phone: boolean; message: string; } | { message: string; phoneLength: boolean; } | { ErrorHalfSizeNumber: boolean; message: string; };
-  // tslint:disable-next-line:max-line-length
-  public mobileFormError: { Phone: boolean; message: string; } | { message: string; phoneLength: boolean; } | { ErrorHalfSizeNumber: boolean; message: string; };
+  public phoneFormError: { Phone?: boolean, message: string,  phoneLength?: boolean, ErrorHalfSizeNumber?: boolean };
+  public mobileFormError: { Phone?: boolean, message: string, phoneLength?: boolean,  ErrorHalfSizeNumber?: boolean };
 
   constructor(private userService: UserService,
               private globalService: GlobalService,
