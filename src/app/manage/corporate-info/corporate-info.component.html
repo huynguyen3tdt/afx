@@ -89,7 +89,7 @@
                         <a href="javascript:;" class="edit-link" data-toggle="tooltip" data-placement="top" *ngIf="editCorAddress == false && corporateInfor?.corporation?.address?.status == STATUS_INFO.approve" title="Edit Address" (click)="showEditFieldCor('cor-address', formType.corporateInfor)"><i class="icon ion-md-create"></i></a>
                     </td> -->
                 </tr>
- 
+
 
                 <tr class="row-phone">
                     <td>{{'Phone' | translate}}</td>
@@ -98,14 +98,12 @@
                             <strong><a href="javascript:;">{{corporateInfor?.corporation?.phone}}</a></strong>
                         </div>
                         <div class="editable d-block" *ngIf="editCorPhone == true">
-                            <input type="tel" name="cor-phone" maxlength="32" placeholder="" formControlName="cor_phone"
+                            <input type="text" name="cor-phone" maxlength="10" placeholder="" formControlName="cor_phone"
                               [className]="corporateForm.controls?.cor_phone?.errors ? 'form-control form-control-sm mb-1 invalid' : 'form-control form-control-sm mb-1'">
-                            <div *ngIf="corporateForm.controls?.cor_phone?.errors?.Required" class="invalid-mess">
-                              <div>{{'This field is required' | translate}}</div>
-                            </div>
-                            <div style="display:block" *ngIf="corporateForm.controls?.cor_phone?.errors?.phoneLength"
-                            class="invalid-mess">
-                              <div *ngIf="corporateForm.controls?.cor_phone?.errors?.phoneLength">{{'Phone number must be at least 10 characters long.' | translate}}</div>
+                            <div style="display:block" *ngIf="corporateForm.controls?.cor_phone?.errors" class="invalid-mess">
+                            <div *ngIf="corporateForm.controls?.cor_phone?.errors?.Phone">{{'This field is required' | translate}}</div>
+                            <div *ngIf="corporateForm.controls?.cor_phone?.errors?.ErrorHalfSizeNumber">{{'Only half-width number can be entered.' | translate}}</div>
+                            <div *ngIf="corporateForm.controls?.cor_phone?.errors?.phoneLength">{{'Please enter your phone number in 10 digits.' | translate}}</div>
                             </div>
                             <div class="text-right">
                                 <button type="button" class="btn btn-sm btn-cancel btn-outline-secondary pt-0 pb-0" (click)="cancelEditCor('cor-phone', formType.corporateInfor)"> {{'Cancel' | translate}}</button>
@@ -269,7 +267,7 @@
                 </td>
                 <td width="15"><a href="javascript:;" class="edit-link" data-toggle="tooltip" data-placement="top" title="Edit Department" *ngIf="editPersonBod == false" (click)="showEditFieldCor('department', formType.pic)"><i class="icon ion-md-create"></i></a></td>
             </tr>
-           
+
             <tr class="row-pic-position">
                 <td width="200">{{'PIC Position' | translate}}</td>
                 <td>
@@ -289,7 +287,7 @@
                 </td>
                 <td width="15"><a href="javascript:;" class="edit-link" data-toggle="tooltip" data-placement="top" title="Edit PIC Position" *ngIf="editPersonPic == false" (click)="showEditFieldCor('pic-position', formType.pic)"><i class="icon ion-md-create"></i></a></td>
             </tr>
-           
+
 
             <tr class="row-pic-name">
                 <td width="200">{{'PIC Name' | translate}}</td>
@@ -305,7 +303,7 @@
                         </div>
                     </div>
                 </td>
-                <td width="15"><a href="javascript:;" class="edit-link" data-toggle="tooltip" data-placement="top" title="Edit PIC Name" 
+                <td width="15"><a href="javascript:;" class="edit-link" data-toggle="tooltip" data-placement="top" title="Edit PIC Name"
                     *ngIf="editPersonPicname == false && corporateInfor?.pic?.info?.status == STATUS_INFO.approve" (click)="showEditFieldCor('pic-name', formType.pic)"><i class="icon ion-md-create"></i></a></td>
             </tr>
 
@@ -328,7 +326,7 @@
                 </td>
                 <!-- <td width="15"><a href="javascript:;" class="edit-link" data-toggle="tooltip" data-placement="top" title="Edit PIC Name" *ngIf="editPersonPicname == false" (click)="showEditFieldCor('pic-name', formType.pic)"><i class="icon ion-md-create"></i></a></td> -->
             </tr>
-          
+
             <tr class="row-pic-gender">
                 <td width="200">{{'PIC Gender' | translate}}</td>
                 <td>
@@ -353,21 +351,22 @@
 
 
             <tr class="row-phone">
-                <td>{{'Phone' | translate}}</td>
+                <td>{{'PIC Phone' | translate}}</td>
                 <td>
                     <div class="currentvalue" *ngIf="editPersonPhone == false">
-                        <strong><a href="javascript:;">{{corporateInfor?.pic?.mobile}}</a></strong>
+                        <strong><a href="javascript:;">{{corporateInfor?.pic?.phone}}</a></strong>
                     </div>
                     <div class="editable d-block" *ngIf="editPersonPhone == true">
-                        <input type="tel" name="p-phone"  maxlength="32" placeholder="" formControlName="person_phone"
-                        [className]="picForm?.controls?.person_phone?.errors ? 'form-control form-control-sm mb-1 invalid' : 'form-control form-control-sm mb-1'">
-                        <div *ngIf="picForm.controls?.person_phone?.errors?.Required" class="invalid-mess">
-                          <div>{{'This field is required' | translate}}</div>
-                        </div>
-                        <div style="display:block" *ngIf="picForm.controls?.person_phone?.errors?.phoneLength"
-                        class="invalid-mess">
-                          <div *ngIf="picForm.controls?.person_phone?.errors?.phoneLength">{{'Phone number must be at least 10 characters long.' | translate}}</div>
-                        </div>
+                        <input type="text" name="p-phone"  maxlength="10" placeholder="" formControlName="person_phone"
+                        [className]="phoneFormError ? 'form-control form-control-sm mb-1 invalid' : 'form-control form-control-sm mb-1'">
+                        <div style="display:block" *ngIf="phoneFormError" class="invalid-mess">
+                            <div *ngIf="phoneFormError.phoneLength">
+                                      {{'Please enter your pic phone number in 10 digits.' | translate}}</div>
+                            <div *ngIf="phoneFormError.ErrorHalfSizeNumber">
+                                      {{'Only half-width number can be entered.' | translate}}</div>
+                          <div *ngIf="phoneFormError.Phone">
+                                      {{'This field is required' | translate}}</div>
+                          </div>
                         <div class="text-right">
                             <button type="button" class="btn btn-sm btn-cancel btn-outline-secondary pt-0 pb-0" (click)="cancelEditCor('p-phone', formType.pic)">{{'Cancel' | translate}}</button>
                         </div>
@@ -376,7 +375,31 @@
                 <td width="15"><a href="javascript:;" class="edit-link" data-toggle="tooltip" data-placement="top" title="Edit Phone" *ngIf="editPersonPhone == false" (click)="showEditFieldCor('p-phone', formType.pic)"><i class="icon ion-md-create"></i></a></td>
             </tr>
 
-            
+            <tr class="row-mobile">
+                <td>{{'PIC Mobile' | translate}}</td>
+                <td>
+                    <div class="currentvalue" *ngIf="editPersonMobile == false">
+                        <strong><a href="javascript:;">{{corporateInfor?.pic?.mobile}}</a></strong>
+                    </div>
+                    <div class="editable d-block" *ngIf="editPersonMobile == true">
+                        <input type="text" name="p-mobile"  maxlength="11" placeholder="" formControlName="person_mobile"
+                        [className]="mobileFormError ? 'form-control form-control-sm mb-1 invalid' : 'form-control form-control-sm mb-1'">
+                        <div style="display:block" *ngIf="mobileFormError" class="invalid-mess">
+                            <div *ngIf="mobileFormError.phoneLength">
+                                        {{'Please enter your pic mobile number in 11 digits.' | translate}}</div>
+                            <div *ngIf="mobileFormError.ErrorHalfSizeNumber">
+                                        {{'Only half-width number can be entered.' | translate}}</div>
+                            <div *ngIf="mobileFormError.Phone">
+                                        {{'This field is required' | translate}}</div>
+                            </div>
+                        <div class="text-right">
+                            <button type="button" class="btn btn-sm btn-cancel btn-outline-secondary pt-0 pb-0" (click)="cancelEditCor('p-mobile', formType.pic)">{{'Cancel' | translate}}</button>
+                        </div>
+                    </div>
+                </td>
+                <td width="15"><a href="javascript:;" class="edit-link" data-toggle="tooltip" data-placement="top" title="Edit Mobile" *ngIf="editPersonMobile == false" (click)="showEditFieldCor('p-mobile', formType.pic)"><i class="icon ion-md-create"></i></a></td>
+
+            </tr>
             <tr class="row-email need-verify">
                 <td>{{'Email' | translate}}</td>
                 <td>
@@ -387,15 +410,20 @@
                     </div>
                     <div class="editable d-block" *ngIf="editPersonEmail == true">
                         <input type="text" name="p-email" maxlength="100" placeholder="" formControlName="person_email"
-                          [className]="(picForm?.controls?.person_email?.errors || invalidEmail == true) ? 'form-control form-control-sm mb-1 invalid' : 'form-control form-control-sm mb-1'">
-                        <div *ngIf="picForm?.controls?.person_email?.errors?.Required" class="invalid-mess">
-                          <div>{{'This field is required' | translate}}</div>
-                        </div>
-                        <div *ngIf="invalidEmail == true" class="invalid-mess">
-                            <div>{{'This email address is already registered' | translate}}</div>
+                          [className]="(picForm?.controls?.person_email?.errors || invalidEmail) ? 'form-control form-control-sm mb-1 invalid' : 'form-control form-control-sm mb-1'">
+                        <div *ngIf="picForm?.controls?.person_email?.errors || invalidEmail" class="invalid-mess">
+                          <div *ngIf="picForm?.controls?.person_email?.errors?.Required">
+                            <div>{{'This field is required' | translate}}</div>
                           </div>
-                        <div *ngIf="picForm?.controls?.person_email?.errors?.Email" class="invalid-mess">
-                          <div *ngIf="picForm?.controls?.person_email?.errors">{{'Invalid email' | translate}}</div>
+                        <div *ngIf="picForm?.controls?.person_email?.errors?.ErrorHalfSizeNumber">
+                          <div>{{'Only half-width characters can be entered.' | translate}}</div>
+                        </div>
+                        <div *ngIf="picForm?.controls?.person_email?.errors?.Email">
+                          <div>{{'Invalid email' | translate}}</div>
+                        </div>
+                        </div>
+                        <div *ngIf="invalidEmail" class="invalid-mess">
+                            <div>{{'This email address is already registered' | translate}}</div>
                         </div>
                         <div class="text-right">
                             <button type="button" class="btn btn-sm btn-cancel btn-outline-secondary pt-0 pb-0" (click)="cancelEditCor('p-email', formType.pic)">{{'Cancel' | translate}}</button>
@@ -403,7 +431,7 @@
                     </div>
                 </td>
                 <td width="15">
-                    <a href="javascript:;" class="edit-link" data-toggle="tooltip" data-placement="top" title="Edit Email" (click)="showEditFieldCor('p-email', formType.pic)" 
+                    <a href="javascript:;" class="edit-link" data-toggle="tooltip" data-placement="top" title="Edit Email" (click)="showEditFieldCor('p-email', formType.pic)"
                     *ngIf="editPersonEmail == false && corporateInfor?.pic?.email?.status == STATUS_INFO.approve"><i class="icon ion-md-create"></i></a>
                 </td>
             </tr>
@@ -515,7 +543,7 @@
         </div>
         <div class="col-md-8 col-lg-6">
             <strong>{{purposeInvestForm?.controls?.financialInstrument?.value}}</strong>
-                     
+
         </div>
     </div>
     <div class="row mb-1">
@@ -535,7 +563,7 @@
         <div class="col-md-6 col-lg-4">
             <label class="container-checkbox small box-item-checkbox mb-2">
                 <div class="text-center"><strong>短期売買</strong></div>
-                <input type="checkbox" formControlName="investPurposeSortTerm"  
+                <input type="checkbox" formControlName="investPurposeSortTerm"
                 (change)="changePurpose()" value="1">
                 <span class="checkmark"></span>
             </label>
@@ -644,7 +672,7 @@
             <label class="label">{{'CFD trading experience' | translate}}</label>
         </div>
         <div class="col-md-8 col-lg-6">
-            <select formControlName="inversExCfd" 
+            <select formControlName="inversExCfd"
             (change)="changeExPurPose()"
             [className]="purposeInvestForm.controls.inversExCfd.errors ? 'form-control invalid' : 'form-control'">
                 <option value="" disabled>選択してください</option>
@@ -695,7 +723,7 @@
             <label class="label">{{'Commodities futures experience' | translate}}</label>
         </div>
         <div class="col-md-8 col-lg-6">
-            <select formControlName="investCommodities" 
+            <select formControlName="investCommodities"
             (change)="changeExPurPose()"
             [className]="purposeInvestForm.controls.investCommodities.errors ? 'form-control invalid' : 'form-control'">
                 <option value="" disabled>選択してください</option>
@@ -743,7 +771,7 @@
                 </div>
             </div>
         </div>
-    
+
         <div class="row mb-1">
             <div class="col-md-4 col-lg-3">
                 <label class="label mr-lg-2">{{'Other trading experience' | translate}}</label>
