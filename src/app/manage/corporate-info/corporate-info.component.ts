@@ -438,7 +438,12 @@ export class CorporateInfoComponent implements OnInit {
       }
     }
     $('#modal-corporation').modal('show');
+    // Prevent clicking Save button when detected an invalid field
+    const firstElementWithError = document.getElementsByClassName('invalid');
 
+    if (firstElementWithError[0]) {
+      return;
+    }
   }
 
   changeExPurPose() {

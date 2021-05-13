@@ -305,13 +305,6 @@ export class UserInforComponent implements OnInit {
   saveUser(type: string) {
     this.saveType = type;
 
-    // Prevent clicking Save button when detected an invalid field
-    const firstElementWithError = document.getElementsByClassName('invalid');
-
-    if (firstElementWithError[0]) {
-      return;
-    }
-
     if (this.saveType === this.formType.userInfor) {
       if (this.userForm.invalid) {
         return;
@@ -331,6 +324,12 @@ export class UserInforComponent implements OnInit {
       }
     }
     $('#modal-confirm').modal('show');
+    // Prevent clicking Save button when detected an invalid field
+    const firstElementWithError = document.getElementsByClassName('invalid');
+
+    if (firstElementWithError[0]) {
+      return;
+    }
   }
 
   updateUser() {
@@ -355,8 +354,6 @@ export class UserInforComponent implements OnInit {
       param.zip = null;
       param.address = null;
       param.email = null;
-      param.phone = null;
-      param.mobile = null;
       param.lang = null;
     }
     if (this.saveType === this.formType.purpose) {
@@ -364,8 +361,6 @@ export class UserInforComponent implements OnInit {
       param.zip = null;
       param.address = null;
       param.email = null;
-      param.phone = null;
-      param.mobile = null;
       param.lang = null;
     }
     this.spinnerService.show();
