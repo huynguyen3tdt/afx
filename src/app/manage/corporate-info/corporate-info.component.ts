@@ -344,6 +344,12 @@ export class CorporateInfoComponent implements OnInit {
   }
 
   updateCorporate() {
+    // Prevent clicking Save button when detected an invalid field
+    const firstElementWithError = document.getElementsByClassName('invalid');
+
+    if (firstElementWithError[0]) {
+      return;
+    }
     const param: UpdateCorporateParam = {
       corporation: {
         zip: this.corporateForm.controls.cor_postcode.value,
@@ -413,7 +419,7 @@ export class CorporateInfoComponent implements OnInit {
 
   saveCorp(type) {
     this.saveType = type;
-
+    this.invalidEmail = false;
     if (this.saveType === this.formType.corporateInfor) {
       if (this.corporateForm.invalid) {
         return;
@@ -438,12 +444,6 @@ export class CorporateInfoComponent implements OnInit {
       }
     }
     $('#modal-corporation').modal('show');
-    // Prevent clicking Save button when detected an invalid field
-    const firstElementWithError = document.getElementsByClassName('invalid');
-
-    if (firstElementWithError[0]) {
-      return;
-    }
   }
 
   changeExPurPose() {
