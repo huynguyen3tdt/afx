@@ -304,6 +304,7 @@ export class UserInforComponent implements OnInit {
 
   saveUser(type: string) {
     this.saveType = type;
+    this.invalidEmail = false;
 
     if (this.saveType === this.formType.userInfor) {
       if (this.userForm.invalid) {
@@ -324,15 +325,15 @@ export class UserInforComponent implements OnInit {
       }
     }
     $('#modal-confirm').modal('show');
+  }
+
+  updateUser() {
     // Prevent clicking Save button when detected an invalid field
     const firstElementWithError = document.getElementsByClassName('invalid');
 
     if (firstElementWithError[0]) {
       return;
     }
-  }
-
-  updateUser() {
     const param: UpdateUserParam = {
       zip: this.userForm.controls.postCode.value,
       address: {

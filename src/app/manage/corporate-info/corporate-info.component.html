@@ -98,12 +98,12 @@
                             <strong><a href="javascript:;">{{corporateInfor?.corporation?.phone}}</a></strong>
                         </div>
                         <div class="editable d-block" *ngIf="editCorPhone == true">
-                            <input type="text" name="cor-phone" maxlength="10" placeholder="" formControlName="cor_phone"
+                            <input type="text" name="cor-phone" maxlength="11" placeholder="" formControlName="cor_phone"
                               [className]="corporateForm.controls?.cor_phone?.errors ? 'form-control form-control-sm mb-1 invalid' : 'form-control form-control-sm mb-1'">
                             <div style="display:block" *ngIf="corporateForm.controls?.cor_phone?.errors" class="invalid-mess">
                             <div *ngIf="corporateForm.controls?.cor_phone?.errors?.Phone">{{'This field is required' | translate}}</div>
                             <div *ngIf="corporateForm.controls?.cor_phone?.errors?.ErrorHalfSizeNumber">{{'Only half-width number can be entered.' | translate}}</div>
-                            <div *ngIf="corporateForm.controls?.cor_phone?.errors?.phoneLength">{{'Please enter your phone number in 10 digits.' | translate}}</div>
+                            <div *ngIf="corporateForm.controls?.cor_phone?.errors?.phoneLength">{{'Please enter your phone number in 10 or 11 digits.' | translate}}</div>
                             </div>
                             <div class="text-right">
                                 <button type="button" class="btn btn-sm btn-cancel btn-outline-secondary pt-0 pb-0" (click)="cancelEditCor('cor-phone', formType.corporateInfor)"> {{'Cancel' | translate}}</button>

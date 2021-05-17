@@ -112,6 +112,7 @@ const NOT_SPECIAL_CHARACTERS_CONTAIN_DOT = '^[a-zA-Z0-9,./_ ]*$';
 const EMAIL_PATTERN = /^[A-Za-z0-9._-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
 const HALF_PATTERN = /^[ｦ-ﾟ ､0-9a-zA-Z]*$/;
 const PHONE_PATTERN = /^[0-9]{10}$/;
+const WORK_PHONE_PATTERN = /^[0-9]{10,11}$/;
 const MOBILE_PATTERN = /^[0-9]{11}$/;
 const FULL_SIZE_NUMBER = /([０-９])/;
 const HALF_SIZE_NUMBER = /^[0-9]*$/;
@@ -195,7 +196,7 @@ function validatePassWord(passWord: string) {
 
 // Validation of number fields
 export function validationNumber(control: AbstractControl) {
-  const patternPhone = RegExp(PHONE_PATTERN);
+  const patternPhone = RegExp(WORK_PHONE_PATTERN);
   const patternNumber = RegExp(HALF_SIZE_NUMBER);
   const patternFullWidth = RegExp(FULL_WIDTH_TXT);
   if (!toString(control.value).trim()) {
