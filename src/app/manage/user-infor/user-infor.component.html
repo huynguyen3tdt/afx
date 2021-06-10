@@ -178,6 +178,8 @@
                                       {{'Please enter your phone number in 10 digits.' | translate}}</div>
                           <div *ngIf="phoneFormError.ErrorHalfSizeNumber">
                                       {{'Only half-width number can be entered.' | translate}}</div>
+                          <div *ngIf="phoneFormError.ErrorTypeNumber">
+                                        {{'Please enter phone number format.' | translate}}</div>
                           </div>
                             <div class="text-right">
                               <button type="button" (click)="cancelEdit('phone')"

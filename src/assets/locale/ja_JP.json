@@ -85,8 +85,8 @@
   "Used Margin": "必要証拠金",
   "Equity": "有効証拠金",
   "My Profile": "マイプロフィール",
-  "Phone": "電話番号",
-  "PIC Phone": "担当者電話番号",
+  "Phone": "固定電話番号",
+  "PIC Phone": "担当者固定電話番号",
   "PIC Mobile": "担当者携帯電話番号",
   "Mobile": "携帯電話番号",
   "Email": "メール",
@@ -401,6 +401,7 @@
   "Please enter your mobile number in 11 digits.": "携帯電話番号は11桁で入力してください。",
   "Please enter your pic mobile number in 11 digits.": "担当者携帯電話番号は11桁で入力してください。",
   "Please enter your phone number in 10 or 11 digits.": "電話番号は10~11桁で入力してください。",
+  "Please enter phone number format.": "固定電話番号を入力してください。",
   "Only half-width number can be entered.": "半角文字しか入力できない 。",
   "Only half-width characters can be entered.": "半角文字しか入力できない 。"
 }
