@@ -76,7 +76,8 @@ export class UserInforComponent implements OnInit {
   notFoundPostCode: boolean;
   mobile: '';
   phone: '';
-  public phoneFormError: { Phone?: boolean, message: string,  phoneLength?: boolean, ErrorHalfSizeNumber?: boolean };
+  // tslint:disable-next-line:max-line-length
+  public phoneFormError: { Phone?: boolean, message: string,  phoneLength?: boolean, ErrorHalfSizeNumber?: boolean; ErrorTypeNumber?: boolean; };
   public mobileFormError: { Phone?: boolean, message: string, phoneLength?: boolean,  ErrorHalfSizeNumber?: boolean };
 
   constructor(private userService: UserService,

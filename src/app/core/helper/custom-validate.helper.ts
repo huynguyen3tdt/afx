@@ -103,6 +103,11 @@ const TRANSFER_ERR = {
   message: 'Amount must be bigger than 0'
 };
 
+const INVALID_TYPE_NUMBER = {
+  ErrorTypeNumber: true,
+  message: ''
+};
+
 const DIGITS_PATTERN = '^\\d+$';
 const SALARY_PATTEN = '^[0-9, ]*$';
 const NOT_SPECIAL_CHARACTERS_FOR_EMAIL = '^[a-zA-Z0-9-._ ]*$';
@@ -113,6 +118,7 @@ const EMAIL_PATTERN = /^[A-Za-z0-9._-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
 const HALF_PATTERN = /^[ｦ-ﾟ ､0-9a-zA-Z]*$/;
 const PHONE_PATTERN = /^[0-9]{10}$/;
 const WORK_PHONE_PATTERN = /^[0-9]{10,11}$/;
+const START_MOBILE_PATTERN = /^090|080|070/;
 const MOBILE_PATTERN = /^[0-9]{11}$/;
 const FULL_SIZE_NUMBER = /([０-９])/;
 const HALF_SIZE_NUMBER = /^[0-9]*$/;
@@ -199,6 +205,10 @@ export function validationNumber(control: AbstractControl) {
   const patternPhone = RegExp(WORK_PHONE_PATTERN);
   const patternNumber = RegExp(HALF_SIZE_NUMBER);
   const patternFullWidth = RegExp(FULL_WIDTH_TXT);
+  const patternStartMobileNumber = RegExp(START_MOBILE_PATTERN);
+  if (patternStartMobileNumber.test(control.value)) {
+    return INVALID_TYPE_NUMBER;
+  }
   if (!toString(control.value).trim()) {
     return DEFAULT_PHONE_REQUIRED;
   }
@@ -217,6 +227,12 @@ export function validationPhoneNumber(control: string, mobile: string) {
   const patternMobile = RegExp(MOBILE_PATTERN);
   const patternFullWidth = RegExp(FULL_WIDTH_TXT);
   const patternNumber = RegExp(HALF_SIZE_NUMBER);
+  // Format of mobile numbers start with (090), (080) or (070)
+  // We need to show messsage to customers to let them know this field describes phone number
+  const patternStartMobileNumber = RegExp(START_MOBILE_PATTERN);
+  if (patternStartMobileNumber.test(control)) {
+    return INVALID_TYPE_NUMBER;
+  }
   if (!toString(control).trim() && !patternMobile.test(mobile)) {
     return DEFAULT_PHONE_REQUIRED;
   } else if (control && control.length < PHONE_LENGTH && patternNumber.test(control)) {

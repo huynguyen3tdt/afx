@@ -88,8 +88,9 @@ export class CorporateInfoComponent implements OnInit {
   notFoundPostCode: boolean;
   mobile: '';
   phone: '';
-  public phoneFormError: { Phone?: boolean; message: string; ErrorHalfSizeNumber?: boolean;  phoneLength?: boolean; };
-  public mobileFormError: { Phone?: boolean; message: string; ErrorHalfSizeNumber?: boolean; phoneLength?: boolean; };
+  // tslint:disable-next-line:max-line-length
+  public phoneFormError: { Phone?: boolean; ErrorHalfSizeNumber?: boolean;  phoneLength?: boolean; ErrorTypeNumber?: boolean; message: string; };
+  public mobileFormError: { Phone?: boolean; ErrorHalfSizeNumber?: boolean; phoneLength?: boolean; message: string; };
   constructor(private spinnerService: Ng4LoadingSpinnerService,
               private userService: UserService,
               private globalService: GlobalService,
