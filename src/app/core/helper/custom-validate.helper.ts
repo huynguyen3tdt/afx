@@ -200,6 +200,23 @@ function validatePassWord(passWord: string) {
   }
 }
 
+// Validation of corporation phone number fields
+export function validationCorporatePhoneNumber(control: AbstractControl) {
+  const patternPhone = RegExp(WORK_PHONE_PATTERN);
+  const patternNumber = RegExp(HALF_SIZE_NUMBER);
+  const patternFullWidth = RegExp(FULL_WIDTH_TXT);
+  if (!toString(control.value).trim()) {
+    return DEFAULT_PHONE_REQUIRED;
+  }
+  if (patternFullWidth.test(control.value) || !patternNumber.test(control.value)) {
+    return HALFSIZE_NUMER_ERR;
+  }
+  if (!patternPhone.test(control.value)) {
+    return DEFAULT_PHONE_LENGTH;
+  }
+  return null;
+}
+
 // Validation of number fields
 export function validationNumber(control: AbstractControl) {
   const patternPhone = RegExp(WORK_PHONE_PATTERN);
