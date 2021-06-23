@@ -9,7 +9,7 @@ import {
   validationPhoneNumber,
   emailValidation,
   experienceValidation,
-  fullWidthRequired, validationMobileNumber, validationNumber, toString
+  fullWidthRequired, validationMobileNumber, toString, validationCorporatePhoneNumber
 } from 'src/app/core/helper/custom-validate.helper';
 import { GlobalService } from 'src/app/core/services/global.service';
 import { LISTCITY_JAPAN } from 'src/app/core/constant/japan-constant';
@@ -89,7 +89,7 @@ export class CorporateInfoComponent implements OnInit {
   mobile: '';
   phone: '';
   // tslint:disable-next-line:max-line-length
-  public phoneFormError: { Phone?: boolean; ErrorHalfSizeNumber?: boolean;  phoneLength?: boolean; ErrorTypeNumber?: boolean; message: string; };
+  public phoneFormError: { Phone?: boolean; ErrorHalfSizeNumber?: boolean;  phoneLength?: boolean; message: string; };
   public mobileFormError: { Phone?: boolean; ErrorHalfSizeNumber?: boolean; phoneLength?: boolean; message: string; };
   constructor(private spinnerService: Ng4LoadingSpinnerService,
               private userService: UserService,
@@ -138,7 +138,7 @@ export class CorporateInfoComponent implements OnInit {
       cor_district: new FormControl('', requiredInput),
       cor_house: new FormControl('', requiredInput),
       cor_build: new FormControl(''),
-      cor_phone: new FormControl('', validationNumber),
+      cor_phone: new FormControl('', validationCorporatePhoneNumber),
       cor_fax: new FormControl(''),
     });
   }
