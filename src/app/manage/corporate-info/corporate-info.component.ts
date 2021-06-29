@@ -89,7 +89,7 @@ export class CorporateInfoComponent implements OnInit {
   mobile: '';
   phone: '';
   // tslint:disable-next-line:max-line-length
-  public phoneFormError: { Phone?: boolean; ErrorHalfSizeNumber?: boolean;  phoneLength?: boolean; message: string; };
+  public phoneFormError: { Phone?: boolean; ErrorHalfSizeNumber?: boolean; ErrorTypeNumber?: boolean; phoneLength?: boolean; message: string; };
   public mobileFormError: { Phone?: boolean; ErrorHalfSizeNumber?: boolean; phoneLength?: boolean; message: string; };
   constructor(private spinnerService: Ng4LoadingSpinnerService,
               private userService: UserService,
