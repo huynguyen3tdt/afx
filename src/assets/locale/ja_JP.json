@@ -402,6 +402,6 @@
   "Please enter your pic mobile number in 11 digits.": "担当者携帯電話番号は11桁で入力してください。",
   "Please enter your phone number in 10 or 11 digits.": "電話番号は10~11桁で入力してください。",
   "Please enter phone number format.": "固定電話番号を入力してください。",
-  "Only half-width number can be entered.": "半角文字しか入力できない 。",
+  "Only half-width number can be entered.": "半角数字しか入力できない。",
   "Only half-width characters can be entered.": "半角文字しか入力できない 。"
 }
