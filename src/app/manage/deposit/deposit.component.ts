@@ -114,7 +114,6 @@ export class DepositComponent implements OnInit, OnDestroy {
   userInfor: UserModel;
   corporateInfor: CorporateModel;
   currentBank: DepositModel;
-  bankTransferDetailResult: postWithdrawModel;
   dateTimeBankTransfer: string;
   intervalResetMt5Info;
 
@@ -424,42 +423,6 @@ export class DepositComponent implements OnInit, OnDestroy {
     }
     this.dateTimeBankTransfer = moment(this.bankTransferForm.controls.dateTime.value).format(this.formatDateHour);
     this.modalBankTransferConfirm.show();
-  }
-
-  onSubmitBankTransfer() {
-    let typeErr;
-    let messageErrMaxDeposit;
-    if (this.locale === LANGUAGLE.english) {
-      typeErr = TYPE_ERROR_TOAST_EN;
-      messageErrMaxDeposit = ERROR_MAX_DEPOSIT_EN;
-    } else {
-      typeErr = TYPE_ERROR_TOAST_JP;
-      messageErrMaxDeposit = ERROR_MAX_DEPOSIT_JP;
-    }
-    this.modalBankTransferConfirm.hide();
-    const param: BankTransferParamModel = {
-      trading_account_id: Number(this.tradingAccount.account_id),
-      bank_code: this.currentBank.bic,
-      remark : this.currentBank.name + ', ' + this.dateTimeBankTransfer,
-      amount: this.bankTransferAmount,
-      currency: this.tradingAccount.currency
-    };
-    this.spinnerService.show();
-    this.withdrawRequestService.postBankTransfer(param).subscribe(response => {
-      this.spinnerService.hide();
-      if (response.meta.code === 200) {
-        this.bankTransferDetailResult = response.data;
-        this.bankTransferDetailResult.create_date =
-        moment(this.bankTransferDetailResult.create_date).tz(this.timeZone).format(this.formatDateHour);
-        this.listTran.ngOnChanges();
-        this.modalBankTransferResult.show();
-      }
-      if (response.meta.code === 601) {
-        this.toastr.error(messageErrMaxDeposit + this.maxDeposit.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,'), typeErr, {
-          timeOut: TIMEOUT_TOAST
-        });
-      }
-    });
   }
 
   onShowPicker(event, type) {
