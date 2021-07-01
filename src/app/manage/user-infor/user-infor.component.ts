@@ -6,7 +6,7 @@ import {
   validationPhoneNumber,
   postCodevalidation,
   annualIncomeValidation,
-  experienceValidation, validationMobileNumber, toString
+  experienceValidation, validationMobileNumber, toString, validateMobileAndPhone
 } from 'src/app/core/helper/custom-validate.helper';
 import { UserModel, AddressModel, LabelModel, QuestionModel, UpdateUserParam } from 'src/app/core/model/user.model';
 import { UserService } from 'src/app/core/services/user.service';
@@ -74,11 +74,6 @@ export class UserInforComponent implements OnInit {
   listPurposeSubmit: Array<QuestionModel>;
   invalidEmail: boolean;
   notFoundPostCode: boolean;
-  mobile: '';
-  phone: '';
-  // tslint:disable-next-line:max-line-length
-  public phoneFormError: { Phone?: boolean, message: string,  phoneLength?: boolean, ErrorHalfSizeNumber?: boolean; ErrorTypeNumber?: boolean; };
-  public mobileFormError: { Phone?: boolean, message: string, phoneLength?: boolean,  ErrorHalfSizeNumber?: boolean };
 
   constructor(private userService: UserService,
               private globalService: GlobalService,
@@ -104,18 +99,6 @@ export class UserInforComponent implements OnInit {
     this.listInvestMarginTradingInvidual = investMarginTradingInvidual.labels;
     this.listInvestCommoditiesInvidual = investCommoditiesInvidual.labels;
     this.listTradingExperienceInvidual = tradingExperienceInvidual.labels;
-
-    this.mobile = this.userForm.get('mobile').value;
-    this.phone = this.userForm.get('phone').value;
-    this.validatePhoneMobile(this.mobile, this.phone);
-    this.userForm.get('phone').valueChanges.subscribe(next => {
-      this.validatePhoneMobile(this.mobile, next);
-      this.phone = next;
-    });
-    this.userForm.get('mobile').valueChanges.subscribe(next => {
-      this.validatePhoneMobile(next, this.phone);
-      this.mobile = next;
-    });
   }
 
   initUserForm() {
@@ -126,9 +109,10 @@ export class UserInforComponent implements OnInit {
       house_numb: new FormControl('', requiredInput),
       name_build: new FormControl(''),
       email: new FormControl('', emailValidation),
-      phone: new FormControl(''),
-      mobile: new FormControl(''),
-    });
+      phone: new FormControl('', validationPhoneNumber),
+      mobile: new FormControl('', validationMobileNumber),
+    },
+    { validators: validateMobileAndPhone });
   }
 
   initOccupationSurveyForm() {
@@ -137,11 +121,6 @@ export class UserInforComponent implements OnInit {
       financialAsset: new FormControl('', requiredInput),
       amountAvaiable: new FormControl('', requiredInput)
     });
-  }
-
-  validatePhoneMobile(mobile: string, phone: string) {
-    this.phoneFormError = validationPhoneNumber(phone, mobile);
-    this.mobileFormError = validationMobileNumber(mobile, phone);
   }
 
   initPurposeInvestForm() {

@@ -163,22 +163,22 @@
                     </tr>
 
                     <tr class="row-phone">
-                        <td>{{'Phone' | translate}}</td>
+                        <td>{{'Indi Phone' | translate}}</td>
                         <td>
                           <div *ngIf="editPhone == false" class="currentvalue">
                             <strong><a href="javascript:;">{{userInfor?.phone}}</a></strong>
                           </div>
                           <div *ngIf="editPhone == true" class="editable d-block">
                             <input type="text" name="phone" formControlName="phone" maxlength="10"
-                                   [className]="phoneFormError ? 'form-control form-control-sm mb-1 invalid' : 'form-control form-control-sm mb-1'">
-                          <div style="display:block" *ngIf="phoneFormError" class="invalid-mess">
-                          <div *ngIf="phoneFormError.Phone">
+                                   [className]="userForm?.controls?.phone?.errors || userForm?.errors ? 'form-control form-control-sm mb-1 invalid' : 'form-control form-control-sm mb-1'">
+                          <div style="display:block" *ngIf="userForm?.controls?.phone?.errors || userForm?.errors" class="invalid-mess">
+                          <div *ngIf="userForm?.errors?.Phone">
                                   {{'This field is required' | translate}}</div>
-                          <div *ngIf="phoneFormError.phoneLength">
+                          <div *ngIf="userForm?.controls?.phone?.errors?.phoneLength">
                                       {{'Please enter your phone number in 10 digits.' | translate}}</div>
-                          <div *ngIf="phoneFormError.ErrorHalfSizeNumber">
+                          <div *ngIf="userForm?.controls?.phone?.errors?.ErrorHalfSizeNumber">
                                       {{'Only half-width number can be entered.' | translate}}</div>
-                          <div *ngIf="phoneFormError.ErrorTypeNumber">
+                          <div *ngIf="userForm?.controls?.phone?.errors?.ErrorTypeNumber">
                                         {{'Please enter phone number format.' | translate}}</div>
                           </div>
                             <div class="text-right">
@@ -201,13 +201,13 @@
                         </div>
                         <div *ngIf="editMobile == true" class="editable d-block">
                           <input type="text" name="mobile" formControlName="mobile" maxlength="11"
-                                 [className]="mobileFormError ? 'form-control form-control-sm mb-1 invalid' : 'form-control form-control-sm mb-1'">
-                        <div style="display:block" *ngIf="mobileFormError" class="invalid-mess">
-                        <div *ngIf="mobileFormError.Phone">
+                                 [className]="userForm?.controls?.mobile?.errors || userForm?.errors ? 'form-control form-control-sm mb-1 invalid' : 'form-control form-control-sm mb-1'">
+                        <div style="display:block" *ngIf="userForm?.controls?.mobile?.errors || userForm?.errors" class="invalid-mess">
+                        <div *ngIf="userForm?.errors?.Phone">
                                 {{'This field is required' | translate}}</div>
-                        <div *ngIf="mobileFormError.phoneLength">
+                        <div *ngIf="userForm?.controls?.mobile?.errors?.phoneLength">
                                     {{'Please enter your mobile number in 11 digits.' | translate}}</div>
-                        <div *ngIf="mobileFormError.ErrorHalfSizeNumber">
+                        <div *ngIf="userForm?.controls?.mobile?.errors?.ErrorHalfSizeNumber">
                                     {{'Only half-width number can be entered.' | translate}}</div>
                         </div>
                           <div class="text-right">

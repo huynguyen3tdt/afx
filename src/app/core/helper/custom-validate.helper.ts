@@ -1,4 +1,4 @@
-import { AbstractControl } from '@angular/forms';
+import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 
 const DEFAULT_INVALID_LENGTH_TEXT = {
   Lengthh: true,
@@ -239,48 +239,66 @@ export function validationNumber(control: AbstractControl) {
 }
 
 // Validation of Phone number
-export function validationPhoneNumber(control: string, mobile: string) {
-  const patternPhone = RegExp(PHONE_PATTERN);
-  const patternMobile = RegExp(MOBILE_PATTERN);
+
+export function validationPhoneNumber(control: AbstractControl) {
   const patternFullWidth = RegExp(FULL_WIDTH_TXT);
   const patternNumber = RegExp(HALF_SIZE_NUMBER);
-  // Format of mobile numbers start with (090), (080) or (070)
-  // We need to show messsage to customers to let them know this field describes phone number
-  const patternStartMobileNumber = RegExp(START_MOBILE_PATTERN);
-  if (patternStartMobileNumber.test(control)) {
+  const patternStartMobile = RegExp(START_MOBILE_PATTERN);
+  if (patternStartMobile.test(control.value)) {
     return INVALID_TYPE_NUMBER;
   }
-  if (!toString(control).trim() && !patternMobile.test(mobile)) {
-    return DEFAULT_PHONE_REQUIRED;
-  } else if (control && control.length < PHONE_LENGTH && patternNumber.test(control)) {
-    return DEFAULT_PHONE_LENGTH;
-  }
-  if (patternFullWidth.test(control) && !patternNumber.test(control)
-  || (!patternMobile.test(mobile) && !patternPhone.test(control))
-  || (control && patternMobile.test(mobile) && !patternPhone.test(control))) {
+  if (patternFullWidth.test(control.value) || !patternNumber.test(control.value)) {
     return HALFSIZE_NUMER_ERR;
   }
-  return null;
+  if (control.value && control.value.length < PHONE_LENGTH && patternNumber.test(control.value)) {
+    return DEFAULT_PHONE_LENGTH;
+  }
+  return;
 }
 
-// Validation of Mobile number
-export function validationMobileNumber(control: string, phone: string) {
-  const patternPhone = RegExp(PHONE_PATTERN);
-  const patternMobile = RegExp(MOBILE_PATTERN);
+// Validation of mobile number
+
+export function validationMobileNumber(control: AbstractControl) {
   const patternFullWidth = RegExp(FULL_WIDTH_TXT);
   const patternNumber = RegExp(HALF_SIZE_NUMBER);
-  if (!toString(control).trim() && !patternPhone.test(phone)) {
-    return DEFAULT_PHONE_REQUIRED;
-  } else if (control && control.length < MOBILE_LENGTH && patternNumber.test(control)) {
-    return DEFAULT_PHONE_LENGTH;
-  }
-  if (patternFullWidth.test(control) && !patternNumber.test(control)
-  || (!patternPhone.test(phone) && !patternMobile.test(control))
-  || (control && patternPhone.test(phone) && !patternMobile.test(control))) {
+
+  if (patternFullWidth.test(control.value) || !patternNumber.test(control.value)) {
     return HALFSIZE_NUMER_ERR;
   }
-  return null;
+  if (control.value && control.value.length < MOBILE_LENGTH && patternNumber.test(control.value)) {
+    return DEFAULT_PHONE_LENGTH;
+  }
+  return;
 }
+
+// Validate both of mobile and phone fields
+
+export const validateMobileAndPhone: ValidatorFn = (control: AbstractControl):
+ValidationErrors | null => {
+  // Needs to get 'phone' and 'mobile' of initation function
+  const mobile = control.get('mobile');
+  const phone = control.get('phone');
+  if (!toString(mobile.value)
+  && !toString(phone.value)) {
+    return DEFAULT_PHONE_REQUIRED;
+  }
+  return null;
+};
+
+// Validate both of mobile and phone fields of Personal In Charge
+
+export const validatePICMobileAndPhone: ValidatorFn = (control: AbstractControl):
+  ValidationErrors | null => {
+  // Needs to get 'phone' and 'mobile' of initation function
+  const mobile = control.get('person_mobile');
+  const phone = control.get('person_phone');
+  if (!toString(mobile.value)
+  && !toString(phone.value)) {
+    return DEFAULT_PHONE_REQUIRED;
+  }
+  return null;
+};
+
 
 
 export function postCodevalidation(control: AbstractControl) {

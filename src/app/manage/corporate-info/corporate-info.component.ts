@@ -9,7 +9,7 @@ import {
   validationPhoneNumber,
   emailValidation,
   experienceValidation,
-  fullWidthRequired, validationMobileNumber, toString, validationCorporatePhoneNumber
+  fullWidthRequired, validationMobileNumber, toString, validationCorporatePhoneNumber, validatePICMobileAndPhone
 } from 'src/app/core/helper/custom-validate.helper';
 import { GlobalService } from 'src/app/core/services/global.service';
 import { LISTCITY_JAPAN } from 'src/app/core/constant/japan-constant';
@@ -86,11 +86,6 @@ export class CorporateInfoComponent implements OnInit {
   listPurposeSubmit: Array<QuestionModel>;
   invalidEmail: boolean;
   notFoundPostCode: boolean;
-  mobile: '';
-  phone: '';
-  // tslint:disable-next-line:max-line-length
-  public phoneFormError: { Phone?: boolean; ErrorHalfSizeNumber?: boolean; ErrorTypeNumber?: boolean; phoneLength?: boolean; message: string; };
-  public mobileFormError: { Phone?: boolean; ErrorHalfSizeNumber?: boolean; phoneLength?: boolean; message: string; };
   constructor(private spinnerService: Ng4LoadingSpinnerService,
               private userService: UserService,
               private globalService: GlobalService,
@@ -119,16 +114,6 @@ export class CorporateInfoComponent implements OnInit {
     this.listInvestMarginTradingInvidual = investMarginTradingInvidual.labels;
     this.listInvestCommoditiesInvidual = investCommoditiesInvidual.labels;
     this.listTradingExperienceInvidual = tradingExperienceInvidual.labels;
-    this.mobile = this.picForm.get('person_mobile').value;
-    this.phone = this.picForm.get('person_phone').value;
-    this.picForm.get('person_phone').valueChanges.subscribe(next => {
-      this.validatePhoneMobile(this.mobile, next);
-      this.phone = next;
-    });
-    this.picForm.get('person_mobile').valueChanges.subscribe(next => {
-      this.validatePhoneMobile(next, this.phone);
-      this.mobile = next;
-    });
   }
 
   initCorporateForm() {
@@ -150,15 +135,11 @@ export class CorporateInfoComponent implements OnInit {
       per_picname: new FormControl('', requiredInput),
       person_picname: new FormControl('', fullWidthRequired),
       person_gender: new FormControl('', requiredInput),
-      person_phone: new FormControl(''),
-      person_mobile: new FormControl(''),
+      person_phone: new FormControl('', validationPhoneNumber),
+      person_mobile: new FormControl('', validationMobileNumber),
       person_email: new FormControl('', emailValidation),
-    });
-  }
-
-  validatePhoneMobile(mobile: string, phone: string) {
-    this.phoneFormError = validationPhoneNumber(phone, mobile);
-    this.mobileFormError = validationMobileNumber(mobile, phone);
+    },
+    { validators: validatePICMobileAndPhone });
   }
 
   initFinancialInforForm() {
