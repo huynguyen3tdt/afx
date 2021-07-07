@@ -127,9 +127,6 @@
                                     </div>
                                     <p class="small text-secondary p-2 bg-light" *ngIf="locale == language.english">Notice: Minimum single deposit amount is {{minDeposit | number}}</p>
                                     <p class="small text-secondary p-2 bg-light" *ngIf="locale == language.japan">※最低入金額は{{minDeposit | number}}円となります。</p>
-                                    <div *ngIf="errMessageQuickDeposit == true" class="invalid-mess">
-                                        <div>{{'Your Margin Level is nearly the Margin Call Level' | translate}}</div>
-                                    </div>
                                     <button class="btn btn-warning btn-block text-uppercase btn-lg mb-3" (click)="onSubmit()"><strong>{{'Deposit' | translate}}</strong></button>
                                     <p class="text-center" style="line-height: 1.2"><a href="javascript:;" (click)="openModal()"><i
                                                 class="icon ion-md-information-circle"></i> {{'General rules for depositing and withdrawing funds' | translate}}</a></p>
@@ -541,7 +538,7 @@
                                         <div [formGroup]="bankTransferForm" class="form form-line">
                                             <div class="form form-line">
                                                 <div class="mb-3 position-relative">
-                                                    <label style="left:0;top: 20px;" class="label position-absolute">{{'Deposit Amount' | translate}}</label>
+                                                    <label>{{'Deposit Amount' | translate}}</label>
                                                     <input maxlength="15" type="text" name="amount" 
                                                     formControlName="deposit" currency autocomplete="off" 
                                                     class="form-control form-control-lg text-right font-weight-bold text-warning" 
@@ -550,9 +547,6 @@
                                                 <div *ngIf="depositError == true" class="invalid-mess">
                                                     <div *ngIf="locale == 'en_US'">Minimum amount is not below {{minDeposit | number}}</div>
                                                     <div *ngIf="locale == 'ja_JP'">ご入金額は{{minDeposit | number}}円以上から承ります</div>
-                                                </div>
-                                                <div *ngIf="errMessageBankTran == true" class="invalid-mess">
-                                                    <div>{{'Your Margin Level is nearly the Margin Call Level' | translate}}</div>
                                                 </div>
                                                 <div class="mb-1 d-flex justify-content-between">
                                                     <label class="label">{{'Currency' | translate}}</label>
@@ -567,8 +561,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <!-- <p class="small text-secondary p-2 bg-light" *ngIf="locale == language.english">Notice: Minimum single deposit amount is {{minDeposit | number}}</p>
-                                    <p class="small text-secondary p-2 bg-light" *ngIf="locale == language.japan">※最低入金額は{{minDeposit | number}}円となります。</p> -->
+                                    <p class="small text-secondary p-2 bg-light" *ngIf="locale == language.english">Notice: Minimum single deposit amount is {{minDeposit | number}}</p>
+                                    <p class="small text-secondary p-2 bg-light" *ngIf="locale == language.japan">※最低入金額は{{minDeposit | number}}円となります。</p>
 
                                     <p class="text-center" style="line-height: 1.2"><a href="javascript:;" (click)="openModal()"><i
                                                 class="icon ion-md-information-circle"></i> {{'General rules for depositing and withdrawing funds' | translate}}</a></p>
