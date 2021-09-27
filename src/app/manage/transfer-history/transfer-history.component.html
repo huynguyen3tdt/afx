@@ -4,7 +4,7 @@
                 <div class="tab-content p-0" id="v-pills-tabContent">
                     <div class="tab-pane fade show active" id="v-pills-all" role="tabpanel"
                         aria-labelledby="v-pills-all-tab">
-                        <h3 class="mb-3"><i class="icon ion-md-time text-secondary"></i>
+                        <h3 class="mb-3"><i class="afx-icon-card text-secondary"></i>
                             {{'Transfer History' | translate}}</h3>
                         <div [formGroup]="searchForm" class="form mb-3 form-search-box">
                             <div class="d-lg-flex justify-content-between">
@@ -22,7 +22,7 @@
                                         <p-multiSelect [defaultLabel]="defaultLabel" [options]="STATUS"
                                             [maxSelectedLabels]="1" [panelStyle]="{minWidth:'20em'}"
                                             formControlName="status" (onChange)="changeStatus()">
-    
+
                                         </p-multiSelect>
                                     </div>
                                 </div>
@@ -81,8 +81,8 @@
                                                 class="keep-all">{{'Apply' | translate}}</span></button>
                                         <div class="d-block d-lg-none">&nbsp;</div>
                                     </div>
-    
-    
+
+
                                 </div>
                             </div>
                         </div>
@@ -100,17 +100,6 @@
                                         <th class="border-top-0 text-right" width="50"><span class="keep-all">{{'Amount' | translate}}</span></th>
                                         <th class="border-top-0 text-right" width="50"><span class="keep-all">{{'Currency' | translate}}</span></th>
                                         <th class="border-top-0 text-right" width="140"><span class="keep-all">{{'Status' | translate}}</span></th>
-
-                                        <!-- <th class="border-top-0" width="140"><span
-                                                class="keep-all">{{'Transaction ID' | translate}}</span></th>
-                                        <th class="border-top-0"><span class="keep-all">{{'Date' | translate}}</span></th>
-                                        <th class="border-top-0"><span class="keep-all">{{'Type' | translate}}</span></th>
-                                        
-                                        <th class="border-top-0 text-right" width="50"><span
-                                                class="keep-all">{{'Amount' | translate}}</span></th>
-                                        <th class="border-top-0 text-right" width="140"><span
-                                                class="keep-all">{{'Status' | translate}}</span>
-                                        </th> -->
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -170,17 +159,17 @@
                                         firstText="&laquo;" lastText="&raquo;" [maxSize]="5">
                                     </pagination>
                                 </ul>
-        
+
                             </div>
                         </ng-container>
                     </div>
                     <div class="tab-pane fade" id="v-pills-deposit" role="tabpanel" aria-labelledby="v-pills-deposit-tab">
-                        <h3 class="mb-3"><i class="icon ion-md-time text-secondary"></i> {{'Deposit History' | translate}}
+                        <h3 class="mb-3"><i class="afx-icon-card text-secondary"></i> {{'Deposit History' | translate}}
                         </h3>
                     </div>
                     <div class="tab-pane fade" id="v-pills-withdrawal" role="tabpanel"
                         aria-labelledby="v-pills-withdrawal-tab">
-                        <h3 class="mb-3"><i class="icon ion-md-time text-secondary"></i>
+                        <h3 class="mb-3"><i class="afx-icon-card text-secondary"></i>
                             {{'Withdrawal History' | translate}}</h3>
                     </div>
                 </div>
@@ -189,6 +178,6 @@
             </div>
         </div>
     </div>
-    
+
     <app-transacstion-modal #tranModal></app-transacstion-modal>
     <ng4-loading-spinner [timeout]="30000"> </ng4-loading-spinner>

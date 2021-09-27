@@ -1,8 +1,8 @@
 <div class="card bg-white mb-3">
     <div *ngIf="this.tranType !== this.typeTranHistory.INTERNALTRANSFER.key" class="card-body">
         <div class="d-flex justify-content-between align-items-center border-bottom mb-3 pb-2">
-            <h6 *ngIf="tranType == typeTranHistory.DEPOSIT.key" class="mb-0 text-uppercase text-primary"><i class="icon ion-md-time"></i> <strong> {{'Entire Deposit History' | translate}}</strong></h6>
-            <h6 *ngIf="tranType == typeTranHistory.WITHDRAWAL.key" class="mb-0 text-uppercase text-primary"><i class="icon ion-md-time"></i> <strong> {{'Entire Withdrawl History' | translate}}</strong></h6>
+            <h6 *ngIf="tranType == typeTranHistory.DEPOSIT.key" class="mb-0 text-uppercase text-primary"><i class="afx-icon-card"></i> <strong> {{'Entire Deposit History' | translate}}</strong></h6>
+            <h6 *ngIf="tranType == typeTranHistory.WITHDRAWAL.key" class="mb-0 text-uppercase text-primary"><i class="afx-icon-card"></i> <strong> {{'Entire Withdrawl History' | translate}}</strong></h6>
             <div class="text-right small text-secondary">{{'Currency:' | translate}} <strong>{{tradingAccount?.currency}}</strong></div>
         </div>
         <div class="table-responsive">
@@ -54,7 +54,7 @@
 
     <div *ngIf="this.tranType === this.typeTranHistory.INTERNALTRANSFER.key" class="card-body">
         <div class="d-flex justify-content-between align-items-center border-bottom mb-3 pb-2">
-            <h6 *ngIf="tranType == typeTranHistory.INTERNALTRANSFER.key" class="mb-0 text-uppercase text-primary"><i class="icon ion-md-time"></i> <strong> {{'Entire Transfer History' | translate}}</strong></h6>
+            <h6 *ngIf="tranType == typeTranHistory.INTERNALTRANSFER.key" class="mb-0 text-uppercase text-primary"><i class="afx-icon-card"></i> <strong> {{'Entire Transfer History' | translate}}</strong></h6>
             <!-- <div class="text-right small text-secondary">{{'Currency:' | translate}} <strong>{{tradingAccount?.currency}}</strong></div> -->
         </div>
         <div class="table-responsive">

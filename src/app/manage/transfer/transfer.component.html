@@ -41,7 +41,7 @@
                                         <strong>{{sentAccountInfo?.bank_balance | number}}</strong>
                                     </div>
                                 </div>
-                                
+
                                 <div class="mb-1 d-flex justify-content-between">
                                     <label class="label">{{'Balance' | translate}}</label>
                                     <div>
@@ -83,14 +83,14 @@
                                 <div *ngIf="sentAccountID" class="d-flex align-items-center">
                                     <div class="mr-2" (click)="onRefesh('sent')"><a href="javascript:;" class="btn-link-24"><i
                                                 class="icon ion-md-refresh-circle pr-1"></i></a></div>
-                                    <div class="small text-secondary"><i class="icon ion-md-time"></i>
+                                    <div class="small text-secondary"><i class="afx-icon-card"></i>
                                         <em>{{lastestTime}}</em></div>
                                 </div>
                             </div>
                             <div class="p-3 border mb-3 form form-line bg-light">
                                     <div class="d-flex justify-content-between mb-2">
                                         <h5 class="text-primary mb-0">{{'Receiver account' | translate}}</h5>
-    
+
                                     </div>
                                     <div class="d-flex flex-wrap justify-content-between align-items-center mb-2">
                                         <div class="d-flex align-items-center">
@@ -110,7 +110,7 @@
                                                 class="label mb-0 mr-2 d-inline">{{'Currency' | translate}}:</label>
                                             <strong>{{tradingReceiveAccount?.currency}}</strong></div>
                                     </div>
-    
+
                                     <div class="mb-1 d-flex justify-content-between">
                                         <label class="label">{{'Actual Balance' | translate}}</label>
                                         <div>
@@ -154,12 +154,12 @@
                                             <strong>{{marginLevelEstimateReceive | number: '1.2-2'}}%</strong>
                                         </div>
                                     </div>
-    
-    
+
+
                                     <div *ngIf="receiveAccountID" class="d-flex align-items-center">
                                         <div class="mr-2" (click)="onRefesh('receive')"><a href="javascript:;" class="btn-link-24"><i
                                                     class="icon ion-md-refresh-circle pr-1"></i></a></div>
-                                        <div class="small text-secondary"><i class="icon ion-md-time"></i>
+                                        <div class="small text-secondary"><i class="afx-icon-card"></i>
                                             <em>{{lastestTime}}</em></div>
                                     </div>
                                 </div>
@@ -214,10 +214,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- <p class="small text-secondary p-2 bg-light" *ngIf="locale == language.english">Notice: Minimum single withdrawal amount is {{minWithdraw | number}}
-                                </p>
-                                <p class="small text-secondary p-2 bg-light" *ngIf="locale == language.japan">※全額出金以外の最低出金額は{{minWithdraw | number}}円となります。 
-                                    </p> -->
                             <div *ngIf="errMessage == true" class="invalid-mess">
                                 <div>{{'Your Margin Level is nearly the Margin Call Level' | translate}}</div>
                             </div>

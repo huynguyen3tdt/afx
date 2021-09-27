@@ -13,30 +13,33 @@
                 <!-- END SITE BRAND -->
                 <!-- BEGIN HEADER TOP NAV -->
                 <ul class="header-top-nav nav">
-                    <li class="nav-item nav-item-account-type dropdown" (click)="openApiKeyModal()" *ngIf="bizGroup === 'it' && showModalApiKey">
+                    <li class="nav-item nav-item-api d-none d-md-inline-block" (click)="openApiKeyModal()" *ngIf="bizGroup === 'it' && showModalApiKey">
                     <a href="javascript:;" class="nav-link" role="button" aria-haspopup="true" aria-expanded="false">
-                        <span class="d-none d-md-inline">{{'API key issuance' | translate}}</span>
+                      <i class="afx-icon-api"></i>
+                        <span class="d-none d-lg-inline"> {{'API key issuance' | translate}}</span>
                     </a>
                     </li>
-                  <li class="nav-item nav-item-account-type dropdown" (click)="openAddAccountModal()" *ngIf ="bizGroup === 'it'">
-                    <a href="javascript:;" class="nav-link" role="button" aria-haspopup="true" aria-expanded="false"><i class="icon ion-md-add mr-1"></i><span class="d-none d-md-inline">{{'Add Account' | translate}}</span></a>
+                  <li class="nav-item nav-item-add-account d-none d-md-inline-block" (click)="openAddAccountModal()" *ngIf ="bizGroup === 'it'">
+                    <a href="javascript:;" class="nav-link" role="button" aria-haspopup="true" aria-expanded="false">
+                      <i class="afx-icon-plus"></i>
+                      <span class="d-none d-lg-inline"> {{'Add Account' | translate}}</span></a>
                 </li>
                 <li class="nav-item nav-item-language dropdown d-none d-md-inline-block">
                     <a href="javascript:;" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{locale == 'en_US' ? 'EN' : 'JP'}}</a>
-                    <div class="dropdown-menu dropdown-menu-language dropdown-menu-right">
+                    <div class="dropdown-menu dropdown-menu-right">
                         <a (click)="changeLang('en_US')" [className]="locale == 'en_US' ? 'dropdown-item active' : 'dropdown-item'" class="dropdown-item" data-language="EN"><img src="assets/images/flags/flag-en.svg" class="icon flag" alt=""> English</a>
                         <a (click)="changeLang('ja_JP')" [className]="locale == 'ja_JP' ? 'dropdown-item active' : 'dropdown-item'" data-language="JP"><img src="assets/images/flags/flag-jp.svg" class="icon flag" alt=""> Japanese</a>
                     </div>
                 </li>
-                    <li class="nav-item nav-item-dmt5">
-                        <a target="_blank" *ngIf="isPc == true" href="https://download.mql5.com/cdn/web/16266/mt5/phillipsecuritiesjp5setup.exe" class="nav-link"><img src="./../../../assets/images/metatrader-5.png"></a>
-                        <a target="_blank" *ngIf="isAndroid == true" href="https://download.mql5.com/cdn/mobile/mt5/android?server=PhillipSecuritiesJP-PROD" class="nav-link">
+                    <li class="nav-item nav-item-mt5 d-none d-md-inline-block">
+                        <a target="_blank" *ngIf="isPc == true" href="https://download.mql5.com/cdn/web/16266/mt5/phillipsecuritiesjp5setup.exe" class="nav-link pl-2 pr-2"><img src="./../../../assets/images/metatrader-5.png"></a>
+                        <a target="_blank" *ngIf="isAndroid == true" href="https://download.mql5.com/cdn/mobile/mt5/android?server=PhillipSecuritiesJP-PROD" class="nav-link pl-2 pr-2">
                         <img src="./../../../assets/images/metatrader-5.png"></a>
-                        <a target="_blank" *ngIf="isIos == true" href="https://download.mql5.com/cdn/mobile/mt5/ios?server=PhillipSecuritiesJP-PROD" class="nav-link">
+                        <a target="_blank" *ngIf="isIos == true" href="https://download.mql5.com/cdn/mobile/mt5/ios?server=PhillipSecuritiesJP-PROD" class="nav-link pl-2 pr-2">
                             <img src="./../../../assets/images/metatrader-5.png"></a>
                     </li>
-                    <li [className]="listNotification && listNotification.length > 0 ? 'nav-item nav-item-notification dropdown has-notification' : 'nav-item nav-item-notification dropdown'">
-                        <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icon ion-md-notifications"></i></a>
+                    <li [className]="listNotification && listNotification.length > 0 ? 'nav-item nav-item-notification dropdown has-notification d-none d-md-inline-block show' : 'nav-item nav-item-notification dropdown has-notification d-none d-md-inline-block'">
+                        <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="afx-icon-bell"></i></a>
                         <div class="dropdown-menu dropdown-menu-notification dropdown-menu-right">
                             <h6 class="mb-1 text-primary text-uppercase title"><strong>{{'Unread Notifications' | translate}}</strong>
                             </h6>
@@ -58,15 +61,7 @@
                             <div class="text-center small"><a [routerLink]="['/manage/notifications']" [queryParams]="{unread: 'true'}" class="text-secondary">{{'View more' | translate}}</a></div>
                         </div>
                     </li>
-                    <!-- <li class="nav-item nav-item-user-panel">
-                        <a href="MY005_Account_Information_MY006_User_Information.html" class="nav-link"><img
-                                src="assets/images/profile-image-48x48.png" alt="Avatar John Doe"
-                                class="rounded-circle"> <span class="d-none d-md-inline">chauctm</span></a>
-                    </li> -->
-                    <li (click)="logout()" class="nav-item nav-item-logout">
-                        <a class="nav-link logout"><i class="icon ion-md-log-out"></i></a>
-                    </li>
-                    <li class="nav-item nav-item-menu d-sm-none" (click)="openSubNav()">
+                    <li class="nav-item nav-item-menu d-md-none" (click)="openSubNav()">
                         <a href="javascript:;" class="nav-link offcanvas-open"><i class="icon ion-md-menu"></i></a>
                     </li>
                 </ul>
@@ -80,37 +75,24 @@
         <div class="container-fluid container-md">
             <ul class="header-bottom-nav nav">
                 <li class="nav-item nav-item-notifications">
-                    <a [routerLink]="['/manage/notifications']" id="notifications" class="nav-link" title="Notifications"><i class="icon ion-md-notifications d-md-none"></i> <span
+                    <a [routerLink]="['/manage/notifications']" id="notifications" class="nav-link" title="Notifications"><i class="icon afx-icon-bell d-md-none"></i> <span
                         class="d-none d-md-inline">{{'Notifications' | translate}}</span></a>
                 </li>
-                <!-- <li class="nav-item nav-item-deposit">
-                    <a [routerLink]="['/manage/deposit']" id="deposit" class="nav-link" title="Deposit"><i
-                            class="icon ion-md-add d-md-none"></i> <span class="d-none d-md-inline">{{'Deposit' | translate}}</span></a>
-                </li> -->
                 <li class="nav-item nav-item-deposit">
                     <a [routerLink]="['/manage/summary']" id="summary" class="nav-link" title="Sum"><i
-                            class="icon ion-md-add d-md-none"></i> <span class="d-none d-md-inline">{{'Account Information' | translate}}</span></a>
+                            class="afx-icon-card d-md-none"></i> <span class="d-none d-md-inline">{{'Account Information' | translate}}</span></a>
                 </li>
                 <li class="nav-item nav-item-deposit">
                     <a [routerLink]="['/manage/internal']" id="internal" class="nav-link" title="Sum"><i
-                            class="icon ion-md-add d-md-none"></i> <span class="d-none d-md-inline">{{'Deposit and Withdrawal' | translate}}</span></a>
+                            class="afx-icon-fund d-md-none"></i> <span class="d-none d-md-inline">{{'Deposit and Withdrawal' | translate}}</span></a>
                 </li>
-                <!-- <li class="nav-item nav-item-withdraw">
-                    <a [routerLink]="['/manage/withdrawRequest']" id="withdrawRequest" class="nav-link" title="Withdraw"><i
-                            class="icon ion-md-remove d-md-none"></i> <span
-                            class="d-none d-md-inline">{{'Withdrawal' | translate}}</span></a>
-                </li> -->
-                <!-- <li class="nav-item nav-item-history">
-                    <a [routerLink]="['/manage/withdrawHistory']" id="withdrawHistory" class="nav-link" title="History"><i
-                          class="icon ion-md-time d-md-none"></i> <span class="d-none d-md-inline">{{'History' | translate}}</span></a>
-                </li> -->
                 <li class="nav-item nav-item-report">
                     <a [routerLink]="['/manage/reportList']" id="reportList" class="nav-link" title="Report"><i
-                            class="icon ion-md-today d-md-none"></i> <span class="d-none d-md-inline">{{'Report' | translate}}</span></a>
+                            class="afx-icon-doc-chart d-md-none"></i> <span class="d-none d-md-inline">{{'Report' | translate}}</span></a>
                 </li>
 
                 <li class="nav-item nav-item-account">
-                    <a [routerLink]="['/manage/accountInfo']" id="accountInfo" class="nav-link" title="My Account"><i class="icon ion-md-person d-md-none"></i> <span
+                    <a [routerLink]="['/manage/accountInfo']" id="accountInfo" class="nav-link" title="My Account"><i class="afx-icon-user d-md-none"></i> <span
                             class="d-none d-md-inline">{{'Customer Information' | translate}}</span></a>
                 </li>
 
@@ -131,31 +113,41 @@
             </div>
             <ul class="offcanvas-nav nav">
                 <li class="nav-item nav-item-notifications">
-                    <a [routerLink]="['/manage/notifications']" id="notifications" class="nav-link has-icon btn-offcanvas-close"><i class="icon ion-md-notifications"></i> {{'Notifications' | translate}}</a>
+                    <a [routerLink]="['/manage/notifications']" id="notifications" class="nav-link has-icon btn-offcanvas-close"><i class="icon afx-icon-bell"></i> {{'Notifications' | translate}}</a>
                 </li>
-                <!-- <li class="nav-item nav-item-deposit">
-                    <a [routerLink]="['/manage/deposit']" id="deposit" class="nav-link has-icon btn-offcanvas-close"><i class="icon ion-md-add"></i> {{'Deposit' | translate}}</a>
-                </li> -->
-                <!-- <li class="nav-item nav-item-withdraw">                                                                                                                
-                    <a [routerLink]="['/manage/withdrawRequest']" id="withdrawRequest" class="nav-link has-icon btn-offcanvas-close"><i class="icon ion-md-remove"></i> {{'Withdrawal' | translate}}</a>
-                </li> -->
                 <li class="nav-item nav-item-history">
-                    <a [routerLink]="['/manage/summary']" id="summary" class="nav-link has-icon btn-offcanvas-close"><i class="icon ion-md-time"></i> {{'Account Information' | translate}}</a>
+                    <a [routerLink]="['/manage/summary']" id="summary" class="nav-link has-icon btn-offcanvas-close"> <i class="icon afx-icon-card"></i> {{'Account Information' | translate}}</a>
                 </li>
-                <li class="nav-item nav-item-withdraw">                                                                                                                
-                    <a [routerLink]="['/manage/internal']" id="internal" class="nav-link has-icon btn-offcanvas-close"><i class="icon ion-md-remove"></i> {{'Deposit and Withdrawal' | translate}}</a>
+                <li class="nav-item nav-item-withdraw">
+                    <a [routerLink]="['/manage/internal']" id="internal" class="nav-link has-icon btn-offcanvas-close"> <i class="icon afx-icon-fund"></i> {{'Deposit and Withdrawal' | translate}}</a>
                 </li>
                 <li class="nav-item nav-item-report">
-                    <a [routerLink]="['/manage/reportList']" id="reportList" class="nav-link has-icon btn-offcanvas-close"><i class="icon ion-md-today"></i> {{'Report' | translate}}</a>
+                    <a [routerLink]="['/manage/reportList']" id="reportList" class="nav-link has-icon btn-offcanvas-close"> <i class="icon afx-icon-doc-chart"></i> {{'Report' | translate}}</a>
                 </li>
                 <li class="nav-item nav-item-account">
-                    <a [routerLink]="['/manage/accountInfo']" id="accountInfo" class="nav-link has-icon btn-offcanvas-close"><i class="icon ion-md-person"></i> {{'Customer Information' | translate}}</a>
+                    <a [routerLink]="['/manage/accountInfo']" id="accountInfo" class="nav-link has-icon btn-offcanvas-close"> <i class="icon afx-icon-user"></i> {{'Customer Information' | translate}}</a>
                 </li>
-
+                <li class="nav-item nav-item-api" (click)="openApiKeyModal()" *ngIf ="bizGroup === 'it'">
+                    <a href="javascript:;" class="nav-link has-icon" role="button" aria-haspopup="true" aria-expanded="false"> <i class="icon afx-icon-api"></i>{{'API key issuance' | translate}}</a>
+                </li>
+              <li class="nav-item nav-item-add-account" (click)="openAddAccountModal()" *ngIf ="bizGroup === 'it'">
+                <a href="javascript:;" class="nav-link has-icon" role="button" aria-haspopup="true" aria-expanded="false"> <i class="icon afx-icon-plus"></i>{{'Add Account' | translate}}</a>
+              </li>
+              <li class="nav-item nav-item-mt5">
+                <a target="_blank" *ngIf="isPc" href="https://download.mql5.com/cdn/web/16266/mt5/phillipsecuritiesjp5setup.exe" class="nav-link has-icon">
+                  <img src="./../../../assets/images/metatrader-5.png">Meta Trader 5</a>
+                <a target="_blank" *ngIf="isAndroid" href="https://download.mql5.com/cdn/mobile/mt5/android?server=PhillipSecuritiesJP-PROD" class="nav-link has-icon">
+                  <img src="./../../../assets/images/metatrader-5.png">Meta Trader 5</a>
+                <a target="_blank" *ngIf="isIos" href="https://download.mql5.com/cdn/mobile/mt5/ios?server=PhillipSecuritiesJP-PROD" class="nav-link has-icon">
+                  <img src="./../../../assets/images/metatrader-5.png">Meta Trader 5</a>
+              </li>
+              <li class="nav-item nav-item-logout">
+                <a href="javascript:;" (click)="logout()" class="nav-link has-icon" role="button" aria-haspopup="true" aria-expanded="false"> <i class="icon ion-md-log-out"></i>{{'Logout' | translate}}</a>
+              </li>
             </ul>
         </div>
     </div>
-    
+
 </div>
 <app-modal-can-not-add-account #modalCanNotAddAccount></app-modal-can-not-add-account>
 <app-modal-api-key #modalApiKey></app-modal-api-key>
