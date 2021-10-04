@@ -14,7 +14,7 @@
         <div class="col-lg-6">
             <!-- BEGIN Form Login -->
             <div class="p-4 form form-line form-login">
-              
+
                     <div class="d-flex flex-row justify-content-end">
                         <li class="nav-item nav-item-language dropdown d-none d-md-inline-block">
                             <a href="javascript:;" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown"
@@ -51,7 +51,7 @@
                                         placeholder="Email or Login ID" formControlName="userName"
                                         [ngClass]="{'invalid': isSubmitted && loginFormGroup.controls['userName'].errors}">
                                     <button type="button" class="btn btn-none"><i
-                                            class="icon ion-md-person"></i></button>
+                                            class="afx-icon-user"></i></button>
                                 </div>
                                 <div *ngIf="isSubmitted && loginFormGroup?.controls['userName']?.errors?.Required" class="invalid-mess">
                                     <div>{{'This field is required' | translate}}</div>

@@ -4,9 +4,9 @@
   font-family: "afx";
   src:url("../fonts/afx.eot");
   src:url("../fonts/afx.eot?#iefix") format("embedded-opentype"),
-    url("../fonts/afx.woff") format("woff"),
-    url("../fonts/afx.ttf") format("truetype"),
-    url("../fonts/afx.svg#afx") format("svg");
+  url("../fonts/afx.woff") format("woff"),
+  url("../fonts/afx.ttf") format("truetype"),
+  url("../fonts/afx.svg#afx") format("svg");
   font-weight: normal;
   font-style: normal;
 
@@ -36,7 +36,7 @@
   line-height: 1;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  display: inline-block; 
+  display: inline-block;
 }
 
 .afx-icon-bank:before {
@@ -68,4 +68,22 @@
 }
 .afx-icon-withdraw:before {
   content: "\6a";
+}
+.afx-icon-exchange:before {
+  content: "\6b";
+}
+.afx-icon-briefcase:before {
+  content: "\6c";
+}
+.afx-icon-card:before {
+  content: "\6d";
+}
+.afx-icon-fund:before {
+  content: "\6e";
+}
+.afx-icon-api:before {
+  content: "\6f";
+}
+.afx-icon-plus:before {
+  content: "\70";
 }

@@ -26,11 +26,11 @@
             <div class="tab-content p-0" id="v-pills-tabContent">
                 <div class="tab-pane fade show active" id="v-pills-all" role="tabpanel"
                     aria-labelledby="v-pills-all-tab">
-                    <h3 class="mb-3" *ngIf="tab == 'ALL'"><i class="icon ion-md-time text-secondary"></i>
+                    <h3 class="mb-3" *ngIf="tab == 'ALL'"><i class="afx-icon-card text-secondary"></i>
                         {{'Deposit and Withdrawal History' | translate}}</h3>
-                    <h3 class="mb-3" *ngIf="tab == 'DEPOSIT'"><i class="icon ion-md-time text-secondary"></i>
+                    <h3 class="mb-3" *ngIf="tab == 'DEPOSIT'"><i class="afx-icon-card text-secondary"></i>
                         {{'Deposit History' | translate}}</h3>
-                    <h3 class="mb-3" *ngIf="tab == 'WITHDRAWAL'"><i class="icon ion-md-time text-secondary"></i>
+                    <h3 class="mb-3" *ngIf="tab == 'WITHDRAWAL'"><i class="afx-icon-card text-secondary"></i>
                         {{'Withdrawal History' | translate}}</h3>
                     <div [formGroup]="searchForm" class="form mb-3 form-search-box">
                         <div class="d-lg-flex justify-content-between">
@@ -44,7 +44,7 @@
                                     </select>
                                 </div>
                                 <div class="form-group mr-md-1 flex-grow-1 min-150"> <label
-                                        class="label d-block mb-0 mr-2">{{'Type' | translate}}</label> 
+                                        class="label d-block mb-0 mr-2">{{'Type' | translate}}</label>
                                         <select formControlName="type" (change)="changeType($event.target.value)" class="form-control form-control-sm">
                                             <option value="{{TABS.ALL.value}}">{{'All' | translate}}</option>
                                             <option value="{{TABS.DEPOSIT.value}}">{{'Deposit History' | translate}}</option>
@@ -225,18 +225,18 @@
                                     previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;" [maxSize]="5">
                                 </pagination>
                             </ul>
-                    
+
                         </div>
                     </ng-container>
-                  
+
                 </div>
                 <div class="tab-pane fade" id="v-pills-deposit" role="tabpanel" aria-labelledby="v-pills-deposit-tab">
-                    <h3 class="mb-3"><i class="icon ion-md-time text-secondary"></i> {{'Deposit History' | translate}}
+                    <h3 class="mb-3"><i class="afx-icon-card text-secondary"></i> {{'Deposit History' | translate}}
                     </h3>
                 </div>
                 <div class="tab-pane fade" id="v-pills-withdrawal" role="tabpanel"
                     aria-labelledby="v-pills-withdrawal-tab">
-                    <h3 class="mb-3"><i class="icon ion-md-time text-secondary"></i>
+                    <h3 class="mb-3"><i class="afx-icon-card text-secondary"></i>
                         {{'Withdrawal History' | translate}}</h3>
                 </div>
             </div>
