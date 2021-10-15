@@ -21,7 +21,7 @@
                     </div>
                 </div>
                 <div class="col-md-9 col-lg-10">
-                    <div class="tab-content" id="deposit-tab">
+                    <div class="tab-content no-padding" id="deposit-tab">
                         <div *ngIf="showTabDeposit"
                             [className]="showTabDeposit ? 'tab-pane fade show active' : 'tab-pane fade'"
                             class="tab-pane fade show active" 
@@ -44,7 +44,7 @@
                         <div *ngIf="showTabHistory" 
                             [className]="showTabHistory ? 'tab-pane fade show active' : 'tab-pane fade'" id="history-tab" role="tabpanel"
                             aria-labelledby="history-tab">
-                            <div class="container">
+                            <div class="container container-deposit">
                                 <div class="content-wrapper">
                                     <div class="content-inner">
                                         <div class="card bg-white mb-3 shadow">
@@ -59,7 +59,7 @@
                                                             aria-selected="true"><strong>{{'Transfer History' | translate}}</strong></a>
                                                     </div>
                                                 </nav>
-                                                <div class="tab-content border-0 p-0 pt-3 mb-3" id="nav-tabContent">
+                                                <div class="tab-content no-padding border-0 p-0 pt-3 mb-3" id="nav-tabContent">
                                                     <!-- BEGIN BBILLING SYSTEM -->
                                                     <div [className]="showTransferHistory ? 'tab-pane fade show' : 'tab-pane show active'" 
                                                      id="nav-billing" role="tabpanel" aria-labelledby="nav-billing-tab">
