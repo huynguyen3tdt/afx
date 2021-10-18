@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, HostListener } from '@angular/core';
 import { AccountType } from 'src/app/core/model/report-response.model';
 import { ACCOUNT_IDS, INTERNAL_TRANSFER } from 'src/app/core/constant/authen-constant';
 import { TYPEOFTRANHISTORY } from 'src/app/core/constant/payment-method-constant';
@@ -33,6 +33,7 @@ export class InternalTransferComponent implements OnInit, AfterViewInit {
   detaiWithdrawFlag: boolean;
   accountID: string;
   hideTransfer: boolean;
+  isChangeMobileSize = false;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -94,4 +95,16 @@ export class InternalTransferComponent implements OnInit, AfterViewInit {
     this.filterWithDrawHistory = false;
     this.showTransferHistory = false;
   }
+
+  @HostListener('window:resize', ['$event'])
+onResize(event) {
+  console.log(293, event.target.innerWidth);
+  event.target.innerWidth;
+  if (event.target.innerWidth < 500) {
+    console.log(104, this.isChangeMobileSize);
+    this.isChangeMobileSize = true;
+  } else {
+    this.isChangeMobileSize = false;
+  }
+}
 }

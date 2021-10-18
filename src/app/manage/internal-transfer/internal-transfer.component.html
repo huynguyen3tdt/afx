@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" [ngClass]="{'p-0': isChangeMobileSize}">
     <div class="content-wrapper">
         <div class="content-inner">
             <div class="row">
@@ -21,7 +21,7 @@
                     </div>
                 </div>
                 <div class="col-md-9 col-lg-10">
-                    <div class="tab-content" id="deposit-tab">
+                    <div [ngClass]="{'tab-content': !isChangeMobileSize}" id="deposit-tab">
                         <div *ngIf="showTabDeposit"
                             [className]="showTabDeposit ? 'tab-pane fade show active' : 'tab-pane fade'"
                             class="tab-pane fade show active" 
@@ -59,7 +59,7 @@
                                                             aria-selected="true"><strong>{{'Transfer History' | translate}}</strong></a>
                                                     </div>
                                                 </nav>
-                                                <div class="tab-content border-0 p-0 pt-3 mb-3" id="nav-tabContent">
+                                                <div [ngClass]="{'tab-content': !isChangeMobileSize}" class="border-0 p-0 pt-3 mb-3" id="nav-tabContent">
                                                     <!-- BEGIN BBILLING SYSTEM -->
                                                     <div [className]="showTransferHistory ? 'tab-pane fade show' : 'tab-pane show active'" 
                                                      id="nav-billing" role="tabpanel" aria-labelledby="nav-billing-tab">

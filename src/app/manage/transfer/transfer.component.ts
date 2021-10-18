@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Output, EventEmitter, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewChild, Output, EventEmitter, OnDestroy, HostListener } from '@angular/core';
 import { WithdrawRequestService } from 'src/app/core/services/withdraw-request.service';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { Router } from '@angular/router';
@@ -287,4 +287,6 @@ export class TransferComponent implements OnInit, OnDestroy {
     clearInterval(this.intervalResetSentAccountMt5Info);
     clearInterval(this.intervalResetReceiveAccountMt5Info);
   }
+
+  
 }
