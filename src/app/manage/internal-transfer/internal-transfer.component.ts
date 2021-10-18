@@ -98,10 +98,8 @@ export class InternalTransferComponent implements OnInit, AfterViewInit {
 
   @HostListener('window:resize', ['$event'])
 onResize(event) {
-  console.log(293, event.target.innerWidth);
   event.target.innerWidth;
   if (event.target.innerWidth < 500) {
-    console.log(104, this.isChangeMobileSize);
     this.isChangeMobileSize = true;
   } else {
     this.isChangeMobileSize = false;

@@ -35,7 +35,7 @@
                     </nav>
                 </div> -->
                 <div class="col-md-9 col-lg-10 col-mypage-content">
-                    <div class="tab-content no-padding border-0" id="nav-tabContent">
+                    <div [ngClass]="showSummary ? 'tab-content no-padding border-0' : 'tab-content border-0'" id="nav-tabContent">
                         <!-- BEGIN ACCOUNT -->
                         <div *ngIf="showSummary" class="tab-pane fade show active" id="nav-account"
                             role="tabpanel" aria-labelledby="nav-account-tab">

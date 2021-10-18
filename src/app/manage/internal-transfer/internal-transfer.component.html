@@ -21,7 +21,7 @@
                     </div>
                 </div>
                 <div class="col-md-9 col-lg-10">
-                    <div [ngClass]="{'tab-content': !isChangeMobileSize}" id="deposit-tab">
+                    <div [ngClass]="{'tab-content no-padding': !isChangeMobileSize}" id="deposit-tab">
                         <div *ngIf="showTabDeposit"
                             [className]="showTabDeposit ? 'tab-pane fade show active' : 'tab-pane fade'"
                             class="tab-pane fade show active" 
