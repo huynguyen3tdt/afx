@@ -32,3 +32,14 @@ p {
         }
 	}
 }
+
+@media screen and (max-width: 350px){
+	.trading-account-content {	
+        .all-account-content {
+            width: 110%;           	
+            img.ml-2 {
+                margin-left: 0 !important;
+            }
+        }
+	}
+}
