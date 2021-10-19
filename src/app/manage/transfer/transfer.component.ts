@@ -288,5 +288,4 @@ export class TransferComponent implements OnInit, OnDestroy {
     clearInterval(this.intervalResetReceiveAccountMt5Info);
   }
 
-  
 }
