@@ -6,6 +6,7 @@ import { forkJoin, Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
 import {
   ACCOUNT_IDS,
+  ACCOUNT_INSSURANCE,
   ERROR_GEN_ISSUANCE_KEY_EN,
   ERROR_GEN_ISSUANCE_KEY_JP,
   SUCCESS_CLIPBOARD_EN,
@@ -35,6 +36,7 @@ export class ModalApiKeyComponent implements OnInit {
   showAccount: boolean;
   locale: string;
   listApiKey = [];
+  listAccountIssurance = ACCOUNT_INSSURANCE;
   constructor(
     private withdrawRequestService: WithdrawRequestService,
     private globalService: GlobalService,
@@ -163,7 +165,8 @@ export class ModalApiKeyComponent implements OnInit {
   }
 
   checkExistApiKeys() {
-    if (this.listApiKey.length > 0) {
+    // Show agreement policy when we have less than 2 account with issuance key ( FX and I-CFD)
+    if (this.listApiKey.length > 1) {
       this.showAccount = true;
     } else {
       this.showAccount = false;
