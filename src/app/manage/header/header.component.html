@@ -63,6 +63,9 @@
                             <div class="text-center small"><a [routerLink]="['/manage/notifications']" [queryParams]="{unread: 'true'}" class="text-secondary">{{'View more' | translate}}</a></div>
                         </div>
                     </li>
+                    <li (click)="logout()" class="nav-item nav-item-logout d-none d-md-inline-block">
+                        <a class="nav-link logout"><i class="icon ion-md-log-out"></i></a>
+                    </li>
                     <li class="nav-item nav-item-menu d-md-none" (click)="openSubNav()">
                         <a href="javascript:;" class="nav-link offcanvas-open"><i class="icon ion-md-menu"></i></a>
                     </li>
