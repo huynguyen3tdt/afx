@@ -108,7 +108,7 @@
 <!-- END HEADER -->
 
 <div class="offcanvas-overlay">
-    <div class="offcanvas-wrapper">
+    <div class="offcanvas-wrapper" style="overflow: hidden scroll;">
         <div class="offcanvas-inner">
             <div class="offcanvas-header">
                 <h3 class="offcanvas-title">{{'Menu' | translate}}</h3>
@@ -127,7 +127,7 @@
                     <a [routerLink]="['/manage/internal']" id="internal" class="nav-link has-icon btn-offcanvas-close"> <i class="icon afx-icon-fund"></i> {{'Deposit and Withdrawal' | translate}}</a>
                 </li>
                 <li class="nav-item nav-item-report">
-                    <a [routerLink]="['/manage/reportList']" id="reportList" class="nav-link has-icon btn-offcanvas-close"> <i class="icon afx-icon-doc-chart"></i> {{'Report' | translate}}</a>
+                    <a [routerLink]="['/manage/reportList']" id="reportList" class="nav-link has-icon btn-offcanvas-close"> <i class="icon ion-md-today"></i> {{'Report' | translate}}</a>
                 </li>
                 <li class="nav-item nav-item-account">
                     <a [routerLink]="['/manage/accountInfo']" id="accountInfo" class="nav-link has-icon btn-offcanvas-close"> <i class="icon afx-icon-user"></i> {{'Customer Information' | translate}}</a>
