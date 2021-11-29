@@ -45,8 +45,3 @@ export const ACCOUNT_TYPE = {
     ACCOUNT_CFDIndex: {account_type: 2, name: '[I-CFD]'},
     ACCOUNT_CFDCom: {account_type: 3, name: '[C-CFD]'},
 };
-
-export const ACCOUNT_INSSURANCE = [
-    ACCOUNT_TYPE.ACCOUNT_FX.account_type,
-    ACCOUNT_TYPE.ACCOUNT_CFDIndex.account_type
-];
