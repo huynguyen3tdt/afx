@@ -95,7 +95,9 @@ export class InternalTransferComponent implements OnInit, AfterViewInit {
     this.filterWithDrawHistory = false;
     this.showTransferHistory = false;
   }
-
+/// Event check size of window changed
+/// If width < 500 is mobile view show
+/// Else desktop view show
   @HostListener('window:resize', ['$event'])
 onResize(event) {
   if (event.target.innerWidth < 500) {
