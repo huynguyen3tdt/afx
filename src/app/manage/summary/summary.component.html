@@ -1,8 +1,21 @@
 <div class="container">
     <div class="content-wrapper">
         <div class="content-inner">
-            <div class="row row-mypage">
-                <div class="col-lg-3 col-mypage-sidebar">
+            <div class="row row-mypage">                
+                <div class="col-md-3 col-lg-2">
+                    <div class="nav flex-md-column nav-pills mb-3 filter-nav" id="v-pills-tab" role="tablist"
+                        aria-orientation="vertical">
+                        <a class="nav-link active"
+                            id="nav-account-tab" data-toggle="pill" href="#nav-account"
+                            (click)="changeTab(TAB.summary)" role="tab"
+                            aria-controls="nav-account" aria-selected="true">{{'Summary' | translate}}</a>
+                        <a class="nav-link"
+                            id="nav-profile-tab" data-toggle="pill" href="#nav-profile"
+                            (click)="changeTab(TAB.detail)" role="tab"
+                            aria-controls="nav-profile" aria-selected="false">{{'Account Information' | translate}}</a>
+                    </div>
+                </div>
+                <!-- <div class="col-lg-3 col-mypage-sidebar">
                     <div class="card card-profile">
                         <div class="card-body">
                             <div class="d-flex align-items-center">
@@ -20,9 +33,9 @@
                                 <strong class="d-none d-md-inline">&nbsp;{{'Account Information' | translate}}</strong></a>
                         </div>
                     </nav>
-                </div>
-                <div class="col-lg-9 col-mypage-content">
-                    <div class="tab-content border" id="nav-tabContent">
+                </div> -->
+                <div class="col-md-9 col-lg-10 col-mypage-content">
+                    <div [ngClass]="showSummary ? 'tab-content no-padding border-0' : 'tab-content border-0'" id="nav-tabContent">
                         <!-- BEGIN ACCOUNT -->
                         <div *ngIf="showSummary" class="tab-pane fade show active" id="nav-account"
                             role="tabpanel" aria-labelledby="nav-account-tab">

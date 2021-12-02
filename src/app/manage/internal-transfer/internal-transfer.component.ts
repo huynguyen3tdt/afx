@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, HostListener } from '@angular/core';
 import { AccountType } from 'src/app/core/model/report-response.model';
 import { ACCOUNT_IDS, INTERNAL_TRANSFER } from 'src/app/core/constant/authen-constant';
 import { TYPEOFTRANHISTORY } from 'src/app/core/constant/payment-method-constant';
@@ -33,6 +33,7 @@ export class InternalTransferComponent implements OnInit, AfterViewInit {
   detaiWithdrawFlag: boolean;
   accountID: string;
   hideTransfer: boolean;
+  isChangeMobileSize = false;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -94,4 +95,15 @@ export class InternalTransferComponent implements OnInit, AfterViewInit {
     this.filterWithDrawHistory = false;
     this.showTransferHistory = false;
   }
+/// Event check size of window changed
+/// If width < 500 is mobile view show
+/// Else desktop view show
+  @HostListener('window:resize', ['$event'])
+onResize(event) {
+  if (event.target.innerWidth < 500) {
+    this.isChangeMobileSize = true;
+  } else {
+    this.isChangeMobileSize = false;
+  }
+}
 }

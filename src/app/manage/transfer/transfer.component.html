@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container container-deposit">
     <!-- <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item" aria-current="page"><a href="javascript:;">Dashboard</a></li>
@@ -10,26 +10,30 @@
             <div class="card bg-white mb-3 shadow">
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-md-6 col-lg-7">
+                        <div class="col-md-12 col-lg-7">
                             <div class="p-3 border mb-3 form form-line bg-light">
                                 <div class="d-flex justify-content-between mb-2">
                                     <h5 class="text-primary mb-0">{{'Sender account' | translate}}</h5>
 
                                 </div>
                                 <div class="d-flex flex-wrap justify-content-between align-items-center mb-2">
-                                    <div class="d-flex align-items-center">
-                                        <label class="label mb-0 mr-2 pt-1">{{'Trading account' | translate}}</label>
-                                        <div class="d-inline-block">
-                                            <select class="form-control form-control-sm mb-0 bg-none"
-                                                (change)="changeTradingAccount('sent')" [(ngModel)]="sentAccountID"
-                                                style="min-width: 160px;">
-                                                <option value="" disabled selected>{{'Please choose trading acount' | translate}}</option>
-                                                <option *ngFor="let item of listTradingAccount"
-                                                    value="{{item?.account_id}}">{{item?.value}}</option>
-                                            </select>
-                                            <!-- <div *ngIf="!sentAccountID" class="invalid-mess">Please choose trading acount</div> -->
+                                    <div class="row align-items-center">
+                                        <div class="col-md-4">
+                                            <label class="label mb-0 mr-2 pt-1 text-nowrap">{{'Trading account' | translate}}</label>
                                         </div>
-                                        <img *ngIf="tradingSentAccount" class="ml-1 pt-1" src="{{tradingSentAccount?.img_type_account}}" width="45" height="35">
+                                        <div class="col-md-8 d-flex">
+                                            <div class="d-inline-block">
+                                                <select class="form-control form-control-sm mb-0 bg-none"
+                                                    (change)="changeTradingAccount('sent')" [(ngModel)]="sentAccountID"
+                                                    style="min-width: 160px;">
+                                                    <option value="" disabled selected>{{'Please choose trading acount' | translate}}</option>
+                                                    <option *ngFor="let item of listTradingAccount"
+                                                        value="{{item?.account_id}}">{{item?.value}}</option>
+                                                </select>
+                                                <!-- <div *ngIf="!sentAccountID" class="invalid-mess">Please choose trading acount</div> -->
+                                            </div>
+                                            <img *ngIf="tradingSentAccount" class="ml-1 pt-1" src="{{tradingSentAccount?.img_type_account}}" width="45" height="35">
+                                        </div>
                                     </div>
                                     <div class="pt-1">{{'Currency' | translate}}:
                                         <strong>{{tradingSentAccount?.currency}}</strong></div>
@@ -93,17 +97,21 @@
 
                                     </div>
                                     <div class="d-flex flex-wrap justify-content-between align-items-center mb-2">
-                                        <div class="d-flex align-items-center">
-                                            <label class="label mb-0 mr-2 pt-1">{{'Trading account' | translate}}</label>
-                                            <div class="d-inline-block">
-                                                <select class="form-control form-control-sm mb-0 bg-none"
-                                                    (change)="changeTradingAccount('receive')" [(ngModel)]="receiveAccountID"
-                                                    style="min-width: 160px;">
-                                                    <option value="" disabled selected>{{'Please choose trading acount' | translate}}</option>
-                                                    <option *ngFor="let item of listTradingAccount"
-                                                        value="{{item?.account_id}}">{{item?.value}}</option>
-                                                </select>
-                                            </div>
+                                        <div class="row align-items-center">
+											<div class="col-md-4">
+												<label class="label mb-0 mr-2 pt-1">{{'Trading account' | translate}}</label>
+											</div>
+											<div class="col-md-8 d-flex">                                            
+												<div class="d-inline-block">
+													<select class="form-control form-control-sm mb-0 bg-none"
+														(change)="changeTradingAccount('receive')" [(ngModel)]="receiveAccountID"
+														style="min-width: 160px;">
+														<option value="" disabled selected>{{'Please choose trading acount' | translate}}</option>
+														<option *ngFor="let item of listTradingAccount"
+															value="{{item?.account_id}}">{{item?.value}}</option>
+													</select>
+												</div>
+											</div>
                                             <img *ngIf="tradingReceiveAccount" class="ml-1 pt-1" src="{{tradingReceiveAccount?.img_type_account}}" width="45" height="35">
                                         </div>
                                         <div class="pt-1"><label
@@ -165,7 +173,7 @@
                                 </div>
 
                         </div>
-                        <div class="col-md-6 col-lg-5" [formGroup]="transferForm">
+                        <div class="col-md-12 col-lg-5" [formGroup]="transferForm">
                             <h4 class="text-primary border-bottom pb-1 mb-3 title-deposit">
                                 {{'Transfer Amount' | translate}}
                             </h4>

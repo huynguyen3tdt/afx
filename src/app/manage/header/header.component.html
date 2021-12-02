@@ -27,8 +27,10 @@
                 <li class="nav-item nav-item-language dropdown d-none d-md-inline-block">
                     <a href="javascript:;" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{locale == 'en_US' ? 'EN' : 'JP'}}</a>
                     <div class="dropdown-menu dropdown-menu-right">
-                        <a (click)="changeLang('en_US')" [className]="locale == 'en_US' ? 'dropdown-item active' : 'dropdown-item'" class="dropdown-item" data-language="EN"><img src="assets/images/flags/flag-en.svg" class="icon flag" alt=""> English</a>
-                        <a (click)="changeLang('ja_JP')" [className]="locale == 'ja_JP' ? 'dropdown-item active' : 'dropdown-item'" data-language="JP"><img src="assets/images/flags/flag-jp.svg" class="icon flag" alt=""> Japanese</a>
+                        <a (click)="changeLang('en_US')" [className]="locale == 'en_US' ? 'dropdown-item active' : 'dropdown-item'" class="dropdown-item" data-language="EN">
+                            <img src="assets/images/flags/flag-en.svg" style="height: 28px; width: auto" class="icon flag" alt=""> English</a>
+                        <a (click)="changeLang('ja_JP')" [className]="locale == 'ja_JP' ? 'dropdown-item active' : 'dropdown-item'" data-language="JP">
+                            <img src="assets/images/flags/flag-jp.svg" style="height: 28px; width: auto" class="icon flag" alt=""> Japanese</a>
                     </div>
                 </li>
                     <li class="nav-item nav-item-mt5 d-none d-md-inline-block">
@@ -60,6 +62,9 @@
 
                             <div class="text-center small"><a [routerLink]="['/manage/notifications']" [queryParams]="{unread: 'true'}" class="text-secondary">{{'View more' | translate}}</a></div>
                         </div>
+                    </li>
+                    <li (click)="logout()" class="nav-item nav-item-logout d-none d-md-inline-block">
+                        <a class="nav-link logout"><i class="icon ion-md-log-out"></i></a>
                     </li>
                     <li class="nav-item nav-item-menu d-md-none" (click)="openSubNav()">
                         <a href="javascript:;" class="nav-link offcanvas-open"><i class="icon ion-md-menu"></i></a>
@@ -103,7 +108,7 @@
 <!-- END HEADER -->
 
 <div class="offcanvas-overlay">
-    <div class="offcanvas-wrapper">
+    <div class="offcanvas-wrapper" style="overflow: hidden auto;">
         <div class="offcanvas-inner">
             <div class="offcanvas-header">
                 <h3 class="offcanvas-title">{{'Menu' | translate}}</h3>
@@ -122,7 +127,7 @@
                     <a [routerLink]="['/manage/internal']" id="internal" class="nav-link has-icon btn-offcanvas-close"> <i class="icon afx-icon-fund"></i> {{'Deposit and Withdrawal' | translate}}</a>
                 </li>
                 <li class="nav-item nav-item-report">
-                    <a [routerLink]="['/manage/reportList']" id="reportList" class="nav-link has-icon btn-offcanvas-close"> <i class="icon afx-icon-doc-chart"></i> {{'Report' | translate}}</a>
+                    <a [routerLink]="['/manage/reportList']" id="reportList" class="nav-link has-icon btn-offcanvas-close"> <i class="icon ion-md-today"></i> {{'Report' | translate}}</a>
                 </li>
                 <li class="nav-item nav-item-account">
                     <a [routerLink]="['/manage/accountInfo']" id="accountInfo" class="nav-link has-icon btn-offcanvas-close"> <i class="icon afx-icon-user"></i> {{'Customer Information' | translate}}</a>

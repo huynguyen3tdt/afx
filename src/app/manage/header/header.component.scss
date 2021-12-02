@@ -5,22 +5,3 @@
 .dropdown-item {
     cursor: pointer;
 }
-@media screen and (max-width: 768px){
-  .header-top-nav-wrapper .header-top-nav{
-    order: 1;
-    -ms-flex: 0 0 3rem;
-    flex: 0 0 3rem;
-    max-width: 3rem;
-    margin-left: -1rem;
-  }
-  .header-top-nav-wrapper .site-brand {
-    order: 2;
-    flex-grow: 1;
-    padding-right: 2rem;
-  }
-  .header-top-nav-wrapper .site-brand .site-title{
-    display: block;
-    text-align: center;
-  }
-
-}

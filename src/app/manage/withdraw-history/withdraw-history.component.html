@@ -23,7 +23,7 @@
                     </div>
                 </div> -->
             <!-- <div class="col-md-12 col-lg-12"> -->
-            <div class="tab-content p-0" id="v-pills-tabContent">
+            <div class="tab-content no-padding p-0" id="v-pills-tabContent">
                 <div class="tab-pane fade show active" id="v-pills-all" role="tabpanel"
                     aria-labelledby="v-pills-all-tab">
                     <h3 class="mb-3" *ngIf="tab == 'ALL'"><i class="afx-icon-card text-secondary"></i>
@@ -33,7 +33,7 @@
                     <h3 class="mb-3" *ngIf="tab == 'WITHDRAWAL'"><i class="afx-icon-card text-secondary"></i>
                         {{'Withdrawal History' | translate}}</h3>
                     <div [formGroup]="searchForm" class="form mb-3 form-search-box">
-                        <div class="d-lg-flex justify-content-between">
+                        <div class="d-lg-flex justify-content-between withdrawal-content-md-block">
                             <div class="d-md-flex flex-grow-1 mr-lg-2">
                                 <div class="form-group mr-md-1 flex-grow-1 min-150">
                                     <label class="label d-block mb-0 mr-2">{{'Trading account' | translate}}</label>
