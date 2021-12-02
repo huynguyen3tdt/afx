@@ -164,9 +164,18 @@ a:hover{
 .breadcrumb-item.active{
 	color: #000;
 }
+
+.container.container-deposit{
+	padding: 0;
+}
 @media screen and (max-width: 540px){
 	.breadcrumb{
 		font-size: 12px;
+	}
+	
+	.tab-content.no-padding {
+		padding: 0;
+		background: transparent;
 	}
 }
 /* Buttons */
@@ -807,7 +816,6 @@ body{
 .main-wrapper {
 	padding: 15px 0;
 }
-
 /* Check Box */
 /* Customize the label (the container) */
 
@@ -1163,7 +1171,7 @@ ul.reset li {
 		background-color: #F0F8FC;
 	}
 	.col-mypage-content .tab-content {
-		border-top: 1px solid #dee2e6 !important;
+		border-top: 0 !important;
 	}
 }
 

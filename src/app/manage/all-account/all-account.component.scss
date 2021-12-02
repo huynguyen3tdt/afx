@@ -11,3 +11,35 @@ p {
     color: aliceblue;
     border-radius: 2px;
 }
+
+
+.trading-account-content {
+    display: -webkit-box!important;
+    display: flex!important;
+    width: 100%;
+    .all-account-content {
+        display: -webkit-box!important;
+        display: flex!important;
+    }
+}
+
+@media screen and (max-width: 500px){
+	.trading-account-content {
+		display: inline-flex !important;
+        width: 100%;		
+        .all-account-content {
+            display: block !important;
+        }
+	}
+}
+
+@media screen and (max-width: 350px){
+	.trading-account-content {	
+        .all-account-content {
+            width: 110%;           	
+            img.ml-2 {
+                margin-left: 0 !important;
+            }
+        }
+	}
+}
