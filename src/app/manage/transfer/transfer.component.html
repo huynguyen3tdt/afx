@@ -111,8 +111,8 @@
 															value="{{item?.account_id}}">{{item?.value}}</option>
 													</select>
 												</div>
+                                                <img *ngIf="tradingReceiveAccount" class="ml-1 pt-1" src="{{tradingReceiveAccount?.img_type_account}}" width="45" height="35">
 											</div>
-                                            <img *ngIf="tradingReceiveAccount" class="ml-1 pt-1" src="{{tradingReceiveAccount?.img_type_account}}" width="45" height="35">
                                         </div>
                                         <div class="pt-1"><label
                                                 class="label mb-0 mr-2 d-inline">{{'Currency' | translate}}:</label>
