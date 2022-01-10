@@ -32,8 +32,8 @@ export class ModalApiKeyComponent implements OnInit {
   @ViewChild('modalApiKey', { static: true }) modal: ModalDirective;
   listTradingAccount: Array<AccountType>;
   listMt5Infor: Array<WithdrawRequestModel> = [];
-  agreeApiPolicy: boolean;
-  showAccount: boolean;
+  agreeApiPolicyFlg: boolean;
+  showAPIAccountFlg: boolean;
   locale: string;
   listApiKey = [];
   LIST_ACCOUNT_ISSURANCE = ACCOUNT_INSSURANCE;
@@ -100,14 +100,13 @@ export class ModalApiKeyComponent implements OnInit {
 
   toggleCheckBox(e) {
     // make checkbox is checked
-    this.agreeApiPolicy = e.target.checked;
+    this.agreeApiPolicyFlg = e.target.checked;
   }
 
   toggleShowListAccount() {
-    // showAccount Flag's used for show overview of each account
-    this.showAccount = true;
+    this.showAPIAccountFlg = true;
     // if user tick accept policy they would be able to click button show overview account
-    this.agreeApiPolicy = false;
+    this.agreeApiPolicyFlg = false;
   }
 
   resetToggleShowKey() {
@@ -167,10 +166,10 @@ export class ModalApiKeyComponent implements OnInit {
   checkExistApiKeys() {
       // Show agreement policy when we have less than 2 account with issuance key ( FX and I-CFD)
     if (this.listApiKey.length > 1) {
-      this.showAccount = true;
+      this.showAPIAccountFlg = true;
     } else {
-      this.showAccount = false;
-      this.agreeApiPolicy = false;
+      this.showAPIAccountFlg = false;
+      this.agreeApiPolicyFlg = false;
     }
   }
 }
