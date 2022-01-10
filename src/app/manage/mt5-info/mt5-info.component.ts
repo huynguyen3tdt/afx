@@ -79,6 +79,7 @@ export class Mt5InfoComponent implements OnInit, OnDestroy {
     this.tradingAccount = this.listTradingAccount.find((account: AccountType) =>
     this.accountID === account.account_id);
     this.getMt5Infor(this.accountID);
+    this.getWithDrawAmount(this.accountID);
   }
 
   ngOnDestroy(): void {
