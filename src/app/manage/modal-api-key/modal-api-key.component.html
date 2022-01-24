@@ -9,7 +9,7 @@
                 </button>
             </div>
             <div class="modal-body pt-0">
-                <div *ngIf="!showAccount">
+                <div *ngIf="!showAPIAccountFlg">
                     <h5 class="pt-3">{{'Getting started with the Philip MT5 API connection' | translate}}</h5>
                     <h5>{{'Please read and understand the following rules before issuing the API key required to use connection service.'| translate}}</h5>
                     <h5><a href="https://www.phillip.co.jp/fx/pdf/phillipmt5_api_terms_service.pdf"
@@ -18,7 +18,7 @@
                         <div>
                             <label class="container-checkbox small mb-2 box-item-checkbox">
                                 <h5 class="pt-2">{{'Agree to Phillip Securities API Service Usage Policy' | translate}}</h5>
-                                <input type="checkbox" [(ngModel)]="agreeApiPolicy" data-md-icheck
+                                <input type="checkbox" [(ngModel)]="agreeApiPolicyFlg" data-md-icheck
                                     (change)="toggleCheckBox($event)">
                                 <span class="checkmark mt-2"></span>
                             </label>
@@ -26,12 +26,12 @@
 
                     </div>
                     <div class="modal-footer pt-1 pb-1 text-right bg-light">
-                        <button type="submit" [disabled]="!agreeApiPolicy" (click)="toggleShowListAccount()"
+                        <button type="submit" [disabled]="!agreeApiPolicyFlg" (click)="toggleShowListAccount()"
                             class="btn btn-primary pl-4 pr-4 btn-confirm">{{'API key issuance' | translate}}</button>
                     </div>
                 </div>
 
-                <div *ngIf="showAccount" class="card bg-white mb-3 shadow p-3">
+                <div *ngIf="showAPIAccountFlg" class="card bg-white mb-3 shadow p-3">
                     <h4 class="border-bottom pb-1 mb-3">{{'List Account' | translate}}</h4>
                     <div class="row">
                         <div *ngFor="let item of listMt5Infor" class="col-lg-12">
@@ -60,9 +60,15 @@
                                                     translate}}</button></td>
                                         </tr>
                                         <tr *ngIf="item?.data?.issuance_key != ''">
-                                            <td><button class="btn btn-sm btn-success pl-2 pr-2"
+                                            <td></td>
+                                            <td style="text-align:right">
+                                                <button *ngIf="!item?.data?.is_show_key" class="btn btn-sm btn-success pl-2 pr-2"
                                                 (click)="toggleDisplayKey(item?.data)">{{'Show API key' |
-                                                    translate}}</button></td>
+                                                    translate}}</button>
+                                                <button *ngIf="item?.data?.is_show_key" class="btn btn-sm btn-success pl-2 pr-2"
+                                                (click)="toggleDisplayKey(item?.data)">{{'Hide API key' |
+                                                    translate}}</button>
+                                            </td>
                                         </tr>
                                         <tr *ngIf="item?.data?.is_show_key">
                                             <td>{{'Trading account' | translate}}: </td>
