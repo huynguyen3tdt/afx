@@ -165,7 +165,7 @@ export class ModalApiKeyComponent implements OnInit {
 
   checkExistApiKeys() {
       // Show agreement policy when we have less than 2 account with issuance key ( FX and I-CFD)
-    if (this.listApiKey.length > 1) {
+    if (this.listApiKey.length !== 0) {
       this.showAPIAccountFlg = true;
     } else {
       this.showAPIAccountFlg = false;
