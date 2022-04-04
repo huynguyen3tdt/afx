@@ -1,32 +1,30 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { Router, NavigationEnd, NavigationStart } from '@angular/router';
-import { TOKEN_AFX, LOCALE, ACCOUNT_IDS, IS_COMPANY, ACCOUNT_TYPE } from 'src/app/core/constant/authen-constant';
-import { AuthenService } from 'src/app/core/services/authen.service';
-import { NotificationsService } from 'src/app/core/services/notifications.service';
-import { PageNotificationResponse, Notification } from 'src/app/core/model/page-noti.model';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {NavigationEnd, Router} from '@angular/router';
+import {ACCOUNT_IDS, ACCOUNT_TYPE, IS_COMPANY, LOCALE, TOKEN_AFX} from 'src/app/core/constant/authen-constant';
+import {AuthenService} from 'src/app/core/services/authen.service';
+import {NotificationsService} from 'src/app/core/services/notifications.service';
+import {Notification, PageNotificationResponse} from 'src/app/core/model/page-noti.model';
 import moment from 'moment-timezone';
-import { EN_FORMATDATE, JAPAN_FORMATDATE } from 'src/app/core/constant/format-date-constant';
-import { AccountType } from 'src/app/core/model/report-response.model';
-import { LANGUAGLE } from 'src/app/core/constant/language-constant';
-import { take } from 'rxjs/operators';
-import { GlobalService } from 'src/app/core/services/global.service';
-import { ModalAddAccountStep1Component } from '../modal-add-account-step1/modal-add-account-step1.component';
-import { ModalAddAccountStep2Component } from '../modal-add-account-step2/modal-add-account-step2.component';
-import { ModalAddAccountStep3Component } from '../modal-add-account-step3/modal-add-account-step3.component';
-import { FormGroup, FormBuilder } from '@angular/forms';
-import { AccountTypeAFX, GroupAccountType, TradingAccount } from 'src/app/core/model/user.model';
-import { UserService } from 'src/app/core/services/user.service';
-import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
-import { PL001, PL002, PL003, PL004, PL005, PL006, BIZ_GROUP } from 'src/app/core/constant/user-code-constant';
-import { ModalCanNotAddAccountComponent } from '../modal-can-not-add-account/modal-can-not-add-account.component';
-import { CCFD_IMAGE, ICFD_IMAGE, FX_IMAGE } from 'src/app/core/constant/img-constant';
-import { TranslateService } from '@ngx-translate/core';
-import { ModalApiKeyComponent } from '../modal-api-key/modal-api-key.component';
-import { forkJoin, Observable } from 'rxjs';
-import { WithdrawRequestModel } from 'src/app/core/model/withdraw-request-response.model';
-import { WithdrawRequestService } from 'src/app/core/services/withdraw-request.service';
-import { ToastrService } from 'ngx-toastr';
-import { PhillipAccountType } from 'src/app/core/enum/enum-info';
+import {EN_FORMATDATE, JAPAN_FORMATDATE} from 'src/app/core/constant/format-date-constant';
+import {AccountType} from 'src/app/core/model/report-response.model';
+import {LANGUAGLE} from 'src/app/core/constant/language-constant';
+import {take} from 'rxjs/operators';
+import {GlobalService} from 'src/app/core/services/global.service';
+import {ModalAddAccountStep1Component} from '../modal-add-account-step1/modal-add-account-step1.component';
+import {ModalAddAccountStep2Component} from '../modal-add-account-step2/modal-add-account-step2.component';
+import {ModalAddAccountStep3Component} from '../modal-add-account-step3/modal-add-account-step3.component';
+import {FormBuilder, FormGroup} from '@angular/forms';
+import {AccountTypeAFX, GroupAccountType} from 'src/app/core/model/user.model';
+import {UserService} from 'src/app/core/services/user.service';
+import {Ng4LoadingSpinnerService} from 'ng4-loading-spinner';
+import {BIZ_GROUP, PL001, PL002, PL003, PL004, PL005, PL006} from 'src/app/core/constant/user-code-constant';
+import {ModalCanNotAddAccountComponent} from '../modal-can-not-add-account/modal-can-not-add-account.component';
+import {TranslateService} from '@ngx-translate/core';
+import {ModalApiKeyComponent} from '../modal-api-key/modal-api-key.component';
+import {WithdrawRequestModel} from 'src/app/core/model/withdraw-request-response.model';
+import {WithdrawRequestService} from 'src/app/core/services/withdraw-request.service';
+import {ToastrService} from 'ngx-toastr';
+import {PhillipAccountType} from 'src/app/core/enum/enum-info';
 
 declare const $: any;
 declare const TweenMax: any;
@@ -97,8 +95,11 @@ export class HeaderComponent implements OnInit {
     this.locale = localStorage.getItem(LOCALE);
     this.bizGroup = localStorage.getItem(BIZ_GROUP);
     this.listTradingAccount = JSON.parse(localStorage.getItem(ACCOUNT_IDS));
+    const isuaranceAccounts = [
+      PhillipAccountType.FX, PhillipAccountType.I_CFD
+    ];
     this.listTradingAccount.forEach((item) => {
-    if (item.account_type === PhillipAccountType.FX) {
+    if (isuaranceAccounts.includes(item.account_type)) {
         this.showModalApiKey = true;
       }
     });

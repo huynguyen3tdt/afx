@@ -35,55 +35,49 @@
                     <h4 class="border-bottom pb-1 mb-3">{{'List Account' | translate}}</h4>
                     <div class="row">
                         <div *ngFor="let item of listMt5Infor" class="col-lg-12">
-                            <div class="d-flex justify-content-between align-items-center mb-2" *ngIf="LIST_ACCOUNT_ISSURANCE.includes(item?.data?.account_type)">
-                                <div class="d-flex">
-                                    <div class="mr-2">
-                                        {{'Trading account' | translate}}
-                                    </div>
-                                    <div class="all-account">
-                                        <div class="d-inline-block">
-                                            {{item?.data?.account_id_char}}
-                                            <img class="ml-2" src={{item?.data?.img_type_account}} width="37"
-                                                height="20" />
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
                             <div class="table-responsive" *ngIf="LIST_ACCOUNT_ISSURANCE.includes(item?.data?.account_type)">
                                 <table class="table table-borderless table-sm table-hover" cellspacing="0"
                                     cellpadding="0">
                                     <tbody>
                                         <tr *ngIf="item?.data?.issuance_key == ''">
-                                            <td><button class="btn btn-sm btn-primary pl-2 pr-2"
+                                      <td class="all-account">{{'Trading account' | translate}}: {{item?.data?.account_id_char}}
+                                            <img class="mr" src={{item?.data?.img_type_account}} width="37" height="20" />
+                                      </td>
+                                            <td style="text-align:right">
+                                              <button class="btn btn-sm btn-primary pr-2"
                                                     (click)="genQuoreaKey(item?.data?.account_id)">{{'API key' |
                                                     translate}}</button></td>
                                         </tr>
                                         <tr *ngIf="item?.data?.issuance_key != ''">
-                                            <td></td>
+                                      <td class="all-account">{{'Trading account' | translate}}: {{item?.data?.account_id_char}}
+                                            <img class="mr" src={{item?.data?.img_type_account}} width="37" height="20" />
+                                      </td>
+                                      <td></td>
                                             <td style="text-align:right">
-                                                <button *ngIf="!item?.data?.is_show_key" class="btn btn-sm btn-success pl-2 pr-2"
+                                                <button *ngIf="!item?.data?.is_show_key" class="btn btn-sm btn-success pr-2"
                                                 (click)="toggleDisplayKey(item?.data)">{{'Show API key' |
                                                     translate}}</button>
-                                                <button *ngIf="item?.data?.is_show_key" class="btn btn-sm btn-success pl-2 pr-2"
+                                                <button *ngIf="item?.data?.is_show_key" class="btn btn-sm btn-success pr-2"
                                                 (click)="toggleDisplayKey(item?.data)">{{'Hide API key' |
                                                     translate}}</button>
                                             </td>
                                         </tr>
                                         <tr *ngIf="item?.data?.is_show_key">
-                                            <td>{{'Trading account' | translate}}: </td>
+                                            <td class="pl-4 pr-2">{{'Trading account' | translate}}: </td>
+                                            <td></td>
                                             <td style="text-align:right">
                                                 {{item?.data?.account_id_char}}
-                                                <button class="btn btn-sm btn-primary pl-2 pr-2"
+                                                <button class="btn btn-sm btn-primary pr-2"
                                                     (click)="copyMessage(item?.data?.account_id)">{{'Copy' |
                                                     translate}}</button>
                                             </td>
                                         </tr>
                                         <tr *ngIf="item?.data?.is_show_key">
-                                            <td>{{'API key' | translate}}: </td>
+                                            <td class="pl-4 pr-2">{{'API key' | translate}}: </td>
+                                            <td></td>
                                             <td style="text-align:right">
                                                 {{item?.data?.issuance_key}}
-                                                <button class="btn btn-sm btn-primary pl-2 pr-2"
+                                                <button class="btn btn-sm btn-primary pr-2"
                                                     (click)="copyMessage(item?.data?.issuance_key)">{{'Copy' |
                                                     translate}}</button>
                                             </td>
