@@ -35,6 +35,7 @@ import { InternalTransferComponent } from './internal-transfer/internal-transfer
 import { TransferComponent } from './transfer/transfer.component';
 import { TransferHistoryComponent } from './transfer-history/transfer-history.component';
 import { ConvertTradingTypePipe } from '../core/pipe/convert-trading-type.pipe';
+import { ModalTurnTradingComponent } from './modal-turn-trading/modal-turn-trading.component';
 
 @NgModule({
     imports: [
@@ -52,31 +53,35 @@ import { ConvertTradingTypePipe } from '../core/pipe/convert-trading-type.pipe';
     ],
     providers: [],
     declarations: [
-      NotificationsComponent,
-      AccountInformationComponent,
-      WithdrawRequestComponent,
-      WithdrawHistoryComponent,
-      ReportListComponent,
-      DepositComponent,
-      CurrencyDirective,
-      ListTransactionComponent,
-      TransacstionModalComponent,
-      UserInforComponent,
-      CorporateInfoComponent,
-      Mt5InfoComponent,
-      BankInfoComponent,
-      SettingComponent,
-      ConvertFinancialPipe,
-      ConvertInvestmentPurposePipe,
-      ConvertAccountTypeBankPipe,
-      SafePipe,
-      ModalDepositWithdrawComponent,
-      SummaryComponent,
-      AllAccountComponent,
-      InternalTransferComponent,
-      TransferComponent,
-      TransferHistoryComponent,
-      ConvertTradingTypePipe
+        NotificationsComponent,
+        AccountInformationComponent,
+        WithdrawRequestComponent,
+        WithdrawHistoryComponent,
+        ReportListComponent,
+        DepositComponent,
+        CurrencyDirective,
+        ListTransactionComponent,
+        TransacstionModalComponent,
+        UserInforComponent,
+        CorporateInfoComponent,
+        Mt5InfoComponent,
+        BankInfoComponent,
+        SettingComponent,
+        ConvertFinancialPipe,
+        ConvertInvestmentPurposePipe,
+        ConvertAccountTypeBankPipe,
+        SafePipe,
+        ModalDepositWithdrawComponent,
+        SummaryComponent,
+        AllAccountComponent,
+        InternalTransferComponent,
+        TransferComponent,
+        TransferHistoryComponent,
+        ConvertTradingTypePipe,
+        ModalTurnTradingComponent
+    ],
+    exports: [
+        ModalTurnTradingComponent
     ],
     schemas: [NO_ERRORS_SCHEMA]
 })

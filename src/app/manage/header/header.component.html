@@ -13,6 +13,12 @@
                 <!-- END SITE BRAND -->
                 <!-- BEGIN HEADER TOP NAV -->
                 <ul class="header-top-nav nav">
+                    <li class="nav-item nav-item-api d-none d-md-inline-block" (click)="openTurnTradingModal()" *ngIf="bizGroup === 'it' && showModalApiKey">
+                    <a href="javascript:;" class="nav-link" role="button" aria-haspopup="true" aria-expanded="false">
+                      <i class="afx-icon-api"></i>
+                        <span class="d-none d-lg-inline"> {{'Turn Trading Cooperation' | translate}}</span>
+                    </a>
+                    </li>
                     <li class="nav-item nav-item-api d-none d-md-inline-block" (click)="openApiKeyModal()" *ngIf="bizGroup === 'it' && showModalApiKey">
                     <a href="javascript:;" class="nav-link" role="button" aria-haspopup="true" aria-expanded="false">
                       <i class="afx-icon-api"></i>
@@ -155,6 +161,7 @@
 
 </div>
 <app-modal-can-not-add-account #modalCanNotAddAccount></app-modal-can-not-add-account>
+<app-modal-turn-trading #turnTrading></app-modal-turn-trading>
 <app-modal-api-key #modalApiKey></app-modal-api-key>
 <app-modal-add-account-step1  #modalAddAccountStep1 [accountTradingForm]="accountTradingForm" (confirmStep1)="onConfirmStep1()"></app-modal-add-account-step1>
 <app-modal-add-account-step2 class="mt-5 mb-5" #modalAddAccountStep2 [accountTradingForm]="accountTradingForm" (returnStep1)="onReturnStep1()" (confirmStep2)="onConfirmStep2()"></app-modal-add-account-step2>

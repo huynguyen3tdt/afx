@@ -28,6 +28,7 @@ import { ModalAddAccountStep3Component } from './manage/modal-add-account-step3/
 import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
 import { ModalCanNotAddAccountComponent } from './manage/modal-can-not-add-account/modal-can-not-add-account.component';
 import { ModalApiKeyComponent } from './manage/modal-api-key/modal-api-key.component';
+import {ManageModule} from './manage/manage.module';
 
 const appEnvInitializerFn = (envConfig: EnvConfigService) => {
   return () => {
@@ -57,24 +58,25 @@ const Routing: ModuleWithProviders = RouterModule.forRoot(AppRoutes, {
     ModalCanNotAddAccountComponent,
     ModalApiKeyComponent
   ],
-  imports: [
-    BrowserModule,
-    HttpClientModule,
-    FormsModule,
-    ReactiveFormsModule,
-    Routing,
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: HttpLoaderFactory,
-        deps: [HttpClient]
-      }
-    }),
-    BrowserAnimationsModule,
-    ToastrModule.forRoot(),
-    ModalModule.forRoot(),
-    Ng4LoadingSpinnerModule.forRoot(),
-  ],
+    imports: [
+        BrowserModule,
+        HttpClientModule,
+        FormsModule,
+        ReactiveFormsModule,
+        Routing,
+        TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: HttpLoaderFactory,
+                deps: [HttpClient]
+            }
+        }),
+        BrowserAnimationsModule,
+        ToastrModule.forRoot(),
+        ModalModule.forRoot(),
+        Ng4LoadingSpinnerModule.forRoot(),
+        ManageModule,
+    ],
   providers: [
     EnvConfigService,
     AuthGuard,

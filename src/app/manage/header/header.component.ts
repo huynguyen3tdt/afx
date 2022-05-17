@@ -25,6 +25,7 @@ import {WithdrawRequestModel} from 'src/app/core/model/withdraw-request-response
 import {WithdrawRequestService} from 'src/app/core/services/withdraw-request.service';
 import {ToastrService} from 'ngx-toastr';
 import {PhillipAccountType} from 'src/app/core/enum/enum-info';
+import {ModalTurnTradingComponent} from '../modal-turn-trading/modal-turn-trading.component';
 
 declare const $: any;
 declare const TweenMax: any;
@@ -69,6 +70,7 @@ export class HeaderComponent implements OnInit {
   @ViewChild('modalAddAccountStep3', { static: false }) modalAddAccountStep3: ModalAddAccountStep3Component;
   @ViewChild('modalCanNotAddAccount', { static: false }) modalCanNotAddAccount: ModalCanNotAddAccountComponent;
   @ViewChild('modalApiKey', { static: false }) modalApiKey: ModalApiKeyComponent;
+  @ViewChild('turnTrading', { static: false }) turnTrading: ModalTurnTradingComponent;
 
   constructor(private router: Router, private authenService: AuthenService,
               private notificationsService: NotificationsService,
@@ -276,6 +278,12 @@ export class HeaderComponent implements OnInit {
     this.modalApiKey.open();
     this.spinnerService.hide();
 }
+
+  openTurnTradingModal() {
+    this.spinnerService.show();
+    this.turnTrading.open();
+    this.spinnerService.hide();
+  }
 
   openAddAccountModal() {
     this.spinnerService.show();
