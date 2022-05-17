@@ -227,6 +227,8 @@ export interface AccountType {
   partner_id: number;
   currency_cd: string;
   issuance_key: string;
+  turn_trading_flg?: boolean;
+  failed_accounts?: string;
 }
 
 export interface TradingAccountResponeModel {

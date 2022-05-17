@@ -8,7 +8,7 @@ import {
   ACCOUNT_IDS,
   ACCOUNT_INSSURANCE,
   ERROR_GEN_ISSUANCE_KEY_EN,
-  ERROR_GEN_ISSUANCE_KEY_JP,
+  ERROR_GEN_ISSUANCE_KEY_JP, MESSAGE_SUCCESS_GEN_QUOREA_KEY_EN, MESSAGE_SUCCESS_GEN_QUOREA_KEY_JP,
   SUCCESS_CLIPBOARD_EN,
   SUCCESS_CLIPBOARD_JP,
   TYPE_SUCCESS_TOAST_EN,
@@ -119,12 +119,15 @@ export class ModalApiKeyComponent implements OnInit {
 
   genQuoreaKey(accountID) {
     let messageSuccess;
+    let messageType;
     let messageErr;
     if (this.locale === LANGUAGLE.english) {
-      messageSuccess = TYPE_SUCCESS_TOAST_EN;
+      messageType = TYPE_SUCCESS_TOAST_EN;
+      messageSuccess = MESSAGE_SUCCESS_GEN_QUOREA_KEY_EN;
       messageErr = ERROR_GEN_ISSUANCE_KEY_EN;
     } else {
-      messageSuccess = TYPE_SUCCESS_TOAST_JP;
+      messageType = TYPE_SUCCESS_TOAST_JP;
+      messageSuccess = MESSAGE_SUCCESS_GEN_QUOREA_KEY_JP;
       messageErr = ERROR_GEN_ISSUANCE_KEY_JP;
     }
     const param: TradingAccount = {
@@ -135,9 +138,9 @@ export class ModalApiKeyComponent implements OnInit {
       this.spinnerService.hide();
       if (response.meta.code === Metacode.SUCCESS) {
         this.getAccountInformation();
-        this.toastr.success(messageSuccess);
+        this.toastr.success(messageSuccess, messageType);
       } else {
-        this.toastr.error(messageErr);
+        this.toastr.error(messageErr, messageType);
       }
     });
   }

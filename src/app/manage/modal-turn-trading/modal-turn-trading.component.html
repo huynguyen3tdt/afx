@@ -9,7 +9,7 @@
                 </button>
             </div>
             <div class="modal-body pt-0">
-                <div *ngIf="!showAPIAccountFlg">
+                <div>
                     <h5 class="pt-3">{{'Getting started with the Philip MT5 API connection' | translate}}</h5>
                     <h5>{{'Please read and understand the following rules before issuing the API key required to use connection service.'| translate}}</h5>
                     <h5>{{'After accepting the link application, we will send the login information to the Turn Trading dedicated site to your registered email address.'| translate}}</h5>
@@ -19,16 +19,16 @@
                         <div>
                             <label class="container-checkbox small mb-2 box-item-checkbox">
                                 <h5 class="pt-2">{{'Agree to Phillip Securities API Service Usage Policy' | translate}}</h5>
-                                <input type="checkbox" [(ngModel)]="agreeApiPolicyFlg" data-md-icheck
-                                    (change)="toggleCheckBox($event)">
+                                <input type="checkbox" [(ngModel)]="agreePolicyFlg" data-md-icheck
+                                       (change)="toggleCheckBox($event)">
                                 <span class="checkmark mt-2"></span>
                             </label>
                         </div>
 
                     </div>
                     <div class="modal-footer pt-1 pb-1 text-right bg-light">
-                        <button type="submit" [disabled]="!agreeApiPolicyFlg" (click)="sendApplication()"
-                            class="btn btn-primary pl-4 pr-4 btn-confirm">{{'Send Application' | translate}}</button>
+                        <button type="submit" [disabled]="!agreePolicyFlg" (click)="sendApplication()"
+                                class="btn btn-primary pl-4 pr-4 btn-confirm">{{'Send Application' | translate}}</button>
                     </div>
                 </div>
 

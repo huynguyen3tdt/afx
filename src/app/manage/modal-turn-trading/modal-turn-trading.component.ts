@@ -1,15 +1,22 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
 import {ModalDirective} from 'ngx-bootstrap';
 import {UserService} from '../../core/services/user.service';
 import {ToastrService} from 'ngx-toastr';
 import {GlobalService} from '../../core/services/global.service';
 import {Ng4LoadingSpinnerService} from 'ng4-loading-spinner';
-import {ACCOUNT_IDS} from '../../core/constant/authen-constant';
+import {
+  FAILED_REGIST_TURN_TRADING_EN,
+  FAILED_REGIST_TURN_TRADING_JP, LOCALE,
+  SUCCESS_REGIST_TURN_TRADING_EN,
+  SUCCESS_REGIST_TURN_TRADING_JP,
+  TYPE_SUCCESS_TOAST_EN,
+  TYPE_SUCCESS_TOAST_JP
+} from '../../core/constant/authen-constant';
 import {AccountType} from '../../core/model/report-response.model';
-import {forkJoin} from 'rxjs';
-import {WithdrawRequestModel} from '../../core/model/withdraw-request-response.model';
-import {Observable} from 'rxjs/internal/Observable';
 import {WithdrawRequestService} from '../../core/services/withdraw-request.service';
+import {take} from 'rxjs/operators';
+import {Metacode} from '../../core/enum/enum-info';
+import {LANGUAGLE} from '../../core/constant/language-constant';
 
 @Component({
   selector: 'app-modal-turn-trading',
@@ -18,10 +25,11 @@ import {WithdrawRequestService} from '../../core/services/withdraw-request.servi
 })
 export class ModalTurnTradingComponent implements OnInit {
   @ViewChild('modalTurnTrading', { static: true }) modal: ModalDirective;
+  @Output() dismiss: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  agreeApiPolicyFlg: any;
-  showAPIAccountFlg: false;
+  agreePolicyFlg: any;
   listTradingAccount: Array<AccountType>;
+  locale: string;
 
   constructor(
     private withdrawRequestService: WithdrawRequestService,
@@ -32,11 +40,11 @@ export class ModalTurnTradingComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.listTradingAccount = JSON.parse(localStorage.getItem(ACCOUNT_IDS));
+    this.locale = localStorage.getItem(LOCALE);
   }
 
   toggleCheckBox(e) {
-    this.agreeApiPolicyFlg = e.target.checked;
+    this.agreePolicyFlg = e.target.checked;
   }
 
   open() {
@@ -48,7 +56,28 @@ export class ModalTurnTradingComponent implements OnInit {
   }
 
   sendApplication() {
-
+    let messageSuccess;
+    let messageErr;
+    if (this.locale === LANGUAGLE.english) {
+      messageSuccess = SUCCESS_REGIST_TURN_TRADING_EN;
+      messageErr = FAILED_REGIST_TURN_TRADING_EN;
+    } else {
+      messageSuccess = SUCCESS_REGIST_TURN_TRADING_JP;
+      messageErr = FAILED_REGIST_TURN_TRADING_JP;
+    }
+    this.spinnerService.show();
+    this.userService.turnTradingAccept().pipe(take(1)).subscribe(response => {
+      this.spinnerService.hide();
+      this.modal.hide();
+      if (response.meta.code === Metacode.SUCCESS) {
+        this.toastr.success(messageSuccess);
+        this.dismiss.emit(false);
+      } else {
+        const failedAccounts = response.data.failed_accounts;
+        messageErr = `${failedAccounts} ${messageErr}`;
+        this.toastr.warning(messageErr);
+      }
+    });
   }
 
 }
