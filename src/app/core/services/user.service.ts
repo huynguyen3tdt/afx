@@ -216,4 +216,17 @@ export class UserService {
           })
         );
   }
+
+
+  turnTradingAccept(param?): Observable<TradingAccountResponeModel> {
+    return this.httpClient
+      .post(`${this.envConfigService.getConfig()}/${AppSettings.API_ACCEPT_TURN_TRADING}`, param)
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          return new Observable((observer: InnerSubscriber<any, any>) => {
+            observer.next(error);
+          });
+        })
+      );
+  }
 }

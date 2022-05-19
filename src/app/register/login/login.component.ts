@@ -157,7 +157,6 @@ export class LoginComponent implements OnInit, AfterViewInit {
         }
         response.data.account_ids = this.getListAccountIds(this.sortListAccount(response.data.account_ids));
         localStorage.setItem(TOKEN_AFX, response.data.access_token);
-        localStorage.setItem(ACCOUNT_IDS, JSON.stringify(response.data.account_ids));
         localStorage.setItem(IS_COMPANY, response.data.is_company.toString());
         if (response.data.module_funding_min_deposit) {
         localStorage.setItem(MIN_DEPOST, response.data.module_funding_min_deposit.toString());
@@ -262,7 +261,8 @@ export class LoginComponent implements OnInit, AfterViewInit {
           account_id: element.account_id,
           value : element.value,
           currency: element.currency,
-          img_type_account: element.img_type_account
+          img_type_account: element.img_type_account,
+          turn_trading_flg: element.turn_trading_flg
         };
         listData.push(dataObj);
       });

@@ -42,6 +42,7 @@ export interface AccountType {
   value: string;
   currency: string;
   img_type_account?: string;
+  turn_trading_flg?: boolean;
 }
 
 export interface Report {

@@ -408,5 +408,9 @@
   "Please enter your phone number in 10 or 11 digits.": "電話番号は10~11桁で入力してください。",
   "Please enter phone number format.": "固定電話番号を入力してください。",
   "Only half-width number can be entered.": "半角数字しか入力できない。",
-  "Only half-width characters can be entered.": "半角文字しか入力できない 。"
+  "Only half-width characters can be entered.": "半角文字しか入力できない 。",
+  "Turn Trading Cooperation": "Turn Trading 連携申請",
+  "After accepting the link application, we will send the login information to the Turn Trading dedicated site to your registered email address.": "連携申請受付後、お客様のご登録メールアドレスへTurnTrading専用サイトへのログイン情報をお送りします。",
+  "Send Application": "連携申請",
+  "Turn Trading cooperation application": "フィリップMT5＆TurnTrading API連携申請"
 }

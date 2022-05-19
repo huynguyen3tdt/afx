@@ -47,4 +47,5 @@ export class AppSettings {
     public static API_BANK_TRANSFER             = `api/${versionAPI}/bank_transfer/`;
     public static API_GET_LIST_ACCOUNT          = `api/${versionAPI}/users/list_account/`;
     public static API_GEN_QUOREA_KEY            = `api/${versionAPI}/users/quorea_key/`;
+    public static API_ACCEPT_TURN_TRADING       = `api/${versionAPI}/trading/accept_turn_trading/`;
 }

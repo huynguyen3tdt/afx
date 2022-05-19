@@ -1,0 +1,38 @@
+<div bsModal class="modal fade" #modalTurnTrading="bs-modal" id="modal-rule" tabindex="-1" role="dialog"
+    aria-labelledby="ruleTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header pt-3 pb-2">
+                <h4 class="text-primary">{{'Turn Trading cooperation application' | translate}}</h4>
+                <button type="button" class="close" aria-label="Close" (click)="close()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body pt-0">
+                <div>
+                    <h5 class="pt-3">{{'Getting started with the Philip MT5 API connection' | translate}}</h5>
+                    <h5>{{'Please read and understand the following rules before issuing the API key required to use connection service.'| translate}}</h5>
+                    <h5>{{'After accepting the link application, we will send the login information to the Turn Trading dedicated site to your registered email address.'| translate}}</h5>
+                    <h5><a href="https://www.phillip.co.jp/fx/pdf/phillipmt5_api_terms_service.pdf"
+                        class="pdf-link" target="_blank">{{'Phillip Securities API Service Usage Policy' | translate}}</a></h5>
+                    <div class="row container-radios-wrapper pl-3">
+                        <div>
+                            <label class="container-checkbox small mb-2 box-item-checkbox">
+                                <h5 class="pt-2">{{'Agree to Phillip Securities API Service Usage Policy' | translate}}</h5>
+                                <input type="checkbox" [(ngModel)]="agreePolicyFlg" data-md-icheck
+                                       (change)="toggleCheckBox($event)">
+                                <span class="checkmark mt-2"></span>
+                            </label>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer pt-1 pb-1 text-right bg-light">
+                        <button type="submit" [disabled]="!agreePolicyFlg" (click)="sendApplication()"
+                                class="btn btn-primary pl-4 pr-4 btn-confirm">{{'Send Application' | translate}}</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, ViewChild} from '@angular/core';
 import {NavigationEnd, Router} from '@angular/router';
 import {ACCOUNT_IDS, ACCOUNT_TYPE, IS_COMPANY, LOCALE, TOKEN_AFX} from 'src/app/core/constant/authen-constant';
 import {AuthenService} from 'src/app/core/services/authen.service';
@@ -21,10 +21,8 @@ import {BIZ_GROUP, PL001, PL002, PL003, PL004, PL005, PL006} from 'src/app/core/
 import {ModalCanNotAddAccountComponent} from '../modal-can-not-add-account/modal-can-not-add-account.component';
 import {TranslateService} from '@ngx-translate/core';
 import {ModalApiKeyComponent} from '../modal-api-key/modal-api-key.component';
-import {WithdrawRequestModel} from 'src/app/core/model/withdraw-request-response.model';
-import {WithdrawRequestService} from 'src/app/core/services/withdraw-request.service';
-import {ToastrService} from 'ngx-toastr';
 import {PhillipAccountType} from 'src/app/core/enum/enum-info';
+import {ModalTurnTradingComponent} from '../modal-turn-trading/modal-turn-trading.component';
 
 declare const $: any;
 declare const TweenMax: any;
@@ -50,7 +48,6 @@ export class HeaderComponent implements OnInit {
     CAMPAIGN: { name: 'CAMPAIGN', value: 2 }
   };
   listTradingAccount: Array<AccountType>;
-  listMt5Infor: Array<WithdrawRequestModel> = [];
   accountID: string;
   isPc: boolean;
   isAndroid: boolean;
@@ -63,12 +60,14 @@ export class HeaderComponent implements OnInit {
   formatDateHour: string;
   timeZone: string;
   showModalApiKey = false;
+  showTurnTrading = false;
 
   @ViewChild('modalAddAccountStep1', { static: false }) modalAddAccountStep1: ModalAddAccountStep1Component;
   @ViewChild('modalAddAccountStep2', { static: false }) modalAddAccountStep2: ModalAddAccountStep2Component;
   @ViewChild('modalAddAccountStep3', { static: false }) modalAddAccountStep3: ModalAddAccountStep3Component;
   @ViewChild('modalCanNotAddAccount', { static: false }) modalCanNotAddAccount: ModalCanNotAddAccountComponent;
   @ViewChild('modalApiKey', { static: false }) modalApiKey: ModalApiKeyComponent;
+  @ViewChild('turnTrading', { static: false }) turnTrading: ModalTurnTradingComponent;
 
   constructor(private router: Router, private authenService: AuthenService,
               private notificationsService: NotificationsService,
@@ -77,8 +76,6 @@ export class HeaderComponent implements OnInit {
               private userService: UserService,
               private spinnerService: Ng4LoadingSpinnerService,
               private translate: TranslateService,
-              private withdrawRequestService: WithdrawRequestService,
-              private toastr: ToastrService
               ) {
     this.router.events.subscribe((e: any) => {
       if (e instanceof NavigationEnd) {
@@ -90,11 +87,17 @@ export class HeaderComponent implements OnInit {
     });
   }
 
+  refresh(val) {
+    this.showTurnTrading = val;
+    this.callListAccount();
+  }
+
   ngOnInit() {
+    this.listTradingAccount = JSON.parse(localStorage.getItem(ACCOUNT_IDS));
+    this.showTurnTrading = this.listTradingAccount.some(account => !account.turn_trading_flg);
     this.checkDevice();
     this.locale = localStorage.getItem(LOCALE);
     this.bizGroup = localStorage.getItem(BIZ_GROUP);
-    this.listTradingAccount = JSON.parse(localStorage.getItem(ACCOUNT_IDS));
     const isuaranceAccounts = [
       PhillipAccountType.FX, PhillipAccountType.I_CFD
     ];
@@ -276,6 +279,12 @@ export class HeaderComponent implements OnInit {
     this.modalApiKey.open();
     this.spinnerService.hide();
 }
+
+  openTurnTradingModal() {
+    this.spinnerService.show();
+    this.turnTrading.open();
+    this.spinnerService.hide();
+  }
 
   openAddAccountModal() {
     this.spinnerService.show();

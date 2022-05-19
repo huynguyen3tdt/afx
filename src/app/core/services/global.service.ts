@@ -209,7 +209,8 @@ export class GlobalService {
           account_id: element.trading_account_id.toString(),
           value : element.value,
           currency: element.currency_cd,
-          img_type_account: element.img_type_account
+          img_type_account: element.img_type_account,
+          turn_trading_flg: element.turn_trading_flg
         };
         listData.push(dataObj);
       });
