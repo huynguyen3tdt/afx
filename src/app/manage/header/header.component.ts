@@ -1,10 +1,10 @@
-import {Component, Input, OnChanges, OnInit, ViewChild} from '@angular/core';
+import {AfterContentChecked, ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
 import {NavigationEnd, Router} from '@angular/router';
 import {ACCOUNT_IDS, ACCOUNT_TYPE, IS_COMPANY, LOCALE, TOKEN_AFX} from 'src/app/core/constant/authen-constant';
 import {AuthenService} from 'src/app/core/services/authen.service';
 import {NotificationsService} from 'src/app/core/services/notifications.service';
 import {Notification, PageNotificationResponse} from 'src/app/core/model/page-noti.model';
-import moment from 'moment-timezone';
+import * as moment from 'moment-timezone';
 import {EN_FORMATDATE, JAPAN_FORMATDATE} from 'src/app/core/constant/format-date-constant';
 import {AccountType} from 'src/app/core/model/report-response.model';
 import {LANGUAGLE} from 'src/app/core/constant/language-constant';
@@ -32,7 +32,7 @@ declare const TweenMax: any;
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, AfterContentChecked {
 
   listNotification: Array<Notification>;
   pageNotification: PageNotificationResponse;
@@ -48,6 +48,7 @@ export class HeaderComponent implements OnInit {
     CAMPAIGN: { name: 'CAMPAIGN', value: 2 }
   };
   listTradingAccount: Array<AccountType>;
+  listAccountTurnTrading: Array<AccountType> = [];
   accountID: string;
   isPc: boolean;
   isAndroid: boolean;
@@ -61,6 +62,7 @@ export class HeaderComponent implements OnInit {
   timeZone: string;
   showModalApiKey = false;
   showTurnTrading = false;
+  isLoading = false;
 
   @ViewChild('modalAddAccountStep1', { static: false }) modalAddAccountStep1: ModalAddAccountStep1Component;
   @ViewChild('modalAddAccountStep2', { static: false }) modalAddAccountStep2: ModalAddAccountStep2Component;
@@ -76,6 +78,7 @@ export class HeaderComponent implements OnInit {
               private userService: UserService,
               private spinnerService: Ng4LoadingSpinnerService,
               private translate: TranslateService,
+              private changeDetector: ChangeDetectorRef,
               ) {
     this.router.events.subscribe((e: any) => {
       if (e instanceof NavigationEnd) {
@@ -89,7 +92,7 @@ export class HeaderComponent implements OnInit {
 
   refresh(val) {
     this.showTurnTrading = val;
-    this.callListAccount();
+    this.ngAfterContentChecked();
   }
 
   ngOnInit() {
@@ -130,6 +133,31 @@ export class HeaderComponent implements OnInit {
     }
     this.initAccountTradingForm();
   }
+
+  ngAfterContentChecked() {
+      this.changeDetector.detectChanges();
+
+      if (!this.listAccountTurnTrading.length && !this.isLoading) {
+        this.isLoading = true;
+        this.userService.getUserListAccount().subscribe(value => {
+          this.spinnerService.hide();
+          const listAccount = [];
+          if (value.meta.code === 200) {
+            value.data.list_account.map(el => {
+              if (el.trading_account_id) {
+                listAccount.push(el);
+              }
+            });
+            this.listAccountTurnTrading = this.globalService.getListAccountIds(this.globalService.sortListAccount(listAccount));
+            localStorage.setItem(ACCOUNT_IDS, JSON.stringify(this.listAccountTurnTrading));
+            this.isLoading = false;
+            this.showTurnTrading = this.listAccountTurnTrading.some(account => !account.turn_trading_flg);
+          }
+        }, error => {
+          this.isLoading = false;
+        });
+      }
+    }
 
   changeLang(language) {
     this.translate.use(language);
