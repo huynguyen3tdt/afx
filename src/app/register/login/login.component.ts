@@ -156,6 +156,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
           localStorage.setItem(REMEMBER_LOGIN, 'false');
         }
         response.data.account_ids = this.getListAccountIds(this.sortListAccount(response.data.account_ids));
+        localStorage.setItem(ACCOUNT_IDS, JSON.stringify(response.data.account_ids));
         localStorage.setItem(TOKEN_AFX, response.data.access_token);
         localStorage.setItem(IS_COMPANY, response.data.is_company.toString());
         if (response.data.module_funding_min_deposit) {
@@ -200,7 +201,6 @@ export class LoginComponent implements OnInit, AfterViewInit {
           this.router.navigate(['/reset_password'], {
           });
         }
-        this.changeLang(this.locale, true);
       } else {
         this.isSending = false;
         if (response.meta.code === 102) {
