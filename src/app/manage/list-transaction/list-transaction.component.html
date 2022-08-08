@@ -25,15 +25,10 @@
                         <td><a (click)="openDetail(item?.id)">{{item?.create_date}}</a></td>
                         <td><a href="javascript:;" (click)="openDetail(item?.id)">{{item?.trading_account_id | convertTradingType}}</a>
                             <img class="ml-1" src="{{item?.img_account_type}}" width="37" height="20"></td>
-                        <td><a (click)="openDetail(item?.id)"><span class="keep-all">{{item?.funding_type}}</span></a></td>
-                        <td><a (click)="openDetail(item?.id)">{{item?.method}}</a></td>
-                        <!-- <td class="text-right">JPY</td> -->
+                        <td><a (click)="openDetail(item?.id)"><span class="keep-all">{{item?.funding_type | translate}}</span></a></td>
+                        <td><a (click)="openDetail(item?.id)">{{item?.method | translate}}</a></td>
                         <td (click)="openDetail(item?.id)" class="text-right">{{item?.amount | number}}</td>
-                        <!-- <td class="text-right"><span class="text-info"><i class="icon ion-md-hourglass"></i>
-                                Pending</span></td> -->
 
-                        <!-- <td *ngIf="item?.status == transactionStatus.NEW.key" class="text-right"><span class="text-info"><i class="icon ion-md-hourglass"></i>
-                                  {{'New' | translate}}</span></td> -->
                         <td *ngIf="item?.status == transactionStatus.PENDING.key" class="text-right"><span class="text-info keep-all"><i class="icon ion-md-hourglass"></i>
                             {{'In-progress' | translate}}</span></td>
                         <td *ngIf="item?.status == transactionStatus.CANCEL.key" class="text-right"><span class="keep-all"> {{'Cancel' | translate}}</span></td>

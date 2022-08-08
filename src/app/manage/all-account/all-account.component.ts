@@ -4,7 +4,7 @@ import { WithdrawRequestModel } from 'src/app/core/model/withdraw-request-respon
 import { ACCOUNT_IDS, TIMEZONEAFX, LOCALE} from 'src/app/core/constant/authen-constant';
 import { WithdrawRequestService } from 'src/app/core/services/withdraw-request.service';
 import { forkJoin, Observable } from 'rxjs';
-import moment from 'moment-timezone';
+import * as moment from 'moment-timezone';
 import { LANGUAGLE } from 'src/app/core/constant/language-constant';
 import { EN_FORMATDATE_HH_MM, JAPAN_FORMATDATE_HH_MM } from 'src/app/core/constant/format-date-constant';
 import { GlobalService } from 'src/app/core/services/global.service';

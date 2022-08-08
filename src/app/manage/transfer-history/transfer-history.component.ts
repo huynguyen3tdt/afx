@@ -14,7 +14,7 @@ import { GlobalService } from 'src/app/core/services/global.service';
 import { AccountType } from 'src/app/core/model/report-response.model';
 import { SelectItem } from 'primeng/api';
 import { ActivatedRoute } from '@angular/router';
-import moment from 'moment-timezone';
+import * as moment from 'moment-timezone';
 import { LANGUAGLE } from 'src/app/core/constant/language-constant';
 import { TransacstionModalComponent } from '../transacstion-modal/transacstion-modal.component';
 import { defineLocale, jaLocale } from 'ngx-bootstrap/chronos';

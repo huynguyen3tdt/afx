@@ -73,9 +73,9 @@
 
 
                                 <div class="d-flex align-items-center">
-                                    <div class="mr-2" (click)="onRefesh()"><a href="javascript:;" class="btn-link-24"><i
+                                    <div class="mr-2" (click)="onRefresh()"><a href="javascript:;" class="btn-link-24"><i
                                         class="icon ion-md-refresh-circle pr-1"></i></a></div>
-                                    <div class="small text-secondary"><i class="afx-icon-card"></i> <em>{{lastestTime}}</em></div>
+                                    <div class="small text-secondary"><i class="afx-icon-card"></i> <em>{{latestTime}}</em></div>
                                 </div>
                             </div>
 
@@ -143,10 +143,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <p class="small text-secondary p-2 bg-light" *ngIf="locale == language.english">Notice: Minimum single withdrawal amount is {{minWithdraw | number}}
-                            </p>
-                            <p class="small text-secondary p-2 bg-light" *ngIf="locale == language.japan">※全額出金以外の最低出金額は{{minWithdraw | number}}円となります。
-                                </p>
+                            <p class="small text-secondary p-2 bg-light">{{'Message Minimum Withdrawal' | translate: {'minWithdraw': minWithdraw} }}</p>
                             <div *ngIf="errMessage == true" class="invalid-mess">
                                 <div>{{'Your Margin Level is nearly the Margin Call Level' | translate}}</div>
                             </div>
@@ -241,8 +238,8 @@
         </div>
       </div>
       <div class="modal-body">
-          <p *ngIf="checkWithDrawal == true">{{'Your withdrawal request has been received:' | translate }}</p>
-          <p *ngIf="checkWithDrawal == false">{{'Your withdrawal request has been rejected:' | translate }}</p>
+          <p *ngIf="checkWithdrawal">{{'Your withdrawal request has been received:' | translate }}</p>
+          <p *ngIf="!checkWithdrawal">{{'Your withdrawal request has been rejected:' | translate }}</p>
         <table class="table table-hover table-sm small" cellspacing="0" cellpadding="0">
             <tbody>
                 <tr>
@@ -260,12 +257,12 @@
             </tbody>
         </table>
         <!-- <p *ngIf="checkWithDrawal == true">{{'It is being processed within 3-5 business day.' | translate}}</p> -->
-        <div *ngIf="checkWithDrawal == true">
+        <div *ngIf="checkWithdrawal">
             <div>{{'Requests made by 15:00 will be withdrawn on the next business day.' | translate}}</div>
             <div>{{'Requests received after 15:00 will be handled the next business day.' | translate}}</div>
         </div>
 
-        <p *ngIf="checkWithDrawal == false">{{'Reason: MT5 account balance is not enough money to withdraw' | translate}}</p>
+        <p *ngIf="!checkWithdrawal">{{'Reason: MT5 account balance is not enough money to withdraw' | translate}}</p>
         <hr>
         <div class="text-center">
           <button type="button" class="btn btn-success" id="got_it" data-dismiss="modal" (click)="modalWithdrawResult.hide()">{{'Finish' | translate}}</button>

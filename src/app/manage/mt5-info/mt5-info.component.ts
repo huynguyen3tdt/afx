@@ -7,7 +7,7 @@ import { Mt5Model, WithdrawAmountModel } from 'src/app/core/model/withdraw-reque
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { WithdrawRequestService } from 'src/app/core/services/withdraw-request.service';
 import { GlobalService } from 'src/app/core/services/global.service';
-import moment from 'moment-timezone';
+import * as moment from 'moment-timezone';
 import { take } from 'rxjs/operators';
 
 @Component({

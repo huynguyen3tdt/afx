@@ -14,7 +14,7 @@ import { GlobalService } from 'src/app/core/services/global.service';
 import { AccountType } from 'src/app/core/model/report-response.model';
 import { SelectItem } from 'primeng/api';
 import { ActivatedRoute } from '@angular/router';
-import moment from 'moment-timezone';
+import * as moment from 'moment-timezone';
 import { LANGUAGLE } from 'src/app/core/constant/language-constant';
 import { TransacstionModalComponent } from '../transacstion-modal/transacstion-modal.component';
 import { defineLocale, jaLocale } from 'ngx-bootstrap/chronos';
@@ -213,7 +213,7 @@ export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
             item.create_date += TIMEZONESERVER;
             item.create_date = moment(item.create_date).tz(this.timeZone).format(this.formatDateHour);
             item.funding_type = this.globalService.checkType(item.funding_type);
-            item.method = this.globalService.checkPaymentMedthod(item.method);
+            item.method = this.globalService.checkPaymentMethod(item.method);
             item.img_account_type = this.globalService.convertTypeToImg(item.trading_account_id.toString());
           });
           this.recordFrom = this.pageSize * (this.currentPage - 1) + 1;
@@ -360,7 +360,7 @@ export class WithdrawHistoryComponent implements OnInit, AfterViewInit {
         this.tranHistoryDetail = response.data;
         this.tranHistoryDetail.create_date += TIMEZONESERVER;
         this.tranHistoryDetail.create_date = moment(this.tranHistoryDetail.create_date).tz(this.timeZone).format(this.formatDateHour);
-        this.tranHistoryDetail.method = this.globalService.checkPaymentMedthod(this.tranHistoryDetail.method);
+        this.tranHistoryDetail.method = this.globalService.checkPaymentMethod(this.tranHistoryDetail.method);
         this.tranHistoryDetail.funding_type = this.globalService.checkType(this.tranHistoryDetail.funding_type);
         this.tranModal.open(this.tranHistoryDetail, this.tradingAccount.value, 'dw');
         // $('#tran_detail').modal('show');
