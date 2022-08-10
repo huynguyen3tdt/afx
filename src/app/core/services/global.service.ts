@@ -17,7 +17,6 @@ export class GlobalService {
   constructor(
     private spinnerService: Ng4LoadingSpinnerService,
     private userService: UserService,
-    private globalService: GlobalService,
   ) { }
 
   totalNoti = new BehaviorSubject('');
@@ -46,53 +45,27 @@ export class GlobalService {
   }
 
   checkType(type: string) {
-    const locale = localStorage.getItem(LOCALE);
     if (type === TYPEOFTRANHISTORY.DEPOSIT.key) {
-      if (locale === LANGUAGLE.english) {
-        return TYPEOFTRANHISTORY.DEPOSIT.name;
-      } else {
-        return TYPEOFTRANHISTORY.DEPOSIT.nameJP;
-      }
+      return TYPEOFTRANHISTORY.DEPOSIT.name;
     }
     if (type === TYPEOFTRANHISTORY.WITHDRAWAL.key) {
-      if (locale === LANGUAGLE.english) {
-        return TYPEOFTRANHISTORY.WITHDRAWAL.name;
-      } else {
-        return TYPEOFTRANHISTORY.WITHDRAWAL.nameJP;
-      }
+      return TYPEOFTRANHISTORY.WITHDRAWAL.name;
     }
     if (type === TYPEOFTRANHISTORY.INTERNALTRANSFER.key) {
-      if (locale === LANGUAGLE.english) {
-        return TYPEOFTRANHISTORY.INTERNALTRANSFER.name;
-      } else {
-        return TYPEOFTRANHISTORY.INTERNALTRANSFER.nameJP;
-      }
+      return TYPEOFTRANHISTORY.INTERNALTRANSFER.name;
     }
     return '';
   }
 
-  checkPaymentMedthod(type: string) {
-    const locale = localStorage.getItem(LOCALE);
+  checkPaymentMethod(type: string) {
     if (type === PAYMENTMETHOD.QUICKDEPOSIT.key) {
-      if (locale === LANGUAGLE.english) {
-        return PAYMENTMETHOD.QUICKDEPOSIT.name;
-      } else {
-        return PAYMENTMETHOD.QUICKDEPOSIT.nameJP;
-      }
+      return PAYMENTMETHOD.QUICKDEPOSIT.name;
     }
     if (type === PAYMENTMETHOD.BANKTRANSFER.key) {
-      if (locale === LANGUAGLE.english) {
-        return PAYMENTMETHOD.BANKTRANSFER.name;
-      } else {
-        return PAYMENTMETHOD.BANKTRANSFER.nameJP;
-      }
+      return PAYMENTMETHOD.BANKTRANSFER.name;
     }
     if (type === PAYMENTMETHOD.INTERNALTRANSFER.key) {
-      if (locale === LANGUAGLE.english) {
-        return PAYMENTMETHOD.INTERNALTRANSFER.name;
-      } else {
-        return PAYMENTMETHOD.INTERNALTRANSFER.nameJP;
-      }
+      return PAYMENTMETHOD.INTERNALTRANSFER.name;
     }
     return '';
   }

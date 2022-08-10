@@ -34,7 +34,7 @@ import { Router } from '@angular/router';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { ListTransactionComponent } from '../list-transaction/list-transaction.component';
 import { LANGUAGLE } from 'src/app/core/constant/language-constant';
-import moment from 'moment-timezone';
+import * as moment from 'moment-timezone';
 import { take } from 'rxjs/operators';
 import { EnvConfigService } from 'src/app/core/services/env-config.service';
 import { AppSettings } from 'src/app/core/services/api.setting';

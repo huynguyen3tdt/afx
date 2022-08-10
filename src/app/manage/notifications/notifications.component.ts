@@ -6,7 +6,7 @@ import { FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { FIRST_LOGIN, LOCALE, TIMEZONEAFX, TIMEZONESERVER, ACCOUNT_IDS, ACCOUNT_TYPE } from 'src/app/core/constant/authen-constant';
 import { EN_FORMATDATE_HH_MM, JAPAN_FORMATDATE_HH_MM } from 'src/app/core/constant/format-date-constant';
-import moment from 'moment-timezone';
+import * as moment from 'moment-timezone';
 import { AccountType } from 'src/app/core/model/report-response.model';
 import { LANGUAGLE } from 'src/app/core/constant/language-constant';
 import { ModalDirective } from 'ngx-bootstrap';

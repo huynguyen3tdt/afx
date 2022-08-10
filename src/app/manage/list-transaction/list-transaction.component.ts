@@ -6,7 +6,7 @@ import { TransactionModel, TransferResulteModel } from 'src/app/core/model/withd
 import { JAPAN_FORMATDATE_HH_MM, EN_FORMATDATE, EN_FORMATDATE_HH_MM, JAPAN_FORMATDATE } from 'src/app/core/constant/format-date-constant';
 import { PAYMENTMETHOD, TYPEOFTRANHISTORY, STATUSTRANHISTORY, TRADING_TYPE } from 'src/app/core/constant/payment-method-constant';
 declare var $: any;
-import moment from 'moment-timezone';
+import * as moment from 'moment-timezone';
 import { LOCALE, TIMEZONEAFX, TIMEZONESERVER, ACCOUNT_IDS } from 'src/app/core/constant/authen-constant';
 import { GlobalService } from 'src/app/core/services/global.service';
 import { LANGUAGLE } from 'src/app/core/constant/language-constant';
@@ -24,7 +24,6 @@ export class ListTransactionComponent implements OnInit, OnChanges {
   @Input() accountID: string;
   @Input() tranType: string;
   @Output() emitTabFromList: EventEmitter<string> = new EventEmitter<string>();
-  titleTransaction: string;
   listTransaction: Array<TransactionModel>;
   transactionDetail: TransactionModel;
   transferTransactionDetail: TransferResulteModel;
@@ -81,7 +80,7 @@ export class ListTransactionComponent implements OnInit, OnChanges {
           // moment(new Date(item.create_date).toLocaleString('ja-JP', { timeZone: 'Asia/Tokyo' })).format(this.formatDateHour);
           moment(item.create_date).tz(this.timeZone).format(this.formatDateHour);
           item.funding_type = this.globalService.checkType(item.funding_type);
-          item.method = this.globalService.checkPaymentMedthod(item.method);
+          item.method = this.globalService.checkPaymentMethod(item.method);
           item.img_account_type = this.globalService.convertTypeToImg(item.trading_account_id.toString());
         });
       }
@@ -99,7 +98,7 @@ export class ListTransactionComponent implements OnInit, OnChanges {
           this.listTranTransfer.forEach(item => {
             item.create_date += TIMEZONESERVER;
             item.create_date = moment(item.create_date).tz(this.timeZone).format(this.formatDateHour);
-            item.method = this.globalService.checkPaymentMedthod(item.method);
+            item.method = this.globalService.checkPaymentMethod(item.method);
             item.img_send_type = this.globalService.convertTypeToImg(item.from_trading_account_id.toString());
             item.img_receive_type = this.globalService.convertTypeToImg(item.to_trading_account_id.toString());
           });
@@ -114,7 +113,7 @@ export class ListTransactionComponent implements OnInit, OnChanges {
           this.transactionDetail = response.data;
           this.transactionDetail.create_date += TIMEZONESERVER;
           this.transactionDetail.create_date = moment(this.transactionDetail.create_date).tz(this.timeZone).format(this.formatDateHour);
-          this.transactionDetail.method = this.globalService.checkPaymentMedthod(this.transactionDetail.method);
+          this.transactionDetail.method = this.globalService.checkPaymentMethod(this.transactionDetail.method);
           this.transactionDetail.funding_type = this.globalService.checkType(this.transactionDetail.funding_type);
           this.tranModal.open(this.transactionDetail, this.tradingAccount.value, this.tranType);
           // $('#tran_detail').modal('show');

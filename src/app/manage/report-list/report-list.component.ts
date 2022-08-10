@@ -6,7 +6,7 @@ import { ACCOUNT_IDS, LOCALE, TIMEZONEAFX, TIMEZONESERVER } from 'src/app/core/c
 import { JAPAN_FORMATDATE, EN_FORMATDATE, EN_FORMATDATE_HH_MM, JAPAN_FORMATDATE_HH_MM } from 'src/app/core/constant/format-date-constant';
 import { GlobalService } from 'src/app/core/services/global.service';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
-import moment from 'moment-timezone';
+import * as moment from 'moment-timezone';
 import { LANGUAGLE } from 'src/app/core/constant/language-constant';
 import { BsLocaleService, defineLocale, jaLocale, ModalDirective, BsDatepickerDirective } from 'ngx-bootstrap';
 import { take } from 'rxjs/operators';
