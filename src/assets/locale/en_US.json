@@ -436,5 +436,10 @@
   "Company changes rule": "The Company may change the general rules regarding deposits and withdrawals without notifying the customer in advance.",
   "User can impose restrictions on withdrawals": "We may also impose restrictions on withdrawals from the perspective of legal compliance.",
   "Conclusion about deposit": "Finally, we may impose an investigation confirmation, refusal or transfer fee on withdrawal requests from trading accounts that are not trading.",
-  "JPY": "JPY"
+  "JPY": "JPY",
+  "publish date": "Publish date",
+  "expire time": "Expire time",
+  "approve date": "Approve date",
+  "Confirmed": "Confirmed",
+  "Expired": "Expired"
 }

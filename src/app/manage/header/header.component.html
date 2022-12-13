@@ -166,7 +166,9 @@
 <app-modal-can-not-add-account #modalCanNotAddAccount></app-modal-can-not-add-account>
 <app-modal-turn-trading #turnTrading (dismiss)="refresh($event)"></app-modal-turn-trading>
 <app-modal-api-key #modalApiKey></app-modal-api-key>
-<app-modal-add-account-step1  #modalAddAccountStep1 [accountTradingForm]="accountTradingForm" (confirmStep1)="onConfirmStep1()"></app-modal-add-account-step1>
-<app-modal-add-account-step2 class="mt-5 mb-5" #modalAddAccountStep2 [accountTradingForm]="accountTradingForm" (returnStep1)="onReturnStep1()" (confirmStep2)="onConfirmStep2()"></app-modal-add-account-step2>
+<ng-container *ngIf="accountTradingForm">
+    <app-modal-add-account-step1  #modalAddAccountStep1 [accountTradingForm]="accountTradingForm" (confirmStep1)="onConfirmStep1()"></app-modal-add-account-step1>
+	<app-modal-add-account-step2 class="mt-5 mb-5" #modalAddAccountStep2 [accountTradingForm]="accountTradingForm" (returnStep1)="onReturnStep1()" (confirmStep2)="onConfirmStep2()"></app-modal-add-account-step2>
+</ng-container>
 <app-modal-add-account-step3  #modalAddAccountStep3 [isLateRegis]="isLateRegis" ></app-modal-add-account-step3>
 <ng4-loading-spinner  [timeout]="30000"> </ng4-loading-spinner>

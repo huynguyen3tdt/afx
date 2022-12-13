@@ -1,11 +1,23 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { NotificationsService } from 'src/app/core/services/notifications.service';
-import { PageNotificationResponse, Notification, TotalNotification } from 'src/app/core/model/page-noti.model';
+import { Notification, PageNotificationResponse, TotalNotification } from 'src/app/core/model/page-noti.model';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { FIRST_LOGIN, LOCALE, TIMEZONEAFX, TIMEZONESERVER, ACCOUNT_IDS, ACCOUNT_TYPE } from 'src/app/core/constant/authen-constant';
-import { EN_FORMATDATE_HH_MM, JAPAN_FORMATDATE_HH_MM } from 'src/app/core/constant/format-date-constant';
+import {
+  ACCOUNT_IDS,
+  ACCOUNT_TYPE,
+  FIRST_LOGIN,
+  LOCALE,
+  TIMEZONEAFX,
+  TIMEZONESERVER
+} from 'src/app/core/constant/authen-constant';
+import {
+  EN_FORMATDATE_HH_MM,
+  EN_FORMATDATE_HH_MM_SS,
+  JAPAN_FORMATDATE_HH_MM,
+  JAPAN_FORMATDATE_HH_MM_SS
+} from 'src/app/core/constant/format-date-constant';
 import * as moment from 'moment-timezone';
 import { AccountType } from 'src/app/core/model/report-response.model';
 import { LANGUAGLE } from 'src/app/core/constant/language-constant';
@@ -13,10 +25,16 @@ import { ModalDirective } from 'ngx-bootstrap';
 import { take } from 'rxjs/operators';
 import { GlobalService } from 'src/app/core/services/global.service';
 import { Title } from '@angular/platform-browser';
-import { UserService } from 'src/app/core/services/user.service';
-import { FX_GROUP, I_CFD_GROUP, C_CFD_GROUP, B2B_FX_GROUP,
-   C_CFD_B2B_GROUP, I_CFD_B2B_GROUP } from 'src/app/core/constant/new-group-constant';
+import {
+  B2B_FX_GROUP,
+  C_CFD_B2B_GROUP,
+  C_CFD_GROUP,
+  FX_GROUP,
+  I_CFD_B2B_GROUP,
+  I_CFD_GROUP
+} from 'src/app/core/constant/new-group-constant';
 import { BIZ_GROUP } from 'src/app/core/constant/user-code-constant';
+
 declare var $: any;
 
 @Component({
@@ -53,6 +71,7 @@ export class NotificationsComponent implements OnInit {
   listTotalItem: Array<number> = [10, 20, 30];
   totalPage: number;
   formatDateHour: string;
+  formatDateHourSecond: string;
   locale: string;
   timeZone: string;
   listTradingAccount: Array<AccountType>;
@@ -62,7 +81,7 @@ export class NotificationsComponent implements OnInit {
     IMPORTANT: { name: 'IMPORTANT', value: 0 },
     NOTIFICATIONS: { name: 'NOTIFICATIONS', value: 1 },
     CAMPAIGN: { name: 'CAMPAIGN', value: 2 },
-    SYSTEM_IMPORTANT: {name: 'SYS_IMPORTATNT', value: '01'}
+    SYSTEM_IMPORTANT: { name: 'SYS_IMPORTATNT', value: '01' }
   };
   language;
   filterFX: boolean;
@@ -78,23 +97,25 @@ export class NotificationsComponent implements OnInit {
     private spinnerService: Ng4LoadingSpinnerService,
     private activatedRoute: ActivatedRoute,
     private globalService: GlobalService,
-    private titleService: Title) { }
+    private titleService: Title) {
+  }
 
   ngOnInit() {
     this.titleService.setTitle('フィリップMT5 Mypage');
     this.language = LANGUAGLE;
     this.timeZone = localStorage.getItem(TIMEZONEAFX);
     this.locale = localStorage.getItem(LOCALE);
-    if (this.locale === LANGUAGLE.english) {
-      this.formatDateHour = EN_FORMATDATE_HH_MM;
-    } else if (this.locale === LANGUAGLE.japan) {
-      this.formatDateHour = JAPAN_FORMATDATE_HH_MM;
-    }
+    this.updatePageDataByLanguage();
+    this.globalService.recallLanguage.subscribe((newLang) => {
+      this.locale = newLang;
+
+      this.updatePageDataByLanguage();
+    });
     this.initFilterRead();
     this.initFilterTradingAcount();
     this.currentPage = 1;
     this.pageSize = 10;
-    this.activatedRoute.queryParams.pipe(take(1)).subscribe(param => {
+    this.activatedRoute.queryParams.pipe(take(1)).subscribe((param) => {
       if (param.fisrtLogin) {
         this.showNoti = true;
       } else {
@@ -115,6 +136,16 @@ export class NotificationsComponent implements OnInit {
     }
   }
 
+  updatePageDataByLanguage() {
+    if (this.locale === LANGUAGLE.english) {
+      this.formatDateHour = EN_FORMATDATE_HH_MM;
+      this.formatDateHourSecond = EN_FORMATDATE_HH_MM_SS;
+    } else if (this.locale === LANGUAGLE.japan) {
+      this.formatDateHour = JAPAN_FORMATDATE_HH_MM;
+      this.formatDateHourSecond = JAPAN_FORMATDATE_HH_MM_SS
+    }
+  }
+
   getListNotifications(pageSize: number, pageNumber: number, unread: boolean, type?: number, listAccountId?: string) {
     this.checkTab(type);
     this.listNotification = [];
@@ -127,8 +158,20 @@ export class NotificationsComponent implements OnInit {
         this.pageNotification = response;
         this.listNotification = this.pageNotification.data.results;
         this.listNotification.forEach(item => {
-          item.publish_date += TIMEZONESERVER;
-          item.publish_date = moment(item.publish_date).tz(this.timeZone).format(this.formatDateHour);
+          if (item.publish_date) {
+            item.publish_date += TIMEZONESERVER;
+            item.publish_date = moment(item.publish_date).format(this.formatDateHour);
+          }
+
+          if (item.expire_date) {
+            item.expire_date += TIMEZONESERVER;
+            item.expire_date = moment(item.expire_date).format(this.formatDateHourSecond);
+          }
+
+          if (item.agree_date) {
+            item.agree_date += TIMEZONESERVER;
+            item.agree_date = moment(item.agree_date).format(this.formatDateHour);
+          }
         });
         this.totalItem = this.pageNotification.data.count;
         this.totalPage = (this.totalItem / this.pageSize) * 10;
@@ -139,6 +182,7 @@ export class NotificationsComponent implements OnInit {
     });
     this.getTotalNotification();
   }
+
   getTotalNotification() {
     const accountNumber = this.accountID;
     this.notificationsService.getTotalNotification(accountNumber).pipe(take(1)).subscribe(response => {
@@ -158,6 +202,7 @@ export class NotificationsComponent implements OnInit {
       }
     });
   }
+
   changeReadStatus(id: number) {
     const param = {
       noti_id: id
@@ -231,9 +276,9 @@ export class NotificationsComponent implements OnInit {
     }
   }
 
-  confirmAgreement() {
+  confirmAgreement(id: number) {
     const param = {
-      noti_id: this.agreementID
+      noti_id: id
     };
     this.notificationsService.changeAgreementStatus(param).pipe(take(1)).subscribe(response => {
       if (response.meta.code === 200) {
@@ -268,9 +313,21 @@ export class NotificationsComponent implements OnInit {
       if (response.meta.code === 200) {
         this.pageNotification = response;
         this.listNotification = this.pageNotification.data.results;
-        this.listNotification.forEach(item => {
-          item.publish_date += TIMEZONESERVER;
-          item.publish_date = moment(item.publish_date).tz(this.timeZone).format(this.formatDateHour);
+        this.listNotification.forEach((item) => {
+          if (item.publish_date) {
+            item.publish_date += TIMEZONESERVER;
+            item.publish_date = moment(item.publish_date).format(this.formatDateHour);
+          }
+
+          if (item.expire_date) {
+            item.expire_date += TIMEZONESERVER;
+            item.expire_date = moment(item.expire_date).format(this.formatDateHourSecond);
+          }
+
+          if (item.agree_date) {
+            item.agree_date += TIMEZONESERVER;
+            item.agree_date = moment(item.agree_date).format(this.formatDateHour);
+          }
         });
         this.totalItem = this.pageNotification.data.count;
         this.totalPage = (this.totalItem / this.pageSize) * 10;
@@ -390,7 +447,7 @@ export class NotificationsComponent implements OnInit {
   }
 
   initFilterRead() {
-    this.unreadAll = false;
+    this.unreadAll = true;
     // this.unreadCampagn = false;
     // this.unreadImportant = false;
     // this.unreadNotification = false;

@@ -35,8 +35,11 @@ export interface Notification {
     agree_flg: boolean;
     agreement_flg: number;
     publish_date: string;
-    news_content: number;
+    news_content: string;
     active: number;
+    expire_flg?: boolean;
+    expire_date?: string;
+    agree_date?: string;
 }
 
 export interface TotalNotification {
