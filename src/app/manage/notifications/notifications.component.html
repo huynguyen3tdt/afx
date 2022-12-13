@@ -140,10 +140,7 @@
                                             <ng-container *ngIf="item.agreement_flg === 1">
                                                 <button type="button"
                                                         class="btn float-right"
-                                                        [ngClass]="{
-												            'btn-primary': !item.agree_flg && !item.expire_flg,
-												            'btn-secondary': (item.agree_flg || item.expire_flg)
-												        }"
+                                                        [ngClass]="item.agree_flg || item.expire_flg ? 'btn-secondary' : 'btn-primary'"
                                                         [disabled]="item.agree_flg || item.expire_flg"
                                                         (click)="!item.agree_flg && !item.expire_flg && confirmAgreement(item.id)"
                                                 >
