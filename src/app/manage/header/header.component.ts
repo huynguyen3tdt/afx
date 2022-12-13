@@ -100,6 +100,12 @@ export class HeaderComponent implements OnInit, AfterContentChecked {
     this.showTurnTrading = this.listTradingAccount.some(account => !account.turn_trading_flg);
     this.checkDevice();
     this.locale = localStorage.getItem(LOCALE);
+    if (!this.locale || this.locale !== LANGUAGLE.english || this.locale !== LANGUAGLE.japan) {
+      this.locale = LANGUAGLE.japan;
+      localStorage.setItem(LOCALE, this.locale);
+    }
+    this.globalService.language.next(this.locale);
+
     this.bizGroup = localStorage.getItem(BIZ_GROUP);
     const isuaranceAccounts = [
       PhillipAccountType.FX, PhillipAccountType.I_CFD

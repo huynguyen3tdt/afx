@@ -113,19 +113,40 @@
                                         </div>
                                         <div class="item-header">
                                             <h5 class="item-title"><a href="javascript:;">{{item?.news_title}}</a></h5>
-                                            <div class="item-meta">{{item?.publish_date}}</div>
-                                        </div>
-                                        <div *ngIf="item?.agreement_flg != 1" class="item-content"
-                                            [innerHTML]="item?.news_content | safe: 'html'">
-                                        </div>
-                                        <div *ngIf="item?.agreement_flg == 1" class="item-content">
-                                            <div class="clearfix" [innerHTML]="item?.news_content | safe: 'html'"></div>
-                                            <div class="text-right">
-                                                <button (click)="confirmAgreement()"
-                                                [disabled]="item.agree_flg == true ? true : false" type="button"
-                                                class="btn btn-primary">{{'Confirm' | translate}}</button>
+                                            <div class="row m-0 justify-content-start">
+                                                <ng-container *ngIf="item.publish_date">
+                                                    <div class="item-meta">
+                                                        {{ 'publish date' | translate }} {{item.publish_date}}
+                                                    </div>
+                                                </ng-container>
+                                                <ng-container *ngIf="item.expire_date">
+                                                    <div class="ml-3 item-meta">
+                                                        {{ 'expire time' | translate }} {{item.expire_date}}
+                                                    </div>
+                                                </ng-container>
+                                                <ng-container *ngIf="item.agree_date">
+                                                    <div class="ml-3 item-meta">
+                                                        {{ 'approve date' | translate }} {{item.agree_date}}
+                                                    </div>
+                                                </ng-container>
                                             </div>
-                                                
+                                        </div>
+                                        <div class="item-content"
+                                        >
+                                            <div class="clearfix"
+                                                 [innerHTML]="item.news_content | safe: 'html'"
+                                            ></div>
+
+                                            <ng-container *ngIf="item.agreement_flg === 1">
+                                                <button type="button"
+                                                        class="btn float-right"
+                                                        [ngClass]="item.agree_flg || item.expire_flg ? 'btn-secondary' : 'btn-primary'"
+                                                        [disabled]="item.agree_flg || item.expire_flg"
+                                                        (click)="!item.agree_flg && !item.expire_flg && confirmAgreement(item.id)"
+                                                >
+                                                    {{(item.agree_flg ? 'Confirmed' : (item.expire_flg ? 'Expired' : 'Confirm')) | translate}}
+                                                </button>
+                                            </ng-container>
                                         </div>
                                     </div>
                                 </ng-container>

@@ -435,5 +435,11 @@
   "Company changes rule": "なお当社はお客様に事前に通知することなく、こちらの入出金に関する一般規則を変更することが出来るものとします。",
   "User can impose restrictions on withdrawals": "また法令順守の観点から出金に制限を課す場合があります。",
   "Conclusion about deposit": "最後に取引活動のない取引口座からの出金依頼に対して調査確認、拒否または振込手数料を課す場合があります。",
-  "JPY": "円"
+  "JPY": "円",
+  "publish date": "公開日付",
+  "expire time": "有効期限",
+  "approve date": "確認日",
+  "Confirmed": "確認済",
+  "Expired": "期限切れ"
+
 }
