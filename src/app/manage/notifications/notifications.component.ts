@@ -142,7 +142,7 @@ export class NotificationsComponent implements OnInit {
       this.formatDateHourSecond = EN_FORMATDATE_HH_MM_SS;
     } else if (this.locale === LANGUAGLE.japan) {
       this.formatDateHour = JAPAN_FORMATDATE_HH_MM;
-      this.formatDateHourSecond = JAPAN_FORMATDATE_HH_MM_SS
+      this.formatDateHourSecond = JAPAN_FORMATDATE_HH_MM_SS;
     }
   }
 
