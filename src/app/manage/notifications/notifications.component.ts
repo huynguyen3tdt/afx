@@ -405,13 +405,17 @@ export class NotificationsComponent implements OnInit {
   }
 
   showDetail(index: number, item: Notification) {
+    $(`#noti_${index}`).toggleClass('opened');
+    if (this.checkAgreementIsRead(item)) {
+      $(`#noti_${index}`).removeClass('unread');
+    }
+
     if (item.read_flg) {
       return;
     }
 
     item.read_flg = true;
     this.changeReadStatus(item.id);
-    this.getTotalNotification();
   }
 
   checkAgreementIsRead(item: Notification) {
