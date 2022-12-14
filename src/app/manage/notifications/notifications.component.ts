@@ -414,7 +414,7 @@ export class NotificationsComponent implements OnInit {
       return;
     }
 
-    if (item.agreement_flg === 1 && !item.agree_flg) {
+    if (item.agreement_flg === 1 && !item.agree_flg && !item.expire_flg) {
       return;
     }
 
