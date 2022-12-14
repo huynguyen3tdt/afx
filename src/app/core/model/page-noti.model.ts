@@ -31,7 +31,7 @@ export interface Notification {
     news_type: number;
     news_title: string;
     create_date: string;
-    read_flg: string;
+    read_flg: boolean;
     agree_flg: boolean;
     agreement_flg: number;
     publish_date: string;

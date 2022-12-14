@@ -406,23 +406,16 @@ export class NotificationsComponent implements OnInit {
 
   showDetail(index: number, item: Notification) {
     $(`#noti_${index}`).toggleClass('opened');
-    if (this.checkAgreementIsRead(item) === true) {
+    if (this.checkAgreementIsRead(item)) {
       $(`#noti_${index}`).removeClass('unread');
     }
-    // if (item.agreement_flg === 1) {
-    //   this.contentAgeement = item.news_content;
-    //   this.agreementID = item.id;
-    //   if (item.agree_flg === false) {
-    //     return;
-    //   }
-    // }
-    if (this.checkAgreementIsRead(item) === false) {
+
+    if (item.read_flg) {
       return;
     }
-    if (!item.read_flg) {
-      this.changeReadStatus(item.id);
-      this.getTotalNotification();
-    }
+
+    item.read_flg = true;
+    this.changeReadStatus(item.id);
   }
 
   checkAgreementIsRead(item: Notification) {
